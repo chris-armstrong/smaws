@@ -17,7 +17,7 @@ val make_vmware_tag :
 (** Create a {!type-vmware_tag} type *)
 
 val make_virtual_machine :
-  ?last_backup_date:float ->
+  ?last_backup_date:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?path:string ->
   ?name:string ->
@@ -29,7 +29,7 @@ val make_virtual_machine :
 
 val make_virtual_machine_details :
   ?vmware_tags:vmware_tag list ->
-  ?last_backup_date:float ->
+  ?last_backup_date:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?path:string ->
   ?name:string ->
@@ -214,7 +214,7 @@ val make_list_hypervisors_input :
 (** Create a {!type-list_hypervisors_input} type *)
 
 val make_gateway :
-  ?last_seen_time:float ->
+  ?last_seen_time:CoreTypes.Timestamp.t ->
   ?hypervisor_id:string ->
   ?gateway_type:gateway_type ->
   ?gateway_display_name:string ->
@@ -251,7 +251,7 @@ val make_import_hypervisor_configuration_input :
 val make_hypervisor_details :
   ?latest_metadata_sync_status:sync_metadata_status ->
   ?latest_metadata_sync_status_message:string ->
-  ?last_successful_metadata_sync_time:float ->
+  ?last_successful_metadata_sync_time:CoreTypes.Timestamp.t ->
   ?state:hypervisor_state ->
   ?log_group_arn:string ->
   ?name:string ->
@@ -294,9 +294,9 @@ val make_get_hypervisor_input : hypervisor_arn:string -> unit
 
 val make_gateway_details :
   ?vpc_endpoint:string ->
-  ?next_update_availability_time:float ->
+  ?next_update_availability_time:CoreTypes.Timestamp.t ->
   ?maintenance_start_time:maintenance_start_time ->
-  ?last_seen_time:float ->
+  ?last_seen_time:CoreTypes.Timestamp.t ->
   ?hypervisor_id:string ->
   ?gateway_type:gateway_type ->
   ?gateway_display_name:string ->

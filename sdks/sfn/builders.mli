@@ -23,7 +23,7 @@ val make_validate_state_machine_definition_input :
 val make_update_state_machine_output :
   ?state_machine_version_arn:string ->
   ?revision_id:string ->
-  update_date:float ->
+  update_date:CoreTypes.Timestamp.t ->
   unit
 -> update_state_machine_output
 (** Create a {!type-update_state_machine_output} type *)
@@ -61,7 +61,8 @@ val make_update_state_machine_input :
 -> update_state_machine_input
 (** Create a {!type-update_state_machine_input} type *)
 
-val make_update_state_machine_alias_output : update_date:float -> unit
+val make_update_state_machine_alias_output :
+  update_date:CoreTypes.Timestamp.t -> unit
 -> update_state_machine_alias_output
 (** Create a {!type-update_state_machine_alias_output} type *)
 
@@ -245,7 +246,7 @@ val make_tag_resource_input : tags:tag list -> resource_arn:string -> unit
 -> tag_resource_input
 (** Create a {!type-tag_resource_input} type *)
 
-val make_stop_execution_output : stop_date:float -> unit
+val make_stop_execution_output : stop_date:CoreTypes.Timestamp.t -> unit
 -> stop_execution_output
 (** Create a {!type-stop_execution_output} type *)
 
@@ -255,12 +256,14 @@ val make_stop_execution_input :
 (** Create a {!type-stop_execution_input} type *)
 
 val make_state_machine_version_list_item :
-  creation_date:float -> state_machine_version_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_version_arn:string ->
+  unit
 -> state_machine_version_list_item
 (** Create a {!type-state_machine_version_list_item} type *)
 
 val make_state_machine_list_item :
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   type_:state_machine_type ->
   name:string ->
   state_machine_arn:string ->
@@ -269,7 +272,9 @@ val make_state_machine_list_item :
 (** Create a {!type-state_machine_list_item} type *)
 
 val make_state_machine_alias_list_item :
-  creation_date:float -> state_machine_alias_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_alias_arn:string ->
+  unit
 -> state_machine_alias_list_item
 (** Create a {!type-state_machine_alias_list_item} type *)
 
@@ -312,8 +317,8 @@ val make_start_sync_execution_output :
   ?name:string ->
   ?state_machine_arn:string ->
   status:sync_execution_status ->
-  stop_date:float ->
-  start_date:float ->
+  stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   execution_arn:string ->
   unit
 -> start_sync_execution_output
@@ -329,7 +334,7 @@ val make_start_sync_execution_input :
 (** Create a {!type-start_sync_execution_input} type *)
 
 val make_start_execution_output :
-  start_date:float -> execution_arn:string -> unit
+  start_date:CoreTypes.Timestamp.t -> execution_arn:string -> unit
 -> start_execution_output
 (** Create a {!type-start_execution_output} type *)
 
@@ -367,7 +372,8 @@ val make_send_task_failure_input :
 -> send_task_failure_input
 (** Create a {!type-send_task_failure_input} type *)
 
-val make_redrive_execution_output : redrive_date:float -> unit
+val make_redrive_execution_output :
+  redrive_date:CoreTypes.Timestamp.t -> unit
 -> redrive_execution_output
 (** Create a {!type-redrive_execution_output} type *)
 
@@ -377,7 +383,9 @@ val make_redrive_execution_input :
 (** Create a {!type-redrive_execution_input} type *)
 
 val make_publish_state_machine_version_output :
-  state_machine_version_arn:string -> creation_date:float -> unit
+  state_machine_version_arn:string ->
+  creation_date:CoreTypes.Timestamp.t ->
+  unit
 -> publish_state_machine_version_output
 (** Create a {!type-publish_state_machine_version_output} type *)
 
@@ -403,8 +411,8 @@ val make_map_run_redriven_event_details :
 (** Create a {!type-map_run_redriven_event_details} type *)
 
 val make_map_run_list_item :
-  ?stop_date:float ->
-  start_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   state_machine_arn:string ->
   map_run_arn:string ->
   execution_arn:string ->
@@ -504,14 +512,14 @@ val make_list_map_runs_input :
 (** Create a {!type-list_map_runs_input} type *)
 
 val make_execution_list_item :
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
   ?state_machine_alias_arn:string ->
   ?state_machine_version_arn:string ->
   ?item_count:int ->
   ?map_run_arn:string ->
-  ?stop_date:float ->
-  start_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   status:execution_status ->
   name:string ->
   state_machine_arn:string ->
@@ -537,7 +545,10 @@ val make_list_executions_input :
 (** Create a {!type-list_executions_input} type *)
 
 val make_activity_list_item :
-  creation_date:float -> name:string -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  name:string ->
+  activity_arn:string ->
+  unit
 -> activity_list_item
 (** Create a {!type-activity_list_item} type *)
 
@@ -700,7 +711,7 @@ val make_history_event :
   ?previous_event_id:int ->
   id:int ->
   type_:history_event_type ->
-  timestamp_:float ->
+  timestamp_:CoreTypes.Timestamp.t ->
   unit
 -> history_event
 (** Create a {!type-history_event} type *)
@@ -737,7 +748,7 @@ val make_describe_state_machine_output :
   ?tracing_configuration:tracing_configuration ->
   ?logging_configuration:logging_configuration ->
   ?status:state_machine_status ->
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   type_:state_machine_type ->
   role_arn:string ->
   definition:string ->
@@ -757,7 +768,7 @@ val make_describe_state_machine_for_execution_output :
   ?map_run_arn:string ->
   ?tracing_configuration:tracing_configuration ->
   ?logging_configuration:logging_configuration ->
-  update_date:float ->
+  update_date:CoreTypes.Timestamp.t ->
   role_arn:string ->
   definition:string ->
   name:string ->
@@ -772,8 +783,8 @@ val make_describe_state_machine_for_execution_input :
 (** Create a {!type-describe_state_machine_for_execution_input} type *)
 
 val make_describe_state_machine_alias_output :
-  ?update_date:float ->
-  ?creation_date:float ->
+  ?update_date:CoreTypes.Timestamp.t ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?routing_configuration:routing_configuration_list_item list ->
   ?description:string ->
   ?name:string ->
@@ -788,15 +799,15 @@ val make_describe_state_machine_alias_input :
 (** Create a {!type-describe_state_machine_alias_input} type *)
 
 val make_describe_map_run_output :
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
-  ?stop_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
   execution_counts:map_run_execution_counts ->
   item_counts:map_run_item_counts ->
   tolerated_failure_count:int ->
   tolerated_failure_percentage:float ->
   max_concurrency:int ->
-  start_date:float ->
+  start_date:CoreTypes.Timestamp.t ->
   status:map_run_status ->
   execution_arn:string ->
   map_run_arn:string ->
@@ -811,7 +822,7 @@ val make_describe_map_run_input : map_run_arn:string -> unit
 val make_describe_execution_output :
   ?redrive_status_reason:string ->
   ?redrive_status:execution_redrive_status ->
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
   ?state_machine_alias_arn:string ->
   ?state_machine_version_arn:string ->
@@ -823,9 +834,9 @@ val make_describe_execution_output :
   ?output:string ->
   ?input_details:cloud_watch_events_execution_data_details ->
   ?input:string ->
-  ?stop_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
   ?name:string ->
-  start_date:float ->
+  start_date:CoreTypes.Timestamp.t ->
   status:execution_status ->
   state_machine_arn:string ->
   execution_arn:string ->
@@ -838,7 +849,10 @@ val make_describe_execution_input : execution_arn:string -> unit
 (** Create a {!type-describe_execution_input} type *)
 
 val make_describe_activity_output :
-  creation_date:float -> name:string -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  name:string ->
+  activity_arn:string ->
+  unit
 -> describe_activity_output
 (** Create a {!type-describe_activity_output} type *)
 
@@ -882,7 +896,7 @@ val make_delete_activity_input : activity_arn:string -> unit
 
 val make_create_state_machine_output :
   ?state_machine_version_arn:string ->
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   state_machine_arn:string ->
   unit
 -> create_state_machine_output
@@ -903,7 +917,9 @@ val make_create_state_machine_input :
 (** Create a {!type-create_state_machine_input} type *)
 
 val make_create_state_machine_alias_output :
-  creation_date:float -> state_machine_alias_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_alias_arn:string ->
+  unit
 -> create_state_machine_alias_output
 (** Create a {!type-create_state_machine_alias_output} type *)
 
@@ -916,7 +932,7 @@ val make_create_state_machine_alias_input :
 (** Create a {!type-create_state_machine_alias_input} type *)
 
 val make_create_activity_output :
-  creation_date:float -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t -> activity_arn:string -> unit
 -> create_activity_output
 (** Create a {!type-create_activity_output} type *)
 

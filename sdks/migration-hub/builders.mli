@@ -26,7 +26,7 @@ val make_progress_update_stream_summary :
 val make_notify_migration_task_state_request :
   ?dry_run:bool ->
   next_update_seconds:int ->
-  update_date_time:float ->
+  update_date_time:CoreTypes.Timestamp.t ->
   task:task ->
   migration_task_name:string ->
   progress_update_stream:string ->
@@ -36,7 +36,7 @@ val make_notify_migration_task_state_request :
 
 val make_notify_application_state_request :
   ?dry_run:bool ->
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   status:application_status ->
   application_id:string ->
   unit
@@ -44,7 +44,7 @@ val make_notify_application_state_request :
 (** Create a {!type-notify_application_state_request} type *)
 
 val make_migration_task_summary :
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   ?status_detail:string ->
   ?progress_percent:int ->
   ?status:status ->
@@ -56,7 +56,7 @@ val make_migration_task_summary :
 
 val make_migration_task :
   ?resource_attribute_list:resource_attribute list ->
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   ?task:task ->
   ?migration_task_name:string ->
   ?progress_update_stream:string ->
@@ -102,7 +102,7 @@ val make_list_created_artifacts_request :
 (** Create a {!type-list_created_artifacts_request} type *)
 
 val make_application_state :
-  ?last_updated_time:float ->
+  ?last_updated_time:CoreTypes.Timestamp.t ->
   ?application_status:application_status ->
   ?application_id:string ->
   unit

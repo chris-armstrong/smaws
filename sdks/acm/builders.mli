@@ -60,7 +60,7 @@ val make_domain_validation :
 
 val make_renewal_summary :
   ?renewal_status_reason:failure_reason ->
-  updated_at:float ->
+  updated_at:CoreTypes.Timestamp.t ->
   domain_validation_options:domain_validation list ->
   renewal_status:renewal_status ->
   unit
@@ -96,12 +96,12 @@ val make_list_tags_for_certificate_request : certificate_arn:string -> unit
 (** Create a {!type-list_tags_for_certificate_request} type *)
 
 val make_certificate_summary :
-  ?revoked_at:float ->
-  ?imported_at:float ->
-  ?issued_at:float ->
-  ?created_at:float ->
-  ?not_after:float ->
-  ?not_before:float ->
+  ?revoked_at:CoreTypes.Timestamp.t ->
+  ?imported_at:CoreTypes.Timestamp.t ->
+  ?issued_at:CoreTypes.Timestamp.t ->
+  ?created_at:CoreTypes.Timestamp.t ->
+  ?not_after:CoreTypes.Timestamp.t ->
+  ?not_before:CoreTypes.Timestamp.t ->
   ?renewal_eligibility:renewal_eligibility ->
   ?exported:bool ->
   ?in_use:bool ->
@@ -206,14 +206,14 @@ val make_certificate_detail :
   ?in_use_by:string list ->
   ?signature_algorithm:string ->
   ?key_algorithm:key_algorithm ->
-  ?not_after:float ->
-  ?not_before:float ->
+  ?not_after:CoreTypes.Timestamp.t ->
+  ?not_before:CoreTypes.Timestamp.t ->
   ?revocation_reason:revocation_reason ->
-  ?revoked_at:float ->
+  ?revoked_at:CoreTypes.Timestamp.t ->
   ?status:certificate_status ->
-  ?imported_at:float ->
-  ?issued_at:float ->
-  ?created_at:float ->
+  ?imported_at:CoreTypes.Timestamp.t ->
+  ?issued_at:CoreTypes.Timestamp.t ->
+  ?created_at:CoreTypes.Timestamp.t ->
   ?issuer:string ->
   ?subject:string ->
   ?serial:string ->

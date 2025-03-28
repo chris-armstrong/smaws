@@ -1,7 +1,7 @@
 open Types
 val make_validity_term :
-  ?agreement_end_date:float ->
-  ?agreement_start_date:float ->
+  ?agreement_end_date:CoreTypes.Timestamp.t ->
+  ?agreement_start_date:CoreTypes.Timestamp.t ->
   ?agreement_duration:string ->
   ?type_:string ->
   unit
@@ -63,9 +63,9 @@ val make_agreement_view_summary :
   ?proposer:proposer ->
   ?acceptor:acceptor ->
   ?agreement_type:string ->
-  ?end_time:float ->
-  ?start_time:float ->
-  ?acceptance_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
+  ?acceptance_time:CoreTypes.Timestamp.t ->
   ?agreement_id:string ->
   unit
 -> agreement_view_summary
@@ -92,7 +92,8 @@ val make_search_agreements_input :
 -> search_agreements_input
 (** Create a {!type-search_agreements_input} type *)
 
-val make_schedule_item : ?charge_amount:string -> ?charge_date:float -> unit
+val make_schedule_item :
+  ?charge_amount:string -> ?charge_date:CoreTypes.Timestamp.t -> unit
 -> schedule_item
 (** Create a {!type-schedule_item} type *)
 
@@ -207,9 +208,9 @@ val make_describe_agreement_output :
   ?proposal_summary:proposal_summary ->
   ?estimated_charges:estimated_charges ->
   ?agreement_type:string ->
-  ?acceptance_time:float ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?acceptance_time:CoreTypes.Timestamp.t ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?proposer:proposer ->
   ?acceptor:acceptor ->
   ?agreement_id:string ->

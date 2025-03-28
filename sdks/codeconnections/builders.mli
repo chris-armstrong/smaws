@@ -47,10 +47,10 @@ val make_sync_blocker_context : value:string -> key:string -> unit
 (** Create a {!type-sync_blocker_context} type *)
 
 val make_sync_blocker :
-  ?resolved_at:float ->
+  ?resolved_at:CoreTypes.Timestamp.t ->
   ?resolved_reason:string ->
   ?contexts:sync_blocker_context list ->
-  created_at:float ->
+  created_at:CoreTypes.Timestamp.t ->
   created_reason:string ->
   status:blocker_status ->
   type_:blocker_type ->
@@ -154,7 +154,11 @@ val make_revision :
 (** Create a {!type-revision} type *)
 
 val make_resource_sync_event :
-  ?external_id:string -> type_:string -> time:float -> event:string -> unit
+  ?external_id:string ->
+  type_:string ->
+  time:CoreTypes.Timestamp.t ->
+  event:string ->
+  unit
 -> resource_sync_event
 (** Create a {!type-resource_sync_event} type *)
 
@@ -162,7 +166,7 @@ val make_resource_sync_attempt :
   target:string ->
   target_revision:revision ->
   status:resource_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   initial_revision:revision ->
   events:resource_sync_event list ->
   unit
@@ -170,7 +174,11 @@ val make_resource_sync_attempt :
 (** Create a {!type-resource_sync_attempt} type *)
 
 val make_repository_sync_event :
-  ?external_id:string -> type_:string -> time:float -> event:string -> unit
+  ?external_id:string ->
+  type_:string ->
+  time:CoreTypes.Timestamp.t ->
+  event:string ->
+  unit
 -> repository_sync_event
 (** Create a {!type-repository_sync_event} type *)
 
@@ -182,7 +190,7 @@ val make_repository_sync_definition :
 val make_repository_sync_attempt :
   events:repository_sync_event list ->
   status:repository_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   unit
 -> repository_sync_attempt
 (** Create a {!type-repository_sync_attempt} type *)

@@ -410,8 +410,8 @@ val make_application_detail :
   ?reference_data_source_descriptions:reference_data_source_description list ->
   ?output_descriptions:output_description list ->
   ?input_descriptions:input_description list ->
-  ?last_update_timestamp:float ->
-  ?create_timestamp:float ->
+  ?last_update_timestamp:CoreTypes.Timestamp.t ->
+  ?create_timestamp:CoreTypes.Timestamp.t ->
   ?application_description:string ->
   application_version_id:int ->
   application_status:application_status ->
@@ -484,7 +484,7 @@ val make_delete_application_response : unit
 (** Create a {!type-delete_application_response} type *)
 
 val make_delete_application_request :
-  create_timestamp:float -> application_name:string -> unit
+  create_timestamp:CoreTypes.Timestamp.t -> application_name:string -> unit
 -> delete_application_request
 (** Create a {!type-delete_application_request} type *)
 

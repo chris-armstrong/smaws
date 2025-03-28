@@ -288,12 +288,12 @@ type contributor = {
     The time range.
      *)
 type time_range = {
-  to_exclusive: float option;
+  to_exclusive: CoreTypes.Timestamp.t option;
   (** 
     The end time, in Unix time in seconds.
      *)
 
-  from_inclusive: float option;
+  from_inclusive: CoreTypes.Timestamp.t option;
   (** 
     The start time, in Unix time in seconds.
      *)
@@ -511,12 +511,12 @@ type subscription = {
     The length, in seconds, of the Shield Advanced subscription for the account.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time your subscription will end.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The start time of the subscription, in Unix time in seconds.
      *)
@@ -966,12 +966,12 @@ type attack_summary = {
     The list of attacks for a specified time period.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The end time of the attack, in Unix time in seconds.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The start time of the attack, in Unix time in seconds.
      *)
@@ -1340,12 +1340,12 @@ type attack_detail = {
     List of counters that describe the attack for the specified time period.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The time the attack ended, in Unix time in seconds.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The time the attack started, in Unix time in seconds.
      *)
@@ -1598,5 +1598,5 @@ type associate_drt_log_bucket_request = {
                      *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

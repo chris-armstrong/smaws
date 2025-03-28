@@ -2406,12 +2406,12 @@ type untag_resource_request = {
         In a [GetSampledRequests] response, the [StartTime] and [EndTime] objects specify the time range for which AWS WAF actually returned a sample of web requests. AWS WAF gets the specified number of requests from among the first 5,000 requests that your AWS resource receives during the specified time period. If your resource receives more than 5,000 requests during that period, AWS WAF stops sampling after the 5,000th request. In that case, [EndTime] is the time that AWS WAF received the 5,000th request.
          |}]
 type time_window = {
-  end_time: float;
+  end_time: CoreTypes.Timestamp.t;
   [@ocaml.doc {| 
     The end of the time range from which you want [GetSampledRequests] to return a sample of the requests that your AWS resource received. You must specify the date and time in Coordinated Universal Time (UTC) format. UTC format includes the special designator, [Z]. For example, ["2016-09-27T14:50Z"]. You can specify any time range in the previous three hours.
      |}]
 
-  start_time: float;
+  start_time: CoreTypes.Timestamp.t;
   [@ocaml.doc {| 
     The beginning of the time range from which you want [GetSampledRequests] to return a sample of the requests that your AWS resource received. You must specify the date and time in Coordinated Universal Time (UTC) format. UTC format includes the special designator, [Z]. For example, ["2016-09-27T14:50Z"]. You can specify any time range in the previous three hours.
      |}]
@@ -2688,7 +2688,7 @@ type sampled_http_request = {
     The action for the [Rule] that the request matched: [ALLOW], [BLOCK], or [COUNT].
      *)
 
-  timestamp_: float option;
+  timestamp_: CoreTypes.Timestamp.t option;
   (** 
     The time at which AWS WAF received the request from your AWS resource, in Unix time format (in seconds).
      *)
@@ -4790,7 +4790,7 @@ type create_byte_match_set_request = {
        *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -5113,7 +5113,8 @@ val make_untag_resource_request :
 -> untag_resource_request
 (** Create a {!type-untag_resource_request} type *)
 
-val make_time_window : end_time:float -> start_time:float -> unit
+val make_time_window :
+  end_time:CoreTypes.Timestamp.t -> start_time:CoreTypes.Timestamp.t -> unit
 -> time_window
 (** Create a {!type-time_window} type *)
 
@@ -5183,7 +5184,7 @@ val make_http_request :
 val make_sampled_http_request :
   ?rule_within_rule_group:string ->
   ?action:string ->
-  ?timestamp_:float ->
+  ?timestamp_:CoreTypes.Timestamp.t ->
   weight:int ->
   request:http_request ->
   unit

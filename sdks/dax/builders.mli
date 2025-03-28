@@ -55,7 +55,7 @@ val make_node :
   ?parameter_group_status:string ->
   ?node_status:string ->
   ?availability_zone:string ->
-  ?node_create_time:float ->
+  ?node_create_time:CoreTypes.Timestamp.t ->
   ?endpoint:endpoint ->
   ?node_id:string ->
   unit
@@ -198,7 +198,7 @@ val make_increase_replication_factor_request :
 (** Create a {!type-increase_replication_factor_request} type *)
 
 val make_event :
-  ?date:float ->
+  ?date:CoreTypes.Timestamp.t ->
   ?message:string ->
   ?source_type:source_type ->
   ?source_name:string ->
@@ -255,8 +255,8 @@ val make_describe_events_request :
   ?next_token:string ->
   ?max_results:int ->
   ?duration:int ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?source_type:source_type ->
   ?source_name:string ->
   unit

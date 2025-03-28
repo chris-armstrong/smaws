@@ -177,12 +177,12 @@ type service_template_version = {
     An array of compatible environment template names for the major version of a service template.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was created.
      *)
@@ -327,12 +327,12 @@ type service_template = {
     The service template name as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was created.
      *)
@@ -467,7 +467,7 @@ type sync_blocker_context = {
     Detailed data of the sync blocker.
      *)
 type sync_blocker = {
-  resolved_at: float option;
+  resolved_at: CoreTypes.Timestamp.t option;
   (** 
     The time the sync blocker was resolved.
      *)
@@ -482,7 +482,7 @@ type sync_blocker = {
     The contexts for the sync blocker.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync blocker was created.
      *)
@@ -593,17 +593,17 @@ type service_pipeline = {
     The name of the service template that was used to create the service pipeline.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service pipeline was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service pipeline was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service pipeline was created.
      *)
@@ -729,12 +729,12 @@ type service = {
     The status of the service.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was created.
      *)
@@ -828,17 +828,17 @@ type service_instance = {
     The name of the service that the service instance belongs to.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service instance was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was created.
      *)
@@ -953,12 +953,12 @@ type environment_template_version = {
     The schema of the version of an environment template.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was created.
      *)
@@ -1070,12 +1070,12 @@ type environment_template = {
     The name of the environment template as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was created.
      *)
@@ -1232,17 +1232,17 @@ type environment = {
     The Amazon Resource Name (ARN) of the environment.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the environment was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was created.
      *)
@@ -1396,12 +1396,12 @@ type environment_account_connection = {
     The status of the environment account connection.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection was last modified.
      *)
 
-  requested_at: float;
+  requested_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection request was made.
      *)
@@ -1509,22 +1509,22 @@ type component = {
     The component deployment status.
      *)
 
-  last_deployment_succeeded_at: float option;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option;
   (** 
     The time when the component was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float option;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option;
   (** 
     The time when a deployment of the component was last attempted.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was created.
      *)
@@ -1760,12 +1760,12 @@ type sort_order = | ASCENDING
     Summary data of an Proton service template version resource.
      *)
 type service_template_version_summary = {
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was created.
      *)
@@ -1836,12 +1836,12 @@ type service_template_summary = {
     The service template name as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was created.
      *)
@@ -1897,12 +1897,12 @@ type service_summary = {
     The status of the service.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was created.
      *)
@@ -2004,17 +2004,17 @@ type service_instance_summary = {
     The name of the service that the service instance belongs to.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was created.
      *)
@@ -2117,7 +2117,7 @@ type resource_sync_event = {
     A resource sync event.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time when the event occurred.
      *)
@@ -2148,7 +2148,7 @@ type resource_sync_attempt = {
     The status of the sync attempt.
      *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync attempt started.
      *)
@@ -2220,7 +2220,7 @@ type repository_sync_event = {
     Event detail for a repository sync attempt.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time that the sync event occurred.
      *)
@@ -2277,7 +2277,7 @@ type repository_sync_attempt = {
     The sync attempt status.
      *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync attempt started.
      *)
@@ -2898,17 +2898,17 @@ type environment_summary = {
     The Amazon Resource Name (ARN) of the environment.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the environment was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was created.
      *)
@@ -2996,12 +2996,12 @@ type environment_template_summary = {
     The name of the environment template as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was created.
      *)
@@ -3048,12 +3048,12 @@ type list_environment_templates_input = {
     A summary of the version of an environment template detail data.
      *)
 type environment_template_version_summary = {
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was created.
      *)
@@ -3213,12 +3213,12 @@ type environment_account_connection_summary = {
     The status of the environment account connection.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection was last modified.
      *)
 
-  requested_at: float;
+  requested_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection request was made.
      *)
@@ -3343,17 +3343,17 @@ type deployment_summary = {
     The name of the environment associated with the deployment.
      *)
 
-  completed_at: float option;
+  completed_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time the deployment was completed.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was created.
      *)
@@ -3363,7 +3363,7 @@ type deployment_summary = {
     The resource type of the deployment target. It can be an environment, service, service instance, or component.
      *)
 
-  target_resource_created_at: float;
+  target_resource_created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the target resource was created.
      *)
@@ -3457,22 +3457,22 @@ type component_summary = {
     The component deployment status.
      *)
 
-  last_deployment_succeeded_at: float option;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option;
   (** 
     The time when the component was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float option;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option;
   (** 
     The time when a deployment of the component was last attempted.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was created.
      *)
@@ -4067,17 +4067,17 @@ type deployment = {
     The ID of the last attempted deployment.
      *)
 
-  completed_at: float option;
+  completed_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time the deployment was completed.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was created.
      *)
@@ -4117,7 +4117,7 @@ type deployment = {
     The resource type of the deployment target. It can be an environment, service, service instance, or component.
      *)
 
-  target_resource_created_at: float;
+  target_resource_created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the depoyment target was created.
      *)
@@ -5257,5 +5257,5 @@ type accept_environment_account_connection_input = {
 
 }
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

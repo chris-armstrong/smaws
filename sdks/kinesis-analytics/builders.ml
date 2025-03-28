@@ -450,8 +450,8 @@ let make_application_detail
   ?(reference_data_source_descriptions : reference_data_source_description list option)
   ?(output_descriptions : output_description list option)
   ?(input_descriptions : input_description list option)
-  ?(last_update_timestamp : float option)
-  ?(create_timestamp : float option)
+  ?(last_update_timestamp : CoreTypes.Timestamp.t option)
+  ?(create_timestamp : CoreTypes.Timestamp.t option)
   ?(application_description : string option)
   ~(application_version_id : int)
   ~(application_status : application_status)
@@ -535,7 +535,7 @@ let make_delete_application_response  () : delete_application_response =
 ()
 
 let make_delete_application_request 
-  ~(create_timestamp : float) ~(application_name : string) ()
+  ~(create_timestamp : CoreTypes.Timestamp.t) ~(application_name : string) ()
 : delete_application_request = { create_timestamp; application_name; 
 }
 

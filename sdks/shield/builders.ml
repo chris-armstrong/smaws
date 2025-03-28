@@ -69,8 +69,9 @@ let make_contributor  ?(value : int option) ?(name : string option) ()
 : contributor = { value; name;  }
 
 let make_time_range 
-  ?(to_exclusive : float option) ?(from_inclusive : float option) ()
-: time_range = { to_exclusive; from_inclusive; 
+  ?(to_exclusive : CoreTypes.Timestamp.t option)
+  ?(from_inclusive : CoreTypes.Timestamp.t option)
+  () : time_range = { to_exclusive; from_inclusive; 
 }
 
 let make_tag_resource_response  () : tag_resource_response = ()
@@ -132,8 +133,8 @@ let make_subscription
   ?(limits : limit list option)
   ?(auto_renew : auto_renew option)
   ?(time_commitment_in_seconds : int option)
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ~(subscription_limits : subscription_limits)
   () : subscription = {
   subscription_arn;
@@ -265,8 +266,8 @@ let make_attack_vector_description  ~(vector_type : string) ()
 
 let make_attack_summary 
   ?(attack_vectors : attack_vector_description list option)
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(resource_arn : string option)
   ?(attack_id : string option)
   () : attack_summary = {
@@ -436,8 +437,8 @@ let make_attack_detail
   ?(mitigations : mitigation list option)
   ?(attack_properties : attack_property list option)
   ?(attack_counters : summarized_counter list option)
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(sub_resources : sub_resource_summary list option)
   ?(resource_arn : string option)
   ?(attack_id : string option)

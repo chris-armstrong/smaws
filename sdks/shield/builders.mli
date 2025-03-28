@@ -76,7 +76,10 @@ val make_contributor : ?value:int -> ?name:string -> unit
 -> contributor
 (** Create a {!type-contributor} type *)
 
-val make_time_range : ?to_exclusive:float -> ?from_inclusive:float -> unit
+val make_time_range :
+  ?to_exclusive:CoreTypes.Timestamp.t ->
+  ?from_inclusive:CoreTypes.Timestamp.t ->
+  unit
 -> time_range
 (** Create a {!type-time_range} type *)
 
@@ -146,8 +149,8 @@ val make_subscription :
   ?limits:limit list ->
   ?auto_renew:auto_renew ->
   ?time_commitment_in_seconds:int ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   subscription_limits:subscription_limits ->
   unit
 -> subscription
@@ -265,8 +268,8 @@ val make_attack_vector_description : vector_type:string -> unit
 
 val make_attack_summary :
   ?attack_vectors:attack_vector_description list ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?attack_id:string ->
   unit
@@ -443,8 +446,8 @@ val make_attack_detail :
   ?mitigations:mitigation list ->
   ?attack_properties:attack_property list ->
   ?attack_counters:summarized_counter list ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?sub_resources:sub_resource_summary list ->
   ?resource_arn:string ->
   ?attack_id:string ->

@@ -318,7 +318,8 @@ val make_untag_resource_request :
 -> untag_resource_request
 (** Create a {!type-untag_resource_request} type *)
 
-val make_time_window : end_time:float -> start_time:float -> unit
+val make_time_window :
+  end_time:CoreTypes.Timestamp.t -> start_time:CoreTypes.Timestamp.t -> unit
 -> time_window
 (** Create a {!type-time_window} type *)
 
@@ -388,7 +389,7 @@ val make_http_request :
 val make_sampled_http_request :
   ?rule_within_rule_group:string ->
   ?action:string ->
-  ?timestamp_:float ->
+  ?timestamp_:CoreTypes.Timestamp.t ->
   weight:int ->
   request:http_request ->
   unit

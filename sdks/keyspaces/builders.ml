@@ -145,7 +145,7 @@ let make_restore_table_request
   ?(point_in_time_recovery_override : point_in_time_recovery option)
   ?(encryption_specification_override : encryption_specification option)
   ?(capacity_specification_override : capacity_specification option)
-  ?(restore_timestamp : float option)
+  ?(restore_timestamp : CoreTypes.Timestamp.t option)
   ~(target_table_name : string)
   ~(target_keyspace_name : string)
   ~(source_table_name : string)
@@ -170,7 +170,7 @@ let make_replication_specification
 }
 
 let make_capacity_specification_summary 
-  ?(last_update_to_pay_per_request_timestamp : float option)
+  ?(last_update_to_pay_per_request_timestamp : CoreTypes.Timestamp.t option)
   ?(write_capacity_units : int option)
   ?(read_capacity_units : int option)
   ~(throughput_mode : throughput_mode)
@@ -197,7 +197,7 @@ let make_replica_auto_scaling_specification
 }
 
 let make_point_in_time_recovery_summary 
-  ?(earliest_restorable_timestamp : float option)
+  ?(earliest_restorable_timestamp : CoreTypes.Timestamp.t option)
   ~(status : point_in_time_recovery_status)
   () : point_in_time_recovery_summary = {
   earliest_restorable_timestamp; status; 
@@ -279,7 +279,7 @@ let make_get_table_response
   ?(capacity_specification : capacity_specification_summary option)
   ?(schema_definition : schema_definition option)
   ?(status : table_status option)
-  ?(creation_timestamp : float option)
+  ?(creation_timestamp : CoreTypes.Timestamp.t option)
   ~(resource_arn : string)
   ~(table_name : string)
   ~(keyspace_name : string)

@@ -380,7 +380,7 @@ type pickup_details = {
     Organization that issued the credential identifying the person picking up the device.
      *)
 
-  identification_expiration_date: float option;
+  identification_expiration_date: CoreTypes.Timestamp.t option;
   (** 
     Expiration date of the credential identifying the person picking up the device.
      *)
@@ -724,12 +724,12 @@ type long_term_pricing_list_entry = {
     The type of long-term pricing that was selected for the device.
      *)
 
-  long_term_pricing_start_date: float option;
+  long_term_pricing_start_date: CoreTypes.Timestamp.t option;
   (** 
     The start date of the long-term pricing contract.
      *)
 
-  long_term_pricing_end_date: float option;
+  long_term_pricing_end_date: CoreTypes.Timestamp.t option;
   (** 
     The end date the long-term pricing contract.
      *)
@@ -961,7 +961,7 @@ type job_list_entry = {
         2016-08-11].
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this job.
      *)
@@ -1077,7 +1077,7 @@ type cluster_list_entry = {
         Cluster-01].
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this cluster.
      *)
@@ -1324,7 +1324,7 @@ type job_metadata = {
     An array of [S3Resource] objects. Each [S3Resource] object represents an Amazon S3 bucket that your transferred data will be exported from or imported into.
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this job.
      *)
@@ -1428,7 +1428,7 @@ type describe_return_shipping_label_result = {
     The pre-signed Amazon S3 URI used to download the return shipping label.
      *)
 
-  expiration_date: float option;
+  expiration_date: CoreTypes.Timestamp.t option;
   (** 
     The expiration date of the current return shipping label.
      *)
@@ -1537,7 +1537,7 @@ type cluster_metadata = {
     The arrays of [JobResource] objects that can include updated [S3Resource] objects or [LambdaResource] objects.
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this cluster.
      *)
@@ -2008,5 +2008,5 @@ type cancel_cluster_request = {
      *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

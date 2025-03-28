@@ -101,7 +101,7 @@ val make_on_device_service_configuration :
 val make_pickup_details :
   ?device_pickup_id:string ->
   ?identification_issuing_org:string ->
-  ?identification_expiration_date:float ->
+  ?identification_expiration_date:CoreTypes.Timestamp.t ->
   ?identification_number:string ->
   ?email:string ->
   ?phone_number:string ->
@@ -177,8 +177,8 @@ val make_long_term_pricing_list_entry :
   ?replacement_job:string ->
   ?current_active_job:string ->
   ?long_term_pricing_type:long_term_pricing_type ->
-  ?long_term_pricing_start_date:float ->
-  ?long_term_pricing_end_date:float ->
+  ?long_term_pricing_start_date:CoreTypes.Timestamp.t ->
+  ?long_term_pricing_end_date:CoreTypes.Timestamp.t ->
   ?long_term_pricing_id:string ->
   unit
 -> long_term_pricing_list_entry
@@ -230,7 +230,7 @@ val make_list_long_term_pricing_request :
 
 val make_job_list_entry :
   ?description:string ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?is_master:bool ->
@@ -255,7 +255,7 @@ val make_list_compatible_images_request :
 
 val make_cluster_list_entry :
   ?description:string ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?cluster_state:cluster_state ->
   ?cluster_id:string ->
   unit
@@ -315,7 +315,7 @@ val make_job_metadata :
   ?kms_key_ar_n:string ->
   ?description:string ->
   ?resources:job_resource ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?job_state:job_state ->
@@ -356,7 +356,7 @@ val make_cluster_metadata :
   ?shipping_option:shipping_option ->
   ?address_id:string ->
   ?resources:job_resource ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?cluster_state:cluster_state ->

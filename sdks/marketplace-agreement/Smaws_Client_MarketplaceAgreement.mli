@@ -13,12 +13,12 @@ val service : Service.descriptor
     Defines the conditions that will keep an agreement created from this offer valid.
      *)
 type validity_term = {
-  agreement_end_date: float option;
+  agreement_end_date: CoreTypes.Timestamp.t option;
   (** 
     Defines the date when the agreement ends. The agreement ends at 23:59:59.999 UTC on the date provided. If [AgreementEndDate] isn’t provided, the agreement end date is determined by the validity of individual terms.
      *)
 
-  agreement_start_date: float option;
+  agreement_start_date: CoreTypes.Timestamp.t option;
   (** 
     Defines the date when agreement starts. The agreement starts at 00:00:00.000 UTC on the date provided. If [AgreementStartDate] isn’t provided, the agreement start date is determined based on agreement signature time.
      *)
@@ -294,17 +294,17 @@ type agreement_view_summary = {
     The type of agreement. Values are [PurchaseAgreement] or [VendorInsightsAgreement].
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the agreement ends. The field is [null] for pay-as-you-go agreements, which don’t have end dates.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the agreement starts.
      *)
 
-  acceptance_time: float option;
+  acceptance_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time that the agreement was accepted.
      *)
@@ -441,7 +441,7 @@ type schedule_item = {
     The price that the customer would pay on the scheduled date (chargeDate).
      *)
 
-  charge_date: float option;
+  charge_date: CoreTypes.Timestamp.t option;
   (** 
     The date that the customer would pay the price defined in this payment schedule term. Invoices are generated on the date provided.
      *)
@@ -892,7 +892,7 @@ type describe_agreement_output = {
     The type of agreement. Values are [PurchaseAgreement] or [VendorInsightsAgreement].
      *)
 
-  acceptance_time: float option;
+  acceptance_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time the offer was accepted or the agreement was created.
     
@@ -900,12 +900,12 @@ type describe_agreement_output = {
      
       *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the agreement ends. The field is [null] for pay-as-you-go agreements, which don’t have end dates.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the agreement starts.
      *)
@@ -955,13 +955,13 @@ type describe_agreement_input = {
        *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
 val make_validity_term :
-  ?agreement_end_date:float ->
-  ?agreement_start_date:float ->
+  ?agreement_end_date:CoreTypes.Timestamp.t ->
+  ?agreement_start_date:CoreTypes.Timestamp.t ->
   ?agreement_duration:string ->
   ?type_:string ->
   unit
@@ -1023,9 +1023,9 @@ val make_agreement_view_summary :
   ?proposer:proposer ->
   ?acceptor:acceptor ->
   ?agreement_type:string ->
-  ?end_time:float ->
-  ?start_time:float ->
-  ?acceptance_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
+  ?acceptance_time:CoreTypes.Timestamp.t ->
   ?agreement_id:string ->
   unit
 -> agreement_view_summary
@@ -1052,7 +1052,8 @@ val make_search_agreements_input :
 -> search_agreements_input
 (** Create a {!type-search_agreements_input} type *)
 
-val make_schedule_item : ?charge_amount:string -> ?charge_date:float -> unit
+val make_schedule_item :
+  ?charge_amount:string -> ?charge_date:CoreTypes.Timestamp.t -> unit
 -> schedule_item
 (** Create a {!type-schedule_item} type *)
 
@@ -1167,9 +1168,9 @@ val make_describe_agreement_output :
   ?proposal_summary:proposal_summary ->
   ?estimated_charges:estimated_charges ->
   ?agreement_type:string ->
-  ?acceptance_time:float ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?acceptance_time:CoreTypes.Timestamp.t ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?proposer:proposer ->
   ?acceptor:acceptor ->
   ?agreement_id:string ->

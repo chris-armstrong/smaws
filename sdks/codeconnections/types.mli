@@ -234,7 +234,7 @@ type sync_blocker_context = {
     Information about a blocker for a sync event.
      *)
 type sync_blocker = {
-  resolved_at: float option;
+  resolved_at: CoreTypes.Timestamp.t option;
   (** 
     The time that a specific sync blocker was resolved.
      *)
@@ -249,7 +249,7 @@ type sync_blocker = {
     The contexts for a specific sync blocker.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The creation time for a specific sync blocker.
      *)
@@ -595,7 +595,7 @@ type resource_sync_event = {
     The type of resource sync event.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time that a resource sync event occurred.
      *)
@@ -647,7 +647,7 @@ type resource_sync_attempt = {
       }
        *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The start time for a resource sync attempt.
      *)
@@ -687,7 +687,7 @@ type repository_sync_event = {
     The event type for a repository sync event.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time that a repository sync event occurred.
      *)
@@ -763,7 +763,7 @@ type repository_sync_attempt = {
       }
        *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The start time of a specific sync attempt.
      *)
@@ -1468,5 +1468,5 @@ type create_connection_input = {
         *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

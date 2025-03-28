@@ -782,7 +782,7 @@ type restore_table_request = {
         For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/ReadWriteCapacityMode.html}Read/write capacity modes} in the {i Amazon Keyspaces Developer Guide}.
          *)
 
-  restore_timestamp: float option;
+  restore_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The restore timestamp in ISO 8601 format.
      *)
@@ -850,7 +850,7 @@ type replication_specification = {
        For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/ReadWriteCapacityMode.html}Read/write capacity modes} in the {i Amazon Keyspaces Developer Guide}.
         *)
 type capacity_specification_summary = {
-  last_update_to_pay_per_request_timestamp: float option;
+  last_update_to_pay_per_request_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The timestamp of the last operation that changed the provisioned throughput capacity of a table.
      *)
@@ -925,7 +925,7 @@ type replica_auto_scaling_specification = {
     The point-in-time recovery status of the specified table.
      *)
 type point_in_time_recovery_summary = {
-  earliest_restorable_timestamp: float option;
+  earliest_restorable_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Specifies the earliest possible restore point of the table in ISO 8601 format.
      *)
@@ -1164,7 +1164,7 @@ type get_table_response = {
     The current status of the specified table.
      *)
 
-  creation_timestamp: float option;
+  creation_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The creation timestamp of the specified table.
      *)
@@ -1505,7 +1505,7 @@ type create_keyspace_request = {
          *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -1657,7 +1657,7 @@ val make_restore_table_request :
   ?point_in_time_recovery_override:point_in_time_recovery ->
   ?encryption_specification_override:encryption_specification ->
   ?capacity_specification_override:capacity_specification ->
-  ?restore_timestamp:float ->
+  ?restore_timestamp:CoreTypes.Timestamp.t ->
   target_table_name:string ->
   target_keyspace_name:string ->
   source_table_name:string ->
@@ -1672,7 +1672,7 @@ val make_replication_specification :
 (** Create a {!type-replication_specification} type *)
 
 val make_capacity_specification_summary :
-  ?last_update_to_pay_per_request_timestamp:float ->
+  ?last_update_to_pay_per_request_timestamp:CoreTypes.Timestamp.t ->
   ?write_capacity_units:int ->
   ?read_capacity_units:int ->
   throughput_mode:throughput_mode ->
@@ -1696,7 +1696,7 @@ val make_replica_auto_scaling_specification :
 (** Create a {!type-replica_auto_scaling_specification} type *)
 
 val make_point_in_time_recovery_summary :
-  ?earliest_restorable_timestamp:float ->
+  ?earliest_restorable_timestamp:CoreTypes.Timestamp.t ->
   status:point_in_time_recovery_status ->
   unit
 -> point_in_time_recovery_summary
@@ -1771,7 +1771,7 @@ val make_get_table_response :
   ?capacity_specification:capacity_specification_summary ->
   ?schema_definition:schema_definition ->
   ?status:table_status ->
-  ?creation_timestamp:float ->
+  ?creation_timestamp:CoreTypes.Timestamp.t ->
   resource_arn:string ->
   table_name:string ->
   keyspace_name:string ->

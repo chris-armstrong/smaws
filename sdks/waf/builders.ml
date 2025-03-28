@@ -302,8 +302,11 @@ let make_untag_resource_request
   ~(tag_keys : string list) ~(resource_ar_n : string) ()
 : untag_resource_request = { tag_keys; resource_ar_n;  }
 
-let make_time_window  ~(end_time : float) ~(start_time : float) ()
-: time_window = { end_time; start_time;  }
+let make_time_window 
+  ~(end_time : CoreTypes.Timestamp.t)
+  ~(start_time : CoreTypes.Timestamp.t)
+  () : time_window = { end_time; start_time; 
+}
 
 let make_tag_resource_response  () : tag_resource_response = ()
 
@@ -366,7 +369,7 @@ let make_http_request
 let make_sampled_http_request 
   ?(rule_within_rule_group : string option)
   ?(action : string option)
-  ?(timestamp_ : float option)
+  ?(timestamp_ : CoreTypes.Timestamp.t option)
   ~(weight : int)
   ~(request : http_request)
   () : sampled_http_request = {

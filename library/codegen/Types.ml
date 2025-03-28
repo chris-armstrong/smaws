@@ -126,9 +126,9 @@ let generateTimestampShape ({ traits } : Shape.timestampShapeDetails) =
      Trait.findTrait (Option.value traits ~default:[]) Trait.isTimestampFormatTrait
    in
    match timestampFormat with
-   | Some (TimestampFormatTrait "date-time") -> {js|float|js}
-   | Some (TimestampFormatTrait "epoch-seconds") -> {js|float;|js}
-   | _ -> {js|float|js})
+   | Some (TimestampFormatTrait "date-time") -> "CoreTypes.Timestamp.t"
+   | Some (TimestampFormatTrait "epoch-seconds") -> "CoreTypes.Timestamp.t"
+   | _ -> "CoreTypes.Timestamp.t")
   [@ns.braces]
 
 let generateEnumShape (details : Shape.enumShapeDetails) =
@@ -160,7 +160,7 @@ let generateTypeTarget ctx descriptor ?(genDoc = false) () =
   | UnitShape -> "unit"
   | SetShape details -> generateSetShape ctx details
   | EnumShape details -> generateEnumShape details
-  | DocumentShape -> "Json.t"
+  | DocumentShape -> "CoreTypes.Document.t"
 
 let getStructureShape =
   let open Shape in

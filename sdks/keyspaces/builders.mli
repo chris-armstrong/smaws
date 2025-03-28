@@ -147,7 +147,7 @@ val make_restore_table_request :
   ?point_in_time_recovery_override:point_in_time_recovery ->
   ?encryption_specification_override:encryption_specification ->
   ?capacity_specification_override:capacity_specification ->
-  ?restore_timestamp:float ->
+  ?restore_timestamp:CoreTypes.Timestamp.t ->
   target_table_name:string ->
   target_keyspace_name:string ->
   source_table_name:string ->
@@ -162,7 +162,7 @@ val make_replication_specification :
 (** Create a {!type-replication_specification} type *)
 
 val make_capacity_specification_summary :
-  ?last_update_to_pay_per_request_timestamp:float ->
+  ?last_update_to_pay_per_request_timestamp:CoreTypes.Timestamp.t ->
   ?write_capacity_units:int ->
   ?read_capacity_units:int ->
   throughput_mode:throughput_mode ->
@@ -186,7 +186,7 @@ val make_replica_auto_scaling_specification :
 (** Create a {!type-replica_auto_scaling_specification} type *)
 
 val make_point_in_time_recovery_summary :
-  ?earliest_restorable_timestamp:float ->
+  ?earliest_restorable_timestamp:CoreTypes.Timestamp.t ->
   status:point_in_time_recovery_status ->
   unit
 -> point_in_time_recovery_summary
@@ -261,7 +261,7 @@ val make_get_table_response :
   ?capacity_specification:capacity_specification_summary ->
   ?schema_definition:schema_definition ->
   ?status:table_status ->
-  ?creation_timestamp:float ->
+  ?creation_timestamp:CoreTypes.Timestamp.t ->
   resource_arn:string ->
   table_name:string ->
   keyspace_name:string ->

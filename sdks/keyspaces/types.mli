@@ -774,7 +774,7 @@ type restore_table_request = {
         For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/ReadWriteCapacityMode.html}Read/write capacity modes} in the {i Amazon Keyspaces Developer Guide}.
          *)
 
-  restore_timestamp: float option;
+  restore_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The restore timestamp in ISO 8601 format.
      *)
@@ -842,7 +842,7 @@ type replication_specification = {
        For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/ReadWriteCapacityMode.html}Read/write capacity modes} in the {i Amazon Keyspaces Developer Guide}.
         *)
 type capacity_specification_summary = {
-  last_update_to_pay_per_request_timestamp: float option;
+  last_update_to_pay_per_request_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The timestamp of the last operation that changed the provisioned throughput capacity of a table.
      *)
@@ -917,7 +917,7 @@ type replica_auto_scaling_specification = {
     The point-in-time recovery status of the specified table.
      *)
 type point_in_time_recovery_summary = {
-  earliest_restorable_timestamp: float option;
+  earliest_restorable_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Specifies the earliest possible restore point of the table in ISO 8601 format.
      *)
@@ -1156,7 +1156,7 @@ type get_table_response = {
     The current status of the specified table.
      *)
 
-  creation_timestamp: float option;
+  creation_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The creation timestamp of the specified table.
      *)
@@ -1497,5 +1497,5 @@ type create_keyspace_request = {
          *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

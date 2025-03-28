@@ -1,3 +1,5 @@
 (executable
  (name AwsGenerator)
- (libraries yojson Parselib fmt))
+ (libraries yojson Parselib fmt ppxlib)
+ (preprocess
+  (pps ppxlib.metaquot)))

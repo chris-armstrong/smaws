@@ -296,12 +296,12 @@ type contributor = {
     The time range.
      *)
 type time_range = {
-  to_exclusive: float option;
+  to_exclusive: CoreTypes.Timestamp.t option;
   (** 
     The end time, in Unix time in seconds.
      *)
 
-  from_inclusive: float option;
+  from_inclusive: CoreTypes.Timestamp.t option;
   (** 
     The start time, in Unix time in seconds.
      *)
@@ -519,12 +519,12 @@ type subscription = {
     The length, in seconds, of the Shield Advanced subscription for the account.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time your subscription will end.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The start time of the subscription, in Unix time in seconds.
      *)
@@ -974,12 +974,12 @@ type attack_summary = {
     The list of attacks for a specified time period.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The end time of the attack, in Unix time in seconds.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The start time of the attack, in Unix time in seconds.
      *)
@@ -1348,12 +1348,12 @@ type attack_detail = {
     List of counters that describe the attack for the specified time period.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The time the attack ended, in Unix time in seconds.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The time the attack started, in Unix time in seconds.
      *)
@@ -1606,7 +1606,7 @@ type associate_drt_log_bucket_request = {
                      *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -1687,7 +1687,10 @@ val make_contributor : ?value:int -> ?name:string -> unit
 -> contributor
 (** Create a {!type-contributor} type *)
 
-val make_time_range : ?to_exclusive:float -> ?from_inclusive:float -> unit
+val make_time_range :
+  ?to_exclusive:CoreTypes.Timestamp.t ->
+  ?from_inclusive:CoreTypes.Timestamp.t ->
+  unit
 -> time_range
 (** Create a {!type-time_range} type *)
 
@@ -1757,8 +1760,8 @@ val make_subscription :
   ?limits:limit list ->
   ?auto_renew:auto_renew ->
   ?time_commitment_in_seconds:int ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   subscription_limits:subscription_limits ->
   unit
 -> subscription
@@ -1876,8 +1879,8 @@ val make_attack_vector_description : vector_type:string -> unit
 
 val make_attack_summary :
   ?attack_vectors:attack_vector_description list ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?attack_id:string ->
   unit
@@ -2054,8 +2057,8 @@ val make_attack_detail :
   ?mitigations:mitigation list ->
   ?attack_properties:attack_property list ->
   ?attack_counters:summarized_counter list ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?sub_resources:sub_resource_summary list ->
   ?resource_arn:string ->
   ?attack_id:string ->

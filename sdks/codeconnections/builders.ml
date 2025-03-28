@@ -64,10 +64,10 @@ let make_sync_blocker_context  ~(value : string) ~(key : string) ()
 : sync_blocker_context = { value; key;  }
 
 let make_sync_blocker 
-  ?(resolved_at : float option)
+  ?(resolved_at : CoreTypes.Timestamp.t option)
   ?(resolved_reason : string option)
   ?(contexts : sync_blocker_context list option)
-  ~(created_at : float)
+  ~(created_at : CoreTypes.Timestamp.t)
   ~(created_reason : string)
   ~(status : blocker_status)
   ~(type_ : blocker_type)
@@ -178,7 +178,7 @@ let make_revision
 let make_resource_sync_event 
   ?(external_id : string option)
   ~(type_ : string)
-  ~(time : float)
+  ~(time : CoreTypes.Timestamp.t)
   ~(event : string)
   () : resource_sync_event = { type_; time; external_id; event; 
 }
@@ -187,7 +187,7 @@ let make_resource_sync_attempt
   ~(target : string)
   ~(target_revision : revision)
   ~(status : resource_sync_status)
-  ~(started_at : float)
+  ~(started_at : CoreTypes.Timestamp.t)
   ~(initial_revision : revision)
   ~(events : resource_sync_event list)
   () : resource_sync_attempt = {
@@ -197,7 +197,7 @@ let make_resource_sync_attempt
 let make_repository_sync_event 
   ?(external_id : string option)
   ~(type_ : string)
-  ~(time : float)
+  ~(time : CoreTypes.Timestamp.t)
   ~(event : string)
   () : repository_sync_event = { type_; time; external_id; event; 
 }
@@ -213,7 +213,7 @@ let make_repository_sync_definition
 let make_repository_sync_attempt 
   ~(events : repository_sync_event list)
   ~(status : repository_sync_status)
-  ~(started_at : float)
+  ~(started_at : CoreTypes.Timestamp.t)
   () : repository_sync_attempt = { events; status; started_at; 
 }
 

@@ -75,15 +75,17 @@ let _ =
         Ast.Organize.partitionOperationShapes ordered
       in
       let serviceDetails = Ast.Trait.extractServiceTrait service.traits in
-      let alias_context =
-        Codegen.Types.create_alias_context
-          (structure_shapes
-          |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
-                 Ast.Shape.{ name; descriptor }
-                 :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
-                        List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
-                            Ast.Shape.{ name; descriptor }))))
+      let shapes =
+        structure_shapes
+        |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
+               Ast.Shape.{ name; descriptor }
+               :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
+                      List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
+                          Ast.Shape.{ name; descriptor })))
       in
+      let alias_context = Codegen.Types.create_alias_context shapes in
+
+      let alias_context_ppx = Gen_types_ppx.create_alias_context shapes in
       List.iter
         ~f:(fun command ->
           let sdkId = serviceDetails.sdkId |> Str.global_replace (Str.regexp "[ ]") "" in
@@ -99,8 +101,10 @@ let _ =
           match command with
           | TypesCommand ->
               write_output "types.ml" (fun output_fmt ->
-                  Gen_types.generate ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt);
+                  (* Gen_types.generate ~name ~service ~operation_shapes ~structure_shapes *)
+                  (*   ~alias_context output_fmt; *)
+                  Gen_types_ppx.generate ~name ~service ~operation_shapes ~structure_shapes
+                    ~alias_context:alias_context_ppx output_fmt);
               write_output "types.mli" (fun output_fmt ->
                   Gen_types.generate_mli ~name ~service ~operation_shapes ~structure_shapes
                     ~alias_context output_fmt)

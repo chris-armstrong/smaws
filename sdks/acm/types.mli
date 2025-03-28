@@ -439,7 +439,7 @@ type failure_reason = | OTHER
     Contains information about the status of ACM's {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html}managed renewal} for the certificate. This structure exists only when the certificate type is [AMAZON_ISSUED].
      *)
 type renewal_summary = {
-  updated_at: float;
+  updated_at: CoreTypes.Timestamp.t;
   (** 
     The time at which the renewal summary was last updated.
      *)
@@ -594,32 +594,32 @@ type extended_key_usage_name = | CUSTOM
     This structure is returned in the response object of [ListCertificates] action.
      *)
 type certificate_summary = {
-  revoked_at: float option;
+  revoked_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was revoked. This value exists only when the certificate status is [REVOKED].
      *)
 
-  imported_at: float option;
+  imported_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the certificate was imported. This value exists only when the certificate type is [IMPORTED].
      *)
 
-  issued_at: float option;
+  issued_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was issued. This value exists only when the certificate type is [AMAZON_ISSUED].
      *)
 
-  created_at: float option;
+  created_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was requested.
      *)
 
-  not_after: float option;
+  not_after: CoreTypes.Timestamp.t option;
   (** 
     The time after which the certificate is not valid.
      *)
 
-  not_before: float option;
+  not_before: CoreTypes.Timestamp.t option;
   (** 
     The time before which the certificate is not valid.
      *)
@@ -1001,12 +1001,12 @@ type certificate_detail = {
     The algorithm that was used to generate the public-private key pair.
      *)
 
-  not_after: float option;
+  not_after: CoreTypes.Timestamp.t option;
   (** 
     The time after which the certificate is not valid.
      *)
 
-  not_before: float option;
+  not_before: CoreTypes.Timestamp.t option;
   (** 
     The time before which the certificate is not valid.
      *)
@@ -1016,7 +1016,7 @@ type certificate_detail = {
     The reason the certificate was revoked. This value exists only when the certificate status is [REVOKED].
      *)
 
-  revoked_at: float option;
+  revoked_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was revoked. This value exists only when the certificate status is [REVOKED].
      *)
@@ -1028,17 +1028,17 @@ type certificate_detail = {
      A certificate enters status PENDING_VALIDATION upon being requested, unless it fails for any of the reasons given in the troubleshooting topic {{:https://docs.aws.amazon.com/acm/latest/userguide/troubleshooting-failed.html}Certificate request fails}. ACM makes repeated attempts to validate a certificate for 72 hours and then times out. If a certificate shows status FAILED or VALIDATION_TIMED_OUT, delete the request, correct the issue with {{:https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html}DNS validation} or {{:https://docs.aws.amazon.com/acm/latest/userguide/email-validation.html}Email validation}, and try again. If validation succeeds, the certificate enters status ISSUED.
       *)
 
-  imported_at: float option;
+  imported_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the certificate was imported. This value exists only when the certificate type is [IMPORTED].
      *)
 
-  issued_at: float option;
+  issued_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was issued. This value exists only when the certificate type is [AMAZON_ISSUED].
      *)
 
-  created_at: float option;
+  created_at: CoreTypes.Timestamp.t option;
   (** 
     The time at which the certificate was requested.
      *)
@@ -1134,5 +1134,5 @@ type add_tags_to_certificate_request = {
                          *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

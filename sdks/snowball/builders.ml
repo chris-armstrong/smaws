@@ -109,7 +109,7 @@ let make_on_device_service_configuration
 let make_pickup_details 
   ?(device_pickup_id : string option)
   ?(identification_issuing_org : string option)
-  ?(identification_expiration_date : float option)
+  ?(identification_expiration_date : CoreTypes.Timestamp.t option)
   ?(identification_number : string option)
   ?(email : string option)
   ?(phone_number : string option)
@@ -205,8 +205,8 @@ let make_long_term_pricing_list_entry
   ?(replacement_job : string option)
   ?(current_active_job : string option)
   ?(long_term_pricing_type : long_term_pricing_type option)
-  ?(long_term_pricing_start_date : float option)
-  ?(long_term_pricing_end_date : float option)
+  ?(long_term_pricing_start_date : CoreTypes.Timestamp.t option)
+  ?(long_term_pricing_end_date : CoreTypes.Timestamp.t option)
   ?(long_term_pricing_id : string option)
   () : long_term_pricing_list_entry = {
   job_ids;
@@ -282,7 +282,7 @@ let make_list_long_term_pricing_request
 
 let make_job_list_entry 
   ?(description : string option)
-  ?(creation_date : float option)
+  ?(creation_date : CoreTypes.Timestamp.t option)
   ?(snowball_type : snowball_type option)
   ?(job_type : job_type option)
   ?(is_master : bool option)
@@ -313,7 +313,7 @@ let make_list_compatible_images_request
 
 let make_cluster_list_entry 
   ?(description : string option)
-  ?(creation_date : float option)
+  ?(creation_date : CoreTypes.Timestamp.t option)
   ?(cluster_state : cluster_state option)
   ?(cluster_id : string option)
   () : cluster_list_entry = {
@@ -375,7 +375,7 @@ let make_job_metadata
   ?(kms_key_ar_n : string option)
   ?(description : string option)
   ?(resources : job_resource option)
-  ?(creation_date : float option)
+  ?(creation_date : CoreTypes.Timestamp.t option)
   ?(snowball_type : snowball_type option)
   ?(job_type : job_type option)
   ?(job_state : job_state option)
@@ -438,7 +438,7 @@ let make_cluster_metadata
   ?(shipping_option : shipping_option option)
   ?(address_id : string option)
   ?(resources : job_resource option)
-  ?(creation_date : float option)
+  ?(creation_date : CoreTypes.Timestamp.t option)
   ?(snowball_type : snowball_type option)
   ?(job_type : job_type option)
   ?(cluster_state : cluster_state option)

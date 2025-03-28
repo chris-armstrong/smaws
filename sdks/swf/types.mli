@@ -30,12 +30,12 @@ type registration_status = | DEPRECATED
     Contains information about a workflow type.
      *)
 type workflow_type_info = {
-  deprecation_date: float option;
+  deprecation_date: CoreTypes.Timestamp.t option;
   (** 
     If the type is in deprecated state, then it is set to the date when the type was deprecated.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date when this type was registered.
      *)
@@ -493,12 +493,12 @@ type workflow_execution_info = {
     The current status of the execution.
      *)
 
-  close_timestamp: float option;
+  close_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The time when the workflow execution was closed. Set only if the execution status is CLOSED.
      *)
 
-  start_timestamp: float;
+  start_timestamp: CoreTypes.Timestamp.t;
   (** 
     The time when the execution was started.
      *)
@@ -631,7 +631,7 @@ type workflow_execution_detail = {
     The latest executionContext provided by the decider for this workflow execution. A decider can provide an executionContext (a free-form string) when closing a decision task using [RespondDecisionTaskCompleted].
      *)
 
-  latest_activity_task_timestamp: float option;
+  latest_activity_task_timestamp: CoreTypes.Timestamp.t option;
   (** 
     The time when the last activity task was scheduled for this workflow execution. You can use this information to determine if the workflow has not made progress for an unusually long period of time and might require a corrective action.
      *)
@@ -4300,7 +4300,7 @@ type history_event = {
     The type of the history event.
      *)
 
-  event_timestamp: float;
+  event_timestamp: CoreTypes.Timestamp.t;
   (** 
     The date and time when the event occurred.
      *)
@@ -4510,12 +4510,12 @@ type list_tags_for_resource_input = {
     Used to filter the workflow executions in visibility APIs by various time-based rules. Each parameter, if specified, defines a rule that must be satisfied by each returned query result. The parameter values are in the {{:https://en.wikipedia.org/wiki/Unix_time}Unix Time format}. For example: ["oldestDate": 1325376070.]
      |}]
 type execution_time_filter = {
-  latest_date: float option;
+  latest_date: CoreTypes.Timestamp.t option;
   (** 
     Specifies the latest start or close date and time to return.
      *)
 
-  oldest_date: float;
+  oldest_date: CoreTypes.Timestamp.t;
   (** 
     Specifies the oldest start or close date and time to return.
      *)
@@ -4746,12 +4746,12 @@ type list_closed_workflow_executions_input = {
     Detailed information about an activity type.
      *)
 type activity_type_info = {
-  deprecation_date: float option;
+  deprecation_date: CoreTypes.Timestamp.t option;
   (** 
     If DEPRECATED, the date and time [DeprecateActivityType] was called.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date and time this activity type was created through [RegisterActivityType].
      *)
@@ -5243,5 +5243,5 @@ type count_closed_workflow_executions_input = {
                                       *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

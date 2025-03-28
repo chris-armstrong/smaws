@@ -255,7 +255,7 @@ type node = {
     The Availability Zone (AZ) in which the node has been deployed.
      *)
 
-  node_create_time: float option;
+  node_create_time: CoreTypes.Timestamp.t option;
   (** 
     The date and time (in UNIX epoch format) when the node was launched.
      *)
@@ -872,7 +872,7 @@ type increase_replication_factor_request = {
     Represents a single occurrence of something interesting within the system. Some examples of events are creating a DAX cluster, adding or removing a node, or rebooting a node.
      *)
 type event = {
-  date: float option;
+  date: CoreTypes.Timestamp.t option;
   (** 
     The date and time when the event occurred.
      *)
@@ -1029,12 +1029,12 @@ type describe_events_request = {
     The number of minutes' worth of events to retrieve.
      *)
 
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The end of the time interval for which to retrieve events, specified in ISO 8601 format.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The beginning of the time interval to retrieve events for, specified in ISO 8601 format.
      *)
@@ -1405,7 +1405,7 @@ type cluster_already_exists_fault = {
      *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -1465,7 +1465,7 @@ val make_node :
   ?parameter_group_status:string ->
   ?node_status:string ->
   ?availability_zone:string ->
-  ?node_create_time:float ->
+  ?node_create_time:CoreTypes.Timestamp.t ->
   ?endpoint:endpoint ->
   ?node_id:string ->
   unit
@@ -1608,7 +1608,7 @@ val make_increase_replication_factor_request :
 (** Create a {!type-increase_replication_factor_request} type *)
 
 val make_event :
-  ?date:float ->
+  ?date:CoreTypes.Timestamp.t ->
   ?message:string ->
   ?source_type:source_type ->
   ?source_name:string ->
@@ -1665,8 +1665,8 @@ val make_describe_events_request :
   ?next_token:string ->
   ?max_results:int ->
   ?duration:int ->
-  ?end_time:float ->
-  ?start_time:float ->
+  ?end_time:CoreTypes.Timestamp.t ->
+  ?start_time:CoreTypes.Timestamp.t ->
   ?source_type:source_type ->
   ?source_name:string ->
   unit

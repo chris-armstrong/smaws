@@ -1373,12 +1373,12 @@ type application_detail = {
     Describes the application input configuration. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html}Configuring Application Input}.
      *)
 
-  last_update_timestamp: float option;
+  last_update_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Time stamp when the application was last updated.
      *)
 
-  create_timestamp: float option;
+  create_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Time stamp when the application version was created.
      *)
@@ -1522,7 +1522,7 @@ type delete_application_response = unit
     
      *)
 type delete_application_request = {
-  create_timestamp: float;
+  create_timestamp: CoreTypes.Timestamp.t;
   (** 
     You can use the [DescribeApplication] operation to get this value.
      *)
@@ -1796,7 +1796,7 @@ type add_application_cloud_watch_logging_option_request = {
                                 *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -2211,8 +2211,8 @@ val make_application_detail :
   ?reference_data_source_descriptions:reference_data_source_description list ->
   ?output_descriptions:output_description list ->
   ?input_descriptions:input_description list ->
-  ?last_update_timestamp:float ->
-  ?create_timestamp:float ->
+  ?last_update_timestamp:CoreTypes.Timestamp.t ->
+  ?create_timestamp:CoreTypes.Timestamp.t ->
   ?application_description:string ->
   application_version_id:int ->
   application_status:application_status ->
@@ -2285,7 +2285,7 @@ val make_delete_application_response : unit
 (** Create a {!type-delete_application_response} type *)
 
 val make_delete_application_request :
-  create_timestamp:float -> application_name:string -> unit
+  create_timestamp:CoreTypes.Timestamp.t -> application_name:string -> unit
 -> delete_application_request
 (** Create a {!type-delete_application_request} type *)
 

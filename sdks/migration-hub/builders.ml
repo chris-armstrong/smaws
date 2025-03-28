@@ -32,7 +32,7 @@ let make_progress_update_stream_summary
 let make_notify_migration_task_state_request 
   ?(dry_run : bool option)
   ~(next_update_seconds : int)
-  ~(update_date_time : float)
+  ~(update_date_time : CoreTypes.Timestamp.t)
   ~(task : task)
   ~(migration_task_name : string)
   ~(progress_update_stream : string)
@@ -47,7 +47,7 @@ let make_notify_migration_task_state_request
 
 let make_notify_application_state_request 
   ?(dry_run : bool option)
-  ?(update_date_time : float option)
+  ?(update_date_time : CoreTypes.Timestamp.t option)
   ~(status : application_status)
   ~(application_id : string)
   () : notify_application_state_request = {
@@ -55,7 +55,7 @@ let make_notify_application_state_request
 }
 
 let make_migration_task_summary 
-  ?(update_date_time : float option)
+  ?(update_date_time : CoreTypes.Timestamp.t option)
   ?(status_detail : string option)
   ?(progress_percent : int option)
   ?(status : status option)
@@ -72,7 +72,7 @@ let make_migration_task_summary
 
 let make_migration_task 
   ?(resource_attribute_list : resource_attribute list option)
-  ?(update_date_time : float option)
+  ?(update_date_time : CoreTypes.Timestamp.t option)
   ?(task : task option)
   ?(migration_task_name : string option)
   ?(progress_update_stream : string option)
@@ -124,7 +124,7 @@ let make_list_created_artifacts_request
 }
 
 let make_application_state 
-  ?(last_updated_time : float option)
+  ?(last_updated_time : CoreTypes.Timestamp.t option)
   ?(application_status : application_status option)
   ?(application_id : string option)
   () : application_state = {

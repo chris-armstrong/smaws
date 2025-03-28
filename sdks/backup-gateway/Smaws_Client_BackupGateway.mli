@@ -62,7 +62,7 @@ type vmware_tag = {
     A virtual machine that is on a hypervisor.
      *)
 type virtual_machine = {
-  last_backup_date: float option;
+  last_backup_date: CoreTypes.Timestamp.t option;
   (** 
     The most recent date a virtual machine was backed up, in Unix format and UTC time.
      *)
@@ -103,7 +103,7 @@ type virtual_machine_details = {
     These are the details of the VMware tags associated with the specified virtual machine.
      *)
 
-  last_backup_date: float option;
+  last_backup_date: CoreTypes.Timestamp.t option;
   (** 
     The most recent date a virtual machine was backed up, in Unix format and UTC time.
      *)
@@ -658,7 +658,7 @@ type gateway_type = | BACKUP_VM
     A gateway is an Backup Gateway appliance that runs on the customer's network to provide seamless connectivity to backup storage in the Amazon Web Services Cloud.
      *)
 type gateway = {
-  last_seen_time: float option;
+  last_seen_time: CoreTypes.Timestamp.t option;
   (** 
     The last time Backup gateway communicated with the gateway, in Unix format and UTC time.
      *)
@@ -779,7 +779,7 @@ type hypervisor_details = {
     This is the most recent status for the indicated metadata sync.
      *)
 
-  last_successful_metadata_sync_time: float option;
+  last_successful_metadata_sync_time: CoreTypes.Timestamp.t option;
   (** 
     This is the time when the most recent successful sync of metadata occurred.
      *)
@@ -885,7 +885,7 @@ type gateway_details = {
     The DNS name for the virtual private cloud (VPC) endpoint the gateway uses to connect to the cloud for backup gateway.
      *)
 
-  next_update_availability_time: float option;
+  next_update_availability_time: CoreTypes.Timestamp.t option;
   (** 
     Details showing the next update availability time of the gateway.
      *)
@@ -895,7 +895,7 @@ type gateway_details = {
     Returns your gateway's weekly maintenance start time including the day and time of the week. Note that values are in terms of the gateway's time zone. Can be weekly or monthly.
      *)
 
-  last_seen_time: float option;
+  last_seen_time: CoreTypes.Timestamp.t option;
   (** 
     Details showing the last time Backup gateway communicated with the cloud, in Unix format and UTC time.
      *)
@@ -1070,7 +1070,7 @@ type associate_gateway_to_server_input = {
 
 }
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -1092,7 +1092,7 @@ val make_vmware_tag :
 (** Create a {!type-vmware_tag} type *)
 
 val make_virtual_machine :
-  ?last_backup_date:float ->
+  ?last_backup_date:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?path:string ->
   ?name:string ->
@@ -1104,7 +1104,7 @@ val make_virtual_machine :
 
 val make_virtual_machine_details :
   ?vmware_tags:vmware_tag list ->
-  ?last_backup_date:float ->
+  ?last_backup_date:CoreTypes.Timestamp.t ->
   ?resource_arn:string ->
   ?path:string ->
   ?name:string ->
@@ -1289,7 +1289,7 @@ val make_list_hypervisors_input :
 (** Create a {!type-list_hypervisors_input} type *)
 
 val make_gateway :
-  ?last_seen_time:float ->
+  ?last_seen_time:CoreTypes.Timestamp.t ->
   ?hypervisor_id:string ->
   ?gateway_type:gateway_type ->
   ?gateway_display_name:string ->
@@ -1326,7 +1326,7 @@ val make_import_hypervisor_configuration_input :
 val make_hypervisor_details :
   ?latest_metadata_sync_status:sync_metadata_status ->
   ?latest_metadata_sync_status_message:string ->
-  ?last_successful_metadata_sync_time:float ->
+  ?last_successful_metadata_sync_time:CoreTypes.Timestamp.t ->
   ?state:hypervisor_state ->
   ?log_group_arn:string ->
   ?name:string ->
@@ -1369,9 +1369,9 @@ val make_get_hypervisor_input : hypervisor_arn:string -> unit
 
 val make_gateway_details :
   ?vpc_endpoint:string ->
-  ?next_update_availability_time:float ->
+  ?next_update_availability_time:CoreTypes.Timestamp.t ->
   ?maintenance_start_time:maintenance_start_time ->
-  ?last_seen_time:float ->
+  ?last_seen_time:CoreTypes.Timestamp.t ->
   ?hypervisor_id:string ->
   ?gateway_type:gateway_type ->
   ?gateway_display_name:string ->

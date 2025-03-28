@@ -106,7 +106,7 @@ type update_state_machine_output = {
     The revision identifier for the updated state machine.
      *)
 
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine was updated.
      *)
@@ -213,7 +213,7 @@ type update_state_machine_input = {
 }
 
 type update_state_machine_alias_output = {
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine alias was updated.
      *)
@@ -891,7 +891,7 @@ type sync_execution_status = | TIMED_OUT
   | SUCCEEDED
 
 type stop_execution_output = {
-  stop_date: float;
+  stop_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is stopped.
      *)
@@ -928,7 +928,7 @@ type execution_does_not_exist = {
     Contains details about a specific state machine version.
      *)
 type state_machine_version_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The creation date of a state machine version.
      *)
@@ -955,7 +955,7 @@ type state_machine_status = | DELETING
     Contains details about the state machine.
      *)
 type state_machine_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
      *)
@@ -1019,7 +1019,7 @@ type state_machine_already_exists = {
     Contains details about a specific state machine alias.
      *)
 type state_machine_alias_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The creation date of a state machine alias.
      *)
@@ -1165,12 +1165,12 @@ type start_sync_execution_output = {
     The current status of the execution.
      *)
 
-  stop_date: float;
+  stop_date: CoreTypes.Timestamp.t;
   (** 
     If the execution has already ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -1230,7 +1230,7 @@ type invalid_name = {
 }
 
 type start_execution_output = {
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -1415,7 +1415,7 @@ type send_task_failure_input = {
 }
 
 type redrive_execution_output = {
-  redrive_date: float;
+  redrive_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution was last redriven.
      *)
@@ -1449,7 +1449,7 @@ type publish_state_machine_version_output = {
     The Amazon Resource Name (ARN) (ARN) that identifies the state machine version.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the version was created.
      *)
@@ -1526,12 +1526,12 @@ type map_run_redriven_event_details = {
     Contains details about a specific Map Run.
      *)
 type map_run_list_item = {
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     The date on which the Map Run stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date on which the Map Run started.
      *)
@@ -1850,7 +1850,7 @@ type execution_status = | PENDING_REDRIVE
     Contains details about an execution.
      *)
 type execution_list_item = {
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date the execution was last redriven.
      *)
@@ -1886,12 +1886,12 @@ type execution_list_item = {
     The Amazon Resource Name (ARN) of a Map Run. This field is returned only if [mapRunArn] was specified in the [ListExecutions] API action. If [stateMachineArn] was specified in [ListExecutions], the [mapRunArn] isn't returned.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     If the execution already ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution started.
      *)
@@ -2007,7 +2007,7 @@ type list_executions_input = {
     Contains details about an activity.
      *)
 type activity_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -2610,7 +2610,7 @@ type history_event = {
     The type of the event.
      *)
 
-  timestamp_: float;
+  timestamp_: CoreTypes.Timestamp.t;
   (** 
     The date and time the event occurred.
      *)
@@ -2731,7 +2731,7 @@ type describe_state_machine_output = {
 
   logging_configuration: logging_configuration option;
   
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
     
@@ -2829,7 +2829,7 @@ type describe_state_machine_for_execution_output = {
 
   logging_configuration: logging_configuration option;
   
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine associated with an execution was updated. For a newly created state machine, this is the creation date.
      *)
@@ -2865,14 +2865,14 @@ type describe_state_machine_for_execution_input = {
 }
 
 type describe_state_machine_alias_output = {
-  update_date: float option;
+  update_date: CoreTypes.Timestamp.t option;
   (** 
     The date the state machine alias was last updated.
     
      For a newly created state machine, this is the same as the creation date.
       *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The date the state machine alias was created.
      *)
@@ -2908,7 +2908,7 @@ type describe_state_machine_alias_input = {
 }
 
 type describe_map_run_output = {
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date a Map Run was last redriven. If you have not yet redriven a Map Run, the [redriveDate] is null.
      *)
@@ -2943,12 +2943,12 @@ type describe_map_run_output = {
     The maximum number of child workflow executions configured to run in parallel for the Map Run at the same time.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     The date when the Map Run was stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date when the Map Run was started.
      *)
@@ -3038,7 +3038,7 @@ type describe_execution_output = {
       }
        *)
 
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date the execution was last redriven. If you have not yet redriven an execution, the [redriveDate] is null.
     
@@ -3101,12 +3101,12 @@ type describe_execution_output = {
     The string that contains the JSON input data of the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     If the execution ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -3164,7 +3164,7 @@ type describe_execution_input = {
 }
 
 type describe_activity_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -3257,7 +3257,7 @@ type create_state_machine_output = {
     The Amazon Resource Name (ARN) that identifies the created state machine version. If you do not set the [publish] parameter to [true], this field returns null value.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
      *)
@@ -3347,7 +3347,7 @@ type create_state_machine_input = {
 }
 
 type create_state_machine_alias_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine alias was created.
      *)
@@ -3380,7 +3380,7 @@ type create_state_machine_alias_input = {
 }
 
 type create_activity_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -3451,7 +3451,7 @@ type activity_limit_exceeded = {
                        *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -3479,7 +3479,7 @@ val make_validate_state_machine_definition_input :
 val make_update_state_machine_output :
   ?state_machine_version_arn:string ->
   ?revision_id:string ->
-  update_date:float ->
+  update_date:CoreTypes.Timestamp.t ->
   unit
 -> update_state_machine_output
 (** Create a {!type-update_state_machine_output} type *)
@@ -3517,7 +3517,8 @@ val make_update_state_machine_input :
 -> update_state_machine_input
 (** Create a {!type-update_state_machine_input} type *)
 
-val make_update_state_machine_alias_output : update_date:float -> unit
+val make_update_state_machine_alias_output :
+  update_date:CoreTypes.Timestamp.t -> unit
 -> update_state_machine_alias_output
 (** Create a {!type-update_state_machine_alias_output} type *)
 
@@ -3701,7 +3702,7 @@ val make_tag_resource_input : tags:tag list -> resource_arn:string -> unit
 -> tag_resource_input
 (** Create a {!type-tag_resource_input} type *)
 
-val make_stop_execution_output : stop_date:float -> unit
+val make_stop_execution_output : stop_date:CoreTypes.Timestamp.t -> unit
 -> stop_execution_output
 (** Create a {!type-stop_execution_output} type *)
 
@@ -3711,12 +3712,14 @@ val make_stop_execution_input :
 (** Create a {!type-stop_execution_input} type *)
 
 val make_state_machine_version_list_item :
-  creation_date:float -> state_machine_version_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_version_arn:string ->
+  unit
 -> state_machine_version_list_item
 (** Create a {!type-state_machine_version_list_item} type *)
 
 val make_state_machine_list_item :
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   type_:state_machine_type ->
   name:string ->
   state_machine_arn:string ->
@@ -3725,7 +3728,9 @@ val make_state_machine_list_item :
 (** Create a {!type-state_machine_list_item} type *)
 
 val make_state_machine_alias_list_item :
-  creation_date:float -> state_machine_alias_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_alias_arn:string ->
+  unit
 -> state_machine_alias_list_item
 (** Create a {!type-state_machine_alias_list_item} type *)
 
@@ -3768,8 +3773,8 @@ val make_start_sync_execution_output :
   ?name:string ->
   ?state_machine_arn:string ->
   status:sync_execution_status ->
-  stop_date:float ->
-  start_date:float ->
+  stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   execution_arn:string ->
   unit
 -> start_sync_execution_output
@@ -3785,7 +3790,7 @@ val make_start_sync_execution_input :
 (** Create a {!type-start_sync_execution_input} type *)
 
 val make_start_execution_output :
-  start_date:float -> execution_arn:string -> unit
+  start_date:CoreTypes.Timestamp.t -> execution_arn:string -> unit
 -> start_execution_output
 (** Create a {!type-start_execution_output} type *)
 
@@ -3823,7 +3828,8 @@ val make_send_task_failure_input :
 -> send_task_failure_input
 (** Create a {!type-send_task_failure_input} type *)
 
-val make_redrive_execution_output : redrive_date:float -> unit
+val make_redrive_execution_output :
+  redrive_date:CoreTypes.Timestamp.t -> unit
 -> redrive_execution_output
 (** Create a {!type-redrive_execution_output} type *)
 
@@ -3833,7 +3839,9 @@ val make_redrive_execution_input :
 (** Create a {!type-redrive_execution_input} type *)
 
 val make_publish_state_machine_version_output :
-  state_machine_version_arn:string -> creation_date:float -> unit
+  state_machine_version_arn:string ->
+  creation_date:CoreTypes.Timestamp.t ->
+  unit
 -> publish_state_machine_version_output
 (** Create a {!type-publish_state_machine_version_output} type *)
 
@@ -3859,8 +3867,8 @@ val make_map_run_redriven_event_details :
 (** Create a {!type-map_run_redriven_event_details} type *)
 
 val make_map_run_list_item :
-  ?stop_date:float ->
-  start_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   state_machine_arn:string ->
   map_run_arn:string ->
   execution_arn:string ->
@@ -3960,14 +3968,14 @@ val make_list_map_runs_input :
 (** Create a {!type-list_map_runs_input} type *)
 
 val make_execution_list_item :
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
   ?state_machine_alias_arn:string ->
   ?state_machine_version_arn:string ->
   ?item_count:int ->
   ?map_run_arn:string ->
-  ?stop_date:float ->
-  start_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
+  start_date:CoreTypes.Timestamp.t ->
   status:execution_status ->
   name:string ->
   state_machine_arn:string ->
@@ -3993,7 +4001,10 @@ val make_list_executions_input :
 (** Create a {!type-list_executions_input} type *)
 
 val make_activity_list_item :
-  creation_date:float -> name:string -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  name:string ->
+  activity_arn:string ->
+  unit
 -> activity_list_item
 (** Create a {!type-activity_list_item} type *)
 
@@ -4156,7 +4167,7 @@ val make_history_event :
   ?previous_event_id:int ->
   id:int ->
   type_:history_event_type ->
-  timestamp_:float ->
+  timestamp_:CoreTypes.Timestamp.t ->
   unit
 -> history_event
 (** Create a {!type-history_event} type *)
@@ -4193,7 +4204,7 @@ val make_describe_state_machine_output :
   ?tracing_configuration:tracing_configuration ->
   ?logging_configuration:logging_configuration ->
   ?status:state_machine_status ->
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   type_:state_machine_type ->
   role_arn:string ->
   definition:string ->
@@ -4213,7 +4224,7 @@ val make_describe_state_machine_for_execution_output :
   ?map_run_arn:string ->
   ?tracing_configuration:tracing_configuration ->
   ?logging_configuration:logging_configuration ->
-  update_date:float ->
+  update_date:CoreTypes.Timestamp.t ->
   role_arn:string ->
   definition:string ->
   name:string ->
@@ -4228,8 +4239,8 @@ val make_describe_state_machine_for_execution_input :
 (** Create a {!type-describe_state_machine_for_execution_input} type *)
 
 val make_describe_state_machine_alias_output :
-  ?update_date:float ->
-  ?creation_date:float ->
+  ?update_date:CoreTypes.Timestamp.t ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?routing_configuration:routing_configuration_list_item list ->
   ?description:string ->
   ?name:string ->
@@ -4244,15 +4255,15 @@ val make_describe_state_machine_alias_input :
 (** Create a {!type-describe_state_machine_alias_input} type *)
 
 val make_describe_map_run_output :
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
-  ?stop_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
   execution_counts:map_run_execution_counts ->
   item_counts:map_run_item_counts ->
   tolerated_failure_count:int ->
   tolerated_failure_percentage:float ->
   max_concurrency:int ->
-  start_date:float ->
+  start_date:CoreTypes.Timestamp.t ->
   status:map_run_status ->
   execution_arn:string ->
   map_run_arn:string ->
@@ -4267,7 +4278,7 @@ val make_describe_map_run_input : map_run_arn:string -> unit
 val make_describe_execution_output :
   ?redrive_status_reason:string ->
   ?redrive_status:execution_redrive_status ->
-  ?redrive_date:float ->
+  ?redrive_date:CoreTypes.Timestamp.t ->
   ?redrive_count:int ->
   ?state_machine_alias_arn:string ->
   ?state_machine_version_arn:string ->
@@ -4279,9 +4290,9 @@ val make_describe_execution_output :
   ?output:string ->
   ?input_details:cloud_watch_events_execution_data_details ->
   ?input:string ->
-  ?stop_date:float ->
+  ?stop_date:CoreTypes.Timestamp.t ->
   ?name:string ->
-  start_date:float ->
+  start_date:CoreTypes.Timestamp.t ->
   status:execution_status ->
   state_machine_arn:string ->
   execution_arn:string ->
@@ -4294,7 +4305,10 @@ val make_describe_execution_input : execution_arn:string -> unit
 (** Create a {!type-describe_execution_input} type *)
 
 val make_describe_activity_output :
-  creation_date:float -> name:string -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  name:string ->
+  activity_arn:string ->
+  unit
 -> describe_activity_output
 (** Create a {!type-describe_activity_output} type *)
 
@@ -4338,7 +4352,7 @@ val make_delete_activity_input : activity_arn:string -> unit
 
 val make_create_state_machine_output :
   ?state_machine_version_arn:string ->
-  creation_date:float ->
+  creation_date:CoreTypes.Timestamp.t ->
   state_machine_arn:string ->
   unit
 -> create_state_machine_output
@@ -4359,7 +4373,9 @@ val make_create_state_machine_input :
 (** Create a {!type-create_state_machine_input} type *)
 
 val make_create_state_machine_alias_output :
-  creation_date:float -> state_machine_alias_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t ->
+  state_machine_alias_arn:string ->
+  unit
 -> create_state_machine_alias_output
 (** Create a {!type-create_state_machine_alias_output} type *)
 
@@ -4372,7 +4388,7 @@ val make_create_state_machine_alias_input :
 (** Create a {!type-create_state_machine_alias_input} type *)
 
 val make_create_activity_output :
-  creation_date:float -> activity_arn:string -> unit
+  creation_date:CoreTypes.Timestamp.t -> activity_arn:string -> unit
 -> create_activity_output
 (** Create a {!type-create_activity_output} type *)
 

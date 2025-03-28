@@ -1365,12 +1365,12 @@ type application_detail = {
     Describes the application input configuration. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html}Configuring Application Input}.
      *)
 
-  last_update_timestamp: float option;
+  last_update_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Time stamp when the application was last updated.
      *)
 
-  create_timestamp: float option;
+  create_timestamp: CoreTypes.Timestamp.t option;
   (** 
     Time stamp when the application version was created.
      *)
@@ -1514,7 +1514,7 @@ type delete_application_response = unit
     
      *)
 type delete_application_request = {
-  create_timestamp: float;
+  create_timestamp: CoreTypes.Timestamp.t;
   (** 
     You can use the [DescribeApplication] operation to get this value.
      *)
@@ -1788,5 +1788,5 @@ type add_application_cloud_watch_logging_option_request = {
                                 *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

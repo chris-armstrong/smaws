@@ -314,5 +314,5 @@ type get_routing_control_state_request = {
        *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

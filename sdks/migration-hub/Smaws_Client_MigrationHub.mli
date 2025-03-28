@@ -228,7 +228,7 @@ type notify_migration_task_state_request = {
     Number of seconds after the UpdateDateTime within which the Migration Hub can expect an update. If Migration Hub does not receive an update within the specified interval, then the migration task will be considered stale.
      *)
 
-  update_date_time: float;
+  update_date_time: CoreTypes.Timestamp.t;
   (** 
     The timestamp when the task was gathered.
      *)
@@ -262,7 +262,7 @@ type notify_application_state_request = {
     Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.
      *)
 
-  update_date_time: float option;
+  update_date_time: CoreTypes.Timestamp.t option;
   (** 
     The timestamp when the application state changed.
      *)
@@ -283,7 +283,7 @@ type notify_application_state_request = {
     MigrationTaskSummary includes [MigrationTaskName], [ProgressPercent], [ProgressUpdateStream], [Status], and [UpdateDateTime] for each task.
      *)
 type migration_task_summary = {
-  update_date_time: float option;
+  update_date_time: CoreTypes.Timestamp.t option;
   (** 
     The timestamp when the task was gathered.
      *)
@@ -324,7 +324,7 @@ type migration_task = {
     Information about the resource that is being migrated. This data will be used to map the task to a resource in the Application Discovery Service repository.
      *)
 
-  update_date_time: float option;
+  update_date_time: CoreTypes.Timestamp.t option;
   (** 
     The timestamp when the task was gathered.
      *)
@@ -511,7 +511,7 @@ type list_created_artifacts_request = {
     The state of an application discovered through Migration Hub import, the AWS Agentless Discovery Connector, or the AWS Application Discovery Agent.
      *)
 type application_state = {
-  last_updated_time: float option;
+  last_updated_time: CoreTypes.Timestamp.t option;
   (** 
     The timestamp when the application status was last updated.
      *)
@@ -651,7 +651,7 @@ type describe_migration_task_request = {
 }
 
 type describe_application_state_result = {
-  last_updated_time: float option;
+  last_updated_time: CoreTypes.Timestamp.t option;
   (** 
     The timestamp when the application status was last updated.
      *)
@@ -758,7 +758,7 @@ type associate_created_artifact_request = {
       *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -789,7 +789,7 @@ val make_progress_update_stream_summary :
 val make_notify_migration_task_state_request :
   ?dry_run:bool ->
   next_update_seconds:int ->
-  update_date_time:float ->
+  update_date_time:CoreTypes.Timestamp.t ->
   task:task ->
   migration_task_name:string ->
   progress_update_stream:string ->
@@ -799,7 +799,7 @@ val make_notify_migration_task_state_request :
 
 val make_notify_application_state_request :
   ?dry_run:bool ->
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   status:application_status ->
   application_id:string ->
   unit
@@ -807,7 +807,7 @@ val make_notify_application_state_request :
 (** Create a {!type-notify_application_state_request} type *)
 
 val make_migration_task_summary :
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   ?status_detail:string ->
   ?progress_percent:int ->
   ?status:status ->
@@ -819,7 +819,7 @@ val make_migration_task_summary :
 
 val make_migration_task :
   ?resource_attribute_list:resource_attribute list ->
-  ?update_date_time:float ->
+  ?update_date_time:CoreTypes.Timestamp.t ->
   ?task:task ->
   ?migration_task_name:string ->
   ?progress_update_stream:string ->
@@ -865,7 +865,7 @@ val make_list_created_artifacts_request :
 (** Create a {!type-list_created_artifacts_request} type *)
 
 val make_application_state :
-  ?last_updated_time:float ->
+  ?last_updated_time:CoreTypes.Timestamp.t ->
   ?application_status:application_status ->
   ?application_id:string ->
   unit

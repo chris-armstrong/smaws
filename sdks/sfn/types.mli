@@ -98,7 +98,7 @@ type update_state_machine_output = {
     The revision identifier for the updated state machine.
      *)
 
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine was updated.
      *)
@@ -205,7 +205,7 @@ type update_state_machine_input = {
 }
 
 type update_state_machine_alias_output = {
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine alias was updated.
      *)
@@ -883,7 +883,7 @@ type sync_execution_status = | TIMED_OUT
   | SUCCEEDED
 
 type stop_execution_output = {
-  stop_date: float;
+  stop_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is stopped.
      *)
@@ -920,7 +920,7 @@ type execution_does_not_exist = {
     Contains details about a specific state machine version.
      *)
 type state_machine_version_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The creation date of a state machine version.
      *)
@@ -947,7 +947,7 @@ type state_machine_status = | DELETING
     Contains details about the state machine.
      *)
 type state_machine_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
      *)
@@ -1011,7 +1011,7 @@ type state_machine_already_exists = {
     Contains details about a specific state machine alias.
      *)
 type state_machine_alias_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The creation date of a state machine alias.
      *)
@@ -1157,12 +1157,12 @@ type start_sync_execution_output = {
     The current status of the execution.
      *)
 
-  stop_date: float;
+  stop_date: CoreTypes.Timestamp.t;
   (** 
     If the execution has already ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -1222,7 +1222,7 @@ type invalid_name = {
 }
 
 type start_execution_output = {
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -1407,7 +1407,7 @@ type send_task_failure_input = {
 }
 
 type redrive_execution_output = {
-  redrive_date: float;
+  redrive_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution was last redriven.
      *)
@@ -1441,7 +1441,7 @@ type publish_state_machine_version_output = {
     The Amazon Resource Name (ARN) (ARN) that identifies the state machine version.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the version was created.
      *)
@@ -1518,12 +1518,12 @@ type map_run_redriven_event_details = {
     Contains details about a specific Map Run.
      *)
 type map_run_list_item = {
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     The date on which the Map Run stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date on which the Map Run started.
      *)
@@ -1842,7 +1842,7 @@ type execution_status = | PENDING_REDRIVE
     Contains details about an execution.
      *)
 type execution_list_item = {
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date the execution was last redriven.
      *)
@@ -1878,12 +1878,12 @@ type execution_list_item = {
     The Amazon Resource Name (ARN) of a Map Run. This field is returned only if [mapRunArn] was specified in the [ListExecutions] API action. If [stateMachineArn] was specified in [ListExecutions], the [mapRunArn] isn't returned.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     If the execution already ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution started.
      *)
@@ -1999,7 +1999,7 @@ type list_executions_input = {
     Contains details about an activity.
      *)
 type activity_list_item = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -2602,7 +2602,7 @@ type history_event = {
     The type of the event.
      *)
 
-  timestamp_: float;
+  timestamp_: CoreTypes.Timestamp.t;
   (** 
     The date and time the event occurred.
      *)
@@ -2723,7 +2723,7 @@ type describe_state_machine_output = {
 
   logging_configuration: logging_configuration option;
   
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
     
@@ -2821,7 +2821,7 @@ type describe_state_machine_for_execution_output = {
 
   logging_configuration: logging_configuration option;
   
-  update_date: float;
+  update_date: CoreTypes.Timestamp.t;
   (** 
     The date and time the state machine associated with an execution was updated. For a newly created state machine, this is the creation date.
      *)
@@ -2857,14 +2857,14 @@ type describe_state_machine_for_execution_input = {
 }
 
 type describe_state_machine_alias_output = {
-  update_date: float option;
+  update_date: CoreTypes.Timestamp.t option;
   (** 
     The date the state machine alias was last updated.
     
      For a newly created state machine, this is the same as the creation date.
       *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The date the state machine alias was created.
      *)
@@ -2900,7 +2900,7 @@ type describe_state_machine_alias_input = {
 }
 
 type describe_map_run_output = {
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date a Map Run was last redriven. If you have not yet redriven a Map Run, the [redriveDate] is null.
      *)
@@ -2935,12 +2935,12 @@ type describe_map_run_output = {
     The maximum number of child workflow executions configured to run in parallel for the Map Run at the same time.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     The date when the Map Run was stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date when the Map Run was started.
      *)
@@ -3030,7 +3030,7 @@ type describe_execution_output = {
       }
        *)
 
-  redrive_date: float option;
+  redrive_date: CoreTypes.Timestamp.t option;
   (** 
     The date the execution was last redriven. If you have not yet redriven an execution, the [redriveDate] is null.
     
@@ -3093,12 +3093,12 @@ type describe_execution_output = {
     The string that contains the JSON input data of the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.
      *)
 
-  stop_date: float option;
+  stop_date: CoreTypes.Timestamp.t option;
   (** 
     If the execution ended, the date the execution stopped.
      *)
 
-  start_date: float;
+  start_date: CoreTypes.Timestamp.t;
   (** 
     The date the execution is started.
      *)
@@ -3156,7 +3156,7 @@ type describe_execution_input = {
 }
 
 type describe_activity_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -3249,7 +3249,7 @@ type create_state_machine_output = {
     The Amazon Resource Name (ARN) that identifies the created state machine version. If you do not set the [publish] parameter to [true], this field returns null value.
      *)
 
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine is created.
      *)
@@ -3339,7 +3339,7 @@ type create_state_machine_input = {
 }
 
 type create_state_machine_alias_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the state machine alias was created.
      *)
@@ -3372,7 +3372,7 @@ type create_state_machine_alias_input = {
 }
 
 type create_activity_output = {
-  creation_date: float;
+  creation_date: CoreTypes.Timestamp.t;
   (** 
     The date the activity is created.
      *)
@@ -3443,5 +3443,5 @@ type activity_limit_exceeded = {
                        *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

@@ -1159,12 +1159,12 @@ type entity_state = | DELETED
     The representation of an WorkMail user.
      *)
 type user = {
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the user was disabled from WorkMail use.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the user was enabled for WorkMail use.
      *)
@@ -1288,12 +1288,12 @@ type resource = {
     Resource description.
      *)
 
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the resource was disabled from WorkMail use.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the resource was enabled for WorkMail use.
      *)
@@ -1513,12 +1513,12 @@ type list_organizations_request = {
     A rule that controls access to mobile devices for an WorkMail group.
      *)
 type mobile_device_access_rule = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which an access rule was modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which an access rule was created.
      *)
@@ -1605,12 +1605,12 @@ type list_mobile_device_access_rules_request = {
     The override object.
      *)
 type mobile_device_access_override = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date the override was last modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date the override was first created.
      *)
@@ -1819,12 +1819,12 @@ type mailbox_export_job_state = | CANCELLED
     The details of a mailbox export job, including the user or resource ID associated with the mailbox and the S3 bucket that the mailbox contents are exported to.
      *)
 type mailbox_export_job = {
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The mailbox export job end timestamp.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The mailbox export job start timestamp.
      *)
@@ -1901,12 +1901,12 @@ type list_mailbox_export_jobs_request = {
     An impersonation role for the given WorkMail organization.
      *)
 type impersonation_role = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date when the impersonation role was last modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date when the impersonation role was created.
      *)
@@ -2046,12 +2046,12 @@ type list_groups_for_entity_request = {
     The representation of an WorkMail group.
      *)
 type group = {
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the group was disabled from WorkMail use.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the group was enabled for WorkMail use.
      *)
@@ -2139,12 +2139,12 @@ type list_groups_request = {
     The representation of a user or group.
      *)
 type member = {
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the member was disabled from WorkMail use.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date indicating when the member was enabled for WorkMail use.
      *)
@@ -2245,12 +2245,12 @@ type redacted_ews_availability_provider = {
     List all the [AvailabilityConfiguration]'s for the given WorkMail organization.
      *)
 type availability_configuration = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which the availability configuration was last modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which the availability configuration was created.
      *)
@@ -2358,12 +2358,12 @@ type access_control_rule = {
     Impersonation role IDs to include in the rule.
      *)
 
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date that the rule was modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date that the rule was created.
      *)
@@ -2432,12 +2432,12 @@ type list_access_control_rules_request = {
 }
 
 type get_mobile_device_access_override_response = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date the description was last modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date the override was first created.
      *)
@@ -2725,12 +2725,12 @@ type get_impersonation_role_effect_request = {
 }
 
 type get_impersonation_role_response = {
-  date_modified: float option;
+  date_modified: CoreTypes.Timestamp.t option;
   (** 
     The date when the impersonation role was last modified.
      *)
 
-  date_created: float option;
+  date_created: CoreTypes.Timestamp.t option;
   (** 
     The date when the impersonation role was created.
      *)
@@ -3013,22 +3013,22 @@ type describe_user_response = {
     First name of the user.
      *)
 
-  mailbox_deprovisioned_date: float option;
+  mailbox_deprovisioned_date: CoreTypes.Timestamp.t option;
   (** 
     The date when the mailbox was removed for the user.
      *)
 
-  mailbox_provisioned_date: float option;
+  mailbox_provisioned_date: CoreTypes.Timestamp.t option;
   (** 
     The date when the mailbox was created for the user.
      *)
 
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which the user was disabled for WorkMail usage, in UNIX epoch time format.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time at which the user was enabled for WorkMailusage, in UNIX epoch time format.
      *)
@@ -3105,12 +3105,12 @@ type describe_resource_response = {
     Description of the resource.
      *)
 
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time when a resource was disabled from WorkMail, in UNIX epoch time format.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time when a resource was enabled for WorkMail, in UNIX epoch time format.
      *)
@@ -3196,7 +3196,7 @@ type describe_organization_response = {
     (Optional) The error message indicating if unexpected behavior was encountered with regards to the organization.
      *)
 
-  completed_date: float option;
+  completed_date: CoreTypes.Timestamp.t option;
   (** 
     The date at which the organization became usable in the WorkMail context, in UNIX epoch time format.
      *)
@@ -3242,12 +3242,12 @@ type describe_organization_request = {
 }
 
 type describe_mailbox_export_job_response = {
-  end_time: float option;
+  end_time: CoreTypes.Timestamp.t option;
   (** 
     The mailbox export job end timestamp.
      *)
 
-  start_time: float option;
+  start_time: CoreTypes.Timestamp.t option;
   (** 
     The mailbox export job start timestamp.
      *)
@@ -3339,12 +3339,12 @@ type describe_group_response = {
     If the value is set to {i true}, the group is hidden from the address book.
      *)
 
-  disabled_date: float option;
+  disabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time when a user was deregistered from WorkMail, in UNIX epoch time format.
      *)
 
-  enabled_date: float option;
+  enabled_date: CoreTypes.Timestamp.t option;
   (** 
     The date and time when a user was registered to WorkMail, in UNIX epoch time format.
      *)
@@ -4349,5 +4349,5 @@ type associate_delegate_to_resource_request = {
         *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 

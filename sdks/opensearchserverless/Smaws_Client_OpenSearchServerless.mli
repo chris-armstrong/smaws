@@ -212,7 +212,7 @@ type conflict_exception = {
 type security_policy_type = | Encryption
   | Network
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** 
     Details about an OpenSearch Serverless security policy.

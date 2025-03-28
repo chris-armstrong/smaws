@@ -18,7 +18,7 @@ let make_vmware_tag
 }
 
 let make_virtual_machine 
-  ?(last_backup_date : float option)
+  ?(last_backup_date : CoreTypes.Timestamp.t option)
   ?(resource_arn : string option)
   ?(path : string option)
   ?(name : string option)
@@ -30,7 +30,7 @@ let make_virtual_machine
 
 let make_virtual_machine_details 
   ?(vmware_tags : vmware_tag list option)
-  ?(last_backup_date : float option)
+  ?(last_backup_date : CoreTypes.Timestamp.t option)
   ?(resource_arn : string option)
   ?(path : string option)
   ?(name : string option)
@@ -222,7 +222,7 @@ let make_list_hypervisors_input
 : list_hypervisors_input = { next_token; max_results;  }
 
 let make_gateway 
-  ?(last_seen_time : float option)
+  ?(last_seen_time : CoreTypes.Timestamp.t option)
   ?(hypervisor_id : string option)
   ?(gateway_type : gateway_type option)
   ?(gateway_display_name : string option)
@@ -264,7 +264,7 @@ let make_import_hypervisor_configuration_input
 let make_hypervisor_details 
   ?(latest_metadata_sync_status : sync_metadata_status option)
   ?(latest_metadata_sync_status_message : string option)
-  ?(last_successful_metadata_sync_time : float option)
+  ?(last_successful_metadata_sync_time : CoreTypes.Timestamp.t option)
   ?(state : hypervisor_state option)
   ?(log_group_arn : string option)
   ?(name : string option)
@@ -312,9 +312,9 @@ let make_get_hypervisor_input  ~(hypervisor_arn : string) ()
 
 let make_gateway_details 
   ?(vpc_endpoint : string option)
-  ?(next_update_availability_time : float option)
+  ?(next_update_availability_time : CoreTypes.Timestamp.t option)
   ?(maintenance_start_time : maintenance_start_time option)
-  ?(last_seen_time : float option)
+  ?(last_seen_time : CoreTypes.Timestamp.t option)
   ?(hypervisor_id : string option)
   ?(gateway_type : gateway_type option)
   ?(gateway_display_name : string option)

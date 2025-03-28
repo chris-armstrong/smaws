@@ -185,12 +185,12 @@ type service_template_version = {
     An array of compatible environment template names for the major version of a service template.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was created.
      *)
@@ -335,12 +335,12 @@ type service_template = {
     The service template name as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was created.
      *)
@@ -475,7 +475,7 @@ type sync_blocker_context = {
     Detailed data of the sync blocker.
      *)
 type sync_blocker = {
-  resolved_at: float option;
+  resolved_at: CoreTypes.Timestamp.t option;
   (** 
     The time the sync blocker was resolved.
      *)
@@ -490,7 +490,7 @@ type sync_blocker = {
     The contexts for the sync blocker.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync blocker was created.
      *)
@@ -601,17 +601,17 @@ type service_pipeline = {
     The name of the service template that was used to create the service pipeline.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service pipeline was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service pipeline was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service pipeline was created.
      *)
@@ -737,12 +737,12 @@ type service = {
     The status of the service.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was created.
      *)
@@ -836,17 +836,17 @@ type service_instance = {
     The name of the service that the service instance belongs to.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service instance was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was created.
      *)
@@ -961,12 +961,12 @@ type environment_template_version = {
     The schema of the version of an environment template.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was created.
      *)
@@ -1078,12 +1078,12 @@ type environment_template = {
     The name of the environment template as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was created.
      *)
@@ -1240,17 +1240,17 @@ type environment = {
     The Amazon Resource Name (ARN) of the environment.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the environment was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was created.
      *)
@@ -1404,12 +1404,12 @@ type environment_account_connection = {
     The status of the environment account connection.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection was last modified.
      *)
 
-  requested_at: float;
+  requested_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection request was made.
      *)
@@ -1517,22 +1517,22 @@ type component = {
     The component deployment status.
      *)
 
-  last_deployment_succeeded_at: float option;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option;
   (** 
     The time when the component was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float option;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option;
   (** 
     The time when a deployment of the component was last attempted.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was created.
      *)
@@ -1768,12 +1768,12 @@ type sort_order = | ASCENDING
     Summary data of an Proton service template version resource.
      *)
 type service_template_version_summary = {
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of a service template was created.
      *)
@@ -1844,12 +1844,12 @@ type service_template_summary = {
     The service template name as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service template was created.
      *)
@@ -1905,12 +1905,12 @@ type service_summary = {
     The status of the service.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was created.
      *)
@@ -2012,17 +2012,17 @@ type service_instance_summary = {
     The name of the service that the service instance belongs to.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the service was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the service instance was created.
      *)
@@ -2125,7 +2125,7 @@ type resource_sync_event = {
     A resource sync event.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time when the event occurred.
      *)
@@ -2156,7 +2156,7 @@ type resource_sync_attempt = {
     The status of the sync attempt.
      *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync attempt started.
      *)
@@ -2228,7 +2228,7 @@ type repository_sync_event = {
     Event detail for a repository sync attempt.
      *)
 
-  time: float;
+  time: CoreTypes.Timestamp.t;
   (** 
     The time that the sync event occurred.
      *)
@@ -2285,7 +2285,7 @@ type repository_sync_attempt = {
     The sync attempt status.
      *)
 
-  started_at: float;
+  started_at: CoreTypes.Timestamp.t;
   (** 
     The time when the sync attempt started.
      *)
@@ -2906,17 +2906,17 @@ type environment_summary = {
     The Amazon Resource Name (ARN) of the environment.
      *)
 
-  last_deployment_succeeded_at: float;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t;
   (** 
     The time when a deployment of the environment was last attempted.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment was created.
      *)
@@ -3004,12 +3004,12 @@ type environment_template_summary = {
     The name of the environment template as displayed in the developer interface.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment template was created.
      *)
@@ -3056,12 +3056,12 @@ type list_environment_templates_input = {
     A summary of the version of an environment template detail data.
      *)
 type environment_template_version_summary = {
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the version of an environment template was created.
      *)
@@ -3221,12 +3221,12 @@ type environment_account_connection_summary = {
     The status of the environment account connection.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection was last modified.
      *)
 
-  requested_at: float;
+  requested_at: CoreTypes.Timestamp.t;
   (** 
     The time when the environment account connection request was made.
      *)
@@ -3351,17 +3351,17 @@ type deployment_summary = {
     The name of the environment associated with the deployment.
      *)
 
-  completed_at: float option;
+  completed_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time the deployment was completed.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was created.
      *)
@@ -3371,7 +3371,7 @@ type deployment_summary = {
     The resource type of the deployment target. It can be an environment, service, service instance, or component.
      *)
 
-  target_resource_created_at: float;
+  target_resource_created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the target resource was created.
      *)
@@ -3465,22 +3465,22 @@ type component_summary = {
     The component deployment status.
      *)
 
-  last_deployment_succeeded_at: float option;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option;
   (** 
     The time when the component was last deployed successfully.
      *)
 
-  last_deployment_attempted_at: float option;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option;
   (** 
     The time when a deployment of the component was last attempted.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The time when the component was created.
      *)
@@ -4075,17 +4075,17 @@ type deployment = {
     The ID of the last attempted deployment.
      *)
 
-  completed_at: float option;
+  completed_at: CoreTypes.Timestamp.t option;
   (** 
     The date and time the deployment was completed.
      *)
 
-  last_modified_at: float;
+  last_modified_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was last modified.
      *)
 
-  created_at: float;
+  created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the deployment was created.
      *)
@@ -4125,7 +4125,7 @@ type deployment = {
     The resource type of the deployment target. It can be an environment, service, service instance, or component.
      *)
 
-  target_resource_created_at: float;
+  target_resource_created_at: CoreTypes.Timestamp.t;
   (** 
     The date and time the depoyment target was created.
      *)
@@ -5265,7 +5265,7 @@ type accept_environment_account_connection_input = {
 
 }
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -5308,8 +5308,8 @@ val make_service_template_version :
   ?status_message:string ->
   ?recommended_minor_version:string ->
   compatible_environment_templates:compatible_environment_template list ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -5347,8 +5347,8 @@ val make_service_template :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -5395,10 +5395,10 @@ val make_sync_blocker_context : value:string -> key:string -> unit
 (** Create a {!type-sync_blocker_context} type *)
 
 val make_sync_blocker :
-  ?resolved_at:float ->
+  ?resolved_at:CoreTypes.Timestamp.t ->
   ?resolved_reason:string ->
   ?contexts:sync_blocker_context list ->
-  created_at:float ->
+  created_at:CoreTypes.Timestamp.t ->
   created_reason:string ->
   status:blocker_status ->
   type_:blocker_type ->
@@ -5429,9 +5429,9 @@ val make_service_pipeline :
   template_minor_version:string ->
   template_major_version:string ->
   template_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   unit
 -> service_pipeline
@@ -5460,8 +5460,8 @@ val make_service :
   ?description:string ->
   spec:string ->
   status:service_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   template_name:string ->
   arn:string ->
   name:string ->
@@ -5485,9 +5485,9 @@ val make_service_instance :
   template_name:string ->
   environment_name:string ->
   service_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -5521,8 +5521,8 @@ val make_environment_template_version :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -5553,8 +5553,8 @@ val make_environment_template :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -5598,9 +5598,9 @@ val make_environment :
   template_major_version:string ->
   template_name:string ->
   arn:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   name:string ->
   unit
 -> environment
@@ -5635,8 +5635,8 @@ val make_environment_account_connection :
   ?codebuild_role_arn:string ->
   ?component_role_arn:string ->
   status:environment_account_connection_status ->
-  last_modified_at:float ->
-  requested_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  requested_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   role_arn:string ->
   environment_account_id:string ->
@@ -5667,14 +5667,14 @@ val make_component :
   ?last_client_request_token:string ->
   ?service_spec:string ->
   ?deployment_status_message:string ->
-  ?last_deployment_succeeded_at:float ->
-  ?last_deployment_attempted_at:float ->
+  ?last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  ?last_deployment_attempted_at:CoreTypes.Timestamp.t ->
   ?service_instance_name:string ->
   ?service_name:string ->
   ?description:string ->
   deployment_status:deployment_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   arn:string ->
   name:string ->
@@ -5750,8 +5750,8 @@ val make_service_template_version_summary :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -5766,8 +5766,8 @@ val make_service_template_summary :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -5786,8 +5786,8 @@ val make_service_summary :
   ?status_message:string ->
   ?description:string ->
   status:service_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   template_name:string ->
   arn:string ->
   name:string ->
@@ -5814,9 +5814,9 @@ val make_service_instance_summary :
   template_name:string ->
   environment_name:string ->
   service_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -5846,14 +5846,18 @@ val make_revision :
 (** Create a {!type-revision} type *)
 
 val make_resource_sync_event :
-  ?external_id:string -> event:string -> time:float -> type_:string -> unit
+  ?external_id:string ->
+  event:string ->
+  time:CoreTypes.Timestamp.t ->
+  type_:string ->
+  unit
 -> resource_sync_event
 (** Create a {!type-resource_sync_event} type *)
 
 val make_resource_sync_attempt :
   events:resource_sync_event list ->
   status:resource_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   target:string ->
   target_revision:revision ->
   initial_revision:revision ->
@@ -5872,7 +5876,11 @@ val make_resource_counts_summary :
 (** Create a {!type-resource_counts_summary} type *)
 
 val make_repository_sync_event :
-  ?external_id:string -> event:string -> time:float -> type_:string -> unit
+  ?external_id:string ->
+  event:string ->
+  time:CoreTypes.Timestamp.t ->
+  type_:string ->
+  unit
 -> repository_sync_event
 (** Create a {!type-repository_sync_event} type *)
 
@@ -5884,7 +5892,7 @@ val make_repository_sync_definition :
 val make_repository_sync_attempt :
   events:repository_sync_event list ->
   status:repository_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   unit
 -> repository_sync_attempt
 (** Create a {!type-repository_sync_attempt} type *)
@@ -6103,9 +6111,9 @@ val make_environment_summary :
   template_major_version:string ->
   template_name:string ->
   arn:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   name:string ->
   unit
 -> environment_summary
@@ -6134,8 +6142,8 @@ val make_environment_template_summary :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -6156,8 +6164,8 @@ val make_environment_template_version_summary :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -6211,8 +6219,8 @@ val make_list_environment_outputs_input :
 val make_environment_account_connection_summary :
   ?component_role_arn:string ->
   status:environment_account_connection_status ->
-  last_modified_at:float ->
-  requested_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  requested_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   role_arn:string ->
   environment_account_id:string ->
@@ -6246,13 +6254,13 @@ val make_deployment_summary :
   ?component_name:string ->
   ?service_instance_name:string ->
   ?service_name:string ->
-  ?completed_at:float ->
+  ?completed_at:CoreTypes.Timestamp.t ->
   deployment_status:deployment_status ->
   environment_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   target_resource_type:deployment_target_resource_type ->
-  target_resource_created_at:float ->
+  target_resource_created_at:CoreTypes.Timestamp.t ->
   target_arn:string ->
   arn:string ->
   id:string ->
@@ -6280,13 +6288,13 @@ val make_component_summary :
   ?last_succeeded_deployment_id:string ->
   ?last_attempted_deployment_id:string ->
   ?deployment_status_message:string ->
-  ?last_deployment_succeeded_at:float ->
-  ?last_deployment_attempted_at:float ->
+  ?last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  ?last_deployment_attempted_at:CoreTypes.Timestamp.t ->
   ?service_instance_name:string ->
   ?service_name:string ->
   deployment_status:deployment_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   arn:string ->
   name:string ->
@@ -6537,17 +6545,17 @@ val make_deployment :
   ?initial_state:deployment_state ->
   ?last_succeeded_deployment_id:string ->
   ?last_attempted_deployment_id:string ->
-  ?completed_at:float ->
+  ?completed_at:CoreTypes.Timestamp.t ->
   ?deployment_status_message:string ->
   ?component_name:string ->
   ?service_instance_name:string ->
   ?service_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   deployment_status:deployment_status ->
   environment_name:string ->
   target_resource_type:deployment_target_resource_type ->
-  target_resource_created_at:float ->
+  target_resource_created_at:CoreTypes.Timestamp.t ->
   target_arn:string ->
   arn:string ->
   id:string ->

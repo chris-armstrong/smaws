@@ -54,7 +54,7 @@ let make_node
   ?(parameter_group_status : string option)
   ?(node_status : string option)
   ?(availability_zone : string option)
-  ?(node_create_time : float option)
+  ?(node_create_time : CoreTypes.Timestamp.t option)
   ?(endpoint : endpoint option)
   ?(node_id : string option)
   () : node = {
@@ -225,7 +225,7 @@ let make_increase_replication_factor_request
   availability_zones; new_replication_factor; cluster_name;  }
 
 let make_event 
-  ?(date : float option)
+  ?(date : CoreTypes.Timestamp.t option)
   ?(message : string option)
   ?(source_type : source_type option)
   ?(source_name : string option)
@@ -283,8 +283,8 @@ let make_describe_events_request
   ?(next_token : string option)
   ?(max_results : int option)
   ?(duration : int option)
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(source_type : source_type option)
   ?(source_name : string option)
   () : describe_events_request = {

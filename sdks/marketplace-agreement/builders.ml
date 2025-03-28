@@ -1,8 +1,8 @@
 [@@@warning "-39"]
 open Types
 let make_validity_term 
-  ?(agreement_end_date : float option)
-  ?(agreement_start_date : float option)
+  ?(agreement_end_date : CoreTypes.Timestamp.t option)
+  ?(agreement_start_date : CoreTypes.Timestamp.t option)
   ?(agreement_duration : string option)
   ?(type_ : string option)
   () : validity_term = {
@@ -59,9 +59,9 @@ let make_agreement_view_summary
   ?(proposer : proposer option)
   ?(acceptor : acceptor option)
   ?(agreement_type : string option)
-  ?(end_time : float option)
-  ?(start_time : float option)
-  ?(acceptance_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
+  ?(acceptance_time : CoreTypes.Timestamp.t option)
   ?(agreement_id : string option)
   () : agreement_view_summary = {
   status;
@@ -94,8 +94,9 @@ let make_search_agreements_input
   next_token; max_results; sort; filters; catalog;  }
 
 let make_schedule_item 
-  ?(charge_amount : string option) ?(charge_date : float option) ()
-: schedule_item = { charge_amount; charge_date; 
+  ?(charge_amount : string option)
+  ?(charge_date : CoreTypes.Timestamp.t option)
+  () : schedule_item = { charge_amount; charge_date; 
 }
 
 let make_renewal_term_configuration  ~(enable_auto_renew : bool) ()
@@ -211,9 +212,9 @@ let make_describe_agreement_output
   ?(proposal_summary : proposal_summary option)
   ?(estimated_charges : estimated_charges option)
   ?(agreement_type : string option)
-  ?(acceptance_time : float option)
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(acceptance_time : CoreTypes.Timestamp.t option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(proposer : proposer option)
   ?(acceptor : acceptor option)
   ?(agreement_id : string option)

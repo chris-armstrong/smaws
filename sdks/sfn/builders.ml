@@ -23,7 +23,7 @@ let make_validate_state_machine_definition_input
 let make_update_state_machine_output 
   ?(state_machine_version_arn : string option)
   ?(revision_id : string option)
-  ~(update_date : float)
+  ~(update_date : CoreTypes.Timestamp.t)
   () : update_state_machine_output = {
   state_machine_version_arn; revision_id; update_date; 
 }
@@ -65,7 +65,8 @@ let make_update_state_machine_input
   state_machine_arn;
    }
 
-let make_update_state_machine_alias_output  ~(update_date : float) ()
+let make_update_state_machine_alias_output 
+  ~(update_date : CoreTypes.Timestamp.t) ()
 : update_state_machine_alias_output = { update_date; 
 }
 
@@ -256,7 +257,7 @@ let make_tag_resource_input  ~(tags : tag list) ~(resource_arn : string) ()
 : tag_resource_input = { tags; resource_arn; 
 }
 
-let make_stop_execution_output  ~(stop_date : float) ()
+let make_stop_execution_output  ~(stop_date : CoreTypes.Timestamp.t) ()
 : stop_execution_output = { stop_date;  }
 
 let make_stop_execution_input 
@@ -267,13 +268,14 @@ let make_stop_execution_input
 }
 
 let make_state_machine_version_list_item 
-  ~(creation_date : float) ~(state_machine_version_arn : string) ()
-: state_machine_version_list_item = {
+  ~(creation_date : CoreTypes.Timestamp.t)
+  ~(state_machine_version_arn : string)
+  () : state_machine_version_list_item = {
   creation_date; state_machine_version_arn; 
 }
 
 let make_state_machine_list_item 
-  ~(creation_date : float)
+  ~(creation_date : CoreTypes.Timestamp.t)
   ~(type_ : state_machine_type)
   ~(name : string)
   ~(state_machine_arn : string)
@@ -282,8 +284,10 @@ let make_state_machine_list_item
 }
 
 let make_state_machine_alias_list_item 
-  ~(creation_date : float) ~(state_machine_alias_arn : string) ()
-: state_machine_alias_list_item = { creation_date; state_machine_alias_arn; 
+  ~(creation_date : CoreTypes.Timestamp.t)
+  ~(state_machine_alias_arn : string)
+  () : state_machine_alias_list_item = {
+  creation_date; state_machine_alias_arn; 
 }
 
 let make_state_exited_event_details 
@@ -323,8 +327,8 @@ let make_start_sync_execution_output
   ?(name : string option)
   ?(state_machine_arn : string option)
   ~(status : sync_execution_status)
-  ~(stop_date : float)
-  ~(start_date : float)
+  ~(stop_date : CoreTypes.Timestamp.t)
+  ~(start_date : CoreTypes.Timestamp.t)
   ~(execution_arn : string)
   () : start_sync_execution_output = {
   billing_details;
@@ -353,8 +357,9 @@ let make_start_sync_execution_input
 }
 
 let make_start_execution_output 
-  ~(start_date : float) ~(execution_arn : string) () : start_execution_output
-= { start_date; execution_arn;  }
+  ~(start_date : CoreTypes.Timestamp.t) ~(execution_arn : string) ()
+: start_execution_output = { start_date; execution_arn; 
+}
 
 let make_start_execution_input 
   ?(trace_header : string option)
@@ -387,7 +392,7 @@ let make_send_task_failure_input
 : send_task_failure_input = { cause; error; task_token; 
 }
 
-let make_redrive_execution_output  ~(redrive_date : float) ()
+let make_redrive_execution_output  ~(redrive_date : CoreTypes.Timestamp.t) ()
 : redrive_execution_output = { redrive_date; 
 }
 
@@ -397,8 +402,9 @@ let make_redrive_execution_input
 }
 
 let make_publish_state_machine_version_output 
-  ~(state_machine_version_arn : string) ~(creation_date : float) ()
-: publish_state_machine_version_output = {
+  ~(state_machine_version_arn : string)
+  ~(creation_date : CoreTypes.Timestamp.t)
+  () : publish_state_machine_version_output = {
   state_machine_version_arn; creation_date; 
 }
 
@@ -424,8 +430,8 @@ let make_map_run_redriven_event_details
 }
 
 let make_map_run_list_item 
-  ?(stop_date : float option)
-  ~(start_date : float)
+  ?(stop_date : CoreTypes.Timestamp.t option)
+  ~(start_date : CoreTypes.Timestamp.t)
   ~(state_machine_arn : string)
   ~(map_run_arn : string)
   ~(execution_arn : string)
@@ -553,14 +559,14 @@ let make_list_map_runs_input
 }
 
 let make_execution_list_item 
-  ?(redrive_date : float option)
+  ?(redrive_date : CoreTypes.Timestamp.t option)
   ?(redrive_count : int option)
   ?(state_machine_alias_arn : string option)
   ?(state_machine_version_arn : string option)
   ?(item_count : int option)
   ?(map_run_arn : string option)
-  ?(stop_date : float option)
-  ~(start_date : float)
+  ?(stop_date : CoreTypes.Timestamp.t option)
+  ~(start_date : CoreTypes.Timestamp.t)
   ~(status : execution_status)
   ~(name : string)
   ~(state_machine_arn : string)
@@ -602,8 +608,10 @@ let make_list_executions_input
    }
 
 let make_activity_list_item 
-  ~(creation_date : float) ~(name : string) ~(activity_arn : string) ()
-: activity_list_item = { creation_date; name; activity_arn; 
+  ~(creation_date : CoreTypes.Timestamp.t)
+  ~(name : string)
+  ~(activity_arn : string)
+  () : activity_list_item = { creation_date; name; activity_arn; 
 }
 
 let make_list_activities_output 
@@ -766,7 +774,7 @@ let make_history_event
   ?(previous_event_id : int option)
   ~(id : int)
   ~(type_ : history_event_type)
-  ~(timestamp_ : float)
+  ~(timestamp_ : CoreTypes.Timestamp.t)
   () : history_event = {
   map_run_redriven_event_details;
   map_run_failed_event_details;
@@ -846,7 +854,7 @@ let make_describe_state_machine_output
   ?(tracing_configuration : tracing_configuration option)
   ?(logging_configuration : logging_configuration option)
   ?(status : state_machine_status option)
-  ~(creation_date : float)
+  ~(creation_date : CoreTypes.Timestamp.t)
   ~(type_ : state_machine_type)
   ~(role_arn : string)
   ~(definition : string)
@@ -877,7 +885,7 @@ let make_describe_state_machine_for_execution_output
   ?(map_run_arn : string option)
   ?(tracing_configuration : tracing_configuration option)
   ?(logging_configuration : logging_configuration option)
-  ~(update_date : float)
+  ~(update_date : CoreTypes.Timestamp.t)
   ~(role_arn : string)
   ~(definition : string)
   ~(name : string)
@@ -900,8 +908,8 @@ let make_describe_state_machine_for_execution_input
 { execution_arn;  }
 
 let make_describe_state_machine_alias_output 
-  ?(update_date : float option)
-  ?(creation_date : float option)
+  ?(update_date : CoreTypes.Timestamp.t option)
+  ?(creation_date : CoreTypes.Timestamp.t option)
   ?(routing_configuration : routing_configuration_list_item list option)
   ?(description : string option)
   ?(name : string option)
@@ -920,15 +928,15 @@ let make_describe_state_machine_alias_input
 = { state_machine_alias_arn;  }
 
 let make_describe_map_run_output 
-  ?(redrive_date : float option)
+  ?(redrive_date : CoreTypes.Timestamp.t option)
   ?(redrive_count : int option)
-  ?(stop_date : float option)
+  ?(stop_date : CoreTypes.Timestamp.t option)
   ~(execution_counts : map_run_execution_counts)
   ~(item_counts : map_run_item_counts)
   ~(tolerated_failure_count : int)
   ~(tolerated_failure_percentage : float)
   ~(max_concurrency : int)
-  ~(start_date : float)
+  ~(start_date : CoreTypes.Timestamp.t)
   ~(status : map_run_status)
   ~(execution_arn : string)
   ~(map_run_arn : string)
@@ -954,7 +962,7 @@ let make_describe_map_run_input  ~(map_run_arn : string) ()
 let make_describe_execution_output 
   ?(redrive_status_reason : string option)
   ?(redrive_status : execution_redrive_status option)
-  ?(redrive_date : float option)
+  ?(redrive_date : CoreTypes.Timestamp.t option)
   ?(redrive_count : int option)
   ?(state_machine_alias_arn : string option)
   ?(state_machine_version_arn : string option)
@@ -966,9 +974,9 @@ let make_describe_execution_output
   ?(output : string option)
   ?(input_details : cloud_watch_events_execution_data_details option)
   ?(input : string option)
-  ?(stop_date : float option)
+  ?(stop_date : CoreTypes.Timestamp.t option)
   ?(name : string option)
-  ~(start_date : float)
+  ~(start_date : CoreTypes.Timestamp.t)
   ~(status : execution_status)
   ~(state_machine_arn : string)
   ~(execution_arn : string)
@@ -1000,8 +1008,10 @@ let make_describe_execution_input  ~(execution_arn : string) ()
 }
 
 let make_describe_activity_output 
-  ~(creation_date : float) ~(name : string) ~(activity_arn : string) ()
-: describe_activity_output = { creation_date; name; activity_arn; 
+  ~(creation_date : CoreTypes.Timestamp.t)
+  ~(name : string)
+  ~(activity_arn : string)
+  () : describe_activity_output = { creation_date; name; activity_arn; 
 }
 
 let make_describe_activity_input  ~(activity_arn : string) ()
@@ -1041,7 +1051,7 @@ let make_delete_activity_input  ~(activity_arn : string) ()
 
 let make_create_state_machine_output 
   ?(state_machine_version_arn : string option)
-  ~(creation_date : float)
+  ~(creation_date : CoreTypes.Timestamp.t)
   ~(state_machine_arn : string)
   () : create_state_machine_output = {
   state_machine_version_arn; creation_date; state_machine_arn; 
@@ -1070,8 +1080,9 @@ let make_create_state_machine_input
    }
 
 let make_create_state_machine_alias_output 
-  ~(creation_date : float) ~(state_machine_alias_arn : string) ()
-: create_state_machine_alias_output = {
+  ~(creation_date : CoreTypes.Timestamp.t)
+  ~(state_machine_alias_arn : string)
+  () : create_state_machine_alias_output = {
   creation_date; state_machine_alias_arn; 
 }
 
@@ -1084,7 +1095,7 @@ let make_create_state_machine_alias_input
 }
 
 let make_create_activity_output 
-  ~(creation_date : float) ~(activity_arn : string) ()
+  ~(creation_date : CoreTypes.Timestamp.t) ~(activity_arn : string) ()
 : create_activity_output = { creation_date; activity_arn; 
 }
 

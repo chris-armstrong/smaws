@@ -382,8 +382,8 @@ let make_put_access_control_rule_request
    }
 
 let make_user 
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(user_role : user_role option)
   ?(state : entity_state option)
   ?(display_name : string option)
@@ -432,8 +432,8 @@ let make_list_tags_for_resource_request  ~(resource_ar_n : string) ()
 
 let make_resource 
   ?(description : string option)
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(state : entity_state option)
   ?(type_ : resource_type option)
   ?(name : string option)
@@ -502,8 +502,8 @@ let make_list_organizations_request
 }
 
 let make_mobile_device_access_rule 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(not_device_user_agents : string list option)
   ?(device_user_agents : string list option)
   ?(not_device_operating_systems : string list option)
@@ -543,8 +543,8 @@ let make_list_mobile_device_access_rules_request
 { organization_id;  }
 
 let make_mobile_device_access_override 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(description : string option)
   ?(effect_ : mobile_device_access_rule_effect option)
   ?(device_id : string option)
@@ -610,8 +610,8 @@ let make_list_mailbox_permissions_request
 }
 
 let make_mailbox_export_job 
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(state : mailbox_export_job_state option)
   ?(estimated_progress : int option)
   ?(s3_path : string option)
@@ -644,8 +644,8 @@ let make_list_mailbox_export_jobs_request
   max_results; next_token; organization_id;  }
 
 let make_impersonation_role 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(type_ : impersonation_role_type option)
   ?(name : string option)
   ?(impersonation_role_id : string option)
@@ -690,8 +690,8 @@ let make_list_groups_for_entity_request
 }
 
 let make_group 
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(state : entity_state option)
   ?(name : string option)
   ?(email : string option)
@@ -720,8 +720,8 @@ let make_list_groups_request
   filters; max_results; next_token; organization_id;  }
 
 let make_member 
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(state : entity_state option)
   ?(type_ : member_type option)
   ?(name : string option)
@@ -749,8 +749,8 @@ let make_redacted_ews_availability_provider
 }
 
 let make_availability_configuration 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(lambda_provider : lambda_availability_provider option)
   ?(ews_provider : redacted_ews_availability_provider option)
   ?(provider_type : availability_provider_type option)
@@ -795,8 +795,8 @@ let make_list_aliases_request
 let make_access_control_rule 
   ?(not_impersonation_role_ids : string list option)
   ?(impersonation_role_ids : string list option)
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(not_user_ids : string list option)
   ?(user_ids : string list option)
   ?(not_actions : string list option)
@@ -832,8 +832,8 @@ let make_list_access_control_rules_request  ~(organization_id : string) ()
 }
 
 let make_get_mobile_device_access_override_response 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(description : string option)
   ?(effect_ : mobile_device_access_rule_effect option)
   ?(device_id : string option)
@@ -931,8 +931,8 @@ let make_get_impersonation_role_effect_request
 }
 
 let make_get_impersonation_role_response 
-  ?(date_modified : float option)
-  ?(date_created : float option)
+  ?(date_modified : CoreTypes.Timestamp.t option)
+  ?(date_created : CoreTypes.Timestamp.t option)
   ?(rules : impersonation_rule list option)
   ?(description : string option)
   ?(type_ : impersonation_role_type option)
@@ -1017,10 +1017,10 @@ let make_describe_user_response
   ?(hidden_from_global_address_list : bool option)
   ?(last_name : string option)
   ?(first_name : string option)
-  ?(mailbox_deprovisioned_date : float option)
-  ?(mailbox_provisioned_date : float option)
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(mailbox_deprovisioned_date : CoreTypes.Timestamp.t option)
+  ?(mailbox_provisioned_date : CoreTypes.Timestamp.t option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(user_role : user_role option)
   ?(state : entity_state option)
   ?(display_name : string option)
@@ -1060,8 +1060,8 @@ let make_describe_user_request
 let make_describe_resource_response 
   ?(hidden_from_global_address_list : bool option)
   ?(description : string option)
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(state : entity_state option)
   ?(booking_options : booking_options option)
   ?(type_ : resource_type option)
@@ -1091,7 +1091,7 @@ let make_describe_organization_response
   ?(migration_admin : string option)
   ?(ar_n : string option)
   ?(error_message : string option)
-  ?(completed_date : float option)
+  ?(completed_date : CoreTypes.Timestamp.t option)
   ?(default_mail_domain : string option)
   ?(directory_type : string option)
   ?(directory_id : string option)
@@ -1117,8 +1117,8 @@ let make_describe_organization_request  ~(organization_id : string) ()
 }
 
 let make_describe_mailbox_export_job_response 
-  ?(end_time : float option)
-  ?(start_time : float option)
+  ?(end_time : CoreTypes.Timestamp.t option)
+  ?(start_time : CoreTypes.Timestamp.t option)
   ?(error_info : string option)
   ?(state : mailbox_export_job_state option)
   ?(estimated_progress : int option)
@@ -1159,8 +1159,8 @@ let make_describe_inbound_dmarc_settings_request
 
 let make_describe_group_response 
   ?(hidden_from_global_address_list : bool option)
-  ?(disabled_date : float option)
-  ?(enabled_date : float option)
+  ?(disabled_date : CoreTypes.Timestamp.t option)
+  ?(enabled_date : CoreTypes.Timestamp.t option)
   ?(state : entity_state option)
   ?(email : string option)
   ?(name : string option)

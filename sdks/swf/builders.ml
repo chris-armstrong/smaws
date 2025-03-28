@@ -4,9 +4,9 @@ let make_workflow_type  ~(version : string) ~(name : string) ()
 : workflow_type = { version; name;  }
 
 let make_workflow_type_info 
-  ?(deprecation_date : float option)
+  ?(deprecation_date : CoreTypes.Timestamp.t option)
   ?(description : string option)
-  ~(creation_date : float)
+  ~(creation_date : CoreTypes.Timestamp.t)
   ~(status : registration_status)
   ~(workflow_type : workflow_type)
   () : workflow_type_info = {
@@ -125,9 +125,9 @@ let make_workflow_execution_info
   ?(tag_list : string list option)
   ?(parent : workflow_execution option)
   ?(close_status : close_status option)
-  ?(close_timestamp : float option)
+  ?(close_timestamp : CoreTypes.Timestamp.t option)
   ~(execution_status : execution_status)
-  ~(start_timestamp : float)
+  ~(start_timestamp : CoreTypes.Timestamp.t)
   ~(workflow_type : workflow_type)
   ~(execution : workflow_execution)
   () : workflow_execution_info = {
@@ -178,7 +178,7 @@ let make_workflow_execution_configuration
 
 let make_workflow_execution_detail 
   ?(latest_execution_context : string option)
-  ?(latest_activity_task_timestamp : float option)
+  ?(latest_activity_task_timestamp : CoreTypes.Timestamp.t option)
   ~(open_counts : workflow_execution_open_counts)
   ~(execution_configuration : workflow_execution_configuration)
   ~(execution_info : workflow_execution_info)
@@ -1113,7 +1113,7 @@ let make_history_event
   ?(workflow_execution_started_event_attributes : workflow_execution_started_event_attributes option)
   ~(event_id : int)
   ~(event_type : event_type)
-  ~(event_timestamp : float)
+  ~(event_timestamp : CoreTypes.Timestamp.t)
   () : history_event = {
   start_lambda_function_failed_event_attributes;
   schedule_lambda_function_failed_event_attributes;
@@ -1256,8 +1256,9 @@ let make_list_tags_for_resource_input  ~(resource_arn : string) ()
 }
 
 let make_execution_time_filter 
-  ?(latest_date : float option) ~(oldest_date : float) ()
-: execution_time_filter = { latest_date; oldest_date; 
+  ?(latest_date : CoreTypes.Timestamp.t option)
+  ~(oldest_date : CoreTypes.Timestamp.t)
+  () : execution_time_filter = { latest_date; oldest_date; 
 }
 
 let make_list_open_workflow_executions_input 
@@ -1331,9 +1332,9 @@ let make_list_closed_workflow_executions_input
    }
 
 let make_activity_type_info 
-  ?(deprecation_date : float option)
+  ?(deprecation_date : CoreTypes.Timestamp.t option)
   ?(description : string option)
-  ~(creation_date : float)
+  ~(creation_date : CoreTypes.Timestamp.t)
   ~(status : registration_status)
   ~(activity_type : activity_type)
   () : activity_type_info = {

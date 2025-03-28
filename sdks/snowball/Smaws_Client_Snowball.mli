@@ -388,7 +388,7 @@ type pickup_details = {
     Organization that issued the credential identifying the person picking up the device.
      *)
 
-  identification_expiration_date: float option;
+  identification_expiration_date: CoreTypes.Timestamp.t option;
   (** 
     Expiration date of the credential identifying the person picking up the device.
      *)
@@ -732,12 +732,12 @@ type long_term_pricing_list_entry = {
     The type of long-term pricing that was selected for the device.
      *)
 
-  long_term_pricing_start_date: float option;
+  long_term_pricing_start_date: CoreTypes.Timestamp.t option;
   (** 
     The start date of the long-term pricing contract.
      *)
 
-  long_term_pricing_end_date: float option;
+  long_term_pricing_end_date: CoreTypes.Timestamp.t option;
   (** 
     The end date the long-term pricing contract.
      *)
@@ -969,7 +969,7 @@ type job_list_entry = {
         2016-08-11].
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this job.
      *)
@@ -1085,7 +1085,7 @@ type cluster_list_entry = {
         Cluster-01].
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this cluster.
      *)
@@ -1332,7 +1332,7 @@ type job_metadata = {
     An array of [S3Resource] objects. Each [S3Resource] object represents an Amazon S3 bucket that your transferred data will be exported from or imported into.
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this job.
      *)
@@ -1436,7 +1436,7 @@ type describe_return_shipping_label_result = {
     The pre-signed Amazon S3 URI used to download the return shipping label.
      *)
 
-  expiration_date: float option;
+  expiration_date: CoreTypes.Timestamp.t option;
   (** 
     The expiration date of the current return shipping label.
      *)
@@ -1545,7 +1545,7 @@ type cluster_metadata = {
     The arrays of [JobResource] objects that can include updated [S3Resource] objects or [LambdaResource] objects.
      *)
 
-  creation_date: float option;
+  creation_date: CoreTypes.Timestamp.t option;
   (** 
     The creation date for this cluster.
      *)
@@ -2016,7 +2016,7 @@ type cancel_cluster_request = {
      *)
 
 
-type base_document = Json.t
+type base_document = CoreTypes.Document.t
 
 (** {1:builders Builders} *)
 
@@ -2122,7 +2122,7 @@ val make_on_device_service_configuration :
 val make_pickup_details :
   ?device_pickup_id:string ->
   ?identification_issuing_org:string ->
-  ?identification_expiration_date:float ->
+  ?identification_expiration_date:CoreTypes.Timestamp.t ->
   ?identification_number:string ->
   ?email:string ->
   ?phone_number:string ->
@@ -2198,8 +2198,8 @@ val make_long_term_pricing_list_entry :
   ?replacement_job:string ->
   ?current_active_job:string ->
   ?long_term_pricing_type:long_term_pricing_type ->
-  ?long_term_pricing_start_date:float ->
-  ?long_term_pricing_end_date:float ->
+  ?long_term_pricing_start_date:CoreTypes.Timestamp.t ->
+  ?long_term_pricing_end_date:CoreTypes.Timestamp.t ->
   ?long_term_pricing_id:string ->
   unit
 -> long_term_pricing_list_entry
@@ -2251,7 +2251,7 @@ val make_list_long_term_pricing_request :
 
 val make_job_list_entry :
   ?description:string ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?is_master:bool ->
@@ -2276,7 +2276,7 @@ val make_list_compatible_images_request :
 
 val make_cluster_list_entry :
   ?description:string ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?cluster_state:cluster_state ->
   ?cluster_id:string ->
   unit
@@ -2336,7 +2336,7 @@ val make_job_metadata :
   ?kms_key_ar_n:string ->
   ?description:string ->
   ?resources:job_resource ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?job_state:job_state ->
@@ -2377,7 +2377,7 @@ val make_cluster_metadata :
   ?shipping_option:shipping_option ->
   ?address_id:string ->
   ?resources:job_resource ->
-  ?creation_date:float ->
+  ?creation_date:CoreTypes.Timestamp.t ->
   ?snowball_type:snowball_type ->
   ?job_type:job_type ->
   ?cluster_state:cluster_state ->

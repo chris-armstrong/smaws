@@ -9,3 +9,8 @@ module Protocols = Protocols
 module Protocols_gen = Protocols_gen
 module Service = Service
 module Sign = Sign
+
+module CoreTypes = struct
+  module Document = Yojson.Basic
+  module Timestamp = Ptime
+end

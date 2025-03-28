@@ -38,8 +38,8 @@ val make_service_template_version :
   ?status_message:string ->
   ?recommended_minor_version:string ->
   compatible_environment_templates:compatible_environment_template list ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -77,8 +77,8 @@ val make_service_template :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -125,10 +125,10 @@ val make_sync_blocker_context : value:string -> key:string -> unit
 (** Create a {!type-sync_blocker_context} type *)
 
 val make_sync_blocker :
-  ?resolved_at:float ->
+  ?resolved_at:CoreTypes.Timestamp.t ->
   ?resolved_reason:string ->
   ?contexts:sync_blocker_context list ->
-  created_at:float ->
+  created_at:CoreTypes.Timestamp.t ->
   created_reason:string ->
   status:blocker_status ->
   type_:blocker_type ->
@@ -159,9 +159,9 @@ val make_service_pipeline :
   template_minor_version:string ->
   template_major_version:string ->
   template_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   unit
 -> service_pipeline
@@ -190,8 +190,8 @@ val make_service :
   ?description:string ->
   spec:string ->
   status:service_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   template_name:string ->
   arn:string ->
   name:string ->
@@ -215,9 +215,9 @@ val make_service_instance :
   template_name:string ->
   environment_name:string ->
   service_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -251,8 +251,8 @@ val make_environment_template_version :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -283,8 +283,8 @@ val make_environment_template :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -328,9 +328,9 @@ val make_environment :
   template_major_version:string ->
   template_name:string ->
   arn:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   name:string ->
   unit
 -> environment
@@ -365,8 +365,8 @@ val make_environment_account_connection :
   ?codebuild_role_arn:string ->
   ?component_role_arn:string ->
   status:environment_account_connection_status ->
-  last_modified_at:float ->
-  requested_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  requested_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   role_arn:string ->
   environment_account_id:string ->
@@ -397,14 +397,14 @@ val make_component :
   ?last_client_request_token:string ->
   ?service_spec:string ->
   ?deployment_status_message:string ->
-  ?last_deployment_succeeded_at:float ->
-  ?last_deployment_attempted_at:float ->
+  ?last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  ?last_deployment_attempted_at:CoreTypes.Timestamp.t ->
   ?service_instance_name:string ->
   ?service_name:string ->
   ?description:string ->
   deployment_status:deployment_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   arn:string ->
   name:string ->
@@ -480,8 +480,8 @@ val make_service_template_version_summary :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -496,8 +496,8 @@ val make_service_template_summary :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -516,8 +516,8 @@ val make_service_summary :
   ?status_message:string ->
   ?description:string ->
   status:service_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   template_name:string ->
   arn:string ->
   name:string ->
@@ -544,9 +544,9 @@ val make_service_instance_summary :
   template_name:string ->
   environment_name:string ->
   service_name:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -576,14 +576,18 @@ val make_revision :
 (** Create a {!type-revision} type *)
 
 val make_resource_sync_event :
-  ?external_id:string -> event:string -> time:float -> type_:string -> unit
+  ?external_id:string ->
+  event:string ->
+  time:CoreTypes.Timestamp.t ->
+  type_:string ->
+  unit
 -> resource_sync_event
 (** Create a {!type-resource_sync_event} type *)
 
 val make_resource_sync_attempt :
   events:resource_sync_event list ->
   status:resource_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   target:string ->
   target_revision:revision ->
   initial_revision:revision ->
@@ -602,7 +606,11 @@ val make_resource_counts_summary :
 (** Create a {!type-resource_counts_summary} type *)
 
 val make_repository_sync_event :
-  ?external_id:string -> event:string -> time:float -> type_:string -> unit
+  ?external_id:string ->
+  event:string ->
+  time:CoreTypes.Timestamp.t ->
+  type_:string ->
+  unit
 -> repository_sync_event
 (** Create a {!type-repository_sync_event} type *)
 
@@ -614,7 +622,7 @@ val make_repository_sync_definition :
 val make_repository_sync_attempt :
   events:repository_sync_event list ->
   status:repository_sync_status ->
-  started_at:float ->
+  started_at:CoreTypes.Timestamp.t ->
   unit
 -> repository_sync_attempt
 (** Create a {!type-repository_sync_attempt} type *)
@@ -833,9 +841,9 @@ val make_environment_summary :
   template_major_version:string ->
   template_name:string ->
   arn:string ->
-  last_deployment_succeeded_at:float ->
-  last_deployment_attempted_at:float ->
-  created_at:float ->
+  last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  last_deployment_attempted_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   name:string ->
   unit
 -> environment_summary
@@ -864,8 +872,8 @@ val make_environment_template_summary :
   ?recommended_version:string ->
   ?description:string ->
   ?display_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   name:string ->
   unit
@@ -886,8 +894,8 @@ val make_environment_template_version_summary :
   ?description:string ->
   ?status_message:string ->
   ?recommended_minor_version:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   arn:string ->
   status:template_version_status ->
   minor_version:string ->
@@ -941,8 +949,8 @@ val make_list_environment_outputs_input :
 val make_environment_account_connection_summary :
   ?component_role_arn:string ->
   status:environment_account_connection_status ->
-  last_modified_at:float ->
-  requested_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  requested_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   role_arn:string ->
   environment_account_id:string ->
@@ -976,13 +984,13 @@ val make_deployment_summary :
   ?component_name:string ->
   ?service_instance_name:string ->
   ?service_name:string ->
-  ?completed_at:float ->
+  ?completed_at:CoreTypes.Timestamp.t ->
   deployment_status:deployment_status ->
   environment_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   target_resource_type:deployment_target_resource_type ->
-  target_resource_created_at:float ->
+  target_resource_created_at:CoreTypes.Timestamp.t ->
   target_arn:string ->
   arn:string ->
   id:string ->
@@ -1010,13 +1018,13 @@ val make_component_summary :
   ?last_succeeded_deployment_id:string ->
   ?last_attempted_deployment_id:string ->
   ?deployment_status_message:string ->
-  ?last_deployment_succeeded_at:float ->
-  ?last_deployment_attempted_at:float ->
+  ?last_deployment_succeeded_at:CoreTypes.Timestamp.t ->
+  ?last_deployment_attempted_at:CoreTypes.Timestamp.t ->
   ?service_instance_name:string ->
   ?service_name:string ->
   deployment_status:deployment_status ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   environment_name:string ->
   arn:string ->
   name:string ->
@@ -1267,17 +1275,17 @@ val make_deployment :
   ?initial_state:deployment_state ->
   ?last_succeeded_deployment_id:string ->
   ?last_attempted_deployment_id:string ->
-  ?completed_at:float ->
+  ?completed_at:CoreTypes.Timestamp.t ->
   ?deployment_status_message:string ->
   ?component_name:string ->
   ?service_instance_name:string ->
   ?service_name:string ->
-  last_modified_at:float ->
-  created_at:float ->
+  last_modified_at:CoreTypes.Timestamp.t ->
+  created_at:CoreTypes.Timestamp.t ->
   deployment_status:deployment_status ->
   environment_name:string ->
   target_resource_type:deployment_target_resource_type ->
-  target_resource_created_at:float ->
+  target_resource_created_at:CoreTypes.Timestamp.t ->
   target_arn:string ->
   arn:string ->
   id:string ->
