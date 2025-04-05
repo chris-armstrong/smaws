@@ -406,7 +406,7 @@ let retention_period_of_yojson = int_of_yojson
 
 let termination_protection_enabled_of_yojson = bool_of_yojson
 
-let date_of_yojson = timestamp_of_yojson
+let date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let event_data_store_kms_key_id_of_yojson = string_of_yojson
 
@@ -2506,7 +2506,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

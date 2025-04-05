@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,11 +7,8 @@ let service =
       version = "2020-07-20";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec error_message = unit
 type nonrec validation_exception = {
   message: string }
-type nonrec resource_name = unit
-type nonrec base_unit = unit
 type nonrec template_type =
   | ENVIRONMENT 
   | SERVICE 
@@ -19,9 +16,6 @@ type nonrec repository_provider =
   | GITHUB 
   | GITHUB_ENTERPRISE 
   | BITBUCKET 
-type nonrec repository_name = unit
-type nonrec git_branch_name = unit
-type nonrec subdirectory = unit
 type nonrec template_sync_config =
   {
   subdirectory: string option ;
@@ -51,33 +45,25 @@ type nonrec conflict_exception = {
   message: string }
 type nonrec access_denied_exception = {
   message: string }
-type nonrec template_version_part = unit
 type nonrec template_version_status =
   | REGISTRATION_IN_PROGRESS 
   | REGISTRATION_FAILED 
   | DRAFT 
   | PUBLISHED 
-type nonrec status_message = unit
-type nonrec description = unit
-type nonrec service_template_version_arn = unit
-type nonrec base_timestamp = unit
 type nonrec compatible_environment_template =
   {
   major_version: string ;
   template_name: string }
-type nonrec compatible_environment_template_list = unit
-type nonrec template_schema = unit
 type nonrec service_template_supported_component_source_type =
   | DIRECTLY_DEFINED 
-type nonrec service_template_supported_component_source_input_list = unit
 type nonrec service_template_version =
   {
   supported_component_sources:
     service_template_supported_component_source_type list option ;
   schema: string option ;
   compatible_environment_templates: compatible_environment_template list ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   description: string option ;
   status_message: string option ;
@@ -93,7 +79,6 @@ type nonrec compatible_environment_template_input =
   {
   major_version: string ;
   template_name: string }
-type nonrec compatible_environment_template_input_list = unit
 type nonrec update_service_template_version_input =
   {
   supported_component_sources:
@@ -105,10 +90,6 @@ type nonrec update_service_template_version_input =
   minor_version: string ;
   major_version: string ;
   template_name: string }
-type nonrec service_template_arn = unit
-type nonrec display_name = unit
-type nonrec full_template_version_number = unit
-type nonrec arn = unit
 type nonrec provisioning =
   | CUSTOMER_MANAGED 
 type nonrec service_template =
@@ -118,8 +99,8 @@ type nonrec service_template =
   recommended_version: string option ;
   description: string option ;
   display_name: string option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
 type nonrec update_service_template_output =
@@ -130,7 +111,6 @@ type nonrec update_service_template_input =
   description: string option ;
   display_name: string option ;
   name: string }
-type nonrec ops_file_path = unit
 type nonrec service_sync_config =
   {
   file_path: string ;
@@ -148,7 +128,6 @@ type nonrec update_service_sync_config_input =
   repository_name: string ;
   repository_provider: repository_provider ;
   service_name: string }
-type nonrec base_string = unit
 type nonrec blocker_type =
   | AUTOMATED 
 type nonrec blocker_status =
@@ -157,13 +136,12 @@ type nonrec blocker_status =
 type nonrec sync_blocker_context = {
   value: string ;
   key: string }
-type nonrec sync_blocker_contexts = unit
 type nonrec sync_blocker =
   {
-  resolved_at: Timestamp.t option ;
+  resolved_at: CoreTypes.Timestamp.t option ;
   resolved_reason: string option ;
   contexts: sync_blocker_context list option ;
-  created_at: Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   created_reason: string ;
   status: blocker_status ;
   type_: blocker_type ;
@@ -186,8 +164,6 @@ type nonrec deployment_status =
   | DELETE_COMPLETE 
   | CANCELLING 
   | CANCELLED 
-type nonrec spec_contents = unit
-type nonrec deployment_id = unit
 type nonrec service_pipeline =
   {
   last_succeeded_deployment_id: string option ;
@@ -198,9 +174,9 @@ type nonrec service_pipeline =
   template_minor_version: string ;
   template_major_version: string ;
   template_name: string ;
-  last_deployment_succeeded_at: Timestamp.t ;
-  last_deployment_attempted_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string }
 type nonrec update_service_pipeline_output = {
   pipeline: service_pipeline }
@@ -216,7 +192,6 @@ type nonrec update_service_pipeline_input =
   deployment_type: deployment_update_type ;
   spec: string ;
   service_name: string }
-type nonrec service_arn = unit
 type nonrec service_status =
   | CREATE_IN_PROGRESS 
   | CREATE_FAILED_CLEANUP_IN_PROGRESS 
@@ -232,7 +207,6 @@ type nonrec service_status =
   | UPDATE_FAILED_CLEANUP_FAILED 
   | UPDATE_FAILED 
   | UPDATE_COMPLETE_CLEANUP_FAILED 
-type nonrec repository_id = unit
 type nonrec service =
   {
   branch_name: string option ;
@@ -242,15 +216,14 @@ type nonrec service =
   spec: string ;
   status_message: string option ;
   status: service_status ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   template_name: string ;
   arn: string ;
   description: string option ;
   name: string }
 type nonrec update_service_output = {
   service: service }
-type nonrec service_instance_arn = unit
 type nonrec service_instance =
   {
   last_succeeded_deployment_id: string option ;
@@ -264,15 +237,14 @@ type nonrec service_instance =
   template_name: string ;
   environment_name: string ;
   service_name: string ;
-  last_deployment_succeeded_at: Timestamp.t ;
-  last_deployment_attempted_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
 type nonrec update_service_instance_output =
   {
   service_instance: service_instance }
-type nonrec client_token = unit
 type nonrec update_service_instance_input =
   {
   client_token: string option ;
@@ -289,12 +261,11 @@ type nonrec update_service_input =
   name: string }
 type nonrec service_quota_exceeded_exception = {
   message: string }
-type nonrec environment_template_version_arn = unit
 type nonrec environment_template_version =
   {
   schema: string option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   description: string option ;
   status_message: string option ;
@@ -313,7 +284,6 @@ type nonrec update_environment_template_version_input =
   minor_version: string ;
   major_version: string ;
   template_name: string }
-type nonrec environment_template_arn = unit
 type nonrec environment_template =
   {
   provisioning: provisioning option ;
@@ -321,8 +291,8 @@ type nonrec environment_template =
   recommended_version: string option ;
   description: string option ;
   display_name: string option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
 type nonrec update_environment_template_output =
@@ -333,17 +303,12 @@ type nonrec update_environment_template_input =
   description: string option ;
   display_name: string option ;
   name: string }
-type nonrec environment_arn = unit
-type nonrec environment_account_connection_id = unit
-type nonrec aws_account_id = unit
-type nonrec repository_arn = unit
 type nonrec repository_branch =
   {
   branch: string ;
   name: string ;
   provider: repository_provider ;
   arn: string }
-type nonrec role_arn = unit
 type nonrec environment =
   {
   last_succeeded_deployment_id: string option ;
@@ -362,9 +327,9 @@ type nonrec environment =
   template_major_version: string ;
   template_name: string ;
   arn: string ;
-  last_deployment_succeeded_at: Timestamp.t ;
-  last_deployment_attempted_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   description: string option ;
   name: string }
 type nonrec update_environment_output = {
@@ -387,7 +352,6 @@ type nonrec update_environment_input =
   spec: string option ;
   description: string option ;
   name: string }
-type nonrec environment_account_connection_arn = unit
 type nonrec environment_account_connection_status =
   | PENDING 
   | CONNECTED 
@@ -397,8 +361,8 @@ type nonrec environment_account_connection =
   codebuild_role_arn: string option ;
   component_role_arn: string option ;
   status: environment_account_connection_status ;
-  last_modified_at: Timestamp.t ;
-  requested_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  requested_at: CoreTypes.Timestamp.t ;
   environment_name: string ;
   role_arn: string ;
   environment_account_id: string ;
@@ -414,7 +378,6 @@ type nonrec update_environment_account_connection_input =
   component_role_arn: string option ;
   role_arn: string option ;
   id: string }
-type nonrec component_arn = unit
 type nonrec component =
   {
   last_succeeded_deployment_id: string option ;
@@ -423,10 +386,10 @@ type nonrec component =
   service_spec: string option ;
   deployment_status_message: string option ;
   deployment_status: deployment_status ;
-  last_deployment_succeeded_at: Timestamp.t option ;
-  last_deployment_attempted_at: Timestamp.t option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   service_instance_name: string option ;
   service_name: string option ;
   environment_name: string ;
@@ -438,8 +401,6 @@ type nonrec update_component_output = {
 type nonrec component_deployment_update_type =
   | NONE 
   | CURRENT_VERSION 
-type nonrec resource_name_or_empty = unit
-type nonrec template_file_contents = unit
 type nonrec update_component_input =
   {
   client_token: string option ;
@@ -450,7 +411,6 @@ type nonrec update_component_input =
   description: string option ;
   deployment_type: component_deployment_update_type ;
   name: string }
-type nonrec role_arn_or_empty_string = unit
 type nonrec account_settings =
   {
   pipeline_codebuild_role_arn: string option ;
@@ -459,7 +419,6 @@ type nonrec account_settings =
 type nonrec update_account_settings_output =
   {
   account_settings: account_settings }
-type nonrec base_boolean = unit
 type nonrec update_account_settings_input =
   {
   pipeline_codebuild_role_arn: string option ;
@@ -467,26 +426,19 @@ type nonrec update_account_settings_input =
   pipeline_provisioning_repository: repository_branch_input option ;
   pipeline_service_role_arn: string option }
 type nonrec untag_resource_output = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_input =
   {
   tag_keys: string list ;
   resource_arn: string }
-type nonrec s3_bucket = unit
-type nonrec s3_key = unit
 type nonrec s3_object_source = {
   key: string ;
   bucket: string }
-type nonrec template_version_source_input = unit
-type nonrec template_sync_config_resource = unit
-type nonrec template_manifest_contents = unit
-type nonrec tag_value = unit
+type nonrec template_version_source_input =
+  | S3 of s3_object_source 
 type nonrec tag_resource_output = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = unit
 type nonrec tag_resource_input = {
   tags: tag list ;
   resource_arn: string }
@@ -498,8 +450,8 @@ type nonrec sort_order =
   | DESCENDING 
 type nonrec service_template_version_summary =
   {
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   description: string option ;
   status_message: string option ;
@@ -508,49 +460,37 @@ type nonrec service_template_version_summary =
   minor_version: string ;
   major_version: string ;
   template_name: string }
-type nonrec service_template_version_summary_list = unit
-type nonrec service_template_version_resource = unit
 type nonrec service_template_summary =
   {
   pipeline_provisioning: provisioning option ;
   recommended_version: string option ;
   description: string option ;
   display_name: string option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
-type nonrec service_template_summary_list = unit
-type nonrec service_template_resource = unit
-type nonrec service_sync_config_resource = unit
-type nonrec latest_sync_blockers = unit
 type nonrec service_sync_blocker_summary =
   {
   latest_blockers: sync_blocker list option ;
   service_instance_name: string option ;
   service_name: string }
-type nonrec service_sync_blocker_resource = unit
 type nonrec service_summary =
   {
   status_message: string option ;
   status: service_status ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   template_name: string ;
   arn: string ;
   description: string option ;
   name: string }
-type nonrec service_summary_list = unit
-type nonrec service_resource = unit
 type nonrec service_pipeline_state =
   {
   template_minor_version: string ;
   template_major_version: string ;
   template_name: string ;
   spec: string option }
-type nonrec service_pipeline_resource = unit
-type nonrec service_pipeline_provisioned_resource_resource = unit
-type nonrec service_pipeline_output_resource = unit
 type nonrec service_instance_summary =
   {
   last_succeeded_deployment_id: string option ;
@@ -562,13 +502,11 @@ type nonrec service_instance_summary =
   template_name: string ;
   environment_name: string ;
   service_name: string ;
-  last_deployment_succeeded_at: Timestamp.t ;
-  last_deployment_attempted_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
-type nonrec service_instance_summary_list = unit
-type nonrec component_deployment_id_list = unit
 type nonrec service_instance_state =
   {
   last_successful_service_pipeline_deployment_id: string option ;
@@ -578,10 +516,6 @@ type nonrec service_instance_state =
   template_major_version: string ;
   template_name: string ;
   spec: string }
-type nonrec service_instance_resource = unit
-type nonrec service_instance_provisioned_resource_resource = unit
-type nonrec service_instance_output_resource = unit
-type nonrec sh_a = unit
 type nonrec revision =
   {
   branch: string ;
@@ -597,15 +531,14 @@ type nonrec resource_sync_status =
 type nonrec resource_sync_event =
   {
   event: string ;
-  time: Timestamp.t ;
+  time: CoreTypes.Timestamp.t ;
   external_id: string option ;
   type_: string }
-type nonrec resource_sync_events = unit
 type nonrec resource_sync_attempt =
   {
   events: resource_sync_event list ;
   status: resource_sync_status ;
-  started_at: Timestamp.t ;
+  started_at: CoreTypes.Timestamp.t ;
   target: string ;
   target_revision: revision ;
   initial_revision: revision }
@@ -613,7 +546,6 @@ type nonrec resource_deployment_status =
   | IN_PROGRESS 
   | FAILED 
   | SUCCEEDED 
-type nonrec base_integer = unit
 type nonrec resource_counts_summary =
   {
   behind_minor: int option ;
@@ -630,30 +562,26 @@ type nonrec repository_sync_status =
 type nonrec repository_sync_event =
   {
   event: string ;
-  time: Timestamp.t ;
+  time: CoreTypes.Timestamp.t ;
   external_id: string option ;
   type_: string }
-type nonrec repository_sync_events = unit
 type nonrec repository_sync_definition =
   {
   directory: string ;
   branch: string ;
   parent: string ;
   target: string }
-type nonrec repository_sync_definition_list = unit
 type nonrec repository_sync_attempt =
   {
   events: repository_sync_event list ;
   status: repository_sync_status ;
-  started_at: Timestamp.t }
+  started_at: CoreTypes.Timestamp.t }
 type nonrec repository_summary =
   {
   connection_arn: string ;
   name: string ;
   provider: repository_provider ;
   arn: string }
-type nonrec repository_summary_list = unit
-type nonrec repository_resource = unit
 type nonrec repository =
   {
   encryption_key: string option ;
@@ -666,8 +594,6 @@ type nonrec reject_environment_account_connection_output =
   environment_account_connection: environment_account_connection }
 type nonrec reject_environment_account_connection_input = {
   id: string }
-type nonrec provisioned_resource_name = unit
-type nonrec provisioned_resource_identifier = unit
 type nonrec provisioned_resource_engine =
   | CLOUDFORMATION 
   | TERRAFORM 
@@ -676,13 +602,9 @@ type nonrec provisioned_resource =
   provisioning_engine: provisioned_resource_engine option ;
   identifier: string option ;
   name: string option }
-type nonrec provisioned_resource_list = unit
-type nonrec output_key = unit
-type nonrec output_value_string = unit
 type nonrec output = {
   value_string: string option ;
   key: string option }
-type nonrec outputs_list = unit
 type nonrec notify_resource_deployment_status_change_output = unit
 type nonrec notify_resource_deployment_status_change_input =
   {
@@ -691,8 +613,6 @@ type nonrec notify_resource_deployment_status_change_input =
   outputs: output list option ;
   status: resource_deployment_status option ;
   resource_arn: string }
-type nonrec next_token = unit
-type nonrec max_page_results = unit
 type nonrec list_tags_for_resource_output =
   {
   next_token: string option ;
@@ -728,7 +648,6 @@ type nonrec list_service_template_versions_input =
   template_name: string ;
   max_results: int option ;
   next_token: string option }
-type nonrec empty_next_token = unit
 type nonrec list_service_pipeline_provisioned_resources_output =
   {
   provisioned_resources: provisioned_resource list ;
@@ -769,12 +688,10 @@ type nonrec list_service_instances_filter_by =
   | LAST_DEPLOYMENT_ATTEMPTED_AT_AFTER 
   | CREATED_AT_BEFORE 
   | CREATED_AT_AFTER 
-type nonrec list_service_instances_filter_value = unit
 type nonrec list_service_instances_filter =
   {
   value: string option ;
   key: list_service_instances_filter_by option }
-type nonrec list_service_instances_filter_list = unit
 type nonrec list_service_instances_input =
   {
   sort_order: sort_order option ;
@@ -835,12 +752,11 @@ type nonrec environment_summary =
   template_major_version: string ;
   template_name: string ;
   arn: string ;
-  last_deployment_succeeded_at: Timestamp.t ;
-  last_deployment_attempted_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   description: string option ;
   name: string }
-type nonrec environment_summary_list = unit
 type nonrec list_environments_output =
   {
   environments: environment_summary list ;
@@ -849,7 +765,6 @@ type nonrec environment_template_filter =
   {
   major_version: string ;
   template_name: string }
-type nonrec environment_template_filter_list = unit
 type nonrec list_environments_input =
   {
   environment_templates: environment_template_filter list option ;
@@ -861,11 +776,10 @@ type nonrec environment_template_summary =
   recommended_version: string option ;
   description: string option ;
   display_name: string option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   name: string }
-type nonrec environment_template_summary_list = unit
 type nonrec list_environment_templates_output =
   {
   templates: environment_template_summary list ;
@@ -876,8 +790,8 @@ type nonrec list_environment_templates_input =
   next_token: string option }
 type nonrec environment_template_version_summary =
   {
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   arn: string ;
   description: string option ;
   status_message: string option ;
@@ -886,7 +800,6 @@ type nonrec environment_template_version_summary =
   minor_version: string ;
   major_version: string ;
   template_name: string }
-type nonrec environment_template_version_summary_list = unit
 type nonrec list_environment_template_versions_output =
   {
   template_versions: environment_template_version_summary list ;
@@ -918,15 +831,14 @@ type nonrec environment_account_connection_summary =
   {
   component_role_arn: string option ;
   status: environment_account_connection_status ;
-  last_modified_at: Timestamp.t ;
-  requested_at: Timestamp.t ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  requested_at: CoreTypes.Timestamp.t ;
   environment_name: string ;
   role_arn: string ;
   environment_account_id: string ;
   management_account_id: string ;
   arn: string ;
   id: string }
-type nonrec environment_account_connection_summary_list = unit
 type nonrec list_environment_account_connections_output =
   {
   next_token: string option ;
@@ -935,7 +847,6 @@ type nonrec list_environment_account_connections_output =
 type nonrec environment_account_connection_requester_account_type =
   | MANAGEMENT_ACCOUNT 
   | ENVIRONMENT_ACCOUNT 
-type nonrec environment_account_connection_status_list = unit
 type nonrec list_environment_account_connections_input =
   {
   max_results: int option ;
@@ -943,7 +854,6 @@ type nonrec list_environment_account_connections_input =
   statuses: environment_account_connection_status list option ;
   environment_name: string option ;
   requested_by: environment_account_connection_requester_account_type }
-type nonrec deployment_arn = unit
 type nonrec deployment_target_resource_type =
   | ENVIRONMENT 
   | SERVICE_PIPELINE 
@@ -958,15 +868,14 @@ type nonrec deployment_summary =
   service_instance_name: string option ;
   service_name: string option ;
   environment_name: string ;
-  completed_at: Timestamp.t option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  completed_at: CoreTypes.Timestamp.t option ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   target_resource_type: deployment_target_resource_type ;
-  target_resource_created_at: Timestamp.t ;
+  target_resource_created_at: CoreTypes.Timestamp.t ;
   target_arn: string ;
   arn: string ;
   id: string }
-type nonrec deployment_summary_list = unit
 type nonrec list_deployments_output =
   {
   deployments: deployment_summary list ;
@@ -985,16 +894,15 @@ type nonrec component_summary =
   last_attempted_deployment_id: string option ;
   deployment_status_message: string option ;
   deployment_status: deployment_status ;
-  last_deployment_succeeded_at: Timestamp.t option ;
-  last_deployment_attempted_at: Timestamp.t option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  last_deployment_succeeded_at: CoreTypes.Timestamp.t option ;
+  last_deployment_attempted_at: CoreTypes.Timestamp.t option ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   service_instance_name: string option ;
   service_name: string option ;
   environment_name: string ;
   arn: string ;
   name: string }
-type nonrec component_summary_list = unit
 type nonrec list_components_output =
   {
   components: component_summary list ;
@@ -1146,16 +1054,20 @@ type nonrec component_state =
   service_spec: string option ;
   service_instance_name: string option ;
   service_name: string option }
-type nonrec deployment_state = unit
+type nonrec deployment_state =
+  | Component of component_state 
+  | ServicePipeline of service_pipeline_state 
+  | Environment of environment_state 
+  | ServiceInstance of service_instance_state 
 type nonrec deployment =
   {
   target_state: deployment_state option ;
   initial_state: deployment_state option ;
   last_succeeded_deployment_id: string option ;
   last_attempted_deployment_id: string option ;
-  completed_at: Timestamp.t option ;
-  last_modified_at: Timestamp.t ;
-  created_at: Timestamp.t ;
+  completed_at: CoreTypes.Timestamp.t option ;
+  last_modified_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   deployment_status_message: string option ;
   deployment_status: deployment_status ;
   component_name: string option ;
@@ -1163,7 +1075,7 @@ type nonrec deployment =
   service_name: string option ;
   environment_name: string ;
   target_resource_type: deployment_target_resource_type ;
-  target_resource_created_at: Timestamp.t ;
+  target_resource_created_at: CoreTypes.Timestamp.t ;
   target_arn: string ;
   arn: string ;
   id: string }
@@ -1184,13 +1096,6 @@ type nonrec get_account_settings_output =
   {
   account_settings: account_settings option }
 type nonrec get_account_settings_input = unit
-type nonrec environment_template_version_resource = unit
-type nonrec environment_template_resource = unit
-type nonrec environment_resource = unit
-type nonrec environment_provisioned_resource_resource = unit
-type nonrec environment_output_resource = unit
-type nonrec environment_account_connection_resource = unit
-type nonrec deployment_resource = unit
 type nonrec delete_template_sync_config_output =
   {
   template_sync_config: template_sync_config option }
@@ -1402,9 +1307,6 @@ type nonrec create_component_input =
   service_name: string option ;
   description: string option ;
   name: string }
-type nonrec component_resource = unit
-type nonrec component_provisioned_resource_resource = unit
-type nonrec component_output_resource = unit
 type nonrec cancel_service_pipeline_deployment_output =
   {
   pipeline: service_pipeline }
@@ -1427,12 +1329,8 @@ type nonrec cancel_component_deployment_output = {
   component: component }
 type nonrec cancel_component_deployment_input = {
   component_name: string }
-type nonrec aws_proton20200720 = unit
-type nonrec account_settings_resource = unit
 type nonrec accept_environment_account_connection_output =
   {
   environment_account_connection: environment_account_connection }
 type nonrec accept_environment_account_connection_input = {
   id: string }
-type nonrec base_long = unit
-type nonrec base_document = unit

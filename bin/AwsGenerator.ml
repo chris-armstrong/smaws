@@ -101,20 +101,18 @@ let _ =
           match command with
           | TypesCommand ->
               write_output "types.ml" (fun output_fmt ->
-                  (* Gen_types.generate ~name ~service ~operation_shapes ~structure_shapes *)
-                  (*   ~alias_context output_fmt; *)
-                  Gen_types_ppx.generate ~name ~service ~operation_shapes ~structure_shapes
+                  Gen_types_ppx.generate_ml ~name ~service ~structure_shapes
                     ~alias_context:alias_context_ppx output_fmt);
               write_output "types.mli" (fun output_fmt ->
-                  Gen_types.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt)
+                  Gen_types_ppx.generate_mli ~name ~service ~structure_shapes
+                    ~alias_context:alias_context_ppx output_fmt)
           | BuildersCommand ->
               write_output "builders.ml" (fun output_fmt ->
                   Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt);
+                    ~alias_context:alias_context_ppx output_fmt);
               write_output "builders.mli" (fun output_fmt ->
                   Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt)
+                    ~alias_context:alias_context_ppx output_fmt)
           | ServiceCommand ->
               write_output "service.ml" (fun output_fmt -> SmithyHelpers.printServiceDetails shapes)
           | OperationsCommand ->
@@ -142,11 +140,11 @@ let _ =
                   Gen_doc.module_doc ~name ~service ~operation_shapes ~structure_shapes output_fmt;
                   Fmt.pf output_fmt "open Smaws_Lib@\n@\n";
                   Fmt.pf output_fmt "(** {1:types Types} *)@\n@\n";
-                  Gen_types.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context ~no_open:true output_fmt;
+                  Gen_types_ppx.generate_mli ~name ~service ~structure_shapes
+                    ~alias_context:alias_context_ppx ~no_open:true output_fmt;
                   Fmt.pf output_fmt "(** {1:builders Builders} *)@\n@\n";
                   Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context ~no_open:true output_fmt;
+                    ~alias_context:alias_context_ppx ~no_open:true output_fmt;
                   Fmt.pf output_fmt "(** {1:operations Operations} *)@\n@\n";
                   Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
                     ~alias_context ~no_open:true output_fmt))

@@ -490,7 +490,7 @@ let too_many_tags_exception_of_yojson =
   }
   in _res
 
-let date_of_yojson = timestamp_of_yojson
+let date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let time_window_of_yojson = 
   fun tree path : time_window ->
@@ -1510,7 +1510,7 @@ let compliance_type_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "ComplianceType" value)
     | _ -> raise (deserialize_wrong_type_error path "ComplianceType")
 
-let ordering_timestamp_of_yojson = timestamp_of_yojson
+let ordering_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let external_evaluation_of_yojson = 
   fun tree path : external_evaluation ->
@@ -2206,7 +2206,7 @@ let list_resource_evaluations_request_of_yojson =
   }
   in _res
 
-let resource_deletion_time_of_yojson = timestamp_of_yojson
+let resource_deletion_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let resource_identifier_of_yojson = 
   fun tree path : resource_identifier ->
@@ -2252,7 +2252,7 @@ let list_discovered_resources_request_of_yojson =
 
 let compliance_score_of_yojson = string_of_yojson
 
-let last_updated_time_of_yojson = timestamp_of_yojson
+let last_updated_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let conformance_pack_compliance_score_of_yojson = 
   fun tree path : conformance_pack_compliance_score ->
@@ -2425,7 +2425,8 @@ let resource_not_discovered_exception_of_yojson =
   }
   in _res
 
-let configuration_item_capture_time_of_yojson = timestamp_of_yojson
+let configuration_item_capture_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let configuration_item_status_of_yojson = 
   fun (tree: t) path : configuration_item_status -> match tree with 
@@ -2445,7 +2446,7 @@ let ar_n_of_yojson = string_of_yojson
 
 let availability_zone_of_yojson = string_of_yojson
 
-let resource_creation_time_of_yojson = timestamp_of_yojson
+let resource_creation_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let related_event_of_yojson = string_of_yojson
 
@@ -2469,7 +2470,8 @@ let relationship_of_yojson =
 let relationship_list_of_yojson = 
   fun tree path -> list_of_yojson relationship_of_yojson tree path 
 
-let configuration_item_delivery_time_of_yojson = timestamp_of_yojson
+let configuration_item_delivery_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let configuration_item_of_yojson = 
   fun tree path : configuration_item ->
@@ -2512,9 +2514,9 @@ let get_resource_config_history_response_of_yojson =
   }
   in _res
 
-let later_time_of_yojson = timestamp_of_yojson
+let later_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let earlier_time_of_yojson = timestamp_of_yojson
+let earlier_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let chronological_order_of_yojson = 
   fun (tree: t) path : chronological_order -> match tree with 
@@ -4650,7 +4652,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,11 +7,9 @@ let service =
       version = "2014-11-01";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec error_message_type = string
 type nonrec xks_proxy_vpc_endpoint_service_not_found_exception =
   {
   message: string option }
-type nonrec xks_proxy_vpc_endpoint_service_name_type = string
 type nonrec xks_proxy_vpc_endpoint_service_invalid_configuration_exception =
   {
   message: string option }
@@ -20,10 +18,8 @@ type nonrec xks_proxy_vpc_endpoint_service_in_use_exception =
   message: string option }
 type nonrec xks_proxy_uri_unreachable_exception = {
   message: string option }
-type nonrec xks_proxy_uri_path_type = string
 type nonrec xks_proxy_uri_in_use_exception = {
   message: string option }
-type nonrec xks_proxy_uri_endpoint_type = string
 type nonrec xks_proxy_uri_endpoint_in_use_exception =
   {
   message: string option }
@@ -35,11 +31,9 @@ type nonrec xks_proxy_invalid_configuration_exception =
 type nonrec xks_proxy_incorrect_authentication_credential_exception =
   {
   message: string option }
-type nonrec base_unit = unit
 type nonrec xks_proxy_connectivity_type =
   | VPC_ENDPOINT_SERVICE 
   | PUBLIC_ENDPOINT 
-type nonrec xks_proxy_authentication_access_key_id_type = string
 type nonrec xks_proxy_configuration_type =
   {
   vpc_endpoint_service_name: string option ;
@@ -47,7 +41,6 @@ type nonrec xks_proxy_configuration_type =
   uri_endpoint: string option ;
   access_key_id: string option ;
   connectivity: xks_proxy_connectivity_type option }
-type nonrec xks_proxy_authentication_raw_secret_access_key_type = string
 type nonrec xks_proxy_authentication_credential_type =
   {
   raw_secret_access_key: string ;
@@ -57,7 +50,6 @@ type nonrec xks_key_not_found_exception = {
 type nonrec xks_key_invalid_configuration_exception =
   {
   message: string option }
-type nonrec xks_key_id_type = string
 type nonrec xks_key_configuration_type = {
   id: string option }
 type nonrec xks_key_already_in_use_exception = {
@@ -67,8 +59,6 @@ type nonrec wrapping_key_spec =
   | RSA_4096 
   | RSA_3072 
   | RSA_2048 
-type nonrec key_id_type = string
-type nonrec boolean_type = bool
 type nonrec signing_algorithm_spec =
   | SM2DSA 
   | ECDSA_SHA_512 
@@ -85,14 +75,9 @@ type nonrec verify_response =
   signing_algorithm: signing_algorithm_spec option ;
   signature_valid: bool option ;
   key_id: string option }
-type nonrec plaintext_type = bytes
 type nonrec message_type =
   | DIGEST 
   | RAW 
-type nonrec ciphertext_type = bytes
-type nonrec grant_token_type = string
-type nonrec grant_token_list = string list option list
-type nonrec nullable_boolean_type = bool
 type nonrec verify_request =
   {
   dry_run: bool option ;
@@ -142,7 +127,6 @@ type nonrec kms_invalid_signature_exception = {
   message: string option }
 type nonrec dependency_timeout_exception = {
   message: string option }
-type nonrec region_type = string
 type nonrec update_primary_region_request =
   {
   primary_region: string ;
@@ -151,16 +135,11 @@ type nonrec unsupported_operation_exception = {
   message: string option }
 type nonrec invalid_arn_exception = {
   message: string option }
-type nonrec description_type = string
 type nonrec update_key_description_request =
   {
   description: string ;
   key_id: string }
 type nonrec update_custom_key_store_response = unit
-type nonrec custom_key_store_id_type = string
-type nonrec custom_key_store_name_type = string
-type nonrec key_store_password_type = string
-type nonrec cloud_hsm_cluster_id_type = string
 type nonrec update_custom_key_store_request =
   {
   xks_proxy_connectivity: xks_proxy_connectivity_type option ;
@@ -192,26 +171,20 @@ type nonrec cloud_hsm_cluster_not_active_exception =
 type nonrec cloud_hsm_cluster_invalid_configuration_exception =
   {
   message: string option }
-type nonrec alias_name_type = string
 type nonrec update_alias_request =
   {
   target_key_id: string ;
   alias_name: string }
 type nonrec limit_exceeded_exception = {
   message: string option }
-type nonrec tag_key_type = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request = {
   tag_keys: string list ;
   key_id: string }
 type nonrec tag_exception = {
   message: string option }
-type nonrec trust_anchor_certificate_type = string
-type nonrec tag_value_type = string
 type nonrec tag = {
   tag_value: string ;
   tag_key: string }
-type nonrec tag_list = tag list option list
 type nonrec tag_resource_request = {
   tags: tag list ;
   key_id: string }
@@ -228,7 +201,6 @@ type nonrec sign_request =
   message_type: message_type option ;
   message: bytes ;
   key_id: string }
-type nonrec date_type = Timestamp.t
 type nonrec key_state =
   | Updating 
   | Unavailable 
@@ -238,12 +210,11 @@ type nonrec key_state =
   | Disabled 
   | Enabled 
   | Creating 
-type nonrec pending_window_in_days_type = int
 type nonrec schedule_key_deletion_response =
   {
   pending_window_in_days: int option ;
   key_state: key_state option ;
-  deletion_date: float option ;
+  deletion_date: CoreTypes.Timestamp.t option ;
   key_id: string option }
 type nonrec schedule_key_deletion_request =
   {
@@ -257,7 +228,6 @@ type nonrec rotate_key_on_demand_request = {
   key_id: string }
 type nonrec invalid_grant_id_exception = {
   message: string option }
-type nonrec grant_id_type = string
 type nonrec revoke_grant_request =
   {
   dry_run: bool option ;
@@ -273,8 +243,6 @@ type nonrec malformed_policy_document_exception = {
   message: string option }
 type nonrec already_exists_exception = {
   message: string option }
-type nonrec aws_account_id_type = string
-type nonrec arn_type = string
 type nonrec key_usage_type =
   | KEY_AGREEMENT 
   | GENERATE_VERIFY_MAC 
@@ -324,27 +292,19 @@ type nonrec encryption_algorithm_spec =
   | RSAES_OAEP_SHA_256 
   | RSAES_OAEP_SHA_1 
   | SYMMETRIC_DEFAULT 
-type nonrec encryption_algorithm_spec_list =
-  encryption_algorithm_spec list option list
-type nonrec signing_algorithm_spec_list =
-  signing_algorithm_spec list option list
 type nonrec key_agreement_algorithm_spec =
   | ECDH 
-type nonrec key_agreement_algorithm_spec_list =
-  key_agreement_algorithm_spec list option list
 type nonrec multi_region_key_type =
   | REPLICA 
   | PRIMARY 
 type nonrec multi_region_key = {
   region: string option ;
   arn: string option }
-type nonrec multi_region_key_list = multi_region_key list option list
 type nonrec multi_region_configuration =
   {
   replica_keys: multi_region_key list option ;
   primary_key: multi_region_key option ;
   multi_region_key_type: multi_region_key_type option }
-type nonrec mac_algorithm_spec_list = mac_algorithm_spec list option list
 type nonrec key_metadata =
   {
   xks_key_configuration: xks_key_configuration_type option ;
@@ -362,17 +322,16 @@ type nonrec key_metadata =
   cloud_hsm_cluster_id: string option ;
   custom_key_store_id: string option ;
   origin: origin_type option ;
-  valid_to: float option ;
-  deletion_date: float option ;
+  valid_to: CoreTypes.Timestamp.t option ;
+  deletion_date: CoreTypes.Timestamp.t option ;
   key_state: key_state option ;
   key_usage: key_usage_type option ;
   description: string option ;
   enabled: bool option ;
-  creation_date: float option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   arn: string option ;
   key_id: string ;
   aws_account_id: string option }
-type nonrec policy_type = string
 type nonrec replicate_key_response =
   {
   replica_tags: tag list option ;
@@ -397,21 +356,18 @@ type nonrec re_encrypt_response =
   key_id: string option ;
   source_key_id: string option ;
   ciphertext_blob: bytes option }
-type nonrec encryption_context_value = string
-type nonrec encryption_context_key = string
-type nonrec encryption_context_type = (string_ option * string_ option) list
+type nonrec encryption_context_type = (string * string) list
 type nonrec re_encrypt_request =
   {
   dry_run: bool option ;
   grant_tokens: string list option ;
   destination_encryption_algorithm: encryption_algorithm_spec option ;
   source_encryption_algorithm: encryption_algorithm_spec option ;
-  destination_encryption_context: (string * string) list option ;
+  destination_encryption_context: encryption_context_type option ;
   destination_key_id: string ;
   source_key_id: string option ;
-  source_encryption_context: (string * string) list option ;
+  source_encryption_context: encryption_context_type option ;
   ciphertext_blob: bytes }
-type nonrec policy_name_type = string
 type nonrec put_key_policy_request =
   {
   bypass_policy_lockout_safety_check: bool option ;
@@ -420,8 +376,6 @@ type nonrec put_key_policy_request =
   key_id: string }
 type nonrec invalid_marker_exception = {
   message: string option }
-type nonrec grant_name_type = string
-type nonrec principal_id_type = string
 type nonrec grant_operation =
   | DeriveSharedSecret 
   | VerifyMac 
@@ -440,11 +394,10 @@ type nonrec grant_operation =
   | GenerateDataKey 
   | Encrypt 
   | Decrypt 
-type nonrec grant_operation_list = grant_operation list option list
 type nonrec grant_constraints =
   {
-  encryption_context_equals: (string * string) list option ;
-  encryption_context_subset: (string * string) list option }
+  encryption_context_equals: encryption_context_type option ;
+  encryption_context_subset: encryption_context_type option }
 type nonrec grant_list_entry =
   {
   constraints: grant_constraints option ;
@@ -452,18 +405,15 @@ type nonrec grant_list_entry =
   issuing_account: string option ;
   retiring_principal: string option ;
   grantee_principal: string option ;
-  creation_date: float option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   name: string option ;
   grant_id: string option ;
   key_id: string option }
-type nonrec grant_list = grant_list_entry list option list
-type nonrec marker_type = string
 type nonrec list_grants_response =
   {
   truncated: bool option ;
   next_marker: string option ;
   grants: grant_list_entry list option }
-type nonrec limit_type = int
 type nonrec list_retirable_grants_request =
   {
   retiring_principal: string ;
@@ -482,7 +432,6 @@ type nonrec list_resource_tags_request =
 type nonrec key_list_entry = {
   key_arn: string option ;
   key_id: string option }
-type nonrec key_list = key_list_entry list option list
 type nonrec list_keys_response =
   {
   truncated: bool option ;
@@ -497,9 +446,8 @@ type nonrec rotation_type =
 type nonrec rotations_list_entry =
   {
   rotation_type: rotation_type option ;
-  rotation_date: float option ;
+  rotation_date: CoreTypes.Timestamp.t option ;
   key_id: string option }
-type nonrec rotations_list = rotations_list_entry list option list
 type nonrec list_key_rotations_response =
   {
   truncated: bool option ;
@@ -510,7 +458,6 @@ type nonrec list_key_rotations_request =
   marker: string option ;
   limit: int option ;
   key_id: string }
-type nonrec policy_name_list = string list option list
 type nonrec list_key_policies_response =
   {
   truncated: bool option ;
@@ -530,12 +477,11 @@ type nonrec list_grants_request =
   limit: int option }
 type nonrec alias_list_entry =
   {
-  last_updated_date: float option ;
-  creation_date: float option ;
+  last_updated_date: CoreTypes.Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   target_key_id: string option ;
   alias_arn: string option ;
   alias_name: string option }
-type nonrec alias_list = alias_list_entry list option list
 type nonrec list_aliases_response =
   {
   truncated: bool option ;
@@ -556,11 +502,10 @@ type nonrec import_key_material_response = unit
 type nonrec import_key_material_request =
   {
   expiration_model: expiration_model_type option ;
-  valid_to: float option ;
+  valid_to: CoreTypes.Timestamp.t option ;
   encrypted_key_material: bytes ;
   import_token: bytes ;
   key_id: string }
-type nonrec public_key_type = bytes
 type nonrec get_public_key_response =
   {
   key_agreement_algorithms: key_agreement_algorithm_spec list option ;
@@ -577,7 +522,7 @@ type nonrec get_public_key_request =
   key_id: string }
 type nonrec get_parameters_for_import_response =
   {
-  parameters_valid_to: float option ;
+  parameters_valid_to: CoreTypes.Timestamp.t option ;
   public_key: bytes option ;
   import_token: bytes option ;
   key_id: string option }
@@ -593,11 +538,10 @@ type nonrec get_parameters_for_import_request =
   wrapping_key_spec: wrapping_key_spec ;
   wrapping_algorithm: algorithm_spec ;
   key_id: string }
-type nonrec rotation_period_in_days_type = int
 type nonrec get_key_rotation_status_response =
   {
-  on_demand_rotation_start_date: float option ;
-  next_rotation_date: float option ;
+  on_demand_rotation_start_date: CoreTypes.Timestamp.t option ;
+  next_rotation_date: CoreTypes.Timestamp.t option ;
   rotation_period_in_days: int option ;
   key_id: string option ;
   key_rotation_enabled: bool option }
@@ -615,10 +559,8 @@ type nonrec generate_random_response =
   {
   ciphertext_for_recipient: bytes option ;
   plaintext: bytes option }
-type nonrec number_of_bytes_type = int
 type nonrec key_encryption_mechanism =
   | RSAES_OAEP_SHA_256 
-type nonrec attestation_document_type = bytes
 type nonrec recipient_info =
   {
   attestation_document: bytes option ;
@@ -653,7 +595,7 @@ type nonrec generate_data_key_without_plaintext_request =
   grant_tokens: string list option ;
   number_of_bytes: int option ;
   key_spec: data_key_spec option ;
-  encryption_context: (string * string) list option ;
+  encryption_context: encryption_context_type option ;
   key_id: string }
 type nonrec data_key_pair_spec =
   | SM2 
@@ -676,7 +618,7 @@ type nonrec generate_data_key_pair_without_plaintext_request =
   grant_tokens: string list option ;
   key_pair_spec: data_key_pair_spec ;
   key_id: string ;
-  encryption_context: (string * string) list option }
+  encryption_context: encryption_context_type option }
 type nonrec generate_data_key_pair_response =
   {
   ciphertext_for_recipient: bytes option ;
@@ -692,7 +634,7 @@ type nonrec generate_data_key_pair_request =
   grant_tokens: string list option ;
   key_pair_spec: data_key_pair_spec ;
   key_id: string ;
-  encryption_context: (string * string) list option }
+  encryption_context: encryption_context_type option }
 type nonrec generate_data_key_response =
   {
   ciphertext_for_recipient: bytes option ;
@@ -706,7 +648,7 @@ type nonrec generate_data_key_request =
   grant_tokens: string list option ;
   key_spec: data_key_spec option ;
   number_of_bytes: int option ;
-  encryption_context: (string * string) list option ;
+  encryption_context: encryption_context_type option ;
   key_id: string }
 type nonrec encrypt_response =
   {
@@ -718,7 +660,7 @@ type nonrec encrypt_request =
   dry_run: bool option ;
   encryption_algorithm: encryption_algorithm_spec option ;
   grant_tokens: string list option ;
-  encryption_context: (string * string) list option ;
+  encryption_context: encryption_context_type option ;
   plaintext: bytes ;
   key_id: string }
 type nonrec enable_key_rotation_request =
@@ -773,15 +715,13 @@ type nonrec custom_key_stores_list_entry =
   {
   xks_proxy_configuration: xks_proxy_configuration_type option ;
   custom_key_store_type: custom_key_store_type option ;
-  creation_date: float option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   connection_error_code: connection_error_code_type option ;
   connection_state: connection_state_type option ;
   trust_anchor_certificate: string option ;
   cloud_hsm_cluster_id: string option ;
   custom_key_store_name: string option ;
   custom_key_store_id: string option }
-type nonrec custom_key_stores_list =
-  custom_key_stores_list_entry list option list
 type nonrec describe_custom_key_stores_response =
   {
   truncated: bool option ;
@@ -830,7 +770,7 @@ type nonrec decrypt_request =
   encryption_algorithm: encryption_algorithm_spec option ;
   key_id: string option ;
   grant_tokens: string list option ;
-  encryption_context: (string * string) list option ;
+  encryption_context: encryption_context_type option ;
   ciphertext_blob: bytes }
 type nonrec create_key_response = {
   key_metadata: key_metadata option }
@@ -894,10 +834,3 @@ type nonrec cancel_key_deletion_response = {
   key_id: string option }
 type nonrec cancel_key_deletion_request = {
   key_id: string }
-type nonrec trent_service = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

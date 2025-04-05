@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,7 +7,6 @@ let service =
       version = "2017-10-01";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec string_ = unit
 type nonrec unsupported_operation_exception = {
   message: string option }
 type nonrec organization_state_exception = {
@@ -26,16 +25,11 @@ type nonrec directory_service_authentication_failed_exception =
   {
   message: string option }
 type nonrec update_user_response = unit
-type nonrec organization_id = unit
-type nonrec entity_identifier = unit
-type nonrec base_unit = unit
 type nonrec user_role =
   | REMOTE_USER 
   | SYSTEM_USER 
   | RESOURCE 
   | USER 
-type nonrec user_attribute = unit
-type nonrec boolean_object = unit
 type nonrec update_user_request =
   {
   office: string option ;
@@ -66,14 +60,11 @@ type nonrec invalid_configuration_exception = {
 type nonrec email_address_in_use_exception = {
   message: string option }
 type nonrec update_resource_response = unit
-type nonrec resource_name = unit
-type nonrec boolean_ = unit
 type nonrec booking_options =
   {
   auto_decline_conflicting_requests: bool option ;
   auto_decline_recurring_requests: bool option ;
   auto_accept_requests: bool option }
-type nonrec new_resource_description = unit
 type nonrec resource_type =
   | EQUIPMENT 
   | ROOM 
@@ -87,27 +78,15 @@ type nonrec update_resource_request =
   resource_id: string ;
   organization_id: string }
 type nonrec update_primary_email_address_response = unit
-type nonrec email_address = unit
 type nonrec update_primary_email_address_request =
   {
   email: string ;
   entity_id: string ;
   organization_id: string }
 type nonrec update_mobile_device_access_rule_response = unit
-type nonrec mobile_device_access_rule_id = unit
-type nonrec mobile_device_access_rule_name = unit
-type nonrec mobile_device_access_rule_description = unit
 type nonrec mobile_device_access_rule_effect =
   | DENY 
   | ALLOW 
-type nonrec device_type = unit
-type nonrec device_type_list = unit
-type nonrec device_model = unit
-type nonrec device_model_list = unit
-type nonrec device_operating_system = unit
-type nonrec device_operating_system_list = unit
-type nonrec device_user_agent = unit
-type nonrec device_user_agent_list = unit
 type nonrec update_mobile_device_access_rule_request =
   {
   not_device_user_agents: string list option ;
@@ -124,7 +103,6 @@ type nonrec update_mobile_device_access_rule_request =
   mobile_device_access_rule_id: string ;
   organization_id: string }
 type nonrec update_mailbox_quota_response = unit
-type nonrec mailbox_quota = unit
 type nonrec update_mailbox_quota_request =
   {
   mailbox_quota: int ;
@@ -135,19 +113,12 @@ type nonrec resource_not_found_exception = {
 type nonrec limit_exceeded_exception = {
   message: string option }
 type nonrec update_impersonation_role_response = unit
-type nonrec impersonation_role_id = unit
-type nonrec impersonation_role_name = unit
 type nonrec impersonation_role_type =
   | READ_ONLY 
   | FULL_ACCESS 
-type nonrec impersonation_role_description = unit
-type nonrec impersonation_rule_id = unit
-type nonrec impersonation_rule_name = unit
-type nonrec impersonation_rule_description = unit
 type nonrec access_effect =
   | DENY 
   | ALLOW 
-type nonrec target_users = unit
 type nonrec impersonation_rule =
   {
   not_target_users: string list option ;
@@ -156,7 +127,6 @@ type nonrec impersonation_rule =
   description: string option ;
   name: string option ;
   impersonation_rule_id: string }
-type nonrec impersonation_rule_list = unit
 type nonrec update_impersonation_role_request =
   {
   rules: impersonation_rule list ;
@@ -172,22 +142,16 @@ type nonrec update_group_request =
   group_id: string ;
   organization_id: string }
 type nonrec update_default_mail_domain_response = unit
-type nonrec work_mail_domain_name = unit
 type nonrec update_default_mail_domain_request =
   {
   domain_name: string ;
   organization_id: string }
 type nonrec update_availability_configuration_response = unit
-type nonrec domain_name = unit
-type nonrec url = unit
-type nonrec external_user_name = unit
-type nonrec password = unit
 type nonrec ews_availability_provider =
   {
   ews_password: string ;
   ews_username: string ;
   ews_endpoint: string }
-type nonrec lambda_arn = unit
 type nonrec lambda_availability_provider = {
   lambda_arn: string }
 type nonrec update_availability_configuration_request =
@@ -197,9 +161,6 @@ type nonrec update_availability_configuration_request =
   domain_name: string ;
   organization_id: string }
 type nonrec untag_resource_response = unit
-type nonrec amazon_resource_name = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
@@ -217,23 +178,14 @@ type nonrec test_availability_configuration_request =
 type nonrec too_many_tags_exception = {
   message: string option }
 type nonrec tag_resource_response = unit
-type nonrec tag_value = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_ar_n: string }
-type nonrec mailbox_export_job_id = unit
 type nonrec start_mailbox_export_job_response = {
   job_id: string option }
-type nonrec idempotency_client_token = unit
-type nonrec description = unit
-type nonrec role_arn = unit
-type nonrec kms_key_arn = unit
-type nonrec s3_bucket_name = unit
-type nonrec s3_object_key = unit
 type nonrec start_mailbox_export_job_request =
   {
   s3_prefix: string ;
@@ -247,7 +199,6 @@ type nonrec start_mailbox_export_job_request =
 type nonrec invalid_password_exception = {
   message: string option }
 type nonrec reset_password_response = unit
-type nonrec work_mail_identifier = unit
 type nonrec reset_password_request =
   {
   password: string ;
@@ -270,8 +221,6 @@ type nonrec register_mail_domain_request =
   organization_id: string ;
   client_token: string option }
 type nonrec put_retention_policy_response = unit
-type nonrec short_string = unit
-type nonrec policy_description = unit
 type nonrec folder_name =
   | JUNK_EMAIL 
   | DRAFTS 
@@ -282,13 +231,11 @@ type nonrec retention_action =
   | PERMANENTLY_DELETE 
   | DELETE 
   | NONE 
-type nonrec retention_period = unit
 type nonrec folder_configuration =
   {
   period: int option ;
   action: retention_action ;
   name: folder_name }
-type nonrec folder_configurations = unit
 type nonrec put_retention_policy_request =
   {
   folder_configurations: folder_configuration list ;
@@ -297,7 +244,6 @@ type nonrec put_retention_policy_request =
   id: string option ;
   organization_id: string }
 type nonrec put_mobile_device_access_override_response = unit
-type nonrec device_id = unit
 type nonrec put_mobile_device_access_override_request =
   {
   description: string option ;
@@ -310,7 +256,6 @@ type nonrec permission_type =
   | SEND_ON_BEHALF 
   | SEND_AS 
   | FULL_ACCESS 
-type nonrec permission_values = unit
 type nonrec put_mailbox_permissions_request =
   {
   permission_values: permission_type list ;
@@ -323,24 +268,15 @@ type nonrec put_inbound_dmarc_settings_request =
   enforced: bool ;
   organization_id: string }
 type nonrec put_email_monitoring_configuration_response = unit
-type nonrec log_group_arn = unit
 type nonrec put_email_monitoring_configuration_request =
   {
   log_group_arn: string ;
   role_arn: string ;
   organization_id: string }
 type nonrec put_access_control_rule_response = unit
-type nonrec access_control_rule_name = unit
 type nonrec access_control_rule_effect =
   | DENY 
   | ALLOW 
-type nonrec access_control_rule_description = unit
-type nonrec ip_range = unit
-type nonrec ip_range_list = unit
-type nonrec access_control_rule_action = unit
-type nonrec actions_list = unit
-type nonrec user_id_list = unit
-type nonrec impersonation_role_id_list = unit
 type nonrec put_access_control_rule_request =
   {
   not_impersonation_role_ids: string list option ;
@@ -355,29 +291,24 @@ type nonrec put_access_control_rule_request =
   description: string ;
   effect_: access_control_rule_effect ;
   name: string }
-type nonrec user_name = unit
 type nonrec entity_state =
   | DELETED 
   | DISABLED 
   | ENABLED 
-type nonrec timestamp_ = unit
 type nonrec user =
   {
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   user_role: user_role option ;
   state: entity_state option ;
   display_name: string option ;
   name: string option ;
   email: string option ;
   id: string option }
-type nonrec users = unit
-type nonrec next_token = unit
 type nonrec list_users_response =
   {
   next_token: string option ;
   users: user list option }
-type nonrec max_results = unit
 type nonrec list_users_filters =
   {
   state: entity_state option ;
@@ -394,18 +325,16 @@ type nonrec list_tags_for_resource_response = {
   tags: tag list option }
 type nonrec list_tags_for_resource_request = {
   resource_ar_n: string }
-type nonrec resource_description = unit
 type nonrec resource =
   {
   description: string option ;
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   state: entity_state option ;
   type_: resource_type option ;
   name: string option ;
   email: string option ;
   id: string option }
-type nonrec resources = unit
 type nonrec list_resources_response =
   {
   next_token: string option ;
@@ -427,7 +356,6 @@ type nonrec member_type =
 type nonrec delegate = {
   type_: member_type ;
   id: string }
-type nonrec resource_delegates = unit
 type nonrec list_resource_delegates_response =
   {
   next_token: string option ;
@@ -438,7 +366,6 @@ type nonrec list_resource_delegates_request =
   next_token: string option ;
   resource_id: string ;
   organization_id: string }
-type nonrec organization_name = unit
 type nonrec organization_summary =
   {
   state: string option ;
@@ -446,7 +373,6 @@ type nonrec organization_summary =
   default_mail_domain: string option ;
   alias: string option ;
   organization_id: string option }
-type nonrec organization_summaries = unit
 type nonrec list_organizations_response =
   {
   next_token: string option ;
@@ -457,8 +383,8 @@ type nonrec list_organizations_request =
   next_token: string option }
 type nonrec mobile_device_access_rule =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   not_device_user_agents: string list option ;
   device_user_agents: string list option ;
   not_device_operating_systems: string list option ;
@@ -471,7 +397,6 @@ type nonrec mobile_device_access_rule =
   description: string option ;
   name: string option ;
   mobile_device_access_rule_id: string option }
-type nonrec mobile_device_access_rules_list = unit
 type nonrec list_mobile_device_access_rules_response =
   {
   rules: mobile_device_access_rule list option }
@@ -480,13 +405,12 @@ type nonrec list_mobile_device_access_rules_request =
   organization_id: string }
 type nonrec mobile_device_access_override =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   description: string option ;
   effect_: mobile_device_access_rule_effect option ;
   device_id: string option ;
   user_id: string option }
-type nonrec mobile_device_access_overrides_list = unit
 type nonrec list_mobile_device_access_overrides_response =
   {
   next_token: string option ;
@@ -502,7 +426,6 @@ type nonrec mail_domain_summary =
   {
   default_domain: bool option ;
   domain_name: string option }
-type nonrec mail_domains = unit
 type nonrec list_mail_domains_response =
   {
   next_token: string option ;
@@ -517,7 +440,6 @@ type nonrec permission =
   permission_values: permission_type list ;
   grantee_type: member_type ;
   grantee_id: string }
-type nonrec permissions = unit
 type nonrec list_mailbox_permissions_response =
   {
   next_token: string option ;
@@ -528,7 +450,6 @@ type nonrec list_mailbox_permissions_request =
   next_token: string option ;
   entity_id: string ;
   organization_id: string }
-type nonrec percentage = unit
 type nonrec mailbox_export_job_state =
   | CANCELLED 
   | FAILED 
@@ -536,8 +457,8 @@ type nonrec mailbox_export_job_state =
   | RUNNING 
 type nonrec mailbox_export_job =
   {
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   state: mailbox_export_job_state option ;
   estimated_progress: int option ;
   s3_path: string option ;
@@ -545,7 +466,6 @@ type nonrec mailbox_export_job =
   description: string option ;
   entity_id: string option ;
   job_id: string option }
-type nonrec jobs = unit
 type nonrec list_mailbox_export_jobs_response =
   {
   next_token: string option ;
@@ -557,12 +477,11 @@ type nonrec list_mailbox_export_jobs_request =
   organization_id: string }
 type nonrec impersonation_role =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   type_: impersonation_role_type option ;
   name: string option ;
   impersonation_role_id: string option }
-type nonrec impersonation_role_list = unit
 type nonrec list_impersonation_roles_response =
   {
   next_token: string option ;
@@ -572,12 +491,10 @@ type nonrec list_impersonation_roles_request =
   max_results: int option ;
   next_token: string option ;
   organization_id: string }
-type nonrec group_name = unit
 type nonrec group_identifier =
   {
   group_name: string option ;
   group_id: string option }
-type nonrec group_identifiers = unit
 type nonrec list_groups_for_entity_response =
   {
   next_token: string option ;
@@ -594,13 +511,12 @@ type nonrec list_groups_for_entity_request =
   organization_id: string }
 type nonrec group =
   {
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   state: entity_state option ;
   name: string option ;
   email: string option ;
   id: string option }
-type nonrec groups = unit
 type nonrec list_groups_response =
   {
   next_token: string option ;
@@ -618,13 +534,12 @@ type nonrec list_groups_request =
   organization_id: string }
 type nonrec member =
   {
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   state: entity_state option ;
   type_: member_type option ;
   name: string option ;
   id: string option }
-type nonrec members = unit
 type nonrec list_group_members_response =
   {
   next_token: string option ;
@@ -644,13 +559,12 @@ type nonrec redacted_ews_availability_provider =
   ews_endpoint: string option }
 type nonrec availability_configuration =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   lambda_provider: lambda_availability_provider option ;
   ews_provider: redacted_ews_availability_provider option ;
   provider_type: availability_provider_type option ;
   domain_name: string option }
-type nonrec availability_configuration_list = unit
 type nonrec list_availability_configurations_response =
   {
   next_token: string option ;
@@ -660,7 +574,6 @@ type nonrec list_availability_configurations_request =
   next_token: string option ;
   max_results: int option ;
   organization_id: string }
-type nonrec aliases = unit
 type nonrec list_aliases_response =
   {
   next_token: string option ;
@@ -675,8 +588,8 @@ type nonrec access_control_rule =
   {
   not_impersonation_role_ids: string list option ;
   impersonation_role_ids: string list option ;
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   not_user_ids: string list option ;
   user_ids: string list option ;
   not_actions: string list option ;
@@ -686,7 +599,6 @@ type nonrec access_control_rule =
   description: string option ;
   effect_: access_control_rule_effect option ;
   name: string option }
-type nonrec access_control_rules_list = unit
 type nonrec list_access_control_rules_response =
   {
   rules: access_control_rule list option }
@@ -694,8 +606,8 @@ type nonrec list_access_control_rules_request = {
   organization_id: string }
 type nonrec get_mobile_device_access_override_response =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   description: string option ;
   effect_: mobile_device_access_rule_effect option ;
   device_id: string option ;
@@ -709,7 +621,6 @@ type nonrec mobile_device_access_matched_rule =
   {
   name: string option ;
   mobile_device_access_rule_id: string option }
-type nonrec mobile_device_access_matched_rule_list = unit
 type nonrec get_mobile_device_access_effect_response =
   {
   matched_rules: mobile_device_access_matched_rule list option ;
@@ -726,7 +637,6 @@ type nonrec dns_record =
   value: string option ;
   hostname: string option ;
   type_: string option }
-type nonrec dns_records = unit
 type nonrec dns_record_verification_status =
   | FAILED 
   | VERIFIED 
@@ -742,7 +652,6 @@ type nonrec get_mail_domain_request =
   {
   domain_name: string ;
   organization_id: string }
-type nonrec mailbox_size = unit
 type nonrec get_mailbox_details_response =
   {
   mailbox_size: float option ;
@@ -755,7 +664,6 @@ type nonrec impersonation_matched_rule =
   {
   name: string option ;
   impersonation_rule_id: string option }
-type nonrec impersonation_matched_rule_list = unit
 type nonrec get_impersonation_role_effect_response =
   {
   matched_rules: impersonation_matched_rule list option ;
@@ -768,8 +676,8 @@ type nonrec get_impersonation_role_effect_request =
   organization_id: string }
 type nonrec get_impersonation_role_response =
   {
-  date_modified: Timestamp.t option ;
-  date_created: Timestamp.t option ;
+  date_modified: CoreTypes.Timestamp.t option ;
+  date_created: CoreTypes.Timestamp.t option ;
   rules: impersonation_rule list option ;
   description: string option ;
   type_: impersonation_role_type option ;
@@ -787,12 +695,10 @@ type nonrec get_default_retention_policy_response =
   id: string option }
 type nonrec get_default_retention_policy_request = {
   organization_id: string }
-type nonrec access_control_rule_name_list = unit
 type nonrec get_access_control_effect_response =
   {
   matched_rules: string list option ;
   effect_: access_control_rule_effect option }
-type nonrec ip_address = unit
 type nonrec get_access_control_effect_request =
   {
   impersonation_role_id: string option ;
@@ -827,10 +733,10 @@ type nonrec describe_user_response =
   hidden_from_global_address_list: bool option ;
   last_name: string option ;
   first_name: string option ;
-  mailbox_deprovisioned_date: Timestamp.t option ;
-  mailbox_provisioned_date: Timestamp.t option ;
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  mailbox_deprovisioned_date: CoreTypes.Timestamp.t option ;
+  mailbox_provisioned_date: CoreTypes.Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   user_role: user_role option ;
   state: entity_state option ;
   display_name: string option ;
@@ -841,13 +747,12 @@ type nonrec describe_user_request =
   {
   user_id: string ;
   organization_id: string }
-type nonrec resource_id = unit
 type nonrec describe_resource_response =
   {
   hidden_from_global_address_list: bool option ;
   description: string option ;
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   state: entity_state option ;
   booking_options: booking_options option ;
   type_: resource_type option ;
@@ -864,7 +769,7 @@ type nonrec describe_organization_response =
   migration_admin: string option ;
   ar_n: string option ;
   error_message: string option ;
-  completed_date: Timestamp.t option ;
+  completed_date: CoreTypes.Timestamp.t option ;
   default_mail_domain: string option ;
   directory_type: string option ;
   directory_id: string option ;
@@ -873,11 +778,10 @@ type nonrec describe_organization_response =
   organization_id: string option }
 type nonrec describe_organization_request = {
   organization_id: string }
-type nonrec mailbox_export_error_info = unit
 type nonrec describe_mailbox_export_job_response =
   {
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   error_info: string option ;
   state: mailbox_export_job_state option ;
   estimated_progress: int option ;
@@ -901,8 +805,8 @@ type nonrec describe_inbound_dmarc_settings_request =
 type nonrec describe_group_response =
   {
   hidden_from_global_address_list: bool option ;
-  disabled_date: Timestamp.t option ;
-  enabled_date: Timestamp.t option ;
+  disabled_date: CoreTypes.Timestamp.t option ;
+  enabled_date: CoreTypes.Timestamp.t option ;
   state: entity_state option ;
   email: string option ;
   name: string option ;
@@ -1042,12 +946,9 @@ type nonrec directory_in_use_exception = {
   message: string option }
 type nonrec create_organization_response = {
   organization_id: string option }
-type nonrec directory_id = unit
-type nonrec hosted_zone_id = unit
 type nonrec domain = {
   hosted_zone_id: string option ;
   domain_name: string }
-type nonrec domains = unit
 type nonrec create_organization_request =
   {
   enable_interoperability: bool option ;
@@ -1112,8 +1013,6 @@ type nonrec cancel_mailbox_export_job_request =
   organization_id: string ;
   job_id: string ;
   client_token: string }
-type nonrec impersonation_token = unit
-type nonrec expires_in = unit
 type nonrec assume_impersonation_role_response =
   {
   expires_in: int option ;
@@ -1134,10 +1033,3 @@ type nonrec associate_delegate_to_resource_request =
   entity_id: string ;
   resource_id: string ;
   organization_id: string }
-type nonrec work_mail_service = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

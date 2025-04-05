@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,43 +7,32 @@ let service =
       version = "2012-01-25";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec name = unit
-type nonrec version = unit
 type nonrec workflow_type = {
   version: string ;
   name: string }
-type nonrec base_unit = unit
 type nonrec registration_status =
   | DEPRECATED 
   | REGISTERED 
-type nonrec description = unit
-type nonrec timestamp_ = unit
 type nonrec workflow_type_info =
   {
-  deprecation_date: Timestamp.t option ;
-  creation_date: Timestamp.t ;
+  deprecation_date: CoreTypes.Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t ;
   description: string option ;
   status: registration_status ;
   workflow_type: workflow_type }
-type nonrec workflow_type_info_list = unit
-type nonrec page_token = unit
 type nonrec workflow_type_infos =
   {
   next_page_token: string option ;
   type_infos: workflow_type_info list }
-type nonrec version_optional = unit
 type nonrec workflow_type_filter = {
   version: string option ;
   name: string }
-type nonrec duration_in_seconds_optional = unit
 type nonrec task_list = {
   name: string }
-type nonrec task_priority = unit
 type nonrec child_policy =
   | ABANDON 
   | REQUEST_CANCEL 
   | TERMINATE 
-type nonrec arn = unit
 type nonrec workflow_type_configuration =
   {
   default_lambda_role: string option ;
@@ -56,17 +45,12 @@ type nonrec workflow_type_detail =
   {
   configuration: workflow_type_configuration ;
   type_info: workflow_type_info }
-type nonrec workflow_run_id_optional = unit
-type nonrec workflow_run_id = unit
-type nonrec workflow_id = unit
 type nonrec workflow_execution_timeout_type =
   | START_TO_CLOSE 
 type nonrec workflow_execution_timed_out_event_attributes =
   {
   child_policy: child_policy ;
   timeout_type: workflow_execution_timeout_type }
-type nonrec terminate_reason = unit
-type nonrec data = unit
 type nonrec workflow_execution_terminated_cause =
   | OPERATOR_INITIATED 
   | EVENT_LIMIT_EXCEEDED 
@@ -77,12 +61,9 @@ type nonrec workflow_execution_terminated_event_attributes =
   child_policy: child_policy ;
   details: string option ;
   reason: string option }
-type nonrec tag = unit
-type nonrec tag_list = unit
 type nonrec workflow_execution = {
   run_id: string ;
   workflow_id: string }
-type nonrec event_id = unit
 type nonrec workflow_execution_started_event_attributes =
   {
   lambda_role: string option ;
@@ -97,15 +78,12 @@ type nonrec workflow_execution_started_event_attributes =
   task_start_to_close_timeout: string option ;
   execution_start_to_close_timeout: string option ;
   input: string option }
-type nonrec signal_name = unit
 type nonrec workflow_execution_signaled_event_attributes =
   {
   external_initiated_event_id: int option ;
   external_workflow_execution: workflow_execution option ;
   input: string option ;
   signal_name: string }
-type nonrec count = unit
-type nonrec open_decision_tasks_count = unit
 type nonrec workflow_execution_open_counts =
   {
   open_lambda_functions: int option ;
@@ -123,7 +101,6 @@ type nonrec close_status =
   | CANCELED 
   | FAILED 
   | COMPLETED 
-type nonrec canceled = unit
 type nonrec workflow_execution_info =
   {
   cancel_requested: bool option ;
@@ -131,24 +108,21 @@ type nonrec workflow_execution_info =
   parent: workflow_execution option ;
   close_status: close_status option ;
   execution_status: execution_status ;
-  close_timestamp: Timestamp.t option ;
-  start_timestamp: Timestamp.t ;
+  close_timestamp: CoreTypes.Timestamp.t option ;
+  start_timestamp: CoreTypes.Timestamp.t ;
   workflow_type: workflow_type ;
   execution: workflow_execution }
-type nonrec workflow_execution_info_list = unit
 type nonrec workflow_execution_infos =
   {
   next_page_token: string option ;
   execution_infos: workflow_execution_info list }
 type nonrec workflow_execution_filter = {
   workflow_id: string }
-type nonrec failure_reason = unit
 type nonrec workflow_execution_failed_event_attributes =
   {
   decision_task_completed_event_id: int ;
   details: string option ;
   reason: string option }
-type nonrec duration_in_seconds = unit
 type nonrec workflow_execution_configuration =
   {
   lambda_role: string option ;
@@ -160,11 +134,10 @@ type nonrec workflow_execution_configuration =
 type nonrec workflow_execution_detail =
   {
   latest_execution_context: string option ;
-  latest_activity_task_timestamp: Timestamp.t option ;
+  latest_activity_task_timestamp: CoreTypes.Timestamp.t option ;
   open_counts: workflow_execution_open_counts ;
   execution_configuration: workflow_execution_configuration ;
   execution_info: workflow_execution_info }
-type nonrec truncated = unit
 type nonrec workflow_execution_count = {
   truncated: bool option ;
   count: int }
@@ -196,12 +169,9 @@ type nonrec workflow_execution_cancel_requested_event_attributes =
   cause: workflow_execution_cancel_requested_cause option ;
   external_initiated_event_id: int option ;
   external_workflow_execution: workflow_execution option }
-type nonrec error_message = unit
 type nonrec workflow_execution_already_started_fault =
   {
   message: string option }
-type nonrec resource_tag_key = unit
-type nonrec resource_tag_key_list = unit
 type nonrec untag_resource_input =
   {
   tag_keys: string list ;
@@ -212,7 +182,6 @@ type nonrec operation_not_permitted_fault = {
   message: string option }
 type nonrec limit_exceeded_fault = {
   message: string option }
-type nonrec domain_name = unit
 type nonrec undeprecate_workflow_type_input =
   {
   workflow_type: workflow_type ;
@@ -236,7 +205,6 @@ type nonrec type_deprecated_fault = {
   message: string option }
 type nonrec too_many_tags_fault = {
   message: string option }
-type nonrec timer_id = unit
 type nonrec timer_started_event_attributes =
   {
   decision_task_completed_event_id: int ;
@@ -260,12 +228,9 @@ type nonrec terminate_workflow_execution_input =
   run_id: string option ;
   workflow_id: string ;
   domain: string }
-type nonrec task_token = unit
-type nonrec resource_tag_value = unit
 type nonrec resource_tag = {
   value: string option ;
   key: string }
-type nonrec resource_tag_list = unit
 type nonrec tag_resource_input =
   {
   tags: resource_tag list ;
@@ -306,7 +271,6 @@ type nonrec start_timer_decision_attributes =
   timer_id: string }
 type nonrec start_lambda_function_failed_cause =
   | ASSUME_ROLE_FAILED 
-type nonrec cause_message = unit
 type nonrec start_lambda_function_failed_event_attributes =
   {
   message: string option ;
@@ -359,7 +323,6 @@ type nonrec start_child_workflow_execution_decision_attributes =
   control: string option ;
   workflow_id: string ;
   workflow_type: workflow_type }
-type nonrec start_at_previous_started_event = unit
 type nonrec signal_workflow_execution_input =
   {
   input: string option ;
@@ -381,7 +344,6 @@ type nonrec decision_type =
   | CompleteWorkflowExecution 
   | RequestCancelActivityTask 
   | ScheduleActivityTask 
-type nonrec activity_id = unit
 type nonrec schedule_activity_task_decision_attributes =
   {
   heartbeat_timeout: string option ;
@@ -418,7 +380,6 @@ type nonrec continue_as_new_workflow_execution_decision_attributes =
   task_list: task_list option ;
   execution_start_to_close_timeout: string option ;
   input: string option }
-type nonrec marker_name = unit
 type nonrec record_marker_decision_attributes =
   {
   details: string option ;
@@ -437,9 +398,6 @@ type nonrec request_cancel_external_workflow_execution_decision_attributes =
   control: string option ;
   run_id: string option ;
   workflow_id: string }
-type nonrec function_id = unit
-type nonrec function_name = unit
-type nonrec function_input = unit
 type nonrec schedule_lambda_function_decision_attributes =
   {
   start_to_close_timeout: string option ;
@@ -473,7 +431,6 @@ type nonrec decision =
   schedule_activity_task_decision_attributes:
     schedule_activity_task_decision_attributes option ;
   decision_type: decision_type }
-type nonrec decision_list = unit
 type nonrec respond_decision_task_completed_input =
   {
   task_list_schedule_to_start_timeout: string option ;
@@ -511,7 +468,6 @@ type nonrec register_workflow_type_input =
   version: string ;
   name: string ;
   domain: string }
-type nonrec duration_in_days = unit
 type nonrec register_domain_input =
   {
   tags: resource_tag list option ;
@@ -532,7 +488,6 @@ type nonrec register_activity_type_input =
   domain: string }
 type nonrec activity_task_status = {
   cancel_requested: bool }
-type nonrec limited_data = unit
 type nonrec record_activity_task_heartbeat_input =
   {
   details: string option ;
@@ -633,7 +588,6 @@ type nonrec decision_task_scheduled_event_attributes =
   start_to_close_timeout: string option ;
   task_priority: string option ;
   task_list: task_list }
-type nonrec identity = unit
 type nonrec decision_task_started_event_attributes =
   {
   scheduled_event_id: int ;
@@ -984,8 +938,7 @@ type nonrec history_event =
     workflow_execution_started_event_attributes option ;
   event_id: int ;
   event_type: event_type ;
-  event_timestamp: Timestamp.t }
-type nonrec history_event_list = unit
+  event_timestamp: CoreTypes.Timestamp.t }
 type nonrec decision_task =
   {
   previous_started_event_id: int option ;
@@ -995,8 +948,6 @@ type nonrec decision_task =
   workflow_execution: workflow_execution ;
   started_event_id: int ;
   task_token: string }
-type nonrec page_size = unit
-type nonrec reverse_order = unit
 type nonrec poll_for_decision_task_input =
   {
   start_at_previous_started_event: bool option ;
@@ -1033,8 +984,8 @@ type nonrec list_tags_for_resource_input = {
   resource_arn: string }
 type nonrec execution_time_filter =
   {
-  latest_date: Timestamp.t option ;
-  oldest_date: Timestamp.t }
+  latest_date: CoreTypes.Timestamp.t option ;
+  oldest_date: CoreTypes.Timestamp.t }
 type nonrec list_open_workflow_executions_input =
   {
   execution_filter: workflow_execution_filter option ;
@@ -1051,7 +1002,6 @@ type nonrec domain_info =
   description: string option ;
   status: registration_status ;
   name: string }
-type nonrec domain_info_list = unit
 type nonrec domain_infos =
   {
   next_page_token: string option ;
@@ -1078,12 +1028,11 @@ type nonrec list_closed_workflow_executions_input =
   domain: string }
 type nonrec activity_type_info =
   {
-  deprecation_date: Timestamp.t option ;
-  creation_date: Timestamp.t ;
+  deprecation_date: CoreTypes.Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t ;
   description: string option ;
   status: registration_status ;
   activity_type: activity_type }
-type nonrec activity_type_info_list = unit
 type nonrec activity_type_infos =
   {
   next_page_token: string option ;
@@ -1187,10 +1136,3 @@ type nonrec count_closed_workflow_executions_input =
   close_time_filter: execution_time_filter option ;
   start_time_filter: execution_time_filter option ;
   domain: string }
-type nonrec simple_workflow_service = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

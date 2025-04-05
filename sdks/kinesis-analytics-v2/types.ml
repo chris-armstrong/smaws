@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,8 +7,6 @@ let service =
       version = "2018-05-23";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec zip_file_content = bytes
-type nonrec base_unit = unit
 type nonrec log_level =
   | DEBUG 
   | ERROR 
@@ -22,7 +20,6 @@ type nonrec zeppelin_monitoring_configuration_description =
   log_level: log_level option }
 type nonrec zeppelin_monitoring_configuration = {
   log_level: log_level }
-type nonrec database_ar_n = string
 type nonrec glue_data_catalog_configuration_update =
   {
   database_arn_update: string }
@@ -30,8 +27,6 @@ type nonrec catalog_configuration_update =
   {
   glue_data_catalog_configuration_update:
     glue_data_catalog_configuration_update }
-type nonrec bucket_ar_n = string
-type nonrec base_path = string
 type nonrec s3_content_base_location_update =
   {
   base_path_update: string option ;
@@ -42,16 +37,11 @@ type nonrec deploy_as_application_configuration_update =
 type nonrec artifact_type =
   | DEPENDENCY_JAR 
   | UDF 
-type nonrec file_key = string
-type nonrec object_version = string
 type nonrec s3_content_location =
   {
   object_version: string option ;
   file_key: string ;
   bucket_ar_n: string }
-type nonrec maven_group_id = string
-type nonrec maven_artifact_id = string
-type nonrec maven_version = string
 type nonrec maven_reference =
   {
   version: string ;
@@ -62,8 +52,6 @@ type nonrec custom_artifact_configuration =
   maven_reference: maven_reference option ;
   s3_content_location: s3_content_location option ;
   artifact_type: artifact_type }
-type nonrec custom_artifacts_configuration_list =
-  custom_artifact_configuration list option list
 type nonrec zeppelin_application_configuration_update =
   {
   custom_artifacts_configuration_update:
@@ -92,8 +80,6 @@ type nonrec custom_artifact_configuration_description =
   maven_reference_description: maven_reference option ;
   s3_content_location_description: s3_content_location option ;
   artifact_type: artifact_type option }
-type nonrec custom_artifacts_configuration_description_list =
-  custom_artifact_configuration_description list option list
 type nonrec zeppelin_application_configuration_description =
   {
   custom_artifacts_configuration_description:
@@ -122,38 +108,24 @@ type nonrec zeppelin_application_configuration =
     deploy_as_application_configuration option ;
   catalog_configuration: catalog_configuration option ;
   monitoring_configuration: zeppelin_monitoring_configuration option }
-type nonrec vpc_id = string
-type nonrec subnet_id = string
-type nonrec subnet_ids = string list option list
-type nonrec security_group_id = string
-type nonrec security_group_ids = string list option list
 type nonrec vpc_configuration =
   {
   security_group_ids: string list ;
   subnet_ids: string list }
-type nonrec vpc_configurations = vpc_configuration list option list
-type nonrec id = string
 type nonrec vpc_configuration_update =
   {
   security_group_id_updates: string list option ;
   subnet_id_updates: string list option ;
   vpc_configuration_id: string }
-type nonrec vpc_configuration_updates =
-  vpc_configuration_update list option list
 type nonrec vpc_configuration_description =
   {
   security_group_ids: string list ;
   subnet_ids: string list ;
   vpc_id: string ;
   vpc_configuration_id: string }
-type nonrec vpc_configuration_descriptions =
-  vpc_configuration_description list option list
 type nonrec url_type =
   | ZEPPELIN_UI_URL 
   | FLINK_DASHBOARD_URL 
-type nonrec resource_ar_n = string
-type nonrec application_description = string
-type nonrec application_name = string
 type nonrec runtime_environment =
   | FLINK_1_18 
   | ZEPPELIN_FLINK_3_0 
@@ -165,7 +137,6 @@ type nonrec runtime_environment =
   | FLINK_1_8 
   | FLINK_1_6 
   | SQL_1_0 
-type nonrec role_ar_n = string
 type nonrec application_status =
   | ROLLED_BACK 
   | MAINTENANCE 
@@ -178,10 +149,6 @@ type nonrec application_status =
   | STOPPING 
   | STARTING 
   | DELETING 
-type nonrec application_version_id = int
-type nonrec timestamp_ = Timestamp.t
-type nonrec in_app_stream_name = string
-type nonrec in_app_stream_names = string list option list
 type nonrec input_lambda_processor_description =
   {
   role_ar_n: string option ;
@@ -201,11 +168,8 @@ type nonrec kinesis_firehose_input_description =
 type nonrec record_format_type =
   | CSV 
   | JSON 
-type nonrec record_row_path = string
 type nonrec json_mapping_parameters = {
   record_row_path: string }
-type nonrec record_row_delimiter = string
-type nonrec record_column_delimiter = string
 type nonrec csv_mapping_parameters =
   {
   record_column_delimiter: string ;
@@ -218,22 +182,16 @@ type nonrec record_format =
   {
   mapping_parameters: mapping_parameters option ;
   record_format_type: record_format_type }
-type nonrec record_encoding = string
-type nonrec record_column_name = string
-type nonrec record_column_mapping = string
-type nonrec record_column_sql_type = string
 type nonrec record_column =
   {
   sql_type: string ;
   mapping: string option ;
   name: string }
-type nonrec record_columns = record_column list option list
 type nonrec source_schema =
   {
   record_columns: record_column list ;
   record_encoding: string option ;
   record_format: record_format }
-type nonrec input_parallelism_count = int
 type nonrec input_parallelism = {
   count: int option }
 type nonrec input_starting_position =
@@ -257,7 +215,6 @@ type nonrec input_description =
   in_app_stream_names: string list option ;
   name_prefix: string option ;
   input_id: string option }
-type nonrec input_descriptions = input_description list option list
 type nonrec kinesis_streams_output_description =
   {
   role_ar_n: string option ;
@@ -282,8 +239,6 @@ type nonrec output_description =
     kinesis_streams_output_description option ;
   name: string option ;
   output_id: string option }
-type nonrec output_descriptions = output_description list option list
-type nonrec in_app_table_name = string
 type nonrec s3_reference_data_source_description =
   {
   reference_role_ar_n: string option ;
@@ -295,8 +250,6 @@ type nonrec reference_data_source_description =
   s3_reference_data_source_description: s3_reference_data_source_description ;
   table_name: string ;
   reference_id: string }
-type nonrec reference_data_source_descriptions =
-  reference_data_source_description list option list
 type nonrec sql_application_configuration_description =
   {
   reference_data_source_descriptions:
@@ -306,9 +259,6 @@ type nonrec sql_application_configuration_description =
 type nonrec code_content_type =
   | ZIPFILE 
   | PLAINTEXT 
-type nonrec text_content = string
-type nonrec code_m_d5 = string
-type nonrec code_size = int
 type nonrec s3_application_code_location_description =
   {
   object_version: string option ;
@@ -329,12 +279,10 @@ type nonrec application_restore_type =
   | RESTORE_FROM_CUSTOM_SNAPSHOT 
   | RESTORE_FROM_LATEST_SNAPSHOT 
   | SKIP_RESTORE_FROM_SNAPSHOT 
-type nonrec snapshot_name = string
 type nonrec application_restore_configuration =
   {
   snapshot_name: string option ;
   application_restore_type: application_restore_type }
-type nonrec boolean_object = bool
 type nonrec flink_run_configuration =
   {
   allow_non_restored_state: bool option }
@@ -346,8 +294,6 @@ type nonrec run_configuration_description =
 type nonrec configuration_type =
   | CUSTOM 
   | DEFAULT 
-type nonrec checkpoint_interval = int
-type nonrec min_pause_between_checkpoints = int
 type nonrec checkpoint_configuration_description =
   {
   min_pause_between_checkpoints: int option ;
@@ -364,8 +310,6 @@ type nonrec monitoring_configuration_description =
   log_level: log_level option ;
   metrics_level: metrics_level option ;
   configuration_type: configuration_type option }
-type nonrec parallelism = int
-type nonrec parallelism_per_kp_u = int
 type nonrec parallelism_configuration_description =
   {
   auto_scaling_enabled: bool option ;
@@ -373,7 +317,6 @@ type nonrec parallelism_configuration_description =
   parallelism_per_kp_u: int option ;
   parallelism: int option ;
   configuration_type: configuration_type option }
-type nonrec job_plan_description = string
 type nonrec flink_application_configuration_description =
   {
   job_plan_description: string option ;
@@ -383,14 +326,11 @@ type nonrec flink_application_configuration_description =
     monitoring_configuration_description option ;
   checkpoint_configuration_description:
     checkpoint_configuration_description option }
-type nonrec property_value = string
-type nonrec property_key = string
-type nonrec property_map = (string_ option * string_ option) list
+type nonrec property_map = (string * string) list
 type nonrec property_group =
   {
-  property_map: (string * string) list ;
+  property_map: property_map ;
   property_group_id: string }
-type nonrec property_groups = property_group list option list
 type nonrec environment_property_descriptions =
   {
   property_group_descriptions: property_group list option }
@@ -412,21 +352,15 @@ type nonrec application_configuration_description =
     application_code_configuration_description option ;
   sql_application_configuration_description:
     sql_application_configuration_description option }
-type nonrec log_stream_ar_n = string
 type nonrec cloud_watch_logging_option_description =
   {
   role_ar_n: string option ;
   log_stream_ar_n: string ;
   cloud_watch_logging_option_id: string option }
-type nonrec cloud_watch_logging_option_descriptions =
-  cloud_watch_logging_option_description list option list
-type nonrec application_maintenance_window_start_time = string
-type nonrec application_maintenance_window_end_time = string
 type nonrec application_maintenance_configuration_description =
   {
   application_maintenance_window_end_time: string ;
   application_maintenance_window_start_time: string }
-type nonrec conditional_token = string
 type nonrec application_mode =
   | INTERACTIVE 
   | STREAMING 
@@ -443,8 +377,8 @@ type nonrec application_detail =
     cloud_watch_logging_option_description list option ;
   application_configuration_description:
     application_configuration_description option ;
-  last_update_timestamp: float option ;
-  create_timestamp: float option ;
+  last_update_timestamp: CoreTypes.Timestamp.t option ;
+  create_timestamp: CoreTypes.Timestamp.t option ;
   application_version_id: int ;
   application_status: application_status ;
   service_execution_role: string option ;
@@ -481,7 +415,6 @@ type nonrec input_update =
     input_processing_configuration_update option ;
   name_prefix_update: string option ;
   input_id: string }
-type nonrec input_updates = input_update list option list
 type nonrec kinesis_streams_output_update = {
   resource_arn_update: string }
 type nonrec kinesis_firehose_output_update = {
@@ -496,7 +429,6 @@ type nonrec output_update =
   kinesis_streams_output_update: kinesis_streams_output_update option ;
   name_update: string option ;
   output_id: string }
-type nonrec output_updates = output_update list option list
 type nonrec s3_reference_data_source_update =
   {
   file_key_update: string option ;
@@ -507,8 +439,6 @@ type nonrec reference_data_source_update =
   s3_reference_data_source_update: s3_reference_data_source_update option ;
   table_name_update: string option ;
   reference_id: string }
-type nonrec reference_data_source_updates =
-  reference_data_source_update list option list
 type nonrec sql_application_configuration_update =
   {
   reference_data_source_updates: reference_data_source_update list option ;
@@ -578,8 +508,6 @@ type nonrec cloud_watch_logging_option_update =
   {
   log_stream_arn_update: string option ;
   cloud_watch_logging_option_id: string }
-type nonrec cloud_watch_logging_option_updates =
-  cloud_watch_logging_option_update list option list
 type nonrec update_application_request =
   {
   runtime_environment_update: runtime_environment option ;
@@ -604,7 +532,6 @@ type nonrec update_application_maintenance_configuration_request =
   application_maintenance_configuration_update:
     application_maintenance_configuration_update ;
   application_name: string }
-type nonrec error_message = string
 type nonrec unsupported_operation_exception = {
   message: string option }
 type nonrec resource_not_found_exception = {
@@ -625,29 +552,20 @@ type nonrec invalid_application_configuration_exception =
 type nonrec code_validation_exception = {
   message: string option }
 type nonrec untag_resource_response = unit
-type nonrec kinesis_analytics_ar_n = string
-type nonrec tag_key = string
-type nonrec tag_keys = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_ar_n: string }
 type nonrec too_many_tags_exception = {
   message: string option }
-type nonrec raw_input_record = string
-type nonrec raw_input_records = string list option list
-type nonrec processed_input_record = string
-type nonrec processed_input_records = string list option list
 type nonrec unable_to_detect_schema_exception =
   {
   processed_input_records: string list option ;
   raw_input_records: string list option ;
   message: string option }
-type nonrec tag_value = string
 type nonrec tag = {
   value: string option ;
   key: string }
-type nonrec tags = tag list option list
 type nonrec tag_resource_response = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
@@ -663,7 +581,6 @@ type nonrec sql_run_configuration =
   input_starting_position_configuration:
     input_starting_position_configuration ;
   input_id: string }
-type nonrec sql_run_configurations = sql_run_configuration list option list
 type nonrec run_configuration =
   {
   application_restore_configuration: application_restore_configuration option ;
@@ -690,7 +607,6 @@ type nonrec input =
   kinesis_streams_input: kinesis_streams_input option ;
   input_processing_configuration: input_processing_configuration option ;
   name_prefix: string }
-type nonrec inputs = input list option list
 type nonrec kinesis_streams_output = {
   resource_ar_n: string }
 type nonrec kinesis_firehose_output = {
@@ -704,7 +620,6 @@ type nonrec output =
   kinesis_firehose_output: kinesis_firehose_output option ;
   kinesis_streams_output: kinesis_streams_output option ;
   name: string }
-type nonrec outputs = output list option list
 type nonrec s3_reference_data_source =
   {
   file_key: string option ;
@@ -714,7 +629,6 @@ type nonrec reference_data_source =
   reference_schema: source_schema ;
   s3_reference_data_source: s3_reference_data_source option ;
   table_name: string }
-type nonrec reference_data_sources = reference_data_source list option list
 type nonrec sql_application_configuration =
   {
   reference_data_sources: reference_data_source list option ;
@@ -728,12 +642,10 @@ type nonrec snapshot_status =
 type nonrec snapshot_details =
   {
   runtime_environment: runtime_environment option ;
-  snapshot_creation_timestamp: float option ;
+  snapshot_creation_timestamp: CoreTypes.Timestamp.t option ;
   application_version_id: int ;
   snapshot_status: snapshot_status ;
   snapshot_name: string }
-type nonrec snapshot_summaries = snapshot_details list option list
-type nonrec session_expiration_duration_in_seconds = int
 type nonrec service_unavailable_exception = {
   message: string option }
 type nonrec s3_configuration = {
@@ -749,16 +661,12 @@ type nonrec rollback_application_request =
 type nonrec resource_provisioned_throughput_exceeded_exception =
   {
   message: string option }
-type nonrec parsed_input_record_field = string
-type nonrec parsed_input_record = string list option list
-type nonrec parsed_input_records = string list list option list
 type nonrec parallelism_configuration =
   {
   auto_scaling_enabled: bool option ;
   parallelism_per_kp_u: int option ;
   parallelism: int option ;
   configuration_type: configuration_type }
-type nonrec next_token = string
 type nonrec monitoring_configuration =
   {
   log_level: log_level option ;
@@ -768,7 +676,6 @@ type nonrec list_tags_for_resource_response = {
   tags: tag list option }
 type nonrec list_tags_for_resource_request = {
   resource_ar_n: string }
-type nonrec list_snapshots_input_limit = int
 type nonrec application_summary =
   {
   application_mode: application_mode option ;
@@ -777,12 +684,10 @@ type nonrec application_summary =
   application_status: application_status ;
   application_ar_n: string ;
   application_name: string }
-type nonrec application_summaries = application_summary list option list
 type nonrec list_applications_response =
   {
   next_token: string option ;
   application_summaries: application_summary list }
-type nonrec list_applications_input_limit = int
 type nonrec list_applications_request =
   {
   next_token: string option ;
@@ -791,13 +696,10 @@ type nonrec application_version_summary =
   {
   application_status: application_status ;
   application_version_id: int }
-type nonrec application_version_summaries =
-  application_version_summary list option list
 type nonrec list_application_versions_response =
   {
   next_token: string option ;
   application_version_summaries: application_version_summary list option }
-type nonrec list_application_versions_input_limit = int
 type nonrec list_application_versions_request =
   {
   next_token: string option ;
@@ -860,7 +762,7 @@ type nonrec delete_application_vpc_configuration_request =
 type nonrec delete_application_snapshot_response = unit
 type nonrec delete_application_snapshot_request =
   {
-  snapshot_creation_timestamp: float ;
+  snapshot_creation_timestamp: CoreTypes.Timestamp.t ;
   snapshot_name: string ;
   application_name: string }
 type nonrec delete_application_reference_data_source_response =
@@ -905,14 +807,13 @@ type nonrec delete_application_cloud_watch_logging_option_request =
 type nonrec delete_application_response = unit
 type nonrec delete_application_request =
   {
-  create_timestamp: float ;
+  create_timestamp: CoreTypes.Timestamp.t ;
   application_name: string }
 type nonrec create_application_snapshot_response = unit
 type nonrec create_application_snapshot_request =
   {
   snapshot_name: string ;
   application_name: string }
-type nonrec authorized_url = string
 type nonrec create_application_presigned_url_response =
   {
   authorized_url: string option }
@@ -961,8 +862,6 @@ type nonrec application_configuration =
   sql_application_configuration: sql_application_configuration option }
 type nonrec cloud_watch_logging_option = {
   log_stream_ar_n: string }
-type nonrec cloud_watch_logging_options =
-  cloud_watch_logging_option list option list
 type nonrec create_application_request =
   {
   application_mode: application_mode option ;
@@ -1040,10 +939,3 @@ type nonrec add_application_cloud_watch_logging_option_request =
   cloud_watch_logging_option: cloud_watch_logging_option ;
   current_application_version_id: int option ;
   application_name: string }
-type nonrec kinesis_analytics_20180523 = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

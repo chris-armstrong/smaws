@@ -333,9 +333,9 @@ let region_name_of_yojson = string_of_yojson
 
 let initiated_by_of_yojson = string_of_yojson
 
-let start_date_time_of_yojson = timestamp_of_yojson
+let start_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let last_updated_date_time_of_yojson = timestamp_of_yojson
+let last_updated_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let update_info_entry_of_yojson = 
   fun tree path : update_info_entry ->
@@ -518,9 +518,10 @@ let trust_state_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "TrustState" value)
     | _ -> raise (deserialize_wrong_type_error path "TrustState")
 
-let created_date_time_of_yojson = timestamp_of_yojson
+let created_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let state_last_updated_date_time_of_yojson = timestamp_of_yojson
+let state_last_updated_date_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let trust_state_reason_of_yojson = string_of_yojson
 
@@ -597,14 +598,15 @@ let tag_limit_exceeded_exception_of_yojson =
 let tag_keys_of_yojson = 
   fun tree path -> list_of_yojson tag_key_of_yojson tree path 
 
-let subscription_created_date_time_of_yojson = timestamp_of_yojson
+let subscription_created_date_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let subnet_id_of_yojson = string_of_yojson
 
 let subnet_ids_of_yojson = 
   fun tree path -> list_of_yojson subnet_id_of_yojson tree path 
 
-let start_time_of_yojson = timestamp_of_yojson
+let start_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let schema_extension_id_of_yojson = string_of_yojson
 
@@ -821,10 +823,10 @@ let directory_configuration_setting_request_status_message_of_yojson =
   string_of_yojson
 
 let directory_configuration_setting_last_updated_date_time_of_yojson = 
-  timestamp_of_yojson
+  timestamp_epoch_seconds_of_yojson
 
 let directory_configuration_setting_last_requested_date_time_of_yojson = 
-  timestamp_of_yojson
+  timestamp_epoch_seconds_of_yojson
 
 let directory_configuration_setting_data_type_of_yojson = string_of_yojson
 
@@ -868,7 +870,7 @@ let schema_extension_status_of_yojson =
 
 let schema_extension_status_reason_of_yojson = string_of_yojson
 
-let end_date_time_of_yojson = timestamp_of_yojson
+let end_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let schema_extension_info_of_yojson = 
   fun tree path : schema_extension_info ->
@@ -1150,7 +1152,7 @@ let directory_vpc_settings_of_yojson =
   }
   in _res
 
-let launch_time_of_yojson = timestamp_of_yojson
+let launch_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let region_description_of_yojson = 
   fun tree path : region_description ->
@@ -1339,7 +1341,7 @@ let ip_route_status_msg_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "IpRouteStatusMsg" value)
     | _ -> raise (deserialize_wrong_type_error path "IpRouteStatusMsg")
 
-let added_date_time_of_yojson = timestamp_of_yojson
+let added_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let ip_route_status_reason_of_yojson = string_of_yojson
 
@@ -1394,7 +1396,8 @@ let certificate_state_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "CertificateState" value)
     | _ -> raise (deserialize_wrong_type_error path "CertificateState")
 
-let certificate_expiry_date_time_of_yojson = timestamp_of_yojson
+let certificate_expiry_date_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let certificate_info_of_yojson = 
   fun tree path : certificate_info ->
@@ -2176,7 +2179,8 @@ let certificate_does_not_exist_exception_of_yojson =
 
 let certificate_state_reason_of_yojson = string_of_yojson
 
-let certificate_registered_date_time_of_yojson = timestamp_of_yojson
+let certificate_registered_date_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let certificate_of_yojson = 
   fun tree path : certificate ->
@@ -2687,7 +2691,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

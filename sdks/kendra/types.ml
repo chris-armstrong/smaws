@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,21 +7,11 @@ let service =
       version = "2019-02-03";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec organization_id = string
-type nonrec boolean_ = bool
-type nonrec data_source_inclusions_exclusions_strings_member = string
-type nonrec data_source_inclusions_exclusions_strings =
-  string list option list
-type nonrec data_source_field_name = string
-type nonrec data_source_date_field_format = string
-type nonrec index_field_name = string
 type nonrec data_source_to_index_field_mapping =
   {
   index_field_name: string ;
   date_field_format: string option ;
   data_source_field_name: string }
-type nonrec data_source_to_index_field_mapping_list =
-  data_source_to_index_field_mapping list option list
 type nonrec work_docs_configuration =
   {
   field_mappings: data_source_to_index_field_mapping list option ;
@@ -30,32 +20,20 @@ type nonrec work_docs_configuration =
   use_change_log: bool option ;
   crawl_comments: bool option ;
   organization_id: string }
-type nonrec base_unit = unit
 type nonrec web_crawler_mode =
   | EVERYTHING 
   | SUBDOMAINS 
   | HOST_ONLY 
-type nonrec seed_url = string
-type nonrec seed_url_list = string list option list
 type nonrec seed_url_configuration =
   {
   web_crawler_mode: web_crawler_mode option ;
   seed_urls: string list }
-type nonrec site_map = string
-type nonrec site_maps_list = string list option list
 type nonrec site_maps_configuration = {
   site_maps: string list }
 type nonrec urls =
   {
   site_maps_configuration: site_maps_configuration option ;
   seed_url_configuration: seed_url_configuration option }
-type nonrec crawl_depth = int
-type nonrec max_links_per_page = int
-type nonrec max_content_size_per_page_in_mega_bytes = float
-type nonrec max_urls_per_minute_crawl_rate = int
-type nonrec host = string
-type nonrec port = int
-type nonrec secret_arn = string
 type nonrec proxy_configuration =
   {
   credentials: string option ;
@@ -66,8 +44,6 @@ type nonrec basic_authentication_configuration =
   credentials: string ;
   port: int ;
   host: string }
-type nonrec basic_authentication_configuration_list =
-  basic_authentication_configuration list option list
 type nonrec authentication_configuration =
   {
   basic_authentication: basic_authentication_configuration list option }
@@ -82,30 +58,17 @@ type nonrec web_crawler_configuration =
   max_links_per_page: int option ;
   crawl_depth: int option ;
   urls: urls }
-type nonrec warning_message = string
 type nonrec warning_code =
   | QUERY_LANGUAGE_INVALID_SYNTAX 
 type nonrec warning = {
   code: warning_code option ;
   message: string option }
-type nonrec warning_list = warning list option list
-type nonrec vpc_security_group_id = string
-type nonrec visitor_id = string
-type nonrec value_importance_map_key = string
-type nonrec importance = int
-type nonrec value_importance_map = (string_ option * int_ option) list
-type nonrec error_message = string
+type nonrec value_importance_map = (string * int) list
 type nonrec validation_exception = {
   message: string option }
 type nonrec key_location =
   | SECRET_MANAGER 
   | URL 
-type nonrec url = string
-type nonrec role_arn = string
-type nonrec user_name_attribute_field = string
-type nonrec group_attribute_field = string
-type nonrec issuer = string
-type nonrec claim_regex = string
 type nonrec jwt_token_type_configuration =
   {
   claim_regex: string option ;
@@ -115,7 +78,6 @@ type nonrec jwt_token_type_configuration =
   secret_manager_arn: string option ;
   ur_l: string option ;
   key_location: key_location }
-type nonrec string_ = string
 type nonrec json_token_type_configuration =
   {
   group_attribute_field: string ;
@@ -124,13 +86,9 @@ type nonrec user_token_configuration =
   {
   json_token_type_configuration: json_token_type_configuration option ;
   jwt_token_type_configuration: jwt_token_type_configuration option }
-type nonrec user_token_configuration_list =
-  user_token_configuration list option list
-type nonrec identity_attribute_name = string
 type nonrec user_identity_configuration =
   {
   identity_attribute_name: string option }
-type nonrec user_id = string
 type nonrec user_group_resolution_mode =
   | NONE 
   | AWS_SSO 
@@ -140,27 +98,15 @@ type nonrec user_group_resolution_configuration =
 type nonrec user_context_policy =
   | USER_TOKEN 
   | ATTRIBUTE_FILTER 
-type nonrec token = string
-type nonrec principal_name = string
-type nonrec groups = string list option list
-type nonrec data_source_id = string
 type nonrec data_source_group = {
   data_source_id: string ;
   group_id: string }
-type nonrec data_source_groups = data_source_group list option list
 type nonrec user_context =
   {
   data_source_groups: data_source_group list option ;
   groups: string list option ;
   user_id: string option ;
   token: string option }
-type nonrec user_account = string
-type nonrec thesaurus_id = string
-type nonrec thesaurus_name = string
-type nonrec index_id = string
-type nonrec description = string
-type nonrec s3_bucket_name = string
-type nonrec s3_object_key = string
 type nonrec s3_path = {
   key: string ;
   bucket: string }
@@ -185,16 +131,10 @@ type nonrec access_denied_exception = {
 type nonrec mode =
   | LEARN_ONLY 
   | ENABLED 
-type nonrec integer_ = int
-type nonrec object_boolean = bool
-type nonrec minimum_number_of_querying_users = int
-type nonrec minimum_query_count = int
-type nonrec document_attribute_key = string
 type nonrec suggestable_config =
   {
   suggestable: bool option ;
   attribute_name: string option }
-type nonrec suggestable_config_list = suggestable_config list option list
 type nonrec attribute_suggestions_mode =
   | INACTIVE 
   | ACTIVE 
@@ -211,8 +151,6 @@ type nonrec update_query_suggestions_config_request =
   query_log_look_back_window_in_days: int option ;
   mode: mode option ;
   index_id: string }
-type nonrec query_suggestions_block_list_id = string
-type nonrec query_suggestions_block_list_name = string
 type nonrec update_query_suggestions_block_list_request =
   {
   role_arn: string option ;
@@ -221,21 +159,17 @@ type nonrec update_query_suggestions_block_list_request =
   name: string option ;
   id: string ;
   index_id: string }
-type nonrec index_name = string
-type nonrec document_metadata_configuration_name = string
 type nonrec document_attribute_value_type =
   | DATE_VALUE 
   | LONG_VALUE 
   | STRING_LIST_VALUE 
   | STRING_VALUE 
-type nonrec document_metadata_boolean = bool
-type nonrec duration = string
 type nonrec order =
   | DESCENDING 
   | ASCENDING 
 type nonrec relevance =
   {
-  value_importance_map: (string * int) list option ;
+  value_importance_map: value_importance_map option ;
   rank_order: order option ;
   duration: string option ;
   importance: int option ;
@@ -252,10 +186,6 @@ type nonrec document_metadata_configuration =
   relevance: relevance option ;
   type_: document_attribute_value_type ;
   name: string }
-type nonrec document_metadata_configuration_list =
-  document_metadata_configuration list option list
-type nonrec storage_capacity_unit = int
-type nonrec query_capacity_unit = int
 type nonrec capacity_units_configuration =
   {
   query_capacity_units: int ;
@@ -275,19 +205,11 @@ type nonrec update_index_request =
   id: string }
 type nonrec service_quota_exceeded_exception = {
   message: string option }
-type nonrec featured_results_set_id = string
-type nonrec featured_results_set_name = string
-type nonrec featured_results_set_description = string
 type nonrec featured_results_set_status =
   | INACTIVE 
   | ACTIVE 
-type nonrec query_text = string
-type nonrec query_text_list = string list option list
-type nonrec document_id = string
 type nonrec featured_document = {
   id: string option }
-type nonrec featured_document_list = featured_document list option list
-type nonrec long = int
 type nonrec featured_results_set =
   {
   creation_timestamp: int option ;
@@ -315,16 +237,10 @@ type nonrec conflicting_item =
   set_id: string option ;
   set_name: string option ;
   query_text: string option }
-type nonrec conflicting_items = conflicting_item list option list
 type nonrec featured_results_conflict_exception =
   {
   conflicting_items: conflicting_item list option ;
   message: string option }
-type nonrec experience_id = string
-type nonrec experience_name = string
-type nonrec data_source_id_list = string list option list
-type nonrec faq_id = string
-type nonrec faq_ids_list = string list option list
 type nonrec content_source_configuration =
   {
   direct_put_content: bool option ;
@@ -342,7 +258,6 @@ type nonrec update_experience_request =
   index_id: string ;
   name: string option ;
   id: string }
-type nonrec data_source_name = string
 type nonrec documents_metadata_configuration = {
   s3_prefix: string option }
 type nonrec access_control_list_configuration = {
@@ -360,10 +275,6 @@ type nonrec share_point_version =
   | SHAREPOINT_ONLINE 
   | SHAREPOINT_2016 
   | SHAREPOINT_2013 
-type nonrec share_point_url_list = string list option list
-type nonrec subnet_id = string
-type nonrec subnet_id_list = string list option list
-type nonrec security_group_id_list = string list option list
 type nonrec data_source_vpc_configuration =
   {
   security_group_ids: string list ;
@@ -392,10 +303,6 @@ type nonrec database_engine_type =
   | RDS_MYSQL 
   | RDS_AURORA_POSTGRESQL 
   | RDS_AURORA_MYSQL 
-type nonrec database_host = string
-type nonrec database_port = int
-type nonrec database_name = string
-type nonrec table_name = string
 type nonrec connection_configuration =
   {
   secret_arn: string ;
@@ -403,8 +310,6 @@ type nonrec connection_configuration =
   database_name: string ;
   database_port: int ;
   database_host: string }
-type nonrec column_name = string
-type nonrec change_detecting_columns = string list option list
 type nonrec column_configuration =
   {
   change_detecting_columns: string list ;
@@ -453,28 +358,21 @@ type nonrec salesforce_standard_object_configuration =
   document_title_field_name: string option ;
   document_data_field_name: string ;
   name: salesforce_standard_object_name }
-type nonrec salesforce_standard_object_configuration_list =
-  salesforce_standard_object_configuration list option list
 type nonrec salesforce_knowledge_article_state =
   | ARCHIVED 
   | PUBLISHED 
   | DRAFT 
-type nonrec salesforce_knowledge_article_state_list =
-  salesforce_knowledge_article_state list option list
 type nonrec salesforce_standard_knowledge_article_type_configuration =
   {
   field_mappings: data_source_to_index_field_mapping list option ;
   document_title_field_name: string option ;
   document_data_field_name: string }
-type nonrec salesforce_custom_knowledge_article_type_name = string
 type nonrec salesforce_custom_knowledge_article_type_configuration =
   {
   field_mappings: data_source_to_index_field_mapping list option ;
   document_title_field_name: string option ;
   document_data_field_name: string ;
   name: string }
-type nonrec salesforce_custom_knowledge_article_type_configuration_list =
-  salesforce_custom_knowledge_article_type_configuration list option list
 type nonrec salesforce_knowledge_article_configuration =
   {
   custom_knowledge_article_type_configurations:
@@ -485,8 +383,6 @@ type nonrec salesforce_knowledge_article_configuration =
 type nonrec salesforce_chatter_feed_include_filter_type =
   | STANDARD_USER 
   | ACTIVE_USER 
-type nonrec salesforce_chatter_feed_include_filter_types =
-  salesforce_chatter_feed_include_filter_type list option list
 type nonrec salesforce_chatter_feed_configuration =
   {
   include_filter_types:
@@ -512,9 +408,6 @@ type nonrec salesforce_configuration =
     salesforce_standard_object_configuration list option ;
   secret_arn: string ;
   server_url: string }
-type nonrec tenant_domain = string
-type nonrec one_drive_user = string
-type nonrec one_drive_user_list = string list option list
 type nonrec one_drive_users =
   {
   one_drive_user_s3_path: s3_path option ;
@@ -528,11 +421,9 @@ type nonrec one_drive_configuration =
   one_drive_users: one_drive_users ;
   secret_arn: string ;
   tenant_domain: string }
-type nonrec service_now_host_url = string
 type nonrec service_now_build_version_type =
   | OTHERS 
   | LONDON 
-type nonrec service_now_knowledge_article_filter_query = string
 type nonrec service_now_knowledge_article_configuration =
   {
   filter_query: string option ;
@@ -566,8 +457,6 @@ type nonrec service_now_configuration =
 type nonrec confluence_version =
   | SERVER 
   | CLOUD 
-type nonrec confluence_space_identifier = string
-type nonrec confluence_space_list = string list option list
 type nonrec confluence_space_field_name =
   | URL 
   | SPACE_KEY 
@@ -578,8 +467,6 @@ type nonrec confluence_space_to_index_field_mapping =
   index_field_name: string option ;
   date_field_format: string option ;
   data_source_field_name: confluence_space_field_name option }
-type nonrec confluence_space_field_mappings_list =
-  confluence_space_to_index_field_mapping list option list
 type nonrec confluence_space_configuration =
   {
   space_field_mappings: confluence_space_to_index_field_mapping list option ;
@@ -605,8 +492,6 @@ type nonrec confluence_page_to_index_field_mapping =
   index_field_name: string option ;
   date_field_format: string option ;
   data_source_field_name: confluence_page_field_name option }
-type nonrec confluence_page_field_mappings_list =
-  confluence_page_to_index_field_mapping list option list
 type nonrec confluence_page_configuration =
   {
   page_field_mappings: confluence_page_to_index_field_mapping list option }
@@ -625,8 +510,6 @@ type nonrec confluence_blog_to_index_field_mapping =
   index_field_name: string option ;
   date_field_format: string option ;
   data_source_field_name: confluence_blog_field_name option }
-type nonrec confluence_blog_field_mappings_list =
-  confluence_blog_to_index_field_mapping list option list
 type nonrec confluence_blog_configuration =
   {
   blog_field_mappings: confluence_blog_to_index_field_mapping list option }
@@ -647,8 +530,6 @@ type nonrec confluence_attachment_to_index_field_mapping =
   index_field_name: string option ;
   date_field_format: string option ;
   data_source_field_name: confluence_attachment_field_name option }
-type nonrec confluence_attachment_field_mappings_list =
-  confluence_attachment_to_index_field_mapping list option list
 type nonrec confluence_attachment_configuration =
   {
   attachment_field_mappings:
@@ -671,11 +552,6 @@ type nonrec confluence_configuration =
   version: confluence_version ;
   secret_arn: string ;
   server_url: string }
-type nonrec mime_type = string
-type nonrec exclude_mime_types_list = string list option list
-type nonrec exclude_user_accounts_list = string list option list
-type nonrec shared_drive_id = string
-type nonrec exclude_shared_drives_list = string list option list
 type nonrec google_drive_configuration =
   {
   exclude_shared_drives: string list option ;
@@ -685,7 +561,6 @@ type nonrec google_drive_configuration =
   exclusion_patterns: string list option ;
   inclusion_patterns: string list option ;
   secret_arn: string }
-type nonrec file_system_id = string
 type nonrec fsx_file_system_type =
   | WINDOWS 
 type nonrec fsx_configuration =
@@ -697,17 +572,11 @@ type nonrec fsx_configuration =
   vpc_configuration: data_source_vpc_configuration ;
   file_system_type: fsx_file_system_type ;
   file_system_id: string }
-type nonrec team_id = string
 type nonrec slack_entity =
   | DIRECT_MESSAGE 
   | GROUP_MESSAGE 
   | PRIVATE_CHANNEL 
   | PUBLIC_CHANNEL 
-type nonrec slack_entity_list = slack_entity list option list
-type nonrec since_crawl_date = string
-type nonrec look_back_period = int
-type nonrec private_channel_filter = string list option list
-type nonrec public_channel_filter = string list option list
 type nonrec slack_configuration =
   {
   field_mappings: data_source_to_index_field_mapping list option ;
@@ -724,7 +593,6 @@ type nonrec slack_configuration =
   vpc_configuration: data_source_vpc_configuration option ;
   secret_arn: string ;
   team_id: string }
-type nonrec enterprise_id = string
 type nonrec box_configuration =
   {
   vpc_configuration: data_source_vpc_configuration option ;
@@ -740,9 +608,6 @@ type nonrec box_configuration =
   use_change_log: bool option ;
   secret_arn: string ;
   enterprise_id: string }
-type nonrec domain = string
-type nonrec folder_id = string
-type nonrec folder_id_list = string list option list
 type nonrec quip_configuration =
   {
   vpc_configuration: data_source_vpc_configuration option ;
@@ -757,15 +622,10 @@ type nonrec quip_configuration =
   crawl_file_comments: bool option ;
   secret_arn: string ;
   domain: string }
-type nonrec jira_account_url = string
-type nonrec project = string list option list
-type nonrec issue_type = string list option list
-type nonrec jira_status = string list option list
 type nonrec issue_sub_entity =
   | WORKLOGS 
   | ATTACHMENTS 
   | COMMENTS 
-type nonrec issue_sub_entity_filter = issue_sub_entity list option list
 type nonrec jira_configuration =
   {
   vpc_configuration: data_source_vpc_configuration option ;
@@ -783,7 +643,6 @@ type nonrec jira_configuration =
   use_change_log: bool option ;
   secret_arn: string ;
   jira_account_url: string }
-type nonrec organization_name = string
 type nonrec saa_s_configuration =
   {
   host_url: string ;
@@ -805,9 +664,6 @@ type nonrec git_hub_document_crawl_properties =
   crawl_issue_comment: bool option ;
   crawl_issue: bool option ;
   crawl_repository_documents: bool option }
-type nonrec repository_name = string
-type nonrec repository_names = string list option list
-type nonrec string_list = string list option list
 type nonrec git_hub_configuration =
   {
   git_hub_pull_request_document_attachment_configuration_field_mappings:
@@ -840,13 +696,10 @@ type nonrec git_hub_configuration =
   type_: type_ option ;
   on_premise_configuration: on_premise_configuration option ;
   saa_s_configuration: saa_s_configuration option }
-type nonrec site_url = string
-type nonrec site_id = string
 type nonrec alfresco_entity =
   | DocumentLibrary 
   | Blog 
   | Wiki 
-type nonrec entity_filter = alfresco_entity list option list
 type nonrec alfresco_configuration =
   {
   vpc_configuration: data_source_vpc_configuration option ;
@@ -863,9 +716,8 @@ type nonrec alfresco_configuration =
   secret_arn: string ;
   site_id: string ;
   site_url: string }
-type nonrec template = Document.t
 type nonrec template_configuration = {
-  template: template option }
+  template: CoreTypes.Document.t option }
 type nonrec data_source_configuration =
   {
   template_configuration: template_configuration option ;
@@ -886,8 +738,6 @@ type nonrec data_source_configuration =
   database_configuration: database_configuration option ;
   share_point_configuration: share_point_configuration option ;
   s3_configuration: s3_data_source_configuration option }
-type nonrec scan_schedule = string
-type nonrec language_code = string
 type nonrec condition_operator =
   | BeginsWith 
   | NotExists 
@@ -900,12 +750,9 @@ type nonrec condition_operator =
   | LessThan 
   | GreaterThanOrEquals 
   | GreaterThan 
-type nonrec document_attribute_string_value = string
-type nonrec document_attribute_string_list_value = string list option list
-type nonrec timestamp_ = Timestamp.t
 type nonrec document_attribute_value =
   {
-  date_value: float option ;
+  date_value: CoreTypes.Timestamp.t option ;
   long_value: int option ;
   string_list_value: string list option ;
   string_value: string option }
@@ -924,9 +771,6 @@ type nonrec inline_custom_document_enrichment_configuration =
   document_content_deletion: bool option ;
   target: document_attribute_target option ;
   condition: document_attribute_condition option }
-type nonrec inline_custom_document_enrichment_configuration_list =
-  inline_custom_document_enrichment_configuration list option list
-type nonrec lambda_arn = string
 type nonrec hook_configuration =
   {
   s3_bucket: string ;
@@ -953,8 +797,6 @@ type nonrec update_data_source_request =
   name: string option ;
   id: string }
 type nonrec update_access_control_configuration_response = unit
-type nonrec access_control_configuration_id = string
-type nonrec access_control_configuration_name = string
 type nonrec principal_type =
   | GROUP 
   | USER 
@@ -967,11 +809,8 @@ type nonrec principal =
   access: read_access_type ;
   type_: principal_type ;
   name: string }
-type nonrec principal_list = principal list option list
 type nonrec hierarchical_principal = {
   principal_list: principal list }
-type nonrec hierarchical_principal_list =
-  hierarchical_principal list option list
 type nonrec update_access_control_configuration_request =
   {
   hierarchical_access_control_list: hierarchical_principal list option ;
@@ -981,20 +820,16 @@ type nonrec update_access_control_configuration_request =
   id: string ;
   index_id: string }
 type nonrec untag_resource_response = unit
-type nonrec amazon_resource_name = string
-type nonrec tag_key = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_ar_n: string }
 type nonrec resource_unavailable_exception = {
   message: string option }
-type nonrec top_document_attribute_value_count_pairs_size = int
-type nonrec title = string
-type nonrec time_range = {
-  end_time: float option ;
-  start_time: float option }
+type nonrec time_range =
+  {
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option }
 type nonrec thesaurus_status =
   | FAILED 
   | ACTIVE_BUT_UPDATE_FAILED 
@@ -1004,12 +839,11 @@ type nonrec thesaurus_status =
   | CREATING 
 type nonrec thesaurus_summary =
   {
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   status: thesaurus_status option ;
   name: string option ;
   id: string option }
-type nonrec thesaurus_summary_items = thesaurus_summary list option list
 type nonrec highlight_type =
   | THESAURUS_SYNONYM 
   | STANDARD 
@@ -1019,23 +853,18 @@ type nonrec highlight =
   top_answer: bool option ;
   end_offset: int ;
   begin_offset: int }
-type nonrec highlight_list = highlight list option list
 type nonrec text_with_highlights =
   {
   highlights: highlight list option ;
   text: string option }
-type nonrec indexed_text_documents_count = int
-type nonrec indexed_text_bytes = int
 type nonrec text_document_statistics =
   {
   indexed_text_bytes: int ;
   indexed_text_documents_count: int }
-type nonrec tag_value = string
 type nonrec tag_resource_response = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = tag list option list
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_ar_n: string }
@@ -1045,10 +874,8 @@ type nonrec table_cell =
   highlighted: bool option ;
   top_answer: bool option ;
   value: string option }
-type nonrec table_cell_list = table_cell list option list
 type nonrec table_row = {
   cells: table_cell list option }
-type nonrec table_row_list = table_row list option list
 type nonrec table_excerpt =
   {
   total_number_of_rows: int option ;
@@ -1057,7 +884,6 @@ type nonrec suggestion_highlight =
   {
   end_offset: int option ;
   begin_offset: int option }
-type nonrec suggestion_highlight_list = suggestion_highlight list option list
 type nonrec suggestion_text_with_highlights =
   {
   highlights: suggestion_highlight list option ;
@@ -1068,33 +894,24 @@ type nonrec suggestion_value =
 type nonrec suggestion_type =
   | DOCUMENT_ATTRIBUTES 
   | QUERY 
-type nonrec suggestion_types = suggestion_type list option list
-type nonrec suggestion_query_text = string
-type nonrec result_id = string
-type nonrec document_attribute_key_list = string list option list
 type nonrec document_attribute =
   {
   value: document_attribute_value ;
   key: string }
-type nonrec document_attribute_list = document_attribute list option list
 type nonrec source_document =
   {
   additional_attributes: document_attribute list option ;
   suggestion_attributes: string list option ;
   document_id: string option }
-type nonrec source_documents = source_document list option list
 type nonrec suggestion =
   {
   source_documents: source_document list option ;
   value: suggestion_value option ;
   id: string option }
-type nonrec suggestion_list = suggestion list option list
-type nonrec suggested_query_text = string
-type nonrec query_id = string
-type nonrec click_feedback = {
-  click_time: float ;
+type nonrec click_feedback =
+  {
+  click_time: CoreTypes.Timestamp.t ;
   result_id: string }
-type nonrec click_feedback_list = click_feedback list option list
 type nonrec relevance_type =
   | NOT_RELEVANT 
   | RELEVANT 
@@ -1102,7 +919,6 @@ type nonrec relevance_feedback =
   {
   relevance_value: relevance_type ;
   result_id: string }
-type nonrec relevance_feedback_list = relevance_feedback list option list
 type nonrec submit_feedback_request =
   {
   relevance_feedback_items: relevance_feedback list option ;
@@ -1144,13 +960,10 @@ type nonrec correction =
   term: string option ;
   end_offset: int option ;
   begin_offset: int option }
-type nonrec correction_list = correction list option list
 type nonrec spell_corrected_query =
   {
   corrections: correction list option ;
   suggested_query_text: string option }
-type nonrec spell_corrected_query_list =
-  spell_corrected_query list option list
 type nonrec sort_order =
   | ASC 
   | DESC 
@@ -1158,12 +971,6 @@ type nonrec sorting_configuration =
   {
   sort_order: sort_order ;
   document_attribute_key: string }
-type nonrec sorting_configuration_list =
-  sorting_configuration list option list
-type nonrec snapshots_data_record = string list option list
-type nonrec snapshots_data_records = string list list option list
-type nonrec snapshots_data_header_fields = string list option list
-type nonrec kms_key_id = string
 type nonrec server_side_encryption_configuration =
   {
   kms_key_id: string option }
@@ -1175,8 +982,6 @@ type nonrec score_confidence =
   | VERY_HIGH 
 type nonrec score_attributes = {
   score_confidence: score_confidence option }
-type nonrec document_title = string
-type nonrec content = string
 type nonrec retrieve_result_item =
   {
   score_attributes: score_attributes option ;
@@ -1186,7 +991,6 @@ type nonrec retrieve_result_item =
   document_title: string option ;
   document_id: string option ;
   id: string option }
-type nonrec retrieve_result_item_list = retrieve_result_item list option list
 type nonrec retrieve_result =
   {
   result_items: retrieve_result_item list option ;
@@ -1203,13 +1007,10 @@ type attribute_filter =
   not_filter: attribute_filter option ;
   or_all_filters: attribute_filter list option ;
   and_all_filters: attribute_filter list option }
-and attribute_filter_list = attribute_filter list option list
 type nonrec document_relevance_configuration =
   {
   relevance: relevance ;
   name: string }
-type nonrec document_relevance_override_configuration_list =
-  document_relevance_configuration list option list
 type nonrec retrieve_request =
   {
   user_context: user_context option ;
@@ -1226,7 +1027,6 @@ type nonrec resource_already_exist_exception = {
 type nonrec query_suggestions_status =
   | UPDATING 
   | ACTIVE 
-type nonrec query_suggestions_id = string
 type nonrec query_suggestions_block_list_status =
   | FAILED 
   | ACTIVE_BUT_UPDATE_FAILED 
@@ -1237,13 +1037,11 @@ type nonrec query_suggestions_block_list_status =
 type nonrec query_suggestions_block_list_summary =
   {
   item_count: int option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   status: query_suggestions_block_list_status option ;
   name: string option ;
   id: string option }
-type nonrec query_suggestions_block_list_summary_items =
-  query_suggestions_block_list_summary list option list
 type nonrec query_result_type =
   | ANSWER 
   | QUESTION_ANSWER 
@@ -1261,9 +1059,6 @@ type nonrec additional_result_attribute =
   value: additional_result_attribute_value ;
   value_type: additional_result_attribute_value_type ;
   key: string }
-type nonrec additional_result_attribute_list =
-  additional_result_attribute list option list
-type nonrec feedback_token = string
 type nonrec expanded_result_item =
   {
   document_attributes: document_attribute list option ;
@@ -1272,7 +1067,6 @@ type nonrec expanded_result_item =
   document_title: text_with_highlights option ;
   document_id: string option ;
   id: string option }
-type nonrec expanded_result_list = expanded_result_item list option list
 type nonrec collapsed_result_detail =
   {
   expanded_results: expanded_result_item list option ;
@@ -1292,21 +1086,17 @@ type nonrec query_result_item =
   format: query_result_format option ;
   type_: query_result_type option ;
   id: string option }
-type nonrec query_result_item_list = query_result_item list option list
 type document_attribute_value_count_pair =
   {
   facet_results: facet_result list option ;
   count: int option ;
   document_attribute_value: document_attribute_value option }
-and document_attribute_value_count_pair_list =
-  document_attribute_value_count_pair list option list
 and facet_result =
   {
   document_attribute_value_count_pairs:
     document_attribute_value_count_pair list option ;
   document_attribute_value_type: document_attribute_value_type option ;
   document_attribute_key: string option }
-and facet_result_list = facet_result list option list
 type nonrec featured_results_item =
   {
   feedback_token: string option ;
@@ -1318,8 +1108,6 @@ type nonrec featured_results_item =
   additional_attributes: additional_result_attribute list option ;
   type_: query_result_type option ;
   id: string option }
-type nonrec featured_results_item_list =
-  featured_results_item list option list
 type nonrec query_result =
   {
   featured_results_items: featured_results_item list option ;
@@ -1334,7 +1122,6 @@ type facet =
   max_results: int option ;
   facets: facet list option ;
   document_attribute_key: string option }
-and facet_list = facet list option list
 type nonrec missing_attribute_key_strategy =
   | EXPAND 
   | COLLAPSE 
@@ -1368,20 +1155,16 @@ type nonrec query_request =
   attribute_filter: attribute_filter option ;
   query_text: string option ;
   index_id: string }
-type nonrec group_id = string
 type nonrec member_group = {
   data_source_id: string option ;
   group_id: string }
-type nonrec member_groups = member_group list option list
 type nonrec member_user = {
   user_id: string }
-type nonrec member_users = member_user list option list
 type nonrec group_members =
   {
   s3_pathfor_group_members: s3_path option ;
   member_users: member_user list option ;
   member_groups: member_group list option }
-type nonrec principal_ordering_id = int
 type nonrec put_principal_mapping_request =
   {
   role_arn: string option ;
@@ -1396,20 +1179,15 @@ type nonrec principal_mapping_status =
   | PROCESSING 
   | SUCCEEDED 
   | FAILED 
-type nonrec entity_id = string
 type nonrec persona =
   | VIEWER 
   | OWNER 
 type nonrec personas_summary =
   {
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   persona: persona option ;
   entity_id: string option }
-type nonrec personas_summary_list = personas_summary list option list
-type nonrec next_token = string
-type nonrec name_type = string
-type nonrec metric_value = string
 type nonrec metric_type =
   | TREND_QUERY_DOC_METRICS 
   | AGG_QUERY_DOC_METRICS 
@@ -1417,18 +1195,6 @@ type nonrec metric_type =
   | QUERIES_BY_ZERO_RESULT_RATE 
   | QUERIES_BY_ZERO_CLICK_RATE 
   | QUERIES_BY_COUNT 
-type nonrec max_results_integer_for_list_thesauri_request = int
-type nonrec max_results_integer_for_list_query_suggestions_block_lists = int
-type nonrec max_results_integer_for_list_principals_request = int
-type nonrec max_results_integer_for_list_indices_request = int
-type nonrec max_results_integer_for_list_featured_results_sets_request = int
-type nonrec max_results_integer_for_list_faqs_request = int
-type nonrec max_results_integer_for_list_experiences_request = int
-type nonrec max_results_integer_for_list_entity_personas_request = int
-type nonrec max_results_integer_for_list_data_sources_request = int
-type nonrec max_results_integer_for_list_data_source_sync_jobs_request = int
-type nonrec max_results_integer_for_list_access_control_configurations_request =
-  int
 type nonrec list_thesauri_response =
   {
   thesaurus_summary_items: thesaurus_summary list option ;
@@ -1455,7 +1221,6 @@ type nonrec group_summary =
   {
   ordering_id: int option ;
   group_id: string option }
-type nonrec list_of_group_summaries = group_summary list option list
 type nonrec index_edition =
   | ENTERPRISE_EDITION 
   | DEVELOPER_EDITION 
@@ -1469,13 +1234,11 @@ type nonrec index_status =
 type nonrec index_configuration_summary =
   {
   status: index_status ;
-  updated_at: float ;
-  created_at: float ;
+  updated_at: CoreTypes.Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   edition: index_edition option ;
   id: string option ;
   name: string option }
-type nonrec index_configuration_summary_list =
-  index_configuration_summary list option list
 type nonrec list_indices_response =
   {
   next_token: string option ;
@@ -1502,8 +1265,6 @@ type nonrec featured_results_set_summary =
   status: featured_results_set_status option ;
   featured_results_set_name: string option ;
   featured_results_set_id: string option }
-type nonrec featured_results_set_summary_items =
-  featured_results_set_summary list option list
 type nonrec list_featured_results_sets_response =
   {
   next_token: string option ;
@@ -1514,7 +1275,6 @@ type nonrec list_featured_results_sets_request =
   max_results: int option ;
   next_token: string option ;
   index_id: string }
-type nonrec faq_name = string
 type nonrec faq_status =
   | FAILED 
   | DELETING 
@@ -1529,12 +1289,11 @@ type nonrec faq_summary =
   {
   language_code: string option ;
   file_format: faq_file_format option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   status: faq_status option ;
   name: string option ;
   id: string option }
-type nonrec faq_summary_items = faq_summary list option list
 type nonrec list_faqs_response =
   {
   faq_summary_items: faq_summary list option ;
@@ -1551,20 +1310,17 @@ type nonrec experience_status =
   | CREATING 
 type nonrec endpoint_type =
   | HOME 
-type nonrec endpoint = string
 type nonrec experience_endpoint =
   {
   endpoint: string option ;
   endpoint_type: endpoint_type option }
-type nonrec experience_endpoints = experience_endpoint list option list
 type nonrec experiences_summary =
   {
   endpoints: experience_endpoint list option ;
   status: experience_status option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   id: string option ;
   name: string option }
-type nonrec experiences_summary_list = experiences_summary list option list
 type nonrec list_experiences_response =
   {
   next_token: string option ;
@@ -1589,8 +1345,6 @@ type nonrec experience_entities_summary =
   display_data: entity_display_data option ;
   entity_type: entity_type option ;
   entity_id: string option }
-type nonrec experience_entities_summary_list =
-  experience_entities_summary list option list
 type nonrec list_experience_entities_response =
   {
   next_token: string option ;
@@ -1640,12 +1394,11 @@ type nonrec data_source_summary =
   {
   language_code: string option ;
   status: data_source_status option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   type_: data_source_type option ;
   id: string option ;
   name: string option }
-type nonrec data_source_summary_list = data_source_summary list option list
 type nonrec list_data_sources_response =
   {
   next_token: string option ;
@@ -1680,11 +1433,9 @@ type nonrec data_source_sync_job =
   error_code: error_code option ;
   error_message: string option ;
   status: data_source_sync_job_status option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   execution_id: string option }
-type nonrec data_source_sync_job_history_list =
-  data_source_sync_job list option list
 type nonrec list_data_source_sync_jobs_response =
   {
   next_token: string option ;
@@ -1699,8 +1450,6 @@ type nonrec list_data_source_sync_jobs_request =
   id: string }
 type nonrec access_control_configuration_summary = {
   id: string }
-type nonrec access_control_configuration_summary_list =
-  access_control_configuration_summary list option list
 type nonrec list_access_control_configurations_response =
   {
   access_control_configurations: access_control_configuration_summary list ;
@@ -1719,23 +1468,19 @@ type nonrec interval =
   | ONE_WEEK_AGO 
   | THIS_WEEK 
   | THIS_MONTH 
-type nonrec indexed_question_answers_count = int
 type nonrec faq_statistics = {
   indexed_question_answers_count: int }
 type nonrec index_statistics =
   {
   text_document_statistics: text_document_statistics ;
   faq_statistics: faq_statistics }
-type nonrec failure_reason = string
 type nonrec group_ordering_id_summary =
   {
   failure_reason: string option ;
   ordering_id: int option ;
-  received_at: float option ;
-  last_updated_at: float option ;
+  received_at: CoreTypes.Timestamp.t option ;
+  last_updated_at: CoreTypes.Timestamp.t option ;
   status: principal_mapping_status option }
-type nonrec group_ordering_id_summaries =
-  group_ordering_id_summary list option list
 type nonrec get_snapshots_response =
   {
   next_token: string option ;
@@ -1766,36 +1511,25 @@ type nonrec get_query_suggestions_request =
   max_suggestions_count: int option ;
   query_text: string ;
   index_id: string }
-type nonrec featured_results_set_id_list = string list option list
 type nonrec featured_document_with_metadata =
   {
   ur_i: string option ;
   title: string option ;
   id: string option }
-type nonrec featured_document_with_metadata_list =
-  featured_document_with_metadata list option list
 type nonrec featured_document_missing = {
   id: string option }
-type nonrec featured_document_missing_list =
-  featured_document_missing list option list
 type nonrec failed_entity =
   {
   error_message: string option ;
   entity_id: string option }
-type nonrec failed_entity_list = failed_entity list option list
 type nonrec entity_persona_configuration =
   {
   persona: persona ;
   entity_id: string }
-type nonrec entity_persona_configuration_list =
-  entity_persona_configuration list option list
-type nonrec entity_ids_list = string list option list
 type nonrec entity_configuration =
   {
   entity_type: entity_type ;
   entity_id: string }
-type nonrec document_status_list = status list option list
-type nonrec blob = bytes
 type nonrec content_type =
   | MD 
   | JSON 
@@ -1820,13 +1554,10 @@ type nonrec document =
   blob: bytes option ;
   title: string option ;
   id: string }
-type nonrec document_list = document list option list
 type nonrec document_info =
   {
   attributes: document_attribute list option ;
   document_id: string }
-type nonrec document_info_list = document_info list option list
-type nonrec document_id_list = string list option list
 type nonrec disassociate_personas_from_entities_response =
   {
   failed_entity_list: failed_entity list option }
@@ -1835,7 +1566,6 @@ type nonrec disassociate_personas_from_entities_request =
   entity_ids: string list ;
   index_id: string ;
   id: string }
-type nonrec disassociate_entity_list = entity_configuration list option list
 type nonrec disassociate_entities_from_experience_response =
   {
   failed_entity_list: failed_entity list option }
@@ -1851,8 +1581,8 @@ type nonrec describe_thesaurus_response =
   file_size_bytes: int option ;
   source_s3_path: s3_path option ;
   role_arn: string option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   status: thesaurus_status option ;
   description: string option ;
@@ -1870,8 +1600,8 @@ type nonrec describe_query_suggestions_config_response =
   {
   attribute_suggestions_config: attribute_suggestions_describe_config option ;
   total_suggestions_count: int option ;
-  last_clear_time: float option ;
-  last_suggestions_build_time: float option ;
+  last_clear_time: CoreTypes.Timestamp.t option ;
+  last_suggestions_build_time: CoreTypes.Timestamp.t option ;
   minimum_query_count: int option ;
   minimum_number_of_querying_users: int option ;
   include_queries_without_user_information: bool option ;
@@ -1886,8 +1616,8 @@ type nonrec describe_query_suggestions_block_list_response =
   file_size_bytes: int option ;
   item_count: int option ;
   source_s3_path: s3_path option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   status: query_suggestions_block_list_status option ;
   description: string option ;
@@ -1920,8 +1650,8 @@ type nonrec describe_index_response =
   index_statistics: index_statistics option ;
   document_metadata_configurations:
     document_metadata_configuration list option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   description: string option ;
   status: index_status option ;
   server_side_encryption_configuration:
@@ -1956,8 +1686,8 @@ type nonrec describe_faq_response =
   role_arn: string option ;
   status: faq_status option ;
   s3_path: s3_path option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   description: string option ;
   name: string option ;
   index_id: string option ;
@@ -1971,8 +1701,8 @@ type nonrec describe_experience_response =
   role_arn: string option ;
   status: experience_status option ;
   description: string option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   configuration: experience_configuration option ;
   endpoints: experience_endpoint list option ;
   name: string option ;
@@ -1991,8 +1721,8 @@ type nonrec describe_data_source_response =
   schedule: string option ;
   status: data_source_status option ;
   description: string option ;
-  updated_at: float option ;
-  created_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   vpc_configuration: data_source_vpc_configuration option ;
   configuration: data_source_configuration option ;
   type_: data_source_type option ;
@@ -2043,14 +1773,12 @@ type nonrec delete_access_control_configuration_request =
   {
   id: string ;
   index_id: string }
-type nonrec data_source_sync_job_id = string
 type nonrec data_source_sync_job_metric_target =
   {
   data_source_sync_job_id: string option ;
   data_source_id: string }
 type nonrec create_thesaurus_response = {
   id: string option }
-type nonrec client_token_name = string
 type nonrec create_thesaurus_request =
   {
   client_token: string option ;
@@ -2158,8 +1886,6 @@ type nonrec batch_put_document_response_failed_document =
   error_message: string option ;
   error_code: error_code option ;
   id: string option }
-type nonrec batch_put_document_response_failed_documents =
-  batch_put_document_response_failed_document list option list
 type nonrec batch_put_document_response =
   {
   failed_documents: batch_put_document_response_failed_document list option }
@@ -2175,8 +1901,6 @@ type nonrec batch_get_document_status_response_error =
   error_message: string option ;
   error_code: error_code option ;
   document_id: string option }
-type nonrec batch_get_document_status_response_errors =
-  batch_get_document_status_response_error list option list
 type nonrec batch_get_document_status_response =
   {
   document_status_list: status list option ;
@@ -2190,8 +1914,6 @@ type nonrec batch_delete_featured_results_set_error =
   error_message: string ;
   error_code: error_code ;
   id: string }
-type nonrec batch_delete_featured_results_set_errors =
-  batch_delete_featured_results_set_error list option list
 type nonrec batch_delete_featured_results_set_response =
   {
   errors: batch_delete_featured_results_set_error list }
@@ -2204,8 +1926,6 @@ type nonrec batch_delete_document_response_failed_document =
   error_message: string option ;
   error_code: error_code option ;
   id: string option }
-type nonrec batch_delete_document_response_failed_documents =
-  batch_delete_document_response_failed_document list option list
 type nonrec batch_delete_document_response =
   {
   failed_documents:
@@ -2224,9 +1944,6 @@ type nonrec associate_personas_to_entities_request =
   personas: entity_persona_configuration list ;
   index_id: string ;
   id: string }
-type nonrec associate_entity_list = entity_configuration list option list
-type nonrec associate_entities_to_experience_failed_entity_list =
-  failed_entity list option list
 type nonrec associate_entities_to_experience_response =
   {
   failed_entity_list: failed_entity list option }
@@ -2235,10 +1952,3 @@ type nonrec associate_entities_to_experience_request =
   entity_list: entity_configuration list ;
   index_id: string ;
   id: string }
-type nonrec aws_kendra_frontend_service = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

@@ -193,7 +193,7 @@ module Deserialiser = struct
     | BooleanShape x -> Fmt.pf fmt "bool_of_yojson"
     | BigIntegerShape x -> Fmt.pf fmt "big_int_of_yojson"
     | BigDecimalShape x -> Fmt.pf fmt "big_decimal_of_yojson"
-    | TimestampShape x -> Fmt.pf fmt "timestamp_of_yojson"
+    | TimestampShape x -> Fmt.pf fmt "timestamp_epoch_seconds_of_yojson"
     | BlobShape x -> Fmt.pf fmt "blob_of_yojson"
     | MapShape x ->
         Fmt.pf fmt "fun tree path -> map_of_yojson %s tree path" (func_name x.mapValue.target)

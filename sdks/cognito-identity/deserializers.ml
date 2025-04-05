@@ -472,7 +472,7 @@ let list_identity_pools_input_of_yojson =
   }
   in _res
 
-let date_type_of_yojson = timestamp_of_yojson
+let date_type_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let identity_description_of_yojson = 
   fun tree path : identity_description ->
@@ -745,7 +745,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

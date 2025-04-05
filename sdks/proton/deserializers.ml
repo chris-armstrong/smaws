@@ -137,7 +137,7 @@ let description_of_yojson = string_of_yojson
 
 let service_template_version_arn_of_yojson = string_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let compatible_environment_template_of_yojson = 
   fun tree path : compatible_environment_template ->

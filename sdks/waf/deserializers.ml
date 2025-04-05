@@ -1210,7 +1210,7 @@ let untag_resource_request_of_yojson =
 
 let uri_string_of_yojson = string_of_yojson
 
-let timestamp__of_yojson = timestamp_of_yojson
+let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 
 let time_window_of_yojson = 
   fun tree path : time_window ->
@@ -2865,7 +2865,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

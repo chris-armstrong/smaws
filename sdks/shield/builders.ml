@@ -1,546 +1,470 @@
-[@@@warning "-39"]
+open Smaws_Lib
 open Types
-let make_validation_exception_field  ~(message : string) ~(name : string) ()
-: validation_exception_field = { message; name; 
-}
-
-let make_update_subscription_response  () : update_subscription_response =
-()
-
-let make_update_subscription_request  ?(auto_renew : auto_renew option) ()
-: update_subscription_request = { auto_renew; 
-}
-
-let make_update_protection_group_response  ()
-: update_protection_group_response =
-()
-
-let make_update_protection_group_request 
-  ?(members : string list option)
-  ?(resource_type : protected_resource_type option)
-  ~(pattern : protection_group_pattern)
-  ~(aggregation : protection_group_aggregation)
-  ~(protection_group_id : string)
-  () : update_protection_group_request = {
-  members; resource_type; pattern; aggregation; protection_group_id; 
-}
-
-let make_update_emergency_contact_settings_response  ()
-: update_emergency_contact_settings_response = ()
-
-let make_emergency_contact 
-  ?(contact_notes : string option)
-  ?(phone_number : string option)
-  ~(email_address : string)
-  () : emergency_contact = { contact_notes; phone_number; email_address; 
-}
-
-let make_update_emergency_contact_settings_request 
-  ?(emergency_contact_list : emergency_contact list option) ()
-: update_emergency_contact_settings_request = { emergency_contact_list; 
-}
-
-let make_update_application_layer_automatic_response_response  ()
-: update_application_layer_automatic_response_response =
-()
-
-let make_block_action  () : block_action = ()
-
-let make_count_action  () : count_action = ()
-
-let make_response_action 
-  ?(count : count_action option) ?(block : block_action option) ()
-: response_action = { count; block; 
-}
-
-let make_update_application_layer_automatic_response_request 
-  ~(action : response_action) ~(resource_arn : string) ()
-: update_application_layer_automatic_response_request = {
-  action; resource_arn;  }
-
-let make_untag_resource_response  () : untag_resource_response =
-()
-
-let make_untag_resource_request 
-  ~(tag_keys : string list) ~(resource_ar_n : string) ()
-: untag_resource_request = { tag_keys; resource_ar_n;  }
-
-let make_contributor  ?(value : int option) ?(name : string option) ()
-: contributor = { value; name;  }
-
-let make_time_range 
-  ?(to_exclusive : CoreTypes.Timestamp.t option)
-  ?(from_inclusive : CoreTypes.Timestamp.t option)
-  () : time_range = { to_exclusive; from_inclusive; 
-}
-
-let make_tag_resource_response  () : tag_resource_response = ()
-
-let make_tag  ?(value : string option) ?(key : string option) () : tag = {
-  value; key;  }
-
-let make_tag_resource_request 
-  ~(tags : tag list) ~(resource_ar_n : string) () : tag_resource_request = {
-  tags; resource_ar_n;  }
-
-let make_summarized_counter 
-  ?(unit_ : string option)
-  ?(n : int option)
-  ?(sum : float option)
-  ?(average : float option)
-  ?(max : float option)
-  ?(name : string option)
-  () : summarized_counter = { unit_; n; sum; average; max; name; 
-}
-
-let make_summarized_attack_vector 
-  ?(vector_counters : summarized_counter list option)
-  ~(vector_type : string)
-  () : summarized_attack_vector = { vector_counters; vector_type; 
-}
-
-let make_limit  ?(max : int option) ?(type_ : string option) () : limit = {
-  max; type_;  }
-
-let make_protection_limits  ~(protected_resource_type_limits : limit list) ()
-: protection_limits = { protected_resource_type_limits; 
-}
-
-let make_protection_group_arbitrary_pattern_limits  ~(max_members : int) ()
-: protection_group_arbitrary_pattern_limits = { max_members; 
-}
-
-let make_protection_group_pattern_type_limits 
-  ~(arbitrary_pattern_limits : protection_group_arbitrary_pattern_limits) ()
-: protection_group_pattern_type_limits = { arbitrary_pattern_limits; 
-}
-
-let make_protection_group_limits 
-  ~(pattern_type_limits : protection_group_pattern_type_limits)
-  ~(max_protection_groups : int)
-  () : protection_group_limits = {
-  pattern_type_limits; max_protection_groups;  }
-
-let make_subscription_limits 
-  ~(protection_group_limits : protection_group_limits)
-  ~(protection_limits : protection_limits)
-  () : subscription_limits = { protection_group_limits; protection_limits; 
-}
-
-let make_subscription 
-  ?(subscription_arn : string option)
-  ?(proactive_engagement_status : proactive_engagement_status option)
-  ?(limits : limit list option)
-  ?(auto_renew : auto_renew option)
-  ?(time_commitment_in_seconds : int option)
-  ?(end_time : CoreTypes.Timestamp.t option)
-  ?(start_time : CoreTypes.Timestamp.t option)
-  ~(subscription_limits : subscription_limits)
-  () : subscription = {
-  subscription_arn;
-  subscription_limits;
-  proactive_engagement_status;
-  limits;
-  auto_renew;
-  time_commitment_in_seconds;
-  end_time;
-  start_time;
-   }
-
-let make_sub_resource_summary 
-  ?(counters : summarized_counter list option)
-  ?(attack_vectors : summarized_attack_vector list option)
-  ?(id : string option)
-  ?(type_ : sub_resource_type option)
-  () : sub_resource_summary = { counters; attack_vectors; id; type_; 
-}
-
-let make_application_layer_automatic_response_configuration 
-  ~(action : response_action)
-  ~(status : application_layer_automatic_response_status)
-  () : application_layer_automatic_response_configuration = {
-  action; status;  }
-
-let make_protection 
-  ?(application_layer_automatic_response_configuration : application_layer_automatic_response_configuration option)
-  ?(protection_arn : string option)
-  ?(health_check_ids : string list option)
-  ?(resource_arn : string option)
-  ?(name : string option)
-  ?(id : string option)
-  () : protection = {
-  application_layer_automatic_response_configuration;
-  protection_arn;
-  health_check_ids;
-  resource_arn;
-  name;
-  id;
-   }
-
-let make_protection_group 
-  ?(protection_group_arn : string option)
-  ?(resource_type : protected_resource_type option)
-  ~(members : string list)
-  ~(pattern : protection_group_pattern)
-  ~(aggregation : protection_group_aggregation)
-  ~(protection_group_id : string)
-  () : protection_group = {
-  protection_group_arn;
-  members;
-  resource_type;
-  pattern;
-  aggregation;
-  protection_group_id;
-   }
-
-let make_mitigation  ?(mitigation_name : string option) () : mitigation = {
-  mitigation_name;  }
-
-let make_list_tags_for_resource_response  ?(tags : tag list option) ()
-: list_tags_for_resource_response = { tags; 
-}
-
-let make_list_tags_for_resource_request  ~(resource_ar_n : string) ()
-: list_tags_for_resource_request = { resource_ar_n; 
-}
-
-let make_list_resources_in_protection_group_response 
-  ?(next_token : string option) ~(resource_arns : string list) ()
-: list_resources_in_protection_group_response = { next_token; resource_arns; 
-}
-
-let make_list_resources_in_protection_group_request 
-  ?(max_results : int option)
-  ?(next_token : string option)
-  ~(protection_group_id : string)
-  () : list_resources_in_protection_group_request = {
-  max_results; next_token; protection_group_id; 
-}
-
-let make_list_protections_response 
-  ?(next_token : string option) ?(protections : protection list option) ()
-: list_protections_response = { next_token; protections; 
-}
-
-let make_inclusion_protection_filters 
-  ?(resource_types : protected_resource_type list option)
-  ?(protection_names : string list option)
-  ?(resource_arns : string list option)
-  () : inclusion_protection_filters = {
-  resource_types; protection_names; resource_arns; 
-}
-
-let make_list_protections_request 
-  ?(inclusion_filters : inclusion_protection_filters option)
-  ?(max_results : int option)
-  ?(next_token : string option)
-  () : list_protections_request = {
-  inclusion_filters; max_results; next_token; 
-}
-
-let make_list_protection_groups_response 
-  ?(next_token : string option)
-  ~(protection_groups : protection_group list)
-  () : list_protection_groups_response = { next_token; protection_groups; 
-}
-
-let make_inclusion_protection_group_filters 
-  ?(aggregations : protection_group_aggregation list option)
-  ?(resource_types : protected_resource_type list option)
-  ?(patterns : protection_group_pattern list option)
-  ?(protection_group_ids : string list option)
-  () : inclusion_protection_group_filters = {
-  aggregations; resource_types; patterns; protection_group_ids; 
-}
-
-let make_list_protection_groups_request 
-  ?(inclusion_filters : inclusion_protection_group_filters option)
-  ?(max_results : int option)
-  ?(next_token : string option)
-  () : list_protection_groups_request = {
-  inclusion_filters; max_results; next_token; 
-}
-
-let make_attack_vector_description  ~(vector_type : string) ()
-: attack_vector_description = { vector_type;  }
-
-let make_attack_summary 
-  ?(attack_vectors : attack_vector_description list option)
-  ?(end_time : CoreTypes.Timestamp.t option)
-  ?(start_time : CoreTypes.Timestamp.t option)
-  ?(resource_arn : string option)
-  ?(attack_id : string option)
-  () : attack_summary = {
-  attack_vectors; end_time; start_time; resource_arn; attack_id; 
-}
-
-let make_list_attacks_response 
-  ?(next_token : string option)
-  ?(attack_summaries : attack_summary list option)
-  () : list_attacks_response = { next_token; attack_summaries; 
-}
-
-let make_list_attacks_request 
-  ?(max_results : int option)
-  ?(next_token : string option)
-  ?(end_time : time_range option)
-  ?(start_time : time_range option)
-  ?(resource_arns : string list option)
-  () : list_attacks_request = {
-  max_results; next_token; end_time; start_time; resource_arns; 
-}
-
-let make_get_subscription_state_response 
-  ~(subscription_state : subscription_state) ()
-: get_subscription_state_response = { subscription_state; 
-}
-
-let make_get_subscription_state_request  () : get_subscription_state_request
-= ()
-
-let make_enable_proactive_engagement_response  ()
-: enable_proactive_engagement_response =
-()
-
-let make_enable_proactive_engagement_request  ()
-: enable_proactive_engagement_request =
-()
-
-let make_enable_application_layer_automatic_response_response  ()
-: enable_application_layer_automatic_response_response =
-()
-
-let make_enable_application_layer_automatic_response_request 
-  ~(action : response_action) ~(resource_arn : string) ()
-: enable_application_layer_automatic_response_request = {
-  action; resource_arn;  }
-
-let make_disassociate_health_check_response  ()
-: disassociate_health_check_response =
-()
-
-let make_disassociate_health_check_request 
-  ~(health_check_arn : string) ~(protection_id : string) ()
-: disassociate_health_check_request = { health_check_arn; protection_id; 
-}
-
-let make_disassociate_drt_role_response  () : disassociate_drt_role_response
-= ()
-
-let make_disassociate_drt_role_request  () : disassociate_drt_role_request =
-()
-
-let make_disassociate_drt_log_bucket_response  ()
-: disassociate_drt_log_bucket_response =
-()
-
-let make_disassociate_drt_log_bucket_request  ~(log_bucket : string) ()
-: disassociate_drt_log_bucket_request = { log_bucket; 
-}
-
-let make_disable_proactive_engagement_response  ()
-: disable_proactive_engagement_response =
-()
-
-let make_disable_proactive_engagement_request  ()
-: disable_proactive_engagement_request =
-()
-
-let make_disable_application_layer_automatic_response_response  ()
-: disable_application_layer_automatic_response_response =
-()
-
-let make_disable_application_layer_automatic_response_request 
-  ~(resource_arn : string) ()
-: disable_application_layer_automatic_response_request = { resource_arn; 
-}
-
-let make_describe_subscription_response 
-  ?(subscription : subscription option) () : describe_subscription_response =
-{ subscription;  }
-
-let make_describe_subscription_request  () : describe_subscription_request =
-()
-
-let make_describe_protection_response  ?(protection : protection option) ()
-: describe_protection_response = { protection; 
-}
-
-let make_describe_protection_request 
-  ?(resource_arn : string option) ?(protection_id : string option) ()
-: describe_protection_request = { resource_arn; protection_id; 
-}
-
-let make_describe_protection_group_response 
-  ~(protection_group : protection_group) ()
-: describe_protection_group_response = { protection_group; 
-}
-
-let make_describe_protection_group_request 
-  ~(protection_group_id : string) () : describe_protection_group_request = {
-  protection_group_id; 
-}
-
-let make_describe_emergency_contact_settings_response 
-  ?(emergency_contact_list : emergency_contact list option) ()
-: describe_emergency_contact_settings_response = { emergency_contact_list; 
-}
-
-let make_describe_emergency_contact_settings_request  ()
-: describe_emergency_contact_settings_request =
-()
-
-let make_describe_drt_access_response 
-  ?(log_bucket_list : string list option) ?(role_arn : string option) ()
-: describe_drt_access_response = { log_bucket_list; role_arn; 
-}
-
-let make_describe_drt_access_request  () : describe_drt_access_request =
-()
-
-let make_attack_volume_statistics  ~(max : float) ()
-: attack_volume_statistics = { max;  }
-
-let make_attack_volume 
-  ?(requests_per_second : attack_volume_statistics option)
-  ?(packets_per_second : attack_volume_statistics option)
-  ?(bits_per_second : attack_volume_statistics option)
-  () : attack_volume = {
-  requests_per_second; packets_per_second; bits_per_second; 
-}
-
-let make_attack_statistics_data_item 
-  ?(attack_volume : attack_volume option) ~(attack_count : int) ()
-: attack_statistics_data_item = { attack_count; attack_volume; 
-}
-
-let make_describe_attack_statistics_response 
-  ~(data_items : attack_statistics_data_item list)
-  ~(time_range : time_range)
-  () : describe_attack_statistics_response = { data_items; time_range; 
-}
-
-let make_describe_attack_statistics_request  ()
-: describe_attack_statistics_request = ()
-
-let make_attack_property 
-  ?(total : int option)
-  ?(unit_ : unit_ option)
-  ?(top_contributors : contributor list option)
-  ?(attack_property_identifier : attack_property_identifier option)
-  ?(attack_layer : attack_layer option)
-  () : attack_property = {
-  total; unit_; top_contributors; attack_property_identifier; attack_layer; 
-}
-
-let make_attack_detail 
-  ?(mitigations : mitigation list option)
-  ?(attack_properties : attack_property list option)
-  ?(attack_counters : summarized_counter list option)
-  ?(end_time : CoreTypes.Timestamp.t option)
-  ?(start_time : CoreTypes.Timestamp.t option)
-  ?(sub_resources : sub_resource_summary list option)
-  ?(resource_arn : string option)
-  ?(attack_id : string option)
-  () : attack_detail = {
-  mitigations;
-  attack_properties;
-  attack_counters;
-  end_time;
-  start_time;
-  sub_resources;
-  resource_arn;
-  attack_id;
-   }
-
-let make_describe_attack_response  ?(attack : attack_detail option) ()
-: describe_attack_response = { attack;  }
-
-let make_describe_attack_request  ~(attack_id : string) ()
-: describe_attack_request = { attack_id; 
-}
-
-let make_delete_subscription_response  () : delete_subscription_response =
-()
-
-let make_delete_subscription_request  () : delete_subscription_request =
-()
-
-let make_delete_protection_response  () : delete_protection_response =
-()
-
-let make_delete_protection_request  ~(protection_id : string) ()
-: delete_protection_request = { protection_id; 
-}
-
-let make_delete_protection_group_response  ()
-: delete_protection_group_response =
-()
-
-let make_delete_protection_group_request  ~(protection_group_id : string) ()
-: delete_protection_group_request = { protection_group_id; 
-}
-
-let make_create_subscription_response  () : create_subscription_response =
-()
-
-let make_create_subscription_request  () : create_subscription_request =
-()
-
-let make_create_protection_response  ?(protection_id : string option) ()
-: create_protection_response = { protection_id; 
-}
-
-let make_create_protection_request 
-  ?(tags : tag list option) ~(resource_arn : string) ~(name : string) ()
-: create_protection_request = { tags; resource_arn; name; 
-}
-
-let make_create_protection_group_response  ()
-: create_protection_group_response =
-()
-
-let make_create_protection_group_request 
-  ?(tags : tag list option)
-  ?(members : string list option)
-  ?(resource_type : protected_resource_type option)
-  ~(pattern : protection_group_pattern)
-  ~(aggregation : protection_group_aggregation)
-  ~(protection_group_id : string)
-  () : create_protection_group_request = {
-  tags; members; resource_type; pattern; aggregation; protection_group_id; 
-}
-
-let make_associate_proactive_engagement_details_response  ()
-: associate_proactive_engagement_details_response =
-()
-
-let make_associate_proactive_engagement_details_request 
-  ~(emergency_contact_list : emergency_contact list) ()
-: associate_proactive_engagement_details_request = { emergency_contact_list; 
-}
-
-let make_associate_health_check_response  ()
-: associate_health_check_response =
-()
-
-let make_associate_health_check_request 
-  ~(health_check_arn : string) ~(protection_id : string) ()
-: associate_health_check_request = { health_check_arn; protection_id; 
-}
-
-let make_associate_drt_role_response  () : associate_drt_role_response =
-()
-
-let make_associate_drt_role_request  ~(role_arn : string) ()
-: associate_drt_role_request = { role_arn; 
-}
-
-let make_associate_drt_log_bucket_response  ()
-: associate_drt_log_bucket_response =
-()
-
-let make_associate_drt_log_bucket_request  ~(log_bucket : string) ()
-: associate_drt_log_bucket_request = { log_bucket; 
-}
-
+let make_validation_exception_field ~message:(message_ : string) 
+  ~name:(name_ : string)  () =
+  ({ message = message_; name = name_ } : validation_exception_field)
+let make_update_subscription_response () =
+  (() : update_subscription_response)
+let make_update_subscription_request
+  ?auto_renew:(auto_renew_ : auto_renew option)  () =
+  ({ auto_renew = auto_renew_ } : update_subscription_request)
+let make_update_protection_group_response () =
+  (() : update_protection_group_response)
+let make_update_protection_group_request
+  ?members:(members_ : string list option) 
+  ?resource_type:(resource_type_ : protected_resource_type option) 
+  ~pattern:(pattern_ : protection_group_pattern) 
+  ~aggregation:(aggregation_ : protection_group_aggregation) 
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({
+     members = members_;
+     resource_type = resource_type_;
+     pattern = pattern_;
+     aggregation = aggregation_;
+     protection_group_id = protection_group_id_
+   } : update_protection_group_request)
+let make_update_emergency_contact_settings_response () =
+  (() : update_emergency_contact_settings_response)
+let make_emergency_contact ?contact_notes:(contact_notes_ : string option) 
+  ?phone_number:(phone_number_ : string option) 
+  ~email_address:(email_address_ : string)  () =
+  ({
+     contact_notes = contact_notes_;
+     phone_number = phone_number_;
+     email_address = email_address_
+   } : emergency_contact)
+let make_update_emergency_contact_settings_request
+  ?emergency_contact_list:(emergency_contact_list_ :
+                            emergency_contact list option)
+   () =
+  ({ emergency_contact_list = emergency_contact_list_ } : update_emergency_contact_settings_request)
+let make_update_application_layer_automatic_response_response () =
+  (() : update_application_layer_automatic_response_response)
+let make_block_action () = (() : block_action)
+let make_count_action () = (() : count_action)
+let make_response_action ?count:(count_ : count_action option) 
+  ?block:(block_ : block_action option)  () =
+  ({ count = count_; block = block_ } : response_action)
+let make_update_application_layer_automatic_response_request
+  ~action:(action_ : response_action)  ~resource_arn:(resource_arn_ : string)
+   () =
+  ({ action = action_; resource_arn = resource_arn_ } : update_application_layer_automatic_response_request)
+let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
+  ~resource_ar_n:(resource_ar_n_ : string)  () =
+  ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
+let make_contributor ?value:(value_ : int option) 
+  ?name:(name_ : string option)  () =
+  ({ value = value_; name = name_ } : contributor)
+let make_time_range
+  ?to_exclusive:(to_exclusive_ : CoreTypes.Timestamp.t option) 
+  ?from_inclusive:(from_inclusive_ : CoreTypes.Timestamp.t option)  () =
+  ({ to_exclusive = to_exclusive_; from_inclusive = from_inclusive_ } : 
+  time_range)
+let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag ?value:(value_ : string option)  ?key:(key_ : string option)  ()
+  = ({ value = value_; key = key_ } : tag)
+let make_tag_resource_request ~tags:(tags_ : tag list) 
+  ~resource_ar_n:(resource_ar_n_ : string)  () =
+  ({ tags = tags_; resource_ar_n = resource_ar_n_ } : tag_resource_request)
+let make_summarized_counter ?unit_:(unit__ : string option) 
+  ?n:(n_ : int option)  ?sum:(sum_ : float option) 
+  ?average:(average_ : float option)  ?max:(max_ : float option) 
+  ?name:(name_ : string option)  () =
+  ({
+     unit_ = unit__;
+     n = n_;
+     sum = sum_;
+     average = average_;
+     max = max_;
+     name = name_
+   } : summarized_counter)
+let make_summarized_attack_vector
+  ?vector_counters:(vector_counters_ : summarized_counter list option) 
+  ~vector_type:(vector_type_ : string)  () =
+  ({ vector_counters = vector_counters_; vector_type = vector_type_ } : 
+  summarized_attack_vector)
+let make_limit ?max:(max_ : int option)  ?type_:(type__ : string option)  ()
+  = ({ max = max_; type_ = type__ } : limit)
+let make_protection_limits
+  ~protected_resource_type_limits:(protected_resource_type_limits_ :
+                                    limit list)
+   () =
+  ({ protected_resource_type_limits = protected_resource_type_limits_ } : 
+  protection_limits)
+let make_protection_group_arbitrary_pattern_limits
+  ~max_members:(max_members_ : int)  () =
+  ({ max_members = max_members_ } : protection_group_arbitrary_pattern_limits)
+let make_protection_group_pattern_type_limits
+  ~arbitrary_pattern_limits:(arbitrary_pattern_limits_ :
+                              protection_group_arbitrary_pattern_limits)
+   () =
+  ({ arbitrary_pattern_limits = arbitrary_pattern_limits_ } : protection_group_pattern_type_limits)
+let make_protection_group_limits
+  ~pattern_type_limits:(pattern_type_limits_ :
+                         protection_group_pattern_type_limits)
+   ~max_protection_groups:(max_protection_groups_ : int)  () =
+  ({
+     pattern_type_limits = pattern_type_limits_;
+     max_protection_groups = max_protection_groups_
+   } : protection_group_limits)
+let make_subscription_limits
+  ~protection_group_limits:(protection_group_limits_ :
+                             protection_group_limits)
+   ~protection_limits:(protection_limits_ : protection_limits)  () =
+  ({
+     protection_group_limits = protection_group_limits_;
+     protection_limits = protection_limits_
+   } : subscription_limits)
+let make_subscription ?subscription_arn:(subscription_arn_ : string option) 
+  ?proactive_engagement_status:(proactive_engagement_status_ :
+                                 proactive_engagement_status option)
+   ?limits:(limits_ : limit list option) 
+  ?auto_renew:(auto_renew_ : auto_renew option) 
+  ?time_commitment_in_seconds:(time_commitment_in_seconds_ : int option) 
+  ?end_time:(end_time_ : CoreTypes.Timestamp.t option) 
+  ?start_time:(start_time_ : CoreTypes.Timestamp.t option) 
+  ~subscription_limits:(subscription_limits_ : subscription_limits)  () =
+  ({
+     subscription_arn = subscription_arn_;
+     subscription_limits = subscription_limits_;
+     proactive_engagement_status = proactive_engagement_status_;
+     limits = limits_;
+     auto_renew = auto_renew_;
+     time_commitment_in_seconds = time_commitment_in_seconds_;
+     end_time = end_time_;
+     start_time = start_time_
+   } : subscription)
+let make_sub_resource_summary
+  ?counters:(counters_ : summarized_counter list option) 
+  ?attack_vectors:(attack_vectors_ : summarized_attack_vector list option) 
+  ?id:(id_ : string option)  ?type_:(type__ : sub_resource_type option)  () =
+  ({
+     counters = counters_;
+     attack_vectors = attack_vectors_;
+     id = id_;
+     type_ = type__
+   } : sub_resource_summary)
+let make_application_layer_automatic_response_configuration
+  ~action:(action_ : response_action) 
+  ~status:(status_ : application_layer_automatic_response_status)  () =
+  ({ action = action_; status = status_ } : application_layer_automatic_response_configuration)
+let make_protection
+  ?application_layer_automatic_response_configuration:(application_layer_automatic_response_configuration_
+                                                        :
+                                                        application_layer_automatic_response_configuration
+                                                          option)
+   ?protection_arn:(protection_arn_ : string option) 
+  ?health_check_ids:(health_check_ids_ : string list option) 
+  ?resource_arn:(resource_arn_ : string option) 
+  ?name:(name_ : string option)  ?id:(id_ : string option)  () =
+  ({
+     application_layer_automatic_response_configuration =
+       application_layer_automatic_response_configuration_;
+     protection_arn = protection_arn_;
+     health_check_ids = health_check_ids_;
+     resource_arn = resource_arn_;
+     name = name_;
+     id = id_
+   } : protection)
+let make_protection_group
+  ?protection_group_arn:(protection_group_arn_ : string option) 
+  ?resource_type:(resource_type_ : protected_resource_type option) 
+  ~members:(members_ : string list) 
+  ~pattern:(pattern_ : protection_group_pattern) 
+  ~aggregation:(aggregation_ : protection_group_aggregation) 
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({
+     protection_group_arn = protection_group_arn_;
+     members = members_;
+     resource_type = resource_type_;
+     pattern = pattern_;
+     aggregation = aggregation_;
+     protection_group_id = protection_group_id_
+   } : protection_group)
+let make_mitigation ?mitigation_name:(mitigation_name_ : string option)  () =
+  ({ mitigation_name = mitigation_name_ } : mitigation)
+let make_list_tags_for_resource_response ?tags:(tags_ : tag list option)  ()
+  = ({ tags = tags_ } : list_tags_for_resource_response)
+let make_list_tags_for_resource_request
+  ~resource_ar_n:(resource_ar_n_ : string)  () =
+  ({ resource_ar_n = resource_ar_n_ } : list_tags_for_resource_request)
+let make_list_resources_in_protection_group_response
+  ?next_token:(next_token_ : string option) 
+  ~resource_arns:(resource_arns_ : string list)  () =
+  ({ next_token = next_token_; resource_arns = resource_arns_ } : list_resources_in_protection_group_response)
+let make_list_resources_in_protection_group_request
+  ?max_results:(max_results_ : int option) 
+  ?next_token:(next_token_ : string option) 
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     protection_group_id = protection_group_id_
+   } : list_resources_in_protection_group_request)
+let make_list_protections_response ?next_token:(next_token_ : string option) 
+  ?protections:(protections_ : protection list option)  () =
+  ({ next_token = next_token_; protections = protections_ } : list_protections_response)
+let make_inclusion_protection_filters
+  ?resource_types:(resource_types_ : protected_resource_type list option) 
+  ?protection_names:(protection_names_ : string list option) 
+  ?resource_arns:(resource_arns_ : string list option)  () =
+  ({
+     resource_types = resource_types_;
+     protection_names = protection_names_;
+     resource_arns = resource_arns_
+   } : inclusion_protection_filters)
+let make_list_protections_request
+  ?inclusion_filters:(inclusion_filters_ :
+                       inclusion_protection_filters option)
+   ?max_results:(max_results_ : int option) 
+  ?next_token:(next_token_ : string option)  () =
+  ({
+     inclusion_filters = inclusion_filters_;
+     max_results = max_results_;
+     next_token = next_token_
+   } : list_protections_request)
+let make_list_protection_groups_response
+  ?next_token:(next_token_ : string option) 
+  ~protection_groups:(protection_groups_ : protection_group list)  () =
+  ({ next_token = next_token_; protection_groups = protection_groups_ } : 
+  list_protection_groups_response)
+let make_inclusion_protection_group_filters
+  ?aggregations:(aggregations_ : protection_group_aggregation list option) 
+  ?resource_types:(resource_types_ : protected_resource_type list option) 
+  ?patterns:(patterns_ : protection_group_pattern list option) 
+  ?protection_group_ids:(protection_group_ids_ : string list option)  () =
+  ({
+     aggregations = aggregations_;
+     resource_types = resource_types_;
+     patterns = patterns_;
+     protection_group_ids = protection_group_ids_
+   } : inclusion_protection_group_filters)
+let make_list_protection_groups_request
+  ?inclusion_filters:(inclusion_filters_ :
+                       inclusion_protection_group_filters option)
+   ?max_results:(max_results_ : int option) 
+  ?next_token:(next_token_ : string option)  () =
+  ({
+     inclusion_filters = inclusion_filters_;
+     max_results = max_results_;
+     next_token = next_token_
+   } : list_protection_groups_request)
+let make_attack_vector_description ~vector_type:(vector_type_ : string)  () =
+  ({ vector_type = vector_type_ } : attack_vector_description)
+let make_attack_summary
+  ?attack_vectors:(attack_vectors_ : attack_vector_description list option) 
+  ?end_time:(end_time_ : CoreTypes.Timestamp.t option) 
+  ?start_time:(start_time_ : CoreTypes.Timestamp.t option) 
+  ?resource_arn:(resource_arn_ : string option) 
+  ?attack_id:(attack_id_ : string option)  () =
+  ({
+     attack_vectors = attack_vectors_;
+     end_time = end_time_;
+     start_time = start_time_;
+     resource_arn = resource_arn_;
+     attack_id = attack_id_
+   } : attack_summary)
+let make_list_attacks_response ?next_token:(next_token_ : string option) 
+  ?attack_summaries:(attack_summaries_ : attack_summary list option)  () =
+  ({ next_token = next_token_; attack_summaries = attack_summaries_ } : 
+  list_attacks_response)
+let make_list_attacks_request ?max_results:(max_results_ : int option) 
+  ?next_token:(next_token_ : string option) 
+  ?end_time:(end_time_ : time_range option) 
+  ?start_time:(start_time_ : time_range option) 
+  ?resource_arns:(resource_arns_ : string list option)  () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     end_time = end_time_;
+     start_time = start_time_;
+     resource_arns = resource_arns_
+   } : list_attacks_request)
+let make_get_subscription_state_response
+  ~subscription_state:(subscription_state_ : subscription_state)  () =
+  ({ subscription_state = subscription_state_ } : get_subscription_state_response)
+let make_get_subscription_state_request () =
+  (() : get_subscription_state_request)
+let make_enable_proactive_engagement_response () =
+  (() : enable_proactive_engagement_response)
+let make_enable_proactive_engagement_request () =
+  (() : enable_proactive_engagement_request)
+let make_enable_application_layer_automatic_response_response () =
+  (() : enable_application_layer_automatic_response_response)
+let make_enable_application_layer_automatic_response_request
+  ~action:(action_ : response_action)  ~resource_arn:(resource_arn_ : string)
+   () =
+  ({ action = action_; resource_arn = resource_arn_ } : enable_application_layer_automatic_response_request)
+let make_disassociate_health_check_response () =
+  (() : disassociate_health_check_response)
+let make_disassociate_health_check_request
+  ~health_check_arn:(health_check_arn_ : string) 
+  ~protection_id:(protection_id_ : string)  () =
+  ({ health_check_arn = health_check_arn_; protection_id = protection_id_ } : 
+  disassociate_health_check_request)
+let make_disassociate_drt_role_response () =
+  (() : disassociate_drt_role_response)
+let make_disassociate_drt_role_request () =
+  (() : disassociate_drt_role_request)
+let make_disassociate_drt_log_bucket_response () =
+  (() : disassociate_drt_log_bucket_response)
+let make_disassociate_drt_log_bucket_request
+  ~log_bucket:(log_bucket_ : string)  () =
+  ({ log_bucket = log_bucket_ } : disassociate_drt_log_bucket_request)
+let make_disable_proactive_engagement_response () =
+  (() : disable_proactive_engagement_response)
+let make_disable_proactive_engagement_request () =
+  (() : disable_proactive_engagement_request)
+let make_disable_application_layer_automatic_response_response () =
+  (() : disable_application_layer_automatic_response_response)
+let make_disable_application_layer_automatic_response_request
+  ~resource_arn:(resource_arn_ : string)  () =
+  ({ resource_arn = resource_arn_ } : disable_application_layer_automatic_response_request)
+let make_describe_subscription_response
+  ?subscription:(subscription_ : subscription option)  () =
+  ({ subscription = subscription_ } : describe_subscription_response)
+let make_describe_subscription_request () =
+  (() : describe_subscription_request)
+let make_describe_protection_response
+  ?protection:(protection_ : protection option)  () =
+  ({ protection = protection_ } : describe_protection_response)
+let make_describe_protection_request
+  ?resource_arn:(resource_arn_ : string option) 
+  ?protection_id:(protection_id_ : string option)  () =
+  ({ resource_arn = resource_arn_; protection_id = protection_id_ } : 
+  describe_protection_request)
+let make_describe_protection_group_response
+  ~protection_group:(protection_group_ : protection_group)  () =
+  ({ protection_group = protection_group_ } : describe_protection_group_response)
+let make_describe_protection_group_request
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({ protection_group_id = protection_group_id_ } : describe_protection_group_request)
+let make_describe_emergency_contact_settings_response
+  ?emergency_contact_list:(emergency_contact_list_ :
+                            emergency_contact list option)
+   () =
+  ({ emergency_contact_list = emergency_contact_list_ } : describe_emergency_contact_settings_response)
+let make_describe_emergency_contact_settings_request () =
+  (() : describe_emergency_contact_settings_request)
+let make_describe_drt_access_response
+  ?log_bucket_list:(log_bucket_list_ : string list option) 
+  ?role_arn:(role_arn_ : string option)  () =
+  ({ log_bucket_list = log_bucket_list_; role_arn = role_arn_ } : describe_drt_access_response)
+let make_describe_drt_access_request () = (() : describe_drt_access_request)
+let make_attack_volume_statistics ~max:(max_ : float)  () =
+  ({ max = max_ } : attack_volume_statistics)
+let make_attack_volume
+  ?requests_per_second:(requests_per_second_ :
+                         attack_volume_statistics option)
+   ?packets_per_second:(packets_per_second_ :
+                         attack_volume_statistics option)
+   ?bits_per_second:(bits_per_second_ : attack_volume_statistics option)  ()
+  =
+  ({
+     requests_per_second = requests_per_second_;
+     packets_per_second = packets_per_second_;
+     bits_per_second = bits_per_second_
+   } : attack_volume)
+let make_attack_statistics_data_item
+  ?attack_volume:(attack_volume_ : attack_volume option) 
+  ~attack_count:(attack_count_ : int)  () =
+  ({ attack_count = attack_count_; attack_volume = attack_volume_ } : 
+  attack_statistics_data_item)
+let make_describe_attack_statistics_response
+  ~data_items:(data_items_ : attack_statistics_data_item list) 
+  ~time_range:(time_range_ : time_range)  () =
+  ({ data_items = data_items_; time_range = time_range_ } : describe_attack_statistics_response)
+let make_describe_attack_statistics_request () =
+  (() : describe_attack_statistics_request)
+let make_attack_property ?total:(total_ : int option) 
+  ?unit_:(unit__ : unit_ option) 
+  ?top_contributors:(top_contributors_ : contributor list option) 
+  ?attack_property_identifier:(attack_property_identifier_ :
+                                attack_property_identifier option)
+   ?attack_layer:(attack_layer_ : attack_layer option)  () =
+  ({
+     total = total_;
+     unit_ = unit__;
+     top_contributors = top_contributors_;
+     attack_property_identifier = attack_property_identifier_;
+     attack_layer = attack_layer_
+   } : attack_property)
+let make_attack_detail ?mitigations:(mitigations_ : mitigation list option) 
+  ?attack_properties:(attack_properties_ : attack_property list option) 
+  ?attack_counters:(attack_counters_ : summarized_counter list option) 
+  ?end_time:(end_time_ : CoreTypes.Timestamp.t option) 
+  ?start_time:(start_time_ : CoreTypes.Timestamp.t option) 
+  ?sub_resources:(sub_resources_ : sub_resource_summary list option) 
+  ?resource_arn:(resource_arn_ : string option) 
+  ?attack_id:(attack_id_ : string option)  () =
+  ({
+     mitigations = mitigations_;
+     attack_properties = attack_properties_;
+     attack_counters = attack_counters_;
+     end_time = end_time_;
+     start_time = start_time_;
+     sub_resources = sub_resources_;
+     resource_arn = resource_arn_;
+     attack_id = attack_id_
+   } : attack_detail)
+let make_describe_attack_response ?attack:(attack_ : attack_detail option) 
+  () = ({ attack = attack_ } : describe_attack_response)
+let make_describe_attack_request ~attack_id:(attack_id_ : string)  () =
+  ({ attack_id = attack_id_ } : describe_attack_request)
+let make_delete_subscription_response () =
+  (() : delete_subscription_response)
+let make_delete_subscription_request () = (() : delete_subscription_request)
+let make_delete_protection_response () = (() : delete_protection_response)
+let make_delete_protection_request ~protection_id:(protection_id_ : string) 
+  () = ({ protection_id = protection_id_ } : delete_protection_request)
+let make_delete_protection_group_response () =
+  (() : delete_protection_group_response)
+let make_delete_protection_group_request
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({ protection_group_id = protection_group_id_ } : delete_protection_group_request)
+let make_create_subscription_response () =
+  (() : create_subscription_response)
+let make_create_subscription_request () = (() : create_subscription_request)
+let make_create_protection_response
+  ?protection_id:(protection_id_ : string option)  () =
+  ({ protection_id = protection_id_ } : create_protection_response)
+let make_create_protection_request ?tags:(tags_ : tag list option) 
+  ~resource_arn:(resource_arn_ : string)  ~name:(name_ : string)  () =
+  ({ tags = tags_; resource_arn = resource_arn_; name = name_ } : create_protection_request)
+let make_create_protection_group_response () =
+  (() : create_protection_group_response)
+let make_create_protection_group_request ?tags:(tags_ : tag list option) 
+  ?members:(members_ : string list option) 
+  ?resource_type:(resource_type_ : protected_resource_type option) 
+  ~pattern:(pattern_ : protection_group_pattern) 
+  ~aggregation:(aggregation_ : protection_group_aggregation) 
+  ~protection_group_id:(protection_group_id_ : string)  () =
+  ({
+     tags = tags_;
+     members = members_;
+     resource_type = resource_type_;
+     pattern = pattern_;
+     aggregation = aggregation_;
+     protection_group_id = protection_group_id_
+   } : create_protection_group_request)
+let make_associate_proactive_engagement_details_response () =
+  (() : associate_proactive_engagement_details_response)
+let make_associate_proactive_engagement_details_request
+  ~emergency_contact_list:(emergency_contact_list_ : emergency_contact list) 
+  () =
+  ({ emergency_contact_list = emergency_contact_list_ } : associate_proactive_engagement_details_request)
+let make_associate_health_check_response () =
+  (() : associate_health_check_response)
+let make_associate_health_check_request
+  ~health_check_arn:(health_check_arn_ : string) 
+  ~protection_id:(protection_id_ : string)  () =
+  ({ health_check_arn = health_check_arn_; protection_id = protection_id_ } : 
+  associate_health_check_request)
+let make_associate_drt_role_response () = (() : associate_drt_role_response)
+let make_associate_drt_role_request ~role_arn:(role_arn_ : string)  () =
+  ({ role_arn = role_arn_ } : associate_drt_role_request)
+let make_associate_drt_log_bucket_response () =
+  (() : associate_drt_log_bucket_response)
+let make_associate_drt_log_bucket_request ~log_bucket:(log_bucket_ : string) 
+  () = ({ log_bucket = log_bucket_ } : associate_drt_log_bucket_request)

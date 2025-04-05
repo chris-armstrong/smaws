@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,13 +7,6 @@ let service =
       version = "2021-11-01";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec saml_user_attribute = unit
-type nonrec saml_metadata = unit
-type nonrec saml_group_attribute = unit
-type nonrec vpc_id = unit
-type nonrec vpc_endpoint_id = unit
-type nonrec vpc_endpoint_name = unit
-type nonrec base_unit = unit
 type nonrec vpc_endpoint_status =
   | PENDING 
   | DELETING 
@@ -24,22 +17,13 @@ type nonrec vpc_endpoint_summary =
   status: vpc_endpoint_status option ;
   name: string option ;
   id: string option }
-type nonrec vpc_endpoint_summaries = unit
-type nonrec vpc_endpoint_ids = unit
 type nonrec vpc_endpoint_filters = {
   status: vpc_endpoint_status option }
-type nonrec base_string = unit
 type nonrec vpc_endpoint_error_detail =
   {
   error_code: string option ;
   error_message: string option ;
   id: string option }
-type nonrec vpc_endpoint_error_details = unit
-type nonrec subnet_id = unit
-type nonrec subnet_ids = unit
-type nonrec security_group_id = unit
-type nonrec security_group_ids = unit
-type nonrec base_long = unit
 type nonrec vpc_endpoint_detail =
   {
   created_date: int option ;
@@ -49,8 +33,6 @@ type nonrec vpc_endpoint_detail =
   vpc_id: string option ;
   name: string option ;
   id: string option }
-type nonrec vpc_endpoint_details = unit
-type nonrec vpc_endpoint = unit
 type nonrec validation_exception = {
   message: string option }
 type nonrec update_vpc_endpoint_detail =
@@ -64,7 +46,6 @@ type nonrec update_vpc_endpoint_detail =
 type nonrec update_vpc_endpoint_response =
   {
   update_vpc_endpoint_detail: update_vpc_endpoint_detail option }
-type nonrec client_token = unit
 type nonrec update_vpc_endpoint_request =
   {
   client_token: string option ;
@@ -80,15 +61,11 @@ type nonrec conflict_exception = {
 type nonrec security_policy_type =
   | Encryption 
   | Network 
-type nonrec policy_name = unit
-type nonrec policy_version = unit
-type nonrec policy_description = unit
-type nonrec base_document = unit
 type nonrec security_policy_detail =
   {
   last_modified_date: int option ;
   created_date: int option ;
-  policy: base_document option ;
+  policy: CoreTypes.Document.t option ;
   description: string option ;
   policy_version: string option ;
   name: string option ;
@@ -96,7 +73,6 @@ type nonrec security_policy_detail =
 type nonrec update_security_policy_response =
   {
   security_policy_detail: security_policy_detail option }
-type nonrec policy_document = unit
 type nonrec update_security_policy_request =
   {
   client_token: string option ;
@@ -114,11 +90,8 @@ type nonrec service_quota_exceeded_exception =
   message: string }
 type nonrec resource_not_found_exception = {
   message: string option }
-type nonrec security_config_id = unit
 type nonrec security_config_type =
   | Saml 
-type nonrec config_description = unit
-type nonrec base_integer = unit
 type nonrec saml_config_options =
   {
   session_timeout: int option ;
@@ -150,7 +123,7 @@ type nonrec lifecycle_policy_detail =
   {
   last_modified_date: int option ;
   created_date: int option ;
-  policy: base_document option ;
+  policy: CoreTypes.Document.t option ;
   description: string option ;
   policy_version: string option ;
   name: string option ;
@@ -166,8 +139,6 @@ type nonrec update_lifecycle_policy_request =
   policy_version: string ;
   name: string ;
   type_: lifecycle_policy_type }
-type nonrec collection_id = unit
-type nonrec collection_name = unit
 type nonrec collection_status =
   | CREATING 
   | DELETING 
@@ -195,8 +166,6 @@ type nonrec update_collection_request =
   client_token: string option ;
   description: string option ;
   id: string }
-type nonrec indexing_capacity_value = unit
-type nonrec search_capacity_value = unit
 type nonrec capacity_limits =
   {
   max_search_capacity_in_oc_u: int option ;
@@ -216,7 +185,7 @@ type nonrec access_policy_detail =
   {
   last_modified_date: int option ;
   created_date: int option ;
-  policy: base_document option ;
+  policy: CoreTypes.Document.t option ;
   description: string option ;
   policy_version: string option ;
   name: string option ;
@@ -233,18 +202,13 @@ type nonrec update_access_policy_request =
   name: string ;
   type_: access_policy_type }
 type nonrec untag_resource_response = unit
-type nonrec arn = unit
-type nonrec tag_key = unit
-type nonrec tag_keys = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_arn: string }
-type nonrec tag_value = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tags = unit
 type nonrec tag_resource_response = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
@@ -260,12 +224,10 @@ type nonrec security_policy_summary =
   policy_version: string option ;
   name: string option ;
   type_: security_policy_type option }
-type nonrec security_policy_summaries = unit
 type nonrec security_policy_stats =
   {
   network_policy_count: int option ;
   encryption_policy_count: int option }
-type nonrec security_policy = unit
 type nonrec security_config_summary =
   {
   last_modified_date: int option ;
@@ -274,15 +236,10 @@ type nonrec security_config_summary =
   config_version: string option ;
   type_: security_config_type option ;
   id: string option }
-type nonrec security_config_summaries = unit
 type nonrec security_config_stats = {
   saml_config_count: int option }
-type nonrec security_config = unit
 type nonrec resource_type =
   | Index 
-type nonrec resource_name = unit
-type nonrec resource = unit
-type nonrec resource_filter = unit
 type nonrec list_tags_for_resource_response = {
   tags: tag list option }
 type nonrec list_tags_for_resource_request = {
@@ -329,14 +286,12 @@ type nonrec batch_get_vpc_endpoint_response =
   vpc_endpoint_details: vpc_endpoint_detail list option }
 type nonrec batch_get_vpc_endpoint_request = {
   ids: string list }
-type nonrec lifecycle_policy_details = unit
 type nonrec lifecycle_policy_error_detail =
   {
   error_code: string option ;
   error_message: string option ;
   name: string option ;
   type_: lifecycle_policy_type option }
-type nonrec lifecycle_policy_error_details = unit
 type nonrec batch_get_lifecycle_policy_response =
   {
   lifecycle_policy_error_details: lifecycle_policy_error_detail list option ;
@@ -345,11 +300,9 @@ type nonrec lifecycle_policy_identifier =
   {
   name: string ;
   type_: lifecycle_policy_type }
-type nonrec lifecycle_policy_identifiers = unit
 type nonrec batch_get_lifecycle_policy_request =
   {
   identifiers: lifecycle_policy_identifier list }
-type nonrec base_boolean = unit
 type nonrec effective_lifecycle_policy_detail =
   {
   no_min_retention_period: bool option ;
@@ -358,14 +311,12 @@ type nonrec effective_lifecycle_policy_detail =
   policy_name: string option ;
   resource: string option ;
   type_: lifecycle_policy_type option }
-type nonrec effective_lifecycle_policy_details = unit
 type nonrec effective_lifecycle_policy_error_detail =
   {
   error_code: string option ;
   error_message: string option ;
   resource: string option ;
   type_: lifecycle_policy_type option }
-type nonrec effective_lifecycle_policy_error_details = unit
 type nonrec batch_get_effective_lifecycle_policy_response =
   {
   effective_lifecycle_policy_error_details:
@@ -376,7 +327,6 @@ type nonrec lifecycle_policy_resource_identifier =
   {
   resource: string ;
   type_: lifecycle_policy_type }
-type nonrec lifecycle_policy_resource_identifiers = unit
 type nonrec batch_get_effective_lifecycle_policy_request =
   {
   resource_identifiers: lifecycle_policy_resource_identifier list }
@@ -394,25 +344,20 @@ type nonrec collection_detail =
   status: collection_status option ;
   name: string option ;
   id: string option }
-type nonrec collection_details = unit
 type nonrec collection_error_detail =
   {
   error_code: string option ;
   error_message: string option ;
   name: string option ;
   id: string option }
-type nonrec collection_error_details = unit
 type nonrec batch_get_collection_response =
   {
   collection_error_details: collection_error_detail list option ;
   collection_details: collection_detail list option }
-type nonrec collection_ids = unit
-type nonrec collection_names = unit
 type nonrec batch_get_collection_request =
   {
   names: string list option ;
   ids: string list option }
-type nonrec open_search_serverless = unit
 type nonrec ocu_limit_exceeded_exception = {
   message: string }
 type nonrec list_vpc_endpoints_response =
@@ -451,13 +396,10 @@ type nonrec lifecycle_policy_summary =
   policy_version: string option ;
   name: string option ;
   type_: lifecycle_policy_type option }
-type nonrec lifecycle_policy_summaries = unit
 type nonrec list_lifecycle_policies_response =
   {
   next_token: string option ;
   lifecycle_policy_summaries: lifecycle_policy_summary list option }
-type nonrec lifecycle_resource = unit
-type nonrec lifecycle_resource_filter = unit
 type nonrec list_lifecycle_policies_request =
   {
   max_results: int option ;
@@ -470,7 +412,6 @@ type nonrec collection_summary =
   status: collection_status option ;
   name: string option ;
   id: string option }
-type nonrec collection_summaries = unit
 type nonrec list_collections_response =
   {
   next_token: string option ;
@@ -492,7 +433,6 @@ type nonrec access_policy_summary =
   policy_version: string option ;
   name: string option ;
   type_: access_policy_type option }
-type nonrec access_policy_summaries = unit
 type nonrec list_access_policies_response =
   {
   next_token: string option ;
@@ -503,7 +443,6 @@ type nonrec list_access_policies_request =
   next_token: string option ;
   resource: string list option ;
   type_: access_policy_type }
-type nonrec lifecycle_policy = unit
 type nonrec get_security_policy_response =
   {
   security_policy_detail: security_policy_detail option }
@@ -588,7 +527,6 @@ type nonrec create_vpc_endpoint_request =
 type nonrec create_security_config_response =
   {
   security_config_detail: security_config_detail option }
-type nonrec config_name = unit
 type nonrec create_security_config_request =
   {
   client_token: string option ;
@@ -629,6 +567,3 @@ type nonrec create_access_policy_request =
   description: string option ;
   name: string ;
   type_: access_policy_type }
-type nonrec collection = unit
-type nonrec access_policy = unit
-type nonrec base_timestamp = unit

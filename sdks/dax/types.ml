@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,12 +7,10 @@ let service =
       version = "2017-04-19";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec string_ = unit
 type nonrec subnet =
   {
   subnet_availability_zone: string option ;
   subnet_identifier: string option }
-type nonrec subnet_list = unit
 type nonrec subnet_group =
   {
   subnets: subnet list option ;
@@ -22,13 +20,11 @@ type nonrec subnet_group =
 type nonrec update_subnet_group_response =
   {
   subnet_group: subnet_group option }
-type nonrec subnet_identifier_list = unit
 type nonrec update_subnet_group_request =
   {
   subnet_ids: string list option ;
   description: string option ;
   subnet_group_name: string }
-type nonrec exception_message = unit
 type nonrec subnet_quota_exceeded_fault = {
   message: string option }
 type nonrec subnet_in_use = {
@@ -50,14 +46,12 @@ type nonrec parameter_name_value =
   {
   parameter_value: string option ;
   parameter_name: string option }
-type nonrec parameter_name_value_list = unit
 type nonrec update_parameter_group_request =
   {
   parameter_name_values: parameter_name_value list ;
   parameter_group_name: string }
 type nonrec parameter_group_not_found_fault = {
   message: string option }
-type nonrec aws_query_error_message = unit
 type nonrec invalid_parameter_value_exception = {
   message: string option }
 type nonrec invalid_parameter_group_state_fault = {
@@ -65,24 +59,19 @@ type nonrec invalid_parameter_group_state_fault = {
 type nonrec invalid_parameter_combination_exception =
   {
   message: string option }
-type nonrec integer_optional = unit
-type nonrec integer_ = unit
 type nonrec endpoint =
   {
   ur_l: string option ;
   port: int option ;
   address: string option }
-type nonrec node_identifier_list = unit
-type nonrec t_stamp = unit
 type nonrec node =
   {
   parameter_group_status: string option ;
   node_status: string option ;
   availability_zone: string option ;
-  node_create_time: Timestamp.t option ;
+  node_create_time: CoreTypes.Timestamp.t option ;
   endpoint: endpoint option ;
   node_id: string option }
-type nonrec node_list = unit
 type nonrec notification_configuration =
   {
   topic_status: string option ;
@@ -91,13 +80,11 @@ type nonrec security_group_membership =
   {
   status: string option ;
   security_group_identifier: string option }
-type nonrec security_group_membership_list = unit
 type nonrec parameter_group_status =
   {
   node_ids_to_reboot: string list option ;
   parameter_apply_status: string option ;
   parameter_group_name: string option }
-type nonrec base_unit = unit
 type nonrec sse_status =
   | DISABLED 
   | DISABLING 
@@ -130,7 +117,6 @@ type nonrec cluster =
   cluster_name: string option }
 type nonrec update_cluster_response = {
   cluster: cluster option }
-type nonrec security_group_identifier_list = unit
 type nonrec update_cluster_request =
   {
   security_group_ids: string list option ;
@@ -147,10 +133,8 @@ type nonrec cluster_not_found_fault = {
 type nonrec tag = {
   value: string option ;
   key: string option }
-type nonrec tag_list = unit
 type nonrec untag_resource_response = {
   tags: tag list option }
-type nonrec key_list = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
@@ -168,8 +152,6 @@ type nonrec tag_quota_per_resource_exceeded = {
   message: string option }
 type nonrec subnet_group_quota_exceeded_fault = {
   message: string option }
-type nonrec subnet_group_name_list = unit
-type nonrec subnet_group_list = unit
 type nonrec subnet_group_in_use_fault = {
   message: string option }
 type nonrec subnet_group_already_exists_fault = {
@@ -179,7 +161,6 @@ type nonrec source_type =
   | PARAMETER_GROUP 
   | CLUSTER 
 type nonrec service_quota_exceeded_exception = unit
-type nonrec sse_enabled = unit
 type nonrec sse_specification = {
   enabled: bool }
 type nonrec reboot_node_response = {
@@ -196,7 +177,6 @@ type nonrec node_type_specific_value =
   {
   value: string option ;
   node_type: string option }
-type nonrec node_type_specific_value_list = unit
 type nonrec is_modifiable =
   | CONDITIONAL 
   | FALSE 
@@ -216,11 +196,8 @@ type nonrec parameter =
   parameter_value: string option ;
   parameter_type: parameter_type option ;
   parameter_name: string option }
-type nonrec parameter_list = unit
 type nonrec parameter_group_quota_exceeded_fault = {
   message: string option }
-type nonrec parameter_group_name_list = unit
-type nonrec parameter_group_list = unit
 type nonrec parameter_group_already_exists_fault = {
   message: string option }
 type nonrec node_quota_for_customer_exceeded_fault =
@@ -242,7 +219,6 @@ type nonrec insufficient_cluster_capacity_fault = {
   message: string option }
 type nonrec increase_replication_factor_response = {
   cluster: cluster option }
-type nonrec availability_zone_list = unit
 type nonrec increase_replication_factor_request =
   {
   availability_zones: string list option ;
@@ -250,11 +226,10 @@ type nonrec increase_replication_factor_request =
   cluster_name: string }
 type nonrec event =
   {
-  date: Timestamp.t option ;
+  date: CoreTypes.Timestamp.t option ;
   message: string option ;
   source_type: source_type option ;
   source_name: string option }
-type nonrec event_list = unit
 type nonrec describe_subnet_groups_response =
   {
   subnet_groups: subnet_group list option ;
@@ -292,8 +267,8 @@ type nonrec describe_events_request =
   next_token: string option ;
   max_results: int option ;
   duration: int option ;
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   source_type: source_type option ;
   source_name: string option }
 type nonrec describe_default_parameters_response =
@@ -304,12 +279,10 @@ type nonrec describe_default_parameters_request =
   {
   next_token: string option ;
   max_results: int option }
-type nonrec cluster_list = unit
 type nonrec describe_clusters_response =
   {
   clusters: cluster list option ;
   next_token: string option }
-type nonrec cluster_name_list = unit
 type nonrec describe_clusters_request =
   {
   next_token: string option ;
@@ -374,10 +347,3 @@ type nonrec cluster_quota_for_customer_exceeded_fault =
   message: string option }
 type nonrec cluster_already_exists_fault = {
   message: string option }
-type nonrec amazon_dax_v3 = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

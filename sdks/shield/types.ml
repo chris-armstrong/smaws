@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,16 +7,12 @@ let service =
       version = "2016-06-02";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec error_message = unit
-type nonrec base_unit = unit
 type nonrec validation_exception_reason =
   | OTHER 
   | FIELD_VALIDATION_FAILED 
-type nonrec string_ = unit
 type nonrec validation_exception_field = {
   message: string ;
   name: string }
-type nonrec validation_exception_field_list = unit
 type nonrec update_subscription_response = unit
 type nonrec auto_renew =
   | DISABLED 
@@ -39,7 +35,6 @@ type nonrec invalid_parameter_exception =
 type nonrec internal_error_exception = {
   message: string option }
 type nonrec update_protection_group_response = unit
-type nonrec protection_group_id = unit
 type nonrec protection_group_aggregation =
   | MAX 
   | MEAN 
@@ -55,8 +50,6 @@ type nonrec protected_resource_type =
   | ELASTIC_IP_ALLOCATION 
   | ROUTE_53_HOSTED_ZONE 
   | CLOUDFRONT_DISTRIBUTION 
-type nonrec resource_arn = unit
-type nonrec protection_group_members = unit
 type nonrec update_protection_group_request =
   {
   members: string list option ;
@@ -65,15 +58,11 @@ type nonrec update_protection_group_request =
   aggregation: protection_group_aggregation ;
   protection_group_id: string }
 type nonrec update_emergency_contact_settings_response = unit
-type nonrec email_address = unit
-type nonrec phone_number = unit
-type nonrec contact_notes = unit
 type nonrec emergency_contact =
   {
   contact_notes: string option ;
   phone_number: string option ;
   email_address: string }
-type nonrec emergency_contact_list = unit
 type nonrec update_emergency_contact_settings_request =
   {
   emergency_contact_list: emergency_contact list option }
@@ -91,8 +80,6 @@ type nonrec update_application_layer_automatic_response_request =
 type nonrec invalid_operation_exception = {
   message: string option }
 type nonrec untag_resource_response = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
@@ -104,28 +91,20 @@ type nonrec unit_ =
   | PACKETS 
   | BYTES 
   | BITS 
-type nonrec long = unit
 type nonrec contributor = {
   value: int option ;
   name: string option }
-type nonrec top_contributors = unit
-type nonrec token = unit
-type nonrec timestamp_ = unit
 type nonrec time_range =
   {
-  to_exclusive: Timestamp.t option ;
-  from_inclusive: Timestamp.t option }
-type nonrec tag_value = unit
+  to_exclusive: CoreTypes.Timestamp.t option ;
+  from_inclusive: CoreTypes.Timestamp.t option }
 type nonrec tag_resource_response = unit
 type nonrec tag = {
   value: string option ;
   key: string option }
-type nonrec tag_list = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_ar_n: string }
-type nonrec double = unit
-type nonrec integer_ = unit
 type nonrec summarized_counter =
   {
   unit_: string option ;
@@ -134,19 +113,16 @@ type nonrec summarized_counter =
   average: float option ;
   max: float option ;
   name: string option }
-type nonrec summarized_counter_list = unit
 type nonrec summarized_attack_vector =
   {
   vector_counters: summarized_counter list option ;
   vector_type: string }
-type nonrec summarized_attack_vector_list = unit
 type nonrec subscription_state =
   | INACTIVE 
   | ACTIVE 
 type nonrec limit = {
   max: int option ;
   type_: string option }
-type nonrec limits = unit
 type nonrec protection_limits = {
   protected_resource_type_limits: limit list }
 type nonrec protection_group_arbitrary_pattern_limits = {
@@ -162,7 +138,6 @@ type nonrec subscription_limits =
   {
   protection_group_limits: protection_group_limits ;
   protection_limits: protection_limits }
-type nonrec duration_in_seconds = unit
 type nonrec proactive_engagement_status =
   | PENDING 
   | DISABLED 
@@ -175,8 +150,8 @@ type nonrec subscription =
   limits: limit list option ;
   auto_renew: auto_renew option ;
   time_commitment_in_seconds: int option ;
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option }
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option }
 type nonrec sub_resource_type =
   | URL 
   | IP 
@@ -186,19 +161,10 @@ type nonrec sub_resource_summary =
   attack_vectors: summarized_attack_vector list option ;
   id: string option ;
   type_: sub_resource_type option }
-type nonrec sub_resource_summary_list = unit
-type nonrec role_arn = unit
-type nonrec resource_arn_list = unit
-type nonrec resource_arn_filters = unit
-type nonrec resource_arn_filter_list = unit
 type nonrec resource_already_exists_exception =
   {
   resource_type: string option ;
   message: string option }
-type nonrec protection_id = unit
-type nonrec protection_name = unit
-type nonrec health_check_id = unit
-type nonrec health_check_ids = unit
 type nonrec application_layer_automatic_response_status =
   | DISABLED 
   | ENABLED 
@@ -215,8 +181,6 @@ type nonrec protection =
   resource_arn: string option ;
   name: string option ;
   id: string option }
-type nonrec protections = unit
-type nonrec protection_name_filters = unit
 type nonrec protection_group =
   {
   protection_group_arn: string option ;
@@ -225,19 +189,10 @@ type nonrec protection_group =
   pattern: protection_group_pattern ;
   aggregation: protection_group_aggregation ;
   protection_group_id: string }
-type nonrec protection_groups = unit
-type nonrec protection_group_pattern_filters = unit
-type nonrec protection_group_id_filters = unit
-type nonrec protection_group_aggregation_filters = unit
-type nonrec protected_resource_type_filters = unit
 type nonrec no_associated_role_exception = {
   message: string option }
 type nonrec mitigation = {
   mitigation_name: string option }
-type nonrec mitigation_list = unit
-type nonrec max_results = unit
-type nonrec log_bucket = unit
-type nonrec log_bucket_list = unit
 type nonrec list_tags_for_resource_response = {
   tags: tag list option }
 type nonrec list_tags_for_resource_request = {
@@ -282,18 +237,15 @@ type nonrec list_protection_groups_request =
   inclusion_filters: inclusion_protection_group_filters option ;
   max_results: int option ;
   next_token: string option }
-type nonrec attack_timestamp = unit
 type nonrec attack_vector_description = {
   vector_type: string }
-type nonrec attack_vector_description_list = unit
 type nonrec attack_summary =
   {
   attack_vectors: attack_vector_description list option ;
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   resource_arn: string option ;
   attack_id: string option }
-type nonrec attack_summaries = unit
 type nonrec list_attacks_response =
   {
   next_token: string option ;
@@ -305,14 +257,11 @@ type nonrec list_attacks_request =
   end_time: time_range option ;
   start_time: time_range option ;
   resource_arns: string list option }
-type nonrec limit_type = unit
-type nonrec limit_number = unit
 type nonrec limits_exceeded_exception =
   {
   limit: int option ;
   type_: string option ;
   message: string option }
-type nonrec health_check_arn = unit
 type nonrec get_subscription_state_response =
   {
   subscription_state: subscription_state }
@@ -379,13 +328,11 @@ type nonrec attack_statistics_data_item =
   {
   attack_count: int ;
   attack_volume: attack_volume option }
-type nonrec attack_statistics_data_list = unit
 type nonrec describe_attack_statistics_response =
   {
   data_items: attack_statistics_data_item list ;
   time_range: time_range }
 type nonrec describe_attack_statistics_request = unit
-type nonrec attack_id = unit
 type nonrec attack_layer =
   | APPLICATION 
   | NETWORK 
@@ -405,14 +352,13 @@ type nonrec attack_property =
   top_contributors: contributor list option ;
   attack_property_identifier: attack_property_identifier option ;
   attack_layer: attack_layer option }
-type nonrec attack_properties = unit
 type nonrec attack_detail =
   {
   mitigations: mitigation list option ;
   attack_properties: attack_property list option ;
   attack_counters: summarized_counter list option ;
-  end_time: Timestamp.t option ;
-  start_time: Timestamp.t option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   sub_resources: sub_resource_summary list option ;
   resource_arn: string option ;
   attack_id: string option }
@@ -463,10 +409,3 @@ type nonrec associate_drt_role_request = {
 type nonrec associate_drt_log_bucket_response = unit
 type nonrec associate_drt_log_bucket_request = {
   log_bucket: string }
-type nonrec aws_shield_20160616 = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

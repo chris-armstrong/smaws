@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,18 +7,11 @@ let service =
       version = "2014-11-06";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec version = string
-type nonrec valid_next_step = string
-type nonrec valid_next_step_list = string list option list
-type nonrec url = string
 type nonrec update_service_setting_result = unit
-type nonrec service_setting_id = string
-type nonrec service_setting_value = string
 type nonrec update_service_setting_request =
   {
   setting_value: string ;
   setting_id: string }
-type nonrec string_ = string
 type nonrec too_many_updates = {
   message: string option }
 type nonrec service_setting_not_found = {
@@ -26,24 +19,13 @@ type nonrec service_setting_not_found = {
 type nonrec internal_server_error = {
   message: string option }
 type nonrec update_resource_data_sync_result = unit
-type nonrec resource_data_sync_name = string
-type nonrec resource_data_sync_type = string
-type nonrec resource_data_sync_source_type = string
-type nonrec resource_data_sync_organization_source_type = string
-type nonrec resource_data_sync_organizational_unit_id = string
 type nonrec resource_data_sync_organizational_unit =
   {
   organizational_unit_id: string option }
-type nonrec resource_data_sync_organizational_unit_list =
-  resource_data_sync_organizational_unit list option list
 type nonrec resource_data_sync_aws_organizations_source =
   {
   organizational_units: resource_data_sync_organizational_unit list option ;
   organization_source_type: string }
-type nonrec resource_data_sync_source_region = string
-type nonrec resource_data_sync_source_region_list = string list option list
-type nonrec resource_data_sync_include_future_regions = bool
-type nonrec resource_data_sync_enable_all_ops_data_sources = bool
 type nonrec resource_data_sync_source =
   {
   enable_all_ops_data_sources: bool option ;
@@ -67,9 +49,6 @@ type nonrec resource_data_sync_invalid_configuration_exception =
   message: string option }
 type nonrec resource_data_sync_conflict_exception = {
   message: string option }
-type nonrec baseline_id = string
-type nonrec baseline_name = string
-type nonrec base_unit = unit
 type nonrec operating_system =
   | AmazonLinux2023 
   | AlmaLinux 
@@ -106,12 +85,9 @@ type nonrec patch_filter_key =
   | BugzillaId 
   | AdvisoryId 
   | Arch 
-type nonrec patch_filter_value = string
-type nonrec patch_filter_value_list = string list option list
 type nonrec patch_filter = {
   values: string list ;
   key: patch_filter_key }
-type nonrec patch_filter_list = patch_filter list option list
 type nonrec patch_filter_group = {
   patch_filters: patch_filter list }
 type nonrec patch_compliance_level =
@@ -121,9 +97,6 @@ type nonrec patch_compliance_level =
   | Medium 
   | High 
   | Critical 
-type nonrec approve_after_days = int
-type nonrec patch_string_date_time = string
-type nonrec boolean_ = bool
 type nonrec patch_rule =
   {
   enable_non_security: bool option ;
@@ -131,32 +104,22 @@ type nonrec patch_rule =
   approve_after_days: int option ;
   compliance_level: patch_compliance_level option ;
   patch_filter_group: patch_filter_group }
-type nonrec patch_rule_list = patch_rule list option list
 type nonrec patch_rule_group = {
   patch_rules: patch_rule list }
-type nonrec patch_id = string
-type nonrec patch_id_list = string list option list
 type nonrec patch_action =
   | Block 
   | AllowAsDependency 
-type nonrec date_time = Timestamp.t
-type nonrec baseline_description = string
-type nonrec patch_source_name = string
-type nonrec patch_source_product = string
-type nonrec patch_source_product_list = string list option list
-type nonrec patch_source_configuration = string
 type nonrec patch_source =
   {
   configuration: string ;
   products: string list ;
   name: string }
-type nonrec patch_source_list = patch_source list option list
 type nonrec update_patch_baseline_result =
   {
   sources: patch_source list option ;
   description: string option ;
-  modified_date: float option ;
-  created_date: float option ;
+  modified_date: CoreTypes.Timestamp.t option ;
+  created_date: CoreTypes.Timestamp.t option ;
   rejected_patches_action: patch_action option ;
   rejected_patches: string list option ;
   approved_patches_enable_non_security: bool option ;
@@ -183,19 +146,15 @@ type nonrec update_patch_baseline_request =
   baseline_id: string }
 type nonrec does_not_exist_exception = {
   message: string option }
-type nonrec ops_metadata_arn = string
 type nonrec update_ops_metadata_result = {
   ops_metadata_arn: string option }
-type nonrec metadata_value_string = string
 type nonrec metadata_value = {
   value: string option }
-type nonrec metadata_key = string
-type nonrec metadata_map = (string_ option * metadata_value option) list
-type nonrec metadata_keys_to_delete_list = string list option list
+type nonrec metadata_map = (string * metadata_value) list
 type nonrec update_ops_metadata_request =
   {
   keys_to_delete: string list option ;
-  metadata_to_update: (string * metadata_value) list option ;
+  metadata_to_update: metadata_map option ;
   ops_metadata_arn: string }
 type nonrec ops_metadata_too_many_updates_exception =
   {
@@ -209,8 +168,6 @@ type nonrec ops_metadata_invalid_argument_exception =
   {
   message: string option }
 type nonrec update_ops_item_response = unit
-type nonrec ops_item_description = string
-type nonrec ops_item_data_value_string = string
 type nonrec ops_item_data_type =
   | STRING 
   | SEARCHABLE_STRING 
@@ -218,17 +175,11 @@ type nonrec ops_item_data_value =
   {
   type_: ops_item_data_type option ;
   value: string option }
-type nonrec ops_item_data_key = string
-type nonrec ops_item_operational_data =
-  (string_ option * ops_item_data_value option) list
-type nonrec ops_item_ops_data_keys_list = string list option list
+type nonrec ops_item_operational_data = (string * ops_item_data_value) list
 type nonrec ops_item_notification = {
   arn: string option }
-type nonrec ops_item_notifications = ops_item_notification list option list
-type nonrec ops_item_priority = int
 type nonrec related_ops_item = {
   ops_item_id: string }
-type nonrec related_ops_items = related_ops_item list option list
 type nonrec ops_item_status =
   | CLOSED 
   | REJECTED 
@@ -249,18 +200,13 @@ type nonrec ops_item_status =
   | RESOLVED 
   | IN_PROGRESS 
   | OPEN 
-type nonrec ops_item_id = string
-type nonrec ops_item_title = string
-type nonrec ops_item_category = string
-type nonrec ops_item_severity = string
-type nonrec ops_item_arn = string
 type nonrec update_ops_item_request =
   {
   ops_item_arn: string option ;
-  planned_end_time: float option ;
-  planned_start_time: float option ;
-  actual_end_time: float option ;
-  actual_start_time: float option ;
+  planned_end_time: CoreTypes.Timestamp.t option ;
+  planned_start_time: CoreTypes.Timestamp.t option ;
+  actual_end_time: CoreTypes.Timestamp.t option ;
+  actual_start_time: CoreTypes.Timestamp.t option ;
   severity: string option ;
   category: string option ;
   title: string option ;
@@ -270,12 +216,10 @@ type nonrec update_ops_item_request =
   priority: int option ;
   notifications: ops_item_notification list option ;
   operational_data_to_delete: string list option ;
-  operational_data: (string * ops_item_data_value) list option ;
+  operational_data: ops_item_operational_data option ;
   description: string option }
 type nonrec ops_item_not_found_exception = {
   message: string option }
-type nonrec ops_item_parameter_names_list = string list option list
-type nonrec integer_ = int
 type nonrec ops_item_limit_exceeded_exception =
   {
   message: string option ;
@@ -295,48 +239,27 @@ type nonrec ops_item_already_exists_exception =
 type nonrec ops_item_access_denied_exception = {
   message: string option }
 type nonrec update_managed_instance_role_result = unit
-type nonrec managed_instance_id = string
-type nonrec iam_role = string
 type nonrec update_managed_instance_role_request =
   {
   iam_role: string ;
   instance_id: string }
 type nonrec invalid_instance_id = {
   message: string option }
-type nonrec maintenance_window_id = string
-type nonrec maintenance_window_task_id = string
-type nonrec target_key = string
-type nonrec target_value = string
-type nonrec target_values = string list option list
 type nonrec target = {
   values: string list option ;
   key: string option }
-type nonrec targets = target list option list
-type nonrec maintenance_window_task_arn = string
-type nonrec service_role = string
-type nonrec maintenance_window_task_parameter_value = string
-type nonrec maintenance_window_task_parameter_value_list =
-  string list option list
 type nonrec maintenance_window_task_parameter_value_expression =
   {
   values: string list option }
-type nonrec maintenance_window_task_parameter_name = string
 type nonrec maintenance_window_task_parameters =
-  (string_ option * maintenance_window_task_parameter_value_expression
-    option) list
-type nonrec comment = string
-type nonrec cloud_watch_log_group_name = string
-type nonrec cloud_watch_output_enabled = bool
+  (string * maintenance_window_task_parameter_value_expression) list
 type nonrec cloud_watch_output_config =
   {
   cloud_watch_output_enabled: bool option ;
   cloud_watch_log_group_name: string option }
-type nonrec document_hash = string
 type nonrec document_hash_type =
   | SHA1 
   | SHA256 
-type nonrec document_version = string
-type nonrec notification_arn = string
 type nonrec notification_event =
   | FAILED 
   | CANCELLED 
@@ -344,7 +267,6 @@ type nonrec notification_event =
   | SUCCESS 
   | IN_PROGRESS 
   | ALL 
-type nonrec notification_event_list = notification_event list option list
 type nonrec notification_type =
   | Invocation 
   | Command 
@@ -353,18 +275,12 @@ type nonrec notification_config =
   notification_type: notification_type option ;
   notification_events: notification_event list option ;
   notification_arn: string option }
-type nonrec s3_bucket_name = string
-type nonrec s3_key_prefix = string
-type nonrec parameter_value = string
-type nonrec parameter_value_list = string list option list
-type nonrec parameter_name = string
-type nonrec parameters = (string_ option * string list option) list
-type nonrec timeout_seconds = int
+type nonrec parameters = (string * string list) list
 type nonrec maintenance_window_run_command_parameters =
   {
   timeout_seconds: int option ;
   service_role_arn: string option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   output_s3_key_prefix: string option ;
   output_s3_bucket_name: string option ;
   notification_config: notification_config option ;
@@ -373,24 +289,15 @@ type nonrec maintenance_window_run_command_parameters =
   document_hash: string option ;
   cloud_watch_output_config: cloud_watch_output_config option ;
   comment: string option }
-type nonrec automation_parameter_value = string
-type nonrec automation_parameter_value_list = string list option list
-type nonrec automation_parameter_key = string
-type nonrec automation_parameter_map =
-  (string_ option * string list option) list
+type nonrec automation_parameter_map = (string * string list) list
 type nonrec maintenance_window_automation_parameters =
   {
-  parameters: (string * string list) list option ;
+  parameters: automation_parameter_map option ;
   document_version: string option }
-type nonrec maintenance_window_step_functions_input = string
-type nonrec maintenance_window_step_functions_name = string
 type nonrec maintenance_window_step_functions_parameters =
   {
   name: string option ;
   input: string option }
-type nonrec maintenance_window_lambda_client_context = string
-type nonrec maintenance_window_lambda_qualifier = string
-type nonrec maintenance_window_lambda_payload = bytes
 type nonrec maintenance_window_lambda_parameters =
   {
   payload: bytes option ;
@@ -402,24 +309,16 @@ type nonrec maintenance_window_task_invocation_parameters =
   step_functions: maintenance_window_step_functions_parameters option ;
   automation: maintenance_window_automation_parameters option ;
   run_command: maintenance_window_run_command_parameters option }
-type nonrec maintenance_window_task_priority = int
-type nonrec max_concurrency = string
-type nonrec max_errors = string
-type nonrec s3_region = string
 type nonrec logging_info =
   {
   s3_region: string ;
   s3_key_prefix: string option ;
   s3_bucket_name: string }
-type nonrec maintenance_window_name = string
-type nonrec maintenance_window_description = string
 type nonrec maintenance_window_task_cutoff_behavior =
   | CancelTask 
   | ContinueTask 
-type nonrec alarm_name = string
 type nonrec alarm = {
   name: string }
-type nonrec alarm_list = alarm list option list
 type nonrec alarm_configuration =
   {
   alarms: alarm list ;
@@ -436,8 +335,7 @@ type nonrec update_maintenance_window_task_result =
   priority: int option ;
   task_invocation_parameters:
     maintenance_window_task_invocation_parameters option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list option ;
+  task_parameters: maintenance_window_task_parameters option ;
   service_role_arn: string option ;
   task_arn: string option ;
   targets: target list option ;
@@ -456,15 +354,12 @@ type nonrec update_maintenance_window_task_request =
   priority: int option ;
   task_invocation_parameters:
     maintenance_window_task_invocation_parameters option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list option ;
+  task_parameters: maintenance_window_task_parameters option ;
   service_role_arn: string option ;
   task_arn: string option ;
   targets: target list option ;
   window_task_id: string ;
   window_id: string }
-type nonrec maintenance_window_target_id = string
-type nonrec owner_information = string
 type nonrec update_maintenance_window_target_result =
   {
   description: string option ;
@@ -482,14 +377,6 @@ type nonrec update_maintenance_window_target_request =
   targets: target list option ;
   window_target_id: string ;
   window_id: string }
-type nonrec maintenance_window_string_date_time = string
-type nonrec maintenance_window_schedule = string
-type nonrec maintenance_window_timezone = string
-type nonrec maintenance_window_offset = int
-type nonrec maintenance_window_duration_hours = int
-type nonrec maintenance_window_cutoff = int
-type nonrec maintenance_window_allow_unassociated_targets = bool
-type nonrec maintenance_window_enabled = bool
 type nonrec update_maintenance_window_result =
   {
   enabled: bool option ;
@@ -519,37 +406,25 @@ type nonrec update_maintenance_window_request =
   description: string option ;
   name: string option ;
   window_id: string }
-type nonrec document_sha1 = string
-type nonrec document_ar_n = string
-type nonrec document_display_name = string
-type nonrec document_version_name = string
-type nonrec document_owner = string
 type nonrec document_status =
   | Failed 
   | Deleting 
   | Updating 
   | Active 
   | Creating 
-type nonrec document_status_information = string
-type nonrec description_in_document = string
-type nonrec document_parameter_name = string
 type nonrec document_parameter_type =
   | StringList 
   | String 
-type nonrec document_parameter_descrption = string
-type nonrec document_parameter_default_value = string
 type nonrec document_parameter =
   {
   default_value: string option ;
   description: string option ;
   type_: document_parameter_type option ;
   name: string option }
-type nonrec document_parameter_list = document_parameter list option list
 type nonrec platform_type =
   | MACOS 
   | LINUX 
   | WINDOWS 
-type nonrec platform_type_list = platform_type list option list
 type nonrec document_type =
   | QuickSetup 
   | ConformancePackTemplate 
@@ -566,47 +441,31 @@ type nonrec document_type =
   | Automation 
   | Policy 
   | Command 
-type nonrec document_schema_version = string
 type nonrec document_format =
   | TEXT 
   | JSON 
   | YAML 
-type nonrec target_type = string
-type nonrec tag_key = string
-type nonrec tag_value = string
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = tag list option list
-type nonrec attachment_name = string
 type nonrec attachment_information = {
   name: string option }
-type nonrec attachment_information_list =
-  attachment_information list option list
-type nonrec require_type = string
 type nonrec document_requires =
   {
   version_name: string option ;
   require_type: string option ;
   version: string option ;
   name: string }
-type nonrec document_requires_list = document_requires list option list
-type nonrec document_author = string
 type nonrec review_status =
   | REJECTED 
   | PENDING 
   | NOT_REVIEWED 
   | APPROVED 
-type nonrec reviewer = string
 type nonrec review_information =
   {
   reviewer: string option ;
   status: review_status option ;
-  reviewed_time: float option }
-type nonrec review_information_list = review_information list option list
-type nonrec category = string
-type nonrec category_list = string list option list
-type nonrec category_enum_list = string list option list
+  reviewed_time: CoreTypes.Timestamp.t option }
 type nonrec document_description =
   {
   category_enum: string list option ;
@@ -631,7 +490,7 @@ type nonrec document_description =
   document_version: string option ;
   status_information: string option ;
   status: document_status option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   owner: string option ;
   version_name: string option ;
   display_name: string option ;
@@ -642,21 +501,15 @@ type nonrec document_description =
 type nonrec update_document_result =
   {
   document_description: document_description option }
-type nonrec document_content = string
 type nonrec attachments_source_key =
   | AttachmentReference 
   | S3FileUrl 
   | SourceUrl 
-type nonrec attachments_source_value = string
-type nonrec attachments_source_values = string list option list
-type nonrec attachment_identifier = string
 type nonrec attachments_source =
   {
   name: string option ;
   values: string list option ;
   key: attachments_source_key option }
-type nonrec attachments_source_list = attachments_source list option list
-type nonrec document_name = string
 type nonrec update_document_request =
   {
   target_type: string option ;
@@ -675,13 +528,10 @@ type nonrec document_review_action =
   | SendForReview 
 type nonrec document_review_comment_type =
   | Comment 
-type nonrec document_review_comment = string
 type nonrec document_review_comment_source =
   {
   content: string option ;
   type_: document_review_comment_type option }
-type nonrec document_review_comment_list =
-  document_review_comment_source list option list
 type nonrec document_reviews =
   {
   comment: document_review_comment_source list option ;
@@ -705,7 +555,6 @@ type nonrec document_default_version_description =
 type nonrec update_document_default_version_result =
   {
   description: document_default_version_description option }
-type nonrec document_version_number = string
 type nonrec update_document_default_version_request =
   {
   document_version: string ;
@@ -722,32 +571,23 @@ type nonrec duplicate_document_content = {
   message: string option }
 type nonrec document_version_limit_exceeded = {
   message: string option }
-type nonrec instance_id = string
-type nonrec association_version = string
 type nonrec association_status_name =
   | Failed 
   | Success 
   | Pending 
-type nonrec status_message = string
-type nonrec status_additional_info = string
 type nonrec association_status =
   {
   additional_info: string option ;
   message: string ;
   name: association_status_name ;
-  date: float }
-type nonrec status_name = string
-type nonrec instance_count = int
-type nonrec association_status_aggregated_count =
-  (string_ option * int_ option) list
+  date: CoreTypes.Timestamp.t }
+type nonrec association_status_aggregated_count = (string * int) list
 type nonrec association_overview =
   {
-  association_status_aggregated_count: (string * int) list option ;
+  association_status_aggregated_count:
+    association_status_aggregated_count option ;
   detailed_status: string option ;
   status: string option }
-type nonrec automation_target_parameter_name = string
-type nonrec association_id = string
-type nonrec schedule_expression = string
 type nonrec s3_output_location =
   {
   output_s3_key_prefix: string option ;
@@ -756,7 +596,6 @@ type nonrec s3_output_location =
 type nonrec instance_association_output_location =
   {
   s3_location: s3_output_location option }
-type nonrec association_name = string
 type nonrec association_compliance_severity =
   | Unspecified 
   | Low 
@@ -766,14 +605,6 @@ type nonrec association_compliance_severity =
 type nonrec association_sync_compliance =
   | Manual 
   | Auto 
-type nonrec apply_only_at_cron_interval = bool
-type nonrec calendar_name_or_ar_n = string
-type nonrec calendar_name_or_arn_list = string list option list
-type nonrec account = string
-type nonrec accounts = string list option list
-type nonrec region = string
-type nonrec regions = string list option list
-type nonrec execution_role_name = string
 type nonrec target_location =
   {
   target_location_alarm_configuration: alarm_configuration option ;
@@ -782,14 +613,7 @@ type nonrec target_location =
   target_location_max_concurrency: string option ;
   regions: string list option ;
   accounts: string list option }
-type nonrec target_locations = target_location list option list
-type nonrec schedule_offset = int
-type nonrec duration = int
-type nonrec target_map_value = string
-type nonrec target_map_value_list = string list option list
-type nonrec target_map_key = string
-type nonrec target_map = (string_ option * string list option) list
-type nonrec target_maps = (string * string list) list list option list
+type nonrec target_map = (string * string list) list
 type nonrec external_alarm_state =
   | ALARM 
   | UNKNOWN 
@@ -797,13 +621,11 @@ type nonrec alarm_state_information =
   {
   state: external_alarm_state ;
   name: string }
-type nonrec alarm_state_information_list =
-  alarm_state_information list option list
 type nonrec association_description =
   {
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   target_locations: target_location list option ;
@@ -814,19 +636,19 @@ type nonrec association_description =
   max_concurrency: string option ;
   max_errors: string option ;
   association_name: string option ;
-  last_successful_execution_date: float option ;
-  last_execution_date: float option ;
+  last_successful_execution_date: CoreTypes.Timestamp.t option ;
+  last_execution_date: CoreTypes.Timestamp.t option ;
   output_location: instance_association_output_location option ;
   schedule_expression: string option ;
   targets: target list option ;
   association_id: string option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   automation_target_parameter_name: string option ;
   document_version: string option ;
   overview: association_overview option ;
   status: association_status option ;
-  last_update_association_date: float option ;
-  date: float option ;
+  last_update_association_date: CoreTypes.Timestamp.t option ;
+  date: CoreTypes.Timestamp.t option ;
   association_version: string option ;
   instance_id: string option ;
   name: string option }
@@ -847,7 +669,7 @@ type nonrec update_association_result =
 type nonrec update_association_request =
   {
   alarm_configuration: alarm_configuration option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   target_locations: target_location list option ;
@@ -865,7 +687,7 @@ type nonrec update_association_request =
   output_location: instance_association_output_location option ;
   schedule_expression: string option ;
   document_version: string option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   association_id: string }
 type nonrec invalid_update = {
   message: string option }
@@ -891,7 +713,6 @@ type nonrec unsupported_operating_system = {
 type nonrec unsupported_inventory_schema_version_exception =
   {
   message: string option }
-type nonrec inventory_item_type_name = string
 type nonrec unsupported_inventory_item_context_exception =
   {
   message: string option ;
@@ -901,14 +722,10 @@ type nonrec unsupported_feature_required_exception =
   message: string option }
 type nonrec unsupported_calendar_exception = {
   message: string option }
-type nonrec parameter_label = string
-type nonrec parameter_label_list = string list option list
 type nonrec unlabel_parameter_version_result =
   {
   invalid_labels: string list option ;
   removed_labels: string list option }
-type nonrec ps_parameter_name = string
-type nonrec ps_parameter_version = int
 type nonrec unlabel_parameter_version_request =
   {
   labels: string list ;
@@ -918,34 +735,24 @@ type nonrec parameter_version_not_found = {
   message: string option }
 type nonrec parameter_not_found = {
   message: string option }
-type nonrec uui_d = string
 type nonrec total_size_limit_exceeded_exception = {
   message: string option }
-type nonrec total_count = int
 type nonrec too_many_tags_error = unit
-type nonrec token_value = string
-type nonrec session_id = string
 type nonrec terminate_session_response = {
   session_id: string option }
 type nonrec terminate_session_request = {
   session_id: string }
-type nonrec target_parameter_list = string list option list
 type nonrec target_not_connected = {
   message: string option }
 type nonrec target_in_use_exception = {
   message: string option }
-type nonrec target_count = int
 type nonrec sub_type_count_limit_exceeded_exception =
   {
   message: string option }
-type nonrec string_list = string list option list
-type nonrec string_date_time = string
-type nonrec stream_url = string
 type nonrec stop_type =
   | CANCEL 
   | COMPLETE 
 type nonrec stop_automation_execution_result = unit
-type nonrec automation_execution_id = string
 type nonrec stop_automation_execution_request =
   {
   type_: stop_type option ;
@@ -956,8 +763,6 @@ type nonrec invalid_automation_status_update_exception =
 type nonrec automation_execution_not_found_exception =
   {
   message: string option }
-type nonrec automation_action_name = string
-type nonrec long = int
 type nonrec automation_execution_status =
   | EXITED 
   | COMPLETED_WITH_FAILURE 
@@ -978,10 +783,10 @@ type nonrec automation_execution_status =
   | WAITING 
   | INPROGRESS 
   | PENDING 
-type nonrec normal_string_map = (string_ option * string_ option) list
+type nonrec normal_string_map = (string * string) list
 type nonrec failure_details =
   {
-  details: (string * string list) list option ;
+  details: automation_parameter_map option ;
   failure_type: string option ;
   failure_stage: string option }
 type nonrec parent_step_details =
@@ -1001,25 +806,22 @@ type nonrec step_execution =
   is_critical: bool option ;
   next_step: string option ;
   is_end: bool option ;
-  overridden_parameters: (string * string list) list option ;
+  overridden_parameters: automation_parameter_map option ;
   step_execution_id: string option ;
   failure_details: failure_details option ;
   failure_message: string option ;
   response: string option ;
-  outputs: (string * string list) list option ;
-  inputs: (string * string) list option ;
+  outputs: automation_parameter_map option ;
+  inputs: normal_string_map option ;
   response_code: string option ;
   step_status: automation_execution_status option ;
-  execution_end_time: float option ;
-  execution_start_time: float option ;
+  execution_end_time: CoreTypes.Timestamp.t option ;
+  execution_start_time: CoreTypes.Timestamp.t option ;
   max_attempts: int option ;
   on_failure: string option ;
   timeout_seconds: int option ;
   action: string option ;
   step_name: string option }
-type nonrec step_execution_list = step_execution list option list
-type nonrec step_execution_filter_value = string
-type nonrec step_execution_filter_value_list = string list option list
 type nonrec step_execution_filter_key =
   | PARENT_STEP_ITERATOR_VALUE 
   | PARENT_STEP_ITERATION 
@@ -1034,58 +836,45 @@ type nonrec step_execution_filter =
   {
   values: string list ;
   key: step_execution_filter_key }
-type nonrec step_execution_filter_list =
-  step_execution_filter list option list
-type nonrec status_details = string
 type nonrec start_session_response =
   {
   stream_url: string option ;
   token_value: string option ;
   session_id: string option }
-type nonrec session_target = string
-type nonrec session_reason = string
-type nonrec session_manager_parameter_value = string
-type nonrec session_manager_parameter_value_list = string list option list
-type nonrec session_manager_parameter_name = string
-type nonrec session_manager_parameters =
-  (string_ option * string list option) list
+type nonrec session_manager_parameters = (string * string list) list
 type nonrec start_session_request =
   {
-  parameters: (string * string list) list option ;
+  parameters: session_manager_parameters option ;
   reason: string option ;
   document_name: string option ;
   target: string }
 type nonrec start_change_request_execution_result =
   {
   automation_execution_id: string option }
-type nonrec change_request_name = string
-type nonrec idempotency_token = string
 type nonrec runbook =
   {
   target_locations: target_location list option ;
   max_errors: string option ;
   max_concurrency: string option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   targets: target list option ;
   target_parameter_name: string option ;
-  parameters: (string * string list) list option ;
+  parameters: automation_parameter_map option ;
   document_version: string option ;
   document_name: string }
-type nonrec runbooks = runbook list option list
-type nonrec change_details_value = string
 type nonrec start_change_request_execution_request =
   {
   change_details: string option ;
-  scheduled_end_time: float option ;
+  scheduled_end_time: CoreTypes.Timestamp.t option ;
   tags: tag list option ;
   runbooks: runbook list ;
   auto_approve: bool option ;
   client_token: string option ;
   change_request_name: string option ;
-  parameters: (string * string list) list option ;
+  parameters: automation_parameter_map option ;
   document_version: string option ;
   document_name: string ;
-  scheduled_time: float option }
+  scheduled_time: CoreTypes.Timestamp.t option }
 type nonrec invalid_automation_execution_parameters_exception =
   {
   message: string option }
@@ -1116,37 +905,29 @@ type nonrec start_automation_execution_request =
   target_locations: target_location list option ;
   max_errors: string option ;
   max_concurrency: string option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   targets: target list option ;
   target_parameter_name: string option ;
   mode: execution_mode option ;
   client_token: string option ;
-  parameters: (string * string list) list option ;
+  parameters: automation_parameter_map option ;
   document_version: string option ;
   document_name: string }
 type nonrec start_associations_once_result = unit
-type nonrec association_id_list = string list option list
 type nonrec start_associations_once_request = {
   association_ids: string list }
 type nonrec invalid_association = {
   message: string option }
-type nonrec standard_output_content = string
-type nonrec standard_error_content = string
 type nonrec source_type =
   | AWS_SSM_MANAGEDINSTANCE 
   | AWS_IOT_THING 
   | AWS_EC2_INSTANCE 
-type nonrec source_id = string
-type nonrec snapshot_id = string
-type nonrec snapshot_download_url = string
 type nonrec signal_type =
   | RESUME 
   | STOP_STEP 
   | START_STEP 
   | REJECT 
   | APPROVE 
-type nonrec shared_document_version = string
-type nonrec compliance_summary_count = int
 type nonrec severity_summary =
   {
   unspecified_count: int option ;
@@ -1165,16 +946,10 @@ type nonrec session_status =
 type nonrec session_state =
   | HISTORY 
   | ACTIVE 
-type nonrec session_owner = string
-type nonrec session_max_results = int
-type nonrec session_manager_s3_output_url = string
-type nonrec session_manager_cloud_watch_output_url = string
 type nonrec session_manager_output_url =
   {
   cloud_watch_output_url: string option ;
   s3_output_url: string option }
-type nonrec session_details = string
-type nonrec max_session_duration = string
 type nonrec session =
   {
   max_session_duration: string option ;
@@ -1183,13 +958,11 @@ type nonrec session =
   reason: string option ;
   owner: string option ;
   document_name: string option ;
-  end_date: float option ;
-  start_date: float option ;
+  end_date: CoreTypes.Timestamp.t option ;
+  start_date: CoreTypes.Timestamp.t option ;
   status: session_status option ;
   target: string option ;
   session_id: string option }
-type nonrec session_list = session list option list
-type nonrec session_filter_value = string
 type nonrec session_filter_key =
   | SESSION_ID 
   | STATUS 
@@ -1200,17 +973,14 @@ type nonrec session_filter_key =
 type nonrec session_filter = {
   value: string ;
   key: session_filter_key }
-type nonrec session_filter_list = session_filter list option list
 type nonrec service_setting =
   {
   status: string option ;
   ar_n: string option ;
   last_modified_user: string option ;
-  last_modified_date: float option ;
+  last_modified_date: CoreTypes.Timestamp.t option ;
   setting_value: string option ;
   setting_id: string option }
-type nonrec command_id = string
-type nonrec instance_id_list = string list option list
 type nonrec command_status =
   | CANCELLING 
   | TIMED_OUT 
@@ -1219,9 +989,6 @@ type nonrec command_status =
   | SUCCESS 
   | IN_PROGRESS 
   | PENDING 
-type nonrec completed_count = int
-type nonrec error_count = int
-type nonrec delivery_timed_out_count = int
 type nonrec command =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -1241,11 +1008,11 @@ type nonrec command =
   output_s3_region: string option ;
   status_details: string option ;
   status: command_status option ;
-  requested_date_time: float option ;
+  requested_date_time: CoreTypes.Timestamp.t option ;
   targets: target list option ;
   instance_ids: string list option ;
-  parameters: (string * string list) list option ;
-  expires_after: float option ;
+  parameters: parameters option ;
+  expires_after: CoreTypes.Timestamp.t option ;
   comment: string option ;
   document_version: string option ;
   document_name: string option ;
@@ -1263,7 +1030,7 @@ type nonrec send_command_request =
   output_s3_key_prefix: string option ;
   output_s3_bucket_name: string option ;
   output_s3_region: string option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   comment: string option ;
   timeout_seconds: int option ;
   document_hash_type: document_hash_type option ;
@@ -1281,7 +1048,7 @@ type nonrec duplicate_instance_id = unit
 type nonrec send_automation_signal_result = unit
 type nonrec send_automation_signal_request =
   {
-  payload: (string * string list) list option ;
+  payload: automation_parameter_map option ;
   signal_type: signal_type ;
   automation_execution_id: string }
 type nonrec invalid_automation_signal_exception = {
@@ -1293,8 +1060,6 @@ type nonrec scheduled_window_execution =
   execution_time: string option ;
   name: string option ;
   window_id: string option }
-type nonrec scheduled_window_execution_list =
-  scheduled_window_execution list option list
 type nonrec s3_output_url = {
   output_url: string option }
 type nonrec resume_session_response =
@@ -1306,8 +1071,6 @@ type nonrec resume_session_request = {
   session_id: string }
 type nonrec result_attribute = {
   type_name: string }
-type nonrec result_attribute_list = result_attribute list option list
-type nonrec response_code = int
 type nonrec resource_type_for_tagging =
   | ASSOCIATION 
   | AUTOMATION 
@@ -1321,10 +1084,8 @@ type nonrec resource_type_for_tagging =
 type nonrec resource_type =
   | EC2_INSTANCE 
   | MANAGED_INSTANCE 
-type nonrec resource_policy_parameter_names_list = string list option list
 type nonrec resource_policy_not_found_exception = {
   message: string option }
-type nonrec resource_policy_max_results = int
 type nonrec resource_policy_limit_exceeded_exception =
   {
   message: string option ;
@@ -1342,8 +1103,6 @@ type nonrec resource_limit_exceeded_exception = {
   message: string option }
 type nonrec resource_in_use_exception = {
   message: string option }
-type nonrec resource_id = string
-type nonrec resource_data_sync_state = string
 type nonrec resource_data_sync_source_with_state =
   {
   enable_all_ops_data_sources: bool option ;
@@ -1353,13 +1112,8 @@ type nonrec resource_data_sync_source_with_state =
   aws_organizations_source:
     resource_data_sync_aws_organizations_source option ;
   source_type: string option }
-type nonrec resource_data_sync_s3_region = string
-type nonrec resource_data_sync_s3_prefix = string
 type nonrec resource_data_sync_s3_format =
   | JSON_SERDE 
-type nonrec resource_data_sync_s3_bucket_name = string
-type nonrec resource_data_sync_awskms_key_ar_n = string
-type nonrec resource_data_sync_destination_data_sharing_type = string
 type nonrec resource_data_sync_destination_data_sharing =
   {
   destination_data_sharing_type: string option }
@@ -1372,40 +1126,28 @@ type nonrec resource_data_sync_s3_destination =
   sync_format: resource_data_sync_s3_format ;
   prefix: string option ;
   bucket_name: string }
-type nonrec resource_data_sync_last_modified_time = Timestamp.t
-type nonrec last_resource_data_sync_time = Timestamp.t
-type nonrec last_successful_resource_data_sync_time = Timestamp.t
 type nonrec last_resource_data_sync_status =
   | INPROGRESS 
   | FAILED 
   | SUCCESSFUL 
-type nonrec resource_data_sync_created_time = Timestamp.t
-type nonrec last_resource_data_sync_message = string
 type nonrec resource_data_sync_item =
   {
   last_sync_status_message: string option ;
-  sync_created_time: float option ;
+  sync_created_time: CoreTypes.Timestamp.t option ;
   last_status: last_resource_data_sync_status option ;
-  sync_last_modified_time: float option ;
-  last_successful_sync_time: float option ;
-  last_sync_time: float option ;
+  sync_last_modified_time: CoreTypes.Timestamp.t option ;
+  last_successful_sync_time: CoreTypes.Timestamp.t option ;
+  last_sync_time: CoreTypes.Timestamp.t option ;
   s3_destination: resource_data_sync_s3_destination option ;
   sync_source: resource_data_sync_source_with_state option ;
   sync_type: string option ;
   sync_name: string option }
-type nonrec resource_data_sync_item_list =
-  resource_data_sync_item list option list
 type nonrec resource_data_sync_count_exceeded_exception =
   {
   message: string option }
 type nonrec resource_data_sync_already_exists_exception =
   {
   sync_name: string option }
-type nonrec resource_count_by_status = string
-type nonrec resource_count = int
-type nonrec compliance_type_name = string
-type nonrec compliance_resource_type = string
-type nonrec compliance_resource_id = string
 type nonrec compliance_status =
   | NonCompliant 
   | Compliant 
@@ -1416,13 +1158,11 @@ type nonrec compliance_severity =
   | Medium 
   | High 
   | Critical 
-type nonrec compliance_execution_id = string
-type nonrec compliance_execution_type = string
 type nonrec compliance_execution_summary =
   {
   execution_type: string option ;
   execution_id: string option ;
-  execution_time: float }
+  execution_time: CoreTypes.Timestamp.t }
 type nonrec compliant_summary =
   {
   severity_summary: severity_summary option ;
@@ -1441,9 +1181,6 @@ type nonrec resource_compliance_summary_item =
   resource_id: string option ;
   resource_type: string option ;
   compliance_type: string option }
-type nonrec resource_compliance_summary_item_list =
-  resource_compliance_summary_item list option list
-type nonrec resource_arn_string = string
 type nonrec resolved_targets =
   {
   truncated: bool option ;
@@ -1454,7 +1191,6 @@ type nonrec reset_service_setting_result =
 type nonrec reset_service_setting_request = {
   setting_id: string }
 type nonrec remove_tags_from_resource_result = unit
-type nonrec key_list = string list option list
 type nonrec remove_tags_from_resource_request =
   {
   tag_keys: string list ;
@@ -1462,16 +1198,9 @@ type nonrec remove_tags_from_resource_request =
   resource_type: resource_type_for_tagging }
 type nonrec invalid_resource_type = unit
 type nonrec invalid_resource_id = unit
-type nonrec remaining_count = int
-type nonrec registrations_count = int
-type nonrec registration_metadata_value = string
-type nonrec registration_metadata_key = string
 type nonrec registration_metadata_item = {
   value: string ;
   key: string }
-type nonrec registration_metadata_list =
-  registration_metadata_item list option list
-type nonrec registration_limit = int
 type nonrec register_task_with_maintenance_window_result =
   {
   window_task_id: string option }
@@ -1480,7 +1209,6 @@ type nonrec maintenance_window_task_type =
   | StepFunctions 
   | Automation 
   | RunCommand 
-type nonrec client_token = string
 type nonrec register_task_with_maintenance_window_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -1494,8 +1222,7 @@ type nonrec register_task_with_maintenance_window_request =
   priority: int option ;
   task_invocation_parameters:
     maintenance_window_task_invocation_parameters option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list option ;
+  task_parameters: maintenance_window_task_parameters option ;
   task_type: maintenance_window_task_type ;
   service_role_arn: string option ;
   task_arn: string ;
@@ -1518,7 +1245,6 @@ type nonrec register_target_with_maintenance_window_request =
   targets: target list ;
   resource_type: maintenance_window_resource_type ;
   window_id: string }
-type nonrec patch_group = string
 type nonrec register_patch_baseline_for_patch_group_result =
   {
   patch_group: string option ;
@@ -1537,13 +1263,10 @@ type nonrec register_default_patch_baseline_request = {
 type nonrec reboot_option =
   | NO_REBOOT 
   | REBOOT_IF_NEEDED 
-type nonrec policy_id = string
-type nonrec policy_hash = string
 type nonrec put_resource_policy_response =
   {
   policy_hash: string option ;
   policy_id: string option }
-type nonrec policy = string
 type nonrec put_resource_policy_request =
   {
   policy_hash: string option ;
@@ -1561,16 +1284,10 @@ type nonrec put_parameter_result =
   {
   tier: parameter_tier option ;
   version: int option }
-type nonrec parameter_description = string
-type nonrec ps_parameter_value = string
 type nonrec parameter_type =
   | SECURE_STRING 
   | STRING_LIST 
   | STRING 
-type nonrec parameter_key_id = string
-type nonrec allowed_pattern = string
-type nonrec parameter_policies = string
-type nonrec parameter_data_type = string
 type nonrec put_parameter_request =
   {
   data_type: string option ;
@@ -1609,28 +1326,18 @@ type nonrec hierarchy_type_mismatch_exception = {
 type nonrec hierarchy_level_limit_exceeded_exception =
   {
   message: string option }
-type nonrec put_inventory_message = string
 type nonrec put_inventory_result = {
   message: string option }
-type nonrec inventory_item_schema_version = string
-type nonrec inventory_item_capture_time = string
-type nonrec inventory_item_content_hash = string
-type nonrec attribute_value = string
-type nonrec attribute_name = string
-type nonrec inventory_item_entry = (string_ option * string_ option) list
-type nonrec inventory_item_entry_list =
-  (string * string) list list option list
-type nonrec inventory_item_content_context =
-  (string_ option * string_ option) list
+type nonrec inventory_item_entry = (string * string) list
+type nonrec inventory_item_content_context = (string * string) list
 type nonrec inventory_item =
   {
-  context: (string * string) list option ;
-  content: (string * string) list list option ;
+  context: inventory_item_content_context option ;
+  content: inventory_item_entry list option ;
   content_hash: string option ;
   capture_time: string ;
   schema_version: string ;
   type_name: string }
-type nonrec inventory_item_list = inventory_item list option list
 type nonrec put_inventory_request =
   {
   items: inventory_item list ;
@@ -1656,19 +1363,14 @@ type nonrec custom_schema_count_limit_exceeded_exception =
   {
   message: string option }
 type nonrec put_compliance_items_result = unit
-type nonrec compliance_item_id = string
-type nonrec compliance_item_title = string
-type nonrec compliance_item_details = (string_ option * string_ option) list
+type nonrec compliance_item_details = (string * string) list
 type nonrec compliance_item_entry =
   {
-  details: (string * string) list option ;
+  details: compliance_item_details option ;
   status: compliance_status ;
   severity: compliance_severity ;
   title: string option ;
   id: string option }
-type nonrec compliance_item_entry_list =
-  compliance_item_entry list option list
-type nonrec compliance_item_content_hash = string
 type nonrec compliance_upload_type =
   | Partial 
   | Complete 
@@ -1691,17 +1393,10 @@ type nonrec progress_counters =
   failed_steps: int option ;
   success_steps: int option ;
   total_steps: int option }
-type nonrec product = string
-type nonrec platform_version = string
-type nonrec platform_name = string
 type nonrec ping_status =
   | INACTIVE 
   | CONNECTION_LOST 
   | ONLINE 
-type nonrec patch_version = string
-type nonrec patch_vendor = string
-type nonrec patch_unreported_not_applicable_count = int
-type nonrec patch_title = string
 type nonrec patch_deployment_status =
   | ExplicitRejected 
   | ExplicitApproved 
@@ -1709,17 +1404,13 @@ type nonrec patch_deployment_status =
   | Approved 
 type nonrec patch_status =
   {
-  approval_date: float option ;
+  approval_date: CoreTypes.Timestamp.t option ;
   compliance_level: patch_compliance_level option ;
   deployment_status: patch_deployment_status option }
-type nonrec patch_severity = string
 type nonrec patch_set =
   | Application 
   | Os 
-type nonrec patch_security_non_compliant_count = int
-type nonrec patch_repository = string
-type nonrec patch_release = string
-type nonrec patch_property_entry = (string_ option * string_ option) list
+type nonrec patch_property_entry = (string * string) list
 type nonrec patch_property =
   | PatchSeverity 
   | PatchPriority 
@@ -1727,40 +1418,13 @@ type nonrec patch_property =
   | PatchClassification 
   | PatchProductFamily 
   | Product 
-type nonrec patch_properties_list = (string * string) list list option list
-type nonrec patch_product_family = string
-type nonrec patch_product = string
-type nonrec patch_other_non_compliant_count = int
-type nonrec patch_orchestrator_filter_value = string
-type nonrec patch_orchestrator_filter_values = string list option list
-type nonrec patch_orchestrator_filter_key = string
 type nonrec patch_orchestrator_filter =
   {
   values: string list option ;
   key: string option }
-type nonrec patch_orchestrator_filter_list =
-  patch_orchestrator_filter list option list
 type nonrec patch_operation_type =
   | INSTALL 
   | SCAN 
-type nonrec patch_not_applicable_count = int
-type nonrec patch_name = string
-type nonrec patch_msrc_severity = string
-type nonrec patch_msrc_number = string
-type nonrec patch_missing_count = int
-type nonrec patch_description = string
-type nonrec patch_content_url = string
-type nonrec patch_classification = string
-type nonrec patch_kb_number = string
-type nonrec patch_language = string
-type nonrec patch_advisory_id = string
-type nonrec patch_advisory_id_list = string list option list
-type nonrec patch_bugzilla_id = string
-type nonrec patch_bugzilla_id_list = string list option list
-type nonrec patch_cve_id = string
-type nonrec patch_cve_id_list = string list option list
-type nonrec patch_epoch = int
-type nonrec patch_arch = string
 type nonrec patch =
   {
   repository: string option ;
@@ -1784,14 +1448,8 @@ type nonrec patch =
   content_url: string option ;
   description: string option ;
   title: string option ;
-  release_date: float option ;
+  release_date: CoreTypes.Timestamp.t option ;
   id: string option }
-type nonrec patch_list = patch list option list
-type nonrec patch_installed_rejected_count = int
-type nonrec patch_installed_pending_reboot_count = int
-type nonrec patch_installed_other_count = int
-type nonrec patch_installed_count = int
-type nonrec default_baseline = bool
 type nonrec patch_baseline_identity =
   {
   default_baseline: bool option ;
@@ -1803,12 +1461,6 @@ type nonrec patch_group_patch_baseline_mapping =
   {
   baseline_identity: patch_baseline_identity option ;
   patch_group: string option }
-type nonrec patch_group_patch_baseline_mapping_list =
-  patch_group_patch_baseline_mapping list option list
-type nonrec patch_group_list = string list option list
-type nonrec patch_failed_count = int
-type nonrec patch_critical_non_compliant_count = int
-type nonrec patch_compliance_max_results = int
 type nonrec patch_compliance_data_state =
   | Failed 
   | NotApplicable 
@@ -1817,23 +1469,15 @@ type nonrec patch_compliance_data_state =
   | InstalledPendingReboot 
   | InstalledOther 
   | Installed 
-type nonrec patch_cve_ids = string
 type nonrec patch_compliance_data =
   {
   cve_ids: string option ;
-  installed_time: float ;
+  installed_time: CoreTypes.Timestamp.t ;
   state: patch_compliance_data_state ;
   severity: string ;
   classification: string ;
   kb_id: string ;
   title: string }
-type nonrec patch_compliance_data_list =
-  patch_compliance_data list option list
-type nonrec patch_baseline_max_results = int
-type nonrec patch_baseline_identity_list =
-  patch_baseline_identity list option list
-type nonrec parameters_filter_value = string
-type nonrec parameters_filter_value_list = string list option list
 type nonrec parameters_filter_key =
   | KEY_ID 
   | TYPE 
@@ -1842,28 +1486,19 @@ type nonrec parameters_filter =
   {
   values: string list ;
   key: parameters_filter_key }
-type nonrec parameters_filter_list = parameters_filter list option list
 type nonrec parameter_version_label_limit_exceeded =
   {
   message: string option }
-type nonrec parameter_string_query_option = string
-type nonrec parameter_string_filter_value = string
-type nonrec parameter_string_filter_value_list = string list option list
-type nonrec parameter_string_filter_key = string
 type nonrec parameter_string_filter =
   {
   values: string list option ;
   option_: string option ;
   key: string }
-type nonrec parameter_string_filter_list =
-  parameter_string_filter list option list
 type nonrec parameter_inline_policy =
   {
   policy_status: string option ;
   policy_type: string option ;
   policy_text: string option }
-type nonrec parameter_policy_list = parameter_inline_policy list option list
-type nonrec parameter_name_list = string list option list
 type nonrec parameter_metadata =
   {
   data_type: string option ;
@@ -1873,25 +1508,22 @@ type nonrec parameter_metadata =
   allowed_pattern: string option ;
   description: string option ;
   last_modified_user: string option ;
-  last_modified_date: float option ;
+  last_modified_date: CoreTypes.Timestamp.t option ;
   key_id: string option ;
   type_: parameter_type option ;
   ar_n: string option ;
   name: string option }
-type nonrec parameter_metadata_list = parameter_metadata list option list
-type nonrec ps_parameter_selector = string
 type nonrec parameter =
   {
   data_type: string option ;
   ar_n: string option ;
-  last_modified_date: float option ;
+  last_modified_date: CoreTypes.Timestamp.t option ;
   source_result: string option ;
   selector: string option ;
   version: int option ;
   value: string option ;
   type_: parameter_type option ;
   name: string option }
-type nonrec parameter_list = parameter list option list
 type nonrec parameter_history =
   {
   data_type: string option ;
@@ -1903,70 +1535,53 @@ type nonrec parameter_history =
   value: string option ;
   description: string option ;
   last_modified_user: string option ;
-  last_modified_date: float option ;
+  last_modified_date: CoreTypes.Timestamp.t option ;
   key_id: string option ;
   type_: parameter_type option ;
   name: string option }
-type nonrec parameter_history_list = parameter_history list option list
-type nonrec output_source_type = string
-type nonrec output_source_id = string
 type nonrec output_source =
   {
   output_source_type: string option ;
   output_source_id: string option }
-type nonrec ops_data_type_name = string
 type nonrec ops_result_attribute = {
   type_name: string }
-type nonrec ops_result_attribute_list = ops_result_attribute list option list
-type nonrec ops_metadata_resource_id = string
 type nonrec ops_metadata =
   {
-  creation_date: float option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   last_modified_user: string option ;
-  last_modified_date: float option ;
+  last_modified_date: CoreTypes.Timestamp.t option ;
   ops_metadata_arn: string option ;
   resource_id: string option }
-type nonrec ops_metadata_list = ops_metadata list option list
 type nonrec ops_metadata_limit_exceeded_exception = {
   message: string option }
-type nonrec ops_metadata_filter_value = string
-type nonrec ops_metadata_filter_value_list = string list option list
-type nonrec ops_metadata_filter_key = string
 type nonrec ops_metadata_filter = {
   values: string list ;
   key: string }
-type nonrec ops_metadata_filter_list = ops_metadata_filter list option list
 type nonrec ops_metadata_already_exists_exception = {
   message: string option }
-type nonrec ops_item_type = string
-type nonrec ops_item_source = string
 type nonrec ops_item_summary =
   {
-  planned_end_time: float option ;
-  planned_start_time: float option ;
-  actual_end_time: float option ;
-  actual_start_time: float option ;
+  planned_end_time: CoreTypes.Timestamp.t option ;
+  planned_start_time: CoreTypes.Timestamp.t option ;
+  actual_end_time: CoreTypes.Timestamp.t option ;
+  actual_start_time: CoreTypes.Timestamp.t option ;
   ops_item_type: string option ;
   severity: string option ;
   category: string option ;
-  operational_data: (string * ops_item_data_value) list option ;
+  operational_data: ops_item_operational_data option ;
   title: string option ;
   ops_item_id: string option ;
   status: ops_item_status option ;
   source: string option ;
   priority: int option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   last_modified_by: string option ;
-  created_time: float option ;
+  created_time: CoreTypes.Timestamp.t option ;
   created_by: string option }
-type nonrec ops_item_summaries = ops_item_summary list option list
-type nonrec ops_item_related_items_max_results = int
 type nonrec ops_item_related_items_filter_key =
   | RESOURCE_URI 
   | ASSOCIATION_ID 
   | RESOURCE_TYPE 
-type nonrec ops_item_related_items_filter_value = string
-type nonrec ops_item_related_items_filter_values = string list option list
 type nonrec ops_item_related_items_filter_operator =
   | EQUAL 
 type nonrec ops_item_related_items_filter =
@@ -1974,27 +1589,19 @@ type nonrec ops_item_related_items_filter =
   operator: ops_item_related_items_filter_operator ;
   values: string list ;
   key: ops_item_related_items_filter_key }
-type nonrec ops_item_related_items_filters =
-  ops_item_related_items_filter list option list
-type nonrec ops_item_related_item_association_id = string
-type nonrec ops_item_related_item_association_resource_type = string
-type nonrec ops_item_related_item_association_type = string
-type nonrec ops_item_related_item_association_resource_uri = string
 type nonrec ops_item_identity = {
   arn: string option }
 type nonrec ops_item_related_item_summary =
   {
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   last_modified_by: ops_item_identity option ;
-  created_time: float option ;
+  created_time: CoreTypes.Timestamp.t option ;
   created_by: ops_item_identity option ;
   resource_uri: string option ;
   association_type: string option ;
   resource_type: string option ;
   association_id: string option ;
   ops_item_id: string option }
-type nonrec ops_item_related_item_summaries =
-  ops_item_related_item_summary list option list
 type nonrec ops_item_related_item_association_not_found_exception =
   {
   message: string option }
@@ -2003,7 +1610,6 @@ type nonrec ops_item_related_item_already_exists_exception =
   ops_item_id: string option ;
   resource_uri: string option ;
   message: string option }
-type nonrec ops_item_max_results = int
 type nonrec ops_item_filter_key =
   | ACCOUNT_ID 
   | INSIGHT_TYPE 
@@ -2033,8 +1639,6 @@ type nonrec ops_item_filter_key =
   | SOURCE 
   | CREATED_BY 
   | STATUS 
-type nonrec ops_item_filter_value = string
-type nonrec ops_item_filter_values = string list option list
 type nonrec ops_item_filter_operator =
   | LESS_THAN 
   | GREATER_THAN 
@@ -2045,23 +1649,17 @@ type nonrec ops_item_filter =
   operator: ops_item_filter_operator ;
   values: string list ;
   key: ops_item_filter_key }
-type nonrec ops_item_filters = ops_item_filter list option list
 type nonrec ops_item_event_summary =
   {
-  created_time: float option ;
+  created_time: CoreTypes.Timestamp.t option ;
   created_by: ops_item_identity option ;
   detail: string option ;
   detail_type: string option ;
   source: string option ;
   event_id: string option ;
   ops_item_id: string option }
-type nonrec ops_item_event_summaries =
-  ops_item_event_summary list option list
-type nonrec ops_item_event_max_results = int
 type nonrec ops_item_event_filter_key =
   | OPSITEM_ID 
-type nonrec ops_item_event_filter_value = string
-type nonrec ops_item_event_filter_values = string list option list
 type nonrec ops_item_event_filter_operator =
   | EQUAL 
 type nonrec ops_item_event_filter =
@@ -2069,18 +1667,16 @@ type nonrec ops_item_event_filter =
   operator: ops_item_event_filter_operator ;
   values: string list ;
   key: ops_item_event_filter_key }
-type nonrec ops_item_event_filters = ops_item_event_filter list option list
-type nonrec ops_item_account_id = string
 type nonrec ops_item =
   {
   ops_item_arn: string option ;
-  planned_end_time: float option ;
-  planned_start_time: float option ;
-  actual_end_time: float option ;
-  actual_start_time: float option ;
+  planned_end_time: CoreTypes.Timestamp.t option ;
+  planned_start_time: CoreTypes.Timestamp.t option ;
+  actual_end_time: CoreTypes.Timestamp.t option ;
+  actual_start_time: CoreTypes.Timestamp.t option ;
   severity: string option ;
   category: string option ;
-  operational_data: (string * ops_item_data_value) list option ;
+  operational_data: ops_item_operational_data option ;
   source: string option ;
   title: string option ;
   version: string option ;
@@ -2089,14 +1685,12 @@ type nonrec ops_item =
   related_ops_items: related_ops_item list option ;
   priority: int option ;
   notifications: ops_item_notification list option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   last_modified_by: string option ;
   description: string option ;
-  created_time: float option ;
+  created_time: CoreTypes.Timestamp.t option ;
   ops_item_type: string option ;
   created_by: string option }
-type nonrec ops_filter_value = string
-type nonrec ops_filter_value_list = string list option list
 type nonrec ops_filter_operator_type =
   | EXISTS 
   | GREATER_THAN 
@@ -2104,50 +1698,33 @@ type nonrec ops_filter_operator_type =
   | BEGIN_WITH 
   | NOT_EQUAL 
   | EQUAL 
-type nonrec ops_filter_key = string
 type nonrec ops_filter =
   {
   type_: ops_filter_operator_type option ;
   values: string list ;
   key: string }
-type nonrec ops_filter_list = ops_filter list option list
-type nonrec ops_entity_id = string
-type nonrec ops_entity_item_capture_time = string
-type nonrec ops_entity_item_entry = (string_ option * string_ option) list
-type nonrec ops_entity_item_entry_list =
-  (string * string) list list option list
+type nonrec ops_entity_item_entry = (string * string) list
 type nonrec ops_entity_item =
   {
-  content: (string * string) list list option ;
+  content: ops_entity_item_entry list option ;
   capture_time: string option }
-type nonrec ops_entity_item_key = string
-type nonrec ops_entity_item_map =
-  (string_ option * ops_entity_item option) list
+type nonrec ops_entity_item_map = (string * ops_entity_item) list
 type nonrec ops_entity =
   {
-  data: (string * ops_entity_item) list option ;
+  data: ops_entity_item_map option ;
   id: string option }
-type nonrec ops_entity_list = ops_entity list option list
-type nonrec ops_data_attribute_name = string
-type nonrec ops_aggregator_value = string
-type nonrec ops_aggregator_value_key = string
-type nonrec ops_aggregator_value_map = (string_ option * string_ option) list
-type nonrec ops_aggregator_type = string
+type nonrec ops_aggregator_value_map = (string * string) list
 type ops_aggregator =
   {
   aggregators: ops_aggregator list option ;
   filters: ops_filter list option ;
-  values: (string * string) list option ;
+  values: ops_aggregator_value_map option ;
   attribute_name: string option ;
   type_name: string option ;
   aggregator_type: string option }
-and ops_aggregator_list = ops_aggregator list option list
-type nonrec next_token = string
 type nonrec modify_document_permission_response = unit
 type nonrec document_permission_type =
   | SHARE 
-type nonrec account_id = string
-type nonrec account_id_list = string list option list
 type nonrec modify_document_permission_request =
   {
   shared_document_version: string option ;
@@ -2161,18 +1738,10 @@ type nonrec document_permission_limit = {
   message: string option }
 type nonrec document_limit_exceeded = {
   message: string option }
-type nonrec max_results_ec2_compatible = int
-type nonrec max_results = int
 type nonrec maintenance_window_identity_for_target =
   {
   name: string option ;
   window_id: string option }
-type nonrec maintenance_windows_for_target_list =
-  maintenance_window_identity_for_target list option list
-type nonrec maintenance_window_task_target_id = string
-type nonrec maintenance_window_task_parameters_list =
-  (string * maintenance_window_task_parameter_value_expression) list list
-    option list
 type nonrec maintenance_window_task =
   {
   alarm_configuration: alarm_configuration option ;
@@ -2184,15 +1753,12 @@ type nonrec maintenance_window_task =
   service_role_arn: string option ;
   logging_info: logging_info option ;
   priority: int option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list option ;
+  task_parameters: maintenance_window_task_parameters option ;
   targets: target list option ;
   type_: maintenance_window_task_type option ;
   task_arn: string option ;
   window_task_id: string option ;
   window_id: string option }
-type nonrec maintenance_window_task_list =
-  maintenance_window_task list option list
 type nonrec maintenance_window_target =
   {
   description: string option ;
@@ -2202,10 +1768,6 @@ type nonrec maintenance_window_target =
   resource_type: maintenance_window_resource_type option ;
   window_target_id: string option ;
   window_id: string option }
-type nonrec maintenance_window_target_list =
-  maintenance_window_target list option list
-type nonrec maintenance_window_search_max_results = int
-type nonrec maintenance_window_max_results = int
 type nonrec maintenance_window_identity =
   {
   next_execution_time: string option ;
@@ -2220,22 +1782,10 @@ type nonrec maintenance_window_identity =
   description: string option ;
   name: string option ;
   window_id: string option }
-type nonrec maintenance_window_identity_list =
-  maintenance_window_identity list option list
-type nonrec maintenance_window_filter_value = string
-type nonrec maintenance_window_filter_values = string list option list
-type nonrec maintenance_window_filter_key = string
 type nonrec maintenance_window_filter =
   {
   values: string list option ;
   key: string option }
-type nonrec maintenance_window_filter_list =
-  maintenance_window_filter list option list
-type nonrec maintenance_window_execution_task_invocation_parameters = string
-type nonrec maintenance_window_execution_id = string
-type nonrec maintenance_window_execution_task_id = string
-type nonrec maintenance_window_execution_task_invocation_id = string
-type nonrec maintenance_window_execution_task_execution_id = string
 type nonrec maintenance_window_execution_status =
   | SkippedOverlapping 
   | Cancelled 
@@ -2245,13 +1795,12 @@ type nonrec maintenance_window_execution_status =
   | Success 
   | InProgress 
   | Pending 
-type nonrec maintenance_window_execution_status_details = string
 type nonrec maintenance_window_execution_task_invocation_identity =
   {
   window_target_id: string option ;
   owner_information: string option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   parameters: string option ;
@@ -2260,34 +1809,26 @@ type nonrec maintenance_window_execution_task_invocation_identity =
   invocation_id: string option ;
   task_execution_id: string option ;
   window_execution_id: string option }
-type nonrec maintenance_window_execution_task_invocation_identity_list =
-  maintenance_window_execution_task_invocation_identity list option list
 type nonrec maintenance_window_execution_task_identity =
   {
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
   task_type: maintenance_window_task_type option ;
   task_arn: string option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   task_execution_id: string option ;
   window_execution_id: string option }
-type nonrec maintenance_window_execution_task_identity_list =
-  maintenance_window_execution_task_identity list option list
-type nonrec maintenance_window_execution_task_id_list =
-  string list option list
 type nonrec maintenance_window_execution =
   {
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   window_execution_id: string option ;
   window_id: string option }
-type nonrec maintenance_window_execution_list =
-  maintenance_window_execution list option list
 type nonrec list_tags_for_resource_result = {
   tag_list: tag list option }
 type nonrec list_tags_for_resource_request =
@@ -2310,9 +1851,6 @@ type nonrec list_resource_compliance_summaries_result =
   next_token: string option ;
   resource_compliance_summary_items:
     resource_compliance_summary_item list option }
-type nonrec compliance_string_filter_key = string
-type nonrec compliance_filter_value = string
-type nonrec compliance_string_filter_value_list = string list option list
 type nonrec compliance_query_operator_type =
   | GreaterThan 
   | LessThan 
@@ -2324,8 +1862,6 @@ type nonrec compliance_string_filter =
   type_: compliance_query_operator_type option ;
   values: string list option ;
   key: string option }
-type nonrec compliance_string_filter_list =
-  compliance_string_filter list option list
 type nonrec list_resource_compliance_summaries_request =
   {
   max_results: int option ;
@@ -2337,7 +1873,6 @@ type nonrec list_ops_metadata_result =
   {
   next_token: string option ;
   ops_metadata_list: ops_metadata list option }
-type nonrec list_ops_metadata_max_results = int
 type nonrec list_ops_metadata_request =
   {
   next_token: string option ;
@@ -2365,14 +1900,11 @@ type nonrec list_ops_item_events_request =
 type nonrec list_inventory_entries_result =
   {
   next_token: string option ;
-  entries: (string * string) list list option ;
+  entries: inventory_item_entry list option ;
   capture_time: string option ;
   schema_version: string option ;
   instance_id: string option ;
   type_name: string option }
-type nonrec inventory_filter_key = string
-type nonrec inventory_filter_value = string
-type nonrec inventory_filter_value_list = string list option list
 type nonrec inventory_query_operator_type =
   | EXISTS 
   | GREATER_THAN 
@@ -2385,7 +1917,6 @@ type nonrec inventory_filter =
   type_: inventory_query_operator_type option ;
   values: string list ;
   key: string }
-type nonrec inventory_filter_list = inventory_filter list option list
 type nonrec list_inventory_entries_request =
   {
   max_results: int option ;
@@ -2408,9 +1939,8 @@ type nonrec document_identifier =
   version_name: string option ;
   owner: string option ;
   display_name: string option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   name: string option }
-type nonrec document_identifier_list = document_identifier list option list
 type nonrec list_documents_result =
   {
   next_token: string option ;
@@ -2420,20 +1950,13 @@ type nonrec document_filter_key =
   | PlatformTypes 
   | Owner 
   | Name 
-type nonrec document_filter_value = string
 type nonrec document_filter = {
   value: string ;
   key: document_filter_key }
-type nonrec document_filter_list = document_filter list option list
-type nonrec document_key_values_filter_key = string
-type nonrec document_key_values_filter_value = string
-type nonrec document_key_values_filter_values = string list option list
 type nonrec document_key_values_filter =
   {
   values: string list option ;
   key: string option }
-type nonrec document_key_values_filter_list =
-  document_key_values_filter list option list
 type nonrec list_documents_request =
   {
   next_token: string option ;
@@ -2448,12 +1971,11 @@ type nonrec document_version_info =
   status: document_status option ;
   document_format: document_format option ;
   is_default_version: bool option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   version_name: string option ;
   document_version: string option ;
   display_name: string option ;
   name: string option }
-type nonrec document_version_list = document_version_info list option list
 type nonrec list_document_versions_result =
   {
   next_token: string option ;
@@ -2468,10 +1990,8 @@ type nonrec document_reviewer_response_source =
   reviewer: string option ;
   comment: document_review_comment_source list option ;
   review_status: review_status option ;
-  updated_time: float option ;
-  create_time: float option }
-type nonrec document_reviewer_response_list =
-  document_reviewer_response_source list option list
+  updated_time: CoreTypes.Timestamp.t option ;
+  create_time: CoreTypes.Timestamp.t option }
 type nonrec document_metadata_response_info =
   {
   reviewer_response: document_reviewer_response_source list option }
@@ -2496,8 +2016,6 @@ type nonrec compliance_summary_item =
   non_compliant_summary: non_compliant_summary option ;
   compliant_summary: compliant_summary option ;
   compliance_type: string option }
-type nonrec compliance_summary_item_list =
-  compliance_summary_item list option list
 type nonrec list_compliance_summaries_result =
   {
   next_token: string option ;
@@ -2509,7 +2027,7 @@ type nonrec list_compliance_summaries_request =
   filters: compliance_string_filter list option }
 type nonrec compliance_item =
   {
-  details: (string * string) list option ;
+  details: compliance_item_details option ;
   execution_summary: compliance_execution_summary option ;
   severity: compliance_severity option ;
   status: compliance_status option ;
@@ -2518,13 +2036,10 @@ type nonrec compliance_item =
   resource_id: string option ;
   resource_type: string option ;
   compliance_type: string option }
-type nonrec compliance_item_list = compliance_item list option list
 type nonrec list_compliance_items_result =
   {
   next_token: string option ;
   compliance_items: compliance_item list option }
-type nonrec compliance_resource_id_list = string list option list
-type nonrec compliance_resource_type_list = string list option list
 type nonrec list_compliance_items_request =
   {
   max_results: int option ;
@@ -2532,23 +2047,19 @@ type nonrec list_compliance_items_request =
   resource_types: string list option ;
   resource_ids: string list option ;
   filters: compliance_string_filter list option }
-type nonrec command_list = command list option list
 type nonrec list_commands_result =
   {
   next_token: string option ;
   commands: command list option }
-type nonrec command_max_results = int
 type nonrec command_filter_key =
   | DOCUMENT_NAME 
   | EXECUTION_STAGE 
   | STATUS 
   | INVOKED_BEFORE 
   | INVOKED_AFTER 
-type nonrec command_filter_value = string
 type nonrec command_filter = {
   value: string ;
   key: command_filter_key }
-type nonrec command_filter_list = command_filter list option list
 type nonrec list_commands_request =
   {
   filters: command_filter list option ;
@@ -2557,7 +2068,6 @@ type nonrec list_commands_request =
   instance_id: string option ;
   command_id: string option }
 type nonrec invalid_command_id = unit
-type nonrec instance_tag_name = string
 type nonrec command_invocation_status =
   | CANCELLING 
   | FAILED 
@@ -2567,8 +2077,6 @@ type nonrec command_invocation_status =
   | DELAYED 
   | IN_PROGRESS 
   | PENDING 
-type nonrec invocation_trace_output = string
-type nonrec command_plugin_name = string
 type nonrec command_plugin_status =
   | FAILED 
   | CANCELLED 
@@ -2576,7 +2084,6 @@ type nonrec command_plugin_status =
   | SUCCESS 
   | IN_PROGRESS 
   | PENDING 
-type nonrec command_plugin_output = string
 type nonrec command_plugin =
   {
   output_s3_key_prefix: string option ;
@@ -2585,13 +2092,12 @@ type nonrec command_plugin =
   standard_error_url: string option ;
   standard_output_url: string option ;
   output: string option ;
-  response_finish_date_time: float option ;
-  response_start_date_time: float option ;
+  response_finish_date_time: CoreTypes.Timestamp.t option ;
+  response_start_date_time: CoreTypes.Timestamp.t option ;
   response_code: int option ;
   status_details: string option ;
   status: command_plugin_status option ;
   name: string option }
-type nonrec command_plugin_list = command_plugin list option list
 type nonrec command_invocation =
   {
   cloud_watch_output_config: cloud_watch_output_config option ;
@@ -2603,14 +2109,13 @@ type nonrec command_invocation =
   trace_output: string option ;
   status_details: string option ;
   status: command_invocation_status option ;
-  requested_date_time: float option ;
+  requested_date_time: CoreTypes.Timestamp.t option ;
   document_version: string option ;
   document_name: string option ;
   comment: string option ;
   instance_name: string option ;
   instance_id: string option ;
   command_id: string option }
-type nonrec command_invocation_list = command_invocation list option list
 type nonrec list_command_invocations_result =
   {
   next_token: string option ;
@@ -2625,20 +2130,19 @@ type nonrec list_command_invocations_request =
   command_id: string option }
 type nonrec association =
   {
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   association_name: string option ;
   schedule_expression: string option ;
   overview: association_overview option ;
-  last_execution_date: float option ;
+  last_execution_date: CoreTypes.Timestamp.t option ;
   targets: target list option ;
   document_version: string option ;
   association_version: string option ;
   association_id: string option ;
   instance_id: string option ;
   name: string option }
-type nonrec association_list = association list option list
 type nonrec list_associations_result =
   {
   next_token: string option ;
@@ -2652,12 +2156,10 @@ type nonrec association_filter_key =
   | AssociationId 
   | Name 
   | InstanceId 
-type nonrec association_filter_value = string
 type nonrec association_filter =
   {
   value: string ;
   key: association_filter_key }
-type nonrec association_filter_list = association_filter list option list
 type nonrec list_associations_request =
   {
   next_token: string option ;
@@ -2665,7 +2167,7 @@ type nonrec list_associations_request =
   association_filter_list: association_filter list option }
 type nonrec association_version_info =
   {
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   target_locations: target_location list option ;
@@ -2679,14 +2181,12 @@ type nonrec association_version_info =
   output_location: instance_association_output_location option ;
   schedule_expression: string option ;
   targets: target list option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   document_version: string option ;
   name: string option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   association_version: string option ;
   association_id: string option }
-type nonrec association_version_list =
-  association_version_info list option list
 type nonrec list_association_versions_result =
   {
   next_token: string option ;
@@ -2705,32 +2205,22 @@ type nonrec label_parameter_version_request =
   labels: string list ;
   parameter_version: int option ;
   name: string }
-type nonrec key_name = string
-type nonrec is_sub_type_schema = bool
 type nonrec invocation_does_not_exist = unit
-type nonrec inventory_type_display_name = string
 type nonrec inventory_schema_delete_option =
   | DELETE_SCHEMA 
   | DISABLE_SCHEMA 
 type nonrec inventory_result_item =
   {
-  content: (string * string) list list ;
+  content: inventory_item_entry list ;
   content_hash: string option ;
   capture_time: string option ;
   schema_version: string ;
   type_name: string }
-type nonrec inventory_result_item_key = string
-type nonrec inventory_result_item_map =
-  (string_ option * inventory_result_item option) list
-type nonrec inventory_result_entity_id = string
+type nonrec inventory_result_item_map = (string * inventory_result_item) list
 type nonrec inventory_result_entity =
   {
-  data: (string * inventory_result_item) list option ;
+  data: inventory_result_item_map option ;
   id: string option }
-type nonrec inventory_result_entity_list =
-  inventory_result_entity list option list
-type nonrec inventory_item_type_name_filter = string
-type nonrec inventory_item_attribute_name = string
 type nonrec inventory_attribute_data_type =
   | NUMBER 
   | STRING 
@@ -2738,57 +2228,42 @@ type nonrec inventory_item_attribute =
   {
   data_type: inventory_attribute_data_type ;
   name: string }
-type nonrec inventory_item_attribute_list =
-  inventory_item_attribute list option list
 type nonrec inventory_item_schema =
   {
   display_name: string option ;
   attributes: inventory_item_attribute list ;
   version: string option ;
   type_name: string }
-type nonrec inventory_item_schema_result_list =
-  inventory_item_schema list option list
-type nonrec inventory_group_name = string
 type nonrec inventory_group = {
   filters: inventory_filter list ;
   name: string }
-type nonrec inventory_group_list = inventory_group list option list
-type nonrec inventory_deletion_start_time = Timestamp.t
 type nonrec inventory_deletion_status =
   | COMPLETE 
   | IN_PROGRESS 
-type nonrec inventory_deletion_last_status_message = string
 type nonrec inventory_deletion_summary_item =
   {
   remaining_count: int option ;
   count: int option ;
   version: string option }
-type nonrec inventory_deletion_summary_items =
-  inventory_deletion_summary_item list option list
 type nonrec inventory_deletion_summary =
   {
   summary_items: inventory_deletion_summary_item list option ;
   remaining_count: int option ;
   total_count: int option }
-type nonrec inventory_deletion_last_status_update_time = Timestamp.t
 type nonrec inventory_deletion_status_item =
   {
-  last_status_update_time: float option ;
+  last_status_update_time: CoreTypes.Timestamp.t option ;
   deletion_summary: inventory_deletion_summary option ;
   last_status_message: string option ;
   last_status: inventory_deletion_status option ;
-  deletion_start_time: float option ;
+  deletion_start_time: CoreTypes.Timestamp.t option ;
   type_name: string option ;
   deletion_id: string option }
-type nonrec inventory_deletions_list =
-  inventory_deletion_status_item list option list
-type nonrec inventory_aggregator_expression = string
 type inventory_aggregator =
   {
   groups: inventory_group list option ;
   aggregators: inventory_aggregator list option ;
   expression: string option }
-and inventory_aggregator_list = inventory_aggregator list option list
 type nonrec invalid_tag = {
   message: string option }
 type nonrec invalid_result_attribute_exception = {
@@ -2823,13 +2298,6 @@ type nonrec invalid_activation_id = {
   message: string option }
 type nonrec invalid_activation = {
   message: string option }
-type nonrec instances_count = int
-type nonrec instance_type = string
-type nonrec instance_state = string
-type nonrec instance_role = string
-type nonrec instance_property_string_filter_key = string
-type nonrec instance_property_filter_value = string
-type nonrec instance_property_filter_value_set = string list option list
 type nonrec instance_property_filter_operator =
   | GREATER_THAN 
   | LESS_THAN 
@@ -2841,8 +2309,6 @@ type nonrec instance_property_string_filter =
   operator: instance_property_filter_operator option ;
   values: string list ;
   key: string }
-type nonrec instance_property_string_filter_list =
-  instance_property_string_filter list option list
 type nonrec instance_property_filter_key =
   | ASSOCIATION_STATUS 
   | RESOURCE_TYPE 
@@ -2857,39 +2323,33 @@ type nonrec instance_property_filter =
   {
   value_set: string list ;
   key: instance_property_filter_key }
-type nonrec instance_property_filter_list =
-  instance_property_filter list option list
-type nonrec instance_name = string
-type nonrec architecture = string
-type nonrec ip_address = string
-type nonrec activation_id = string
-type nonrec computer_name = string
 type nonrec instance_association_status_aggregated_count =
-  (string_ option * int_ option) list
+  (string * int) list
 type nonrec instance_aggregated_association_overview =
   {
-  instance_association_status_aggregated_count: (string * int) list option ;
+  instance_association_status_aggregated_count:
+    instance_association_status_aggregated_count option ;
   detailed_status: string option }
 type nonrec instance_property =
   {
   source_type: source_type option ;
   source_id: string option ;
   association_overview: instance_aggregated_association_overview option ;
-  last_successful_association_execution_date: float option ;
-  last_association_execution_date: float option ;
+  last_successful_association_execution_date: CoreTypes.Timestamp.t option ;
+  last_association_execution_date: CoreTypes.Timestamp.t option ;
   association_status: string option ;
   computer_name: string option ;
   resource_type: string option ;
-  registration_date: float option ;
+  registration_date: CoreTypes.Timestamp.t option ;
   iam_role: string option ;
   activation_id: string option ;
   platform_version: string option ;
   platform_name: string option ;
   platform_type: platform_type option ;
   agent_version: string option ;
-  last_ping_date_time: float option ;
+  last_ping_date_time: CoreTypes.Timestamp.t option ;
   ping_status: ping_status option ;
-  launch_time: float option ;
+  launch_time: CoreTypes.Timestamp.t option ;
   ip_address: string option ;
   architecture: string option ;
   instance_state: string option ;
@@ -2898,18 +2358,16 @@ type nonrec instance_property =
   instance_type: string option ;
   instance_id: string option ;
   name: string option }
-type nonrec instance_properties = instance_property list option list
-type nonrec install_override_list = string
 type nonrec instance_patch_state =
   {
   other_non_compliant_count: int option ;
   security_non_compliant_count: int option ;
   critical_non_compliant_count: int option ;
   reboot_option: reboot_option option ;
-  last_no_reboot_install_operation_time: float option ;
+  last_no_reboot_install_operation_time: CoreTypes.Timestamp.t option ;
   operation: patch_operation_type ;
-  operation_end_time: float ;
-  operation_start_time: float ;
+  operation_end_time: CoreTypes.Timestamp.t ;
+  operation_start_time: CoreTypes.Timestamp.t ;
   not_applicable_count: int option ;
   unreported_not_applicable_count: int option ;
   failed_count: int option ;
@@ -2924,46 +2382,33 @@ type nonrec instance_patch_state =
   baseline_id: string ;
   patch_group: string ;
   instance_id: string }
-type nonrec instance_patch_states_list =
-  instance_patch_state list option list
 type nonrec instance_patch_state_operator_type =
   | GREATER_THAN 
   | LESS_THAN 
   | NOT_EQUAL 
   | EQUAL 
-type nonrec instance_patch_state_list = instance_patch_state list option list
-type nonrec instance_patch_state_filter_value = string
-type nonrec instance_patch_state_filter_values = string list option list
-type nonrec instance_patch_state_filter_key = string
 type nonrec instance_patch_state_filter =
   {
   type_: instance_patch_state_operator_type ;
   values: string list ;
   key: string }
-type nonrec instance_patch_state_filter_list =
-  instance_patch_state_filter list option list
-type nonrec instance_information_string_filter_key = string
-type nonrec instance_information_filter_value = string
-type nonrec instance_information_filter_value_set = string list option list
 type nonrec instance_information_string_filter =
   {
   values: string list ;
   key: string }
-type nonrec instance_information_string_filter_list =
-  instance_information_string_filter list option list
 type nonrec instance_information =
   {
   source_type: source_type option ;
   source_id: string option ;
   association_overview: instance_aggregated_association_overview option ;
-  last_successful_association_execution_date: float option ;
-  last_association_execution_date: float option ;
+  last_successful_association_execution_date: CoreTypes.Timestamp.t option ;
+  last_association_execution_date: CoreTypes.Timestamp.t option ;
   association_status: string option ;
   computer_name: string option ;
   ip_address: string option ;
   name: string option ;
   resource_type: resource_type option ;
-  registration_date: float option ;
+  registration_date: CoreTypes.Timestamp.t option ;
   iam_role: string option ;
   activation_id: string option ;
   platform_version: string option ;
@@ -2971,10 +2416,9 @@ type nonrec instance_information =
   platform_type: platform_type option ;
   is_latest_version: bool option ;
   agent_version: string option ;
-  last_ping_date_time: float option ;
+  last_ping_date_time: CoreTypes.Timestamp.t option ;
   ping_status: ping_status option ;
   instance_id: string option }
-type nonrec instance_information_list = instance_information list option list
 type nonrec instance_information_filter_key =
   | ASSOCIATION_STATUS 
   | RESOURCE_TYPE 
@@ -2988,10 +2432,6 @@ type nonrec instance_information_filter =
   {
   value_set: string list ;
   key: instance_information_filter_key }
-type nonrec instance_information_filter_list =
-  instance_information_filter list option list
-type nonrec instance_association_execution_summary = string
-type nonrec agent_error_code = string
 type nonrec instance_association_output_url =
   {
   s3_output_url: s3_output_url option }
@@ -3003,22 +2443,18 @@ type nonrec instance_association_status_info =
   execution_summary: string option ;
   detailed_status: string option ;
   status: string option ;
-  execution_date: float option ;
+  execution_date: CoreTypes.Timestamp.t option ;
   instance_id: string option ;
   association_version: string option ;
   document_version: string option ;
   name: string option ;
   association_id: string option }
-type nonrec instance_association_status_infos =
-  instance_association_status_info list option list
 type nonrec instance_association =
   {
   association_version: string option ;
   content: string option ;
   instance_id: string option ;
   association_id: string option }
-type nonrec instance_association_list = instance_association list option list
-type nonrec iso8601_string = string
 type nonrec get_service_setting_result =
   {
   service_setting: service_setting option }
@@ -3029,8 +2465,6 @@ type nonrec get_resource_policies_response_entry =
   policy: string option ;
   policy_hash: string option ;
   policy_id: string option }
-type nonrec get_resource_policies_response_entries =
-  get_resource_policies_response_entry list option list
 type nonrec get_resource_policies_response =
   {
   policies: get_resource_policies_response_entry list option ;
@@ -3044,8 +2478,8 @@ type nonrec get_patch_baseline_result =
   {
   sources: patch_source list option ;
   description: string option ;
-  modified_date: float option ;
-  created_date: float option ;
+  modified_date: CoreTypes.Timestamp.t option ;
+  created_date: CoreTypes.Timestamp.t option ;
   patch_groups: string list option ;
   rejected_patches_action: patch_action option ;
   rejected_patches: string list option ;
@@ -3080,7 +2514,6 @@ type nonrec get_parameters_by_path_result =
   {
   next_token: string option ;
   parameters: parameter list option }
-type nonrec get_parameters_by_path_max_results = int
 type nonrec get_parameters_by_path_request =
   {
   next_token: string option ;
@@ -3120,9 +2553,8 @@ type nonrec get_ops_summary_request =
 type nonrec get_ops_metadata_result =
   {
   next_token: string option ;
-  metadata: (string * metadata_value) list option ;
+  metadata: metadata_map option ;
   resource_id: string option }
-type nonrec get_ops_metadata_max_results = int
 type nonrec get_ops_metadata_request =
   {
   next_token: string option ;
@@ -3146,8 +2578,7 @@ type nonrec get_maintenance_window_task_result =
   priority: int option ;
   task_invocation_parameters:
     maintenance_window_task_invocation_parameters option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list option ;
+  task_parameters: maintenance_window_task_parameters option ;
   task_type: maintenance_window_task_type option ;
   service_role_arn: string option ;
   task_arn: string option ;
@@ -3160,8 +2591,8 @@ type nonrec get_maintenance_window_task_request =
   window_id: string }
 type nonrec get_maintenance_window_result =
   {
-  modified_date: float option ;
-  created_date: float option ;
+  modified_date: CoreTypes.Timestamp.t option ;
+  created_date: CoreTypes.Timestamp.t option ;
   enabled: bool option ;
   allow_unassociated_targets: bool option ;
   cutoff: int option ;
@@ -3181,17 +2612,14 @@ type nonrec get_maintenance_window_execution_task_result =
   {
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   max_errors: string option ;
   max_concurrency: string option ;
   priority: int option ;
-  task_parameters:
-    (string * maintenance_window_task_parameter_value_expression) list list
-      option
-    ;
+  task_parameters: maintenance_window_task_parameters list option ;
   type_: maintenance_window_task_type option ;
   service_role: string option ;
   task_arn: string option ;
@@ -3205,8 +2633,8 @@ type nonrec get_maintenance_window_execution_task_invocation_result =
   {
   window_target_id: string option ;
   owner_information: string option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   parameters: string option ;
@@ -3222,8 +2650,8 @@ type nonrec get_maintenance_window_execution_task_invocation_request =
   window_execution_id: string }
 type nonrec get_maintenance_window_execution_result =
   {
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   task_ids: string list option ;
@@ -3235,8 +2663,6 @@ type nonrec get_inventory_schema_result =
   {
   next_token: string option ;
   schemas: inventory_item_schema list option }
-type nonrec get_inventory_schema_max_results = int
-type nonrec aggregator_schema_only = bool
 type nonrec get_inventory_schema_request =
   {
   sub_type: bool option ;
@@ -3255,11 +2681,8 @@ type nonrec get_inventory_request =
   result_attributes: result_attribute list option ;
   aggregators: inventory_aggregator list option ;
   filters: inventory_filter list option }
-type nonrec content_length = int
-type nonrec attachment_hash = string
 type nonrec attachment_hash_type =
   | SHA256 
-type nonrec attachment_url = string
 type nonrec attachment_content =
   {
   url: string option ;
@@ -3267,7 +2690,6 @@ type nonrec attachment_content =
   hash: string option ;
   size: int option ;
   name: string option }
-type nonrec attachment_content_list = attachment_content list option list
 type nonrec get_document_result =
   {
   review_status: review_status option ;
@@ -3281,7 +2703,7 @@ type nonrec get_document_result =
   document_version: string option ;
   version_name: string option ;
   display_name: string option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   name: string option }
 type nonrec get_document_request =
   {
@@ -3367,12 +2789,12 @@ type nonrec automation_subtype =
   | ChangeRequest 
 type nonrec automation_execution =
   {
-  variables: (string * string list) list option ;
+  variables: automation_parameter_map option ;
   change_request_name: string option ;
   association_id: string option ;
   ops_item_id: string option ;
   runbooks: runbook list option ;
-  scheduled_time: float option ;
+  scheduled_time: CoreTypes.Timestamp.t option ;
   automation_subtype: automation_subtype option ;
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
@@ -3382,7 +2804,7 @@ type nonrec automation_execution =
   max_errors: string option ;
   max_concurrency: string option ;
   resolved_targets: resolved_targets option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   targets: target list option ;
   target_parameter_name: string option ;
   current_action: string option ;
@@ -3391,13 +2813,13 @@ type nonrec automation_execution =
   parent_automation_execution_id: string option ;
   mode: execution_mode option ;
   failure_message: string option ;
-  outputs: (string * string list) list option ;
-  parameters: (string * string list) list option ;
+  outputs: automation_parameter_map option ;
+  parameters: automation_parameter_map option ;
   step_executions_truncated: bool option ;
   step_executions: step_execution list option ;
   automation_execution_status: automation_execution_status option ;
-  execution_end_time: float option ;
-  execution_start_time: float option ;
+  execution_end_time: CoreTypes.Timestamp.t option ;
+  execution_start_time: CoreTypes.Timestamp.t option ;
   document_version: string option ;
   document_name: string option ;
   automation_execution_id: string option }
@@ -3414,7 +2836,7 @@ type nonrec fault =
 type nonrec create_association_batch_request_entry =
   {
   alarm_configuration: alarm_configuration option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   target_locations: target_location list option ;
@@ -3430,26 +2852,18 @@ type nonrec create_association_batch_request_entry =
   targets: target list option ;
   document_version: string option ;
   automation_target_parameter_name: string option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   instance_id: string option ;
   name: string }
-type nonrec batch_error_message = string
 type nonrec failed_create_association =
   {
   fault: fault option ;
   message: string option ;
   entry: create_association_batch_request_entry option }
-type nonrec failed_create_association_list =
-  failed_create_association list option list
-type nonrec expiration_date = Timestamp.t
 type nonrec effective_patch =
   {
   patch_status: patch_status option ;
   patch: patch option }
-type nonrec effective_patch_list = effective_patch list option list
-type nonrec effective_instance_association_max_results = int
-type nonrec dry_run = bool
-type nonrec document_permission_max_results = int
 type nonrec document_already_exists = {
   message: string option }
 type nonrec disassociate_ops_item_related_item_response = unit
@@ -3470,7 +2884,7 @@ type nonrec describe_sessions_request =
 type nonrec describe_patch_properties_result =
   {
   next_token: string option ;
-  properties: (string * string) list list option }
+  properties: patch_property_entry list option }
 type nonrec describe_patch_properties_request =
   {
   next_token: string option ;
@@ -3629,7 +3043,6 @@ type nonrec describe_instance_properties_result =
   {
   next_token: string option ;
   instance_properties: instance_property list option }
-type nonrec describe_instance_properties_max_results = int
 type nonrec describe_instance_properties_request =
   {
   next_token: string option ;
@@ -3715,7 +3128,6 @@ type nonrec account_sharing_info =
   {
   shared_document_version: string option ;
   account_id: string option }
-type nonrec account_sharing_info_list = account_sharing_info list option list
 type nonrec describe_document_permission_response =
   {
   next_token: string option ;
@@ -3756,7 +3168,7 @@ type nonrec automation_execution_metadata =
   association_id: string option ;
   ops_item_id: string option ;
   runbooks: runbook list option ;
-  scheduled_time: float option ;
+  scheduled_time: CoreTypes.Timestamp.t option ;
   automation_subtype: automation_subtype option ;
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
@@ -3765,7 +3177,7 @@ type nonrec automation_execution_metadata =
   max_errors: string option ;
   max_concurrency: string option ;
   resolved_targets: resolved_targets option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   targets: target list option ;
   target_parameter_name: string option ;
   failure_message: string option ;
@@ -3773,17 +3185,15 @@ type nonrec automation_execution_metadata =
   current_step_name: string option ;
   parent_automation_execution_id: string option ;
   mode: execution_mode option ;
-  outputs: (string * string list) list option ;
+  outputs: automation_parameter_map option ;
   log_file: string option ;
   executed_by: string option ;
-  execution_end_time: float option ;
-  execution_start_time: float option ;
+  execution_end_time: CoreTypes.Timestamp.t option ;
+  execution_start_time: CoreTypes.Timestamp.t option ;
   automation_execution_status: automation_execution_status option ;
   document_version: string option ;
   document_name: string option ;
   automation_execution_id: string option }
-type nonrec automation_execution_metadata_list =
-  automation_execution_metadata list option list
 type nonrec describe_automation_executions_result =
   {
   next_token: string option ;
@@ -3802,14 +3212,10 @@ type nonrec automation_execution_filter_key =
   | EXECUTION_ID 
   | EXECUTION_STATUS 
   | DOCUMENT_NAME_PREFIX 
-type nonrec automation_execution_filter_value = string
-type nonrec automation_execution_filter_value_list = string list option list
 type nonrec automation_execution_filter =
   {
   values: string list ;
   key: automation_execution_filter_key }
-type nonrec automation_execution_filter_list =
-  automation_execution_filter list option list
 type nonrec describe_automation_executions_request =
   {
   next_token: string option ;
@@ -3824,21 +3230,18 @@ type nonrec describe_association_request =
   association_id: string option ;
   instance_id: string option ;
   name: string option }
-type nonrec association_execution_id = string
 type nonrec association_execution =
   {
   triggered_alarms: alarm_state_information list option ;
   alarm_configuration: alarm_configuration option ;
   resource_count_by_status: string option ;
-  last_execution_date: float option ;
-  created_time: float option ;
+  last_execution_date: CoreTypes.Timestamp.t option ;
+  created_time: CoreTypes.Timestamp.t option ;
   detailed_status: string option ;
   status: string option ;
   execution_id: string option ;
   association_version: string option ;
   association_id: string option }
-type nonrec association_executions_list =
-  association_execution list option list
 type nonrec describe_association_executions_result =
   {
   next_token: string option ;
@@ -3847,7 +3250,6 @@ type nonrec association_execution_filter_key =
   | CreatedTime 
   | Status 
   | ExecutionId 
-type nonrec association_execution_filter_value = string
 type nonrec association_filter_operator_type =
   | GreaterThan 
   | LessThan 
@@ -3857,20 +3259,16 @@ type nonrec association_execution_filter =
   type_: association_filter_operator_type ;
   value: string ;
   key: association_execution_filter_key }
-type nonrec association_execution_filter_list =
-  association_execution_filter list option list
 type nonrec describe_association_executions_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: association_execution_filter list option ;
   association_id: string }
-type nonrec association_resource_id = string
-type nonrec association_resource_type = string
 type nonrec association_execution_target =
   {
   output_source: output_source option ;
-  last_execution_date: float option ;
+  last_execution_date: CoreTypes.Timestamp.t option ;
   detailed_status: string option ;
   status: string option ;
   resource_type: string option ;
@@ -3878,8 +3276,6 @@ type nonrec association_execution_target =
   execution_id: string option ;
   association_version: string option ;
   association_id: string option }
-type nonrec association_execution_targets_list =
-  association_execution_target list option list
 type nonrec describe_association_execution_targets_result =
   {
   next_token: string option ;
@@ -3888,13 +3284,10 @@ type nonrec association_execution_targets_filter_key =
   | ResourceType 
   | ResourceId 
   | Status 
-type nonrec association_execution_targets_filter_value = string
 type nonrec association_execution_targets_filter =
   {
   value: string ;
   key: association_execution_targets_filter_key }
-type nonrec association_execution_targets_filter_list =
-  association_execution_targets_filter list option list
 type nonrec describe_association_execution_targets_request =
   {
   next_token: string option ;
@@ -3904,22 +3297,18 @@ type nonrec describe_association_execution_targets_request =
   association_id: string }
 type nonrec association_execution_does_not_exist = {
   message: string option }
-type nonrec activation_description = string
-type nonrec default_instance_name = string
-type nonrec created_date = Timestamp.t
 type nonrec activation =
   {
   tags: tag list option ;
-  created_date: float option ;
+  created_date: CoreTypes.Timestamp.t option ;
   expired: bool option ;
-  expiration_date: float option ;
+  expiration_date: CoreTypes.Timestamp.t option ;
   registrations_count: int option ;
   registration_limit: int option ;
   iam_role: string option ;
   default_instance_name: string option ;
   description: string option ;
   activation_id: string option }
-type nonrec activation_list = activation list option list
 type nonrec describe_activations_result =
   {
   next_token: string option ;
@@ -3932,8 +3321,6 @@ type nonrec describe_activations_filter =
   {
   filter_values: string list option ;
   filter_key: describe_activations_filter_keys option }
-type nonrec describe_activations_filter_list =
-  describe_activations_filter list option list
 type nonrec describe_activations_request =
   {
   next_token: string option ;
@@ -4058,7 +3445,7 @@ type nonrec create_ops_metadata_result = {
 type nonrec create_ops_metadata_request =
   {
   tags: tag list option ;
-  metadata: (string * metadata_value) list option ;
+  metadata: metadata_map option ;
   resource_id: string }
 type nonrec create_ops_item_response =
   {
@@ -4067,10 +3454,10 @@ type nonrec create_ops_item_response =
 type nonrec create_ops_item_request =
   {
   account_id: string option ;
-  planned_end_time: float option ;
-  planned_start_time: float option ;
-  actual_end_time: float option ;
-  actual_start_time: float option ;
+  planned_end_time: CoreTypes.Timestamp.t option ;
+  planned_start_time: CoreTypes.Timestamp.t option ;
+  actual_end_time: CoreTypes.Timestamp.t option ;
+  actual_start_time: CoreTypes.Timestamp.t option ;
   severity: string option ;
   category: string option ;
   tags: tag list option ;
@@ -4079,7 +3466,7 @@ type nonrec create_ops_item_request =
   related_ops_items: related_ops_item list option ;
   priority: int option ;
   notifications: ops_item_notification list option ;
-  operational_data: (string * ops_item_data_value) list option ;
+  operational_data: ops_item_operational_data option ;
   ops_item_type: string option ;
   description: string }
 type nonrec create_maintenance_window_result = {
@@ -4120,7 +3507,7 @@ type nonrec create_association_request =
   {
   alarm_configuration: alarm_configuration option ;
   tags: tag list option ;
-  target_maps: (string * string list) list list option ;
+  target_maps: target_map list option ;
   duration: int option ;
   schedule_offset: int option ;
   target_locations: target_location list option ;
@@ -4135,24 +3522,19 @@ type nonrec create_association_request =
   output_location: instance_association_output_location option ;
   schedule_expression: string option ;
   targets: target list option ;
-  parameters: (string * string list) list option ;
+  parameters: parameters option ;
   instance_id: string option ;
   document_version: string option ;
   name: string }
-type nonrec association_description_list =
-  association_description list option list
 type nonrec create_association_batch_result =
   {
   failed: failed_create_association list option ;
   successful: association_description list option }
-type nonrec create_association_batch_request_entries =
-  create_association_batch_request_entry list option list
 type nonrec create_association_batch_request =
   {
   entries: create_association_batch_request_entry list }
 type nonrec association_limit_exceeded = unit
 type nonrec association_already_exists = unit
-type nonrec activation_code = string
 type nonrec create_activation_result =
   {
   activation_code: string option ;
@@ -4161,7 +3543,7 @@ type nonrec create_activation_request =
   {
   registration_metadata: registration_metadata_item list option ;
   tags: tag list option ;
-  expiration_date: float option ;
+  expiration_date: CoreTypes.Timestamp.t option ;
   registration_limit: int option ;
   iam_role: string ;
   default_instance_name: string option ;
@@ -4192,10 +3574,3 @@ type nonrec add_tags_to_resource_request =
   tags: tag list ;
   resource_id: string ;
   resource_type: resource_type_for_tagging }
-type nonrec amazon_ss_m = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

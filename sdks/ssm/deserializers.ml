@@ -293,7 +293,7 @@ let patch_action_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "PatchAction" value)
     | _ -> raise (deserialize_wrong_type_error path "PatchAction")
 
-let date_time_of_yojson = timestamp_of_yojson
+let date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let baseline_description_of_yojson = string_of_yojson
 
@@ -2927,12 +2927,14 @@ let resource_data_sync_s3_destination_of_yojson =
   }
   in _res
 
-let resource_data_sync_last_modified_time_of_yojson = timestamp_of_yojson
+let resource_data_sync_last_modified_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
-let last_resource_data_sync_time_of_yojson = timestamp_of_yojson
+let last_resource_data_sync_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let last_successful_resource_data_sync_time_of_yojson = 
-  timestamp_of_yojson
+  timestamp_epoch_seconds_of_yojson
 
 let last_resource_data_sync_status_of_yojson = 
   fun (tree: t) path : last_resource_data_sync_status -> match tree with 
@@ -2942,7 +2944,8 @@ let last_resource_data_sync_status_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "LastResourceDataSyncStatus" value)
     | _ -> raise (deserialize_wrong_type_error path "LastResourceDataSyncStatus")
 
-let resource_data_sync_created_time_of_yojson = timestamp_of_yojson
+let resource_data_sync_created_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let last_resource_data_sync_message_of_yojson = string_of_yojson
 
@@ -5741,7 +5744,8 @@ let inventory_group_of_yojson =
 let inventory_group_list_of_yojson = 
   fun tree path -> list_of_yojson inventory_group_of_yojson tree path 
 
-let inventory_deletion_start_time_of_yojson = timestamp_of_yojson
+let inventory_deletion_start_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let inventory_deletion_status_of_yojson = 
   fun (tree: t) path : inventory_deletion_status -> match tree with 
@@ -5778,7 +5782,7 @@ let inventory_deletion_summary_of_yojson =
   in _res
 
 let inventory_deletion_last_status_update_time_of_yojson = 
-  timestamp_of_yojson
+  timestamp_epoch_seconds_of_yojson
 
 let inventory_deletion_status_item_of_yojson = 
   fun tree path : inventory_deletion_status_item ->
@@ -7071,7 +7075,7 @@ let failed_create_association_of_yojson =
 let failed_create_association_list_of_yojson = 
   fun tree path -> list_of_yojson failed_create_association_of_yojson tree path 
 
-let expiration_date_of_yojson = timestamp_of_yojson
+let expiration_date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let effective_patch_of_yojson = 
   fun tree path : effective_patch ->
@@ -8037,7 +8041,7 @@ let activation_description_of_yojson = string_of_yojson
 
 let default_instance_name_of_yojson = string_of_yojson
 
-let created_date_of_yojson = timestamp_of_yojson
+let created_date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let activation_of_yojson = 
   fun tree path : activation ->
@@ -8728,7 +8732,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

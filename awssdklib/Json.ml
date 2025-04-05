@@ -1,3 +1,5 @@
+open CoreTypes
+
 type t = Yojson.Basic.t
 
 module SerializeHelpers = struct
@@ -26,7 +28,7 @@ module SerializeHelpers = struct
   let map_to_yojson (converter : 'a -> t) (x : (string * 'a) list) : t =
     `Assoc (List.map (fun (name, value) -> (name, converter value)) x)
 
-  let timestamp_to_yojson = float_to_yojson
+  let timestamp_to_yojson (x : Timestamp.t) : t = `Float (Timestamp.to_float_s x)
   let option_to_yojson (converter : 'a -> t) (x : 'a option) = Option.map converter x
 end
 
@@ -124,8 +126,16 @@ module DeserializeHelpers = struct
     | `String str -> str
     | _ -> raise (deserialize_wrong_type_error path "bigdecimal")
 
-  let timestamp_of_yojson (tree : t) path =
-    match tree with `Float str -> str | _ -> raise (deserialize_wrong_type_error path "timestamp")
+  let timestamp_epoch_seconds_of_yojson (tree : t) path =
+    match tree with
+    | `Float fl ->
+        CoreTypes.Timestamp.of_float_s fl
+        |> Option.get_or_exn
+             ~exn:
+               (JsonDeserializeError
+                  (RecordParseError
+                     (path_to_string path, "unable to parse POSIX timestamp as number")))
+    | _ -> raise (deserialize_wrong_type_error path "timestamp")
 
   let value_for_key converter key (l : (string * t) list) path =
     match List.assoc_opt key l with

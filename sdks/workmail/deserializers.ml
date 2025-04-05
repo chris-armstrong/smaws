@@ -890,7 +890,7 @@ let entity_state_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "EntityState" value)
     | _ -> raise (deserialize_wrong_type_error path "EntityState")
 
-let timestamp__of_yojson = timestamp_of_yojson
+let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 
 let user_of_yojson = 
   fun tree path : user ->
@@ -2646,7 +2646,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

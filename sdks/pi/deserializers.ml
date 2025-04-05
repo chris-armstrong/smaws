@@ -205,7 +205,7 @@ let list_tags_for_resource_request_of_yojson =
   }
   in _res
 
-let iso_timestamp_of_yojson = timestamp_of_yojson
+let iso_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let analysis_status_of_yojson = 
   fun (tree: t) path : analysis_status -> match tree with 
@@ -748,7 +748,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

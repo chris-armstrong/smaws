@@ -197,7 +197,7 @@ let endpoint_of_yojson =
 let node_identifier_list_of_yojson = 
   fun tree path -> list_of_yojson string__of_yojson tree path 
 
-let t_stamp_of_yojson = timestamp_of_yojson
+let t_stamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let node_of_yojson = 
   fun tree path : node ->
@@ -994,7 +994,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

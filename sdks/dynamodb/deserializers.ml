@@ -447,7 +447,7 @@ let key_schema_element_of_yojson =
 let key_schema_of_yojson = 
   fun tree path -> list_of_yojson key_schema_element_of_yojson tree path 
 
-let date_of_yojson = timestamp_of_yojson
+let date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let non_negative_long_object_of_yojson = long_of_yojson
 
@@ -1782,9 +1782,9 @@ let time_to_live_description_of_yojson =
   }
   in _res
 
-let time_range_upper_bound_of_yojson = timestamp_of_yojson
+let time_range_upper_bound_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let time_range_lower_bound_of_yojson = timestamp_of_yojson
+let time_range_lower_bound_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let tag_value_string_of_yojson = string_of_yojson
 
@@ -1855,7 +1855,7 @@ let table_creation_parameters_of_yojson =
   }
   in _res
 
-let table_creation_date_time_of_yojson = timestamp_of_yojson
+let table_creation_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let table_already_exists_exception_of_yojson = 
   fun tree path : table_already_exists_exception ->
@@ -2401,9 +2401,9 @@ let input_format_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "InputFormat" value)
     | _ -> raise (deserialize_wrong_type_error path "InputFormat")
 
-let import_start_time_of_yojson = timestamp_of_yojson
+let import_start_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let import_end_time_of_yojson = timestamp_of_yojson
+let import_end_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let import_summary_of_yojson = 
   fun tree path : import_summary ->
@@ -2578,7 +2578,8 @@ let list_contributor_insights_input_of_yojson =
 
 let backup_name_of_yojson = string_of_yojson
 
-let backup_creation_date_time_of_yojson = timestamp_of_yojson
+let backup_creation_date_time_of_yojson = 
+  timestamp_epoch_seconds_of_yojson
 
 let backup_status_of_yojson = 
   fun (tree: t) path : backup_status -> match tree with 
@@ -2654,7 +2655,7 @@ let list_backups_input_of_yojson =
   }
   in _res
 
-let last_update_date_time_of_yojson = timestamp_of_yojson
+let last_update_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let enable_kinesis_streaming_configuration_of_yojson = 
   fun tree path : enable_kinesis_streaming_configuration ->
@@ -2762,9 +2763,9 @@ let input_compression_type_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "InputCompressionType" value)
     | _ -> raise (deserialize_wrong_type_error path "InputCompressionType")
 
-let export_from_time_of_yojson = timestamp_of_yojson
+let export_from_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let export_to_time_of_yojson = timestamp_of_yojson
+let export_to_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let export_view_type_of_yojson = 
   fun (tree: t) path : export_view_type -> match tree with 
@@ -2929,11 +2930,11 @@ let failure_exception_of_yojson =
   }
   in _res
 
-let export_time_of_yojson = timestamp_of_yojson
+let export_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let export_start_time_of_yojson = timestamp_of_yojson
+let export_start_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
-let export_end_time_of_yojson = timestamp_of_yojson
+let export_end_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let export_manifest_of_yojson = string_of_yojson
 
@@ -3593,7 +3594,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

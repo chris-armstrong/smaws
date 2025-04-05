@@ -1433,5 +1433,5 @@ let create_access_policy_request_of_yojson =
   in _res
 
 let base_timestamp_of_yojson = 
-  timestamp_of_yojson
+  timestamp_epoch_seconds_of_yojson
 

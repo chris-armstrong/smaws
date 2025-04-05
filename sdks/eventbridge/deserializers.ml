@@ -226,7 +226,7 @@ let connection_state_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "ConnectionState" value)
     | _ -> raise (deserialize_wrong_type_error path "ConnectionState")
 
-let timestamp__of_yojson = timestamp_of_yojson
+let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 
 let update_connection_response_of_yojson = 
   fun tree path : update_connection_response ->
@@ -1291,7 +1291,7 @@ let put_partner_events_response_of_yojson =
   }
   in _res
 
-let event_time_of_yojson = timestamp_of_yojson
+let event_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let event_source_name_of_yojson = string_of_yojson
 
@@ -2524,7 +2524,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,11 +7,8 @@ let service =
       version = "2013-12-02";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec error_message = string
 type nonrec validation_exception = {
   message: string option }
-type nonrec stream_ar_n = string
-type nonrec base_unit = unit
 type nonrec stream_mode =
   | ON_DEMAND 
   | PROVISIONED 
@@ -29,8 +26,6 @@ type nonrec limit_exceeded_exception = {
   message: string option }
 type nonrec invalid_argument_exception = {
   message: string option }
-type nonrec stream_name = string
-type nonrec positive_integer_object = int
 type nonrec update_shard_count_output =
   {
   stream_ar_n: string option ;
@@ -47,18 +42,10 @@ type nonrec update_shard_count_input =
   stream_name: string option }
 type nonrec access_denied_exception = {
   message: string option }
-type nonrec timestamp_ = Timestamp.t
-type nonrec tag_value = string
-type nonrec tag_key = string
-type nonrec tag_map = (string_ option * string_ option) list
+type nonrec tag_map = (string * string) list
 type nonrec tag = {
   value: string option ;
   key: string }
-type nonrec tag_list = tag list option list
-type nonrec tag_key_list = string list option list
-type nonrec sequence_number = string
-type nonrec data = bytes
-type nonrec partition_key = string
 type nonrec encryption_type =
   | KMS 
   | NONE 
@@ -67,13 +54,8 @@ type nonrec record =
   encryption_type: encryption_type option ;
   partition_key: string ;
   data: bytes ;
-  approximate_arrival_timestamp: float option ;
+  approximate_arrival_timestamp: CoreTypes.Timestamp.t option ;
   sequence_number: string }
-type nonrec record_list = record list option list
-type nonrec millis_behind_latest = int
-type nonrec shard_id = string
-type nonrec shard_id_list = string list option list
-type nonrec hash_key = string
 type nonrec hash_key_range =
   {
   ending_hash_key: string ;
@@ -83,7 +65,6 @@ type nonrec child_shard =
   hash_key_range: hash_key_range ;
   parent_shards: string list ;
   shard_id: string }
-type nonrec child_shard_list = child_shard list option list
 type nonrec subscribe_to_shard_event =
   {
   child_shards: child_shard list option ;
@@ -104,11 +85,20 @@ type nonrec kms_throttling_exception = {
   message: string option }
 type nonrec internal_failure_exception = {
   message: string option }
-type nonrec subscribe_to_shard_event_stream = unit
+type nonrec subscribe_to_shard_event_stream =
+  | InternalFailureException of internal_failure_exception 
+  | KMSThrottlingException of kms_throttling_exception 
+  | KMSOptInRequired of kms_opt_in_required 
+  | KMSNotFoundException of kms_not_found_exception 
+  | KMSAccessDeniedException of kms_access_denied_exception 
+  | KMSInvalidStateException of kms_invalid_state_exception 
+  | KMSDisabledException of kms_disabled_exception 
+  | ResourceInUseException of resource_in_use_exception 
+  | ResourceNotFoundException of resource_not_found_exception 
+  | SubscribeToShardEvent of subscribe_to_shard_event 
 type nonrec subscribe_to_shard_output =
   {
   event_stream: subscribe_to_shard_event_stream }
-type nonrec consumer_ar_n = string
 type nonrec shard_iterator_type =
   | AT_TIMESTAMP 
   | LATEST 
@@ -117,7 +107,7 @@ type nonrec shard_iterator_type =
   | AT_SEQUENCE_NUMBER 
 type nonrec starting_position =
   {
-  timestamp_: float option ;
+  timestamp_: CoreTypes.Timestamp.t option ;
   sequence_number: string option ;
   type_: shard_iterator_type }
 type nonrec subscribe_to_shard_input =
@@ -132,14 +122,11 @@ type nonrec stream_status =
   | CREATING 
 type nonrec stream_summary =
   {
-  stream_creation_timestamp: float option ;
+  stream_creation_timestamp: CoreTypes.Timestamp.t option ;
   stream_mode_details: stream_mode_details option ;
   stream_status: stream_status ;
   stream_ar_n: string ;
   stream_name: string }
-type nonrec stream_summary_list = stream_summary list option list
-type nonrec stream_name_list = string list option list
-type nonrec retention_period_hours = int
 type nonrec metrics_name =
   | ALL 
   | ITERATOR_AGE_MILLISECONDS 
@@ -149,14 +136,9 @@ type nonrec metrics_name =
   | OUTGOING_BYTES 
   | INCOMING_RECORDS 
   | INCOMING_BYTES 
-type nonrec metrics_name_list = metrics_name list option list
 type nonrec enhanced_metrics =
   {
   shard_level_metrics: metrics_name list option }
-type nonrec enhanced_monitoring_list = enhanced_metrics list option list
-type nonrec key_id = string
-type nonrec shard_count_object = int
-type nonrec consumer_count_object = int
 type nonrec stream_description_summary =
   {
   consumer_count: int option ;
@@ -164,7 +146,7 @@ type nonrec stream_description_summary =
   key_id: string option ;
   encryption_type: encryption_type option ;
   enhanced_monitoring: enhanced_metrics list ;
-  stream_creation_timestamp: float ;
+  stream_creation_timestamp: CoreTypes.Timestamp.t ;
   retention_period_hours: int ;
   stream_mode_details: stream_mode_details option ;
   stream_status: stream_status ;
@@ -181,14 +163,12 @@ type nonrec shard =
   adjacent_parent_shard_id: string option ;
   parent_shard_id: string option ;
   shard_id: string }
-type nonrec shard_list = shard list option list
-type nonrec boolean_object = bool
 type nonrec stream_description =
   {
   key_id: string option ;
   encryption_type: encryption_type option ;
   enhanced_monitoring: enhanced_metrics list ;
-  stream_creation_timestamp: float ;
+  stream_creation_timestamp: CoreTypes.Timestamp.t ;
   retention_period_hours: int ;
   has_more_shards: bool ;
   shards: shard list ;
@@ -214,7 +194,6 @@ type nonrec split_shard_input =
   new_starting_hash_key: string ;
   shard_to_split: string ;
   stream_name: string option }
-type nonrec shard_iterator = string
 type nonrec shard_filter_type =
   | FROM_TIMESTAMP 
   | AT_TIMESTAMP 
@@ -224,23 +203,21 @@ type nonrec shard_filter_type =
   | AFTER_SHARD_ID 
 type nonrec shard_filter =
   {
-  timestamp_: float option ;
+  timestamp_: CoreTypes.Timestamp.t option ;
   shard_id: string option ;
   type_: shard_filter_type }
-type nonrec resource_ar_n = string
 type nonrec remove_tags_from_stream_input =
   {
   stream_ar_n: string option ;
   tag_keys: string list ;
   stream_name: string option }
-type nonrec consumer_name = string
 type nonrec consumer_status =
   | ACTIVE 
   | DELETING 
   | CREATING 
 type nonrec consumer =
   {
-  consumer_creation_timestamp: float ;
+  consumer_creation_timestamp: CoreTypes.Timestamp.t ;
   consumer_status: consumer_status ;
   consumer_ar_n: string ;
   consumer_name: string }
@@ -250,27 +227,21 @@ type nonrec register_stream_consumer_input =
   {
   consumer_name: string ;
   stream_ar_n: string }
-type nonrec policy = string
 type nonrec put_resource_policy_input =
   {
   policy: string ;
   resource_ar_n: string }
-type nonrec error_code = string
 type nonrec put_records_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
   shard_id: string option ;
   sequence_number: string option }
-type nonrec put_records_result_entry_list =
-  put_records_result_entry list option list
 type nonrec put_records_request_entry =
   {
   partition_key: string ;
   explicit_hash_key: string option ;
   data: bytes }
-type nonrec put_records_request_entry_list =
-  put_records_request_entry list option list
 type nonrec put_records_output =
   {
   encryption_type: encryption_type option ;
@@ -297,9 +268,6 @@ type nonrec put_record_input =
   partition_key: string ;
   data: bytes ;
   stream_name: string option }
-type nonrec on_demand_stream_count_object = int
-type nonrec on_demand_stream_count_limit_object = int
-type nonrec next_token = string
 type nonrec merge_shards_input =
   {
   stream_ar_n: string option ;
@@ -310,7 +278,6 @@ type nonrec list_tags_for_stream_output =
   {
   has_more_tags: bool ;
   tags: tag list }
-type nonrec list_tags_for_stream_input_limit = int
 type nonrec list_tags_for_stream_input =
   {
   stream_ar_n: string option ;
@@ -323,7 +290,6 @@ type nonrec list_streams_output =
   next_token: string option ;
   has_more_streams: bool ;
   stream_names: string list }
-type nonrec list_streams_input_limit = int
 type nonrec list_streams_input =
   {
   next_token: string option ;
@@ -331,15 +297,13 @@ type nonrec list_streams_input =
   limit: int option }
 type nonrec expired_next_token_exception = {
   message: string option }
-type nonrec consumer_list = consumer list option list
 type nonrec list_stream_consumers_output =
   {
   next_token: string option ;
   consumers: consumer list option }
-type nonrec list_stream_consumers_input_limit = int
 type nonrec list_stream_consumers_input =
   {
-  stream_creation_timestamp: float option ;
+  stream_creation_timestamp: CoreTypes.Timestamp.t option ;
   max_results: int option ;
   next_token: string option ;
   stream_ar_n: string }
@@ -347,12 +311,11 @@ type nonrec list_shards_output =
   {
   next_token: string option ;
   shards: shard list option }
-type nonrec list_shards_input_limit = int
 type nonrec list_shards_input =
   {
   stream_ar_n: string option ;
   shard_filter: shard_filter option ;
-  stream_creation_timestamp: float option ;
+  stream_creation_timestamp: CoreTypes.Timestamp.t option ;
   max_results: int option ;
   exclusive_start_shard_id: string option ;
   next_token: string option ;
@@ -367,7 +330,7 @@ type nonrec get_shard_iterator_output = {
 type nonrec get_shard_iterator_input =
   {
   stream_ar_n: string option ;
-  timestamp_: float option ;
+  timestamp_: CoreTypes.Timestamp.t option ;
   starting_sequence_number: string option ;
   shard_iterator_type: shard_iterator_type ;
   shard_id: string ;
@@ -384,7 +347,6 @@ type nonrec get_records_output =
   millis_behind_latest: int option ;
   next_shard_iterator: string option ;
   records: record list }
-type nonrec get_records_input_limit = int
 type nonrec get_records_input =
   {
   stream_ar_n: string option ;
@@ -416,7 +378,7 @@ type nonrec describe_stream_summary_input =
 type nonrec consumer_description =
   {
   stream_ar_n: string ;
-  consumer_creation_timestamp: float ;
+  consumer_creation_timestamp: CoreTypes.Timestamp.t ;
   consumer_status: consumer_status ;
   consumer_ar_n: string ;
   consumer_name: string }
@@ -431,7 +393,6 @@ type nonrec describe_stream_consumer_input =
 type nonrec describe_stream_output =
   {
   stream_description: stream_description }
-type nonrec describe_stream_input_limit = int
 type nonrec describe_stream_input =
   {
   stream_ar_n: string option ;
@@ -470,12 +431,5 @@ type nonrec create_stream_input =
 type nonrec add_tags_to_stream_input =
   {
   stream_ar_n: string option ;
-  tags: (string * string) list ;
+  tags: tag_map ;
   stream_name: string option }
-type nonrec kinesis_20131202 = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

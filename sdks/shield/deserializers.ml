@@ -289,7 +289,7 @@ let top_contributors_of_yojson =
 
 let token_of_yojson = string_of_yojson
 
-let timestamp__of_yojson = timestamp_of_yojson
+let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 
 let time_range_of_yojson = 
   fun tree path : time_range ->
@@ -718,7 +718,7 @@ let list_protection_groups_request_of_yojson =
   }
   in _res
 
-let attack_timestamp_of_yojson = timestamp_of_yojson
+let attack_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let attack_vector_description_of_yojson = 
   fun tree path : attack_vector_description ->
@@ -1284,7 +1284,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

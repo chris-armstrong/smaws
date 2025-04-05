@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,24 +7,14 @@ let service =
       version = "2014-11-12";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec version = string
-type nonrec value = string
-type nonrec error_message = string
 type nonrec validation_exception = {
   message: string option }
-type nonrec amazon_resource_name = string
-type nonrec tag_key = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_arn: string }
 type nonrec resource_not_found_exception = {
   message: string option }
-type nonrec base_unit = unit
-type nonrec account_id = string
-type nonrec aws_region = string
-type nonrec resource_id = string
 type nonrec resource_type =
   | SSMDocument 
   | Route53ResolverFirewallRuleGroup 
@@ -433,7 +423,6 @@ type nonrec resource_type =
   | Host 
   | EIP 
   | CustomerGateway 
-type nonrec resource_name = string
 type nonrec aggregate_resource_identifier =
   {
   resource_name: string option ;
@@ -441,58 +430,30 @@ type nonrec aggregate_resource_identifier =
   resource_id: string ;
   source_region: string ;
   source_account_id: string }
-type nonrec unprocessed_resource_identifier_list =
-  aggregate_resource_identifier list option list
 type nonrec too_many_tags_exception = {
   message: string option }
-type nonrec date = Timestamp.t
-type nonrec time_window = {
-  end_time: float option ;
-  start_time: float option }
-type nonrec ssm_document_name = string
-type nonrec ssm_document_version = string
+type nonrec time_window =
+  {
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option }
 type nonrec template_ssm_document_details =
   {
   document_version: string option ;
   document_name: string }
-type nonrec template_s3_uri = string
-type nonrec template_body = string
-type nonrec tag_value = string
 type nonrec tag = {
   value: string option ;
   key: string option }
-type nonrec tags_list = tag list option list
-type nonrec name = string
-type nonrec tags = (string_ option * string_ option) list
-type nonrec tag_list = tag list option list
+type nonrec tags = (string * string) list
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_arn: string }
-type nonrec supplementary_configuration_value = string
-type nonrec supplementary_configuration_name = string
-type nonrec supplementary_configuration =
-  (string_ option * string_ option) list
-type nonrec string_with_char_limit768 = string
-type nonrec string_with_char_limit64 = string
-type nonrec string_with_char_limit256_min0 = string
-type nonrec string_with_char_limit256 = string
-type nonrec string_with_char_limit2048 = string
-type nonrec string_with_char_limit128 = string
-type nonrec string_with_char_limit1024 = string
-type nonrec string_ = string
-type nonrec query_id = string
-type nonrec query_arn = string
-type nonrec query_name = string
-type nonrec query_description = string
+type nonrec supplementary_configuration = (string * string) list
 type nonrec stored_query_metadata =
   {
   description: string option ;
   query_name: string ;
   query_arn: string ;
   query_id: string }
-type nonrec stored_query_metadata_list =
-  stored_query_metadata list option list
-type nonrec query_expression = string
 type nonrec stored_query =
   {
   expression: string option ;
@@ -500,7 +461,6 @@ type nonrec stored_query =
   query_name: string ;
   query_arn: string option ;
   query_id: string option }
-type nonrec recorder_name = string
 type nonrec stop_configuration_recorder_request =
   {
   configuration_recorder_name: string }
@@ -521,15 +481,11 @@ type nonrec status_detail_filters =
   {
   member_account_rule_status: member_account_rule_status option ;
   account_id: string option }
-type nonrec static_parameter_values = string list option list
 type nonrec static_value = {
   values: string list }
-type nonrec resource_evaluation_id = string
 type nonrec start_resource_evaluation_response =
   {
   resource_evaluation_id: string option }
-type nonrec base_resource_id = string
-type nonrec resource_configuration = string
 type nonrec resource_configuration_schema_type =
   | CFN_RESOURCE_SCHEMA 
 type nonrec resource_details =
@@ -539,15 +495,12 @@ type nonrec resource_details =
   resource_configuration: string ;
   resource_type: string ;
   resource_id: string }
-type nonrec evaluation_context_identifier = string
 type nonrec evaluation_context =
   {
   evaluation_context_identifier: string option }
 type nonrec evaluation_mode =
   | PROACTIVE 
   | DETECTIVE 
-type nonrec evaluation_timeout = int
-type nonrec client_token = string
 type nonrec start_resource_evaluation_request =
   {
   client_token: string option ;
@@ -563,12 +516,10 @@ type nonrec resource_key =
   {
   resource_id: string ;
   resource_type: resource_type }
-type nonrec resource_keys = resource_key list option list
 type nonrec start_remediation_execution_response =
   {
   failed_items: resource_key list option ;
   failure_message: string option }
-type nonrec config_rule_name = string
 type nonrec start_remediation_execution_request =
   {
   resource_keys: resource_key list ;
@@ -585,7 +536,6 @@ type nonrec no_available_delivery_channel_exception =
   {
   message: string option }
 type nonrec start_config_rules_evaluation_response = unit
-type nonrec reevaluate_config_rule_names = string list option list
 type nonrec start_config_rules_evaluation_request =
   {
   config_rule_names: string list option }
@@ -601,21 +551,15 @@ type nonrec invalid_limit_exception = {
   message: string option }
 type nonrec invalid_expression_exception = {
   message: string option }
-type nonrec results = string list option list
-type nonrec field_name = string
 type nonrec field_info = {
   name: string option }
-type nonrec field_info_list = field_info list option list
 type nonrec query_info = {
   select_fields: field_info list option }
-type nonrec next_token = string
 type nonrec select_resource_config_response =
   {
   next_token: string option ;
   query_info: query_info option ;
   results: string list option }
-type nonrec expression = string
-type nonrec limit = int
 type nonrec select_resource_config_request =
   {
   next_token: string option ;
@@ -629,7 +573,6 @@ type nonrec select_aggregate_resource_config_response =
   next_token: string option ;
   query_info: query_info option ;
   results: string list option }
-type nonrec configuration_aggregator_name = string
 type nonrec select_aggregate_resource_config_request =
   {
   next_token: string option ;
@@ -649,8 +592,6 @@ type nonrec put_stored_query_request =
 type nonrec max_number_of_retention_configurations_exceeded_exception =
   {
   message: string option }
-type nonrec retention_configuration_name = string
-type nonrec retention_period_in_days = int
 type nonrec retention_configuration =
   {
   retention_period_in_days: int ;
@@ -667,12 +608,9 @@ type nonrec no_running_configuration_recorder_exception =
 type nonrec max_active_resources_exceeded_exception =
   {
   message: string option }
-type nonrec resource_type_string = string
-type nonrec schema_version_id = string
-type nonrec configuration = string
 type nonrec put_resource_config_request =
   {
-  tags: (string * string) list option ;
+  tags: tags option ;
   configuration: string ;
   resource_name: string option ;
   resource_id: string ;
@@ -680,18 +618,15 @@ type nonrec put_resource_config_request =
   resource_type: string }
 type nonrec remediation_exception =
   {
-  expiration_time: float option ;
+  expiration_time: CoreTypes.Timestamp.t option ;
   message: string option ;
   resource_id: string ;
   resource_type: string ;
   config_rule_name: string }
-type nonrec remediation_exceptions = remediation_exception list option list
 type nonrec failed_remediation_exception_batch =
   {
   failed_items: remediation_exception list option ;
   failure_message: string option }
-type nonrec failed_remediation_exception_batches =
-  failed_remediation_exception_batch list option list
 type nonrec put_remediation_exceptions_response =
   {
   failed_batches: failed_remediation_exception_batch list option }
@@ -699,11 +634,9 @@ type nonrec remediation_exception_resource_key =
   {
   resource_id: string option ;
   resource_type: string option }
-type nonrec remediation_exception_resource_keys =
-  remediation_exception_resource_key list option list
 type nonrec put_remediation_exceptions_request =
   {
-  expiration_time: float option ;
+  expiration_time: CoreTypes.Timestamp.t option ;
   message: string option ;
   resource_keys: remediation_exception_resource_key list ;
   config_rule_name: string }
@@ -718,17 +651,13 @@ type nonrec remediation_parameter_value =
   static_value: static_value option ;
   resource_value: resource_value option }
 type nonrec remediation_parameters =
-  (string_ option * remediation_parameter_value option) list
-type nonrec boolean_ = bool
-type nonrec percentage = int
+  (string * remediation_parameter_value) list
 type nonrec ssm_controls =
   {
   error_percentage: int option ;
   concurrent_execution_rate_percentage: int option }
 type nonrec execution_controls = {
   ssm_controls: ssm_controls option }
-type nonrec auto_remediation_attempts = int
-type nonrec auto_remediation_attempt_seconds = int
 type nonrec remediation_configuration =
   {
   created_by_service: string option ;
@@ -738,19 +667,15 @@ type nonrec remediation_configuration =
   execution_controls: execution_controls option ;
   automatic: bool option ;
   resource_type: string option ;
-  parameters: (string * remediation_parameter_value) list option ;
+  parameters: remediation_parameters option ;
   target_version: string option ;
   target_id: string ;
   target_type: remediation_target_type ;
   config_rule_name: string }
-type nonrec remediation_configurations =
-  remediation_configuration list option list
 type nonrec failed_remediation_batch =
   {
   failed_items: remediation_configuration list option ;
   failure_message: string option }
-type nonrec failed_remediation_batches =
-  failed_remediation_batch list option list
 type nonrec put_remediation_configurations_response =
   {
   failed_batches: failed_remediation_batch list option }
@@ -773,18 +698,10 @@ type nonrec max_number_of_organization_conformance_packs_exceeded_exception =
 type nonrec put_organization_conformance_pack_response =
   {
   organization_conformance_pack_arn: string option }
-type nonrec organization_conformance_pack_name = string
-type nonrec delivery_s3_bucket = string
-type nonrec delivery_s3_key_prefix = string
-type nonrec parameter_name = string
-type nonrec parameter_value = string
 type nonrec conformance_pack_input_parameter =
   {
   parameter_value: string ;
   parameter_name: string }
-type nonrec conformance_pack_input_parameters =
-  conformance_pack_input_parameter list option list
-type nonrec excluded_accounts = string list option list
 type nonrec put_organization_conformance_pack_request =
   {
   excluded_accounts: string list option ;
@@ -801,14 +718,12 @@ type nonrec max_number_of_organization_config_rules_exceeded_exception =
 type nonrec put_organization_config_rule_response =
   {
   organization_config_rule_arn: string option }
-type nonrec organization_config_rule_name = string
 type nonrec maximum_execution_frequency =
   | TwentyFour_Hours 
   | Twelve_Hours 
   | Six_Hours 
   | Three_Hours 
   | One_Hour 
-type nonrec resource_types_scope = string list option list
 type nonrec organization_managed_rule_metadata =
   {
   tag_value_scope: string option ;
@@ -823,8 +738,6 @@ type nonrec organization_config_rule_trigger_type =
   | SCHEDULED_NOTIFICATION 
   | OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION 
   | CONFIGURATION_ITEM_CHANGE_NOTIFICATION 
-type nonrec organization_config_rule_trigger_types =
-  organization_config_rule_trigger_type list option list
 type nonrec organization_custom_rule_metadata =
   {
   tag_value_scope: string option ;
@@ -840,11 +753,6 @@ type nonrec organization_custom_rule_metadata =
 type nonrec organization_config_rule_trigger_type_no_s_n =
   | OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION 
   | CONFIGURATION_ITEM_CHANGE_NOTIFICATION 
-type nonrec organization_config_rule_trigger_type_no_s_ns =
-  organization_config_rule_trigger_type_no_s_n list option list
-type nonrec policy_runtime = string
-type nonrec policy_text = string
-type nonrec debug_log_delivery_accounts = string list option list
 type nonrec organization_custom_policy_rule_metadata =
   {
   debug_log_delivery_accounts: string list option ;
@@ -874,10 +782,9 @@ type nonrec compliance_type =
   | Not_Applicable 
   | Non_Compliant 
   | Compliant 
-type nonrec ordering_timestamp = Timestamp.t
 type nonrec external_evaluation =
   {
-  ordering_timestamp: float ;
+  ordering_timestamp: CoreTypes.Timestamp.t ;
   annotation: string option ;
   compliance_type: compliance_type ;
   compliance_resource_id: string ;
@@ -890,12 +797,11 @@ type nonrec invalid_result_token_exception = {
   message: string option }
 type nonrec evaluation =
   {
-  ordering_timestamp: float ;
+  ordering_timestamp: CoreTypes.Timestamp.t ;
   annotation: string option ;
   compliance_type: compliance_type ;
   compliance_resource_id: string ;
   compliance_resource_type: string }
-type nonrec evaluations = evaluation list option list
 type nonrec put_evaluations_response =
   {
   failed_evaluations: evaluation list option }
@@ -924,7 +830,6 @@ type nonrec invalid_delivery_channel_name_exception =
 type nonrec insufficient_delivery_policy_exception =
   {
   message: string option }
-type nonrec channel_name = string
 type nonrec config_snapshot_delivery_properties =
   {
   delivery_frequency: maximum_execution_frequency option }
@@ -946,11 +851,9 @@ type nonrec max_number_of_conformance_packs_exceeded_exception =
 type nonrec conformance_pack_template_validation_exception =
   {
   message: string option }
-type nonrec conformance_pack_arn = string
 type nonrec put_conformance_pack_response =
   {
   conformance_pack_arn: string option }
-type nonrec conformance_pack_name = string
 type nonrec put_conformance_pack_request =
   {
   template_ssm_document_details: template_ssm_document_details option ;
@@ -971,9 +874,6 @@ type nonrec invalid_recording_group_exception = {
 type nonrec invalid_configuration_recorder_name_exception =
   {
   message: string option }
-type nonrec all_supported = bool
-type nonrec include_global_resource_types = bool
-type nonrec resource_type_list = resource_type list option list
 type nonrec exclusion_by_resource_types =
   {
   resource_types: resource_type list option }
@@ -993,16 +893,11 @@ type nonrec recording_group =
 type nonrec recording_frequency =
   | DAILY 
   | CONTINUOUS 
-type nonrec description = string
-type nonrec recording_mode_resource_types_list =
-  resource_type list option list
 type nonrec recording_mode_override =
   {
   recording_frequency: recording_frequency ;
   resource_types: resource_type list ;
   description: string option }
-type nonrec recording_mode_overrides =
-  recording_mode_override list option list
 type nonrec recording_mode =
   {
   recording_mode_overrides: recording_mode_override list option ;
@@ -1016,16 +911,11 @@ type nonrec configuration_recorder =
 type nonrec put_configuration_recorder_request =
   {
   configuration_recorder: configuration_recorder }
-type nonrec configuration_aggregator_arn = string
-type nonrec account_aggregation_source_account_list = string list option list
-type nonrec aggregator_region_list = string list option list
 type nonrec account_aggregation_source =
   {
   aws_regions: string list option ;
   all_aws_regions: bool option ;
   account_ids: string list }
-type nonrec account_aggregation_source_list =
-  account_aggregation_source list option list
 type nonrec organization_aggregation_source =
   {
   all_aws_regions: bool option ;
@@ -1034,8 +924,8 @@ type nonrec organization_aggregation_source =
 type nonrec configuration_aggregator =
   {
   created_by: string option ;
-  last_updated_time: float option ;
-  creation_time: float option ;
+  last_updated_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   organization_aggregation_source: organization_aggregation_source option ;
   account_aggregation_sources: account_aggregation_source list option ;
   configuration_aggregator_arn: string option ;
@@ -1052,8 +942,6 @@ type nonrec put_configuration_aggregator_request =
 type nonrec max_number_of_config_rules_exceeded_exception =
   {
   message: string option }
-type nonrec emptiable_string_with_char_limit256 = string
-type nonrec compliance_resource_types = string list option list
 type nonrec scope =
   {
   compliance_resource_id: string option ;
@@ -1076,7 +964,6 @@ type nonrec source_detail =
   maximum_execution_frequency: maximum_execution_frequency option ;
   message_type: message_type option ;
   event_source: event_source option }
-type nonrec source_details = source_detail list option list
 type nonrec custom_policy_details =
   {
   enable_debug_log_delivery: bool option ;
@@ -1095,7 +982,6 @@ type nonrec config_rule_state =
   | ACTIVE 
 type nonrec evaluation_mode_configuration = {
   mode: evaluation_mode option }
-type nonrec evaluation_modes = evaluation_mode_configuration list option list
 type nonrec config_rule =
   {
   evaluation_modes: evaluation_mode_configuration list option ;
@@ -1115,7 +1001,7 @@ type nonrec put_config_rule_request =
   config_rule: config_rule }
 type nonrec aggregation_authorization =
   {
-  creation_time: float option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   authorized_aws_region: string option ;
   authorized_account_id: string option ;
   aggregation_authorization_arn: string option }
@@ -1148,10 +1034,9 @@ type nonrec invalid_time_range_exception = {
   message: string option }
 type nonrec resource_evaluation =
   {
-  evaluation_start_timestamp: float option ;
+  evaluation_start_timestamp: CoreTypes.Timestamp.t option ;
   evaluation_mode: evaluation_mode option ;
   resource_evaluation_id: string option }
-type nonrec resource_evaluations = resource_evaluation list option list
 type nonrec list_resource_evaluations_response =
   {
   next_token: string option ;
@@ -1161,25 +1046,21 @@ type nonrec resource_evaluation_filters =
   evaluation_context_identifier: string option ;
   time_window: time_window option ;
   evaluation_mode: evaluation_mode option }
-type nonrec list_resource_evaluations_page_item_limit = int
 type nonrec list_resource_evaluations_request =
   {
   next_token: string option ;
   limit: int option ;
   filters: resource_evaluation_filters option }
-type nonrec resource_deletion_time = Timestamp.t
 type nonrec resource_identifier =
   {
-  resource_deletion_time: float option ;
+  resource_deletion_time: CoreTypes.Timestamp.t option ;
   resource_name: string option ;
   resource_id: string option ;
   resource_type: resource_type option }
-type nonrec resource_identifier_list = resource_identifier list option list
 type nonrec list_discovered_resources_response =
   {
   next_token: string option ;
   resource_identifiers: resource_identifier list option }
-type nonrec resource_id_list = string list option list
 type nonrec list_discovered_resources_request =
   {
   next_token: string option ;
@@ -1188,20 +1069,15 @@ type nonrec list_discovered_resources_request =
   resource_name: string option ;
   resource_ids: string list option ;
   resource_type: resource_type }
-type nonrec compliance_score = string
-type nonrec last_updated_time = Timestamp.t
 type nonrec conformance_pack_compliance_score =
   {
-  last_updated_time: float option ;
+  last_updated_time: CoreTypes.Timestamp.t option ;
   conformance_pack_name: string option ;
   score: string option }
-type nonrec conformance_pack_compliance_scores =
-  conformance_pack_compliance_score list option list
 type nonrec list_conformance_pack_compliance_scores_response =
   {
   conformance_pack_compliance_scores: conformance_pack_compliance_score list ;
   next_token: string option }
-type nonrec conformance_pack_name_filter = string list option list
 type nonrec conformance_pack_compliance_scores_filters =
   {
   conformance_pack_names: string list }
@@ -1210,7 +1086,6 @@ type nonrec sort_order =
   | ASCENDING 
 type nonrec sort_by =
   | SCORE 
-type nonrec page_size_limit = int
 type nonrec list_conformance_pack_compliance_scores_request =
   {
   next_token: string option ;
@@ -1218,8 +1093,6 @@ type nonrec list_conformance_pack_compliance_scores_request =
   sort_by: sort_by option ;
   sort_order: sort_order option ;
   filters: conformance_pack_compliance_scores_filters option }
-type nonrec discovered_resource_identifier_list =
-  aggregate_resource_identifier list option list
 type nonrec list_aggregate_discovered_resources_response =
   {
   next_token: string option ;
@@ -1254,7 +1127,7 @@ type nonrec get_resource_evaluation_summary_response =
   resource_details: resource_details option ;
   evaluation_context: evaluation_context option ;
   compliance: compliance_type option ;
-  evaluation_start_timestamp: float option ;
+  evaluation_start_timestamp: CoreTypes.Timestamp.t option ;
   evaluation_status: evaluation_status option ;
   evaluation_mode: evaluation_mode option ;
   resource_evaluation_id: string option }
@@ -1263,39 +1136,28 @@ type nonrec get_resource_evaluation_summary_request =
   resource_evaluation_id: string }
 type nonrec resource_not_discovered_exception = {
   message: string option }
-type nonrec configuration_item_capture_time = Timestamp.t
 type nonrec configuration_item_status =
   | ResourceDeletedNotRecorded 
   | ResourceDeleted 
   | ResourceNotRecorded 
   | ResourceDiscovered 
   | OK 
-type nonrec configuration_state_id = string
-type nonrec configuration_item_md5_hash = string
-type nonrec ar_n = string
-type nonrec availability_zone = string
-type nonrec resource_creation_time = Timestamp.t
-type nonrec related_event = string
-type nonrec related_event_list = string list option list
-type nonrec relationship_name = string
 type nonrec relationship =
   {
   relationship_name: string option ;
   resource_name: string option ;
   resource_id: string option ;
   resource_type: resource_type option }
-type nonrec relationship_list = relationship list option list
-type nonrec configuration_item_delivery_time = Timestamp.t
 type nonrec configuration_item =
   {
-  configuration_item_delivery_time: float option ;
+  configuration_item_delivery_time: CoreTypes.Timestamp.t option ;
   recording_frequency: recording_frequency option ;
-  supplementary_configuration: (string * string) list option ;
+  supplementary_configuration: supplementary_configuration option ;
   configuration: string option ;
   relationships: relationship list option ;
   related_events: string list option ;
-  tags: (string * string) list option ;
-  resource_creation_time: float option ;
+  tags: tags option ;
+  resource_creation_time: CoreTypes.Timestamp.t option ;
   availability_zone: string option ;
   aws_region: string option ;
   resource_name: string option ;
@@ -1305,16 +1167,13 @@ type nonrec configuration_item =
   configuration_item_md5_hash: string option ;
   configuration_state_id: string option ;
   configuration_item_status: configuration_item_status option ;
-  configuration_item_capture_time: float option ;
+  configuration_item_capture_time: CoreTypes.Timestamp.t option ;
   account_id: string option ;
   version: string option }
-type nonrec configuration_item_list = configuration_item list option list
 type nonrec get_resource_config_history_response =
   {
   next_token: string option ;
   configuration_items: configuration_item list option }
-type nonrec later_time = Timestamp.t
-type nonrec earlier_time = Timestamp.t
 type nonrec chronological_order =
   | Forward 
   | Reverse 
@@ -1323,8 +1182,8 @@ type nonrec get_resource_config_history_request =
   next_token: string option ;
   limit: int option ;
   chronological_order: chronological_order option ;
-  earlier_time: float option ;
-  later_time: float option ;
+  earlier_time: CoreTypes.Timestamp.t option ;
+  later_time: CoreTypes.Timestamp.t option ;
   resource_id: string ;
   resource_type: resource_type }
 type nonrec no_such_organization_config_rule_exception =
@@ -1351,14 +1210,12 @@ type nonrec organization_resource_detailed_status =
   | CREATE_SUCCESSFUL 
 type nonrec organization_conformance_pack_detailed_status =
   {
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   error_code: string option ;
   status: organization_resource_detailed_status ;
   conformance_pack_name: string ;
   account_id: string }
-type nonrec organization_conformance_pack_detailed_statuses =
-  organization_conformance_pack_detailed_status list option list
 type nonrec get_organization_conformance_pack_detailed_status_response =
   {
   next_token: string option ;
@@ -1368,7 +1225,6 @@ type nonrec organization_resource_detailed_status_filters =
   {
   status: organization_resource_detailed_status option ;
   account_id: string option }
-type nonrec cosmos_page_limit = int
 type nonrec get_organization_conformance_pack_detailed_status_request =
   {
   next_token: string option ;
@@ -1377,14 +1233,12 @@ type nonrec get_organization_conformance_pack_detailed_status_request =
   organization_conformance_pack_name: string }
 type nonrec member_account_status =
   {
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   error_code: string option ;
   member_account_rule_status: member_account_rule_status ;
   config_rule_name: string ;
   account_id: string }
-type nonrec organization_config_rule_detailed_status =
-  member_account_status list option list
 type nonrec get_organization_config_rule_detailed_status_response =
   {
   next_token: string option ;
@@ -1395,18 +1249,15 @@ type nonrec get_organization_config_rule_detailed_status_request =
   limit: int option ;
   filters: status_detail_filters option ;
   organization_config_rule_name: string }
-type nonrec long = int
 type nonrec resource_count =
   {
   count: int option ;
   resource_type: resource_type option }
-type nonrec resource_counts = resource_count list option list
 type nonrec get_discovered_resource_counts_response =
   {
   next_token: string option ;
   resource_counts: resource_count list option ;
   total_discovered_resources: int option }
-type nonrec resource_types = string list option list
 type nonrec get_discovered_resource_counts_request =
   {
   next_token: string option ;
@@ -1427,15 +1278,11 @@ type nonrec conformance_pack_compliance_summary =
   {
   conformance_pack_compliance_status: conformance_pack_compliance_type ;
   conformance_pack_name: string }
-type nonrec conformance_pack_compliance_summary_list =
-  conformance_pack_compliance_summary list option list
 type nonrec get_conformance_pack_compliance_summary_response =
   {
   next_token: string option ;
   conformance_pack_compliance_summary_list:
     conformance_pack_compliance_summary list option }
-type nonrec conformance_pack_names_to_summarize_list =
-  string list option list
 type nonrec get_conformance_pack_compliance_summary_request =
   {
   next_token: string option ;
@@ -1453,56 +1300,46 @@ type nonrec evaluation_result_qualifier =
 type nonrec evaluation_result_identifier =
   {
   resource_evaluation_id: string option ;
-  ordering_timestamp: float option ;
+  ordering_timestamp: CoreTypes.Timestamp.t option ;
   evaluation_result_qualifier: evaluation_result_qualifier option }
-type nonrec annotation = string
 type nonrec conformance_pack_evaluation_result =
   {
   annotation: string option ;
-  result_recorded_time: float ;
-  config_rule_invoked_time: float ;
+  result_recorded_time: CoreTypes.Timestamp.t ;
+  config_rule_invoked_time: CoreTypes.Timestamp.t ;
   evaluation_result_identifier: evaluation_result_identifier ;
   compliance_type: conformance_pack_compliance_type }
-type nonrec conformance_pack_rule_evaluation_results_list =
-  conformance_pack_evaluation_result list option list
 type nonrec get_conformance_pack_compliance_details_response =
   {
   next_token: string option ;
   conformance_pack_rule_evaluation_results:
     conformance_pack_evaluation_result list option ;
   conformance_pack_name: string }
-type nonrec conformance_pack_config_rule_names = string list option list
-type nonrec conformance_pack_compliance_resource_ids =
-  string list option list
 type nonrec conformance_pack_evaluation_filters =
   {
   resource_ids: string list option ;
   resource_type: string option ;
   compliance_type: conformance_pack_compliance_type option ;
   config_rule_names: string list option }
-type nonrec get_conformance_pack_compliance_details_limit = int
 type nonrec get_conformance_pack_compliance_details_request =
   {
   next_token: string option ;
   limit: int option ;
   filters: conformance_pack_evaluation_filters option ;
   conformance_pack_name: string }
-type nonrec integer_ = int
 type nonrec compliance_contributor_count =
   {
   cap_exceeded: bool option ;
   capped_count: int option }
 type nonrec compliance_summary =
   {
-  compliance_summary_timestamp: float option ;
+  compliance_summary_timestamp: CoreTypes.Timestamp.t option ;
   non_compliant_resource_count: compliance_contributor_count option ;
   compliant_resource_count: compliance_contributor_count option }
 type nonrec compliance_summary_by_resource_type =
   {
   compliance_summary: compliance_summary option ;
   resource_type: string option }
-type nonrec compliance_summaries_by_resource_type =
-  compliance_summary_by_resource_type list option list
 type nonrec get_compliance_summary_by_resource_type_response =
   {
   compliance_summaries_by_resource_type:
@@ -1517,16 +1354,14 @@ type nonrec evaluation_result =
   {
   result_token: string option ;
   annotation: string option ;
-  config_rule_invoked_time: float option ;
-  result_recorded_time: float option ;
+  config_rule_invoked_time: CoreTypes.Timestamp.t option ;
+  result_recorded_time: CoreTypes.Timestamp.t option ;
   compliance_type: compliance_type option ;
   evaluation_result_identifier: evaluation_result_identifier option }
-type nonrec evaluation_results = evaluation_result list option list
 type nonrec get_compliance_details_by_resource_response =
   {
   next_token: string option ;
   evaluation_results: evaluation_result list option }
-type nonrec compliance_types = compliance_type list option list
 type nonrec get_compliance_details_by_resource_request =
   {
   resource_evaluation_id: string option ;
@@ -1558,8 +1393,6 @@ type nonrec grouped_resource_count =
   {
   resource_count: int ;
   group_name: string }
-type nonrec grouped_resource_count_list =
-  grouped_resource_count list option list
 type nonrec get_aggregate_discovered_resource_counts_response =
   {
   next_token: string option ;
@@ -1575,7 +1408,6 @@ type nonrec resource_count_group_key =
   | AWS_REGION 
   | ACCOUNT_ID 
   | RESOURCE_TYPE 
-type nonrec group_by_api_limit = int
 type nonrec get_aggregate_discovered_resource_counts_request =
   {
   next_token: string option ;
@@ -1591,8 +1423,6 @@ type nonrec aggregate_conformance_pack_compliance_summary =
   {
   group_name: string option ;
   compliance_summary: aggregate_conformance_pack_compliance_count option }
-type nonrec aggregate_conformance_pack_compliance_summary_list =
-  aggregate_conformance_pack_compliance_summary list option list
 type nonrec get_aggregate_conformance_pack_compliance_summary_response =
   {
   next_token: string option ;
@@ -1618,8 +1448,6 @@ type nonrec aggregate_compliance_count =
   {
   compliance_summary: compliance_summary option ;
   group_name: string option }
-type nonrec aggregate_compliance_count_list =
-  aggregate_compliance_count list option list
 type nonrec get_aggregate_config_rule_compliance_summary_response =
   {
   next_token: string option ;
@@ -1644,12 +1472,10 @@ type nonrec aggregate_evaluation_result =
   aws_region: string option ;
   account_id: string option ;
   annotation: string option ;
-  config_rule_invoked_time: float option ;
-  result_recorded_time: float option ;
+  config_rule_invoked_time: CoreTypes.Timestamp.t option ;
+  result_recorded_time: CoreTypes.Timestamp.t option ;
   compliance_type: compliance_type option ;
   evaluation_result_identifier: evaluation_result_identifier option }
-type nonrec aggregate_evaluation_result_list =
-  aggregate_evaluation_result list option list
 type nonrec get_aggregate_compliance_details_by_config_rule_response =
   {
   next_token: string option ;
@@ -1666,13 +1492,10 @@ type nonrec get_aggregate_compliance_details_by_config_rule_request =
 type nonrec no_such_retention_configuration_exception =
   {
   message: string option }
-type nonrec retention_configuration_list =
-  retention_configuration list option list
 type nonrec describe_retention_configurations_response =
   {
   next_token: string option ;
   retention_configurations: retention_configuration list option }
-type nonrec retention_configuration_name_list = string list option list
 type nonrec describe_retention_configurations_request =
   {
   next_token: string option ;
@@ -1688,22 +1511,18 @@ type nonrec remediation_execution_step_state =
   | SUCCEEDED 
 type nonrec remediation_execution_step =
   {
-  stop_time: float option ;
-  start_time: float option ;
+  stop_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   state: remediation_execution_step_state option ;
   name: string option }
-type nonrec remediation_execution_steps =
-  remediation_execution_step list option list
 type nonrec remediation_execution_status =
   {
-  last_updated_time: float option ;
-  invocation_time: float option ;
+  last_updated_time: CoreTypes.Timestamp.t option ;
+  invocation_time: CoreTypes.Timestamp.t option ;
   step_details: remediation_execution_step list option ;
   state: remediation_execution_state option ;
   resource_key: resource_key option }
-type nonrec remediation_execution_statuses =
-  remediation_execution_status list option list
 type nonrec describe_remediation_execution_status_response =
   {
   next_token: string option ;
@@ -1727,7 +1546,6 @@ type nonrec describe_remediation_exceptions_request =
 type nonrec describe_remediation_configurations_response =
   {
   remediation_configurations: remediation_configuration list option }
-type nonrec config_rule_names = string list option list
 type nonrec describe_remediation_configurations_request =
   {
   config_rule_names: string list }
@@ -1735,13 +1553,10 @@ type nonrec pending_aggregation_request =
   {
   requester_aws_region: string option ;
   requester_account_id: string option }
-type nonrec pending_aggregation_request_list =
-  pending_aggregation_request list option list
 type nonrec describe_pending_aggregation_requests_response =
   {
   next_token: string option ;
   pending_aggregation_requests: pending_aggregation_request list option }
-type nonrec describe_pending_aggregation_requests_limit = int
 type nonrec describe_pending_aggregation_requests_request =
   {
   next_token: string option ;
@@ -1758,19 +1573,16 @@ type nonrec organization_resource_status =
   | CREATE_SUCCESSFUL 
 type nonrec organization_conformance_pack_status =
   {
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   error_code: string option ;
   status: organization_resource_status ;
   organization_conformance_pack_name: string }
-type nonrec organization_conformance_pack_statuses =
-  organization_conformance_pack_status list option list
 type nonrec describe_organization_conformance_pack_statuses_response =
   {
   next_token: string option ;
   organization_conformance_pack_statuses:
     organization_conformance_pack_status list option }
-type nonrec organization_conformance_pack_names = string list option list
 type nonrec describe_organization_conformance_pack_statuses_request =
   {
   next_token: string option ;
@@ -1778,7 +1590,7 @@ type nonrec describe_organization_conformance_pack_statuses_request =
   organization_conformance_pack_names: string list option }
 type nonrec organization_conformance_pack =
   {
-  last_update_time: float ;
+  last_update_time: CoreTypes.Timestamp.t ;
   excluded_accounts: string list option ;
   conformance_pack_input_parameters:
     conformance_pack_input_parameter list option ;
@@ -1786,8 +1598,6 @@ type nonrec organization_conformance_pack =
   delivery_s3_bucket: string option ;
   organization_conformance_pack_arn: string ;
   organization_conformance_pack_name: string }
-type nonrec organization_conformance_packs =
-  organization_conformance_pack list option list
 type nonrec describe_organization_conformance_packs_response =
   {
   next_token: string option ;
@@ -1809,19 +1619,16 @@ type nonrec organization_rule_status =
   | CREATE_SUCCESSFUL 
 type nonrec organization_config_rule_status =
   {
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   error_message: string option ;
   error_code: string option ;
   organization_rule_status: organization_rule_status ;
   organization_config_rule_name: string }
-type nonrec organization_config_rule_statuses =
-  organization_config_rule_status list option list
 type nonrec describe_organization_config_rule_statuses_response =
   {
   next_token: string option ;
   organization_config_rule_statuses:
     organization_config_rule_status list option }
-type nonrec organization_config_rule_names = string list option list
 type nonrec describe_organization_config_rule_statuses_request =
   {
   next_token: string option ;
@@ -1844,15 +1651,13 @@ type nonrec organization_config_rule =
   {
   organization_custom_policy_rule_metadata:
     organization_custom_policy_rule_metadata_no_policy option ;
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   excluded_accounts: string list option ;
   organization_custom_rule_metadata: organization_custom_rule_metadata option ;
   organization_managed_rule_metadata:
     organization_managed_rule_metadata option ;
   organization_config_rule_arn: string ;
   organization_config_rule_name: string }
-type nonrec organization_config_rules =
-  organization_config_rule list option list
 type nonrec describe_organization_config_rules_response =
   {
   next_token: string option ;
@@ -1870,15 +1675,15 @@ type nonrec delivery_status =
   | Success 
 type nonrec config_export_delivery_info =
   {
-  next_delivery_time: float option ;
-  last_successful_time: float option ;
-  last_attempt_time: float option ;
+  next_delivery_time: CoreTypes.Timestamp.t option ;
+  last_successful_time: CoreTypes.Timestamp.t option ;
+  last_attempt_time: CoreTypes.Timestamp.t option ;
   last_error_message: string option ;
   last_error_code: string option ;
   last_status: delivery_status option }
 type nonrec config_stream_delivery_info =
   {
-  last_status_change_time: float option ;
+  last_status_change_time: CoreTypes.Timestamp.t option ;
   last_error_message: string option ;
   last_error_code: string option ;
   last_status: delivery_status option }
@@ -1888,48 +1693,38 @@ type nonrec delivery_channel_status =
   config_history_delivery_info: config_export_delivery_info option ;
   config_snapshot_delivery_info: config_export_delivery_info option ;
   name: string option }
-type nonrec delivery_channel_status_list =
-  delivery_channel_status list option list
 type nonrec describe_delivery_channel_status_response =
   {
   delivery_channels_status: delivery_channel_status list option }
-type nonrec delivery_channel_name_list = string list option list
 type nonrec describe_delivery_channel_status_request =
   {
   delivery_channel_names: string list option }
-type nonrec delivery_channel_list = delivery_channel list option list
 type nonrec describe_delivery_channels_response =
   {
   delivery_channels: delivery_channel list option }
 type nonrec describe_delivery_channels_request =
   {
   delivery_channel_names: string list option }
-type nonrec conformance_pack_id = string
 type nonrec conformance_pack_state =
   | DELETE_FAILED 
   | DELETE_IN_PROGRESS 
   | CREATE_FAILED 
   | CREATE_COMPLETE 
   | CREATE_IN_PROGRESS 
-type nonrec stack_arn = string
-type nonrec conformance_pack_status_reason = string
 type nonrec conformance_pack_status_detail =
   {
-  last_update_completed_time: float option ;
-  last_update_requested_time: float ;
+  last_update_completed_time: CoreTypes.Timestamp.t option ;
+  last_update_requested_time: CoreTypes.Timestamp.t ;
   conformance_pack_status_reason: string option ;
   stack_arn: string ;
   conformance_pack_state: conformance_pack_state ;
   conformance_pack_arn: string ;
   conformance_pack_id: string ;
   conformance_pack_name: string }
-type nonrec conformance_pack_status_details_list =
-  conformance_pack_status_detail list option list
 type nonrec describe_conformance_pack_status_response =
   {
   next_token: string option ;
   conformance_pack_status_details: conformance_pack_status_detail list option }
-type nonrec conformance_pack_names_list = string list option list
 type nonrec describe_conformance_pack_status_request =
   {
   next_token: string option ;
@@ -1939,7 +1734,7 @@ type nonrec conformance_pack_detail =
   {
   template_ssm_document_details: template_ssm_document_details option ;
   created_by: string option ;
-  last_update_requested_time: float option ;
+  last_update_requested_time: CoreTypes.Timestamp.t option ;
   conformance_pack_input_parameters:
     conformance_pack_input_parameter list option ;
   delivery_s3_key_prefix: string option ;
@@ -1947,8 +1742,6 @@ type nonrec conformance_pack_detail =
   conformance_pack_id: string ;
   conformance_pack_arn: string ;
   conformance_pack_name: string }
-type nonrec conformance_pack_detail_list =
-  conformance_pack_detail list option list
 type nonrec describe_conformance_packs_response =
   {
   next_token: string option ;
@@ -1958,14 +1751,11 @@ type nonrec describe_conformance_packs_request =
   next_token: string option ;
   limit: int option ;
   conformance_pack_names: string list option }
-type nonrec controls_list = string list option list
 type nonrec conformance_pack_rule_compliance =
   {
   controls: string list option ;
   compliance_type: conformance_pack_compliance_type option ;
   config_rule_name: string option }
-type nonrec conformance_pack_rule_compliance_list =
-  conformance_pack_rule_compliance list option list
 type nonrec describe_conformance_pack_compliance_response =
   {
   next_token: string option ;
@@ -1976,7 +1766,6 @@ type nonrec conformance_pack_compliance_filters =
   {
   compliance_type: conformance_pack_compliance_type option ;
   config_rule_names: string list option }
-type nonrec describe_conformance_pack_compliance_limit = int
 type nonrec describe_conformance_pack_compliance_request =
   {
   next_token: string option ;
@@ -1989,25 +1778,20 @@ type nonrec recorder_status =
   | Pending 
 type nonrec configuration_recorder_status =
   {
-  last_status_change_time: float option ;
+  last_status_change_time: CoreTypes.Timestamp.t option ;
   last_error_message: string option ;
   last_error_code: string option ;
   last_status: recorder_status option ;
   recording: bool option ;
-  last_stop_time: float option ;
-  last_start_time: float option ;
+  last_stop_time: CoreTypes.Timestamp.t option ;
+  last_start_time: CoreTypes.Timestamp.t option ;
   name: string option }
-type nonrec configuration_recorder_status_list =
-  configuration_recorder_status list option list
 type nonrec describe_configuration_recorder_status_response =
   {
   configuration_recorders_status: configuration_recorder_status list option }
-type nonrec configuration_recorder_name_list = string list option list
 type nonrec describe_configuration_recorder_status_request =
   {
   configuration_recorder_names: string list option }
-type nonrec configuration_recorder_list =
-  configuration_recorder list option list
 type nonrec describe_configuration_recorders_response =
   {
   configuration_recorders: configuration_recorder list option }
@@ -2025,38 +1809,30 @@ type nonrec aggregated_source_status =
   {
   last_error_message: string option ;
   last_error_code: string option ;
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   last_update_status: aggregated_source_status_type option ;
   aws_region: string option ;
   source_type: aggregated_source_type option ;
   source_id: string option }
-type nonrec aggregated_source_status_list =
-  aggregated_source_status list option list
 type nonrec describe_configuration_aggregator_sources_status_response =
   {
   next_token: string option ;
   aggregated_source_status_list: aggregated_source_status list option }
-type nonrec aggregated_source_status_type_list =
-  aggregated_source_status_type list option list
 type nonrec describe_configuration_aggregator_sources_status_request =
   {
   limit: int option ;
   next_token: string option ;
   update_status: aggregated_source_status_type list option ;
   configuration_aggregator_name: string }
-type nonrec configuration_aggregator_list =
-  configuration_aggregator list option list
 type nonrec describe_configuration_aggregators_response =
   {
   next_token: string option ;
   configuration_aggregators: configuration_aggregator list option }
-type nonrec configuration_aggregator_name_list = string list option list
 type nonrec describe_configuration_aggregators_request =
   {
   limit: int option ;
   next_token: string option ;
   configuration_aggregator_names: string list option }
-type nonrec config_rules = config_rule list option list
 type nonrec describe_config_rules_response =
   {
   next_token: string option ;
@@ -2071,28 +1847,25 @@ type nonrec describe_config_rules_request =
   config_rule_names: string list option }
 type nonrec config_rule_evaluation_status =
   {
-  last_debug_log_delivery_time: float option ;
+  last_debug_log_delivery_time: CoreTypes.Timestamp.t option ;
   last_debug_log_delivery_status_reason: string option ;
   last_debug_log_delivery_status: string option ;
   first_evaluation_started: bool option ;
   last_error_message: string option ;
   last_error_code: string option ;
-  last_deactivated_time: float option ;
-  first_activated_time: float option ;
-  last_failed_evaluation_time: float option ;
-  last_successful_evaluation_time: float option ;
-  last_failed_invocation_time: float option ;
-  last_successful_invocation_time: float option ;
+  last_deactivated_time: CoreTypes.Timestamp.t option ;
+  first_activated_time: CoreTypes.Timestamp.t option ;
+  last_failed_evaluation_time: CoreTypes.Timestamp.t option ;
+  last_successful_evaluation_time: CoreTypes.Timestamp.t option ;
+  last_failed_invocation_time: CoreTypes.Timestamp.t option ;
+  last_successful_invocation_time: CoreTypes.Timestamp.t option ;
   config_rule_id: string option ;
   config_rule_arn: string option ;
   config_rule_name: string option }
-type nonrec config_rule_evaluation_status_list =
-  config_rule_evaluation_status list option list
 type nonrec describe_config_rule_evaluation_status_response =
   {
   next_token: string option ;
   config_rules_evaluation_status: config_rule_evaluation_status list option }
-type nonrec rule_limit = int
 type nonrec describe_config_rule_evaluation_status_request =
   {
   limit: int option ;
@@ -2107,7 +1880,6 @@ type nonrec compliance_by_resource =
   compliance: compliance option ;
   resource_id: string option ;
   resource_type: string option }
-type nonrec compliance_by_resources = compliance_by_resource list option list
 type nonrec describe_compliance_by_resource_response =
   {
   next_token: string option ;
@@ -2123,8 +1895,6 @@ type nonrec compliance_by_config_rule =
   {
   compliance: compliance option ;
   config_rule_name: string option }
-type nonrec compliance_by_config_rules =
-  compliance_by_config_rule list option list
 type nonrec describe_compliance_by_config_rule_response =
   {
   next_token: string option ;
@@ -2134,8 +1904,6 @@ type nonrec describe_compliance_by_config_rule_request =
   next_token: string option ;
   compliance_types: compliance_type list option ;
   config_rule_names: string list option }
-type nonrec aggregation_authorization_list =
-  aggregation_authorization list option list
 type nonrec describe_aggregation_authorizations_response =
   {
   next_token: string option ;
@@ -2156,8 +1924,6 @@ type nonrec aggregate_compliance_by_conformance_pack =
   account_id: string option ;
   compliance: aggregate_conformance_pack_compliance option ;
   conformance_pack_name: string option }
-type nonrec aggregate_compliance_by_conformance_pack_list =
-  aggregate_compliance_by_conformance_pack list option list
 type nonrec describe_aggregate_compliance_by_conformance_packs_response =
   {
   next_token: string option ;
@@ -2181,8 +1947,6 @@ type nonrec aggregate_compliance_by_config_rule =
   account_id: string option ;
   compliance: compliance option ;
   config_rule_name: string option }
-type nonrec aggregate_compliance_by_config_rule_list =
-  aggregate_compliance_by_config_rule list option list
 type nonrec describe_aggregate_compliance_by_config_rules_response =
   {
   next_token: string option ;
@@ -2223,8 +1987,6 @@ type nonrec failed_delete_remediation_exceptions_batch =
   {
   failed_items: remediation_exception_resource_key list option ;
   failure_message: string option }
-type nonrec failed_delete_remediation_exceptions_batches =
-  failed_delete_remediation_exceptions_batch list option list
 type nonrec delete_remediation_exceptions_response =
   {
   failed_batches: failed_delete_remediation_exceptions_batch list option }
@@ -2275,11 +2037,11 @@ type nonrec delete_aggregation_authorization_request =
   authorized_account_id: string }
 type nonrec base_configuration_item =
   {
-  configuration_item_delivery_time: float option ;
+  configuration_item_delivery_time: CoreTypes.Timestamp.t option ;
   recording_frequency: recording_frequency option ;
-  supplementary_configuration: (string * string) list option ;
+  supplementary_configuration: supplementary_configuration option ;
   configuration: string option ;
-  resource_creation_time: float option ;
+  resource_creation_time: CoreTypes.Timestamp.t option ;
   availability_zone: string option ;
   aws_region: string option ;
   resource_name: string option ;
@@ -2288,11 +2050,9 @@ type nonrec base_configuration_item =
   arn: string option ;
   configuration_state_id: string option ;
   configuration_item_status: configuration_item_status option ;
-  configuration_item_capture_time: float option ;
+  configuration_item_capture_time: CoreTypes.Timestamp.t option ;
   account_id: string option ;
   version: string option }
-type nonrec base_configuration_items =
-  base_configuration_item list option list
 type nonrec batch_get_resource_config_response =
   {
   unprocessed_resource_keys: resource_key list option ;
@@ -2304,16 +2064,7 @@ type nonrec batch_get_aggregate_resource_config_response =
   {
   unprocessed_resource_identifiers: aggregate_resource_identifier list option ;
   base_configuration_items: base_configuration_item list option }
-type nonrec resource_identifiers_list =
-  aggregate_resource_identifier list option list
 type nonrec batch_get_aggregate_resource_config_request =
   {
   resource_identifiers: aggregate_resource_identifier list ;
   configuration_aggregator_name: string }
-type nonrec starling_dove_service = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

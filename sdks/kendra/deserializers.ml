@@ -1720,7 +1720,7 @@ let document_attribute_string_value_of_yojson = string_of_yojson
 let document_attribute_string_list_value_of_yojson = 
   fun tree path -> list_of_yojson string__of_yojson tree path 
 
-let timestamp__of_yojson = timestamp_of_yojson
+let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 
 let document_attribute_value_of_yojson = 
   fun tree path : document_attribute_value ->
@@ -4516,7 +4516,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

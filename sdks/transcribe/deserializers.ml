@@ -127,7 +127,7 @@ let language_code_of_yojson =
     | `String value -> raise (deserialize_unknown_enum_value_error path "LanguageCode" value)
     | _ -> raise (deserialize_wrong_type_error path "LanguageCode")
 
-let date_time_of_yojson = timestamp_of_yojson
+let date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let vocabulary_info_of_yojson = 
   fun tree path : vocabulary_info ->
@@ -1940,7 +1940,7 @@ let base_boolean_of_yojson = bool_of_yojson
 
 let base_integer_of_yojson = int_of_yojson
 
-let base_timestamp_of_yojson = timestamp_of_yojson
+let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let base_long_of_yojson = long_of_yojson
 

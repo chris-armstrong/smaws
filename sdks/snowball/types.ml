@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,25 +7,19 @@ let service =
       version = "2016-06-30";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec boolean_ = unit
 type nonrec wireless_connection = {
   is_wifi_enabled: bool option }
 type nonrec update_long_term_pricing_result = unit
-type nonrec long_term_pricing_id = unit
-type nonrec job_id = unit
-type nonrec java_boolean = unit
 type nonrec update_long_term_pricing_request =
   {
   is_long_term_pricing_auto_renew: bool option ;
   replacement_job: string option ;
   long_term_pricing_id: string }
-type nonrec string_ = unit
 type nonrec invalid_resource_exception =
   {
   resource_type: string option ;
   message: string option }
 type nonrec update_job_shipment_state_result = unit
-type nonrec base_unit = unit
 type nonrec shipment_state =
   | RETURNED 
   | RECEIVED 
@@ -36,8 +30,6 @@ type nonrec update_job_shipment_state_request =
 type nonrec invalid_job_state_exception = {
   message: string option }
 type nonrec update_job_result = unit
-type nonrec role_ar_n = unit
-type nonrec sns_topic_ar_n = unit
 type nonrec job_state =
   | PENDING 
   | LISTING 
@@ -52,14 +44,12 @@ type nonrec job_state =
   | PREPARING_SHIPMENT 
   | PREPARING_APPLIANCE 
   | NEW 
-type nonrec job_state_list = unit
 type nonrec notification =
   {
   device_pickup_sns_topic_ar_n: string option ;
   notify_all: bool option ;
   job_states_to_notify: job_state list option ;
   sns_topic_ar_n: string option }
-type nonrec resource_ar_n = unit
 type nonrec key_range =
   {
   end_marker: string option ;
@@ -75,33 +65,26 @@ type nonrec target_on_device_service =
   {
   transfer_option: transfer_option option ;
   service_name: device_service_name option }
-type nonrec target_on_device_service_list = unit
 type nonrec s3_resource =
   {
   target_on_device_services: target_on_device_service list option ;
   key_range: key_range option ;
   bucket_arn: string option }
-type nonrec s3_resource_list = unit
 type nonrec event_trigger_definition = {
   event_resource_ar_n: string option }
-type nonrec event_trigger_definition_list = unit
 type nonrec lambda_resource =
   {
   event_triggers: event_trigger_definition list option ;
   lambda_arn: string option }
-type nonrec lambda_resource_list = unit
-type nonrec ami_id = unit
 type nonrec ec2_ami_resource =
   {
   snowball_ami_id: string option ;
   ami_id: string }
-type nonrec ec2_ami_resource_list = unit
 type nonrec job_resource =
   {
   ec2_ami_resources: ec2_ami_resource list option ;
   lambda_resources: lambda_resource list option ;
   s3_resources: s3_resource list option }
-type nonrec storage_limit = unit
 type nonrec storage_unit =
   | TB 
 type nonrec nfs_on_device_service_configuration =
@@ -116,9 +99,6 @@ type nonrec eks_on_device_service_configuration =
   {
   eks_anywhere_version: string option ;
   kubernetes_version: string option }
-type nonrec s3_storage_limit = unit
-type nonrec service_size = unit
-type nonrec node_fault_tolerance = unit
 type nonrec s3_on_device_service_configuration =
   {
   fault_tolerance: int option ;
@@ -131,7 +111,6 @@ type nonrec on_device_service_configuration =
   eks_on_device_service: eks_on_device_service_configuration option ;
   tgw_on_device_service: tgw_on_device_service_configuration option ;
   nfs_on_device_service: nfs_on_device_service_configuration option }
-type nonrec address_id = unit
 type nonrec shipping_option =
   | STANDARD 
   | EXPRESS 
@@ -149,15 +128,11 @@ type nonrec snowball_capacity =
   | T100 
   | T80 
   | T50 
-type nonrec phone_number = unit
-type nonrec email = unit
-type nonrec timestamp_ = unit
-type nonrec device_pickup_id = unit
 type nonrec pickup_details =
   {
   device_pickup_id: string option ;
   identification_issuing_org: string option ;
-  identification_expiration_date: Timestamp.t option ;
+  identification_expiration_date: CoreTypes.Timestamp.t option ;
   identification_number: string option ;
   email: string option ;
   phone_number: string option ;
@@ -184,7 +159,6 @@ type nonrec ec2_request_failed_exception = {
 type nonrec cluster_limit_exceeded_exception = {
   message: string option }
 type nonrec update_cluster_result = unit
-type nonrec cluster_id = unit
 type nonrec update_cluster_request =
   {
   forwarding_address_id: string option ;
@@ -198,7 +172,6 @@ type nonrec update_cluster_request =
   cluster_id: string }
 type nonrec unsupported_address_exception = {
   message: string option }
-type nonrec gsti_n = unit
 type nonrec ind_tax_documents = {
   gsti_n: string option }
 type nonrec tax_documents = {
@@ -233,7 +206,6 @@ type nonrec shipping_details =
   shipping_option: shipping_option option }
 type nonrec service_version = {
   version: string option }
-type nonrec service_version_list = unit
 type nonrec service_name =
   | EKS_ANYWHERE 
   | KUBERNETES 
@@ -248,7 +220,6 @@ type nonrec long_term_pricing_type =
   | ONE_MONTH 
   | THREE_YEAR 
   | ONE_YEAR 
-type nonrec long_term_pricing_associated_job_id_list = unit
 type nonrec long_term_pricing_list_entry =
   {
   job_ids: string list option ;
@@ -258,24 +229,19 @@ type nonrec long_term_pricing_list_entry =
   replacement_job: string option ;
   current_active_job: string option ;
   long_term_pricing_type: long_term_pricing_type option ;
-  long_term_pricing_start_date: Timestamp.t option ;
-  long_term_pricing_end_date: Timestamp.t option ;
+  long_term_pricing_start_date: CoreTypes.Timestamp.t option ;
+  long_term_pricing_end_date: CoreTypes.Timestamp.t option ;
   long_term_pricing_id: string option }
-type nonrec long_term_pricing_id_list = unit
-type nonrec long_term_pricing_entry_list = unit
-type nonrec long = unit
 type nonrec dependent_service =
   {
   service_version: service_version option ;
   service_name: service_name option }
-type nonrec dependent_service_list = unit
 type nonrec list_service_versions_result =
   {
   next_token: string option ;
   dependent_services: dependent_service list option ;
   service_name: service_name ;
   service_versions: service_version list }
-type nonrec list_limit = unit
 type nonrec list_service_versions_request =
   {
   next_token: string option ;
@@ -304,7 +270,6 @@ type nonrec address =
   company: string option ;
   name: string option ;
   address_id: string option }
-type nonrec address_list = unit
 type nonrec list_pickup_locations_result =
   {
   next_token: string option ;
@@ -328,13 +293,12 @@ type nonrec job_type =
 type nonrec job_list_entry =
   {
   description: string option ;
-  creation_date: Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   snowball_type: snowball_type option ;
   job_type: job_type option ;
   is_master: bool option ;
   job_state: job_state option ;
   job_id: string option }
-type nonrec job_list_entry_list = unit
 type nonrec list_jobs_result =
   {
   next_token: string option ;
@@ -346,7 +310,6 @@ type nonrec list_jobs_request =
 type nonrec compatible_image = {
   name: string option ;
   ami_id: string option }
-type nonrec compatible_image_list = unit
 type nonrec list_compatible_images_result =
   {
   next_token: string option ;
@@ -364,10 +327,9 @@ type nonrec cluster_state =
 type nonrec cluster_list_entry =
   {
   description: string option ;
-  creation_date: Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   cluster_state: cluster_state option ;
   cluster_id: string option }
-type nonrec cluster_list_entry_list = unit
 type nonrec list_clusters_result =
   {
   next_token: string option ;
@@ -385,7 +347,6 @@ type nonrec list_cluster_jobs_request =
   next_token: string option ;
   max_results: int option ;
   cluster_id: string }
-type nonrec kms_key_ar_n = unit
 type nonrec data_transfer =
   {
   total_objects: int option ;
@@ -428,16 +389,13 @@ type nonrec job_metadata =
   kms_key_ar_n: string option ;
   description: string option ;
   resources: job_resource option ;
-  creation_date: Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   snowball_type: snowball_type option ;
   job_type: job_type option ;
   job_state: job_state option ;
   job_id: string option }
-type nonrec job_metadata_list = unit
 type nonrec invalid_address_exception = {
   message: string option }
-type nonrec integer_ = unit
-type nonrec initial_cluster_size = unit
 type nonrec get_software_updates_result = {
   updates_ur_i: string option }
 type nonrec get_software_updates_request = {
@@ -458,7 +416,7 @@ type nonrec get_job_manifest_request = {
 type nonrec describe_return_shipping_label_result =
   {
   return_shipping_label_ur_i: string option ;
-  expiration_date: Timestamp.t option ;
+  expiration_date: CoreTypes.Timestamp.t option ;
   status: shipping_label_status option }
 type nonrec describe_return_shipping_label_request = {
   job_id: string }
@@ -481,7 +439,7 @@ type nonrec cluster_metadata =
   shipping_option: shipping_option option ;
   address_id: string option ;
   resources: job_resource option ;
-  creation_date: Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   snowball_type: snowball_type option ;
   job_type: job_type option ;
   cluster_state: cluster_state option ;
@@ -577,10 +535,3 @@ type nonrec cancel_job_request = {
 type nonrec cancel_cluster_result = unit
 type nonrec cancel_cluster_request = {
   cluster_id: string }
-type nonrec awsie_snowball_job_management_service = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

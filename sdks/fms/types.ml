@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,8 +7,6 @@ let service =
       version = "2018-01-01";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec violation_target = string
-type nonrec base_unit = unit
 type nonrec violation_reason =
   | InvalidNetworkAclEntry 
   | FirewallSubnetMissingVPCEndpoint 
@@ -39,25 +37,13 @@ type nonrec violation_reason =
   | ResourceIncorrectWebAcl 
   | ResourceMissingWebAcl 
   | WebAclMissingRuleGroup 
-type nonrec policy_id = string
-type nonrec aws_account_id = string
-type nonrec resource_id = string
-type nonrec resource_type = string
-type nonrec length_bounded_string = string
-type nonrec reference_rule = string
-type nonrec target_violation_reason = string
-type nonrec target_violation_reasons = string list option list
 type nonrec partial_match =
   {
   target_violation_reasons: string list option ;
   reference: string option }
-type nonrec partial_matches = partial_match list option list
 type nonrec remediation_action_type =
   | Modify 
   | Remove 
-type nonrec remediation_action_description = string
-type nonrec cid_r = string
-type nonrec ip_port_number = int
 type nonrec security_group_rule_description =
   {
   to_port: int option ;
@@ -66,15 +52,12 @@ type nonrec security_group_rule_description =
   prefix_list_id: string option ;
   ipv6_range: string option ;
   ipv4_range: string option }
-type nonrec boolean_ = bool
 type nonrec security_group_remediation_action =
   {
   is_default_action: bool option ;
   remediation_result: security_group_rule_description option ;
   description: string option ;
   remediation_action_type: remediation_action_type option }
-type nonrec security_group_remediation_actions =
-  security_group_remediation_action list option list
 type nonrec aws_vpc_security_group_violation =
   {
   possible_security_group_remediation_actions:
@@ -82,13 +65,10 @@ type nonrec aws_vpc_security_group_violation =
   partial_matches: partial_match list option ;
   violation_target_description: string option ;
   violation_target: string option }
-type nonrec resource_id_list = string list option list
 type nonrec aws_ec2_network_interface_violation =
   {
   violating_security_groups: string list option ;
   violation_target: string option }
-type nonrec aws_ec2_network_interface_violations =
-  aws_ec2_network_interface_violation list option list
 type nonrec aws_ec2_instance_violation =
   {
   aws_ec2_network_interface_violations:
@@ -113,17 +93,11 @@ type nonrec network_firewall_missing_expected_rt_violation =
   availability_zone: string option ;
   vp_c: string option ;
   violation_target: string option }
-type nonrec network_firewall_resource_name = string
-type nonrec stateless_rule_group_priority = int
 type nonrec stateless_rule_group =
   {
   priority: int option ;
   resource_id: string option ;
   rule_group_name: string option }
-type nonrec stateless_rule_group_list = stateless_rule_group list option list
-type nonrec network_firewall_action = string
-type nonrec network_firewall_action_list = string list option list
-type nonrec priority_number = int
 type nonrec network_firewall_override_action =
   | DROP_TO_ALERT 
 type nonrec network_firewall_stateful_rule_group_override =
@@ -135,7 +109,6 @@ type nonrec stateful_rule_group =
   priority: int option ;
   resource_id: string option ;
   rule_group_name: string option }
-type nonrec stateful_rule_group_list = stateful_rule_group list option list
 type nonrec rule_order =
   | DEFAULT_ACTION_ORDER 
   | STRICT_ORDER 
@@ -183,8 +156,6 @@ type nonrec route =
   destination: string option ;
   target_type: target_type option ;
   destination_type: destination_type option }
-type nonrec routes = route list option list
-type nonrec length_bounded_string_list = string list option list
 type nonrec expected_route =
   {
   route_table_id: string option ;
@@ -193,7 +164,6 @@ type nonrec expected_route =
   ip_v6_cidr: string option ;
   prefix_list_id: string option ;
   ip_v4_cidr: string option }
-type nonrec expected_routes = expected_route list option list
 type nonrec network_firewall_internet_traffic_not_inspected_violation =
   {
   vpc_id: string option ;
@@ -253,8 +223,6 @@ type nonrec network_firewall_missing_expected_routes_violation =
   vpc_id: string option ;
   expected_routes: expected_route list option ;
   violation_target: string option }
-type nonrec dns_rule_group_priority = int
-type nonrec dns_rule_group_priorities = int list option list
 type nonrec dns_rule_group_priority_conflict_violation =
   {
   unavailable_priorities: int list option ;
@@ -266,7 +234,6 @@ type nonrec dns_duplicate_rule_group_violation =
   {
   violation_target_description: string option ;
   violation_target: string option }
-type nonrec basic_integer = int
 type nonrec dns_rule_group_limit_exceeded_violation =
   {
   number_of_rule_groups_already_associated: int option ;
@@ -318,20 +285,16 @@ type nonrec firewall_subnet_missing_vpc_endpoint_violation =
   subnet_availability_zone: string option ;
   vpc_id: string option ;
   firewall_subnet_id: string option }
-type nonrec integer_object = int
 type nonrec network_acl_icmp_type_code =
   {
   type_: int option ;
   code: int option }
-type nonrec ip_port_number_integer = int
 type nonrec network_acl_port_range = {
   to_: int option ;
   from_: int option }
-type nonrec length_bounded_non_empty_string = string
 type nonrec network_acl_rule_action =
   | DENY 
   | ALLOW 
-type nonrec boolean_object = bool
 type nonrec network_acl_entry =
   {
   egress: bool ;
@@ -341,7 +304,6 @@ type nonrec network_acl_entry =
   port_range: network_acl_port_range option ;
   protocol: string ;
   icmp_type_code: network_acl_icmp_type_code option }
-type nonrec integer_object_minimum0 = int
 type nonrec entry_type =
   | CustomEntry 
   | FMSManagedLastEntry 
@@ -351,12 +313,10 @@ type nonrec entry_description =
   entry_type: entry_type option ;
   entry_rule_number: int option ;
   entry_detail: network_acl_entry option }
-type nonrec entries_with_conflicts = entry_description list option list
 type nonrec entry_violation_reason =
   | EntryConflict 
   | IncorrectEntryOrder 
   | MissingExpectedEntry 
-type nonrec entry_violation_reasons = entry_violation_reason list option list
 type nonrec entry_violation =
   {
   entry_violation_reasons: entry_violation_reason list option ;
@@ -365,7 +325,6 @@ type nonrec entry_violation =
   actual_evaluation_order: string option ;
   expected_evaluation_order: string option ;
   expected_entry: entry_description option }
-type nonrec entry_violations = entry_violation list option list
 type nonrec invalid_network_acl_entries_violation =
   {
   entry_violations: entry_violation list option ;
@@ -421,7 +380,6 @@ type nonrec ec2_create_route_table_action =
   {
   vpc_id: action_target ;
   description: string option }
-type nonrec managed_service_data = string
 type nonrec fms_policy_update_firewall_creation_config_action =
   {
   firewall_creation_config: string option ;
@@ -437,7 +395,6 @@ type nonrec replace_network_acl_association_action =
   network_acl_id: action_target option ;
   association_id: action_target option ;
   description: string option }
-type nonrec entries_description = entry_description list option list
 type nonrec create_network_acl_entries_action =
   {
   fms_can_remediate: bool option ;
@@ -472,15 +429,11 @@ type nonrec remediation_action_with_order =
   {
   order: int option ;
   remediation_action: remediation_action option }
-type nonrec ordered_remediation_actions =
-  remediation_action_with_order list option list
 type nonrec possible_remediation_action =
   {
   is_default_action: bool option ;
   ordered_remediation_actions: remediation_action_with_order list ;
   description: string option }
-type nonrec possible_remediation_action_list =
-  possible_remediation_action list option list
 type nonrec possible_remediation_actions =
   {
   actions: possible_remediation_action list option ;
@@ -532,13 +485,9 @@ type nonrec resource_violation =
   aws_ec2_network_interface_violation:
     aws_ec2_network_interface_violation option ;
   aws_vpc_security_group_violation: aws_vpc_security_group_violation option }
-type nonrec resource_violations = resource_violation list option list
-type nonrec tag_key = string
-type nonrec tag_value = string
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = tag list option list
 type nonrec violation_detail =
   {
   resource_description: string option ;
@@ -548,15 +497,11 @@ type nonrec violation_detail =
   resource_id: string ;
   member_account: string ;
   policy_id: string }
-type nonrec update_token = string
 type nonrec untag_resource_response = unit
-type nonrec resource_arn = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_arn: string }
-type nonrec error_message = string
 type nonrec resource_not_found_exception = {
   message: string option }
 type nonrec invalid_operation_exception = {
@@ -565,21 +510,16 @@ type nonrec invalid_input_exception = {
   message: string option }
 type nonrec internal_error_exception = {
   message: string option }
-type nonrec time_stamp = Timestamp.t
 type nonrec firewall_deployment_model =
   | DISTRIBUTED 
   | CENTRALIZED 
 type nonrec third_party_firewall_policy =
   {
   firewall_deployment_model: firewall_deployment_model option }
-type nonrec firewall_policy_id = string
-type nonrec firewall_policy_name = string
 type nonrec third_party_firewall_firewall_policy =
   {
   firewall_policy_name: string option ;
   firewall_policy_id: string option }
-type nonrec third_party_firewall_firewall_policies =
-  third_party_firewall_firewall_policy list option list
 type nonrec third_party_firewall_association_status =
   | NOT_EXIST 
   | OFFBOARD_COMPLETE 
@@ -608,12 +548,9 @@ type nonrec security_service_type =
   | SHIELD_ADVANCED 
   | WAFV2 
   | WAF 
-type nonrec security_service_type_list =
-  security_service_type list option list
 type nonrec network_firewall_policy =
   {
   firewall_deployment_model: firewall_deployment_model option }
-type nonrec network_acl_entries = network_acl_entry list option list
 type nonrec network_acl_entry_set =
   {
   force_remediate_for_last_entries: bool ;
@@ -633,47 +570,31 @@ type nonrec security_service_policy_data =
   policy_option: policy_option option ;
   managed_service_data: string option ;
   type_: security_service_type }
-type nonrec resource_type_list = string list option list
-type nonrec resource_tag_key = string
-type nonrec resource_tag_value = string
 type nonrec resource_tag = {
   value: string option ;
   key: string }
-type nonrec resource_tags = resource_tag list option list
-type nonrec base62_id = string
-type nonrec name = string
-type nonrec description = string
 type nonrec resource_set_status =
   | OUT_OF_ADMIN_SCOPE 
   | ACTIVE 
 type nonrec resource_set_summary =
   {
   resource_set_status: resource_set_status option ;
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   description: string option ;
   name: string option ;
   id: string option }
-type nonrec resource_set_summary_list = resource_set_summary list option list
-type nonrec resource_set_ids = string list option list
 type nonrec resource_set =
   {
   resource_set_status: resource_set_status option ;
-  last_update_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
   resource_type_list: string list ;
   update_token: string option ;
   description: string option ;
   name: string ;
   id: string option }
-type nonrec resource_name = string
-type nonrec identifier = string
 type nonrec resource = {
   account_id: string option ;
   ur_i: string }
-type nonrec resource_list = resource list option list
-type nonrec resource_description = string
-type nonrec resource_count = int
-type nonrec aws_region = string
-type nonrec aws_region_list = string list option list
 type nonrec region_scope =
   {
   all_regions_enabled: bool option ;
@@ -686,18 +607,13 @@ type nonrec put_resource_set_request =
   {
   tag_list: tag list option ;
   resource_set: resource_set }
-type nonrec list_id = string
-type nonrec protocol = string
-type nonrec protocols_list = string list option list
-type nonrec previous_list_version = string
-type nonrec previous_protocols_list =
-  (string_ option * string list option) list
+type nonrec previous_protocols_list = (string * string list) list
 type nonrec protocols_list_data =
   {
-  previous_protocols_list: (string * string list) list option ;
+  previous_protocols_list: previous_protocols_list option ;
   protocols_list: string list ;
-  last_update_time: float option ;
-  create_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
+  create_time: CoreTypes.Timestamp.t option ;
   list_update_token: string option ;
   list_name: string ;
   list_id: string option }
@@ -709,14 +625,11 @@ type nonrec put_protocols_list_request =
   {
   tag_list: tag list option ;
   protocols_list: protocols_list_data }
-type nonrec policy_update_token = string
-type nonrec customer_policy_scope_id = string
-type nonrec customer_policy_scope_id_list = string list option list
 type nonrec customer_policy_scope_id_type =
   | ORG_UNIT 
   | ACCOUNT 
 type nonrec customer_policy_scope_map =
-  (string_ option * string list option) list
+  (customer_policy_scope_id_type * string list) list
 type nonrec customer_policy_status =
   | OUT_OF_ADMIN_SCOPE 
   | ACTIVE 
@@ -725,8 +638,8 @@ type nonrec policy =
   policy_status: customer_policy_status option ;
   policy_description: string option ;
   resource_set_ids: string list option ;
-  exclude_map: (string * string list) list option ;
-  include_map: (string * string list) list option ;
+  exclude_map: customer_policy_scope_map option ;
+  include_map: customer_policy_scope_map option ;
   delete_unused_fm_managed_resources: bool option ;
   remediation_enabled: bool ;
   exclude_resource_tags: bool ;
@@ -754,14 +667,13 @@ type nonrec app = {
   port: int ;
   protocol: string ;
   app_name: string }
-type nonrec apps_list = app list option list
-type nonrec previous_apps_list = (string_ option * app list option) list
+type nonrec previous_apps_list = (string * app list) list
 type nonrec apps_list_data =
   {
-  previous_apps_list: (string * app list) list option ;
+  previous_apps_list: previous_apps_list option ;
   apps_list: app list ;
-  last_update_time: float option ;
-  create_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
+  create_time: CoreTypes.Timestamp.t option ;
   list_update_token: string option ;
   list_name: string ;
   list_id: string option }
@@ -773,14 +685,11 @@ type nonrec put_apps_list_request =
   {
   tag_list: tag list option ;
   apps_list: apps_list_data }
-type nonrec account_id_list = string list option list
 type nonrec account_scope =
   {
   exclude_specified_accounts: bool option ;
   all_accounts_enabled: bool option ;
   accounts: string list option }
-type nonrec organizational_unit_id = string
-type nonrec organizational_unit_id_list = string list option list
 type nonrec organizational_unit_scope =
   {
   exclude_specified_organizational_units: bool option ;
@@ -806,9 +715,6 @@ type nonrec protocols_list_data_summary =
   list_name: string option ;
   list_id: string option ;
   list_arn: string option }
-type nonrec protocols_lists_data =
-  protocols_list_data_summary list option list
-type nonrec protection_data = string
 type nonrec policy_summary =
   {
   policy_status: customer_policy_status option ;
@@ -819,7 +725,6 @@ type nonrec policy_summary =
   policy_name: string option ;
   policy_id: string option ;
   policy_arn: string option }
-type nonrec policy_summary_list = policy_summary list option list
 type nonrec policy_compliance_status_type =
   | NonCompliant 
   | Compliant 
@@ -828,51 +733,42 @@ type nonrec evaluation_result =
   evaluation_limit_exceeded: bool option ;
   violator_count: int option ;
   compliance_status: policy_compliance_status_type option }
-type nonrec evaluation_results = evaluation_result list option list
-type nonrec detailed_info = string
 type nonrec dependent_service_name =
   | AWSVirtualPrivateCloud 
   | AWSShieldAdvanced 
   | AWSWAF 
   | AWSConfig 
-type nonrec issue_info_map = (string_ option * string_ option) list
+type nonrec issue_info_map = (dependent_service_name * string) list
 type nonrec policy_compliance_status =
   {
-  issue_info_map: (string * string) list option ;
-  last_updated: float option ;
+  issue_info_map: issue_info_map option ;
+  last_updated: CoreTypes.Timestamp.t option ;
   evaluation_results: evaluation_result list option ;
   member_account: string option ;
   policy_name: string option ;
   policy_id: string option ;
   policy_owner: string option }
-type nonrec policy_compliance_status_list =
-  policy_compliance_status list option list
-type nonrec compliance_violator_metadata =
-  (string_ option * string_ option) list
+type nonrec compliance_violator_metadata = (string * string) list
 type nonrec compliance_violator =
   {
-  metadata: (string * string) list option ;
+  metadata: compliance_violator_metadata option ;
   resource_type: string option ;
   violation_reason: violation_reason option ;
   resource_id: string option }
-type nonrec compliance_violators = compliance_violator list option list
 type nonrec policy_compliance_detail =
   {
-  issue_info_map: (string * string) list option ;
-  expired_at: float option ;
+  issue_info_map: issue_info_map option ;
+  expired_at: CoreTypes.Timestamp.t option ;
   evaluation_limit_exceeded: bool option ;
   violators: compliance_violator list option ;
   member_account: string option ;
   policy_id: string option ;
   policy_owner: string option }
-type nonrec pagination_token = string
-type nonrec pagination_max_results = int
 type nonrec organization_status =
   | OffboardingComplete 
   | Offboarding 
   | OnboardingComplete 
   | Onboarding 
-type nonrec member_accounts = string list option list
 type nonrec marketplace_subscription_onboarding_status =
   | COMPLETE 
   | NOT_COMPLETE 
@@ -939,12 +835,10 @@ type nonrec discovered_resource =
   type_: string option ;
   account_id: string option ;
   ur_i: string option }
-type nonrec discovered_resource_list = discovered_resource list option list
 type nonrec list_discovered_resources_response =
   {
   next_token: string option ;
   items: discovered_resource list option }
-type nonrec aws_account_id_list = string list option list
 type nonrec list_discovered_resources_request =
   {
   next_token: string option ;
@@ -966,7 +860,6 @@ type nonrec apps_list_data_summary =
   list_name: string option ;
   list_id: string option ;
   list_arn: string option }
-type nonrec apps_lists_data = apps_list_data_summary list option list
 type nonrec list_apps_lists_response =
   {
   next_token: string option ;
@@ -989,8 +882,6 @@ type nonrec admin_account_summary =
   status: organization_status option ;
   default_admin: bool option ;
   admin_account: string option }
-type nonrec admin_account_summary_list =
-  admin_account_summary list option list
 type nonrec list_admin_accounts_for_organization_response =
   {
   next_token: string option ;
@@ -999,7 +890,6 @@ type nonrec list_admin_accounts_for_organization_request =
   {
   max_results: int option ;
   next_token: string option }
-type nonrec identifier_list = string list option list
 type nonrec get_violation_details_response =
   {
   violation_detail: violation_detail option }
@@ -1041,8 +931,8 @@ type nonrec get_protection_status_request =
   {
   max_results: int option ;
   next_token: string option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   member_account_id: string option ;
   policy_id: string }
 type nonrec get_policy_response =
@@ -1099,7 +989,6 @@ type nonrec failed_item =
   {
   reason: failed_item_reason option ;
   ur_i: string option }
-type nonrec failed_item_list = failed_item list option list
 type nonrec disassociate_third_party_firewall_response =
   {
   third_party_firewall_status: third_party_firewall_association_status option }
@@ -1142,10 +1031,3 @@ type nonrec associate_third_party_firewall_request =
   third_party_firewall: third_party_firewall }
 type nonrec associate_admin_account_request = {
   admin_account: string }
-type nonrec awsfm_s_20180101 = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

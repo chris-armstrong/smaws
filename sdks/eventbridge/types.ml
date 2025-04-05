@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,11 +7,6 @@ let service =
       version = "2015-10-07";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec string_ = string
-type nonrec event_bus_name = string
-type nonrec kms_key_identifier = string
-type nonrec event_bus_description = string
-type nonrec resource_arn = string
 type nonrec dead_letter_config = {
   arn: string option }
 type nonrec update_event_bus_response =
@@ -27,7 +22,6 @@ type nonrec update_event_bus_request =
   description: string option ;
   kms_key_identifier: string option ;
   name: string option }
-type nonrec error_message = string
 type nonrec resource_not_found_exception = {
   message: string option }
 type nonrec operation_disabled_exception = {
@@ -36,12 +30,8 @@ type nonrec internal_exception = {
   message: string option }
 type nonrec concurrent_modification_exception = {
   message: string option }
-type nonrec endpoint_name = string
-type nonrec endpoint_arn = string
-type nonrec health_check = string
 type nonrec primary = {
   health_check: string }
-type nonrec route = string
 type nonrec secondary = {
   route: string }
 type nonrec failover_config = {
@@ -49,19 +39,13 @@ type nonrec failover_config = {
   primary: primary }
 type nonrec routing_config = {
   failover_config: failover_config }
-type nonrec base_unit = unit
 type nonrec replication_state =
   | DISABLED 
   | ENABLED 
 type nonrec replication_config = {
   state: replication_state option }
-type nonrec non_partner_event_bus_arn = string
 type nonrec endpoint_event_bus = {
   event_bus_arn: string }
-type nonrec endpoint_event_bus_list = endpoint_event_bus list option list
-type nonrec iam_role_arn = string
-type nonrec endpoint_id = string
-type nonrec endpoint_url = string
 type nonrec endpoint_state =
   | DELETE_FAILED 
   | UPDATE_FAILED 
@@ -81,7 +65,6 @@ type nonrec update_endpoint_response =
   routing_config: routing_config option ;
   arn: string option ;
   name: string option }
-type nonrec endpoint_description = string
 type nonrec update_endpoint_request =
   {
   role_arn: string option ;
@@ -90,7 +73,6 @@ type nonrec update_endpoint_request =
   routing_config: routing_config option ;
   description: string option ;
   name: string }
-type nonrec connection_arn = string
 type nonrec connection_state =
   | DEAUTHORIZING 
   | AUTHORIZING 
@@ -99,22 +81,17 @@ type nonrec connection_state =
   | DELETING 
   | UPDATING 
   | CREATING 
-type nonrec timestamp_ = Timestamp.t
 type nonrec update_connection_response =
   {
-  last_authorized_time: float option ;
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_authorized_time: CoreTypes.Timestamp.t option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
   connection_arn: string option }
-type nonrec connection_name = string
-type nonrec connection_description = string
 type nonrec connection_authorization_type =
   | API_KEY 
   | OAUTH_CLIENT_CREDENTIALS 
   | BASIC 
-type nonrec auth_header_parameters = string
-type nonrec auth_header_parameters_sensitive = string
 type nonrec update_connection_basic_auth_request_parameters =
   {
   password: string option ;
@@ -123,38 +100,25 @@ type nonrec update_connection_o_auth_client_request_parameters =
   {
   client_secret: string option ;
   client_i_d: string option }
-type nonrec https_endpoint = string
 type nonrec connection_o_auth_http_method =
   | PUT 
   | POST 
   | GET 
-type nonrec header_key = string
-type nonrec header_value_sensitive = string
-type nonrec boolean_ = bool
 type nonrec connection_header_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
   key: string option }
-type nonrec connection_header_parameters_list =
-  connection_header_parameter list option list
-type nonrec query_string_key = string
-type nonrec query_string_value_sensitive = string
 type nonrec connection_query_string_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
   key: string option }
-type nonrec connection_query_string_parameters_list =
-  connection_query_string_parameter list option list
-type nonrec sensitive_string = string
 type nonrec connection_body_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
   key: string option }
-type nonrec connection_body_parameters_list =
-  connection_body_parameter list option list
 type nonrec connection_http_parameters =
   {
   body_parameters: connection_body_parameter list option ;
@@ -187,7 +151,6 @@ type nonrec update_connection_request =
   name: string }
 type nonrec limit_exceeded_exception = {
   message: string option }
-type nonrec archive_arn = string
 type nonrec archive_state =
   | UPDATE_FAILED 
   | CREATE_FAILED 
@@ -195,17 +158,12 @@ type nonrec archive_state =
   | CREATING 
   | DISABLED 
   | ENABLED 
-type nonrec archive_state_reason = string
 type nonrec update_archive_response =
   {
-  creation_time: float option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
   archive_arn: string option }
-type nonrec archive_name = string
-type nonrec archive_description = string
-type nonrec event_pattern = string
-type nonrec retention_days = int
 type nonrec update_archive_request =
   {
   retention_days: int option ;
@@ -214,18 +172,15 @@ type nonrec update_archive_request =
   archive_name: string }
 type nonrec invalid_event_pattern_exception = {
   message: string option }
-type nonrec api_destination_arn = string
 type nonrec api_destination_state =
   | INACTIVE 
   | ACTIVE 
 type nonrec update_api_destination_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
   api_destination_arn: string option }
-type nonrec api_destination_name = string
-type nonrec api_destination_description = string
 type nonrec api_destination_http_method =
   | DELETE 
   | PATCH 
@@ -234,7 +189,6 @@ type nonrec api_destination_http_method =
   | HEAD 
   | GET 
   | POST 
-type nonrec api_destination_invocation_rate_limit_per_second = int
 type nonrec update_api_destination_request =
   {
   invocation_rate_limit_per_second: int option ;
@@ -244,53 +198,35 @@ type nonrec update_api_destination_request =
   description: string option ;
   name: string }
 type nonrec untag_resource_response = unit
-type nonrec arn = string
-type nonrec tag_key = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_ar_n: string }
 type nonrec managed_rule_exception = {
   message: string option }
-type nonrec target_input_path = string
-type nonrec input_transformer_path_key = string
-type nonrec transformer_paths = (string_ option * string_ option) list
-type nonrec transformer_input = string
-type nonrec trace_header = string
+type nonrec transformer_paths = (string * string) list
 type nonrec test_event_pattern_response = {
   result: bool option }
 type nonrec test_event_pattern_request =
   {
   event: string ;
   event_pattern: string }
-type nonrec target_partition_key_path = string
-type nonrec target_id = string
-type nonrec target_arn = string
-type nonrec role_arn = string
-type nonrec target_input = string
 type nonrec input_transformer =
   {
   input_template: string ;
-  input_paths_map: (string * string) list option }
+  input_paths_map: transformer_paths option }
 type nonrec kinesis_parameters = {
   partition_key_path: string }
-type nonrec run_command_target_key = string
-type nonrec run_command_target_value = string
-type nonrec run_command_target_values = string list option list
 type nonrec run_command_target = {
   values: string list ;
   key: string }
-type nonrec run_command_targets = run_command_target list option list
 type nonrec run_command_parameters =
   {
   run_command_targets: run_command_target list }
-type nonrec limit_min1 = int
 type nonrec launch_type =
   | EXTERNAL 
   | FARGATE 
   | EC2 
-type nonrec string_list = string list option list
 type nonrec assign_public_ip =
   | DISABLED 
   | ENABLED 
@@ -302,43 +238,31 @@ type nonrec aws_vpc_configuration =
 type nonrec network_configuration =
   {
   awsvpc_configuration: aws_vpc_configuration option }
-type nonrec capacity_provider = string
-type nonrec capacity_provider_strategy_item_weight = int
-type nonrec capacity_provider_strategy_item_base = int
 type nonrec capacity_provider_strategy_item =
   {
   base: int option ;
   weight: int option ;
   capacity_provider: string }
-type nonrec capacity_provider_strategy =
-  capacity_provider_strategy_item list option list
 type nonrec placement_constraint_type =
   | MEMBER_OF 
   | DISTINCT_INSTANCE 
-type nonrec placement_constraint_expression = string
 type nonrec placement_constraint =
   {
   expression: string option ;
   type_: placement_constraint_type option }
-type nonrec placement_constraints = placement_constraint list option list
 type nonrec placement_strategy_type =
   | BINPACK 
   | SPREAD 
   | RANDOM 
-type nonrec placement_strategy_field = string
 type nonrec placement_strategy =
   {
   field: string option ;
   type_: placement_strategy_type option }
-type nonrec placement_strategies = placement_strategy list option list
 type nonrec propagate_tags =
   | TASK_DEFINITION 
-type nonrec reference_id = string
-type nonrec tag_value = string
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = tag list option list
 type nonrec ecs_parameters =
   {
   tags: tag list option ;
@@ -355,7 +279,6 @@ type nonrec ecs_parameters =
   launch_type: launch_type option ;
   task_count: int option ;
   task_definition_arn: string }
-type nonrec integer_ = int
 type nonrec batch_array_properties = {
   size: int option }
 type nonrec batch_retry_strategy = {
@@ -366,27 +289,15 @@ type nonrec batch_parameters =
   array_properties: batch_array_properties option ;
   job_name: string ;
   job_definition: string }
-type nonrec message_group_id = string
 type nonrec sqs_parameters = {
   message_group_id: string option }
-type nonrec path_parameter = string
-type nonrec path_parameter_list = string list option list
-type nonrec header_value = string
-type nonrec header_parameters_map = (string_ option * string_ option) list
-type nonrec query_string_value = string
-type nonrec query_string_parameters_map =
-  (string_ option * string_ option) list
+type nonrec header_parameters_map = (string * string) list
+type nonrec query_string_parameters_map = (string * string) list
 type nonrec http_parameters =
   {
-  query_string_parameters: (string * string) list option ;
-  header_parameters: (string * string) list option ;
+  query_string_parameters: query_string_parameters_map option ;
+  header_parameters: header_parameters_map option ;
   path_parameter_values: string list option }
-type nonrec redshift_secret_manager_arn = string
-type nonrec database = string
-type nonrec db_user = string
-type nonrec sql = string
-type nonrec statement_name = string
-type nonrec sqls = string list option list
 type nonrec redshift_data_parameters =
   {
   sqls: string list option ;
@@ -396,23 +307,16 @@ type nonrec redshift_data_parameters =
   db_user: string option ;
   database: string ;
   secret_manager_arn: string option }
-type nonrec sage_maker_pipeline_parameter_name = string
-type nonrec sage_maker_pipeline_parameter_value = string
 type nonrec sage_maker_pipeline_parameter = {
   value: string ;
   name: string }
-type nonrec sage_maker_pipeline_parameter_list =
-  sage_maker_pipeline_parameter list option list
 type nonrec sage_maker_pipeline_parameters =
   {
   pipeline_parameter_list: sage_maker_pipeline_parameter list option }
-type nonrec maximum_retry_attempts = int
-type nonrec maximum_event_age_in_seconds = int
 type nonrec retry_policy =
   {
   maximum_event_age_in_seconds: int option ;
   maximum_retry_attempts: int option }
-type nonrec graph_ql_operation = string
 type nonrec app_sync_parameters = {
   graph_ql_operation: string option }
 type nonrec target =
@@ -434,14 +338,10 @@ type nonrec target =
   role_arn: string option ;
   arn: string ;
   id: string }
-type nonrec target_list = target list option list
-type nonrec target_id_list = string list option list
 type nonrec tag_resource_response = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_ar_n: string }
-type nonrec statement_id = string
-type nonrec replay_arn = string
 type nonrec replay_state =
   | FAILED 
   | CANCELLED 
@@ -449,16 +349,12 @@ type nonrec replay_state =
   | CANCELLING 
   | RUNNING 
   | STARTING 
-type nonrec replay_state_reason = string
 type nonrec start_replay_response =
   {
-  replay_start_time: float option ;
+  replay_start_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: replay_state option ;
   replay_arn: string option }
-type nonrec replay_name = string
-type nonrec replay_description = string
-type nonrec replay_destination_filters = string list option list
 type nonrec replay_destination =
   {
   filter_arns: string list option ;
@@ -466,23 +362,17 @@ type nonrec replay_destination =
 type nonrec start_replay_request =
   {
   destination: replay_destination ;
-  event_end_time: float ;
-  event_start_time: float ;
+  event_end_time: CoreTypes.Timestamp.t ;
+  event_start_time: CoreTypes.Timestamp.t ;
   event_source_arn: string ;
   description: string option ;
   replay_name: string }
 type nonrec resource_already_exists_exception = {
   message: string option }
-type nonrec secrets_manager_secret_arn = string
-type nonrec schedule_expression = string
 type nonrec rule_state =
   | ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS 
   | DISABLED 
   | ENABLED 
-type nonrec rule_name = string
-type nonrec rule_arn = string
-type nonrec rule_description = string
-type nonrec managed_by = string
 type nonrec rule =
   {
   event_bus_name: string option ;
@@ -494,40 +384,32 @@ type nonrec rule =
   event_pattern: string option ;
   arn: string option ;
   name: string option }
-type nonrec rule_response_list = rule list option list
-type nonrec rule_name_list = string list option list
 type nonrec replay =
   {
-  replay_end_time: float option ;
-  replay_start_time: float option ;
-  event_last_replayed_time: float option ;
-  event_end_time: float option ;
-  event_start_time: float option ;
+  replay_end_time: CoreTypes.Timestamp.t option ;
+  replay_start_time: CoreTypes.Timestamp.t option ;
+  event_last_replayed_time: CoreTypes.Timestamp.t option ;
+  event_end_time: CoreTypes.Timestamp.t option ;
+  event_start_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: replay_state option ;
   event_source_arn: string option ;
   replay_name: string option }
-type nonrec replay_list = replay list option list
-type nonrec error_code = string
 type nonrec remove_targets_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
   target_id: string option }
-type nonrec remove_targets_result_entry_list =
-  remove_targets_result_entry list option list
 type nonrec remove_targets_response =
   {
   failed_entries: remove_targets_result_entry list option ;
   failed_entry_count: int option }
-type nonrec event_bus_name_or_arn = string
 type nonrec remove_targets_request =
   {
   force: bool option ;
   ids: string list ;
   event_bus_name: string option ;
   rule: string }
-type nonrec non_partner_event_bus_name = string
 type nonrec remove_permission_request =
   {
   event_bus_name: string option ;
@@ -538,8 +420,6 @@ type nonrec put_targets_result_entry =
   error_message: string option ;
   error_code: string option ;
   target_id: string option }
-type nonrec put_targets_result_entry_list =
-  put_targets_result_entry list option list
 type nonrec put_targets_response =
   {
   failed_entries: put_targets_result_entry list option ;
@@ -561,8 +441,6 @@ type nonrec put_rule_request =
   event_pattern: string option ;
   schedule_expression: string option ;
   name: string }
-type nonrec action = string
-type nonrec principal = string
 type nonrec condition = {
   value: string ;
   key: string ;
@@ -577,31 +455,22 @@ type nonrec put_permission_request =
   event_bus_name: string option }
 type nonrec policy_length_exceeded_exception = {
   message: string option }
-type nonrec event_id = string
 type nonrec put_partner_events_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
   event_id: string option }
-type nonrec put_partner_events_result_entry_list =
-  put_partner_events_result_entry list option list
 type nonrec put_partner_events_response =
   {
   entries: put_partner_events_result_entry list option ;
   failed_entry_count: int option }
-type nonrec event_time = Timestamp.t
-type nonrec event_source_name = string
-type nonrec event_resource = string
-type nonrec event_resource_list = string list option list
 type nonrec put_partner_events_request_entry =
   {
   detail: string option ;
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: float option }
-type nonrec put_partner_events_request_entry_list =
-  put_partner_events_request_entry list option list
+  time: CoreTypes.Timestamp.t option }
 type nonrec put_partner_events_request =
   {
   entries: put_partner_events_request_entry list }
@@ -610,13 +479,10 @@ type nonrec put_events_result_entry =
   error_message: string option ;
   error_code: string option ;
   event_id: string option }
-type nonrec put_events_result_entry_list =
-  put_events_result_entry list option list
 type nonrec put_events_response =
   {
   entries: put_events_result_entry list option ;
   failed_entry_count: int option }
-type nonrec non_partner_event_bus_name_or_arn = string
 type nonrec put_events_request_entry =
   {
   trace_header: string option ;
@@ -625,19 +491,14 @@ type nonrec put_events_request_entry =
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: float option }
-type nonrec put_events_request_entry_list =
-  put_events_request_entry list option list
+  time: CoreTypes.Timestamp.t option }
 type nonrec put_events_request =
   {
   endpoint_id: string option ;
   entries: put_events_request_entry list }
-type nonrec partner_event_source_name_prefix = string
 type nonrec partner_event_source = {
   name: string option ;
   arn: string option }
-type nonrec partner_event_source_list = partner_event_source list option list
-type nonrec account_id = string
 type nonrec event_source_state =
   | DELETED 
   | ACTIVE 
@@ -645,18 +506,13 @@ type nonrec event_source_state =
 type nonrec partner_event_source_account =
   {
   state: event_source_state option ;
-  expiration_time: float option ;
-  creation_time: float option ;
+  expiration_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   account: string option }
-type nonrec partner_event_source_account_list =
-  partner_event_source_account list option list
-type nonrec next_token = string
-type nonrec long = int
 type nonrec list_targets_by_rule_response =
   {
   next_token: string option ;
   targets: target list option }
-type nonrec limit_max100 = int
 type nonrec list_targets_by_rule_request =
   {
   limit: int option ;
@@ -720,16 +576,14 @@ type nonrec event_source =
   {
   state: event_source_state option ;
   name: string option ;
-  expiration_time: float option ;
-  creation_time: float option ;
+  expiration_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
   arn: string option }
-type nonrec event_source_list = event_source list option list
 type nonrec list_event_sources_response =
   {
   next_token: string option ;
   event_sources: event_source list option }
-type nonrec event_source_name_prefix = string
 type nonrec list_event_sources_request =
   {
   limit: int option ;
@@ -737,13 +591,12 @@ type nonrec list_event_sources_request =
   name_prefix: string option }
 type nonrec event_bus =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   policy: string option ;
   description: string option ;
   arn: string option ;
   name: string option }
-type nonrec event_bus_list = event_bus list option list
 type nonrec list_event_buses_response =
   {
   next_token: string option ;
@@ -753,11 +606,10 @@ type nonrec list_event_buses_request =
   limit: int option ;
   next_token: string option ;
   name_prefix: string option }
-type nonrec endpoint_state_reason = string
 type nonrec endpoint =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: endpoint_state option ;
   endpoint_url: string option ;
@@ -769,30 +621,26 @@ type nonrec endpoint =
   arn: string option ;
   description: string option ;
   name: string option }
-type nonrec endpoint_list = endpoint list option list
 type nonrec list_endpoints_response =
   {
   next_token: string option ;
   endpoints: endpoint list option }
-type nonrec home_region = string
 type nonrec list_endpoints_request =
   {
   max_results: int option ;
   next_token: string option ;
   home_region: string option ;
   name_prefix: string option }
-type nonrec connection_state_reason = string
 type nonrec connection =
   {
-  last_authorized_time: float option ;
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_authorized_time: CoreTypes.Timestamp.t option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   authorization_type: connection_authorization_type option ;
   state_reason: string option ;
   connection_state: connection_state option ;
   name: string option ;
   connection_arn: string option }
-type nonrec connection_response_list = connection list option list
 type nonrec list_connections_response =
   {
   next_token: string option ;
@@ -805,7 +653,7 @@ type nonrec list_connections_request =
   name_prefix: string option }
 type nonrec archive =
   {
-  creation_time: float option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   event_count: int option ;
   size_bytes: int option ;
   retention_days: int option ;
@@ -813,7 +661,6 @@ type nonrec archive =
   state: archive_state option ;
   event_source_arn: string option ;
   archive_name: string option }
-type nonrec archive_response_list = archive list option list
 type nonrec list_archives_response =
   {
   next_token: string option ;
@@ -827,8 +674,8 @@ type nonrec list_archives_request =
   name_prefix: string option }
 type nonrec api_destination =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   invocation_rate_limit_per_second: int option ;
   http_method: api_destination_http_method option ;
   invocation_endpoint: string option ;
@@ -836,7 +683,6 @@ type nonrec api_destination =
   api_destination_state: api_destination_state option ;
   name: string option ;
   api_destination_arn: string option }
-type nonrec api_destination_response_list = api_destination list option list
 type nonrec list_api_destinations_response =
   {
   next_token: string option ;
@@ -859,7 +705,6 @@ type nonrec disable_rule_request =
   {
   event_bus_name: string option ;
   name: string }
-type nonrec created_by = string
 type nonrec describe_rule_response =
   {
   created_by: string option ;
@@ -878,11 +723,11 @@ type nonrec describe_rule_request =
   name: string }
 type nonrec describe_replay_response =
   {
-  replay_end_time: float option ;
-  replay_start_time: float option ;
-  event_last_replayed_time: float option ;
-  event_end_time: float option ;
-  event_start_time: float option ;
+  replay_end_time: CoreTypes.Timestamp.t option ;
+  replay_start_time: CoreTypes.Timestamp.t option ;
+  event_last_replayed_time: CoreTypes.Timestamp.t option ;
+  event_end_time: CoreTypes.Timestamp.t option ;
+  event_start_time: CoreTypes.Timestamp.t option ;
   destination: replay_destination option ;
   event_source_arn: string option ;
   state_reason: string option ;
@@ -902,16 +747,16 @@ type nonrec describe_event_source_response =
   {
   state: event_source_state option ;
   name: string option ;
-  expiration_time: float option ;
-  creation_time: float option ;
+  expiration_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
   arn: string option }
 type nonrec describe_event_source_request = {
   name: string }
 type nonrec describe_event_bus_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   policy: string option ;
   dead_letter_config: dead_letter_config option ;
   kms_key_identifier: string option ;
@@ -922,8 +767,8 @@ type nonrec describe_event_bus_request = {
   name: string option }
 type nonrec describe_endpoint_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: endpoint_state option ;
   endpoint_url: string option ;
@@ -962,9 +807,9 @@ type nonrec connection_auth_response_parameters =
   basic_auth_parameters: connection_basic_auth_response_parameters option }
 type nonrec describe_connection_response =
   {
-  last_authorized_time: float option ;
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_authorized_time: CoreTypes.Timestamp.t option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   auth_parameters: connection_auth_response_parameters option ;
   secret_arn: string option ;
   authorization_type: connection_authorization_type option ;
@@ -977,7 +822,7 @@ type nonrec describe_connection_request = {
   name: string }
 type nonrec describe_archive_response =
   {
-  creation_time: float option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   event_count: int option ;
   size_bytes: int option ;
   retention_days: int option ;
@@ -992,8 +837,8 @@ type nonrec describe_archive_request = {
   archive_name: string }
 type nonrec describe_api_destination_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   invocation_rate_limit_per_second: int option ;
   http_method: api_destination_http_method option ;
   invocation_endpoint: string option ;
@@ -1020,9 +865,9 @@ type nonrec delete_endpoint_request = {
   name: string }
 type nonrec delete_connection_response =
   {
-  last_authorized_time: float option ;
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_authorized_time: CoreTypes.Timestamp.t option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
   connection_arn: string option }
 type nonrec delete_connection_request = {
@@ -1035,9 +880,9 @@ type nonrec delete_api_destination_request = {
   name: string }
 type nonrec deauthorize_connection_response =
   {
-  last_authorized_time: float option ;
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_authorized_time: CoreTypes.Timestamp.t option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
   connection_arn: string option }
 type nonrec deauthorize_connection_request = {
@@ -1084,8 +929,8 @@ type nonrec create_endpoint_request =
   name: string }
 type nonrec create_connection_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
   connection_arn: string option }
 type nonrec create_connection_basic_auth_request_parameters =
@@ -1122,7 +967,7 @@ type nonrec create_connection_request =
   name: string }
 type nonrec create_archive_response =
   {
-  creation_time: float option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
   archive_arn: string option }
@@ -1135,8 +980,8 @@ type nonrec create_archive_request =
   archive_name: string }
 type nonrec create_api_destination_response =
   {
-  last_modified_time: float option ;
-  creation_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
   api_destination_arn: string option }
 type nonrec create_api_destination_request =
@@ -1156,10 +1001,3 @@ type nonrec cancel_replay_request = {
   replay_name: string }
 type nonrec activate_event_source_request = {
   name: string }
-type nonrec aws_events = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

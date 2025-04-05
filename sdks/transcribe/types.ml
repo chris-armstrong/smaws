@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,14 +7,10 @@ let service =
       version = "2017-10-26";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec word = string
-type nonrec words = string list option list
-type nonrec base_unit = unit
 type nonrec vocabulary_state =
   | FAILED 
   | READY 
   | PENDING 
-type nonrec vocabulary_name = string
 type nonrec language_code =
   | ZU_ZA 
   | WO_SN 
@@ -119,35 +115,27 @@ type nonrec language_code =
   | AR_SA 
   | AR_AE 
   | AF_ZA 
-type nonrec date_time = Timestamp.t
 type nonrec vocabulary_info =
   {
   vocabulary_state: vocabulary_state option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_name: string option }
-type nonrec vocabulary_filter_name = string
 type nonrec vocabulary_filter_info =
   {
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_filter_name: string option }
-type nonrec vocabulary_filters = vocabulary_filter_info list option list
 type nonrec vocabulary_filter_method =
   | TAG 
   | MASK 
   | REMOVE 
-type nonrec vocabularies = vocabulary_info list option list
-type nonrec uri = string
 type nonrec update_vocabulary_response =
   {
   vocabulary_state: vocabulary_state option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_name: string option }
-type nonrec phrase = string
-type nonrec phrases = string list option list
-type nonrec data_access_role_arn = string
 type nonrec update_vocabulary_request =
   {
   data_access_role_arn: string option ;
@@ -157,7 +145,7 @@ type nonrec update_vocabulary_request =
   vocabulary_name: string }
 type nonrec update_vocabulary_filter_response =
   {
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_filter_name: string option }
 type nonrec update_vocabulary_filter_request =
@@ -166,14 +154,12 @@ type nonrec update_vocabulary_filter_request =
   vocabulary_filter_file_uri: string option ;
   words: string list option ;
   vocabulary_filter_name: string }
-type nonrec string_ = string
 type nonrec not_found_exception = {
   message: string option }
 type nonrec limit_exceeded_exception = {
   message: string option }
 type nonrec internal_failure_exception = {
   message: string option }
-type nonrec failure_reason = string
 type nonrec bad_request_exception = {
   message: string option }
 type nonrec conflict_exception = {
@@ -181,7 +167,7 @@ type nonrec conflict_exception = {
 type nonrec update_medical_vocabulary_response =
   {
   vocabulary_state: vocabulary_state option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_name: string option }
 type nonrec update_medical_vocabulary_request =
@@ -189,22 +175,18 @@ type nonrec update_medical_vocabulary_request =
   vocabulary_file_uri: string ;
   language_code: language_code ;
   vocabulary_name: string }
-type nonrec category_name = string
-type nonrec timestamp_milliseconds = int
 type nonrec absolute_time_range =
   {
   last: int option ;
   first: int option ;
   end_time: int option ;
   start_time: int option }
-type nonrec percentage = int
 type nonrec relative_time_range =
   {
   last: int option ;
   first: int option ;
   end_percentage: int option ;
   start_percentage: int option }
-type nonrec boolean_ = bool
 type nonrec non_talk_time_filter =
   {
   negate: bool option ;
@@ -223,8 +205,6 @@ type nonrec interruption_filter =
   threshold: int option }
 type nonrec transcript_filter_type =
   | EXACT 
-type nonrec non_empty_string = string
-type nonrec string_target_list = string list option list
 type nonrec transcript_filter =
   {
   targets: string list ;
@@ -238,7 +218,6 @@ type nonrec sentiment_value =
   | NEUTRAL 
   | NEGATIVE 
   | POSITIVE 
-type nonrec sentiment_value_list = sentiment_value list option list
 type nonrec sentiment_filter =
   {
   negate: bool option ;
@@ -246,16 +225,19 @@ type nonrec sentiment_filter =
   relative_time_range: relative_time_range option ;
   absolute_time_range: absolute_time_range option ;
   sentiments: sentiment_value list }
-type nonrec rule = unit
-type nonrec rule_list = rule list option list
+type nonrec rule =
+  | SentimentFilter of sentiment_filter 
+  | TranscriptFilter of transcript_filter 
+  | InterruptionFilter of interruption_filter 
+  | NonTalkTimeFilter of non_talk_time_filter 
 type nonrec input_type =
   | POST_CALL 
   | REAL_TIME 
 type nonrec category_properties =
   {
   input_type: input_type option ;
-  last_update_time: float option ;
-  create_time: float option ;
+  last_update_time: CoreTypes.Timestamp.t option ;
+  create_time: CoreTypes.Timestamp.t option ;
   rules: rule list option ;
   category_name: string option }
 type nonrec update_call_analytics_category_response =
@@ -267,9 +249,6 @@ type nonrec update_call_analytics_category_request =
   rules: rule list ;
   category_name: string }
 type nonrec untag_resource_response = unit
-type nonrec transcribe_arn = string
-type nonrec tag_key = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
@@ -277,7 +256,6 @@ type nonrec untag_resource_request =
 type nonrec type_ =
   | DICTATION 
   | CONVERSATION 
-type nonrec transcription_job_name = string
 type nonrec transcription_job_status =
   | COMPLETED 
   | FAILED 
@@ -304,29 +282,22 @@ type nonrec pii_entity_type =
   | CREDIT_DEBIT_NUMBER 
   | BANK_ROUTING 
   | BANK_ACCOUNT_NUMBER 
-type nonrec pii_entity_types = pii_entity_type list option list
 type nonrec content_redaction =
   {
   pii_entity_types: pii_entity_type list option ;
   redaction_output: redaction_output ;
   redaction_type: redaction_type }
-type nonrec model_name = string
 type nonrec model_settings = {
   language_model_name: string option }
-type nonrec identified_language_score = float
-type nonrec duration_in_seconds = float
 type nonrec language_code_item =
   {
   duration_in_seconds: float option ;
   language_code: language_code option }
-type nonrec language_code_list = language_code_item list option list
 type nonrec toxicity_category =
   | ALL 
-type nonrec toxicity_categories = toxicity_category list option list
 type nonrec toxicity_detection_settings =
   {
   toxicity_categories: toxicity_category list }
-type nonrec toxicity_detection = toxicity_detection_settings list option list
 type nonrec transcription_job_summary =
   {
   toxicity_detection: toxicity_detection_settings list option ;
@@ -340,13 +311,10 @@ type nonrec transcription_job_summary =
   failure_reason: string option ;
   transcription_job_status: transcription_job_status option ;
   language_code: language_code option ;
-  completion_time: float option ;
-  start_time: float option ;
-  creation_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   transcription_job_name: string option }
-type nonrec transcription_job_summaries =
-  transcription_job_summary list option list
-type nonrec media_sample_rate_hertz = int
 type nonrec media_format =
   | M4A 
   | WEBM 
@@ -364,8 +332,6 @@ type nonrec transcript =
   {
   redacted_transcript_file_uri: string option ;
   transcript_file_uri: string option }
-type nonrec max_speakers = int
-type nonrec max_alternatives = int
 type nonrec settings =
   {
   vocabulary_filter_method: vocabulary_filter_method option ;
@@ -380,18 +346,12 @@ type nonrec job_execution_settings =
   {
   data_access_role_arn: string option ;
   allow_deferred_execution: bool option }
-type nonrec language_options = language_code list option list
-type nonrec tag_value = string
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = tag list option list
 type nonrec subtitle_format =
   | SRT 
   | VTT 
-type nonrec subtitle_formats = subtitle_format list option list
-type nonrec subtitle_file_uris = string list option list
-type nonrec subtitle_output_start_index = int
 type nonrec subtitles_output =
   {
   output_start_index: int option ;
@@ -403,11 +363,11 @@ type nonrec language_id_settings =
   vocabulary_filter_name: string option ;
   vocabulary_name: string option }
 type nonrec language_id_settings_map =
-  (string_ option * language_id_settings option) list
+  (language_code * language_id_settings) list
 type nonrec transcription_job =
   {
   toxicity_detection: toxicity_detection_settings list option ;
-  language_id_settings: (string * language_id_settings) list option ;
+  language_id_settings: language_id_settings_map option ;
   subtitles: subtitles_output option ;
   tags: tag list option ;
   language_codes: language_code_item list option ;
@@ -420,9 +380,9 @@ type nonrec transcription_job =
   model_settings: model_settings option ;
   settings: settings option ;
   failure_reason: string option ;
-  completion_time: float option ;
-  creation_time: float option ;
-  start_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   transcript: transcript option ;
   media: media option ;
   media_format: media_format option ;
@@ -437,11 +397,7 @@ type nonrec tag_resource_request = {
 type nonrec start_transcription_job_response =
   {
   transcription_job: transcription_job option }
-type nonrec output_bucket_name = string
-type nonrec output_key = string
-type nonrec kms_key_id = string
-type nonrec kms_encryption_context_map =
-  (string_ option * string_ option) list
+type nonrec kms_encryption_context_map = (string * string) list
 type nonrec subtitles =
   {
   output_start_index: int option ;
@@ -449,7 +405,7 @@ type nonrec subtitles =
 type nonrec start_transcription_job_request =
   {
   toxicity_detection: toxicity_detection_settings list option ;
-  language_id_settings: (string * language_id_settings) list option ;
+  language_id_settings: language_id_settings_map option ;
   tags: tag list option ;
   subtitles: subtitles option ;
   language_options: language_code list option ;
@@ -459,7 +415,7 @@ type nonrec start_transcription_job_request =
   job_execution_settings: job_execution_settings option ;
   model_settings: model_settings option ;
   settings: settings option ;
-  kms_encryption_context: (string * string) list option ;
+  kms_encryption_context: kms_encryption_context_map option ;
   output_encryption_kms_key_id: string option ;
   output_key: string option ;
   output_bucket_name: string option ;
@@ -468,7 +424,6 @@ type nonrec start_transcription_job_request =
   media_sample_rate_hertz: int option ;
   language_code: language_code option ;
   transcription_job_name: string }
-type nonrec medical_media_sample_rate_hertz = int
 type nonrec medical_transcript = {
   transcript_file_uri: string option }
 type nonrec medical_transcription_setting =
@@ -491,9 +446,9 @@ type nonrec medical_transcription_job =
   content_identification_type: medical_content_identification_type option ;
   settings: medical_transcription_setting option ;
   failure_reason: string option ;
-  completion_time: float option ;
-  creation_time: float option ;
-  start_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   transcript: medical_transcript option ;
   media: media option ;
   media_format: media_format option ;
@@ -511,7 +466,7 @@ type nonrec start_medical_transcription_job_request =
   specialty: specialty ;
   content_identification_type: medical_content_identification_type option ;
   settings: medical_transcription_setting option ;
-  kms_encryption_context: (string * string) list option ;
+  kms_encryption_context: kms_encryption_context_map option ;
   output_encryption_kms_key_id: string option ;
   output_key: string option ;
   output_bucket_name: string ;
@@ -539,7 +494,6 @@ type nonrec medical_scribe_settings =
   channel_identification: bool option ;
   max_speaker_labels: int option ;
   show_speaker_labels: bool option }
-type nonrec medical_scribe_channel_id = int
 type nonrec medical_scribe_participant_role =
   | CLINICIAN 
   | PATIENT 
@@ -547,8 +501,6 @@ type nonrec medical_scribe_channel_definition =
   {
   participant_role: medical_scribe_participant_role ;
   channel_id: int }
-type nonrec medical_scribe_channel_definitions =
-  medical_scribe_channel_definition list option list
 type nonrec medical_scribe_job =
   {
   tags: tag list option ;
@@ -556,9 +508,9 @@ type nonrec medical_scribe_job =
   data_access_role_arn: string option ;
   settings: medical_scribe_settings option ;
   failure_reason: string option ;
-  completion_time: float option ;
-  creation_time: float option ;
-  start_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   medical_scribe_output: medical_scribe_output option ;
   media: media option ;
   language_code: medical_scribe_language_code option ;
@@ -573,12 +525,11 @@ type nonrec start_medical_scribe_job_request =
   channel_definitions: medical_scribe_channel_definition list option ;
   settings: medical_scribe_settings ;
   data_access_role_arn: string ;
-  kms_encryption_context: (string * string) list option ;
+  kms_encryption_context: kms_encryption_context_map option ;
   output_encryption_kms_key_id: string option ;
   output_bucket_name: string ;
   media: media ;
   medical_scribe_job_name: string }
-type nonrec call_analytics_job_name = string
 type nonrec call_analytics_job_status =
   | COMPLETED 
   | FAILED 
@@ -594,8 +545,6 @@ type nonrec call_analytics_skipped_feature =
   message: string option ;
   reason_code: call_analytics_skipped_reason_code option ;
   feature: call_analytics_feature option }
-type nonrec call_analytics_skipped_feature_list =
-  call_analytics_skipped_feature list option list
 type nonrec call_analytics_job_details =
   {
   skipped: call_analytics_skipped_feature list option }
@@ -604,19 +553,17 @@ type nonrec summarization = {
 type nonrec call_analytics_job_settings =
   {
   summarization: summarization option ;
-  language_id_settings: (string * language_id_settings) list option ;
+  language_id_settings: language_id_settings_map option ;
   language_options: language_code list option ;
   content_redaction: content_redaction option ;
   language_model_name: string option ;
   vocabulary_filter_method: vocabulary_filter_method option ;
   vocabulary_filter_name: string option ;
   vocabulary_name: string option }
-type nonrec channel_id = int
 type nonrec channel_definition =
   {
   participant_role: participant_role option ;
   channel_id: int option }
-type nonrec channel_definitions = channel_definition list option list
 type nonrec call_analytics_job =
   {
   channel_definitions: channel_definition list option ;
@@ -624,9 +571,9 @@ type nonrec call_analytics_job =
   identified_language_score: float option ;
   data_access_role_arn: string option ;
   failure_reason: string option ;
-  completion_time: float option ;
-  creation_time: float option ;
-  start_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   transcript: transcript option ;
   media: media option ;
   media_format: media_format option ;
@@ -647,12 +594,10 @@ type nonrec start_call_analytics_job_request =
   output_location: string option ;
   media: media ;
   call_analytics_job_name: string }
-type nonrec next_token = string
 type nonrec list_vocabulary_filters_response =
   {
   vocabulary_filters: vocabulary_filter_info list option ;
   next_token: string option }
-type nonrec max_results = int
 type nonrec list_vocabulary_filters_request =
   {
   name_contains: string option ;
@@ -706,12 +651,10 @@ type nonrec medical_transcription_job_summary =
   failure_reason: string option ;
   transcription_job_status: transcription_job_status option ;
   language_code: language_code option ;
-  completion_time: float option ;
-  start_time: float option ;
-  creation_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   medical_transcription_job_name: string option }
-type nonrec medical_transcription_job_summaries =
-  medical_transcription_job_summary list option list
 type nonrec list_medical_transcription_jobs_response =
   {
   medical_transcription_job_summaries:
@@ -729,12 +672,10 @@ type nonrec medical_scribe_job_summary =
   failure_reason: string option ;
   medical_scribe_job_status: medical_scribe_job_status option ;
   language_code: medical_scribe_language_code option ;
-  completion_time: float option ;
-  start_time: float option ;
-  creation_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   medical_scribe_job_name: string option }
-type nonrec medical_scribe_job_summaries =
-  medical_scribe_job_summary list option list
 type nonrec list_medical_scribe_jobs_response =
   {
   medical_scribe_job_summaries: medical_scribe_job_summary list option ;
@@ -774,10 +715,9 @@ type nonrec language_model =
   model_status: model_status option ;
   base_model_name: base_model_name option ;
   language_code: clm_language_code option ;
-  last_modified_time: float option ;
-  create_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
+  create_time: CoreTypes.Timestamp.t option ;
   model_name: string option }
-type nonrec models = language_model list option list
 type nonrec list_language_models_response =
   {
   models: language_model list option ;
@@ -794,12 +734,10 @@ type nonrec call_analytics_job_summary =
   call_analytics_job_details: call_analytics_job_details option ;
   call_analytics_job_status: call_analytics_job_status option ;
   language_code: language_code option ;
-  completion_time: float option ;
-  start_time: float option ;
-  creation_time: float option ;
+  completion_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
+  creation_time: CoreTypes.Timestamp.t option ;
   call_analytics_job_name: string option }
-type nonrec call_analytics_job_summaries =
-  call_analytics_job_summary list option list
 type nonrec list_call_analytics_jobs_response =
   {
   call_analytics_job_summaries: call_analytics_job_summary list option ;
@@ -811,7 +749,6 @@ type nonrec list_call_analytics_jobs_request =
   next_token: string option ;
   job_name_contains: string option ;
   status: call_analytics_job_status option }
-type nonrec category_properties_list = category_properties list option list
 type nonrec list_call_analytics_categories_response =
   {
   categories: category_properties list option ;
@@ -823,7 +760,7 @@ type nonrec list_call_analytics_categories_request =
 type nonrec get_vocabulary_filter_response =
   {
   download_uri: string option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_filter_name: string option }
 type nonrec get_vocabulary_filter_request = {
@@ -832,7 +769,7 @@ type nonrec get_vocabulary_response =
   {
   download_uri: string option ;
   failure_reason: string option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   vocabulary_state: vocabulary_state option ;
   language_code: language_code option ;
   vocabulary_name: string option }
@@ -847,7 +784,7 @@ type nonrec get_medical_vocabulary_response =
   {
   download_uri: string option ;
   failure_reason: string option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   vocabulary_state: vocabulary_state option ;
   language_code: language_code option ;
   vocabulary_name: string option }
@@ -908,7 +845,7 @@ type nonrec delete_call_analytics_category_request = {
   category_name: string }
 type nonrec create_vocabulary_filter_response =
   {
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   language_code: language_code option ;
   vocabulary_filter_name: string option }
 type nonrec create_vocabulary_filter_request =
@@ -922,7 +859,7 @@ type nonrec create_vocabulary_filter_request =
 type nonrec create_vocabulary_response =
   {
   failure_reason: string option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   vocabulary_state: vocabulary_state option ;
   language_code: language_code option ;
   vocabulary_name: string option }
@@ -937,7 +874,7 @@ type nonrec create_vocabulary_request =
 type nonrec create_medical_vocabulary_response =
   {
   failure_reason: string option ;
-  last_modified_time: float option ;
+  last_modified_time: CoreTypes.Timestamp.t option ;
   vocabulary_state: vocabulary_state option ;
   language_code: language_code option ;
   vocabulary_name: string option }
@@ -969,10 +906,3 @@ type nonrec create_call_analytics_category_request =
   input_type: input_type option ;
   rules: rule list ;
   category_name: string }
-type nonrec transcribe = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

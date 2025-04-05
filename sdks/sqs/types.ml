@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,13 +7,9 @@ let service =
       version = "2012-11-05";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec string_ = string
-type nonrec tag_key = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_queue_request = {
   tag_keys: string list ;
   queue_url: string }
-type nonrec exception_message = string
 type nonrec unsupported_operation = {
   message: string option }
 type nonrec request_throttled = {
@@ -24,20 +20,14 @@ type nonrec invalid_security = {
   message: string option }
 type nonrec invalid_address = {
   message: string option }
-type nonrec base_unit = unit
 type nonrec too_many_entries_in_batch_request = {
   message: string option }
-type nonrec token = string
-type nonrec tag_value = string
-type nonrec tag_map = (string_ option * string_ option) list
-type nonrec tag_queue_request =
-  {
-  tags: (string * string) list ;
+type nonrec tag_map = (string * string) list
+type nonrec tag_queue_request = {
+  tags: tag_map ;
   queue_url: string }
-type nonrec string_list = string list option list
 type nonrec start_message_move_task_result = {
   task_handle: string option }
-type nonrec nullable_integer = int
 type nonrec start_message_move_task_request =
   {
   max_number_of_messages_per_second: int option ;
@@ -68,10 +58,10 @@ type nonrec queue_attribute_name =
   | VisibilityTimeout 
   | Policy 
   | All 
-type nonrec queue_attribute_map = (string_ option * string_ option) list
+type nonrec queue_attribute_map = (queue_attribute_name * string) list
 type nonrec set_queue_attributes_request =
   {
-  attributes: (string * string) list ;
+  attributes: queue_attribute_map ;
   queue_url: string }
 type nonrec over_limit = {
   message: string option }
@@ -86,8 +76,6 @@ type nonrec send_message_result =
   md5_of_message_system_attributes: string option ;
   md5_of_message_attributes: string option ;
   md5_of_message_body: string option }
-type nonrec binary = bytes
-type nonrec binary_list = bytes list option list
 type nonrec message_attribute_value =
   {
   data_type: string ;
@@ -96,7 +84,7 @@ type nonrec message_attribute_value =
   binary_value: bytes option ;
   string_value: string option }
 type nonrec message_body_attribute_map =
-  (string_ option * message_attribute_value option) list
+  (string * message_attribute_value) list
 type nonrec message_system_attribute_value =
   {
   data_type: string ;
@@ -107,14 +95,14 @@ type nonrec message_system_attribute_value =
 type nonrec message_system_attribute_name_for_sends =
   | AWSTraceHeader 
 type nonrec message_body_system_attribute_map =
-  (string_ option * message_system_attribute_value option) list
+  (message_system_attribute_name_for_sends * message_system_attribute_value)
+    list
 type nonrec send_message_request =
   {
   message_group_id: string option ;
   message_deduplication_id: string option ;
-  message_system_attributes:
-    (string * message_system_attribute_value) list option ;
-  message_attributes: (string * message_attribute_value) list option ;
+  message_system_attributes: message_body_system_attribute_map option ;
+  message_attributes: message_body_attribute_map option ;
   delay_seconds: int option ;
   message_body: string ;
   queue_url: string }
@@ -126,17 +114,12 @@ type nonrec send_message_batch_result_entry =
   md5_of_message_body: string ;
   message_id: string ;
   id: string }
-type nonrec send_message_batch_result_entry_list =
-  send_message_batch_result_entry list option list
-type nonrec boolean_ = bool
 type nonrec batch_result_error_entry =
   {
   message: string option ;
   code: string ;
   sender_fault: bool ;
   id: string }
-type nonrec batch_result_error_entry_list =
-  batch_result_error_entry list option list
 type nonrec send_message_batch_result =
   {
   failed: batch_result_error_entry list ;
@@ -145,14 +128,11 @@ type nonrec send_message_batch_request_entry =
   {
   message_group_id: string option ;
   message_deduplication_id: string option ;
-  message_system_attributes:
-    (string * message_system_attribute_value) list option ;
-  message_attributes: (string * message_attribute_value) list option ;
+  message_system_attributes: message_body_system_attribute_map option ;
+  message_attributes: message_body_attribute_map option ;
   delay_seconds: int option ;
   message_body: string ;
   id: string }
-type nonrec send_message_batch_request_entry_list =
-  send_message_batch_request_entry list option list
 type nonrec send_message_batch_request =
   {
   entries: send_message_batch_request_entry list ;
@@ -196,24 +176,18 @@ type nonrec message_system_attribute_name =
   | SenderId 
   | All 
 type nonrec message_system_attribute_map =
-  (string_ option * string_ option) list
+  (message_system_attribute_name * string) list
 type nonrec message =
   {
-  message_attributes: (string * message_attribute_value) list option ;
+  message_attributes: message_body_attribute_map option ;
   md5_of_message_attributes: string option ;
-  attributes: (string * string) list option ;
+  attributes: message_system_attribute_map option ;
   body: string option ;
   md5_of_body: string option ;
   receipt_handle: string option ;
   message_id: string option }
-type nonrec message_list = message list option list
 type nonrec receive_message_result = {
   messages: message list option }
-type nonrec attribute_name_list = queue_attribute_name list option list
-type nonrec message_system_attribute_list =
-  message_system_attribute_name list option list
-type nonrec message_attribute_name = string
-type nonrec message_attribute_name_list = string list option list
 type nonrec receive_message_request =
   {
   receive_request_attempt_id: string option ;
@@ -226,7 +200,6 @@ type nonrec receive_message_request =
   queue_url: string }
 type nonrec receipt_handle_is_invalid = {
   message: string option }
-type nonrec queue_url_list = string list option list
 type nonrec queue_name_exists = {
   message: string option }
 type nonrec queue_deleted_recently = {
@@ -235,21 +208,18 @@ type nonrec purge_queue_request = {
   queue_url: string }
 type nonrec purge_queue_in_progress = {
   message: string option }
-type nonrec nullable_long = int
 type nonrec message_not_inflight = unit
-type nonrec long = int
 type nonrec list_queues_result =
   {
   next_token: string option ;
   queue_urls: string list option }
-type nonrec boxed_integer = int
 type nonrec list_queues_request =
   {
   max_results: int option ;
   next_token: string option ;
   queue_name_prefix: string option }
 type nonrec list_queue_tags_result = {
-  tags: (string * string) list option }
+  tags: tag_map option }
 type nonrec list_queue_tags_request = {
   queue_url: string }
 type nonrec list_message_move_tasks_result_entry =
@@ -263,8 +233,6 @@ type nonrec list_message_move_tasks_result_entry =
   source_arn: string option ;
   status: string option ;
   task_handle: string option }
-type nonrec list_message_move_tasks_result_entry_list =
-  list_message_move_tasks_result_entry list option list
 type nonrec list_message_move_tasks_result =
   {
   results: list_message_move_tasks_result_entry list option }
@@ -290,7 +258,7 @@ type nonrec get_queue_url_request =
   queue_name: string }
 type nonrec get_queue_attributes_result =
   {
-  attributes: (string * string) list option }
+  attributes: queue_attribute_map option }
 type nonrec get_queue_attributes_request =
   {
   attribute_names: queue_attribute_name list option ;
@@ -303,8 +271,6 @@ type nonrec delete_message_request =
   queue_url: string }
 type nonrec delete_message_batch_result_entry = {
   id: string }
-type nonrec delete_message_batch_result_entry_list =
-  delete_message_batch_result_entry list option list
 type nonrec delete_message_batch_result =
   {
   failed: batch_result_error_entry list ;
@@ -313,8 +279,6 @@ type nonrec delete_message_batch_request_entry =
   {
   receipt_handle: string ;
   id: string }
-type nonrec delete_message_batch_request_entry_list =
-  delete_message_batch_request_entry list option list
 type nonrec delete_message_batch_request =
   {
   entries: delete_message_batch_request_entry list ;
@@ -323,8 +287,8 @@ type nonrec create_queue_result = {
   queue_url: string option }
 type nonrec create_queue_request =
   {
-  tags: (string * string) list option ;
-  attributes: (string * string) list option ;
+  tags: tag_map option ;
+  attributes: queue_attribute_map option ;
   queue_name: string }
 type nonrec change_message_visibility_request =
   {
@@ -333,8 +297,6 @@ type nonrec change_message_visibility_request =
   queue_url: string }
 type nonrec change_message_visibility_batch_result_entry = {
   id: string }
-type nonrec change_message_visibility_batch_result_entry_list =
-  change_message_visibility_batch_result_entry list option list
 type nonrec change_message_visibility_batch_result =
   {
   failed: batch_result_error_entry list ;
@@ -344,8 +306,6 @@ type nonrec change_message_visibility_batch_request_entry =
   visibility_timeout: int option ;
   receipt_handle: string ;
   id: string }
-type nonrec change_message_visibility_batch_request_entry_list =
-  change_message_visibility_batch_request_entry list option list
 type nonrec change_message_visibility_batch_request =
   {
   entries: change_message_visibility_batch_request_entry list ;
@@ -355,18 +315,9 @@ type nonrec cancel_message_move_task_result =
   approximate_number_of_messages_moved: int option }
 type nonrec cancel_message_move_task_request = {
   task_handle: string }
-type nonrec aws_account_id_list = string list option list
-type nonrec action_name_list = string list option list
 type nonrec add_permission_request =
   {
   actions: string list ;
   aws_account_ids: string list ;
   label: string ;
   queue_url: string }
-type nonrec amazon_sq_s = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

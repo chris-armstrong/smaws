@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,24 +7,20 @@ let service =
       version = "2019-12-02";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec base_unit = unit
 type nonrec validation_exception_reason =
   | OTHER 
   | FIELD_VALIDATION_FAILED 
   | CANNOT_PARSE 
   | UNKNOWN_OPERATION 
-type nonrec string_ = unit
 type nonrec validation_exception_field = {
   message: string ;
   name: string }
-type nonrec validation_exception_field_list = unit
 type nonrec validation_exception =
   {
   fields: validation_exception_field list option ;
   reason: validation_exception_reason option ;
   message: string }
 type nonrec update_routing_control_states_response = unit
-type nonrec arn = unit
 type nonrec routing_control_state =
   | Off 
   | On 
@@ -32,14 +28,11 @@ type nonrec update_routing_control_state_entry =
   {
   routing_control_state: routing_control_state ;
   routing_control_arn: string }
-type nonrec update_routing_control_state_entries = unit
-type nonrec arns = unit
 type nonrec update_routing_control_states_request =
   {
   safety_rules_to_override: string list option ;
   update_routing_control_state_entries:
     update_routing_control_state_entry list }
-type nonrec retry_after_seconds = unit
 type nonrec throttling_exception =
   {
   retry_after_seconds: int option ;
@@ -75,9 +68,6 @@ type nonrec update_routing_control_state_request =
   safety_rules_to_override: string list option ;
   routing_control_state: routing_control_state ;
   routing_control_arn: string }
-type nonrec control_panel_name = unit
-type nonrec routing_control_name = unit
-type nonrec owner = unit
 type nonrec routing_control =
   {
   owner: string option ;
@@ -86,13 +76,10 @@ type nonrec routing_control =
   routing_control_arn: string option ;
   control_panel_name: string option ;
   control_panel_arn: string option }
-type nonrec routing_controls = unit
-type nonrec page_token = unit
 type nonrec list_routing_controls_response =
   {
   next_token: string option ;
   routing_controls: routing_control list }
-type nonrec max_results = unit
 type nonrec list_routing_controls_request =
   {
   max_results: int option ;
@@ -106,10 +93,3 @@ type nonrec get_routing_control_state_response =
 type nonrec get_routing_control_state_request =
   {
   routing_control_arn: string }
-type nonrec toggle_customer_ap_i = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

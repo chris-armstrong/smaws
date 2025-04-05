@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,8 +7,6 @@ let service =
       version = "2015-08-24";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec error_message = unit
-type nonrec base_unit = unit
 type nonrec match_field_type =
   | ALL_QUERY_ARGS 
   | SINGLE_QUERY_ARG 
@@ -17,7 +15,6 @@ type nonrec match_field_type =
   | HEADER 
   | QUERY_STRING 
   | URI 
-type nonrec match_field_data = unit
 type nonrec field_to_match = {
   data: string option ;
   type_: match_field_type }
@@ -32,7 +29,6 @@ type nonrec xss_match_tuple =
   {
   text_transformation: text_transformation ;
   field_to_match: field_to_match }
-type nonrec xss_match_tuples = unit
 type nonrec change_action =
   | DELETE 
   | INSERT 
@@ -40,19 +36,14 @@ type nonrec xss_match_set_update =
   {
   xss_match_tuple: xss_match_tuple ;
   action: change_action }
-type nonrec xss_match_set_updates = unit
-type nonrec resource_id = unit
-type nonrec resource_name = unit
 type nonrec xss_match_set_summary = {
   name: string ;
   xss_match_set_id: string }
-type nonrec xss_match_set_summaries = unit
 type nonrec xss_match_set =
   {
   xss_match_tuples: xss_match_tuple list ;
   name: string option ;
   xss_match_set_id: string }
-type nonrec rule_priority = unit
 type nonrec waf_action_type =
   | COUNT 
   | ALLOW 
@@ -70,7 +61,6 @@ type nonrec waf_rule_type =
   | REGULAR 
 type nonrec excluded_rule = {
   rule_id: string }
-type nonrec excluded_rules = unit
 type nonrec activated_rule =
   {
   excluded_rules: excluded_rule list option ;
@@ -83,14 +73,9 @@ type nonrec web_acl_update =
   {
   activated_rule: activated_rule ;
   action: change_action }
-type nonrec web_acl_updates = unit
 type nonrec web_acl_summary = {
   name: string ;
   web_acl_id: string }
-type nonrec web_acl_summaries = unit
-type nonrec metric_name = unit
-type nonrec activated_rules = unit
-type nonrec resource_arn = unit
 type nonrec web_ac_l =
   {
   web_acl_arn: string option ;
@@ -145,7 +130,6 @@ type nonrec parameter_exception_field =
   | WAF_OVERRIDE_ACTION 
   | WAF_ACTION 
   | CHANGE_ACTION 
-type nonrec parameter_exception_parameter = unit
 type nonrec parameter_exception_reason =
   | INVALID_TAG_KEY 
   | ILLEGAL_ARGUMENT 
@@ -169,7 +153,6 @@ type nonrec migration_error_type =
   | S3_BUCKET_NO_PERMISSION 
   | ENTITY_NOT_FOUND 
   | ENTITY_NOT_SUPPORTED 
-type nonrec error_reason = unit
 type nonrec waf_entity_migration_exception =
   {
   migration_error_reason: string option ;
@@ -179,7 +162,6 @@ type nonrec waf_disallowed_name_exception = {
   message: string option }
 type nonrec waf_bad_request_exception = {
   message: string option }
-type nonrec change_token = unit
 type nonrec update_xss_match_set_response = {
   change_token: string option }
 type nonrec update_xss_match_set_request =
@@ -206,7 +188,6 @@ type nonrec sql_injection_match_set_update =
   {
   sql_injection_match_tuple: sql_injection_match_tuple ;
   action: change_action }
-type nonrec sql_injection_match_set_updates = unit
 type nonrec update_sql_injection_match_set_request =
   {
   updates: sql_injection_match_set_update list ;
@@ -222,7 +203,6 @@ type nonrec comparison_operator =
   | LE 
   | NE 
   | EQ 
-type nonrec size = unit
 type nonrec size_constraint =
   {
   size: int ;
@@ -233,7 +213,6 @@ type nonrec size_constraint_set_update =
   {
   size_constraint: size_constraint ;
   action: change_action }
-type nonrec size_constraint_set_updates = unit
 type nonrec update_size_constraint_set_request =
   {
   updates: size_constraint_set_update list ;
@@ -241,7 +220,6 @@ type nonrec update_size_constraint_set_request =
   size_constraint_set_id: string }
 type nonrec update_rule_response = {
   change_token: string option }
-type nonrec negated = unit
 type nonrec predicate_type =
   | REGEX_MATCH 
   | XSS_MATCH 
@@ -258,7 +236,6 @@ type nonrec predicate =
 type nonrec rule_update = {
   predicate: predicate ;
   action: change_action }
-type nonrec rule_updates = unit
 type nonrec update_rule_request =
   {
   updates: rule_update list ;
@@ -270,7 +247,6 @@ type nonrec rule_group_update =
   {
   activated_rule: activated_rule ;
   action: change_action }
-type nonrec rule_group_updates = unit
 type nonrec update_rule_group_request =
   {
   change_token: string ;
@@ -279,12 +255,10 @@ type nonrec update_rule_group_request =
 type nonrec update_regex_pattern_set_response =
   {
   change_token: string option }
-type nonrec regex_pattern_string = unit
 type nonrec regex_pattern_set_update =
   {
   regex_pattern_string: string ;
   action: change_action }
-type nonrec regex_pattern_set_updates = unit
 type nonrec update_regex_pattern_set_request =
   {
   change_token: string ;
@@ -301,7 +275,6 @@ type nonrec regex_match_set_update =
   {
   regex_match_tuple: regex_match_tuple ;
   action: change_action }
-type nonrec regex_match_set_updates = unit
 type nonrec update_regex_match_set_request =
   {
   change_token: string ;
@@ -309,7 +282,6 @@ type nonrec update_regex_match_set_request =
   regex_match_set_id: string }
 type nonrec update_rate_based_rule_response = {
   change_token: string option }
-type nonrec rate_limit = unit
 type nonrec update_rate_based_rule_request =
   {
   rate_limit: int ;
@@ -321,7 +293,6 @@ type nonrec update_ip_set_response = {
 type nonrec ip_set_descriptor_type =
   | IPV6 
   | IPV4 
-type nonrec ip_set_descriptor_value = unit
 type nonrec ip_set_descriptor =
   {
   value: string ;
@@ -330,7 +301,6 @@ type nonrec ip_set_update =
   {
   ip_set_descriptor: ip_set_descriptor ;
   action: change_action }
-type nonrec ip_set_updates = unit
 type nonrec update_ip_set_request =
   {
   updates: ip_set_update list ;
@@ -598,7 +568,6 @@ type nonrec geo_match_set_update =
   {
   geo_match_constraint: geo_match_constraint ;
   action: change_action }
-type nonrec geo_match_set_updates = unit
 type nonrec update_geo_match_set_request =
   {
   updates: geo_match_set_update list ;
@@ -606,7 +575,6 @@ type nonrec update_geo_match_set_request =
   geo_match_set_id: string }
 type nonrec update_byte_match_set_response = {
   change_token: string option }
-type nonrec byte_match_target_string = unit
 type nonrec positional_constraint =
   | CONTAINS_WORD 
   | CONTAINS 
@@ -623,30 +591,24 @@ type nonrec byte_match_set_update =
   {
   byte_match_tuple: byte_match_tuple ;
   action: change_action }
-type nonrec byte_match_set_updates = unit
 type nonrec update_byte_match_set_request =
   {
   updates: byte_match_set_update list ;
   change_token: string ;
   byte_match_set_id: string }
 type nonrec untag_resource_response = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_ar_n: string }
-type nonrec uri_string = unit
-type nonrec timestamp_ = unit
-type nonrec time_window = {
-  end_time: Timestamp.t ;
-  start_time: Timestamp.t }
-type nonrec tag_value = unit
+type nonrec time_window =
+  {
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t }
 type nonrec tag_resource_response = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
   resource_ar_n: string }
@@ -659,39 +621,27 @@ type nonrec subscribed_rule_group_summary =
   metric_name: string ;
   name: string ;
   rule_group_id: string }
-type nonrec subscribed_rule_group_summaries = unit
-type nonrec sql_injection_match_tuples = unit
 type nonrec sql_injection_match_set_summary =
   {
   name: string ;
   sql_injection_match_set_id: string }
-type nonrec sql_injection_match_set_summaries = unit
 type nonrec sql_injection_match_set =
   {
   sql_injection_match_tuples: sql_injection_match_tuple list ;
   name: string option ;
   sql_injection_match_set_id: string }
-type nonrec size_constraints = unit
 type nonrec size_constraint_set_summary =
   {
   name: string ;
   size_constraint_set_id: string }
-type nonrec size_constraint_set_summaries = unit
 type nonrec size_constraint_set =
   {
   size_constraints: size_constraint list ;
   name: string option ;
   size_constraint_set_id: string }
-type nonrec ip_string = unit
-type nonrec country = unit
-type nonrec http_method = unit
-type nonrec http_version = unit
-type nonrec header_name = unit
-type nonrec header_value = unit
 type nonrec http_header = {
   value: string option ;
   name: string option }
-type nonrec http_headers = unit
 type nonrec http_request =
   {
   headers: http_header list option ;
@@ -700,61 +650,48 @@ type nonrec http_request =
   ur_i: string option ;
   country: string option ;
   client_i_p: string option }
-type nonrec sample_weight = unit
-type nonrec action = unit
 type nonrec sampled_http_request =
   {
   rule_within_rule_group: string option ;
   action: string option ;
-  timestamp_: Timestamp.t option ;
+  timestamp_: CoreTypes.Timestamp.t option ;
   weight: int ;
   request: http_request }
-type nonrec sampled_http_requests = unit
-type nonrec s3_object_url = unit
-type nonrec s3_bucket_name = unit
 type nonrec rule_summary = {
   name: string ;
   rule_id: string }
-type nonrec rule_summaries = unit
 type nonrec rule_group_summary = {
   name: string ;
   rule_group_id: string }
-type nonrec rule_group_summaries = unit
 type nonrec rule_group =
   {
   metric_name: string option ;
   name: string option ;
   rule_group_id: string }
-type nonrec predicates = unit
 type nonrec rule =
   {
   predicates: predicate list ;
   metric_name: string option ;
   name: string option ;
   rule_id: string }
-type nonrec regex_pattern_strings = unit
 type nonrec regex_pattern_set_summary =
   {
   name: string ;
   regex_pattern_set_id: string }
-type nonrec regex_pattern_set_summaries = unit
 type nonrec regex_pattern_set =
   {
   regex_pattern_strings: string list ;
   name: string option ;
   regex_pattern_set_id: string }
-type nonrec regex_match_tuples = unit
 type nonrec regex_match_set_summary =
   {
   name: string ;
   regex_match_set_id: string }
-type nonrec regex_match_set_summaries = unit
 type nonrec regex_match_set =
   {
   regex_match_tuples: regex_match_tuple list option ;
   name: string option ;
   regex_match_set_id: string option }
-type nonrec redacted_fields = unit
 type nonrec rate_key =
   | IP 
 type nonrec rate_based_rule =
@@ -766,12 +703,10 @@ type nonrec rate_based_rule =
   name: string option ;
   rule_id: string }
 type nonrec put_permission_policy_response = unit
-type nonrec policy_string = unit
 type nonrec put_permission_policy_request =
   {
   policy: string ;
   resource_arn: string }
-type nonrec log_destination_configs = unit
 type nonrec logging_configuration =
   {
   redacted_fields: field_to_match list option ;
@@ -783,12 +718,6 @@ type nonrec put_logging_configuration_response =
 type nonrec put_logging_configuration_request =
   {
   logging_configuration: logging_configuration }
-type nonrec population_size = unit
-type nonrec pagination_limit = unit
-type nonrec next_marker = unit
-type nonrec managed_key = unit
-type nonrec managed_keys = unit
-type nonrec logging_configurations = unit
 type nonrec list_xss_match_sets_response =
   {
   xss_match_sets: xss_match_set_summary list option ;
@@ -889,7 +818,6 @@ type nonrec list_logging_configurations_request =
 type nonrec ip_set_summary = {
   name: string ;
   ip_set_id: string }
-type nonrec ip_set_summaries = unit
 type nonrec list_ip_sets_response =
   {
   ip_sets: ip_set_summary list option ;
@@ -901,7 +829,6 @@ type nonrec list_ip_sets_request =
 type nonrec geo_match_set_summary = {
   name: string ;
   geo_match_set_id: string }
-type nonrec geo_match_set_summaries = unit
 type nonrec list_geo_match_sets_response =
   {
   geo_match_sets: geo_match_set_summary list option ;
@@ -914,7 +841,6 @@ type nonrec byte_match_set_summary =
   {
   name: string ;
   byte_match_set_id: string }
-type nonrec byte_match_set_summaries = unit
 type nonrec list_byte_match_sets_response =
   {
   byte_match_sets: byte_match_set_summary list option ;
@@ -932,8 +858,6 @@ type nonrec list_activated_rules_in_rule_group_request =
   limit: int option ;
   next_marker: string option ;
   rule_group_id: string option }
-type nonrec ignore_unsupported_type = unit
-type nonrec ip_set_descriptors = unit
 type nonrec ip_set =
   {
   ip_set_descriptors: ip_set_descriptor list ;
@@ -965,7 +889,6 @@ type nonrec get_sampled_requests_response =
   time_window: time_window option ;
   population_size: int option ;
   sampled_requests: sampled_http_request list option }
-type nonrec get_sampled_requests_max_items = unit
 type nonrec get_sampled_requests_request =
   {
   max_items: int ;
@@ -1015,7 +938,6 @@ type nonrec get_ip_set_response = {
   ip_set: ip_set option }
 type nonrec get_ip_set_request = {
   ip_set_id: string }
-type nonrec geo_match_constraints = unit
 type nonrec geo_match_set =
   {
   geo_match_constraints: geo_match_constraint list ;
@@ -1038,7 +960,6 @@ type nonrec get_change_token_status_request = {
 type nonrec get_change_token_response = {
   change_token: string option }
 type nonrec get_change_token_request = unit
-type nonrec byte_match_tuples = unit
 type nonrec byte_match_set =
   {
   byte_match_tuples: byte_match_tuple list ;
@@ -1243,10 +1164,3 @@ type nonrec create_byte_match_set_request =
   {
   change_token: string ;
   name: string }
-type nonrec awswa_f_20150824 = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

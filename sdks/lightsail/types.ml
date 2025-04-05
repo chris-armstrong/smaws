@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,13 +7,6 @@ let service =
       version = "2016-11-28";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec timestamp_ = Timestamp.t
-type nonrec string_ = string
-type nonrec non_empty_string = string
-type nonrec resource_name = string
-type nonrec setup_domain_name = string
-type nonrec setup_domain_name_list = string list option list
-type nonrec base_unit = unit
 type nonrec certificate_provider =
   | LetsEncrypt 
 type nonrec setup_request =
@@ -21,7 +14,6 @@ type nonrec setup_request =
   certificate_provider: certificate_provider option ;
   domain_names: string list option ;
   instance_name: string option }
-type nonrec iso_date = Timestamp.t
 type nonrec region_name =
   | EU_NORTH_1 
   | AP_NORTHEAST_2 
@@ -67,7 +59,7 @@ type nonrec setup_history_resource =
   {
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   name: string option }
 type nonrec setup_status =
@@ -81,10 +73,8 @@ type nonrec setup_execution_details =
   standard_error: string option ;
   status: setup_status option ;
   name: string option ;
-  date_time: float option ;
+  date_time: CoreTypes.Timestamp.t option ;
   command: string option }
-type nonrec setup_execution_details_list =
-  setup_execution_details list option list
 type nonrec setup_history =
   {
   status: setup_status option ;
@@ -92,12 +82,6 @@ type nonrec setup_history =
   resource: setup_history_resource option ;
   request: setup_request option ;
   operation_id: string option }
-type nonrec setup_history_list = setup_history list option list
-type nonrec long = int
-type nonrec integer_ = int
-type nonrec float_ = float
-type nonrec double = float
-type nonrec boolean_ = bool
 type nonrec viewer_minimum_tls_protocol_version_enum =
   | TLSv12_2021 
   | TLSv12_2019 
@@ -197,21 +181,19 @@ type nonrec operation =
   {
   error_details: string option ;
   error_code: string option ;
-  status_changed_at: float option ;
+  status_changed_at: CoreTypes.Timestamp.t option ;
   status: operation_status option ;
   operation_type: operation_type option ;
   operation_details: string option ;
   is_terminal: bool option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   resource_type: resource_type option ;
   resource_name: string option ;
   id: string option }
-type nonrec operation_list = operation list option list
 type nonrec update_relational_database_result =
   {
   operations: operation list option }
-type nonrec sensitive_string = string
 type nonrec update_relational_database_request =
   {
   relational_database_blueprint_id: string option ;
@@ -238,8 +220,6 @@ type nonrec relational_database_parameter =
   apply_type: string option ;
   apply_method: string option ;
   allowed_values: string option }
-type nonrec relational_database_parameter_list =
-  relational_database_parameter list option list
 type nonrec update_relational_database_parameters_request =
   {
   parameters: relational_database_parameter list ;
@@ -295,7 +275,6 @@ type nonrec load_balancer_attribute_name =
   | SessionStickiness_LB_CookieDurationSeconds 
   | SessionStickinessEnabled 
   | HealthCheckPath 
-type nonrec string_max256 = string
 type nonrec update_load_balancer_attribute_request =
   {
   attribute_value: string ;
@@ -322,13 +301,10 @@ type nonrec update_instance_metadata_options_request =
   instance_name: string }
 type nonrec update_domain_entry_result = {
   operations: operation list option }
-type nonrec domain_name = string
-type nonrec domain_entry_type = string
-type nonrec domain_entry_options_keys = string
-type nonrec domain_entry_options = (string_ option * string_ option) list
+type nonrec domain_entry_options = (string * string) list
 type nonrec domain_entry =
   {
-  options: (string * string) list option ;
+  options: domain_entry_options option ;
   type_: string option ;
   is_alias: bool option ;
   target: string option ;
@@ -358,7 +334,6 @@ type nonrec forward_values =
   | All 
   | AllowList 
   | None 
-type nonrec string_list = string list option list
 type nonrec cookie_object =
   {
   cookies_allow_list: string list option ;
@@ -379,7 +354,6 @@ type nonrec header_enum =
   | AcceptDatetime 
   | AcceptCharset 
   | Accept 
-type nonrec header_forward_list = header_enum list option list
 type nonrec header_object =
   {
   headers_allow_list: header_enum list option ;
@@ -402,7 +376,6 @@ type nonrec cache_behavior_per_path =
   {
   behavior: behavior_enum option ;
   path: string option }
-type nonrec cache_behavior_list = cache_behavior_per_path list option list
 type nonrec update_distribution_request =
   {
   use_default_certificate: bool option ;
@@ -422,13 +395,9 @@ type nonrec update_distribution_bundle_request =
   {
   bundle_id: string option ;
   distribution_name: string option }
-type nonrec container_service_name = string
-type nonrec tag_key = string
-type nonrec tag_value = string
 type nonrec tag = {
   value: string option ;
   key: string option }
-type nonrec tag_list = tag list option list
 type nonrec container_service_power_name =
   | Xlarge 
   | Large 
@@ -458,28 +427,25 @@ type nonrec container_service_state_detail =
   {
   message: string option ;
   code: container_service_state_detail_code option }
-type nonrec container_service_scale = int
 type nonrec container_service_deployment_state =
   | FAILED 
   | INACTIVE 
   | ACTIVE 
   | ACTIVATING 
-type nonrec environment = (string_ option * string_ option) list
+type nonrec environment = (string * string) list
 type nonrec container_service_protocol =
   | UDP 
   | TCP 
   | HTTPS 
   | HTTP 
-type nonrec port_map =
-  (string_ option * container_service_protocol option) list
+type nonrec port_map = (string * container_service_protocol) list
 type nonrec container =
   {
-  ports: (string * container_service_protocol) list option ;
-  environment: (string * string) list option ;
+  ports: port_map option ;
+  environment: environment option ;
   command: string list option ;
   image: string option }
-type nonrec container_name = string
-type nonrec container_map = (string_ option * container option) list
+type nonrec container_map = (string * container) list
 type nonrec container_service_health_check_config =
   {
   success_codes: string option ;
@@ -495,14 +461,12 @@ type nonrec container_service_endpoint =
   container_name: string option }
 type nonrec container_service_deployment =
   {
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   public_endpoint: container_service_endpoint option ;
-  containers: (string * container) list option ;
+  containers: container_map option ;
   state: container_service_deployment_state option ;
   version: int option }
-type nonrec container_service_public_domains_list = string list option list
-type nonrec container_service_public_domains =
-  (string_ option * string list option) list
+type nonrec container_service_public_domains = (string * string list) list
 type nonrec container_service_ecr_image_puller_role =
   {
   principal_arn: string option ;
@@ -514,7 +478,7 @@ type nonrec container_service =
   {
   private_registry_access: private_registry_access option ;
   url: string option ;
-  public_domain_names: (string * string list) list option ;
+  public_domain_names: container_service_public_domains option ;
   private_domain_name: string option ;
   principal_arn: string option ;
   is_disabled: bool option ;
@@ -528,7 +492,7 @@ type nonrec container_service =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   container_service_name: string option }
 type nonrec update_container_service_result =
@@ -544,7 +508,7 @@ type nonrec private_registry_access_request =
 type nonrec update_container_service_request =
   {
   private_registry_access: private_registry_access_request option ;
-  public_domain_names: (string * string list) list option ;
+  public_domain_names: container_service_public_domains option ;
   is_disabled: bool option ;
   scale: int option ;
   power: container_service_power_name option ;
@@ -556,17 +520,13 @@ type nonrec access_rules =
   {
   allow_public_overrides: bool option ;
   get_object: access_type option }
-type nonrec bucket_name = string
-type nonrec partner_id_list = string list option list
 type nonrec resource_receiving_access =
   {
   resource_type: string option ;
   name: string option }
-type nonrec access_receiver_list = resource_receiving_access list option list
 type nonrec bucket_state = {
   message: string option ;
   code: string option }
-type nonrec bucket_access_log_prefix = string
 type nonrec bucket_access_log_config =
   {
   prefix: string option ;
@@ -585,7 +545,7 @@ type nonrec bucket =
   name: string option ;
   location: resource_location option ;
   url: string option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   bundle_id: string option ;
   arn: string option ;
   access_rules: access_rules option ;
@@ -610,8 +570,6 @@ type nonrec update_bucket_bundle_request =
   bucket_name: string }
 type nonrec untag_resource_result = {
   operations: operation list option }
-type nonrec resource_arn = string
-type nonrec tag_key_list = string list option list
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
@@ -625,10 +583,10 @@ type nonrec treat_missing_data =
   | Ignore 
   | NotBreaching 
   | Breaching 
-type nonrec time_period = {
-  end_: float option ;
-  start: float option }
-type nonrec time_of_day = string
+type nonrec time_period =
+  {
+  end_: CoreTypes.Timestamp.t option ;
+  start: CoreTypes.Timestamp.t option }
 type nonrec test_alarm_result = {
   operations: operation list option }
 type nonrec alarm_state =
@@ -645,7 +603,6 @@ type nonrec tag_resource_request =
   tags: tag list ;
   resource_arn: string option ;
   resource_name: string }
-type nonrec subject_alternative_name_list = string list option list
 type nonrec stop_relational_database_result =
   {
   operations: operation list option }
@@ -681,7 +638,6 @@ type nonrec status =
   | Started 
   | NotStarted 
   | StartExpired 
-type nonrec ip_address = string
 type nonrec static_ip =
   {
   is_attached: bool option ;
@@ -689,11 +645,10 @@ type nonrec static_ip =
   ip_address: string option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec static_ip_list = static_ip list option list
 type nonrec start_relational_database_result =
   {
   operations: operation list option }
@@ -711,14 +666,12 @@ type nonrec start_gui_session_request = {
 type nonrec setup_instance_https_result =
   {
   operations: operation list option }
-type nonrec email_address = string
 type nonrec setup_instance_https_request =
   {
   certificate_provider: certificate_provider ;
   domain_names: string list ;
   email_address: string ;
   instance_name: string }
-type nonrec setup_history_page_token = string
 type nonrec set_resource_access_for_bucket_result =
   {
   operations: operation list option }
@@ -742,14 +695,11 @@ type nonrec set_ip_address_type_request =
   ip_address_type: ip_address_type ;
   resource_name: string ;
   resource_type: resource_type }
-type nonrec sensitive_non_empty_string = string
 type nonrec session =
   {
   is_primary: bool option ;
   url: string option ;
   name: string option }
-type nonrec sessions = session list option list
-type nonrec serial_number = string
 type nonrec send_contact_method_verification_result =
   {
   operations: operation list option }
@@ -758,7 +708,6 @@ type nonrec contact_method_verification_protocol =
 type nonrec send_contact_method_verification_request =
   {
   protocol: contact_method_verification_protocol }
-type nonrec revocation_reason = string
 type nonrec pricing_unit =
   | Queries 
   | Bundles 
@@ -774,36 +723,30 @@ type nonrec estimate_by_time =
   unit_: float option ;
   pricing_unit: pricing_unit option ;
   usage_cost: float option }
-type nonrec estimates_by_time = estimate_by_time list option list
 type nonrec cost_estimate =
   {
   results_by_time: estimate_by_time list option ;
   usage_type: string option }
-type nonrec cost_estimates = cost_estimate list option list
 type nonrec resource_budget_estimate =
   {
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   cost_estimates: cost_estimate list option ;
   resource_type: resource_type option ;
   resource_name: string option }
-type nonrec resources_budget_estimate =
-  resource_budget_estimate list option list
 type nonrec resource_record =
   {
   value: string option ;
   type_: string option ;
   name: string option }
-type nonrec resource_name_list = string list option list
 type nonrec reset_distribution_cache_result =
   {
   operation: operation option ;
-  create_time: float option ;
+  create_time: CoreTypes.Timestamp.t option ;
   status: string option }
 type nonrec reset_distribution_cache_request =
   {
   distribution_name: string option }
-type nonrec request_failure_reason = string
 type nonrec dns_record_creation_state_code =
   | Failed 
   | Started 
@@ -822,17 +765,14 @@ type nonrec domain_validation_record =
   dns_record_creation_state: dns_record_creation_state option ;
   resource_record: resource_record option ;
   domain_name: string option }
-type nonrec domain_validation_record_list =
-  domain_validation_record list option list
 type nonrec renewal_status =
   | Failed 
   | Success 
   | PendingValidation 
   | PendingAutoRenewal 
-type nonrec renewal_status_reason = string
 type nonrec renewal_summary =
   {
-  updated_at: float option ;
+  updated_at: CoreTypes.Timestamp.t option ;
   renewal_status_reason: string option ;
   renewal_status: renewal_status option ;
   domain_validation_records: domain_validation_record list option }
@@ -853,12 +793,10 @@ type nonrec relational_database_snapshot =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec relational_database_snapshot_list =
-  relational_database_snapshot list option list
 type nonrec relational_database_password_version =
   | PENDING 
   | PREVIOUS 
@@ -886,11 +824,9 @@ type nonrec relational_database_endpoint =
   port: int option }
 type nonrec pending_maintenance_action =
   {
-  current_apply_date: float option ;
+  current_apply_date: CoreTypes.Timestamp.t option ;
   description: string option ;
   action: string option }
-type nonrec pending_maintenance_action_list =
-  pending_maintenance_action list option list
 type nonrec relational_database =
   {
   ca_certificate_identifier: string option ;
@@ -901,7 +837,7 @@ type nonrec relational_database =
   preferred_backup_window: string option ;
   parameter_apply_status: string option ;
   master_username: string option ;
-  latest_restorable_time: float option ;
+  latest_restorable_time: CoreTypes.Timestamp.t option ;
   engine_version: string option ;
   engine: string option ;
   pending_modified_values: pending_modified_relational_database_values option ;
@@ -915,19 +851,16 @@ type nonrec relational_database =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec relational_database_list = relational_database list option list
 type nonrec relational_database_event =
   {
   event_categories: string list option ;
   message: string option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   resource: string option }
-type nonrec relational_database_event_list =
-  relational_database_event list option list
 type nonrec relational_database_engine =
   | MYSQL 
 type nonrec relational_database_bundle =
@@ -941,8 +874,6 @@ type nonrec relational_database_bundle =
   price: float option ;
   name: string option ;
   bundle_id: string option }
-type nonrec relational_database_bundle_list =
-  relational_database_bundle list option list
 type nonrec relational_database_blueprint =
   {
   is_engine_default: bool option ;
@@ -951,8 +882,6 @@ type nonrec relational_database_blueprint =
   engine_version: string option ;
   engine: relational_database_engine option ;
   blueprint_id: string option }
-type nonrec relational_database_blueprint_list =
-  relational_database_blueprint list option list
 type nonrec name_servers_update_state_code =
   | Started 
   | Failed 
@@ -977,13 +906,12 @@ type nonrec registered_domain_delegation_info =
   name_servers_update_state: name_servers_update_state option }
 type nonrec container_image =
   {
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   digest: string option ;
   image: string option }
 type nonrec register_container_image_result =
   {
   container_image: container_image option }
-type nonrec container_label = string
 type nonrec register_container_image_request =
   {
   digest: string ;
@@ -993,7 +921,6 @@ type nonrec availability_zone =
   {
   state: string option ;
   zone_name: string option }
-type nonrec availability_zone_list = availability_zone list option list
 type nonrec region =
   {
   relational_database_availability_zones: availability_zone list option ;
@@ -1002,7 +929,6 @@ type nonrec region =
   display_name: string option ;
   description: string option ;
   continent_code: string option }
-type nonrec region_list = region list option list
 type nonrec record_state =
   | Failed 
   | Succeeded 
@@ -1019,7 +945,6 @@ type nonrec reboot_instance_request = {
   instance_name: string }
 type nonrec put_instance_public_ports_result = {
   operation: operation option }
-type nonrec port = int
 type nonrec network_protocol =
   | ICMPV6 
   | ICMP 
@@ -1034,7 +959,6 @@ type nonrec port_info =
   protocol: network_protocol option ;
   to_port: int option ;
   from_port: int option }
-type nonrec port_info_list = port_info list option list
 type nonrec put_instance_public_ports_request =
   {
   instance_name: string ;
@@ -1075,8 +999,6 @@ type nonrec comparison_operator =
 type nonrec contact_protocol =
   | SMS 
   | Email 
-type nonrec contact_protocols_list = contact_protocol list option list
-type nonrec notification_trigger_list = alarm_state list option list
 type nonrec put_alarm_request =
   {
   notification_enabled: bool option ;
@@ -1093,7 +1015,6 @@ type nonrec put_alarm_request =
 type nonrec port_state =
   | Closed 
   | Open 
-type nonrec port_list = int list option list
 type nonrec port_info_source_type =
   | Closed 
   | None 
@@ -1164,22 +1085,19 @@ type nonrec metric_statistic =
   | Sum 
   | Maximum 
   | Minimum 
-type nonrec metric_statistic_list = metric_statistic list option list
-type nonrec metric_period = int
 type nonrec metric_datapoint =
   {
   unit_: metric_unit option ;
-  timestamp_: float option ;
+  timestamp_: CoreTypes.Timestamp.t option ;
   sum: float option ;
   sample_count: float option ;
   minimum: float option ;
   maximum: float option ;
   average: float option }
-type nonrec metric_datapoint_list = metric_datapoint list option list
-type nonrec log_event = {
+type nonrec log_event =
+  {
   message: string option ;
-  created_at: float option }
-type nonrec log_event_list = log_event list option list
+  created_at: CoreTypes.Timestamp.t option }
 type nonrec load_balancer_tls_policy =
   {
   ciphers: string list option ;
@@ -1187,14 +1105,10 @@ type nonrec load_balancer_tls_policy =
   description: string option ;
   is_default: bool option ;
   name: string option }
-type nonrec load_balancer_tls_policy_list =
-  load_balancer_tls_policy list option list
 type nonrec load_balancer_tls_certificate_summary =
   {
   is_attached: bool option ;
   name: string option }
-type nonrec load_balancer_tls_certificate_summary_list =
-  load_balancer_tls_certificate_summary list option list
 type nonrec load_balancer_tls_certificate_status =
   | Unknown 
   | Failed 
@@ -1228,8 +1142,6 @@ type nonrec load_balancer_tls_certificate_domain_validation_option =
   {
   validation_status: load_balancer_tls_certificate_domain_status option ;
   domain_name: string option }
-type nonrec load_balancer_tls_certificate_domain_validation_option_list =
-  load_balancer_tls_certificate_domain_validation_option list option list
 type nonrec load_balancer_tls_certificate_renewal_summary =
   {
   domain_validation_options:
@@ -1252,8 +1164,6 @@ type nonrec load_balancer_tls_certificate_domain_validation_record =
   value: string option ;
   type_: string option ;
   name: string option }
-type nonrec load_balancer_tls_certificate_domain_validation_record_list =
-  load_balancer_tls_certificate_domain_validation_record list option list
 type nonrec load_balancer_tls_certificate_failure_reason =
   | Other 
   | InvalidPublicDomain 
@@ -1266,14 +1176,14 @@ type nonrec load_balancer_tls_certificate =
   subject: string option ;
   signature_algorithm: string option ;
   serial: string option ;
-  revoked_at: float option ;
+  revoked_at: CoreTypes.Timestamp.t option ;
   revocation_reason: load_balancer_tls_certificate_revocation_reason option ;
   renewal_summary: load_balancer_tls_certificate_renewal_summary option ;
-  not_before: float option ;
-  not_after: float option ;
+  not_before: CoreTypes.Timestamp.t option ;
+  not_after: CoreTypes.Timestamp.t option ;
   key_algorithm: string option ;
   issuer: string option ;
-  issued_at: float option ;
+  issued_at: CoreTypes.Timestamp.t option ;
   failure_reason: load_balancer_tls_certificate_failure_reason option ;
   domain_validation_records:
     load_balancer_tls_certificate_domain_validation_record list option ;
@@ -1284,12 +1194,10 @@ type nonrec load_balancer_tls_certificate =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec load_balancer_tls_certificate_list =
-  load_balancer_tls_certificate list option list
 type nonrec load_balancer_state =
   | Unknown 
   | Failed 
@@ -1336,16 +1244,14 @@ type nonrec instance_health_summary =
   instance_health_reason: instance_health_reason option ;
   instance_health: instance_health_state option ;
   instance_name: string option }
-type nonrec instance_health_summary_list =
-  instance_health_summary list option list
 type nonrec load_balancer_configuration_options =
-  (string_ option * string_ option) list
+  (load_balancer_attribute_name * string) list
 type nonrec load_balancer =
   {
   tls_policy_name: string option ;
   https_redirection_enabled: bool option ;
   ip_address_type: ip_address_type option ;
-  configuration_options: (string * string) list option ;
+  configuration_options: load_balancer_configuration_options option ;
   tls_certificate_summaries:
     load_balancer_tls_certificate_summary list option ;
   instance_health_summary: instance_health_summary list option ;
@@ -1358,17 +1264,15 @@ type nonrec load_balancer =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec load_balancer_list = load_balancer list option list
 type nonrec is_vpc_peered_result = {
   is_peered: bool option }
 type nonrec is_vpc_peered_request = unit
 type nonrec import_key_pair_result = {
   operation: operation option }
-type nonrec base64 = string
 type nonrec import_key_pair_request =
   {
   public_key_base64: string ;
@@ -1426,14 +1330,14 @@ type nonrec get_relational_database_metric_data_request =
   {
   statistics: metric_statistic list ;
   unit_: metric_unit ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: relational_database_metric_name ;
   relational_database_name: string }
 type nonrec get_relational_database_master_user_password_result =
   {
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   master_user_password: string option }
 type nonrec get_relational_database_master_user_password_request =
   {
@@ -1454,8 +1358,8 @@ type nonrec get_relational_database_log_events_request =
   {
   page_token: string option ;
   start_from_head: bool option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   log_stream_name: string ;
   relational_database_name: string }
 type nonrec get_relational_database_events_result =
@@ -1540,8 +1444,8 @@ type nonrec get_load_balancer_metric_data_request =
   {
   statistics: metric_statistic list ;
   unit_: metric_unit ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: load_balancer_metric_name ;
   load_balancer_name: string }
@@ -1555,11 +1459,10 @@ type nonrec key_pair =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec key_pair_list = key_pair list option list
 type nonrec get_key_pairs_result =
   {
   next_page_token: string option ;
@@ -1591,7 +1494,6 @@ type nonrec add_on =
   snapshot_time_of_day: string option ;
   status: string option ;
   name: string option }
-type nonrec add_on_list = add_on list option list
 type nonrec disk_state =
   | Unknown 
   | InUse 
@@ -1619,11 +1521,10 @@ type nonrec disk =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec disk_list = disk list option list
 type nonrec instance_snapshot =
   {
   size_in_gb: int option ;
@@ -1638,11 +1539,10 @@ type nonrec instance_snapshot =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec instance_snapshot_list = instance_snapshot list option list
 type nonrec get_instance_snapshots_result =
   {
   next_page_token: string option ;
@@ -1654,8 +1554,6 @@ type nonrec get_instance_snapshot_result =
   instance_snapshot: instance_snapshot option }
 type nonrec get_instance_snapshot_request = {
   instance_snapshot_name: string }
-type nonrec ipv6_address = string
-type nonrec ipv6_address_list = string list option list
 type nonrec instance_hardware =
   {
   ram_size_in_gb: float option ;
@@ -1676,7 +1574,6 @@ type nonrec instance_port_info =
   protocol: network_protocol option ;
   to_port: int option ;
   from_port: int option }
-type nonrec instance_port_info_list = instance_port_info list option list
 type nonrec instance_networking =
   {
   ports: instance_port_info list option ;
@@ -1711,11 +1608,10 @@ type nonrec instance =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec instance_list = instance list option list
 type nonrec get_instances_result =
   {
   next_page_token: string option ;
@@ -1731,7 +1627,6 @@ type nonrec instance_port_state =
   protocol: network_protocol option ;
   to_port: int option ;
   from_port: int option }
-type nonrec instance_port_state_list = instance_port_state list option list
 type nonrec get_instance_port_states_result =
   {
   port_states: instance_port_state list option }
@@ -1755,8 +1650,8 @@ type nonrec get_instance_metric_data_request =
   {
   statistics: metric_statistic list ;
   unit_: metric_unit ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: instance_metric_name ;
   instance_name: string }
@@ -1765,14 +1660,13 @@ type nonrec instance_access_protocol =
   | Ssh 
 type nonrec host_key_attributes =
   {
-  not_valid_after: float option ;
-  not_valid_before: float option ;
+  not_valid_after: CoreTypes.Timestamp.t option ;
+  not_valid_before: CoreTypes.Timestamp.t option ;
   fingerprint_sh_a256: string option ;
   fingerprint_sh_a1: string option ;
-  witnessed_at: float option ;
+  witnessed_at: CoreTypes.Timestamp.t option ;
   public_key: string option ;
   algorithm: string option }
-type nonrec host_keys_list = host_key_attributes list option list
 type nonrec instance_access_details =
   {
   host_keys: host_key_attributes list option ;
@@ -1784,7 +1678,7 @@ type nonrec instance_access_details =
   password: string option ;
   ipv6_addresses: string list option ;
   ip_address: string option ;
-  expires_at: float option ;
+  expires_at: CoreTypes.Timestamp.t option ;
   cert_key: string option }
 type nonrec get_instance_access_details_result =
   {
@@ -1806,7 +1700,6 @@ type nonrec disk_info =
   size_in_gb: int option ;
   path: string option ;
   name: string option }
-type nonrec disk_info_list = disk_info list option list
 type nonrec instance_snapshot_info =
   {
   from_disk_info: disk_info list option ;
@@ -1822,7 +1715,7 @@ type nonrec export_snapshot_record_source_info =
   from_resource_name: string option ;
   arn: string option ;
   name: string option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   resource_type: export_snapshot_record_source_type option }
 type nonrec destination_info = {
   service: string option ;
@@ -1834,11 +1727,9 @@ type nonrec export_snapshot_record =
   state: record_state option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   name: string option }
-type nonrec export_snapshot_record_list =
-  export_snapshot_record list option list
 type nonrec get_export_snapshot_records_result =
   {
   next_page_token: string option ;
@@ -1846,7 +1737,6 @@ type nonrec get_export_snapshot_records_result =
 type nonrec get_export_snapshot_records_request =
   {
   page_token: string option }
-type nonrec domain_entry_list = domain_entry list option list
 type nonrec domain =
   {
   registered_domain_delegation_info: registered_domain_delegation_info option ;
@@ -1854,11 +1744,10 @@ type nonrec domain =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec domain_list = domain list option list
 type nonrec get_domains_result =
   {
   next_page_token: string option ;
@@ -1888,11 +1777,10 @@ type nonrec lightsail_distribution =
   alternative_domain_names: string list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec distribution_list = lightsail_distribution list option list
 type nonrec get_distributions_result =
   {
   next_page_token: string option ;
@@ -1917,13 +1805,13 @@ type nonrec get_distribution_metric_data_request =
   statistics: metric_statistic list ;
   unit_: metric_unit ;
   period: int ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   metric_name: distribution_metric_name ;
   distribution_name: string }
 type nonrec get_distribution_latest_cache_reset_result =
   {
-  create_time: float option ;
+  create_time: CoreTypes.Timestamp.t option ;
   status: string option }
 type nonrec get_distribution_latest_cache_reset_request =
   {
@@ -1935,7 +1823,6 @@ type nonrec distribution_bundle =
   price: float option ;
   name: string option ;
   bundle_id: string option }
-type nonrec distribution_bundle_list = distribution_bundle list option list
 type nonrec get_distribution_bundles_result =
   {
   bundles: distribution_bundle list option }
@@ -1958,11 +1845,10 @@ type nonrec disk_snapshot =
   tags: tag list option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
   name: string option }
-type nonrec disk_snapshot_list = disk_snapshot list option list
 type nonrec get_disk_snapshots_result =
   {
   next_page_token: string option ;
@@ -1988,10 +1874,9 @@ type nonrec get_cost_estimate_result =
   resources_budget_estimate: resource_budget_estimate list option }
 type nonrec get_cost_estimate_request =
   {
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   resource_name: string }
-type nonrec container_service_list = container_service list option list
 type nonrec container_services_list_result =
   {
   container_services: container_service list option }
@@ -2005,8 +1890,6 @@ type nonrec container_service_power =
   cpu_count: float option ;
   price: float option ;
   power_id: string option }
-type nonrec container_service_power_list =
-  container_service_power list option list
 type nonrec get_container_service_powers_result =
   {
   powers: container_service_power list option }
@@ -2022,12 +1905,10 @@ type nonrec get_container_service_metric_data_request =
   {
   statistics: metric_statistic list ;
   period: int ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   metric_name: container_service_metric_name ;
   service_name: string }
-type nonrec container_service_deployment_list =
-  container_service_deployment list option list
 type nonrec get_container_service_deployments_result =
   {
   deployments: container_service_deployment list option }
@@ -2037,9 +1918,7 @@ type nonrec get_container_service_deployments_request =
 type nonrec container_service_log_event =
   {
   message: string option ;
-  created_at: float option }
-type nonrec container_service_log_event_list =
-  container_service_log_event list option list
+  created_at: CoreTypes.Timestamp.t option }
 type nonrec get_container_log_result =
   {
   next_page_token: string option ;
@@ -2048,23 +1927,19 @@ type nonrec get_container_log_request =
   {
   page_token: string option ;
   filter_pattern: string option ;
-  end_time: float option ;
-  start_time: float option ;
+  end_time: CoreTypes.Timestamp.t option ;
+  start_time: CoreTypes.Timestamp.t option ;
   container_name: string ;
   service_name: string }
-type nonrec container_image_list = container_image list option list
 type nonrec get_container_images_result =
   {
   container_images: container_image list option }
 type nonrec get_container_images_request = {
   service_name: string }
-type nonrec container_service_metadata_entry =
-  (string_ option * string_ option) list
-type nonrec container_service_metadata_entry_list =
-  (string * string) list list option list
+type nonrec container_service_metadata_entry = (string * string) list
 type nonrec get_container_api_metadata_result =
   {
-  metadata: (string * string) list list option }
+  metadata: container_service_metadata_entry list option }
 type nonrec get_container_api_metadata_request = unit
 type nonrec contact_method_status =
   | Invalid 
@@ -2075,13 +1950,12 @@ type nonrec contact_method =
   support_code: string option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   name: string option ;
   protocol: contact_protocol option ;
   status: contact_method_status option ;
   contact_endpoint: string option }
-type nonrec contact_methods_list = contact_method list option list
 type nonrec get_contact_methods_result =
   {
   contact_methods: contact_method list option }
@@ -2095,8 +1969,6 @@ type nonrec cloud_formation_stack_record_source_info =
   arn: string option ;
   name: string option ;
   resource_type: cloud_formation_stack_record_source_type option }
-type nonrec cloud_formation_stack_record_source_info_list =
-  cloud_formation_stack_record_source_info list option list
 type nonrec cloud_formation_stack_record =
   {
   destination_info: destination_info option ;
@@ -2104,11 +1976,9 @@ type nonrec cloud_formation_stack_record =
   state: record_state option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   name: string option }
-type nonrec cloud_formation_stack_record_list =
-  cloud_formation_stack_record list option list
 type nonrec get_cloud_formation_stack_records_result =
   {
   next_page_token: string option ;
@@ -2116,7 +1986,6 @@ type nonrec get_cloud_formation_stack_records_result =
 type nonrec get_cloud_formation_stack_records_request =
   {
   page_token: string option }
-type nonrec certificate_name = string
 type nonrec certificate_status =
   | Failed 
   | Revoked 
@@ -2125,23 +1994,19 @@ type nonrec certificate_status =
   | Inactive 
   | Issued 
   | PendingValidation 
-type nonrec in_use_resource_count = int
-type nonrec key_algorithm = string
-type nonrec issuer_c_a = string
-type nonrec eligible_to_renew = string
 type nonrec certificate =
   {
   support_code: string option ;
   tags: tag list option ;
   revocation_reason: string option ;
-  revoked_at: float option ;
+  revoked_at: CoreTypes.Timestamp.t option ;
   renewal_summary: renewal_summary option ;
   eligible_to_renew: string option ;
-  not_after: float option ;
-  not_before: float option ;
+  not_after: CoreTypes.Timestamp.t option ;
+  not_before: CoreTypes.Timestamp.t option ;
   issuer_c_a: string option ;
-  issued_at: float option ;
-  created_at: float option ;
+  issued_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   key_algorithm: string option ;
   in_use_resource_count: int option ;
   request_failure_reason: string option ;
@@ -2159,13 +2024,10 @@ type nonrec certificate_summary =
   domain_name: string option ;
   certificate_name: string option ;
   certificate_arn: string option }
-type nonrec certificate_summary_list = certificate_summary list option list
 type nonrec get_certificates_result =
   {
   next_page_token: string option ;
   certificates: certificate_summary list option }
-type nonrec certificate_status_list = certificate_status list option list
-type nonrec include_certificate_details = bool
 type nonrec get_certificates_request =
   {
   page_token: string option ;
@@ -2175,10 +2037,8 @@ type nonrec get_certificates_request =
 type nonrec instance_platform =
   | Windows 
   | LinuxUnix 
-type nonrec instance_platform_list = instance_platform list option list
 type nonrec app_category =
   | LfR 
-type nonrec app_category_list = app_category list option list
 type nonrec bundle =
   {
   public_ipv4_address_count: int option ;
@@ -2194,7 +2054,6 @@ type nonrec bundle =
   disk_size_in_gb: int option ;
   cpu_count: int option ;
   price: float option }
-type nonrec bundle_list = bundle list option list
 type nonrec get_bundles_result =
   {
   next_page_token: string option ;
@@ -2204,7 +2063,6 @@ type nonrec get_bundles_request =
   app_category: app_category option ;
   page_token: string option ;
   include_inactive: bool option }
-type nonrec bucket_list = bucket list option list
 type nonrec account_level_bpa_sync_status =
   | Defaulted 
   | NeverSynced 
@@ -2219,7 +2077,7 @@ type nonrec account_level_bpa_sync =
   {
   bpa_impacts_lightsail: bool option ;
   message: bpa_status_message option ;
-  last_synced_at: float option ;
+  last_synced_at: CoreTypes.Timestamp.t option ;
   status: account_level_bpa_sync_status option }
 type nonrec get_buckets_result =
   {
@@ -2243,8 +2101,8 @@ type nonrec get_bucket_metric_data_request =
   unit_: metric_unit ;
   statistics: metric_statistic list ;
   period: int ;
-  end_time: float ;
-  start_time: float ;
+  end_time: CoreTypes.Timestamp.t ;
+  start_time: CoreTypes.Timestamp.t ;
   metric_name: bucket_metric_name ;
   bucket_name: string }
 type nonrec bucket_bundle =
@@ -2255,25 +2113,22 @@ type nonrec bucket_bundle =
   price: float option ;
   name: string option ;
   bundle_id: string option }
-type nonrec bucket_bundle_list = bucket_bundle list option list
 type nonrec get_bucket_bundles_result = {
   bundles: bucket_bundle list option }
 type nonrec get_bucket_bundles_request = {
   include_inactive: bool option }
-type nonrec iam_access_key_id = string
 type nonrec access_key_last_used =
   {
   service_name: string option ;
   region: string option ;
-  last_used_date: float option }
+  last_used_date: CoreTypes.Timestamp.t option }
 type nonrec access_key =
   {
   last_used: access_key_last_used option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   status: status_type option ;
   secret_access_key: string option ;
   access_key_id: string option }
-type nonrec access_key_list = access_key list option list
 type nonrec get_bucket_access_keys_result =
   {
   access_keys: access_key list option }
@@ -2297,7 +2152,6 @@ type nonrec blueprint =
   group: string option ;
   name: string option ;
   blueprint_id: string option }
-type nonrec blueprint_list = blueprint list option list
 type nonrec get_blueprints_result =
   {
   next_page_token: string option ;
@@ -2315,15 +2169,12 @@ type nonrec auto_snapshot_status =
 type nonrec attached_disk = {
   size_in_gb: int option ;
   path: string option }
-type nonrec attached_disk_list = attached_disk list option list
 type nonrec auto_snapshot_details =
   {
   from_attached_disks: attached_disk list option ;
   status: auto_snapshot_status option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   date: string option }
-type nonrec auto_snapshot_details_list =
-  auto_snapshot_details list option list
 type nonrec get_auto_snapshots_result =
   {
   auto_snapshots: auto_snapshot_details list option ;
@@ -2350,10 +2201,9 @@ type nonrec alarm =
   support_code: string option ;
   resource_type: resource_type option ;
   location: resource_location option ;
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
   name: string option }
-type nonrec alarms_list = alarm list option list
 type nonrec get_alarms_result =
   {
   next_page_token: string option ;
@@ -2392,7 +2242,7 @@ type nonrec enable_add_on_request =
   resource_name: string }
 type nonrec download_default_key_pair_result =
   {
-  created_at: float option ;
+  created_at: CoreTypes.Timestamp.t option ;
   private_key_base64: string option ;
   public_key_base64: string option }
 type nonrec download_default_key_pair_request = unit
@@ -2531,7 +2381,6 @@ type nonrec delete_bucket_request =
 type nonrec delete_auto_snapshot_result =
   {
   operations: operation list option }
-type nonrec auto_snapshot_date = string
 type nonrec delete_auto_snapshot_request =
   {
   date: string ;
@@ -2555,7 +2404,7 @@ type nonrec create_relational_database_from_snapshot_request =
   {
   tags: tag list option ;
   use_latest_restorable_time: bool option ;
-  restore_time: float option ;
+  restore_time: CoreTypes.Timestamp.t option ;
   source_relational_database_name: string option ;
   relational_database_bundle_id: string option ;
   relational_database_snapshot_name: string option ;
@@ -2581,7 +2430,6 @@ type nonrec create_relational_database_request =
 type nonrec create_load_balancer_tls_certificate_result =
   {
   operations: operation list option }
-type nonrec domain_name_list = string list option list
 type nonrec create_load_balancer_tls_certificate_request =
   {
   tags: tag list option ;
@@ -2628,9 +2476,7 @@ type nonrec disk_map =
   {
   new_disk_name: string option ;
   original_disk_path: string option }
-type nonrec disk_map_list = disk_map list option list
-type nonrec attached_disk_map = (string_ option * disk_map list option) list
-type nonrec add_on_request_list = add_on_request list option list
+type nonrec attached_disk_map = (string * disk_map list) list
 type nonrec create_instances_from_snapshot_request =
   {
   use_latest_restorable_auto_snapshot: bool option ;
@@ -2644,7 +2490,7 @@ type nonrec create_instances_from_snapshot_request =
   bundle_id: string ;
   instance_snapshot_name: string option ;
   availability_zone: string ;
-  attached_disk_mapping: (string * disk_map list) list option ;
+  attached_disk_mapping: attached_disk_map option ;
   instance_names: string list }
 type nonrec create_instances_result = {
   operations: operation list option }
@@ -2734,7 +2580,7 @@ type nonrec create_disk_request =
 type nonrec container_service_registry_login =
   {
   registry: string option ;
-  expires_at: float option ;
+  expires_at: CoreTypes.Timestamp.t option ;
   password: string option ;
   username: string option }
 type nonrec create_container_service_registry_login_result =
@@ -2752,7 +2598,7 @@ type nonrec endpoint_request =
 type nonrec create_container_service_deployment_request =
   {
   public_endpoint: endpoint_request option ;
-  containers: (string * container) list option ;
+  containers: container_map option ;
   service_name: string }
 type nonrec create_container_service_result =
   {
@@ -2760,12 +2606,12 @@ type nonrec create_container_service_result =
 type nonrec container_service_deployment_request =
   {
   public_endpoint: endpoint_request option ;
-  containers: (string * container) list option }
+  containers: container_map option }
 type nonrec create_container_service_request =
   {
   private_registry_access: private_registry_access_request option ;
   deployment: container_service_deployment_request option ;
-  public_domain_names: (string * string list) list option ;
+  public_domain_names: container_service_public_domains option ;
   tags: tag list option ;
   scale: int ;
   power: container_service_power_name ;
@@ -2787,7 +2633,6 @@ type nonrec instance_entry =
   port_info_source: port_info_source_type ;
   instance_type: string ;
   source_name: string }
-type nonrec instance_entry_list = instance_entry list option list
 type nonrec create_cloud_formation_stack_request =
   {
   instances: instance_entry list }
@@ -2873,10 +2718,3 @@ type nonrec allocate_static_ip_result = {
   operations: operation list option }
 type nonrec allocate_static_ip_request = {
   static_ip_name: string }
-type nonrec lightsail_20161128 = unit
-type nonrec base_string = string
-type nonrec base_boolean = bool
-type nonrec base_integer = int
-type nonrec base_timestamp = Timestamp.t
-type nonrec base_long = int
-type nonrec base_document = Document.t

@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,16 +7,11 @@ let service =
       version = "2015-12-08";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
-type nonrec base_unit = unit
 type nonrec validation_method =
   | DNS 
   | EMAIL 
-type nonrec validation_exception_message = unit
 type nonrec validation_exception = {
   message: string option }
-type nonrec string_ = unit
-type nonrec validation_email_list = unit
-type nonrec arn = unit
 type nonrec certificate_transparency_logging_preference =
   | DISABLED 
   | ENABLED 
@@ -38,24 +33,18 @@ type nonrec invalid_arn_exception = {
   message: string option }
 type nonrec too_many_tags_exception = {
   message: string option }
-type nonrec availability_error_message = unit
 type nonrec throttling_exception = {
   message: string option }
-type nonrec tag_value = unit
 type nonrec tag_policy_exception = {
   message: string option }
-type nonrec tag_key = unit
 type nonrec tag = {
   value: string option ;
   key: string }
-type nonrec tag_list = unit
-type nonrec t_stamp = unit
 type nonrec sort_order =
   | DESCENDING 
   | ASCENDING 
 type nonrec sort_by =
   | CREATED_AT 
-type nonrec service_error_message = unit
 type nonrec revocation_reason =
   | A_A_COMPROMISE 
   | PRIVILEGE_WITHDRAWN 
@@ -76,7 +65,6 @@ type nonrec resource_record =
   name: string }
 type nonrec resource_in_use_exception = {
   message: string option }
-type nonrec domain_name_string = unit
 type nonrec resend_validation_email_request =
   {
   validation_domain: string ;
@@ -89,14 +77,10 @@ type nonrec request_in_progress_exception = {
   message: string option }
 type nonrec request_certificate_response = {
   certificate_arn: string option }
-type nonrec domain_list = unit
-type nonrec idempotency_token = unit
 type nonrec domain_validation_option =
   {
   validation_domain: string ;
   domain_name: string }
-type nonrec domain_validation_option_list = unit
-type nonrec pca_arn = unit
 type nonrec key_algorithm =
   | EC_secp521r1 
   | EC_secp384r1 
@@ -137,7 +121,6 @@ type nonrec domain_validation =
   validation_domain: string option ;
   validation_emails: string list option ;
   domain_name: string }
-type nonrec domain_validation_list = unit
 type nonrec failure_reason =
   | OTHER 
   | SLR_NOT_FOUND 
@@ -158,7 +141,7 @@ type nonrec failure_reason =
   | NO_AVAILABLE_CONTACTS 
 type nonrec renewal_summary =
   {
-  updated_at: Timestamp.t ;
+  updated_at: CoreTypes.Timestamp.t ;
   renewal_status_reason: failure_reason option ;
   domain_validation_options: domain_validation list ;
   renewal_status: renewal_status }
@@ -171,7 +154,6 @@ type nonrec remove_tags_from_certificate_request =
   {
   tags: tag list ;
   certificate_arn: string }
-type nonrec positive_integer = unit
 type nonrec expiry_events_configuration = {
   days_before_expiry: int option }
 type nonrec put_account_configuration_request =
@@ -182,12 +164,6 @@ type nonrec conflict_exception = {
   message: string option }
 type nonrec access_denied_exception = {
   message: string option }
-type nonrec private_key_blob = unit
-type nonrec private_key = unit
-type nonrec passphrase_blob = unit
-type nonrec nullable_boolean = unit
-type nonrec next_token = unit
-type nonrec max_items = unit
 type nonrec list_tags_for_certificate_response = {
   tags: tag list option }
 type nonrec list_tags_for_certificate_request = {
@@ -216,7 +192,6 @@ type nonrec key_usage_name =
   | KEY_ENCIPHERMENT 
   | NON_REPUDATION 
   | DIGITAL_SIGNATURE 
-type nonrec key_usage_names = unit
 type nonrec extended_key_usage_name =
   | CUSTOM 
   | NONE 
@@ -230,15 +205,14 @@ type nonrec extended_key_usage_name =
   | CODE_SIGNING 
   | TLS_WEB_CLIENT_AUTHENTICATION 
   | TLS_WEB_SERVER_AUTHENTICATION 
-type nonrec extended_key_usage_names = unit
 type nonrec certificate_summary =
   {
-  revoked_at: Timestamp.t option ;
-  imported_at: Timestamp.t option ;
-  issued_at: Timestamp.t option ;
-  created_at: Timestamp.t option ;
-  not_after: Timestamp.t option ;
-  not_before: Timestamp.t option ;
+  revoked_at: CoreTypes.Timestamp.t option ;
+  imported_at: CoreTypes.Timestamp.t option ;
+  issued_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
+  not_after: CoreTypes.Timestamp.t option ;
+  not_before: CoreTypes.Timestamp.t option ;
   renewal_eligibility: renewal_eligibility option ;
   exported: bool option ;
   in_use: bool option ;
@@ -251,15 +225,10 @@ type nonrec certificate_summary =
   subject_alternative_name_summaries: string list option ;
   domain_name: string option ;
   certificate_arn: string option }
-type nonrec certificate_summary_list = unit
 type nonrec list_certificates_response =
   {
   certificate_summary_list: certificate_summary list option ;
   next_token: string option }
-type nonrec certificate_statuses = unit
-type nonrec extended_key_usage_filter_list = unit
-type nonrec key_usage_filter_list = unit
-type nonrec key_algorithm_list = unit
 type nonrec filters =
   {
   key_types: key_algorithm list option ;
@@ -277,12 +246,8 @@ type nonrec invalid_args_exception = {
   message: string option }
 type nonrec key_usage = {
   name: key_usage_name option }
-type nonrec key_usage_list = unit
-type nonrec in_use_list = unit
 type nonrec import_certificate_response = {
   certificate_arn: string option }
-type nonrec certificate_body_blob = unit
-type nonrec certificate_chain_blob = unit
 type nonrec import_certificate_request =
   {
   tags: tag list option ;
@@ -290,8 +255,6 @@ type nonrec import_certificate_request =
   private_key: bytes ;
   certificate: bytes ;
   certificate_arn: string option }
-type nonrec certificate_body = unit
-type nonrec certificate_chain = unit
 type nonrec get_certificate_response =
   {
   certificate_chain: string option ;
@@ -305,7 +268,6 @@ type nonrec extended_key_usage =
   {
   oi_d: string option ;
   name: extended_key_usage_name option }
-type nonrec extended_key_usage_list = unit
 type nonrec export_certificate_response =
   {
   private_key: string option ;
@@ -328,14 +290,14 @@ type nonrec certificate_detail =
   in_use_by: string list option ;
   signature_algorithm: string option ;
   key_algorithm: key_algorithm option ;
-  not_after: Timestamp.t option ;
-  not_before: Timestamp.t option ;
+  not_after: CoreTypes.Timestamp.t option ;
+  not_before: CoreTypes.Timestamp.t option ;
   revocation_reason: revocation_reason option ;
-  revoked_at: Timestamp.t option ;
+  revoked_at: CoreTypes.Timestamp.t option ;
   status: certificate_status option ;
-  imported_at: Timestamp.t option ;
-  issued_at: Timestamp.t option ;
-  created_at: Timestamp.t option ;
+  imported_at: CoreTypes.Timestamp.t option ;
+  issued_at: CoreTypes.Timestamp.t option ;
+  created_at: CoreTypes.Timestamp.t option ;
   issuer: string option ;
   subject: string option ;
   serial: string option ;
@@ -354,10 +316,3 @@ type nonrec add_tags_to_certificate_request =
   {
   tags: tag list ;
   certificate_arn: string }
-type nonrec certificate_manager = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

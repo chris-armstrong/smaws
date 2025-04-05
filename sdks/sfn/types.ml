@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,17 +7,11 @@ let service =
       version = "2016-11-23";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec truncated = unit
-type nonrec included_details = unit
-type nonrec version_weight = unit
-type nonrec version_description = unit
-type nonrec base_unit = unit
 type nonrec validation_exception_reason =
   | INVALID_ROUTING_CONFIGURATION 
   | CANNOT_UPDATE_COMPLETED_MAP_RUN 
   | MISSING_REQUIRED_PARAMETER 
   | API_DOES_NOT_SUPPORT_LABELED_ARNS 
-type nonrec error_message = unit
 type nonrec validation_exception =
   {
   reason: validation_exception_reason option ;
@@ -27,21 +21,16 @@ type nonrec validate_state_machine_definition_severity =
 type nonrec validate_state_machine_definition_result_code =
   | FAIL 
   | OK 
-type nonrec validate_state_machine_definition_code = unit
-type nonrec validate_state_machine_definition_message = unit
-type nonrec validate_state_machine_definition_location = unit
 type nonrec validate_state_machine_definition_diagnostic =
   {
   location: string option ;
   message: string ;
   code: string ;
   severity: validate_state_machine_definition_severity }
-type nonrec validate_state_machine_definition_diagnostic_list = unit
 type nonrec validate_state_machine_definition_output =
   {
   diagnostics: validate_state_machine_definition_diagnostic list ;
   result: validate_state_machine_definition_result_code }
-type nonrec definition = unit
 type nonrec state_machine_type =
   | EXPRESS 
   | STANDARD 
@@ -49,35 +38,28 @@ type nonrec validate_state_machine_definition_input =
   {
   type_: state_machine_type option ;
   definition: string }
-type nonrec timestamp_ = unit
-type nonrec revision_id = unit
-type nonrec arn = unit
 type nonrec update_state_machine_output =
   {
   state_machine_version_arn: string option ;
   revision_id: string option ;
-  update_date: Timestamp.t }
+  update_date: CoreTypes.Timestamp.t }
 type nonrec log_level =
   | OFF 
   | FATAL 
   | ERROR 
   | ALL 
-type nonrec include_execution_data = unit
 type nonrec cloud_watch_logs_log_group = {
   log_group_arn: string option }
 type nonrec log_destination =
   {
   cloud_watch_logs_log_group: cloud_watch_logs_log_group option }
-type nonrec log_destination_list = unit
 type nonrec logging_configuration =
   {
   destinations: log_destination list option ;
   include_execution_data: bool option ;
   level: log_level option }
-type nonrec enabled = unit
 type nonrec tracing_configuration = {
   enabled: bool option }
-type nonrec publish = unit
 type nonrec update_state_machine_input =
   {
   version_description: string option ;
@@ -87,14 +69,13 @@ type nonrec update_state_machine_input =
   role_arn: string option ;
   definition: string option ;
   state_machine_arn: string }
-type nonrec update_state_machine_alias_output = {
-  update_date: Timestamp.t }
-type nonrec alias_description = unit
+type nonrec update_state_machine_alias_output =
+  {
+  update_date: CoreTypes.Timestamp.t }
 type nonrec routing_configuration_list_item =
   {
   weight: int ;
   state_machine_version_arn: string }
-type nonrec routing_configuration_list = unit
 type nonrec update_state_machine_alias_input =
   {
   routing_configuration: routing_configuration_list_item list option ;
@@ -123,10 +104,6 @@ type nonrec invalid_logging_configuration = {
 type nonrec invalid_definition = {
   message: string option }
 type nonrec update_map_run_output = unit
-type nonrec long_arn = unit
-type nonrec max_concurrency = unit
-type nonrec tolerated_failure_percentage = unit
-type nonrec tolerated_failure_count = unit
 type nonrec update_map_run_input =
   {
   tolerated_failure_count: int option ;
@@ -134,28 +111,14 @@ type nonrec update_map_run_input =
   max_concurrency: int option ;
   map_run_arn: string }
 type nonrec untag_resource_output = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_input =
   {
   tag_keys: string list ;
   resource_arn: string }
-type nonrec unsigned_long = unit
-type nonrec unsigned_integer = unit
-type nonrec ur_l = unit
-type nonrec trace_header = unit
 type nonrec too_many_tags =
   {
   resource_name: string option ;
   message: string option }
-type nonrec timeout_in_seconds = unit
-type nonrec sensitive_data = unit
-type nonrec sensitive_error = unit
-type nonrec sensitive_cause = unit
-type nonrec http_protocol = unit
-type nonrec http_method = unit
-type nonrec http_headers = unit
-type nonrec http_body = unit
 type nonrec inspection_data_request =
   {
   body: string option ;
@@ -163,8 +126,6 @@ type nonrec inspection_data_request =
   url: string option ;
   method_: string option ;
   protocol: string option }
-type nonrec http_status_code = unit
-type nonrec http_status_message = unit
 type nonrec inspection_data_response =
   {
   body: string option ;
@@ -182,7 +143,6 @@ type nonrec inspection_data =
   after_parameters: string option ;
   after_input_path: string option ;
   input: string option }
-type nonrec state_name = unit
 type nonrec test_execution_status =
   | CAUGHT_ERROR 
   | RETRIABLE 
@@ -200,7 +160,6 @@ type nonrec inspection_level =
   | TRACE 
   | DEBUG 
   | INFO 
-type nonrec reveal_secrets = unit
 type nonrec test_state_input =
   {
   reveal_secrets: bool option ;
@@ -210,8 +169,6 @@ type nonrec test_state_input =
   definition: string }
 type nonrec invalid_execution_input = {
   message: string option }
-type nonrec task_token = unit
-type nonrec name = unit
 type nonrec task_timed_out_event_details =
   {
   cause: string option ;
@@ -250,7 +207,6 @@ type nonrec task_start_failed_event_details =
   error: string option ;
   resource: string ;
   resource_type: string }
-type nonrec connector_parameters = unit
 type nonrec task_credentials = {
   role_arn: string option }
 type nonrec task_scheduled_event_details =
@@ -270,12 +226,10 @@ type nonrec task_failed_event_details =
   resource_type: string }
 type nonrec task_does_not_exist = {
   message: string option }
-type nonrec tag_value = unit
 type nonrec tag_resource_output = unit
 type nonrec tag = {
   value: string option ;
   key: string option }
-type nonrec tag_list = unit
 type nonrec tag_resource_input = {
   tags: tag list ;
   resource_arn: string }
@@ -284,7 +238,7 @@ type nonrec sync_execution_status =
   | FAILED 
   | SUCCEEDED 
 type nonrec stop_execution_output = {
-  stop_date: Timestamp.t }
+  stop_date: CoreTypes.Timestamp.t }
 type nonrec stop_execution_input =
   {
   cause: string option ;
@@ -294,9 +248,8 @@ type nonrec execution_does_not_exist = {
   message: string option }
 type nonrec state_machine_version_list_item =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   state_machine_version_arn: string }
-type nonrec state_machine_version_list = unit
 type nonrec state_machine_type_not_supported = {
   message: string option }
 type nonrec state_machine_status =
@@ -304,20 +257,18 @@ type nonrec state_machine_status =
   | ACTIVE 
 type nonrec state_machine_list_item =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   type_: state_machine_type ;
   name: string ;
   state_machine_arn: string }
-type nonrec state_machine_list = unit
 type nonrec state_machine_limit_exceeded = {
   message: string option }
 type nonrec state_machine_already_exists = {
   message: string option }
 type nonrec state_machine_alias_list_item =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   state_machine_alias_arn: string }
-type nonrec state_machine_alias_list = unit
 type nonrec state_exited_event_details =
   {
   output_details: history_event_execution_data_details option ;
@@ -331,8 +282,6 @@ type nonrec state_entered_event_details =
 type nonrec cloud_watch_events_execution_data_details =
   {
   included: bool option }
-type nonrec billed_memory_used = unit
-type nonrec billed_duration = unit
 type nonrec billing_details =
   {
   billed_duration_in_milliseconds: int option ;
@@ -348,8 +297,8 @@ type nonrec start_sync_execution_output =
   cause: string option ;
   error: string option ;
   status: sync_execution_status ;
-  stop_date: Timestamp.t ;
-  start_date: Timestamp.t ;
+  stop_date: CoreTypes.Timestamp.t ;
+  start_date: CoreTypes.Timestamp.t ;
   name: string option ;
   state_machine_arn: string option ;
   execution_arn: string }
@@ -363,7 +312,7 @@ type nonrec invalid_name = {
   message: string option }
 type nonrec start_execution_output =
   {
-  start_date: Timestamp.t ;
+  start_date: CoreTypes.Timestamp.t ;
   execution_arn: string }
 type nonrec start_execution_input =
   {
@@ -375,7 +324,6 @@ type nonrec execution_limit_exceeded = {
   message: string option }
 type nonrec execution_already_exists = {
   message: string option }
-type nonrec sensitive_data_job_input = unit
 type nonrec send_task_success_output = unit
 type nonrec send_task_success_input = {
   output: string ;
@@ -393,28 +341,23 @@ type nonrec send_task_failure_input =
   cause: string option ;
   error: string option ;
   task_token: string }
-type nonrec reverse_order = unit
 type nonrec redrive_execution_output = {
-  redrive_date: Timestamp.t }
-type nonrec client_token = unit
+  redrive_date: CoreTypes.Timestamp.t }
 type nonrec redrive_execution_input =
   {
   client_token: string option ;
   execution_arn: string }
 type nonrec execution_not_redrivable = {
   message: string option }
-type nonrec redrive_count = unit
 type nonrec publish_state_machine_version_output =
   {
   state_machine_version_arn: string ;
-  creation_date: Timestamp.t }
+  creation_date: CoreTypes.Timestamp.t }
 type nonrec publish_state_machine_version_input =
   {
   description: string option ;
   revision_id: string option ;
   state_machine_arn: string }
-type nonrec page_token = unit
-type nonrec page_size = unit
 type nonrec map_state_started_event_details = {
   length: int option }
 type nonrec map_run_status =
@@ -430,14 +373,11 @@ type nonrec map_run_redriven_event_details =
   map_run_arn: string option }
 type nonrec map_run_list_item =
   {
-  stop_date: Timestamp.t option ;
-  start_date: Timestamp.t ;
+  stop_date: CoreTypes.Timestamp.t option ;
+  start_date: CoreTypes.Timestamp.t ;
   state_machine_arn: string ;
   map_run_arn: string ;
   execution_arn: string }
-type nonrec map_run_list = unit
-type nonrec map_run_label = unit
-type nonrec long_object = unit
 type nonrec map_run_item_counts =
   {
   pending_redrive: int option ;
@@ -509,7 +449,6 @@ type nonrec list_map_runs_input =
   next_token: string option ;
   max_results: int option ;
   execution_arn: string }
-type nonrec list_executions_page_token = unit
 type nonrec execution_status =
   | PENDING_REDRIVE 
   | ABORTED 
@@ -519,19 +458,18 @@ type nonrec execution_status =
   | RUNNING 
 type nonrec execution_list_item =
   {
-  redrive_date: Timestamp.t option ;
+  redrive_date: CoreTypes.Timestamp.t option ;
   redrive_count: int option ;
   state_machine_alias_arn: string option ;
   state_machine_version_arn: string option ;
   item_count: int option ;
   map_run_arn: string option ;
-  stop_date: Timestamp.t option ;
-  start_date: Timestamp.t ;
+  stop_date: CoreTypes.Timestamp.t option ;
+  start_date: CoreTypes.Timestamp.t ;
   status: execution_status ;
   name: string ;
   state_machine_arn: string ;
   execution_arn: string }
-type nonrec execution_list = unit
 type nonrec list_executions_output =
   {
   next_token: string option ;
@@ -549,10 +487,9 @@ type nonrec list_executions_input =
   state_machine_arn: string option }
 type nonrec activity_list_item =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   name: string ;
   activity_arn: string }
-type nonrec activity_list = unit
 type nonrec list_activities_output =
   {
   next_token: string option ;
@@ -588,8 +525,6 @@ type nonrec lambda_function_failed_event_details =
   {
   cause: string option ;
   error: string option }
-type nonrec include_execution_data_get_execution_history = unit
-type nonrec identity = unit
 type nonrec history_event_type =
   | MapRunRedriven 
   | ExecutionRedriven 
@@ -652,7 +587,6 @@ type nonrec history_event_type =
   | ActivityScheduleFailed 
   | ActivityScheduled 
   | ActivityFailed 
-type nonrec event_id = unit
 type nonrec activity_failed_event_details =
   {
   cause: string option ;
@@ -751,8 +685,7 @@ type nonrec history_event =
   previous_event_id: int option ;
   id: int ;
   type_: history_event_type ;
-  timestamp_: Timestamp.t }
-type nonrec history_event_list = unit
+  timestamp_: CoreTypes.Timestamp.t }
 type nonrec get_execution_history_output =
   {
   next_token: string option ;
@@ -787,7 +720,7 @@ type nonrec describe_state_machine_output =
   label: string option ;
   tracing_configuration: tracing_configuration option ;
   logging_configuration: logging_configuration option ;
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   type_: state_machine_type ;
   role_arn: string ;
   definition: string ;
@@ -803,7 +736,7 @@ type nonrec describe_state_machine_for_execution_output =
   map_run_arn: string option ;
   tracing_configuration: tracing_configuration option ;
   logging_configuration: logging_configuration option ;
-  update_date: Timestamp.t ;
+  update_date: CoreTypes.Timestamp.t ;
   role_arn: string ;
   definition: string ;
   name: string ;
@@ -813,8 +746,8 @@ type nonrec describe_state_machine_for_execution_input =
   execution_arn: string }
 type nonrec describe_state_machine_alias_output =
   {
-  update_date: Timestamp.t option ;
-  creation_date: Timestamp.t option ;
+  update_date: CoreTypes.Timestamp.t option ;
+  creation_date: CoreTypes.Timestamp.t option ;
   routing_configuration: routing_configuration_list_item list option ;
   description: string option ;
   name: string option ;
@@ -824,15 +757,15 @@ type nonrec describe_state_machine_alias_input =
   state_machine_alias_arn: string }
 type nonrec describe_map_run_output =
   {
-  redrive_date: Timestamp.t option ;
+  redrive_date: CoreTypes.Timestamp.t option ;
   redrive_count: int option ;
   execution_counts: map_run_execution_counts ;
   item_counts: map_run_item_counts ;
   tolerated_failure_count: int ;
   tolerated_failure_percentage: float ;
   max_concurrency: int ;
-  stop_date: Timestamp.t option ;
-  start_date: Timestamp.t ;
+  stop_date: CoreTypes.Timestamp.t option ;
+  start_date: CoreTypes.Timestamp.t ;
   status: map_run_status ;
   execution_arn: string ;
   map_run_arn: string }
@@ -842,7 +775,7 @@ type nonrec describe_execution_output =
   {
   redrive_status_reason: string option ;
   redrive_status: execution_redrive_status option ;
-  redrive_date: Timestamp.t option ;
+  redrive_date: CoreTypes.Timestamp.t option ;
   redrive_count: int option ;
   state_machine_alias_arn: string option ;
   state_machine_version_arn: string option ;
@@ -854,8 +787,8 @@ type nonrec describe_execution_output =
   output: string option ;
   input_details: cloud_watch_events_execution_data_details option ;
   input: string option ;
-  stop_date: Timestamp.t option ;
-  start_date: Timestamp.t ;
+  stop_date: CoreTypes.Timestamp.t option ;
+  start_date: CoreTypes.Timestamp.t ;
   status: execution_status ;
   name: string option ;
   state_machine_arn: string ;
@@ -864,7 +797,7 @@ type nonrec describe_execution_input = {
   execution_arn: string }
 type nonrec describe_activity_output =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   name: string ;
   activity_arn: string }
 type nonrec describe_activity_input = {
@@ -886,7 +819,7 @@ type nonrec delete_activity_input = {
 type nonrec create_state_machine_output =
   {
   state_machine_version_arn: string option ;
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   state_machine_arn: string }
 type nonrec create_state_machine_input =
   {
@@ -901,9 +834,8 @@ type nonrec create_state_machine_input =
   name: string }
 type nonrec create_state_machine_alias_output =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   state_machine_alias_arn: string }
-type nonrec character_restricted_name = unit
 type nonrec create_state_machine_alias_input =
   {
   routing_configuration: routing_configuration_list_item list ;
@@ -911,17 +843,10 @@ type nonrec create_state_machine_alias_input =
   description: string option }
 type nonrec create_activity_output =
   {
-  creation_date: Timestamp.t ;
+  creation_date: CoreTypes.Timestamp.t ;
   activity_arn: string }
 type nonrec create_activity_input = {
   tags: tag list option ;
   name: string }
 type nonrec activity_limit_exceeded = {
   message: string option }
-type nonrec aws_step_functions = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit

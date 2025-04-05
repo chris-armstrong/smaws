@@ -1,4 +1,4 @@
-open Smaws_Lib.CoreTypes
+open Smaws_Lib
 let service =
   let open Smaws_Lib.Service in
     {
@@ -7,33 +7,18 @@ let service =
       version = "2023-12-01";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
-type nonrec vpc_id = unit
-type nonrec subnet_id = unit
-type nonrec subnet_ids = unit
-type nonrec security_group_id = unit
-type nonrec security_group_ids = unit
-type nonrec tls_certificate = unit
 type nonrec vpc_configuration =
   {
   tls_certificate: string option ;
   security_group_ids: string list ;
   subnet_ids: string list ;
   vpc_id: string }
-type nonrec url = unit
-type nonrec branch_name = unit
-type nonrec deployment_file_path = unit
-type nonrec owner_id = unit
-type nonrec base_unit = unit
 type nonrec provider_type =
   | GITLAB_SELF_MANAGED 
   | GITLAB 
   | GITHUB_ENTERPRISE_SERVER 
   | GITHUB 
   | BITBUCKET 
-type nonrec repository_link_id = unit
-type nonrec repository_name = unit
-type nonrec resource_name = unit
-type nonrec iam_role_arn = unit
 type nonrec sync_configuration_type =
   | CFN_STACK_SYNC 
 type nonrec publish_deployment_status =
@@ -68,7 +53,6 @@ type nonrec update_sync_configuration_input =
   repository_link_id: string option ;
   config_file: string option ;
   branch: string option }
-type nonrec error_message = unit
 type nonrec update_out_of_sync_exception = {
   message: string option }
 type nonrec throttling_exception = {
@@ -83,27 +67,20 @@ type nonrec concurrent_modification_exception = {
   message: string option }
 type nonrec access_denied_exception = {
   message: string option }
-type nonrec id = unit
 type nonrec blocker_type =
   | AUTOMATED 
 type nonrec blocker_status =
   | RESOLVED 
   | ACTIVE 
-type nonrec created_reason = unit
-type nonrec timestamp_ = unit
-type nonrec sync_blocker_context_key = unit
-type nonrec sync_blocker_context_value = unit
 type nonrec sync_blocker_context = {
   value: string ;
   key: string }
-type nonrec sync_blocker_context_list = unit
-type nonrec resolved_reason = unit
 type nonrec sync_blocker =
   {
-  resolved_at: Timestamp.t option ;
+  resolved_at: CoreTypes.Timestamp.t option ;
   resolved_reason: string option ;
   contexts: sync_blocker_context list option ;
-  created_at: Timestamp.t ;
+  created_at: CoreTypes.Timestamp.t ;
   created_reason: string ;
   status: blocker_status ;
   type_: blocker_type ;
@@ -123,9 +100,6 @@ type nonrec sync_blocker_does_not_exist_exception = {
   message: string option }
 type nonrec retry_latest_commit_failed_exception = {
   message: string option }
-type nonrec connection_arn = unit
-type nonrec kms_key_arn = unit
-type nonrec repository_link_arn = unit
 type nonrec repository_link_info =
   {
   repository_name: string ;
@@ -146,7 +120,6 @@ type nonrec update_repository_link_input =
 type nonrec conditional_check_failed_exception = {
   message: string option }
 type nonrec update_host_output = unit
-type nonrec host_arn = unit
 type nonrec update_host_input =
   {
   vpc_configuration: vpc_configuration option ;
@@ -159,23 +132,16 @@ type nonrec resource_unavailable_exception = {
 type nonrec conflict_exception = {
   message: string option }
 type nonrec untag_resource_output = unit
-type nonrec amazon_resource_name = unit
-type nonrec tag_key = unit
-type nonrec tag_key_list = unit
 type nonrec untag_resource_input =
   {
   tag_keys: string list ;
   resource_arn: string }
 type nonrec unsupported_provider_type_exception = {
   message: string option }
-type nonrec type_ = unit
-type nonrec target = unit
-type nonrec tag_value = unit
 type nonrec tag_resource_output = unit
 type nonrec tag = {
   value: string ;
   key: string }
-type nonrec tag_list = unit
 type nonrec tag_resource_input = {
   tags: tag list ;
   resource_arn: string }
@@ -184,16 +150,11 @@ type nonrec limit_exceeded_exception = {
 type nonrec sync_configuration_still_exists_exception =
   {
   message: string option }
-type nonrec sync_configuration_list = unit
-type nonrec latest_sync_blocker_list = unit
 type nonrec sync_blocker_summary =
   {
   latest_blockers: sync_blocker list option ;
   parent_resource_name: string option ;
   resource_name: string }
-type nonrec sharp_next_token = unit
-type nonrec sh_a = unit
-type nonrec directory = unit
 type nonrec revision =
   {
   sha: string ;
@@ -207,21 +168,18 @@ type nonrec resource_sync_status =
   | IN_PROGRESS 
   | INITIATED 
   | FAILED 
-type nonrec event = unit
-type nonrec external_id = unit
 type nonrec resource_sync_event =
   {
   type_: string ;
-  time: Timestamp.t ;
+  time: CoreTypes.Timestamp.t ;
   external_id: string option ;
   event: string }
-type nonrec resource_sync_event_list = unit
 type nonrec resource_sync_attempt =
   {
   target: string ;
   target_revision: revision ;
   status: resource_sync_status ;
-  started_at: Timestamp.t ;
+  started_at: CoreTypes.Timestamp.t ;
   initial_revision: revision ;
   events: resource_sync_event list }
 type nonrec resource_already_exists_exception = {
@@ -235,26 +193,20 @@ type nonrec repository_sync_status =
 type nonrec repository_sync_event =
   {
   type_: string ;
-  time: Timestamp.t ;
+  time: CoreTypes.Timestamp.t ;
   external_id: string option ;
   event: string }
-type nonrec repository_sync_event_list = unit
-type nonrec parent = unit
 type nonrec repository_sync_definition =
   {
   target: string ;
   parent: string ;
   directory: string ;
   branch: string }
-type nonrec repository_sync_definition_list = unit
 type nonrec repository_sync_attempt =
   {
   events: repository_sync_event list ;
   status: repository_sync_status ;
-  started_at: Timestamp.t }
-type nonrec repository_link_list = unit
-type nonrec next_token = unit
-type nonrec max_results = unit
+  started_at: CoreTypes.Timestamp.t }
 type nonrec list_tags_for_resource_output = {
   tags: tag list option }
 type nonrec list_tags_for_resource_input = {
@@ -285,9 +237,6 @@ type nonrec list_repository_links_input =
   {
   next_token: string option ;
   max_results: int option }
-type nonrec host_name = unit
-type nonrec host_status = unit
-type nonrec host_status_message = unit
 type nonrec host =
   {
   status_message: string option ;
@@ -297,7 +246,6 @@ type nonrec host =
   provider_type: provider_type option ;
   host_arn: string option ;
   name: string option }
-type nonrec host_list = unit
 type nonrec list_hosts_output =
   {
   next_token: string option ;
@@ -306,8 +254,6 @@ type nonrec list_hosts_input =
   {
   next_token: string option ;
   max_results: int option }
-type nonrec connection_name = unit
-type nonrec account_id = unit
 type nonrec connection_status =
   | ERROR 
   | AVAILABLE 
@@ -320,7 +266,6 @@ type nonrec connection =
   provider_type: provider_type option ;
   connection_arn: string option ;
   connection_name: string option }
-type nonrec connection_list = unit
 type nonrec list_connections_output =
   {
   next_token: string option ;
@@ -438,10 +383,3 @@ type nonrec create_connection_input =
   tags: tag list option ;
   connection_name: string ;
   provider_type: provider_type option }
-type nonrec code_connections_20231201 = unit
-type nonrec base_string = unit
-type nonrec base_boolean = unit
-type nonrec base_integer = unit
-type nonrec base_timestamp = unit
-type nonrec base_long = unit
-type nonrec base_document = unit
