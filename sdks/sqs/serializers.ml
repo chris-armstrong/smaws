@@ -76,7 +76,8 @@ let token_to_yojson = string_to_yojson
 
 let tag_value_to_yojson = string_to_yojson
 
-let tag_map_to_yojson = fun tree -> map_to_yojson tag_value_to_yojson tree
+let tag_map_to_yojson = 
+  fun tree -> map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 
 let tag_queue_request_to_yojson = 
   fun (x: tag_queue_request) -> assoc_to_yojson(
@@ -152,7 +153,7 @@ let queue_attribute_name_to_yojson =
    
 
 let queue_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson queue_attribute_name_to_yojson string__to_yojson tree
 
 let set_queue_attributes_request_to_yojson = 
   fun (x: set_queue_attributes_request) -> assoc_to_yojson(
@@ -235,7 +236,7 @@ let message_attribute_value_to_yojson =
   ])
 
 let message_body_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson message_attribute_value_to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson message_attribute_value_to_yojson tree
 
 let message_system_attribute_value_to_yojson = 
   fun (x: message_system_attribute_value) -> assoc_to_yojson(
@@ -263,7 +264,7 @@ let message_system_attribute_name_for_sends_to_yojson =
      
 
 let message_body_system_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson message_system_attribute_value_to_yojson tree
+  fun tree -> map_to_yojson message_system_attribute_name_for_sends_to_yojson message_system_attribute_value_to_yojson tree
 
 let send_message_request_to_yojson = 
   fun (x: send_message_request) -> assoc_to_yojson(
@@ -513,7 +514,7 @@ let message_system_attribute_name_to_yojson =
    
 
 let message_system_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson message_system_attribute_name_to_yojson string__to_yojson tree
 
 let message_to_yojson = 
   fun (x: message) -> assoc_to_yojson(

@@ -190,7 +190,7 @@ let value_importance_map_key_of_yojson = string_of_yojson
 let importance_of_yojson = int_of_yojson
 
 let value_importance_map_of_yojson = 
-  fun tree path -> map_of_yojson importance_of_yojson tree path
+  fun tree path -> map_of_yojson value_importance_map_key_of_yojson importance_of_yojson tree path
 
 let error_message_of_yojson = string_of_yojson
 

@@ -1725,7 +1725,7 @@ let protocols_list_to_yojson =
 let previous_list_version_to_yojson = string_to_yojson
 
 let previous_protocols_list_to_yojson = 
-  fun tree -> map_to_yojson protocols_list_to_yojson tree
+  fun tree -> map_to_yojson previous_list_version_to_yojson protocols_list_to_yojson tree
 
 let protocols_list_data_to_yojson = 
   fun (x: protocols_list_data) -> assoc_to_yojson(
@@ -1789,7 +1789,7 @@ let customer_policy_scope_id_type_to_yojson =
      
 
 let customer_policy_scope_map_to_yojson = 
-  fun tree -> map_to_yojson customer_policy_scope_id_list_to_yojson tree
+  fun tree -> map_to_yojson customer_policy_scope_id_type_to_yojson customer_policy_scope_id_list_to_yojson tree
 
 let customer_policy_status_to_yojson = 
   fun (x: customer_policy_status) -> match x with 
@@ -1906,7 +1906,7 @@ let app_to_yojson =
 let apps_list_to_yojson = fun tree -> list_to_yojson app_to_yojson tree
 
 let previous_apps_list_to_yojson = 
-  fun tree -> map_to_yojson apps_list_to_yojson tree
+  fun tree -> map_to_yojson previous_list_version_to_yojson apps_list_to_yojson tree
 
 let apps_list_data_to_yojson = 
   fun (x: apps_list_data) -> assoc_to_yojson(
@@ -2121,7 +2121,7 @@ let dependent_service_name_to_yojson =
    
 
 let issue_info_map_to_yojson = 
-  fun tree -> map_to_yojson detailed_info_to_yojson tree
+  fun tree -> map_to_yojson dependent_service_name_to_yojson detailed_info_to_yojson tree
 
 let policy_compliance_status_to_yojson = 
   fun (x: policy_compliance_status) -> assoc_to_yojson(
@@ -2153,7 +2153,7 @@ let policy_compliance_status_list_to_yojson =
   fun tree -> list_to_yojson policy_compliance_status_to_yojson tree
 
 let compliance_violator_metadata_to_yojson = 
-  fun tree -> map_to_yojson length_bounded_string_to_yojson tree
+  fun tree -> map_to_yojson length_bounded_string_to_yojson length_bounded_string_to_yojson tree
 
 let compliance_violator_to_yojson = 
   fun (x: compliance_violator) -> assoc_to_yojson(

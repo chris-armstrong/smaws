@@ -25,8 +25,15 @@ module SerializeHelpers = struct
   let blob_to_yojson (x : Bytes.t) : t = `String (Base64.encode_exn (Bytes.to_string x))
   let big_decimal_to_yojson (x : string) : t = `String x
 
-  let map_to_yojson (converter : 'a -> t) (x : (string * 'a) list) : t =
-    `Assoc (List.map (fun (name, value) -> (name, converter value)) x)
+  let map_to_yojson (key_converter : 'k -> t) (value_converter : 'v -> t) (x : ('k * 'v) list) : t =
+    `Assoc
+      (List.map
+         (fun (name, value) ->
+           ( (key_converter name |> function
+              | `String x -> x
+              | _ -> failwith "expecting string compatible map name"),
+             value_converter value ))
+         x)
 
   let timestamp_to_yojson (x : Timestamp.t) : t = `Float (Timestamp.to_float_s x)
   let option_to_yojson (converter : 'a -> t) (x : 'a option) = Option.map converter x
@@ -107,9 +114,10 @@ module DeserializeHelpers = struct
   let assoc_of_yojson (tree : t) path =
     match tree with `Assoc l -> l | _ -> raise (deserialize_wrong_type_error path "object")
 
-  let map_of_yojson converter (tree : t) path =
+  let map_of_yojson key_converter value_converter (tree : t) path =
     match tree with
-    | `Assoc l -> List.map (fun (k, v) -> (k, converter v path)) l
+    | `Assoc l ->
+        List.map (fun (k, v) -> (key_converter (`String k) path, value_converter v path)) l
     | _ -> raise (deserialize_wrong_type_error path "map")
 
   let json_of_yojson (tree : t) path = tree

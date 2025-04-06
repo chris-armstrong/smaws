@@ -86,10 +86,10 @@ and list_attribute_value_of_yojson =
   fun tree path -> list_of_yojson attribute_value_of_yojson tree path 
 
 and map_attribute_value_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let sequence_number_of_yojson = string_of_yojson
 

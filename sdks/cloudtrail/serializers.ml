@@ -1344,7 +1344,7 @@ let query_result_value_to_yojson = string_to_yojson
 let query_result_key_to_yojson = string_to_yojson
 
 let query_result_column_to_yojson = 
-  fun tree -> map_to_yojson query_result_value_to_yojson tree
+  fun tree -> map_to_yojson query_result_key_to_yojson query_result_value_to_yojson tree
 
 let query_result_row_to_yojson = 
   fun tree -> list_to_yojson query_result_column_to_yojson tree

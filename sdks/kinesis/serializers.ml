@@ -130,7 +130,8 @@ let tag_value_to_yojson = string_to_yojson
 
 let tag_key_to_yojson = string_to_yojson
 
-let tag_map_to_yojson = fun tree -> map_to_yojson tag_value_to_yojson tree
+let tag_map_to_yojson = 
+  fun tree -> map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 
 let tag_to_yojson = 
   fun (x: tag) -> assoc_to_yojson(

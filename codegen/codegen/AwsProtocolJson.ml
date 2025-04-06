@@ -86,7 +86,9 @@ module Serialiser = struct
     | BigDecimalShape x -> Fmt.pf fmt "big_decimal_to_yojson"
     | TimestampShape x -> Fmt.pf fmt "timestamp_to_yojson"
     | BlobShape x -> Fmt.pf fmt "blob_to_yojson"
-    | MapShape x -> Fmt.pf fmt "fun tree -> map_to_yojson %s tree" (func_name x.mapValue.target)
+    | MapShape x ->
+        Fmt.pf fmt "fun tree -> map_to_yojson %s %s tree" (func_name x.mapKey.target)
+          (func_name x.mapValue.target)
     | EnumShape s -> enum_func_body fmt name s
     | UnionShape x -> union_func_body fmt name x
     | SetShape x -> Fmt.pf fmt "fun tree -> list_to_yojson %s tree" (func_name x.target)
@@ -196,7 +198,8 @@ module Deserialiser = struct
     | TimestampShape x -> Fmt.pf fmt "timestamp_epoch_seconds_of_yojson"
     | BlobShape x -> Fmt.pf fmt "blob_of_yojson"
     | MapShape x ->
-        Fmt.pf fmt "fun tree path -> map_of_yojson %s tree path" (func_name x.mapValue.target)
+        Fmt.pf fmt "fun tree path -> map_of_yojson %s %s tree path" (func_name x.mapKey.target)
+          (func_name x.mapValue.target)
     | EnumShape s -> enum_func_body fmt name s
     | UnionShape x -> union_func_body fmt name x
     | SetShape x -> Fmt.pf fmt "fun tree path -> list_of_yojson %s tree path" (func_name x.target)

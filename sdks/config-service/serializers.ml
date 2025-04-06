@@ -544,7 +544,8 @@ let tags_list_to_yojson = fun tree -> list_to_yojson tag_to_yojson tree
 
 let name_to_yojson = string_to_yojson
 
-let tags_to_yojson = fun tree -> map_to_yojson value_to_yojson tree
+let tags_to_yojson = 
+  fun tree -> map_to_yojson name_to_yojson value_to_yojson tree
 
 let tag_list_to_yojson = fun tree -> list_to_yojson tag_to_yojson tree
 
@@ -564,7 +565,7 @@ let supplementary_configuration_value_to_yojson = string_to_yojson
 let supplementary_configuration_name_to_yojson = string_to_yojson
 
 let supplementary_configuration_to_yojson = 
-  fun tree -> map_to_yojson supplementary_configuration_value_to_yojson tree
+  fun tree -> map_to_yojson supplementary_configuration_name_to_yojson supplementary_configuration_value_to_yojson tree
 
 let string_with_char_limit768_to_yojson = string_to_yojson
 
@@ -1230,7 +1231,7 @@ let remediation_parameter_value_to_yojson =
   ])
 
 let remediation_parameters_to_yojson = 
-  fun tree -> map_to_yojson remediation_parameter_value_to_yojson tree
+  fun tree -> map_to_yojson string_with_char_limit256_to_yojson remediation_parameter_value_to_yojson tree
 
 let boolean__to_yojson = bool_to_yojson
 

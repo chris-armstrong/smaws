@@ -1623,7 +1623,7 @@ let custom_response_body_to_yojson =
   ])
 
 let custom_response_bodies_to_yojson = 
-  fun tree -> map_to_yojson custom_response_body_to_yojson tree
+  fun tree -> map_to_yojson entity_name_to_yojson custom_response_body_to_yojson tree
 
 let token_domain_to_yojson = string_to_yojson
 
@@ -1658,7 +1658,7 @@ let associated_resource_type_to_yojson =
    
 
 let request_body_to_yojson = 
-  fun tree -> map_to_yojson request_body_associated_resource_type_config_to_yojson tree
+  fun tree -> map_to_yojson associated_resource_type_to_yojson request_body_associated_resource_type_config_to_yojson tree
 
 let association_config_to_yojson = 
   fun (x: association_config) -> assoc_to_yojson(
@@ -1985,7 +1985,7 @@ let version_to_publish_to_yojson =
   ])
 
 let versions_to_publish_to_yojson = 
-  fun tree -> map_to_yojson version_to_publish_to_yojson tree
+  fun tree -> map_to_yojson version_key_string_to_yojson version_to_publish_to_yojson tree
 
 let update_web_acl_response_to_yojson = 
   fun (x: update_web_acl_response) -> assoc_to_yojson(
@@ -2801,7 +2801,7 @@ let managed_rule_set_version_to_yojson =
   ])
 
 let published_versions_to_yojson = 
-  fun tree -> map_to_yojson managed_rule_set_version_to_yojson tree
+  fun tree -> map_to_yojson version_key_string_to_yojson managed_rule_set_version_to_yojson tree
 
 let product_title_to_yojson = string_to_yojson
 

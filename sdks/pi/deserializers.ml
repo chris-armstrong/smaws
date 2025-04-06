@@ -137,7 +137,7 @@ let response_resource_metric_list_of_yojson =
 let request_string_of_yojson = string_of_yojson
 
 let dimension_map_of_yojson = 
-  fun tree path -> map_of_yojson request_string_of_yojson tree path
+  fun tree path -> map_of_yojson request_string_of_yojson request_string_of_yojson tree path
 
 let response_resource_metric_key_of_yojson = 
   fun tree path : response_resource_metric_key ->
@@ -420,7 +420,7 @@ let dimension_group_of_yojson =
   in _res
 
 let metric_query_filter_map_of_yojson = 
-  fun tree path -> map_of_yojson request_string_of_yojson tree path
+  fun tree path -> map_of_yojson sanitized_string_of_yojson request_string_of_yojson tree path
 
 let metric_query_of_yojson = 
   fun tree path : metric_query ->
@@ -476,7 +476,7 @@ let feature_metadata_of_yojson =
   in _res
 
 let feature_metadata_map_of_yojson = 
-  fun tree path -> map_of_yojson feature_metadata_of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson feature_metadata_of_yojson tree path
 
 let get_resource_metadata_response_of_yojson = 
   fun tree path : get_resource_metadata_response ->
@@ -510,7 +510,7 @@ let context_type_of_yojson =
 let descriptive_string_of_yojson = string_of_yojson
 
 let descriptive_map_of_yojson = 
-  fun tree path -> map_of_yojson descriptive_string_of_yojson tree path
+  fun tree path -> map_of_yojson descriptive_string_of_yojson descriptive_string_of_yojson tree path
 
 let performance_insights_metric_of_yojson = 
   fun tree path : performance_insights_metric ->
@@ -647,7 +647,7 @@ let get_dimension_key_details_request_of_yojson =
   in _res
 
 let additional_metrics_map_of_yojson = 
-  fun tree path -> map_of_yojson double_of_yojson tree path
+  fun tree path -> map_of_yojson request_string_of_yojson double_of_yojson tree path
 
 let metric_values_list_of_yojson = 
   fun tree path -> list_of_yojson double_of_yojson tree path 

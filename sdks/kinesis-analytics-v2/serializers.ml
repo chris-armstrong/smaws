@@ -904,7 +904,7 @@ let property_value_to_yojson = string_to_yojson
 let property_key_to_yojson = string_to_yojson
 
 let property_map_to_yojson = 
-  fun tree -> map_to_yojson property_value_to_yojson tree
+  fun tree -> map_to_yojson property_key_to_yojson property_value_to_yojson tree
 
 let property_group_to_yojson = 
   fun (x: property_group) -> assoc_to_yojson(

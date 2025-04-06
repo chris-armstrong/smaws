@@ -110,9 +110,10 @@ let generateListShape ctx target =
   let resolved = target |> resolve ctx in
   resolved ^ " list"
 
-let generateMapShape ctx _ (mapValue : Shape.mapKeyValue) =
+let generateMapShape ctx (mapKey : Shape.mapKeyValue) (mapValue : Shape.mapKeyValue) =
+  let keyType = mapKey.target |> resolve ctx in
   let valueType = mapValue.target |> resolve ctx in
-  "(string * " ^ valueType ^ ") list"
+  "(" ^ keyType ^ " * " ^ valueType ^ ") list"
 
 exception NoServiceTrait of string
 exception UnknownTimestampFormat of string

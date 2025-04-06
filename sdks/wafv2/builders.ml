@@ -434,9 +434,9 @@ let make_regex_match_statement
      field_to_match = field_to_match_;
      regex_string = regex_string_
    } : regex_match_statement)
-let rec make_and_statement ~statements:(statements_ : statement list)  () =
+let make_and_statement ~statements:(statements_ : statement list)  () =
   ({ statements = statements_ } : and_statement)
-and make_managed_rule_group_statement
+let make_managed_rule_group_statement
   ?rule_action_overrides:(rule_action_overrides_ :
                            rule_action_override list option)
    ?managed_rule_group_configs:(managed_rule_group_configs_ :
@@ -454,11 +454,11 @@ and make_managed_rule_group_statement
      name = name_;
      vendor_name = vendor_name_
    } : managed_rule_group_statement)
-and make_not_statement ~statement:(statement_ : statement)  () =
+let make_not_statement ~statement:(statement_ : statement)  () =
   ({ statement = statement_ } : not_statement)
-and make_or_statement ~statements:(statements_ : statement list)  () =
+let make_or_statement ~statements:(statements_ : statement list)  () =
   ({ statements = statements_ } : or_statement)
-and make_rate_based_statement
+let make_rate_based_statement
   ?custom_keys:(custom_keys_ : rate_based_statement_custom_key list option) 
   ?forwarded_ip_config:(forwarded_ip_config_ : forwarded_ip_config option) 
   ?scope_down_statement:(scope_down_statement_ : statement option) 
@@ -474,7 +474,7 @@ and make_rate_based_statement
      evaluation_window_sec = evaluation_window_sec_;
      limit = limit_
    } : rate_based_statement)
-and make_statement
+let make_statement
   ?regex_match_statement:(regex_match_statement_ :
                            regex_match_statement option)
    ?label_match_statement:(label_match_statement_ :

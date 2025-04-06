@@ -806,7 +806,7 @@ let property_value_of_yojson = string_of_yojson
 let property_key_of_yojson = string_of_yojson
 
 let property_map_of_yojson = 
-  fun tree path -> map_of_yojson property_value_of_yojson tree path
+  fun tree path -> map_of_yojson property_key_of_yojson property_value_of_yojson tree path
 
 let property_group_of_yojson = 
   fun tree path : property_group ->

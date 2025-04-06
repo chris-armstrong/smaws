@@ -264,14 +264,14 @@ let runtime_environment_variables_value_to_yojson = string_to_yojson
 let runtime_environment_variables_key_to_yojson = string_to_yojson
 
 let runtime_environment_variables_to_yojson = 
-  fun tree -> map_to_yojson runtime_environment_variables_value_to_yojson tree
+  fun tree -> map_to_yojson runtime_environment_variables_key_to_yojson runtime_environment_variables_value_to_yojson tree
 
 let runtime_environment_secrets_value_to_yojson = string_to_yojson
 
 let runtime_environment_secrets_name_to_yojson = string_to_yojson
 
 let runtime_environment_secrets_to_yojson = 
-  fun tree -> map_to_yojson runtime_environment_secrets_value_to_yojson tree
+  fun tree -> map_to_yojson runtime_environment_secrets_name_to_yojson runtime_environment_secrets_value_to_yojson tree
 
 let code_configuration_values_to_yojson = 
   fun (x: code_configuration_values) -> assoc_to_yojson(

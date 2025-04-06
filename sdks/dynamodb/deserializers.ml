@@ -49,10 +49,10 @@ and list_attribute_value_of_yojson =
   fun tree path -> list_of_yojson attribute_value_of_yojson tree path 
 
 and map_attribute_value_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let put_item_input_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let put_request_of_yojson = 
   fun tree path : put_request ->
@@ -64,7 +64,7 @@ let put_request_of_yojson =
   in _res
 
 let key_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let delete_request_of_yojson = 
   fun tree path : delete_request ->
@@ -965,7 +965,7 @@ let update_kinesis_streaming_destination_input_of_yojson =
   in _res
 
 let attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let consumed_capacity_units_of_yojson = double_of_yojson
 
@@ -981,7 +981,7 @@ let capacity_of_yojson =
   in _res
 
 let secondary_indexes_capacity_map_of_yojson = 
-  fun tree path -> map_of_yojson capacity_of_yojson tree path
+  fun tree path -> map_of_yojson index_name_of_yojson capacity_of_yojson tree path
 
 let consumed_capacity_of_yojson = 
   fun tree path : consumed_capacity ->
@@ -999,7 +999,7 @@ let consumed_capacity_of_yojson =
   in _res
 
 let item_collection_key_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let item_collection_size_estimate_bound_of_yojson = double_of_yojson
 
@@ -1046,7 +1046,7 @@ let attribute_value_update_of_yojson =
   in _res
 
 let attribute_updates_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_update_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_update_of_yojson tree path
 
 let comparison_operator_of_yojson = 
   fun (tree: t) path : comparison_operator -> match tree with 
@@ -1082,7 +1082,7 @@ let expected_attribute_value_of_yojson =
   in _res
 
 let expected_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson expected_attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson expected_attribute_value_of_yojson tree path
 
 let conditional_operator_of_yojson = 
   fun (tree: t) path : conditional_operator -> match tree with 
@@ -1123,12 +1123,12 @@ let condition_expression_of_yojson = string_of_yojson
 let expression_attribute_name_variable_of_yojson = string_of_yojson
 
 let expression_attribute_name_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_name_of_yojson tree path
+  fun tree path -> map_of_yojson expression_attribute_name_variable_of_yojson attribute_name_of_yojson tree path
 
 let expression_attribute_value_variable_of_yojson = string_of_yojson
 
 let expression_attribute_value_map_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson expression_attribute_value_variable_of_yojson attribute_value_of_yojson tree path
 
 let return_values_on_condition_check_failure_of_yojson = 
   fun (tree: t) path : return_values_on_condition_check_failure -> match tree with 
@@ -1613,7 +1613,7 @@ let item_collection_metrics_multiple_of_yojson =
   fun tree path -> list_of_yojson item_collection_metrics_of_yojson tree path 
 
 let item_collection_metrics_per_table_of_yojson = 
-  fun tree path -> map_of_yojson item_collection_metrics_multiple_of_yojson tree path
+  fun tree path -> map_of_yojson table_arn_of_yojson item_collection_metrics_multiple_of_yojson tree path
 
 let transact_write_items_output_of_yojson = 
   fun tree path : transact_write_items_output ->
@@ -1976,7 +1976,7 @@ let condition_of_yojson =
   in _res
 
 let filter_condition_map_of_yojson = 
-  fun tree path -> map_of_yojson condition_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson condition_of_yojson tree path
 
 let consistent_read_of_yojson = bool_of_yojson
 
@@ -2161,7 +2161,7 @@ let query_output_of_yojson =
   in _res
 
 let key_conditions_of_yojson = 
-  fun tree path -> map_of_yojson condition_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson condition_of_yojson tree path
 
 let key_expression_of_yojson = string_of_yojson
 
@@ -3517,7 +3517,7 @@ let create_backup_input_of_yojson =
   in _res
 
 let batch_write_item_request_map_of_yojson = 
-  fun tree path -> map_of_yojson write_requests_of_yojson tree path
+  fun tree path -> map_of_yojson table_arn_of_yojson write_requests_of_yojson tree path
 
 let batch_write_item_output_of_yojson = 
   fun tree path : batch_write_item_output ->
@@ -3542,10 +3542,10 @@ let batch_write_item_input_of_yojson =
   in _res
 
 let batch_get_response_map_of_yojson = 
-  fun tree path -> map_of_yojson item_list_of_yojson tree path
+  fun tree path -> map_of_yojson table_arn_of_yojson item_list_of_yojson tree path
 
 let batch_get_request_map_of_yojson = 
-  fun tree path -> map_of_yojson keys_and_attributes_of_yojson tree path
+  fun tree path -> map_of_yojson table_arn_of_yojson keys_and_attributes_of_yojson tree path
 
 let batch_get_item_output_of_yojson = 
   fun tree path : batch_get_item_output ->

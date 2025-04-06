@@ -600,7 +600,7 @@ let attr_value_to_yojson = string_to_yojson
 let attr_key_to_yojson = string_to_yojson
 
 let attributes_to_yojson = 
-  fun tree -> map_to_yojson attr_value_to_yojson tree
+  fun tree -> map_to_yojson attr_key_to_yojson attr_value_to_yojson tree
 
 let register_instance_request_to_yojson = 
   fun (x: register_instance_request) -> assoc_to_yojson(
@@ -948,7 +948,7 @@ let operation_target_type_to_yojson =
    
 
 let operation_targets_map_to_yojson = 
-  fun tree -> map_to_yojson resource_id_to_yojson tree
+  fun tree -> map_to_yojson operation_target_type_to_yojson resource_id_to_yojson tree
 
 let operation_to_yojson = 
   fun (x: operation) -> assoc_to_yojson(
@@ -1052,7 +1052,7 @@ let health_status_to_yojson =
    
 
 let instance_health_status_map_to_yojson = 
-  fun tree -> map_to_yojson health_status_to_yojson tree
+  fun tree -> map_to_yojson resource_id_to_yojson health_status_to_yojson tree
 
 let get_instances_health_status_response_to_yojson = 
   fun (x: get_instances_health_status_response) -> assoc_to_yojson(

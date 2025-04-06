@@ -396,7 +396,7 @@ let metadata_value_of_yojson =
 let metadata_key_of_yojson = string_of_yojson
 
 let metadata_map_of_yojson = 
-  fun tree path -> map_of_yojson metadata_value_of_yojson tree path
+  fun tree path -> map_of_yojson metadata_key_of_yojson metadata_value_of_yojson tree path
 
 let metadata_keys_to_delete_list_of_yojson = 
   fun tree path -> list_of_yojson metadata_key_of_yojson tree path 
@@ -478,7 +478,7 @@ let ops_item_data_value_of_yojson =
 let ops_item_data_key_of_yojson = string_of_yojson
 
 let ops_item_operational_data_of_yojson = 
-  fun tree path -> map_of_yojson ops_item_data_value_of_yojson tree path
+  fun tree path -> map_of_yojson ops_item_data_key_of_yojson ops_item_data_value_of_yojson tree path
 
 let ops_item_ops_data_keys_list_of_yojson = 
   fun tree path -> list_of_yojson string__of_yojson tree path 
@@ -705,7 +705,7 @@ let maintenance_window_task_parameter_value_expression_of_yojson =
 let maintenance_window_task_parameter_name_of_yojson = string_of_yojson
 
 let maintenance_window_task_parameters_of_yojson = 
-  fun tree path -> map_of_yojson maintenance_window_task_parameter_value_expression_of_yojson tree path
+  fun tree path -> map_of_yojson maintenance_window_task_parameter_name_of_yojson maintenance_window_task_parameter_value_expression_of_yojson tree path
 
 let comment_of_yojson = string_of_yojson
 
@@ -780,7 +780,7 @@ let parameter_value_list_of_yojson =
 let parameter_name_of_yojson = string_of_yojson
 
 let parameters_of_yojson = 
-  fun tree path -> map_of_yojson parameter_value_list_of_yojson tree path
+  fun tree path -> map_of_yojson parameter_name_of_yojson parameter_value_list_of_yojson tree path
 
 let timeout_seconds_of_yojson = int_of_yojson
 
@@ -811,7 +811,7 @@ let automation_parameter_value_list_of_yojson =
 let automation_parameter_key_of_yojson = string_of_yojson
 
 let automation_parameter_map_of_yojson = 
-  fun tree path -> map_of_yojson automation_parameter_value_list_of_yojson tree path
+  fun tree path -> map_of_yojson automation_parameter_key_of_yojson automation_parameter_value_list_of_yojson tree path
 
 let maintenance_window_automation_parameters_of_yojson = 
   fun tree path : maintenance_window_automation_parameters ->
@@ -1535,7 +1535,7 @@ let status_name_of_yojson = string_of_yojson
 let instance_count_of_yojson = int_of_yojson
 
 let association_status_aggregated_count_of_yojson = 
-  fun tree path -> map_of_yojson instance_count_of_yojson tree path
+  fun tree path -> map_of_yojson status_name_of_yojson instance_count_of_yojson tree path
 
 let association_overview_of_yojson = 
   fun tree path : association_overview ->
@@ -1641,7 +1641,7 @@ let target_map_value_list_of_yojson =
 let target_map_key_of_yojson = string_of_yojson
 
 let target_map_of_yojson = 
-  fun tree path -> map_of_yojson target_map_value_list_of_yojson tree path
+  fun tree path -> map_of_yojson target_map_key_of_yojson target_map_value_list_of_yojson tree path
 
 let target_maps_of_yojson = 
   fun tree path -> list_of_yojson target_map_of_yojson tree path 
@@ -2111,7 +2111,7 @@ let automation_execution_status_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "AutomationExecutionStatus")
 
 let normal_string_map_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson string__of_yojson tree path
 
 let failure_details_of_yojson = 
   fun tree path : failure_details ->
@@ -2229,7 +2229,7 @@ let session_manager_parameter_value_list_of_yojson =
 let session_manager_parameter_name_of_yojson = string_of_yojson
 
 let session_manager_parameters_of_yojson = 
-  fun tree path -> map_of_yojson session_manager_parameter_value_list_of_yojson tree path
+  fun tree path -> map_of_yojson session_manager_parameter_name_of_yojson session_manager_parameter_value_list_of_yojson tree path
 
 let start_session_request_of_yojson = 
   fun tree path : start_session_request ->
@@ -3519,13 +3519,13 @@ let attribute_value_of_yojson = string_of_yojson
 let attribute_name_of_yojson = string_of_yojson
 
 let inventory_item_entry_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let inventory_item_entry_list_of_yojson = 
   fun tree path -> list_of_yojson inventory_item_entry_of_yojson tree path 
 
 let inventory_item_content_context_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let inventory_item_of_yojson = 
   fun tree path : inventory_item ->
@@ -3622,7 +3622,7 @@ let compliance_item_id_of_yojson = string_of_yojson
 let compliance_item_title_of_yojson = string_of_yojson
 
 let compliance_item_details_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let compliance_item_entry_of_yojson = 
   fun tree path : compliance_item_entry ->
@@ -3744,7 +3744,7 @@ let patch_repository_of_yojson = string_of_yojson
 let patch_release_of_yojson = string_of_yojson
 
 let patch_property_entry_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let patch_property_of_yojson = 
   fun (tree: t) path : patch_property -> match tree with 
@@ -4485,7 +4485,7 @@ let ops_entity_id_of_yojson = string_of_yojson
 let ops_entity_item_capture_time_of_yojson = string_of_yojson
 
 let ops_entity_item_entry_of_yojson = 
-  fun tree path -> map_of_yojson attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson attribute_name_of_yojson attribute_value_of_yojson tree path
 
 let ops_entity_item_entry_list_of_yojson = 
   fun tree path -> list_of_yojson ops_entity_item_entry_of_yojson tree path 
@@ -4503,7 +4503,7 @@ let ops_entity_item_of_yojson =
 let ops_entity_item_key_of_yojson = string_of_yojson
 
 let ops_entity_item_map_of_yojson = 
-  fun tree path -> map_of_yojson ops_entity_item_of_yojson tree path
+  fun tree path -> map_of_yojson ops_entity_item_key_of_yojson ops_entity_item_of_yojson tree path
 
 let ops_entity_of_yojson = 
   fun tree path : ops_entity ->
@@ -4525,7 +4525,7 @@ let ops_aggregator_value_of_yojson = string_of_yojson
 let ops_aggregator_value_key_of_yojson = string_of_yojson
 
 let ops_aggregator_value_map_of_yojson = 
-  fun tree path -> map_of_yojson ops_aggregator_value_of_yojson tree path
+  fun tree path -> map_of_yojson ops_aggregator_value_key_of_yojson ops_aggregator_value_of_yojson tree path
 
 let ops_aggregator_type_of_yojson = string_of_yojson
 
@@ -5673,7 +5673,7 @@ let inventory_result_item_of_yojson =
 let inventory_result_item_key_of_yojson = string_of_yojson
 
 let inventory_result_item_map_of_yojson = 
-  fun tree path -> map_of_yojson inventory_result_item_of_yojson tree path
+  fun tree path -> map_of_yojson inventory_result_item_key_of_yojson inventory_result_item_of_yojson tree path
 
 let inventory_result_entity_id_of_yojson = string_of_yojson
 
@@ -6036,7 +6036,7 @@ let activation_id_of_yojson = string_of_yojson
 let computer_name_of_yojson = string_of_yojson
 
 let instance_association_status_aggregated_count_of_yojson = 
-  fun tree path -> map_of_yojson instance_count_of_yojson tree path
+  fun tree path -> map_of_yojson status_name_of_yojson instance_count_of_yojson tree path
 
 let instance_aggregated_association_overview_of_yojson = 
   fun tree path : instance_aggregated_association_overview ->

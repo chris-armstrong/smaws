@@ -91,7 +91,7 @@ let identity_provider_id_of_yojson = string_of_yojson
 let identity_provider_name_of_yojson = string_of_yojson
 
 let identity_providers_of_yojson = 
-  fun tree path -> map_of_yojson identity_provider_id_of_yojson tree path
+  fun tree path -> map_of_yojson identity_provider_name_of_yojson identity_provider_id_of_yojson tree path
 
 let developer_provider_name_of_yojson = string_of_yojson
 
@@ -128,7 +128,7 @@ let tag_value_type_of_yojson = string_of_yojson
 let tag_keys_type_of_yojson = string_of_yojson
 
 let identity_pool_tags_type_of_yojson = 
-  fun tree path -> map_of_yojson tag_value_type_of_yojson tree path
+  fun tree path -> map_of_yojson tag_keys_type_of_yojson tag_value_type_of_yojson tree path
 
 let identity_pool_of_yojson = 
   fun tree path : identity_pool ->
@@ -194,7 +194,7 @@ let unprocessed_identity_id_list_of_yojson =
 let identity_provider_token_of_yojson = string_of_yojson
 
 let logins_map_of_yojson = 
-  fun tree path -> map_of_yojson identity_provider_token_of_yojson tree path
+  fun tree path -> map_of_yojson identity_provider_name_of_yojson identity_provider_token_of_yojson tree path
 
 let logins_list_of_yojson = 
   fun tree path -> list_of_yojson identity_provider_name_of_yojson tree path 
@@ -256,7 +256,7 @@ let principal_tag_value_of_yojson = string_of_yojson
 let principal_tag_i_d_of_yojson = string_of_yojson
 
 let principal_tags_of_yojson = 
-  fun tree path -> map_of_yojson principal_tag_value_of_yojson tree path
+  fun tree path -> map_of_yojson principal_tag_i_d_of_yojson principal_tag_value_of_yojson tree path
 
 let set_principal_tag_attribute_map_response_of_yojson = 
   fun tree path : set_principal_tag_attribute_map_response ->
@@ -285,7 +285,7 @@ let set_principal_tag_attribute_map_input_of_yojson =
 let role_type_of_yojson = string_of_yojson
 
 let roles_map_of_yojson = 
-  fun tree path -> map_of_yojson arn_string_of_yojson tree path
+  fun tree path -> map_of_yojson role_type_of_yojson arn_string_of_yojson tree path
 
 let role_mapping_type_of_yojson = 
   fun (tree: t) path : role_mapping_type -> match tree with 
@@ -350,7 +350,7 @@ let role_mapping_of_yojson =
   in _res
 
 let role_mapping_map_of_yojson = 
-  fun tree path -> map_of_yojson role_mapping_of_yojson tree path
+  fun tree path -> map_of_yojson identity_provider_name_of_yojson role_mapping_of_yojson tree path
 
 let set_identity_pool_roles_input_of_yojson = 
   fun tree path : set_identity_pool_roles_input ->

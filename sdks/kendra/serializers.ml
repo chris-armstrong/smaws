@@ -223,7 +223,7 @@ let value_importance_map_key_to_yojson = string_to_yojson
 let importance_to_yojson = int_to_yojson
 
 let value_importance_map_to_yojson = 
-  fun tree -> map_to_yojson importance_to_yojson tree
+  fun tree -> map_to_yojson value_importance_map_key_to_yojson importance_to_yojson tree
 
 let error_message_to_yojson = string_to_yojson
 

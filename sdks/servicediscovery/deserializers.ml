@@ -556,7 +556,7 @@ let attr_value_of_yojson = string_of_yojson
 let attr_key_of_yojson = string_of_yojson
 
 let attributes_of_yojson = 
-  fun tree path -> map_of_yojson attr_value_of_yojson tree path
+  fun tree path -> map_of_yojson attr_key_of_yojson attr_value_of_yojson tree path
 
 let register_instance_request_of_yojson = 
   fun tree path : register_instance_request ->
@@ -866,7 +866,7 @@ let operation_target_type_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "OperationTargetType")
 
 let operation_targets_map_of_yojson = 
-  fun tree path -> map_of_yojson resource_id_of_yojson tree path
+  fun tree path -> map_of_yojson operation_target_type_of_yojson resource_id_of_yojson tree path
 
 let operation_of_yojson = 
   fun tree path : operation ->
@@ -946,7 +946,7 @@ let health_status_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "HealthStatus")
 
 let instance_health_status_map_of_yojson = 
-  fun tree path -> map_of_yojson health_status_of_yojson tree path
+  fun tree path -> map_of_yojson resource_id_of_yojson health_status_of_yojson tree path
 
 let get_instances_health_status_response_of_yojson = 
   fun tree path : get_instances_health_status_response ->

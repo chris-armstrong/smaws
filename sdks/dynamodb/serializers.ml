@@ -44,10 +44,10 @@ and list_attribute_value_to_yojson =
   fun tree -> list_to_yojson attribute_value_to_yojson tree
 
 and map_attribute_value_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let put_item_input_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let put_request_to_yojson = 
   fun (x: put_request) -> assoc_to_yojson(
@@ -58,7 +58,7 @@ let put_request_to_yojson =
   ])
 
 let key_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let delete_request_to_yojson = 
   fun (x: delete_request) -> assoc_to_yojson(
@@ -1182,7 +1182,7 @@ let update_kinesis_streaming_destination_input_to_yojson =
   ])
 
 let attribute_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let consumed_capacity_units_to_yojson = double_to_yojson
 
@@ -1201,7 +1201,7 @@ let capacity_to_yojson =
   ])
 
 let secondary_indexes_capacity_map_to_yojson = 
-  fun tree -> map_to_yojson capacity_to_yojson tree
+  fun tree -> map_to_yojson index_name_to_yojson capacity_to_yojson tree
 
 let consumed_capacity_to_yojson = 
   fun (x: consumed_capacity) -> assoc_to_yojson(
@@ -1230,7 +1230,7 @@ let consumed_capacity_to_yojson =
   ])
 
 let item_collection_key_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let item_collection_size_estimate_bound_to_yojson = double_to_yojson
 
@@ -1281,7 +1281,7 @@ let attribute_value_update_to_yojson =
   ])
 
 let attribute_updates_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_update_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_update_to_yojson tree
 
 let comparison_operator_to_yojson = 
   fun (x: comparison_operator) -> match x with 
@@ -1322,7 +1322,7 @@ let expected_attribute_value_to_yojson =
   ])
 
 let expected_attribute_map_to_yojson = 
-  fun tree -> map_to_yojson expected_attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson expected_attribute_value_to_yojson tree
 
 let conditional_operator_to_yojson = 
   fun (x: conditional_operator) -> match x with 
@@ -1361,12 +1361,12 @@ let condition_expression_to_yojson = string_to_yojson
 let expression_attribute_name_variable_to_yojson = string_to_yojson
 
 let expression_attribute_name_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_name_to_yojson tree
+  fun tree -> map_to_yojson expression_attribute_name_variable_to_yojson attribute_name_to_yojson tree
 
 let expression_attribute_value_variable_to_yojson = string_to_yojson
 
 let expression_attribute_value_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson expression_attribute_value_variable_to_yojson attribute_value_to_yojson tree
 
 let return_values_on_condition_check_failure_to_yojson = 
   fun (x: return_values_on_condition_check_failure) -> match x with 
@@ -1938,7 +1938,7 @@ let item_collection_metrics_multiple_to_yojson =
   fun tree -> list_to_yojson item_collection_metrics_to_yojson tree
 
 let item_collection_metrics_per_table_to_yojson = 
-  fun tree -> map_to_yojson item_collection_metrics_multiple_to_yojson tree
+  fun tree -> map_to_yojson table_arn_to_yojson item_collection_metrics_multiple_to_yojson tree
 
 let transact_write_items_output_to_yojson = 
   fun (x: transact_write_items_output) -> assoc_to_yojson(
@@ -2405,7 +2405,7 @@ let condition_to_yojson =
   ])
 
 let filter_condition_map_to_yojson = 
-  fun tree -> map_to_yojson condition_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson condition_to_yojson tree
 
 let consistent_read_to_yojson = bool_to_yojson
 
@@ -2656,7 +2656,7 @@ let query_output_to_yojson =
   ])
 
 let key_conditions_to_yojson = 
-  fun tree -> map_to_yojson condition_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson condition_to_yojson tree
 
 let key_expression_to_yojson = string_to_yojson
 
@@ -4346,7 +4346,7 @@ let create_backup_input_to_yojson =
   ])
 
 let batch_write_item_request_map_to_yojson = 
-  fun tree -> map_to_yojson write_requests_to_yojson tree
+  fun tree -> map_to_yojson table_arn_to_yojson write_requests_to_yojson tree
 
 let batch_write_item_output_to_yojson = 
   fun (x: batch_write_item_output) -> assoc_to_yojson(
@@ -4377,10 +4377,10 @@ let batch_write_item_input_to_yojson =
   ])
 
 let batch_get_response_map_to_yojson = 
-  fun tree -> map_to_yojson item_list_to_yojson tree
+  fun tree -> map_to_yojson table_arn_to_yojson item_list_to_yojson tree
 
 let batch_get_request_map_to_yojson = 
-  fun tree -> map_to_yojson keys_and_attributes_to_yojson tree
+  fun tree -> map_to_yojson table_arn_to_yojson keys_and_attributes_to_yojson tree
 
 let batch_get_item_output_to_yojson = 
   fun (x: batch_get_item_output) -> assoc_to_yojson(

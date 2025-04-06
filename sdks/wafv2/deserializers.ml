@@ -1442,7 +1442,7 @@ let custom_response_body_of_yojson =
   in _res
 
 let custom_response_bodies_of_yojson = 
-  fun tree path -> map_of_yojson custom_response_body_of_yojson tree path
+  fun tree path -> map_of_yojson entity_name_of_yojson custom_response_body_of_yojson tree path
 
 let token_domain_of_yojson = string_of_yojson
 
@@ -1478,7 +1478,7 @@ let associated_resource_type_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "AssociatedResourceType")
 
 let request_body_of_yojson = 
-  fun tree path -> map_of_yojson request_body_associated_resource_type_config_of_yojson tree path
+  fun tree path -> map_of_yojson associated_resource_type_of_yojson request_body_associated_resource_type_config_of_yojson tree path
 
 let association_config_of_yojson = 
   fun tree path : association_config ->
@@ -1785,7 +1785,7 @@ let version_to_publish_of_yojson =
   in _res
 
 let versions_to_publish_of_yojson = 
-  fun tree path -> map_of_yojson version_to_publish_of_yojson tree path
+  fun tree path -> map_of_yojson version_key_string_of_yojson version_to_publish_of_yojson tree path
 
 let update_web_acl_response_of_yojson = 
   fun tree path : update_web_acl_response ->
@@ -2438,7 +2438,7 @@ let managed_rule_set_version_of_yojson =
   in _res
 
 let published_versions_of_yojson = 
-  fun tree path -> map_of_yojson managed_rule_set_version_of_yojson tree path
+  fun tree path -> map_of_yojson version_key_string_of_yojson managed_rule_set_version_of_yojson tree path
 
 let product_title_of_yojson = string_of_yojson
 

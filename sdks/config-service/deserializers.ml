@@ -538,7 +538,7 @@ let tags_list_of_yojson =
 let name_of_yojson = string_of_yojson
 
 let tags_of_yojson = 
-  fun tree path -> map_of_yojson value_of_yojson tree path
+  fun tree path -> map_of_yojson name_of_yojson value_of_yojson tree path
 
 let tag_list_of_yojson = 
   fun tree path -> list_of_yojson tag_of_yojson tree path 
@@ -558,7 +558,7 @@ let supplementary_configuration_value_of_yojson = string_of_yojson
 let supplementary_configuration_name_of_yojson = string_of_yojson
 
 let supplementary_configuration_of_yojson = 
-  fun tree path -> map_of_yojson supplementary_configuration_value_of_yojson tree path
+  fun tree path -> map_of_yojson supplementary_configuration_name_of_yojson supplementary_configuration_value_of_yojson tree path
 
 let string_with_char_limit768_of_yojson = string_of_yojson
 
@@ -1190,7 +1190,7 @@ let remediation_parameter_value_of_yojson =
   in _res
 
 let remediation_parameters_of_yojson = 
-  fun tree path -> map_of_yojson remediation_parameter_value_of_yojson tree path
+  fun tree path -> map_of_yojson string_with_char_limit256_of_yojson remediation_parameter_value_of_yojson tree path
 
 let boolean__of_yojson = bool_of_yojson
 

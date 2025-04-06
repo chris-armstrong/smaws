@@ -32,7 +32,7 @@ let failure_info_to_yojson =
 let resource_ar_n_to_yojson = string_to_yojson
 
 let failed_resources_map_to_yojson = 
-  fun tree -> map_to_yojson failure_info_to_yojson tree
+  fun tree -> map_to_yojson resource_ar_n_to_yojson failure_info_to_yojson tree
 
 let untag_resources_output_to_yojson = 
   fun (x: untag_resources_output) -> assoc_to_yojson(
@@ -118,7 +118,8 @@ let tag_resources_output_to_yojson =
        
   ])
 
-let tag_map_to_yojson = fun tree -> map_to_yojson tag_value_to_yojson tree
+let tag_map_to_yojson = 
+  fun tree -> map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 
 let tag_resources_input_to_yojson = 
   fun (x: tag_resources_input) -> assoc_to_yojson(

@@ -648,7 +648,7 @@ let domain_entry_type_to_yojson = string_to_yojson
 let domain_entry_options_keys_to_yojson = string_to_yojson
 
 let domain_entry_options_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson domain_entry_options_keys_to_yojson string__to_yojson tree
 
 let domain_entry_to_yojson = 
   fun (x: domain_entry) -> assoc_to_yojson(
@@ -970,7 +970,7 @@ let container_service_deployment_state_to_yojson =
    
 
 let environment_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson string__to_yojson tree
 
 let container_service_protocol_to_yojson = 
   fun (x: container_service_protocol) -> match x with 
@@ -982,7 +982,7 @@ let container_service_protocol_to_yojson =
    
 
 let port_map_to_yojson = 
-  fun tree -> map_to_yojson container_service_protocol_to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson container_service_protocol_to_yojson tree
 
 let container_to_yojson = 
   fun (x: container) -> assoc_to_yojson(
@@ -1004,7 +1004,7 @@ let container_to_yojson =
 let container_name_to_yojson = string_to_yojson
 
 let container_map_to_yojson = 
-  fun tree -> map_to_yojson container_to_yojson tree
+  fun tree -> map_to_yojson container_name_to_yojson container_to_yojson tree
 
 let container_service_health_check_config_to_yojson = 
   fun (x: container_service_health_check_config) -> assoc_to_yojson(
@@ -1067,7 +1067,7 @@ let container_service_public_domains_list_to_yojson =
   fun tree -> list_to_yojson string__to_yojson tree
 
 let container_service_public_domains_to_yojson = 
-  fun tree -> map_to_yojson container_service_public_domains_list_to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson container_service_public_domains_list_to_yojson tree
 
 let container_service_ecr_image_puller_role_to_yojson = 
   fun (x: container_service_ecr_image_puller_role) -> assoc_to_yojson(
@@ -3132,7 +3132,7 @@ let instance_health_summary_list_to_yojson =
   fun tree -> list_to_yojson instance_health_summary_to_yojson tree
 
 let load_balancer_configuration_options_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson load_balancer_attribute_name_to_yojson string__to_yojson tree
 
 let load_balancer_to_yojson = 
   fun (x: load_balancer) -> assoc_to_yojson(
@@ -5194,7 +5194,7 @@ let get_container_images_request_to_yojson =
   ])
 
 let container_service_metadata_entry_to_yojson = 
-  fun tree -> map_to_yojson string__to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson string__to_yojson tree
 
 let container_service_metadata_entry_list_to_yojson = 
   fun tree -> list_to_yojson container_service_metadata_entry_to_yojson tree
@@ -6830,7 +6830,7 @@ let disk_map_list_to_yojson =
   fun tree -> list_to_yojson disk_map_to_yojson tree
 
 let attached_disk_map_to_yojson = 
-  fun tree -> map_to_yojson disk_map_list_to_yojson tree
+  fun tree -> map_to_yojson resource_name_to_yojson disk_map_list_to_yojson tree
 
 let add_on_request_list_to_yojson = 
   fun tree -> list_to_yojson add_on_request_to_yojson tree

@@ -129,7 +129,7 @@ let tag_value_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 
 let tag_map_of_yojson = 
-  fun tree path -> map_of_yojson tag_value_of_yojson tree path
+  fun tree path -> map_of_yojson tag_key_of_yojson tag_value_of_yojson tree path
 
 let tag_of_yojson = 
   fun tree path : tag ->

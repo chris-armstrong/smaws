@@ -1204,7 +1204,7 @@ let query_result_value_of_yojson = string_of_yojson
 let query_result_key_of_yojson = string_of_yojson
 
 let query_result_column_of_yojson = 
-  fun tree path -> map_of_yojson query_result_value_of_yojson tree path
+  fun tree path -> map_of_yojson query_result_key_of_yojson query_result_value_of_yojson tree path
 
 let query_result_row_of_yojson = 
   fun tree path -> list_of_yojson query_result_column_of_yojson tree path 

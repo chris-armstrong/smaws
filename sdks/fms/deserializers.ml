@@ -1315,7 +1315,7 @@ let protocols_list_of_yojson =
 let previous_list_version_of_yojson = string_of_yojson
 
 let previous_protocols_list_of_yojson = 
-  fun tree path -> map_of_yojson protocols_list_of_yojson tree path
+  fun tree path -> map_of_yojson previous_list_version_of_yojson protocols_list_of_yojson tree path
 
 let protocols_list_data_of_yojson = 
   fun tree path : protocols_list_data ->
@@ -1367,7 +1367,7 @@ let customer_policy_scope_id_type_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "CustomerPolicyScopeIdType")
 
 let customer_policy_scope_map_of_yojson = 
-  fun tree path -> map_of_yojson customer_policy_scope_id_list_of_yojson tree path
+  fun tree path -> map_of_yojson customer_policy_scope_id_type_of_yojson customer_policy_scope_id_list_of_yojson tree path
 
 let customer_policy_status_of_yojson = 
   fun (tree: t) path : customer_policy_status -> match tree with 
@@ -1453,7 +1453,7 @@ let apps_list_of_yojson =
   fun tree path -> list_of_yojson app_of_yojson tree path 
 
 let previous_apps_list_of_yojson = 
-  fun tree path -> map_of_yojson apps_list_of_yojson tree path
+  fun tree path -> map_of_yojson previous_list_version_of_yojson apps_list_of_yojson tree path
 
 let apps_list_data_of_yojson = 
   fun tree path : apps_list_data ->
@@ -1621,7 +1621,7 @@ let dependent_service_name_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "DependentServiceName")
 
 let issue_info_map_of_yojson = 
-  fun tree path -> map_of_yojson detailed_info_of_yojson tree path
+  fun tree path -> map_of_yojson dependent_service_name_of_yojson detailed_info_of_yojson tree path
 
 let policy_compliance_status_of_yojson = 
   fun tree path : policy_compliance_status ->
@@ -1642,7 +1642,7 @@ let policy_compliance_status_list_of_yojson =
   fun tree path -> list_of_yojson policy_compliance_status_of_yojson tree path 
 
 let compliance_violator_metadata_of_yojson = 
-  fun tree path -> map_of_yojson length_bounded_string_of_yojson tree path
+  fun tree path -> map_of_yojson length_bounded_string_of_yojson length_bounded_string_of_yojson tree path
 
 let compliance_violator_of_yojson = 
   fun tree path : compliance_violator ->

@@ -91,35 +91,23 @@ let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structu
   labelled_arguments
 
 let stri_builders ~structure_shapes ~(alias_context : Types_ppx.t) =
+  let make_structure_item name descriptor =
+    let builder = generate_builder ~alias_context name descriptor in
+    let func_name = "make_" ^ SafeNames.safeTypeName name in
+    [%stri let [%p B.ppat_var (Location.mknoloc func_name)] = [%e builder]]
+  in
   let structure_items =
     structure_shapes
     |> List.filter_map (fun shapeWithTarget ->
            let shapes = structure_shapes_without_exceptions shapeWithTarget in
            match shapes with
            | [] -> None
-           | (name, descriptor) :: [] ->
-               let builder = generate_builder ~alias_context name descriptor in
-               let func_name = "make_" ^ SafeNames.safeTypeName name in
-               Some [%stri let [%p B.ppat_var (Location.mknoloc func_name)] = [%e builder]]
-           | (name, descriptor) :: remainder ->
-               let func_name = "make_" ^ SafeNames.safeTypeName name in
-               let builder = generate_builder ~alias_context name descriptor in
-               let value_binding =
-                 B.value_binding ~pat:(B.ppat_var (Location.mknoloc func_name)) ~expr:builder
+           | items ->
+               let sis =
+                 List.map (fun (name, descriptor) -> make_structure_item name descriptor) items
                in
-               let rec_bindings =
-                 remainder
-                 |> List.map (fun (name, descriptor) ->
-                        let func_name = "make_" ^ SafeNames.safeTypeName name in
-                        let builder = generate_builder ~alias_context name descriptor in
-                        let value_binding =
-                          B.value_binding
-                            ~pat:(B.ppat_var (Location.mknoloc func_name))
-                            ~expr:builder
-                        in
-                        value_binding)
-               in
-               Some (B.pstr_value Recursive (value_binding :: rec_bindings)))
+               Some sis)
+    |> List.flatten
   in
   structure_items
 

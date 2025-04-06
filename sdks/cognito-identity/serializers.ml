@@ -83,7 +83,7 @@ let identity_provider_id_to_yojson = string_to_yojson
 let identity_provider_name_to_yojson = string_to_yojson
 
 let identity_providers_to_yojson = 
-  fun tree -> map_to_yojson identity_provider_id_to_yojson tree
+  fun tree -> map_to_yojson identity_provider_name_to_yojson identity_provider_id_to_yojson tree
 
 let developer_provider_name_to_yojson = string_to_yojson
 
@@ -123,7 +123,7 @@ let tag_value_type_to_yojson = string_to_yojson
 let tag_keys_type_to_yojson = string_to_yojson
 
 let identity_pool_tags_type_to_yojson = 
-  fun tree -> map_to_yojson tag_value_type_to_yojson tree
+  fun tree -> map_to_yojson tag_keys_type_to_yojson tag_value_type_to_yojson tree
 
 let identity_pool_to_yojson = 
   fun (x: identity_pool) -> assoc_to_yojson(
@@ -207,7 +207,7 @@ let unprocessed_identity_id_list_to_yojson =
 let identity_provider_token_to_yojson = string_to_yojson
 
 let logins_map_to_yojson = 
-  fun tree -> map_to_yojson identity_provider_token_to_yojson tree
+  fun tree -> map_to_yojson identity_provider_name_to_yojson identity_provider_token_to_yojson tree
 
 let logins_list_to_yojson = 
   fun tree -> list_to_yojson identity_provider_name_to_yojson tree
@@ -276,7 +276,7 @@ let principal_tag_value_to_yojson = string_to_yojson
 let principal_tag_i_d_to_yojson = string_to_yojson
 
 let principal_tags_to_yojson = 
-  fun tree -> map_to_yojson principal_tag_value_to_yojson tree
+  fun tree -> map_to_yojson principal_tag_i_d_to_yojson principal_tag_value_to_yojson tree
 
 let set_principal_tag_attribute_map_response_to_yojson = 
   fun (x: set_principal_tag_attribute_map_response) -> assoc_to_yojson(
@@ -315,7 +315,7 @@ let set_principal_tag_attribute_map_input_to_yojson =
 let role_type_to_yojson = string_to_yojson
 
 let roles_map_to_yojson = 
-  fun tree -> map_to_yojson arn_string_to_yojson tree
+  fun tree -> map_to_yojson role_type_to_yojson arn_string_to_yojson tree
 
 let role_mapping_type_to_yojson = 
   fun (x: role_mapping_type) -> match x with 
@@ -386,7 +386,7 @@ let role_mapping_to_yojson =
   ])
 
 let role_mapping_map_to_yojson = 
-  fun tree -> map_to_yojson role_mapping_to_yojson tree
+  fun tree -> map_to_yojson identity_provider_name_to_yojson role_mapping_to_yojson tree
 
 let set_identity_pool_roles_input_to_yojson = 
   fun (x: set_identity_pool_roles_input) -> assoc_to_yojson(

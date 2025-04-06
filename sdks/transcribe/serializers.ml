@@ -873,7 +873,7 @@ let language_id_settings_to_yojson =
   ])
 
 let language_id_settings_map_to_yojson = 
-  fun tree -> map_to_yojson language_id_settings_to_yojson tree
+  fun tree -> map_to_yojson language_code_to_yojson language_id_settings_to_yojson tree
 
 let transcription_job_to_yojson = 
   fun (x: transcription_job) -> assoc_to_yojson(
@@ -983,7 +983,7 @@ let output_key_to_yojson = string_to_yojson
 let kms_key_id_to_yojson = string_to_yojson
 
 let kms_encryption_context_map_to_yojson = 
-  fun tree -> map_to_yojson non_empty_string_to_yojson tree
+  fun tree -> map_to_yojson non_empty_string_to_yojson non_empty_string_to_yojson tree
 
 let subtitles_to_yojson = 
   fun (x: subtitles) -> assoc_to_yojson(

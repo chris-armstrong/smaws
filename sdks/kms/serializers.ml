@@ -1052,7 +1052,7 @@ let encryption_context_value_to_yojson = string_to_yojson
 let encryption_context_key_to_yojson = string_to_yojson
 
 let encryption_context_type_to_yojson = 
-  fun tree -> map_to_yojson encryption_context_value_to_yojson tree
+  fun tree -> map_to_yojson encryption_context_key_to_yojson encryption_context_value_to_yojson tree
 
 let re_encrypt_request_to_yojson = 
   fun (x: re_encrypt_request) -> assoc_to_yojson(

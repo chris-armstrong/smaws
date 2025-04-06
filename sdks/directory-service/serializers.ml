@@ -913,7 +913,7 @@ let directory_configuration_status_to_yojson =
    
 
 let directory_configuration_setting_request_detailed_status_to_yojson = 
-  fun tree -> map_to_yojson directory_configuration_status_to_yojson tree
+  fun tree -> map_to_yojson region_name_to_yojson directory_configuration_status_to_yojson tree
 
 let directory_configuration_setting_request_status_message_to_yojson = 
   string_to_yojson

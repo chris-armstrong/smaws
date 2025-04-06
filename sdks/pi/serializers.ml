@@ -139,7 +139,7 @@ let response_resource_metric_list_to_yojson =
 let request_string_to_yojson = string_to_yojson
 
 let dimension_map_to_yojson = 
-  fun tree -> map_to_yojson request_string_to_yojson tree
+  fun tree -> map_to_yojson request_string_to_yojson request_string_to_yojson tree
 
 let response_resource_metric_key_to_yojson = 
   fun (x: response_resource_metric_key) -> assoc_to_yojson(
@@ -470,7 +470,7 @@ let dimension_group_to_yojson =
   ])
 
 let metric_query_filter_map_to_yojson = 
-  fun tree -> map_to_yojson request_string_to_yojson tree
+  fun tree -> map_to_yojson sanitized_string_to_yojson request_string_to_yojson tree
 
 let metric_query_to_yojson = 
   fun (x: metric_query) -> assoc_to_yojson(
@@ -543,7 +543,7 @@ let feature_metadata_to_yojson =
   ])
 
 let feature_metadata_map_to_yojson = 
-  fun tree -> map_to_yojson feature_metadata_to_yojson tree
+  fun tree -> map_to_yojson string__to_yojson feature_metadata_to_yojson tree
 
 let get_resource_metadata_response_to_yojson = 
   fun (x: get_resource_metadata_response) -> assoc_to_yojson(
@@ -578,7 +578,7 @@ let context_type_to_yojson =
 let descriptive_string_to_yojson = string_to_yojson
 
 let descriptive_map_to_yojson = 
-  fun tree -> map_to_yojson descriptive_string_to_yojson tree
+  fun tree -> map_to_yojson descriptive_string_to_yojson descriptive_string_to_yojson tree
 
 let performance_insights_metric_to_yojson = 
   fun (x: performance_insights_metric) -> assoc_to_yojson(
@@ -765,7 +765,7 @@ let get_dimension_key_details_request_to_yojson =
   ])
 
 let additional_metrics_map_to_yojson = 
-  fun tree -> map_to_yojson double_to_yojson tree
+  fun tree -> map_to_yojson request_string_to_yojson double_to_yojson tree
 
 let metric_values_list_to_yojson = 
   fun tree -> list_to_yojson double_to_yojson tree

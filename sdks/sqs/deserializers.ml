@@ -82,7 +82,7 @@ let token_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
 
 let tag_map_of_yojson = 
-  fun tree path -> map_of_yojson tag_value_of_yojson tree path
+  fun tree path -> map_of_yojson tag_key_of_yojson tag_value_of_yojson tree path
 
 let tag_queue_request_of_yojson = 
   fun tree path : tag_queue_request ->
@@ -156,7 +156,7 @@ let queue_attribute_name_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "QueueAttributeName")
 
 let queue_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson queue_attribute_name_of_yojson string__of_yojson tree path
 
 let set_queue_attributes_request_of_yojson = 
   fun tree path : set_queue_attributes_request ->
@@ -227,7 +227,7 @@ let message_attribute_value_of_yojson =
   in _res
 
 let message_body_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson message_attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson message_attribute_value_of_yojson tree path
 
 let message_system_attribute_value_of_yojson = 
   fun tree path : message_system_attribute_value ->
@@ -249,7 +249,7 @@ let message_system_attribute_name_for_sends_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "MessageSystemAttributeNameForSends")
 
 let message_body_system_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson message_system_attribute_value_of_yojson tree path
+  fun tree path -> map_of_yojson message_system_attribute_name_for_sends_of_yojson message_system_attribute_value_of_yojson tree path
 
 let send_message_request_of_yojson = 
   fun tree path : send_message_request ->
@@ -472,7 +472,7 @@ let message_system_attribute_name_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "MessageSystemAttributeName")
 
 let message_system_attribute_map_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson message_system_attribute_name_of_yojson string__of_yojson tree path
 
 let message_of_yojson = 
   fun tree path : message ->

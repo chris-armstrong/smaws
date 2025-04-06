@@ -529,7 +529,7 @@ let domain_entry_type_of_yojson = string_of_yojson
 let domain_entry_options_keys_of_yojson = string_of_yojson
 
 let domain_entry_options_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson domain_entry_options_keys_of_yojson string__of_yojson tree path
 
 let domain_entry_of_yojson = 
   fun tree path : domain_entry ->
@@ -806,7 +806,7 @@ let container_service_deployment_state_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "ContainerServiceDeploymentState")
 
 let environment_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson string__of_yojson tree path
 
 let container_service_protocol_of_yojson = 
   fun (tree: t) path : container_service_protocol -> match tree with 
@@ -818,7 +818,7 @@ let container_service_protocol_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "ContainerServiceProtocol")
 
 let port_map_of_yojson = 
-  fun tree path -> map_of_yojson container_service_protocol_of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson container_service_protocol_of_yojson tree path
 
 let container_of_yojson = 
   fun tree path : container ->
@@ -835,7 +835,7 @@ let container_of_yojson =
 let container_name_of_yojson = string_of_yojson
 
 let container_map_of_yojson = 
-  fun tree path -> map_of_yojson container_of_yojson tree path
+  fun tree path -> map_of_yojson container_name_of_yojson container_of_yojson tree path
 
 let container_service_health_check_config_of_yojson = 
   fun tree path : container_service_health_check_config ->
@@ -879,7 +879,7 @@ let container_service_public_domains_list_of_yojson =
   fun tree path -> list_of_yojson string__of_yojson tree path 
 
 let container_service_public_domains_of_yojson = 
-  fun tree path -> map_of_yojson container_service_public_domains_list_of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson container_service_public_domains_list_of_yojson tree path
 
 let container_service_ecr_image_puller_role_of_yojson = 
   fun tree path : container_service_ecr_image_puller_role ->
@@ -2575,7 +2575,7 @@ let instance_health_summary_list_of_yojson =
   fun tree path -> list_of_yojson instance_health_summary_of_yojson tree path 
 
 let load_balancer_configuration_options_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson load_balancer_attribute_name_of_yojson string__of_yojson tree path
 
 let load_balancer_of_yojson = 
   fun tree path : load_balancer ->
@@ -4219,7 +4219,7 @@ let get_container_images_request_of_yojson =
   in _res
 
 let container_service_metadata_entry_of_yojson = 
-  fun tree path -> map_of_yojson string__of_yojson tree path
+  fun tree path -> map_of_yojson string__of_yojson string__of_yojson tree path
 
 let container_service_metadata_entry_list_of_yojson = 
   fun tree path -> list_of_yojson container_service_metadata_entry_of_yojson tree path 
@@ -5599,7 +5599,7 @@ let disk_map_list_of_yojson =
   fun tree path -> list_of_yojson disk_map_of_yojson tree path 
 
 let attached_disk_map_of_yojson = 
-  fun tree path -> map_of_yojson disk_map_list_of_yojson tree path
+  fun tree path -> map_of_yojson resource_name_of_yojson disk_map_list_of_yojson tree path
 
 let add_on_request_list_of_yojson = 
   fun tree path -> list_of_yojson add_on_request_of_yojson tree path 

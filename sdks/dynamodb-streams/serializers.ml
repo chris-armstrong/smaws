@@ -80,10 +80,10 @@ and list_attribute_value_to_yojson =
   fun tree -> list_to_yojson attribute_value_to_yojson tree
 
 and map_attribute_value_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let attribute_map_to_yojson = 
-  fun tree -> map_to_yojson attribute_value_to_yojson tree
+  fun tree -> map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
 
 let sequence_number_to_yojson = string_to_yojson
 

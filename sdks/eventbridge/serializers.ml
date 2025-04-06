@@ -636,7 +636,7 @@ let target_input_path_to_yojson = string_to_yojson
 let input_transformer_path_key_to_yojson = string_to_yojson
 
 let transformer_paths_to_yojson = 
-  fun tree -> map_to_yojson target_input_path_to_yojson tree
+  fun tree -> map_to_yojson input_transformer_path_key_to_yojson target_input_path_to_yojson tree
 
 let transformer_input_to_yojson = string_to_yojson
 
@@ -952,12 +952,12 @@ let path_parameter_list_to_yojson =
 let header_value_to_yojson = string_to_yojson
 
 let header_parameters_map_to_yojson = 
-  fun tree -> map_to_yojson header_value_to_yojson tree
+  fun tree -> map_to_yojson header_key_to_yojson header_value_to_yojson tree
 
 let query_string_value_to_yojson = string_to_yojson
 
 let query_string_parameters_map_to_yojson = 
-  fun tree -> map_to_yojson query_string_value_to_yojson tree
+  fun tree -> map_to_yojson query_string_key_to_yojson query_string_value_to_yojson tree
 
 let http_parameters_to_yojson = 
   fun (x: http_parameters) -> assoc_to_yojson(

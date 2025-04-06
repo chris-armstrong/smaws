@@ -817,7 +817,7 @@ let directory_configuration_status_of_yojson =
     | _ -> raise (deserialize_wrong_type_error path "DirectoryConfigurationStatus")
 
 let directory_configuration_setting_request_detailed_status_of_yojson = 
-  fun tree path -> map_of_yojson directory_configuration_status_of_yojson tree path
+  fun tree path -> map_of_yojson region_name_of_yojson directory_configuration_status_of_yojson tree path
 
 let directory_configuration_setting_request_status_message_of_yojson = 
   string_of_yojson

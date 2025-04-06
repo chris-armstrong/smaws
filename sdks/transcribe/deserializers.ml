@@ -758,7 +758,7 @@ let language_id_settings_of_yojson =
   in _res
 
 let language_id_settings_map_of_yojson = 
-  fun tree path -> map_of_yojson language_id_settings_of_yojson tree path
+  fun tree path -> map_of_yojson language_code_of_yojson language_id_settings_of_yojson tree path
 
 let transcription_job_of_yojson = 
   fun tree path : transcription_job ->
@@ -824,7 +824,7 @@ let output_key_of_yojson = string_of_yojson
 let kms_key_id_of_yojson = string_of_yojson
 
 let kms_encryption_context_map_of_yojson = 
-  fun tree path -> map_of_yojson non_empty_string_of_yojson tree path
+  fun tree path -> map_of_yojson non_empty_string_of_yojson non_empty_string_of_yojson tree path
 
 let subtitles_of_yojson = 
   fun tree path : subtitles ->
