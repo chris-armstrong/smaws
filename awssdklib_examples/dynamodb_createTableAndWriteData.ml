@@ -11,7 +11,7 @@ let _ =
             Config.
               {
                 resolveRegion = (fun () -> "ap-southeast-2");
-                resolveAuth = (fun () -> Auth.fromProfile env ());
+                resolveAuth = (fun () -> Auth.Profile.resolve env ());
               }
           in
           let context = Context.make ~sw ~config env in
