@@ -27,7 +27,7 @@
   base
   (base64 (>= "3.4.0"))
   (digestif (>= "1.1.4"))
-  (ppx_deriving (>= "5.0"))
+  (ppx_deriving (>= "5.0" :with-dev-setup))
   ocamlgraph
   (markup (>= "1.0.3"))
   (uri (>= "4.2.0"))
@@ -66,7 +66,7 @@
   (logs (>= "0.7.0"))
   (httpun (>= "0.2.0"))
   (httpun-eio (>= "0.2.0"))
-  (ppx_deriving (>= "5.0"))
+  (ppx_deriving (and (>= "5.0") :build))
   (alcotest :with-test)
   (eio_main :with-dev-setup)
   (odoc :with-doc)))

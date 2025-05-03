@@ -16,7 +16,7 @@ depends: [
   "base"
   "base64" {>= "3.4.0"}
   "digestif" {>= "1.1.4"}
-  "ppx_deriving" {>= "5.0"}
+  "ppx_deriving" {"5.0" >= with-dev-setup}
   "ocamlgraph"
   "markup" {>= "1.0.3"}
   "uri" {>= "4.2.0"}
