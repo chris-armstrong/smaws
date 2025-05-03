@@ -4,9 +4,9 @@ module CountClosedWorkflowExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -30,9 +30,9 @@ module CountOpenWorkflowExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -56,9 +56,9 @@ module CountPendingActivityTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -82,9 +82,9 @@ module CountPendingDecisionTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -108,11 +108,11 @@ module DeleteActivityType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeNotDeprecatedFault" ->
+      | _, "TypeNotDeprecatedFault" ->
          (`TypeNotDeprecatedFault (type_not_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -136,11 +136,11 @@ module DeleteWorkflowType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeNotDeprecatedFault" ->
+      | _, "TypeNotDeprecatedFault" ->
          (`TypeNotDeprecatedFault (type_not_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -164,11 +164,11 @@ module DeprecateActivityType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeDeprecatedFault" ->
+      | _, "TypeDeprecatedFault" ->
          (`TypeDeprecatedFault (type_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -192,11 +192,11 @@ module DeprecateDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "DomainDeprecatedFault" ->
+      | _, "DomainDeprecatedFault" ->
          (`DomainDeprecatedFault (domain_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -220,11 +220,11 @@ module DeprecateWorkflowType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeDeprecatedFault" ->
+      | _, "TypeDeprecatedFault" ->
          (`TypeDeprecatedFault (type_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -248,9 +248,9 @@ module DescribeActivityType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -274,9 +274,9 @@ module DescribeDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -300,9 +300,9 @@ module DescribeWorkflowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -326,9 +326,9 @@ module DescribeWorkflowType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -352,9 +352,9 @@ module GetWorkflowExecutionHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -378,9 +378,9 @@ module ListActivityTypes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -404,9 +404,9 @@ module ListClosedWorkflowExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -430,7 +430,7 @@ module ListDomains = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -454,9 +454,9 @@ module ListOpenWorkflowExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -480,11 +480,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -508,9 +508,9 @@ module ListWorkflowTypes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -534,11 +534,11 @@ module PollForActivityTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -562,11 +562,11 @@ module PollForDecisionTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -590,9 +590,9 @@ module RecordActivityTaskHeartbeat = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -616,13 +616,13 @@ module RegisterActivityType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeAlreadyExistsFault" ->
+      | _, "TypeAlreadyExistsFault" ->
          (`TypeAlreadyExistsFault (type_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -646,13 +646,13 @@ module RegisterDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "DomainAlreadyExistsFault" ->
+      | _, "DomainAlreadyExistsFault" ->
          (`DomainAlreadyExistsFault (domain_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TooManyTagsFault" ->
+      | _, "TooManyTagsFault" ->
          (`TooManyTagsFault (too_many_tags_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -676,13 +676,13 @@ module RegisterWorkflowType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeAlreadyExistsFault" ->
+      | _, "TypeAlreadyExistsFault" ->
          (`TypeAlreadyExistsFault (type_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -706,9 +706,9 @@ module RequestCancelWorkflowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -732,9 +732,9 @@ module RespondActivityTaskCanceled = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -758,9 +758,9 @@ module RespondActivityTaskCompleted = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -784,9 +784,9 @@ module RespondActivityTaskFailed = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -810,9 +810,9 @@ module RespondDecisionTaskCompleted = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -836,9 +836,9 @@ module SignalWorkflowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -862,17 +862,17 @@ module StartWorkflowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "DefaultUndefinedFault" ->
+      | _, "DefaultUndefinedFault" ->
          (`DefaultUndefinedFault (default_undefined_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeDeprecatedFault" ->
+      | _, "TypeDeprecatedFault" ->
          (`TypeDeprecatedFault (type_deprecated_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "WorkflowExecutionAlreadyStartedFault" ->
+      | _, "WorkflowExecutionAlreadyStartedFault" ->
          (`WorkflowExecutionAlreadyStartedFault (workflow_execution_already_started_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -896,13 +896,13 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TooManyTagsFault" ->
+      | _, "TooManyTagsFault" ->
          (`TooManyTagsFault (too_many_tags_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -926,9 +926,9 @@ module TerminateWorkflowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -952,11 +952,11 @@ module UndeprecateActivityType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeAlreadyExistsFault" ->
+      | _, "TypeAlreadyExistsFault" ->
          (`TypeAlreadyExistsFault (type_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -980,11 +980,11 @@ module UndeprecateDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "DomainAlreadyExistsFault" ->
+      | _, "DomainAlreadyExistsFault" ->
          (`DomainAlreadyExistsFault (domain_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1008,11 +1008,11 @@ module UndeprecateWorkflowType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "TypeAlreadyExistsFault" ->
+      | _, "TypeAlreadyExistsFault" ->
          (`TypeAlreadyExistsFault (type_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1036,11 +1036,11 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.swf", "LimitExceededFault" ->
+      | _, "LimitExceededFault" ->
          (`LimitExceededFault (limit_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "OperationNotPermittedFault" ->
+      | _, "OperationNotPermittedFault" ->
          (`OperationNotPermittedFault (operation_not_permitted_fault_of_yojson tree path))
-      | "com.amazonaws.swf", "UnknownResourceFault" ->
+      | _, "UnknownResourceFault" ->
          (`UnknownResourceFault (unknown_resource_fault_of_yojson tree path))
       | _type -> handler tree path _type
       

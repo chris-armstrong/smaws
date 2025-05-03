@@ -4,15 +4,15 @@ module AddApplicationCloudWatchLoggingOption = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,17 +36,17 @@ module AddApplicationInput = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "CodeValidationException" ->
+      | _, "CodeValidationException" ->
          (`CodeValidationException (code_validation_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -70,15 +70,15 @@ module AddApplicationInputProcessingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -102,15 +102,15 @@ module AddApplicationOutput = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -134,15 +134,15 @@ module AddApplicationReferenceDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -166,17 +166,17 @@ module CreateApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "CodeValidationException" ->
+      | _, "CodeValidationException" ->
          (`CodeValidationException (code_validation_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -200,13 +200,13 @@ module DeleteApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -230,15 +230,15 @@ module DeleteApplicationCloudWatchLoggingOption = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -262,15 +262,15 @@ module DeleteApplicationInputProcessingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -294,15 +294,15 @@ module DeleteApplicationOutput = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -326,15 +326,15 @@ module DeleteApplicationReferenceDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -358,9 +358,9 @@ module DescribeApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -384,13 +384,13 @@ module DiscoverInputSchema = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceProvisionedThroughputExceededException" ->
+      | _, "ResourceProvisionedThroughputExceededException" ->
          (`ResourceProvisionedThroughputExceededException (resource_provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnableToDetectSchemaException" ->
+      | _, "UnableToDetectSchemaException" ->
          (`UnableToDetectSchemaException (unable_to_detect_schema_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -432,11 +432,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -460,15 +460,15 @@ module StartApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "InvalidApplicationConfigurationException" ->
+      | _, "InvalidApplicationConfigurationException" ->
          (`InvalidApplicationConfigurationException (invalid_application_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -492,11 +492,11 @@ module StopApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -520,15 +520,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -552,15 +552,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -584,17 +584,17 @@ module UpdateApplication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesisanalytics", "CodeValidationException" ->
+      | _, "CodeValidationException" ->
          (`CodeValidationException (code_validation_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesisanalytics", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

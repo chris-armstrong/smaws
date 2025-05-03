@@ -4,15 +4,15 @@ module CreateKeyspace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,17 +36,17 @@ module CreateTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -70,17 +70,17 @@ module DeleteKeyspace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -104,17 +104,17 @@ module DeleteTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -138,15 +138,15 @@ module GetKeyspace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -170,15 +170,15 @@ module GetTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -202,15 +202,15 @@ module GetTableAutoScalingSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -234,15 +234,15 @@ module ListKeyspaces = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -266,15 +266,15 @@ module ListTables = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -298,15 +298,15 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -330,17 +330,17 @@ module RestoreTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -364,15 +364,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -396,17 +396,17 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -430,17 +430,17 @@ module UpdateTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.keyspaces", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.keyspaces", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

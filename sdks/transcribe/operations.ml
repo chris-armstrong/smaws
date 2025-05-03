@@ -4,13 +4,13 @@ module CreateCallAnalyticsCategory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -34,13 +34,13 @@ module CreateLanguageModel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -64,13 +64,13 @@ module CreateMedicalVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -94,13 +94,13 @@ module CreateVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -124,13 +124,13 @@ module CreateVocabularyFilter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -154,13 +154,13 @@ module DeleteCallAnalyticsCategory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -184,11 +184,11 @@ module DeleteCallAnalyticsJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -212,11 +212,11 @@ module DeleteLanguageModel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -240,11 +240,11 @@ module DeleteMedicalScribeJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -268,11 +268,11 @@ module DeleteMedicalTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -296,13 +296,13 @@ module DeleteMedicalVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -326,11 +326,11 @@ module DeleteTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -354,13 +354,13 @@ module DeleteVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -384,13 +384,13 @@ module DeleteVocabularyFilter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -414,13 +414,13 @@ module DescribeLanguageModel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -444,13 +444,13 @@ module GetCallAnalyticsCategory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -474,13 +474,13 @@ module GetCallAnalyticsJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -504,13 +504,13 @@ module GetMedicalScribeJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -534,13 +534,13 @@ module GetMedicalTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,13 +564,13 @@ module GetMedicalVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -594,13 +594,13 @@ module GetTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -624,13 +624,13 @@ module GetVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -654,13 +654,13 @@ module GetVocabularyFilter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -684,11 +684,11 @@ module ListCallAnalyticsCategories = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -712,11 +712,11 @@ module ListCallAnalyticsJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -740,11 +740,11 @@ module ListLanguageModels = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -768,11 +768,11 @@ module ListMedicalScribeJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -796,11 +796,11 @@ module ListMedicalTranscriptionJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -824,11 +824,11 @@ module ListMedicalVocabularies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -852,13 +852,13 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -882,11 +882,11 @@ module ListTranscriptionJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -910,11 +910,11 @@ module ListVocabularies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -938,11 +938,11 @@ module ListVocabularyFilters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -966,13 +966,13 @@ module StartCallAnalyticsJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,13 +996,13 @@ module StartMedicalScribeJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1026,13 +1026,13 @@ module StartMedicalTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1056,13 +1056,13 @@ module StartTranscriptionJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1086,15 +1086,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1118,15 +1118,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1150,15 +1150,15 @@ module UpdateCallAnalyticsCategory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1182,15 +1182,15 @@ module UpdateMedicalVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1214,15 +1214,15 @@ module UpdateVocabulary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1246,13 +1246,13 @@ module UpdateVocabularyFilter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.transcribe", "BadRequestException" ->
+      | _, "BadRequestException" ->
          (`BadRequestException (bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "InternalFailureException" ->
+      | _, "InternalFailureException" ->
          (`InternalFailureException (internal_failure_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.transcribe", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

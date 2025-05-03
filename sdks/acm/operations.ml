@@ -4,19 +4,19 @@ module AddTagsToCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidTagException" ->
+      | _, "InvalidTagException" ->
          (`InvalidTagException (invalid_tag_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TagPolicyException" ->
+      | _, "TagPolicyException" ->
          (`TagPolicyException (tag_policy_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -40,17 +40,17 @@ module DeleteCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -74,9 +74,9 @@ module DescribeCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -100,11 +100,11 @@ module ExportCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "RequestInProgressException" ->
+      | _, "RequestInProgressException" ->
          (`RequestInProgressException (request_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -128,9 +128,9 @@ module GetAccountConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -154,11 +154,11 @@ module GetCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "RequestInProgressException" ->
+      | _, "RequestInProgressException" ->
          (`RequestInProgressException (request_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -182,19 +182,19 @@ module ImportCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidTagException" ->
+      | _, "InvalidTagException" ->
          (`InvalidTagException (invalid_tag_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TagPolicyException" ->
+      | _, "TagPolicyException" ->
          (`TagPolicyException (tag_policy_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -218,9 +218,9 @@ module ListCertificates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArgsException" ->
+      | _, "InvalidArgsException" ->
          (`InvalidArgsException (invalid_args_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -244,9 +244,9 @@ module ListTagsForCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -270,13 +270,13 @@ module PutAccountConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -300,17 +300,17 @@ module RemoveTagsFromCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidTagException" ->
+      | _, "InvalidTagException" ->
          (`InvalidTagException (invalid_tag_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TagPolicyException" ->
+      | _, "TagPolicyException" ->
          (`TagPolicyException (tag_policy_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -334,9 +334,9 @@ module RenewCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -360,19 +360,19 @@ module RequestCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidDomainValidationOptionsException" ->
+      | _, "InvalidDomainValidationOptionsException" ->
          (`InvalidDomainValidationOptionsException (invalid_domain_validation_options_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidTagException" ->
+      | _, "InvalidTagException" ->
          (`InvalidTagException (invalid_tag_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TagPolicyException" ->
+      | _, "TagPolicyException" ->
          (`TagPolicyException (tag_policy_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -396,13 +396,13 @@ module ResendValidationEmail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidDomainValidationOptionsException" ->
+      | _, "InvalidDomainValidationOptionsException" ->
          (`InvalidDomainValidationOptionsException (invalid_domain_validation_options_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,13 +426,13 @@ module UpdateCertificateOptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.acm", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.acm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

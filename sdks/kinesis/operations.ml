@@ -4,15 +4,15 @@ module AddTagsToStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,11 +36,11 @@ module CreateStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -64,15 +64,15 @@ module DecreaseStreamRetentionPeriod = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -96,15 +96,15 @@ module DeleteResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -128,15 +128,15 @@ module DeleteStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -160,11 +160,11 @@ module DeregisterStreamConsumer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -188,7 +188,7 @@ module DescribeLimits = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -212,13 +212,13 @@ module DescribeStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -242,11 +242,11 @@ module DescribeStreamConsumer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -270,13 +270,13 @@ module DescribeStreamSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -300,15 +300,15 @@ module DisableEnhancedMonitoring = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -332,15 +332,15 @@ module EnableEnhancedMonitoring = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -364,27 +364,27 @@ module GetRecords = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ExpiredIteratorException" ->
+      | _, "ExpiredIteratorException" ->
          (`ExpiredIteratorException (expired_iterator_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSAccessDeniedException" ->
+      | _, "KMSAccessDeniedException" ->
          (`KMSAccessDeniedException (kms_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSDisabledException" ->
+      | _, "KMSDisabledException" ->
          (`KMSDisabledException (kms_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSNotFoundException" ->
+      | _, "KMSNotFoundException" ->
          (`KMSNotFoundException (kms_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSOptInRequired" ->
+      | _, "KMSOptInRequired" ->
          (`KMSOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSThrottlingException" ->
+      | _, "KMSThrottlingException" ->
          (`KMSThrottlingException (kms_throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -408,13 +408,13 @@ module GetResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -438,13 +438,13 @@ module GetShardIterator = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -468,15 +468,15 @@ module IncreaseStreamRetentionPeriod = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -500,17 +500,17 @@ module ListShards = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ExpiredNextTokenException" ->
+      | _, "ExpiredNextTokenException" ->
          (`ExpiredNextTokenException (expired_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -534,15 +534,15 @@ module ListStreamConsumers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "ExpiredNextTokenException" ->
+      | _, "ExpiredNextTokenException" ->
          (`ExpiredNextTokenException (expired_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -566,11 +566,11 @@ module ListStreams = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "ExpiredNextTokenException" ->
+      | _, "ExpiredNextTokenException" ->
          (`ExpiredNextTokenException (expired_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -594,13 +594,13 @@ module ListTagsForStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -624,17 +624,17 @@ module MergeShards = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -658,25 +658,25 @@ module PutRecord = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSAccessDeniedException" ->
+      | _, "KMSAccessDeniedException" ->
          (`KMSAccessDeniedException (kms_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSDisabledException" ->
+      | _, "KMSDisabledException" ->
          (`KMSDisabledException (kms_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSNotFoundException" ->
+      | _, "KMSNotFoundException" ->
          (`KMSNotFoundException (kms_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSOptInRequired" ->
+      | _, "KMSOptInRequired" ->
          (`KMSOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSThrottlingException" ->
+      | _, "KMSThrottlingException" ->
          (`KMSThrottlingException (kms_throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -700,25 +700,25 @@ module PutRecords = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSAccessDeniedException" ->
+      | _, "KMSAccessDeniedException" ->
          (`KMSAccessDeniedException (kms_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSDisabledException" ->
+      | _, "KMSDisabledException" ->
          (`KMSDisabledException (kms_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSNotFoundException" ->
+      | _, "KMSNotFoundException" ->
          (`KMSNotFoundException (kms_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSOptInRequired" ->
+      | _, "KMSOptInRequired" ->
          (`KMSOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSThrottlingException" ->
+      | _, "KMSThrottlingException" ->
          (`KMSThrottlingException (kms_throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -742,15 +742,15 @@ module PutResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -774,13 +774,13 @@ module RegisterStreamConsumer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -804,15 +804,15 @@ module RemoveTagsFromStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -836,17 +836,17 @@ module SplitShard = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -870,27 +870,27 @@ module StartStreamEncryption = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSAccessDeniedException" ->
+      | _, "KMSAccessDeniedException" ->
          (`KMSAccessDeniedException (kms_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSDisabledException" ->
+      | _, "KMSDisabledException" ->
          (`KMSDisabledException (kms_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSNotFoundException" ->
+      | _, "KMSNotFoundException" ->
          (`KMSNotFoundException (kms_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSOptInRequired" ->
+      | _, "KMSOptInRequired" ->
          (`KMSOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.kinesis", "KMSThrottlingException" ->
+      | _, "KMSThrottlingException" ->
          (`KMSThrottlingException (kms_throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -914,15 +914,15 @@ module StopStreamEncryption = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -946,15 +946,15 @@ module SubscribeToShard = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -978,17 +978,17 @@ module UpdateShardCount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1012,13 +1012,13 @@ module UpdateStreamMode = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kinesis", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kinesis", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

@@ -4,23 +4,23 @@ module AssociateCreatedArtifact = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -44,25 +44,25 @@ module AssociateDiscoveredResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "PolicyErrorException" ->
+      | _, "PolicyErrorException" ->
          (`PolicyErrorException (policy_error_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -86,21 +86,21 @@ module CreateProgressUpdateStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -124,23 +124,23 @@ module DeleteProgressUpdateStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -164,21 +164,21 @@ module DescribeApplicationState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "PolicyErrorException" ->
+      | _, "PolicyErrorException" ->
          (`PolicyErrorException (policy_error_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -202,19 +202,19 @@ module DescribeMigrationTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -238,23 +238,23 @@ module DisassociateCreatedArtifact = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -278,23 +278,23 @@ module DisassociateDiscoveredResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -318,23 +318,23 @@ module ImportMigrationTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -358,17 +358,17 @@ module ListApplicationStates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -392,19 +392,19 @@ module ListCreatedArtifacts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -428,19 +428,19 @@ module ListDiscoveredResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -464,21 +464,21 @@ module ListMigrationTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "PolicyErrorException" ->
+      | _, "PolicyErrorException" ->
          (`PolicyErrorException (policy_error_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -502,17 +502,17 @@ module ListProgressUpdateStreams = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -536,25 +536,25 @@ module NotifyApplicationState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "PolicyErrorException" ->
+      | _, "PolicyErrorException" ->
          (`PolicyErrorException (policy_error_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -578,23 +578,23 @@ module NotifyMigrationTaskState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -618,23 +618,23 @@ module PutResourceAttributes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.migrationhub", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "DryRunOperation" ->
+      | _, "DryRunOperation" ->
          (`DryRunOperation (dry_run_operation_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "HomeRegionNotSetException" ->
+      | _, "HomeRegionNotSetException" ->
          (`HomeRegionNotSetException (home_region_not_set_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ServiceUnavailableException" ->
+      | _, "ServiceUnavailableException" ->
          (`ServiceUnavailableException (service_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.migrationhub", "UnauthorizedOperation" ->
+      | _, "UnauthorizedOperation" ->
          (`UnauthorizedOperation (unauthorized_operation_of_yojson tree path))
       | _type -> handler tree path _type
       

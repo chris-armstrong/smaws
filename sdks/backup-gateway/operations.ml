@@ -4,7 +4,7 @@ module AssociateGatewayToServer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -46,7 +46,7 @@ module DeleteGateway = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -70,11 +70,11 @@ module DeleteHypervisor = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -98,9 +98,9 @@ module DisassociateGatewayFromServer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -124,7 +124,7 @@ module GetBandwidthRateLimitSchedule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -148,7 +148,7 @@ module GetGateway = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -172,7 +172,7 @@ module GetHypervisor = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -196,7 +196,7 @@ module GetHypervisorPropertyMappings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -220,7 +220,7 @@ module GetVirtualMachine = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -244,9 +244,9 @@ module ImportHypervisorConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -306,7 +306,7 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -348,7 +348,7 @@ module PutBandwidthRateLimitSchedule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -372,11 +372,11 @@ module PutHypervisorPropertyMappings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -400,9 +400,9 @@ module PutMaintenanceStartTime = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,9 +426,9 @@ module StartVirtualMachinesMetadataSync = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -452,7 +452,7 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -476,9 +476,9 @@ module TestHypervisorConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -502,7 +502,7 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -526,9 +526,9 @@ module UpdateGatewayInformation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -552,7 +552,7 @@ module UpdateGatewaySoftwareNow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -576,11 +576,11 @@ module UpdateHypervisor = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.backupgateway", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.backupgateway", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

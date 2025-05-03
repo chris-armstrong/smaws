@@ -4,13 +4,13 @@ module CreateAccessPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -34,15 +34,15 @@ module CreateCollection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "OcuLimitExceededException" ->
+      | _, "OcuLimitExceededException" ->
          (`OcuLimitExceededException (ocu_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -66,13 +66,13 @@ module CreateSecurityConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -96,13 +96,13 @@ module CreateVpcEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -126,13 +126,13 @@ module DeleteAccessPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -156,13 +156,13 @@ module DeleteCollection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -186,13 +186,13 @@ module DeleteLifecyclePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -216,13 +216,13 @@ module DeleteSecurityConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -246,13 +246,13 @@ module DeleteSecurityPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -276,13 +276,13 @@ module DeleteVpcEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -306,11 +306,11 @@ module GetAccessPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -334,11 +334,11 @@ module GetSecurityConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -362,11 +362,11 @@ module GetSecurityPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -390,9 +390,9 @@ module ListAccessPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -416,9 +416,9 @@ module ListCollections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -442,9 +442,9 @@ module ListLifecyclePolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -468,9 +468,9 @@ module ListSecurityConfigs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -494,9 +494,9 @@ module ListSecurityPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -520,9 +520,9 @@ module ListVpcEndpoints = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -546,9 +546,9 @@ module BatchGetCollection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -572,9 +572,9 @@ module BatchGetEffectiveLifecyclePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -598,9 +598,9 @@ module BatchGetLifecyclePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -624,9 +624,9 @@ module BatchGetVpcEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -650,13 +650,13 @@ module CreateLifecyclePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -680,13 +680,13 @@ module CreateSecurityPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -710,9 +710,9 @@ module GetAccountSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -736,7 +736,7 @@ module GetPoliciesStats = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -760,11 +760,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -788,15 +788,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -820,13 +820,13 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -850,13 +850,13 @@ module UpdateAccessPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -880,9 +880,9 @@ module UpdateAccountSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -906,11 +906,11 @@ module UpdateCollection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -934,15 +934,15 @@ module UpdateLifecyclePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -966,13 +966,13 @@ module UpdateSecurityConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,15 +996,15 @@ module UpdateSecurityPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1028,11 +1028,11 @@ module UpdateVpcEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.opensearchserverless", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.opensearchserverless", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

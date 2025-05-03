@@ -4,17 +4,17 @@ module CreateByteMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,17 +38,17 @@ module CreateGeoMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -72,17 +72,17 @@ module CreateIPSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -106,21 +106,21 @@ module CreateRateBasedRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -144,13 +144,13 @@ module CreateRegexMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -174,13 +174,13 @@ module CreateRegexPatternSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -204,21 +204,21 @@ module CreateRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -242,19 +242,19 @@ module CreateRuleGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -278,17 +278,17 @@ module CreateSizeConstraintSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -312,17 +312,17 @@ module CreateSqlInjectionMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -346,23 +346,23 @@ module CreateWebACL = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -386,15 +386,15 @@ module CreateWebACLMigrationStack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFEntityMigrationException" ->
+      | _, "WAFEntityMigrationException" ->
          (`WAFEntityMigrationException (waf_entity_migration_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -418,17 +418,17 @@ module CreateXssMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -452,17 +452,17 @@ module DeleteByteMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -486,17 +486,17 @@ module DeleteGeoMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -520,17 +520,17 @@ module DeleteIPSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -554,11 +554,11 @@ module DeleteLoggingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -582,11 +582,11 @@ module DeletePermissionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -610,21 +610,21 @@ module DeleteRateBasedRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -648,17 +648,17 @@ module DeleteRegexMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -682,17 +682,17 @@ module DeleteRegexPatternSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -716,21 +716,21 @@ module DeleteRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -754,21 +754,21 @@ module DeleteRuleGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -792,17 +792,17 @@ module DeleteSizeConstraintSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -826,17 +826,17 @@ module DeleteSqlInjectionMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -860,21 +860,21 @@ module DeleteWebACL = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -898,17 +898,17 @@ module DeleteXssMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonEmptyEntityException" ->
+      | _, "WAFNonEmptyEntityException" ->
          (`WAFNonEmptyEntityException (waf_non_empty_entity_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -932,11 +932,11 @@ module GetByteMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -960,7 +960,7 @@ module GetChangeToken = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -984,9 +984,9 @@ module GetChangeTokenStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1010,11 +1010,11 @@ module GetGeoMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1038,11 +1038,11 @@ module GetIPSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1066,9 +1066,9 @@ module GetLoggingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1092,9 +1092,9 @@ module GetPermissionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1118,11 +1118,11 @@ module GetRateBasedRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1146,13 +1146,13 @@ module GetRateBasedRuleManagedKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1176,11 +1176,11 @@ module GetRegexMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1204,11 +1204,11 @@ module GetRegexPatternSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1232,11 +1232,11 @@ module GetRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1260,9 +1260,9 @@ module GetRuleGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1286,9 +1286,9 @@ module GetSampledRequests = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1312,11 +1312,11 @@ module GetSizeConstraintSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1340,11 +1340,11 @@ module GetSqlInjectionMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1368,11 +1368,11 @@ module GetWebACL = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1396,11 +1396,11 @@ module GetXssMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1424,11 +1424,11 @@ module ListActivatedRulesInRuleGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1452,9 +1452,9 @@ module ListByteMatchSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1478,9 +1478,9 @@ module ListGeoMatchSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1504,9 +1504,9 @@ module ListIPSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1530,11 +1530,11 @@ module ListLoggingConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1558,9 +1558,9 @@ module ListRateBasedRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1584,9 +1584,9 @@ module ListRegexMatchSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1610,9 +1610,9 @@ module ListRegexPatternSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1636,7 +1636,7 @@ module ListRuleGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1660,9 +1660,9 @@ module ListRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1686,9 +1686,9 @@ module ListSizeConstraintSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1712,9 +1712,9 @@ module ListSqlInjectionMatchSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1738,9 +1738,9 @@ module ListSubscribedRuleGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1764,17 +1764,17 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1798,9 +1798,9 @@ module ListWebACLs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1824,9 +1824,9 @@ module ListXssMatchSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1850,13 +1850,13 @@ module PutLoggingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFServiceLinkedRoleErrorException" ->
+      | _, "WAFServiceLinkedRoleErrorException" ->
          (`WAFServiceLinkedRoleErrorException (waf_service_linked_role_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1880,13 +1880,13 @@ module PutPermissionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidPermissionPolicyException" ->
+      | _, "WAFInvalidPermissionPolicyException" ->
          (`WAFInvalidPermissionPolicyException (waf_invalid_permission_policy_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1910,19 +1910,19 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1946,17 +1946,17 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFBadRequestException" ->
+      | _, "WAFBadRequestException" ->
          (`WAFBadRequestException (waf_bad_request_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationException" ->
+      | _, "WAFTagOperationException" ->
          (`WAFTagOperationException (waf_tag_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFTagOperationInternalErrorException" ->
+      | _, "WAFTagOperationInternalErrorException" ->
          (`WAFTagOperationInternalErrorException (waf_tag_operation_internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1980,21 +1980,21 @@ module UpdateByteMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2018,23 +2018,23 @@ module UpdateGeoMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2058,23 +2058,23 @@ module UpdateIPSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2098,23 +2098,23 @@ module UpdateRateBasedRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2138,21 +2138,21 @@ module UpdateRegexMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFDisallowedNameException" ->
+      | _, "WAFDisallowedNameException" ->
          (`WAFDisallowedNameException (waf_disallowed_name_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2176,21 +2176,21 @@ module UpdateRegexPatternSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidRegexPatternException" ->
+      | _, "WAFInvalidRegexPatternException" ->
          (`WAFInvalidRegexPatternException (waf_invalid_regex_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2214,23 +2214,23 @@ module UpdateRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2254,19 +2254,19 @@ module UpdateRuleGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2290,23 +2290,23 @@ module UpdateSizeConstraintSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2330,21 +2330,21 @@ module UpdateSqlInjectionMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2368,25 +2368,25 @@ module UpdateWebACL = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFReferencedItemException" ->
+      | _, "WAFReferencedItemException" ->
          (`WAFReferencedItemException (waf_referenced_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFSubscriptionNotFoundException" ->
+      | _, "WAFSubscriptionNotFoundException" ->
          (`WAFSubscriptionNotFoundException (waf_subscription_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2410,21 +2410,21 @@ module UpdateXssMatchSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.waf", "WAFInternalErrorException" ->
+      | _, "WAFInternalErrorException" ->
          (`WAFInternalErrorException (waf_internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidAccountException" ->
+      | _, "WAFInvalidAccountException" ->
          (`WAFInvalidAccountException (waf_invalid_account_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidOperationException" ->
+      | _, "WAFInvalidOperationException" ->
          (`WAFInvalidOperationException (waf_invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFInvalidParameterException" ->
+      | _, "WAFInvalidParameterException" ->
          (`WAFInvalidParameterException (waf_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFLimitsExceededException" ->
+      | _, "WAFLimitsExceededException" ->
          (`WAFLimitsExceededException (waf_limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentContainerException" ->
+      | _, "WAFNonexistentContainerException" ->
          (`WAFNonexistentContainerException (waf_nonexistent_container_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFNonexistentItemException" ->
+      | _, "WAFNonexistentItemException" ->
          (`WAFNonexistentItemException (waf_nonexistent_item_exception_of_yojson tree path))
-      | "com.amazonaws.waf", "WAFStaleDataException" ->
+      | _, "WAFStaleDataException" ->
          (`WAFStaleDataException (waf_stale_data_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

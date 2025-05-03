@@ -4,9 +4,9 @@ module DescribeStream = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodbstreams", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -30,15 +30,15 @@ module GetRecords = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodbstreams", "ExpiredIteratorException" ->
+      | _, "ExpiredIteratorException" ->
          (`ExpiredIteratorException (expired_iterator_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "TrimmedDataAccessException" ->
+      | _, "TrimmedDataAccessException" ->
          (`TrimmedDataAccessException (trimmed_data_access_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -62,11 +62,11 @@ module GetShardIterator = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodbstreams", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "TrimmedDataAccessException" ->
+      | _, "TrimmedDataAccessException" ->
          (`TrimmedDataAccessException (trimmed_data_access_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -90,9 +90,9 @@ module ListStreams = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodbstreams", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodbstreams", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

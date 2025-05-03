@@ -4,17 +4,17 @@ module CreateIdentityPool = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,11 +38,11 @@ module DeleteIdentities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -66,15 +66,15 @@ module DeleteIdentityPool = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -98,15 +98,15 @@ module DescribeIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -130,15 +130,15 @@ module DescribeIdentityPool = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -162,21 +162,21 @@ module GetCredentialsForIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ExternalServiceException" ->
+      | _, "ExternalServiceException" ->
          (`ExternalServiceException (external_service_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidIdentityPoolConfigurationException" ->
+      | _, "InvalidIdentityPoolConfigurationException" ->
          (`InvalidIdentityPoolConfigurationException (invalid_identity_pool_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -200,21 +200,21 @@ module GetId = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ExternalServiceException" ->
+      | _, "ExternalServiceException" ->
          (`ExternalServiceException (external_service_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -238,17 +238,17 @@ module GetIdentityPoolRoles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -272,19 +272,19 @@ module GetOpenIdToken = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ExternalServiceException" ->
+      | _, "ExternalServiceException" ->
          (`ExternalServiceException (external_service_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -308,19 +308,19 @@ module GetOpenIdTokenForDeveloperIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "DeveloperUserAlreadyRegisteredException" ->
+      | _, "DeveloperUserAlreadyRegisteredException" ->
          (`DeveloperUserAlreadyRegisteredException (developer_user_already_registered_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -344,15 +344,15 @@ module GetPrincipalTagAttributeMap = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -376,15 +376,15 @@ module ListIdentities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -408,15 +408,15 @@ module ListIdentityPools = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -440,15 +440,15 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -472,17 +472,17 @@ module LookupDeveloperIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -506,17 +506,17 @@ module MergeDeveloperIdentities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -540,19 +540,19 @@ module SetIdentityPoolRoles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -576,15 +576,15 @@ module SetPrincipalTagAttributeMap = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -608,15 +608,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -640,17 +640,17 @@ module UnlinkDeveloperIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -674,19 +674,19 @@ module UnlinkIdentity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ExternalServiceException" ->
+      | _, "ExternalServiceException" ->
          (`ExternalServiceException (external_service_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -710,15 +710,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -742,21 +742,21 @@ module UpdateIdentityPool = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cognitoidentity", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceConflictException" ->
+      | _, "ResourceConflictException" ->
          (`ResourceConflictException (resource_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cognitoidentity", "TooManyRequestsException" ->
+      | _, "TooManyRequestsException" ->
          (`TooManyRequestsException (too_many_requests_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

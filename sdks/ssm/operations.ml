@@ -4,15 +4,15 @@ module AddTagsToResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceType" ->
+      | _, "InvalidResourceType" ->
          (`InvalidResourceType (invalid_resource_type_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyTagsError" ->
+      | _, "TooManyTagsError" ->
          (`TooManyTagsError (too_many_tags_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,17 +36,17 @@ module AssociateOpsItemRelatedItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemConflictException" ->
+      | _, "OpsItemConflictException" ->
          (`OpsItemConflictException (ops_item_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemLimitExceededException" ->
+      | _, "OpsItemLimitExceededException" ->
          (`OpsItemLimitExceededException (ops_item_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemNotFoundException" ->
+      | _, "OpsItemNotFoundException" ->
          (`OpsItemNotFoundException (ops_item_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemRelatedItemAlreadyExistsException" ->
+      | _, "OpsItemRelatedItemAlreadyExistsException" ->
          (`OpsItemRelatedItemAlreadyExistsException (ops_item_related_item_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -70,13 +70,13 @@ module CancelCommand = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DuplicateInstanceId" ->
+      | _, "DuplicateInstanceId" ->
          (`DuplicateInstanceId (duplicate_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidCommandId" ->
+      | _, "InvalidCommandId" ->
          (`InvalidCommandId (invalid_command_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -100,9 +100,9 @@ module CancelMaintenanceWindowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -126,9 +126,9 @@ module CreateActivation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidParameters" ->
+      | _, "InvalidParameters" ->
          (`InvalidParameters (invalid_parameters_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -152,31 +152,31 @@ module CreateAssociation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationAlreadyExists" ->
+      | _, "AssociationAlreadyExists" ->
          (`AssociationAlreadyExists (association_already_exists_of_yojson tree path))
-      | "com.amazonaws.ssm", "AssociationLimitExceeded" ->
+      | _, "AssociationLimitExceeded" ->
          (`AssociationLimitExceeded (association_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidOutputLocation" ->
+      | _, "InvalidOutputLocation" ->
          (`InvalidOutputLocation (invalid_output_location_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidParameters" ->
+      | _, "InvalidParameters" ->
          (`InvalidParameters (invalid_parameters_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidSchedule" ->
+      | _, "InvalidSchedule" ->
          (`InvalidSchedule (invalid_schedule_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTag" ->
+      | _, "InvalidTag" ->
          (`InvalidTag (invalid_tag_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTarget" ->
+      | _, "InvalidTarget" ->
          (`InvalidTarget (invalid_target_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTargetMaps" ->
+      | _, "InvalidTargetMaps" ->
          (`InvalidTargetMaps (invalid_target_maps_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedPlatformType" ->
+      | _, "UnsupportedPlatformType" ->
          (`UnsupportedPlatformType (unsupported_platform_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -200,29 +200,29 @@ module CreateAssociationBatch = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationLimitExceeded" ->
+      | _, "AssociationLimitExceeded" ->
          (`AssociationLimitExceeded (association_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "DuplicateInstanceId" ->
+      | _, "DuplicateInstanceId" ->
          (`DuplicateInstanceId (duplicate_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidOutputLocation" ->
+      | _, "InvalidOutputLocation" ->
          (`InvalidOutputLocation (invalid_output_location_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidParameters" ->
+      | _, "InvalidParameters" ->
          (`InvalidParameters (invalid_parameters_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidSchedule" ->
+      | _, "InvalidSchedule" ->
          (`InvalidSchedule (invalid_schedule_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTarget" ->
+      | _, "InvalidTarget" ->
          (`InvalidTarget (invalid_target_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTargetMaps" ->
+      | _, "InvalidTargetMaps" ->
          (`InvalidTargetMaps (invalid_target_maps_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedPlatformType" ->
+      | _, "UnsupportedPlatformType" ->
          (`UnsupportedPlatformType (unsupported_platform_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -246,17 +246,17 @@ module CreateDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DocumentAlreadyExists" ->
+      | _, "DocumentAlreadyExists" ->
          (`DocumentAlreadyExists (document_already_exists_of_yojson tree path))
-      | "com.amazonaws.ssm", "DocumentLimitExceeded" ->
+      | _, "DocumentLimitExceeded" ->
          (`DocumentLimitExceeded (document_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentContent" ->
+      | _, "InvalidDocumentContent" ->
          (`InvalidDocumentContent (invalid_document_content_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentSchemaVersion" ->
+      | _, "InvalidDocumentSchemaVersion" ->
          (`InvalidDocumentSchemaVersion (invalid_document_schema_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "MaxDocumentSizeExceeded" ->
+      | _, "MaxDocumentSizeExceeded" ->
          (`MaxDocumentSizeExceeded (max_document_size_exceeded_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -280,11 +280,11 @@ module CreateMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceLimitExceededException" ->
+      | _, "ResourceLimitExceededException" ->
          (`ResourceLimitExceededException (resource_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -308,15 +308,15 @@ module CreateOpsItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemAccessDeniedException" ->
+      | _, "OpsItemAccessDeniedException" ->
          (`OpsItemAccessDeniedException (ops_item_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemAlreadyExistsException" ->
+      | _, "OpsItemAlreadyExistsException" ->
          (`OpsItemAlreadyExistsException (ops_item_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemLimitExceededException" ->
+      | _, "OpsItemLimitExceededException" ->
          (`OpsItemLimitExceededException (ops_item_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -340,15 +340,15 @@ module CreateOpsMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataAlreadyExistsException" ->
+      | _, "OpsMetadataAlreadyExistsException" ->
          (`OpsMetadataAlreadyExistsException (ops_metadata_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataInvalidArgumentException" ->
+      | _, "OpsMetadataInvalidArgumentException" ->
          (`OpsMetadataInvalidArgumentException (ops_metadata_invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataLimitExceededException" ->
+      | _, "OpsMetadataLimitExceededException" ->
          (`OpsMetadataLimitExceededException (ops_metadata_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataTooManyUpdatesException" ->
+      | _, "OpsMetadataTooManyUpdatesException" ->
          (`OpsMetadataTooManyUpdatesException (ops_metadata_too_many_updates_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -372,11 +372,11 @@ module CreatePatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceLimitExceededException" ->
+      | _, "ResourceLimitExceededException" ->
          (`ResourceLimitExceededException (resource_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -400,13 +400,13 @@ module CreateResourceDataSync = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncAlreadyExistsException" ->
+      | _, "ResourceDataSyncAlreadyExistsException" ->
          (`ResourceDataSyncAlreadyExistsException (resource_data_sync_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncCountExceededException" ->
+      | _, "ResourceDataSyncCountExceededException" ->
          (`ResourceDataSyncCountExceededException (resource_data_sync_count_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncInvalidConfigurationException" ->
+      | _, "ResourceDataSyncInvalidConfigurationException" ->
          (`ResourceDataSyncInvalidConfigurationException (resource_data_sync_invalid_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -430,13 +430,13 @@ module DeleteActivation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidActivation" ->
+      | _, "InvalidActivation" ->
          (`InvalidActivation (invalid_activation_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidActivationId" ->
+      | _, "InvalidActivationId" ->
          (`InvalidActivationId (invalid_activation_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -460,15 +460,15 @@ module DeleteAssociation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -492,13 +492,13 @@ module DeleteDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociatedInstances" ->
+      | _, "AssociatedInstances" ->
          (`AssociatedInstances (associated_instances_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentOperation" ->
+      | _, "InvalidDocumentOperation" ->
          (`InvalidDocumentOperation (invalid_document_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -522,15 +522,15 @@ module DeleteInventory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDeleteInventoryParametersException" ->
+      | _, "InvalidDeleteInventoryParametersException" ->
          (`InvalidDeleteInventoryParametersException (invalid_delete_inventory_parameters_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInventoryRequestException" ->
+      | _, "InvalidInventoryRequestException" ->
          (`InvalidInventoryRequestException (invalid_inventory_request_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidOptionException" ->
+      | _, "InvalidOptionException" ->
          (`InvalidOptionException (invalid_option_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -554,7 +554,7 @@ module DeleteMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -578,9 +578,9 @@ module DeleteOpsItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -604,11 +604,11 @@ module DeleteOpsMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataInvalidArgumentException" ->
+      | _, "OpsMetadataInvalidArgumentException" ->
          (`OpsMetadataInvalidArgumentException (ops_metadata_invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataNotFoundException" ->
+      | _, "OpsMetadataNotFoundException" ->
          (`OpsMetadataNotFoundException (ops_metadata_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -632,9 +632,9 @@ module DeleteParameter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterNotFound" ->
+      | _, "ParameterNotFound" ->
          (`ParameterNotFound (parameter_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -658,7 +658,7 @@ module DeleteParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -682,9 +682,9 @@ module DeletePatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -708,11 +708,11 @@ module DeleteResourceDataSync = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncInvalidConfigurationException" ->
+      | _, "ResourceDataSyncInvalidConfigurationException" ->
          (`ResourceDataSyncInvalidConfigurationException (resource_data_sync_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncNotFoundException" ->
+      | _, "ResourceDataSyncNotFoundException" ->
          (`ResourceDataSyncNotFoundException (resource_data_sync_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -736,17 +736,17 @@ module DeleteResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "MalformedResourcePolicyDocumentException" ->
+      | _, "MalformedResourcePolicyDocumentException" ->
          (`MalformedResourcePolicyDocumentException (malformed_resource_policy_document_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyConflictException" ->
+      | _, "ResourcePolicyConflictException" ->
          (`ResourcePolicyConflictException (resource_policy_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyInvalidParameterException" ->
+      | _, "ResourcePolicyInvalidParameterException" ->
          (`ResourcePolicyInvalidParameterException (resource_policy_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyNotFoundException" ->
+      | _, "ResourcePolicyNotFoundException" ->
          (`ResourcePolicyNotFoundException (resource_policy_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -770,9 +770,9 @@ module DeregisterManagedInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -796,9 +796,9 @@ module DeregisterPatchBaselineForPatchGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -822,11 +822,11 @@ module DeregisterTargetFromMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "TargetInUseException" ->
+      | _, "TargetInUseException" ->
          (`TargetInUseException (target_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -850,9 +850,9 @@ module DeregisterTaskFromMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -876,11 +876,11 @@ module DescribeActivations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -904,15 +904,15 @@ module DescribeAssociation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAssociationVersion" ->
+      | _, "InvalidAssociationVersion" ->
          (`InvalidAssociationVersion (invalid_association_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -936,13 +936,13 @@ module DescribeAssociationExecutionTargets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "AssociationExecutionDoesNotExist" ->
+      | _, "AssociationExecutionDoesNotExist" ->
          (`AssociationExecutionDoesNotExist (association_execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -966,11 +966,11 @@ module DescribeAssociationExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -994,13 +994,13 @@ module DescribeAutomationExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterValue" ->
+      | _, "InvalidFilterValue" ->
          (`InvalidFilterValue (invalid_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1024,15 +1024,15 @@ module DescribeAutomationStepExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationExecutionNotFoundException" ->
+      | _, "AutomationExecutionNotFoundException" ->
          (`AutomationExecutionNotFoundException (automation_execution_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterValue" ->
+      | _, "InvalidFilterValue" ->
          (`InvalidFilterValue (invalid_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1056,7 +1056,7 @@ module DescribeAvailablePatches = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1080,11 +1080,11 @@ module DescribeDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1108,15 +1108,15 @@ module DescribeDocumentPermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentOperation" ->
+      | _, "InvalidDocumentOperation" ->
          (`InvalidDocumentOperation (invalid_document_operation_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidPermissionType" ->
+      | _, "InvalidPermissionType" ->
          (`InvalidPermissionType (invalid_permission_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1140,11 +1140,11 @@ module DescribeEffectiveInstanceAssociations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1168,13 +1168,13 @@ module DescribeEffectivePatchesForPatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedOperatingSystem" ->
+      | _, "UnsupportedOperatingSystem" ->
          (`UnsupportedOperatingSystem (unsupported_operating_system_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1198,11 +1198,11 @@ module DescribeInstanceAssociationsStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1226,15 +1226,15 @@ module DescribeInstanceInformation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceInformationFilterValue" ->
+      | _, "InvalidInstanceInformationFilterValue" ->
          (`InvalidInstanceInformationFilterValue (invalid_instance_information_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1258,9 +1258,9 @@ module DescribeInstancePatchStates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1284,11 +1284,11 @@ module DescribeInstancePatchStatesForPatchGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1312,13 +1312,13 @@ module DescribeInstancePatches = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1342,19 +1342,19 @@ module DescribeInstanceProperties = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidActivationId" ->
+      | _, "InvalidActivationId" ->
          (`InvalidActivationId (invalid_activation_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstancePropertyFilterValue" ->
+      | _, "InvalidInstancePropertyFilterValue" ->
          (`InvalidInstancePropertyFilterValue (invalid_instance_property_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1378,11 +1378,11 @@ module DescribeInventoryDeletions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDeletionIdException" ->
+      | _, "InvalidDeletionIdException" ->
          (`InvalidDeletionIdException (invalid_deletion_id_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1406,9 +1406,9 @@ module DescribeMaintenanceWindowExecutionTaskInvocations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1432,9 +1432,9 @@ module DescribeMaintenanceWindowExecutionTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1458,7 +1458,7 @@ module DescribeMaintenanceWindowExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1482,9 +1482,9 @@ module DescribeMaintenanceWindowSchedule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1508,9 +1508,9 @@ module DescribeMaintenanceWindowTargets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1534,9 +1534,9 @@ module DescribeMaintenanceWindowTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1560,7 +1560,7 @@ module DescribeMaintenanceWindows = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1584,7 +1584,7 @@ module DescribeMaintenanceWindowsForTarget = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1608,7 +1608,7 @@ module DescribeOpsItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1632,15 +1632,15 @@ module DescribeParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterOption" ->
+      | _, "InvalidFilterOption" ->
          (`InvalidFilterOption (invalid_filter_option_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterValue" ->
+      | _, "InvalidFilterValue" ->
          (`InvalidFilterValue (invalid_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1664,7 +1664,7 @@ module DescribePatchBaselines = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1688,9 +1688,9 @@ module DescribePatchGroupState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1714,7 +1714,7 @@ module DescribePatchGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1738,7 +1738,7 @@ module DescribePatchProperties = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1762,11 +1762,11 @@ module DescribeSessions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1790,15 +1790,15 @@ module DisassociateOpsItemRelatedItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemConflictException" ->
+      | _, "OpsItemConflictException" ->
          (`OpsItemConflictException (ops_item_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemNotFoundException" ->
+      | _, "OpsItemNotFoundException" ->
          (`OpsItemNotFoundException (ops_item_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemRelatedItemAssociationNotFoundException" ->
+      | _, "OpsItemRelatedItemAssociationNotFoundException" ->
          (`OpsItemRelatedItemAssociationNotFoundException (ops_item_related_item_association_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1822,9 +1822,9 @@ module GetAutomationExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationExecutionNotFoundException" ->
+      | _, "AutomationExecutionNotFoundException" ->
          (`AutomationExecutionNotFoundException (automation_execution_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1848,13 +1848,13 @@ module GetCalendarState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentType" ->
+      | _, "InvalidDocumentType" ->
          (`InvalidDocumentType (invalid_document_type_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedCalendarException" ->
+      | _, "UnsupportedCalendarException" ->
          (`UnsupportedCalendarException (unsupported_calendar_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1878,15 +1878,15 @@ module GetCommandInvocation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidCommandId" ->
+      | _, "InvalidCommandId" ->
          (`InvalidCommandId (invalid_command_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidPluginName" ->
+      | _, "InvalidPluginName" ->
          (`InvalidPluginName (invalid_plugin_name_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvocationDoesNotExist" ->
+      | _, "InvocationDoesNotExist" ->
          (`InvocationDoesNotExist (invocation_does_not_exist_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1910,7 +1910,7 @@ module GetConnectionStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1934,7 +1934,7 @@ module GetDefaultPatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1958,11 +1958,11 @@ module GetDeployablePatchSnapshotForInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedFeatureRequiredException" ->
+      | _, "UnsupportedFeatureRequiredException" ->
          (`UnsupportedFeatureRequiredException (unsupported_feature_required_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedOperatingSystem" ->
+      | _, "UnsupportedOperatingSystem" ->
          (`UnsupportedOperatingSystem (unsupported_operating_system_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1986,11 +1986,11 @@ module GetDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2014,19 +2014,19 @@ module GetInventory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAggregatorException" ->
+      | _, "InvalidAggregatorException" ->
          (`InvalidAggregatorException (invalid_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInventoryGroupException" ->
+      | _, "InvalidInventoryGroupException" ->
          (`InvalidInventoryGroupException (invalid_inventory_group_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResultAttributeException" ->
+      | _, "InvalidResultAttributeException" ->
          (`InvalidResultAttributeException (invalid_result_attribute_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2050,11 +2050,11 @@ module GetInventorySchema = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2078,9 +2078,9 @@ module GetMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2104,9 +2104,9 @@ module GetMaintenanceWindowExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2130,9 +2130,9 @@ module GetMaintenanceWindowExecutionTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2156,9 +2156,9 @@ module GetMaintenanceWindowExecutionTaskInvocation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2182,9 +2182,9 @@ module GetMaintenanceWindowTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2208,11 +2208,11 @@ module GetOpsItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemAccessDeniedException" ->
+      | _, "OpsItemAccessDeniedException" ->
          (`OpsItemAccessDeniedException (ops_item_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemNotFoundException" ->
+      | _, "OpsItemNotFoundException" ->
          (`OpsItemNotFoundException (ops_item_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2236,11 +2236,11 @@ module GetOpsMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataInvalidArgumentException" ->
+      | _, "OpsMetadataInvalidArgumentException" ->
          (`OpsMetadataInvalidArgumentException (ops_metadata_invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataNotFoundException" ->
+      | _, "OpsMetadataNotFoundException" ->
          (`OpsMetadataNotFoundException (ops_metadata_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2264,17 +2264,17 @@ module GetOpsSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAggregatorException" ->
+      | _, "InvalidAggregatorException" ->
          (`InvalidAggregatorException (invalid_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncNotFoundException" ->
+      | _, "ResourceDataSyncNotFoundException" ->
          (`ResourceDataSyncNotFoundException (resource_data_sync_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2298,13 +2298,13 @@ module GetParameter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidKeyId" ->
+      | _, "InvalidKeyId" ->
          (`InvalidKeyId (invalid_key_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterNotFound" ->
+      | _, "ParameterNotFound" ->
          (`ParameterNotFound (parameter_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterVersionNotFound" ->
+      | _, "ParameterVersionNotFound" ->
          (`ParameterVersionNotFound (parameter_version_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2328,13 +2328,13 @@ module GetParameterHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidKeyId" ->
+      | _, "InvalidKeyId" ->
          (`InvalidKeyId (invalid_key_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterNotFound" ->
+      | _, "ParameterNotFound" ->
          (`ParameterNotFound (parameter_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2358,9 +2358,9 @@ module GetParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidKeyId" ->
+      | _, "InvalidKeyId" ->
          (`InvalidKeyId (invalid_key_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2384,17 +2384,17 @@ module GetParametersByPath = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterOption" ->
+      | _, "InvalidFilterOption" ->
          (`InvalidFilterOption (invalid_filter_option_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterValue" ->
+      | _, "InvalidFilterValue" ->
          (`InvalidFilterValue (invalid_filter_value_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidKeyId" ->
+      | _, "InvalidKeyId" ->
          (`InvalidKeyId (invalid_key_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2418,11 +2418,11 @@ module GetPatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2446,7 +2446,7 @@ module GetPatchBaselineForPatchGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2470,11 +2470,11 @@ module GetResourcePolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyInvalidParameterException" ->
+      | _, "ResourcePolicyInvalidParameterException" ->
          (`ResourcePolicyInvalidParameterException (resource_policy_invalid_parameter_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2498,9 +2498,9 @@ module GetServiceSetting = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ServiceSettingNotFound" ->
+      | _, "ServiceSettingNotFound" ->
          (`ServiceSettingNotFound (service_setting_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2524,15 +2524,15 @@ module LabelParameterVersion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterNotFound" ->
+      | _, "ParameterNotFound" ->
          (`ParameterNotFound (parameter_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterVersionLabelLimitExceeded" ->
+      | _, "ParameterVersionLabelLimitExceeded" ->
          (`ParameterVersionLabelLimitExceeded (parameter_version_label_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterVersionNotFound" ->
+      | _, "ParameterVersionNotFound" ->
          (`ParameterVersionNotFound (parameter_version_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2556,11 +2556,11 @@ module ListAssociationVersions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2584,9 +2584,9 @@ module ListAssociations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2610,15 +2610,15 @@ module ListCommandInvocations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidCommandId" ->
+      | _, "InvalidCommandId" ->
          (`InvalidCommandId (invalid_command_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2642,15 +2642,15 @@ module ListCommands = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidCommandId" ->
+      | _, "InvalidCommandId" ->
          (`InvalidCommandId (invalid_command_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2674,15 +2674,15 @@ module ListComplianceItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceType" ->
+      | _, "InvalidResourceType" ->
          (`InvalidResourceType (invalid_resource_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2706,11 +2706,11 @@ module ListComplianceSummaries = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2734,13 +2734,13 @@ module ListDocumentMetadataHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2764,11 +2764,11 @@ module ListDocumentVersions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2792,11 +2792,11 @@ module ListDocuments = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilterKey" ->
+      | _, "InvalidFilterKey" ->
          (`InvalidFilterKey (invalid_filter_key_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2820,15 +2820,15 @@ module ListInventoryEntries = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2852,13 +2852,13 @@ module ListOpsItemEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemLimitExceededException" ->
+      | _, "OpsItemLimitExceededException" ->
          (`OpsItemLimitExceededException (ops_item_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemNotFoundException" ->
+      | _, "OpsItemNotFoundException" ->
          (`OpsItemNotFoundException (ops_item_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2882,9 +2882,9 @@ module ListOpsItemRelatedItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2908,9 +2908,9 @@ module ListOpsMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataInvalidArgumentException" ->
+      | _, "OpsMetadataInvalidArgumentException" ->
          (`OpsMetadataInvalidArgumentException (ops_metadata_invalid_argument_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2934,11 +2934,11 @@ module ListResourceComplianceSummaries = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidFilter" ->
+      | _, "InvalidFilter" ->
          (`InvalidFilter (invalid_filter_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2962,11 +2962,11 @@ module ListResourceDataSync = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNextToken" ->
+      | _, "InvalidNextToken" ->
          (`InvalidNextToken (invalid_next_token_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncInvalidConfigurationException" ->
+      | _, "ResourceDataSyncInvalidConfigurationException" ->
          (`ResourceDataSyncInvalidConfigurationException (resource_data_sync_invalid_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2990,11 +2990,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceType" ->
+      | _, "InvalidResourceType" ->
          (`InvalidResourceType (invalid_resource_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3018,15 +3018,15 @@ module ModifyDocumentPermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DocumentLimitExceeded" ->
+      | _, "DocumentLimitExceeded" ->
          (`DocumentLimitExceeded (document_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "DocumentPermissionLimit" ->
+      | _, "DocumentPermissionLimit" ->
          (`DocumentPermissionLimit (document_permission_limit_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidPermissionType" ->
+      | _, "InvalidPermissionType" ->
          (`InvalidPermissionType (invalid_permission_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3050,19 +3050,19 @@ module PutComplianceItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "ComplianceTypeCountLimitExceededException" ->
+      | _, "ComplianceTypeCountLimitExceededException" ->
          (`ComplianceTypeCountLimitExceededException (compliance_type_count_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidItemContentException" ->
+      | _, "InvalidItemContentException" ->
          (`InvalidItemContentException (invalid_item_content_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceType" ->
+      | _, "InvalidResourceType" ->
          (`InvalidResourceType (invalid_resource_type_of_yojson tree path))
-      | "com.amazonaws.ssm", "ItemSizeLimitExceededException" ->
+      | _, "ItemSizeLimitExceededException" ->
          (`ItemSizeLimitExceededException (item_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "TotalSizeLimitExceededException" ->
+      | _, "TotalSizeLimitExceededException" ->
          (`TotalSizeLimitExceededException (total_size_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3086,29 +3086,29 @@ module PutInventory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "CustomSchemaCountLimitExceededException" ->
+      | _, "CustomSchemaCountLimitExceededException" ->
          (`CustomSchemaCountLimitExceededException (custom_schema_count_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInventoryItemContextException" ->
+      | _, "InvalidInventoryItemContextException" ->
          (`InvalidInventoryItemContextException (invalid_inventory_item_context_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidItemContentException" ->
+      | _, "InvalidItemContentException" ->
          (`InvalidItemContentException (invalid_item_content_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTypeNameException" ->
+      | _, "InvalidTypeNameException" ->
          (`InvalidTypeNameException (invalid_type_name_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ItemContentMismatchException" ->
+      | _, "ItemContentMismatchException" ->
          (`ItemContentMismatchException (item_content_mismatch_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ItemSizeLimitExceededException" ->
+      | _, "ItemSizeLimitExceededException" ->
          (`ItemSizeLimitExceededException (item_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "SubTypeCountLimitExceededException" ->
+      | _, "SubTypeCountLimitExceededException" ->
          (`SubTypeCountLimitExceededException (sub_type_count_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "TotalSizeLimitExceededException" ->
+      | _, "TotalSizeLimitExceededException" ->
          (`TotalSizeLimitExceededException (total_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedInventoryItemContextException" ->
+      | _, "UnsupportedInventoryItemContextException" ->
          (`UnsupportedInventoryItemContextException (unsupported_inventory_item_context_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedInventorySchemaVersionException" ->
+      | _, "UnsupportedInventorySchemaVersionException" ->
          (`UnsupportedInventorySchemaVersionException (unsupported_inventory_schema_version_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3132,35 +3132,35 @@ module PutParameter = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "HierarchyLevelLimitExceededException" ->
+      | _, "HierarchyLevelLimitExceededException" ->
          (`HierarchyLevelLimitExceededException (hierarchy_level_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "HierarchyTypeMismatchException" ->
+      | _, "HierarchyTypeMismatchException" ->
          (`HierarchyTypeMismatchException (hierarchy_type_mismatch_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "IncompatiblePolicyException" ->
+      | _, "IncompatiblePolicyException" ->
          (`IncompatiblePolicyException (incompatible_policy_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAllowedPatternException" ->
+      | _, "InvalidAllowedPatternException" ->
          (`InvalidAllowedPatternException (invalid_allowed_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidKeyId" ->
+      | _, "InvalidKeyId" ->
          (`InvalidKeyId (invalid_key_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidPolicyAttributeException" ->
+      | _, "InvalidPolicyAttributeException" ->
          (`InvalidPolicyAttributeException (invalid_policy_attribute_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidPolicyTypeException" ->
+      | _, "InvalidPolicyTypeException" ->
          (`InvalidPolicyTypeException (invalid_policy_type_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterAlreadyExists" ->
+      | _, "ParameterAlreadyExists" ->
          (`ParameterAlreadyExists (parameter_already_exists_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterLimitExceeded" ->
+      | _, "ParameterLimitExceeded" ->
          (`ParameterLimitExceeded (parameter_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterMaxVersionLimitExceeded" ->
+      | _, "ParameterMaxVersionLimitExceeded" ->
          (`ParameterMaxVersionLimitExceeded (parameter_max_version_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterPatternMismatchException" ->
+      | _, "ParameterPatternMismatchException" ->
          (`ParameterPatternMismatchException (parameter_pattern_mismatch_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "PoliciesLimitExceededException" ->
+      | _, "PoliciesLimitExceededException" ->
          (`PoliciesLimitExceededException (policies_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedParameterType" ->
+      | _, "UnsupportedParameterType" ->
          (`UnsupportedParameterType (unsupported_parameter_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3184,19 +3184,19 @@ module PutResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "MalformedResourcePolicyDocumentException" ->
+      | _, "MalformedResourcePolicyDocumentException" ->
          (`MalformedResourcePolicyDocumentException (malformed_resource_policy_document_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyConflictException" ->
+      | _, "ResourcePolicyConflictException" ->
          (`ResourcePolicyConflictException (resource_policy_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyInvalidParameterException" ->
+      | _, "ResourcePolicyInvalidParameterException" ->
          (`ResourcePolicyInvalidParameterException (resource_policy_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyLimitExceededException" ->
+      | _, "ResourcePolicyLimitExceededException" ->
          (`ResourcePolicyLimitExceededException (resource_policy_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourcePolicyNotFoundException" ->
+      | _, "ResourcePolicyNotFoundException" ->
          (`ResourcePolicyNotFoundException (resource_policy_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3220,11 +3220,11 @@ module RegisterDefaultPatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3248,15 +3248,15 @@ module RegisterPatchBaselineForPatchGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AlreadyExistsException" ->
+      | _, "AlreadyExistsException" ->
          (`AlreadyExistsException (already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceLimitExceededException" ->
+      | _, "ResourceLimitExceededException" ->
          (`ResourceLimitExceededException (resource_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3280,13 +3280,13 @@ module RegisterTargetWithMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceLimitExceededException" ->
+      | _, "ResourceLimitExceededException" ->
          (`ResourceLimitExceededException (resource_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3310,15 +3310,15 @@ module RegisterTaskWithMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "FeatureNotAvailableException" ->
+      | _, "FeatureNotAvailableException" ->
          (`FeatureNotAvailableException (feature_not_available_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceLimitExceededException" ->
+      | _, "ResourceLimitExceededException" ->
          (`ResourceLimitExceededException (resource_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3342,13 +3342,13 @@ module RemoveTagsFromResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceId" ->
+      | _, "InvalidResourceId" ->
          (`InvalidResourceId (invalid_resource_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidResourceType" ->
+      | _, "InvalidResourceType" ->
          (`InvalidResourceType (invalid_resource_type_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3372,11 +3372,11 @@ module ResetServiceSetting = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ServiceSettingNotFound" ->
+      | _, "ServiceSettingNotFound" ->
          (`ServiceSettingNotFound (service_setting_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3400,9 +3400,9 @@ module ResumeSession = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3426,13 +3426,13 @@ module SendAutomationSignal = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationExecutionNotFoundException" ->
+      | _, "AutomationExecutionNotFoundException" ->
          (`AutomationExecutionNotFoundException (automation_execution_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationStepNotFoundException" ->
+      | _, "AutomationStepNotFoundException" ->
          (`AutomationStepNotFoundException (automation_step_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAutomationSignalException" ->
+      | _, "InvalidAutomationSignalException" ->
          (`InvalidAutomationSignalException (invalid_automation_signal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3456,27 +3456,27 @@ module SendCommand = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DuplicateInstanceId" ->
+      | _, "DuplicateInstanceId" ->
          (`DuplicateInstanceId (duplicate_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidNotificationConfig" ->
+      | _, "InvalidNotificationConfig" ->
          (`InvalidNotificationConfig (invalid_notification_config_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidOutputFolder" ->
+      | _, "InvalidOutputFolder" ->
          (`InvalidOutputFolder (invalid_output_folder_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidParameters" ->
+      | _, "InvalidParameters" ->
          (`InvalidParameters (invalid_parameters_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidRole" ->
+      | _, "InvalidRole" ->
          (`InvalidRole (invalid_role_of_yojson tree path))
-      | "com.amazonaws.ssm", "MaxDocumentSizeExceeded" ->
+      | _, "MaxDocumentSizeExceeded" ->
          (`MaxDocumentSizeExceeded (max_document_size_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "UnsupportedPlatformType" ->
+      | _, "UnsupportedPlatformType" ->
          (`UnsupportedPlatformType (unsupported_platform_type_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3500,9 +3500,9 @@ module StartAssociationsOnce = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAssociation" ->
+      | _, "InvalidAssociation" ->
          (`InvalidAssociation (invalid_association_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3526,19 +3526,19 @@ module StartAutomationExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationDefinitionNotFoundException" ->
+      | _, "AutomationDefinitionNotFoundException" ->
          (`AutomationDefinitionNotFoundException (automation_definition_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationDefinitionVersionNotFoundException" ->
+      | _, "AutomationDefinitionVersionNotFoundException" ->
          (`AutomationDefinitionVersionNotFoundException (automation_definition_version_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationExecutionLimitExceededException" ->
+      | _, "AutomationExecutionLimitExceededException" ->
          (`AutomationExecutionLimitExceededException (automation_execution_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAutomationExecutionParametersException" ->
+      | _, "InvalidAutomationExecutionParametersException" ->
          (`InvalidAutomationExecutionParametersException (invalid_automation_execution_parameters_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTarget" ->
+      | _, "InvalidTarget" ->
          (`InvalidTarget (invalid_target_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3562,19 +3562,19 @@ module StartChangeRequestExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationDefinitionNotApprovedException" ->
+      | _, "AutomationDefinitionNotApprovedException" ->
          (`AutomationDefinitionNotApprovedException (automation_definition_not_approved_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationDefinitionNotFoundException" ->
+      | _, "AutomationDefinitionNotFoundException" ->
          (`AutomationDefinitionNotFoundException (automation_definition_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationDefinitionVersionNotFoundException" ->
+      | _, "AutomationDefinitionVersionNotFoundException" ->
          (`AutomationDefinitionVersionNotFoundException (automation_definition_version_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "AutomationExecutionLimitExceededException" ->
+      | _, "AutomationExecutionLimitExceededException" ->
          (`AutomationExecutionLimitExceededException (automation_execution_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAutomationExecutionParametersException" ->
+      | _, "InvalidAutomationExecutionParametersException" ->
          (`InvalidAutomationExecutionParametersException (invalid_automation_execution_parameters_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3598,11 +3598,11 @@ module StartSession = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "TargetNotConnected" ->
+      | _, "TargetNotConnected" ->
          (`TargetNotConnected (target_not_connected_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3626,11 +3626,11 @@ module StopAutomationExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AutomationExecutionNotFoundException" ->
+      | _, "AutomationExecutionNotFoundException" ->
          (`AutomationExecutionNotFoundException (automation_execution_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAutomationStatusUpdateException" ->
+      | _, "InvalidAutomationStatusUpdateException" ->
          (`InvalidAutomationStatusUpdateException (invalid_automation_status_update_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3654,7 +3654,7 @@ module TerminateSession = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3678,13 +3678,13 @@ module UnlabelParameterVersion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterNotFound" ->
+      | _, "ParameterNotFound" ->
          (`ParameterNotFound (parameter_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "ParameterVersionNotFound" ->
+      | _, "ParameterVersionNotFound" ->
          (`ParameterVersionNotFound (parameter_version_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3708,31 +3708,31 @@ module UpdateAssociation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "AssociationVersionLimitExceeded" ->
+      | _, "AssociationVersionLimitExceeded" ->
          (`AssociationVersionLimitExceeded (association_version_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidAssociationVersion" ->
+      | _, "InvalidAssociationVersion" ->
          (`InvalidAssociationVersion (invalid_association_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidOutputLocation" ->
+      | _, "InvalidOutputLocation" ->
          (`InvalidOutputLocation (invalid_output_location_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidParameters" ->
+      | _, "InvalidParameters" ->
          (`InvalidParameters (invalid_parameters_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidSchedule" ->
+      | _, "InvalidSchedule" ->
          (`InvalidSchedule (invalid_schedule_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTarget" ->
+      | _, "InvalidTarget" ->
          (`InvalidTarget (invalid_target_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidTargetMaps" ->
+      | _, "InvalidTargetMaps" ->
          (`InvalidTargetMaps (invalid_target_maps_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidUpdate" ->
+      | _, "InvalidUpdate" ->
          (`InvalidUpdate (invalid_update_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3756,17 +3756,17 @@ module UpdateAssociationStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "AssociationDoesNotExist" ->
+      | _, "AssociationDoesNotExist" ->
          (`AssociationDoesNotExist (association_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
-      | "com.amazonaws.ssm", "StatusUnchanged" ->
+      | _, "StatusUnchanged" ->
          (`StatusUnchanged (status_unchanged_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3790,25 +3790,25 @@ module UpdateDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DocumentVersionLimitExceeded" ->
+      | _, "DocumentVersionLimitExceeded" ->
          (`DocumentVersionLimitExceeded (document_version_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.ssm", "DuplicateDocumentContent" ->
+      | _, "DuplicateDocumentContent" ->
          (`DuplicateDocumentContent (duplicate_document_content_of_yojson tree path))
-      | "com.amazonaws.ssm", "DuplicateDocumentVersionName" ->
+      | _, "DuplicateDocumentVersionName" ->
          (`DuplicateDocumentVersionName (duplicate_document_version_name_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentContent" ->
+      | _, "InvalidDocumentContent" ->
          (`InvalidDocumentContent (invalid_document_content_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentOperation" ->
+      | _, "InvalidDocumentOperation" ->
          (`InvalidDocumentOperation (invalid_document_operation_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentSchemaVersion" ->
+      | _, "InvalidDocumentSchemaVersion" ->
          (`InvalidDocumentSchemaVersion (invalid_document_schema_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "MaxDocumentSizeExceeded" ->
+      | _, "MaxDocumentSizeExceeded" ->
          (`MaxDocumentSizeExceeded (max_document_size_exceeded_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3832,13 +3832,13 @@ module UpdateDocumentDefaultVersion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentSchemaVersion" ->
+      | _, "InvalidDocumentSchemaVersion" ->
          (`InvalidDocumentSchemaVersion (invalid_document_schema_version_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3862,13 +3862,13 @@ module UpdateDocumentMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocument" ->
+      | _, "InvalidDocument" ->
          (`InvalidDocument (invalid_document_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentOperation" ->
+      | _, "InvalidDocumentOperation" ->
          (`InvalidDocumentOperation (invalid_document_operation_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidDocumentVersion" ->
+      | _, "InvalidDocumentVersion" ->
          (`InvalidDocumentVersion (invalid_document_version_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3892,9 +3892,9 @@ module UpdateMaintenanceWindow = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3918,9 +3918,9 @@ module UpdateMaintenanceWindowTarget = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3944,9 +3944,9 @@ module UpdateMaintenanceWindowTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3970,9 +3970,9 @@ module UpdateManagedInstanceRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "InvalidInstanceId" ->
+      | _, "InvalidInstanceId" ->
          (`InvalidInstanceId (invalid_instance_id_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3996,19 +3996,19 @@ module UpdateOpsItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemAccessDeniedException" ->
+      | _, "OpsItemAccessDeniedException" ->
          (`OpsItemAccessDeniedException (ops_item_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemAlreadyExistsException" ->
+      | _, "OpsItemAlreadyExistsException" ->
          (`OpsItemAlreadyExistsException (ops_item_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemConflictException" ->
+      | _, "OpsItemConflictException" ->
          (`OpsItemConflictException (ops_item_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemInvalidParameterException" ->
+      | _, "OpsItemInvalidParameterException" ->
          (`OpsItemInvalidParameterException (ops_item_invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemLimitExceededException" ->
+      | _, "OpsItemLimitExceededException" ->
          (`OpsItemLimitExceededException (ops_item_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsItemNotFoundException" ->
+      | _, "OpsItemNotFoundException" ->
          (`OpsItemNotFoundException (ops_item_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4032,15 +4032,15 @@ module UpdateOpsMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataInvalidArgumentException" ->
+      | _, "OpsMetadataInvalidArgumentException" ->
          (`OpsMetadataInvalidArgumentException (ops_metadata_invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataKeyLimitExceededException" ->
+      | _, "OpsMetadataKeyLimitExceededException" ->
          (`OpsMetadataKeyLimitExceededException (ops_metadata_key_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataNotFoundException" ->
+      | _, "OpsMetadataNotFoundException" ->
          (`OpsMetadataNotFoundException (ops_metadata_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "OpsMetadataTooManyUpdatesException" ->
+      | _, "OpsMetadataTooManyUpdatesException" ->
          (`OpsMetadataTooManyUpdatesException (ops_metadata_too_many_updates_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4064,9 +4064,9 @@ module UpdatePatchBaseline = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "DoesNotExistException" ->
+      | _, "DoesNotExistException" ->
          (`DoesNotExistException (does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4090,13 +4090,13 @@ module UpdateResourceDataSync = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncConflictException" ->
+      | _, "ResourceDataSyncConflictException" ->
          (`ResourceDataSyncConflictException (resource_data_sync_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncInvalidConfigurationException" ->
+      | _, "ResourceDataSyncInvalidConfigurationException" ->
          (`ResourceDataSyncInvalidConfigurationException (resource_data_sync_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.ssm", "ResourceDataSyncNotFoundException" ->
+      | _, "ResourceDataSyncNotFoundException" ->
          (`ResourceDataSyncNotFoundException (resource_data_sync_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4120,11 +4120,11 @@ module UpdateServiceSetting = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.ssm", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.ssm", "ServiceSettingNotFound" ->
+      | _, "ServiceSettingNotFound" ->
          (`ServiceSettingNotFound (service_setting_not_found_of_yojson tree path))
-      | "com.amazonaws.ssm", "TooManyUpdates" ->
+      | _, "TooManyUpdates" ->
          (`TooManyUpdates (too_many_updates_of_yojson tree path))
       | _type -> handler tree path _type
       

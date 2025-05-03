@@ -4,35 +4,35 @@ module CreateCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterAlreadyExistsFault" ->
+      | _, "ClusterAlreadyExistsFault" ->
          (`ClusterAlreadyExistsFault (cluster_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ClusterQuotaForCustomerExceededFault" ->
+      | _, "ClusterQuotaForCustomerExceededFault" ->
          (`ClusterQuotaForCustomerExceededFault (cluster_quota_for_customer_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InsufficientClusterCapacityFault" ->
+      | _, "InsufficientClusterCapacityFault" ->
          (`InsufficientClusterCapacityFault (insufficient_cluster_capacity_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterGroupStateFault" ->
+      | _, "InvalidParameterGroupStateFault" ->
          (`InvalidParameterGroupStateFault (invalid_parameter_group_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidVPCNetworkStateFault" ->
+      | _, "InvalidVPCNetworkStateFault" ->
          (`InvalidVPCNetworkStateFault (invalid_vpc_network_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeQuotaForClusterExceededFault" ->
+      | _, "NodeQuotaForClusterExceededFault" ->
          (`NodeQuotaForClusterExceededFault (node_quota_for_cluster_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeQuotaForCustomerExceededFault" ->
+      | _, "NodeQuotaForCustomerExceededFault" ->
          (`NodeQuotaForCustomerExceededFault (node_quota_for_customer_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupNotFoundFault" ->
+      | _, "SubnetGroupNotFoundFault" ->
          (`SubnetGroupNotFoundFault (subnet_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "TagQuotaPerResourceExceeded" ->
+      | _, "TagQuotaPerResourceExceeded" ->
          (`TagQuotaPerResourceExceeded (tag_quota_per_resource_exceeded_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -56,17 +56,17 @@ module CreateParameterGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterGroupStateFault" ->
+      | _, "InvalidParameterGroupStateFault" ->
          (`InvalidParameterGroupStateFault (invalid_parameter_group_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupAlreadyExistsFault" ->
+      | _, "ParameterGroupAlreadyExistsFault" ->
          (`ParameterGroupAlreadyExistsFault (parameter_group_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupQuotaExceededFault" ->
+      | _, "ParameterGroupQuotaExceededFault" ->
          (`ParameterGroupQuotaExceededFault (parameter_group_quota_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -90,15 +90,15 @@ module CreateSubnetGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidSubnet" ->
+      | _, "InvalidSubnet" ->
          (`InvalidSubnet (invalid_subnet_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupAlreadyExistsFault" ->
+      | _, "SubnetGroupAlreadyExistsFault" ->
          (`SubnetGroupAlreadyExistsFault (subnet_group_already_exists_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupQuotaExceededFault" ->
+      | _, "SubnetGroupQuotaExceededFault" ->
          (`SubnetGroupQuotaExceededFault (subnet_group_quota_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetQuotaExceededFault" ->
+      | _, "SubnetQuotaExceededFault" ->
          (`SubnetQuotaExceededFault (subnet_quota_exceeded_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -122,17 +122,17 @@ module DecreaseReplicationFactor = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeNotFoundFault" ->
+      | _, "NodeNotFoundFault" ->
          (`NodeNotFoundFault (node_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -156,15 +156,15 @@ module DeleteCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -188,15 +188,15 @@ module DeleteParameterGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterGroupStateFault" ->
+      | _, "InvalidParameterGroupStateFault" ->
          (`InvalidParameterGroupStateFault (invalid_parameter_group_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -220,11 +220,11 @@ module DeleteSubnetGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupInUseFault" ->
+      | _, "SubnetGroupInUseFault" ->
          (`SubnetGroupInUseFault (subnet_group_in_use_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupNotFoundFault" ->
+      | _, "SubnetGroupNotFoundFault" ->
          (`SubnetGroupNotFoundFault (subnet_group_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -248,13 +248,13 @@ module DescribeClusters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -278,11 +278,11 @@ module DescribeDefaultParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -306,11 +306,11 @@ module DescribeEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -334,13 +334,13 @@ module DescribeParameterGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -364,13 +364,13 @@ module DescribeParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -394,9 +394,9 @@ module DescribeSubnetGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupNotFoundFault" ->
+      | _, "SubnetGroupNotFoundFault" ->
          (`SubnetGroupNotFoundFault (subnet_group_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -420,23 +420,23 @@ module IncreaseReplicationFactor = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InsufficientClusterCapacityFault" ->
+      | _, "InsufficientClusterCapacityFault" ->
          (`InsufficientClusterCapacityFault (insufficient_cluster_capacity_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidVPCNetworkStateFault" ->
+      | _, "InvalidVPCNetworkStateFault" ->
          (`InvalidVPCNetworkStateFault (invalid_vpc_network_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeQuotaForClusterExceededFault" ->
+      | _, "NodeQuotaForClusterExceededFault" ->
          (`NodeQuotaForClusterExceededFault (node_quota_for_cluster_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeQuotaForCustomerExceededFault" ->
+      | _, "NodeQuotaForCustomerExceededFault" ->
          (`NodeQuotaForCustomerExceededFault (node_quota_for_customer_exceeded_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -460,17 +460,17 @@ module ListTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidARNFault" ->
+      | _, "InvalidARNFault" ->
          (`InvalidARNFault (invalid_arn_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -494,17 +494,17 @@ module RebootNode = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "NodeNotFoundFault" ->
+      | _, "NodeNotFoundFault" ->
          (`NodeNotFoundFault (node_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -528,19 +528,19 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidARNFault" ->
+      | _, "InvalidARNFault" ->
          (`InvalidARNFault (invalid_arn_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "TagQuotaPerResourceExceeded" ->
+      | _, "TagQuotaPerResourceExceeded" ->
          (`TagQuotaPerResourceExceeded (tag_quota_per_resource_exceeded_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,19 +564,19 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidARNFault" ->
+      | _, "InvalidARNFault" ->
          (`InvalidARNFault (invalid_arn_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "TagNotFoundFault" ->
+      | _, "TagNotFoundFault" ->
          (`TagNotFoundFault (tag_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -600,19 +600,19 @@ module UpdateCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "ClusterNotFoundFault" ->
+      | _, "ClusterNotFoundFault" ->
          (`ClusterNotFoundFault (cluster_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidClusterStateFault" ->
+      | _, "InvalidClusterStateFault" ->
          (`InvalidClusterStateFault (invalid_cluster_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterGroupStateFault" ->
+      | _, "InvalidParameterGroupStateFault" ->
          (`InvalidParameterGroupStateFault (invalid_parameter_group_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -636,15 +636,15 @@ module UpdateParameterGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterGroupStateFault" ->
+      | _, "InvalidParameterGroupStateFault" ->
          (`InvalidParameterGroupStateFault (invalid_parameter_group_state_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.dax", "ParameterGroupNotFoundFault" ->
+      | _, "ParameterGroupNotFoundFault" ->
          (`ParameterGroupNotFoundFault (parameter_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -668,15 +668,15 @@ module UpdateSubnetGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dax", "InvalidSubnet" ->
+      | _, "InvalidSubnet" ->
          (`InvalidSubnet (invalid_subnet_of_yojson tree path))
-      | "com.amazonaws.dax", "ServiceLinkedRoleNotFoundFault" ->
+      | _, "ServiceLinkedRoleNotFoundFault" ->
          (`ServiceLinkedRoleNotFoundFault (service_linked_role_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetGroupNotFoundFault" ->
+      | _, "SubnetGroupNotFoundFault" ->
          (`SubnetGroupNotFoundFault (subnet_group_not_found_fault_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetInUse" ->
+      | _, "SubnetInUse" ->
          (`SubnetInUse (subnet_in_use_of_yojson tree path))
-      | "com.amazonaws.dax", "SubnetQuotaExceededFault" ->
+      | _, "SubnetQuotaExceededFault" ->
          (`SubnetQuotaExceededFault (subnet_quota_exceeded_fault_of_yojson tree path))
       | _type -> handler tree path _type
       

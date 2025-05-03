@@ -4,19 +4,19 @@ module AllocateStaticIp = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -40,17 +40,17 @@ module AttachCertificateToDistribution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -74,19 +74,19 @@ module AttachDisk = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -110,19 +110,19 @@ module AttachInstancesToLoadBalancer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -146,19 +146,19 @@ module AttachLoadBalancerTlsCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -182,19 +182,19 @@ module AttachStaticIp = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -218,19 +218,19 @@ module CloseInstancePublicPorts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -254,19 +254,19 @@ module CopySnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -290,13 +290,13 @@ module CreateBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -320,15 +320,15 @@ module CreateBucketAccessKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -352,15 +352,15 @@ module CreateCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -384,19 +384,19 @@ module CreateCloudFormationStack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -420,17 +420,17 @@ module CreateContactMethod = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -454,15 +454,15 @@ module CreateContainerService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -486,15 +486,15 @@ module CreateContainerServiceDeployment = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -518,15 +518,15 @@ module CreateContainerServiceRegistryLogin = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -550,19 +550,19 @@ module CreateDisk = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -586,19 +586,19 @@ module CreateDiskFromSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -622,19 +622,19 @@ module CreateDiskSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -658,17 +658,17 @@ module CreateDistribution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -692,19 +692,19 @@ module CreateDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -728,19 +728,19 @@ module CreateDomainEntry = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -764,15 +764,15 @@ module CreateGUISessionAccessDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -796,19 +796,19 @@ module CreateInstances = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -832,19 +832,19 @@ module CreateInstancesFromSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -868,19 +868,19 @@ module CreateInstanceSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -904,19 +904,19 @@ module CreateKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -940,19 +940,19 @@ module CreateLoadBalancer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -976,19 +976,19 @@ module CreateLoadBalancerTlsCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1012,19 +1012,19 @@ module CreateRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1048,19 +1048,19 @@ module CreateRelationalDatabaseFromSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1084,19 +1084,19 @@ module CreateRelationalDatabaseSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1120,17 +1120,17 @@ module DeleteAlarm = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1154,17 +1154,17 @@ module DeleteAutoSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1188,15 +1188,15 @@ module DeleteBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1220,15 +1220,15 @@ module DeleteBucketAccessKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1252,15 +1252,15 @@ module DeleteCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1284,17 +1284,17 @@ module DeleteContactMethod = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1318,15 +1318,15 @@ module DeleteContainerImage = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1350,15 +1350,15 @@ module DeleteContainerService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1382,19 +1382,19 @@ module DeleteDisk = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1418,19 +1418,19 @@ module DeleteDiskSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1454,17 +1454,17 @@ module DeleteDistribution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1488,19 +1488,19 @@ module DeleteDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1524,19 +1524,19 @@ module DeleteDomainEntry = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1560,19 +1560,19 @@ module DeleteInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1596,19 +1596,19 @@ module DeleteInstanceSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1632,19 +1632,19 @@ module DeleteKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1668,19 +1668,19 @@ module DeleteKnownHostKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1704,19 +1704,19 @@ module DeleteLoadBalancer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1740,19 +1740,19 @@ module DeleteLoadBalancerTlsCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1776,19 +1776,19 @@ module DeleteRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1812,19 +1812,19 @@ module DeleteRelationalDatabaseSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1848,17 +1848,17 @@ module DetachCertificateFromDistribution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1882,19 +1882,19 @@ module DetachDisk = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1918,19 +1918,19 @@ module DetachInstancesFromLoadBalancer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1954,19 +1954,19 @@ module DetachStaticIp = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1990,17 +1990,17 @@ module DisableAddOn = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2024,19 +2024,19 @@ module DownloadDefaultKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2060,17 +2060,17 @@ module EnableAddOn = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2094,19 +2094,19 @@ module ExportSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2130,19 +2130,19 @@ module GetActiveNames = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2166,17 +2166,17 @@ module GetAlarms = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2200,17 +2200,17 @@ module GetAutoSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2234,19 +2234,19 @@ module GetBlueprints = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2270,15 +2270,15 @@ module GetBucketAccessKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2302,13 +2302,13 @@ module GetBucketBundles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2332,15 +2332,15 @@ module GetBucketMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2364,15 +2364,15 @@ module GetBuckets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2396,19 +2396,19 @@ module GetBundles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2432,15 +2432,15 @@ module GetCertificates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2464,19 +2464,19 @@ module GetCloudFormationStackRecords = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2500,17 +2500,17 @@ module GetContactMethods = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2534,11 +2534,11 @@ module GetContainerAPIMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2562,15 +2562,15 @@ module GetContainerImages = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2594,15 +2594,15 @@ module GetContainerLog = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2626,15 +2626,15 @@ module GetContainerServiceDeployments = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2658,15 +2658,15 @@ module GetContainerServiceMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2690,15 +2690,15 @@ module GetContainerServicePowers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2722,15 +2722,15 @@ module GetContainerServices = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2754,15 +2754,15 @@ module GetCostEstimate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2786,19 +2786,19 @@ module GetDisk = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2822,19 +2822,19 @@ module GetDisks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2858,19 +2858,19 @@ module GetDiskSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2894,19 +2894,19 @@ module GetDiskSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2930,17 +2930,17 @@ module GetDistributionBundles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2964,17 +2964,17 @@ module GetDistributionLatestCacheReset = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2998,17 +2998,17 @@ module GetDistributionMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3032,17 +3032,17 @@ module GetDistributions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3066,19 +3066,19 @@ module GetDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3102,19 +3102,19 @@ module GetDomains = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3138,19 +3138,19 @@ module GetExportSnapshotRecords = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3174,19 +3174,19 @@ module GetInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3210,19 +3210,19 @@ module GetInstanceAccessDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3246,19 +3246,19 @@ module GetInstanceMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3282,19 +3282,19 @@ module GetInstancePortStates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3318,19 +3318,19 @@ module GetInstances = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3354,19 +3354,19 @@ module GetInstanceSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3390,19 +3390,19 @@ module GetInstanceSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3426,19 +3426,19 @@ module GetInstanceState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3462,19 +3462,19 @@ module GetKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3498,19 +3498,19 @@ module GetKeyPairs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3534,19 +3534,19 @@ module GetLoadBalancer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3570,19 +3570,19 @@ module GetLoadBalancerMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3606,19 +3606,19 @@ module GetLoadBalancers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3642,19 +3642,19 @@ module GetLoadBalancerTlsCertificates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3678,15 +3678,15 @@ module GetLoadBalancerTlsPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3710,19 +3710,19 @@ module GetOperation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3746,19 +3746,19 @@ module GetOperations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3782,19 +3782,19 @@ module GetOperationsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3818,19 +3818,19 @@ module GetRegions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3854,19 +3854,19 @@ module GetRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3890,19 +3890,19 @@ module GetRelationalDatabaseBlueprints = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3926,19 +3926,19 @@ module GetRelationalDatabaseBundles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3962,19 +3962,19 @@ module GetRelationalDatabaseEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -3998,19 +3998,19 @@ module GetRelationalDatabaseLogEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4034,19 +4034,19 @@ module GetRelationalDatabaseLogStreams = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4070,19 +4070,19 @@ module GetRelationalDatabaseMasterUserPassword = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4106,19 +4106,19 @@ module GetRelationalDatabaseMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4142,19 +4142,19 @@ module GetRelationalDatabaseParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4178,19 +4178,19 @@ module GetRelationalDatabases = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4214,19 +4214,19 @@ module GetRelationalDatabaseSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4250,19 +4250,19 @@ module GetRelationalDatabaseSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4286,15 +4286,15 @@ module GetSetupHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4318,19 +4318,19 @@ module GetStaticIp = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4354,19 +4354,19 @@ module GetStaticIps = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4390,19 +4390,19 @@ module ImportKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4426,19 +4426,19 @@ module IsVpcPeered = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4462,19 +4462,19 @@ module OpenInstancePublicPorts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4498,19 +4498,19 @@ module PeerVpc = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4534,17 +4534,17 @@ module PutAlarm = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4568,19 +4568,19 @@ module PutInstancePublicPorts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4604,19 +4604,19 @@ module RebootInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4640,19 +4640,19 @@ module RebootRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4676,15 +4676,15 @@ module RegisterContainerImage = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4708,19 +4708,19 @@ module ReleaseStaticIp = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4744,17 +4744,17 @@ module ResetDistributionCache = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4778,17 +4778,17 @@ module SendContactMethodVerification = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4812,19 +4812,19 @@ module SetIpAddressType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4848,15 +4848,15 @@ module SetResourceAccessForBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4880,15 +4880,15 @@ module SetupInstanceHttps = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4912,15 +4912,15 @@ module StartGUISession = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4944,19 +4944,19 @@ module StartInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -4980,19 +4980,19 @@ module StartRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5016,15 +5016,15 @@ module StopGUISession = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5048,19 +5048,19 @@ module StopInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5084,19 +5084,19 @@ module StopRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5120,19 +5120,19 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5156,17 +5156,17 @@ module TestAlarm = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5190,19 +5190,19 @@ module UnpeerVpc = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5226,19 +5226,19 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5262,15 +5262,15 @@ module UpdateBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5294,15 +5294,15 @@ module UpdateBucketBundle = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5326,15 +5326,15 @@ module UpdateContainerService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5358,17 +5358,17 @@ module UpdateDistribution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5392,17 +5392,17 @@ module UpdateDistributionBundle = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5426,19 +5426,19 @@ module UpdateDomainEntry = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5462,19 +5462,19 @@ module UpdateInstanceMetadataOptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5498,19 +5498,19 @@ module UpdateLoadBalancerAttribute = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5534,19 +5534,19 @@ module UpdateRelationalDatabase = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -5570,19 +5570,19 @@ module UpdateRelationalDatabaseParameters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.lightsail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "AccountSetupInProgressException" ->
+      | _, "AccountSetupInProgressException" ->
          (`AccountSetupInProgressException (account_setup_in_progress_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "OperationFailureException" ->
+      | _, "OperationFailureException" ->
          (`OperationFailureException (operation_failure_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.lightsail", "UnauthenticatedException" ->
+      | _, "UnauthenticatedException" ->
          (`UnauthenticatedException (unauthenticated_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

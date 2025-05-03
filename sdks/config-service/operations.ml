@@ -4,9 +4,9 @@ module BatchGetAggregateResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -30,9 +30,9 @@ module BatchGetResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -56,7 +56,7 @@ module DeleteAggregationAuthorization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -80,9 +80,9 @@ module DeleteConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -106,7 +106,7 @@ module DeleteConfigurationAggregator = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -130,7 +130,7 @@ module DeleteConfigurationRecorder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationRecorderException" ->
+      | _, "NoSuchConfigurationRecorderException" ->
          (`NoSuchConfigurationRecorderException (no_such_configuration_recorder_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -154,9 +154,9 @@ module DeleteConformancePack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConformancePackException" ->
+      | _, "NoSuchConformancePackException" ->
          (`NoSuchConformancePackException (no_such_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -180,9 +180,9 @@ module DeleteDeliveryChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "LastDeliveryChannelDeleteFailedException" ->
+      | _, "LastDeliveryChannelDeleteFailedException" ->
          (`LastDeliveryChannelDeleteFailedException (last_delivery_channel_delete_failed_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchDeliveryChannelException" ->
+      | _, "NoSuchDeliveryChannelException" ->
          (`NoSuchDeliveryChannelException (no_such_delivery_channel_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -206,9 +206,9 @@ module DeleteEvaluationResults = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -232,11 +232,11 @@ module DeleteOrganizationConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchOrganizationConfigRuleException" ->
+      | _, "NoSuchOrganizationConfigRuleException" ->
          (`NoSuchOrganizationConfigRuleException (no_such_organization_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -260,11 +260,11 @@ module DeleteOrganizationConformancePack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchOrganizationConformancePackException" ->
+      | _, "NoSuchOrganizationConformancePackException" ->
          (`NoSuchOrganizationConformancePackException (no_such_organization_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -288,7 +288,7 @@ module DeletePendingAggregationRequest = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -312,13 +312,13 @@ module DeleteRemediationConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchRemediationConfigurationException" ->
+      | _, "NoSuchRemediationConfigurationException" ->
          (`NoSuchRemediationConfigurationException (no_such_remediation_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "RemediationInProgressException" ->
+      | _, "RemediationInProgressException" ->
          (`RemediationInProgressException (remediation_in_progress_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -342,7 +342,7 @@ module DeleteRemediationExceptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchRemediationExceptionException" ->
+      | _, "NoSuchRemediationExceptionException" ->
          (`NoSuchRemediationExceptionException (no_such_remediation_exception_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -366,9 +366,9 @@ module DeleteResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoRunningConfigurationRecorderException" ->
+      | _, "NoRunningConfigurationRecorderException" ->
          (`NoRunningConfigurationRecorderException (no_running_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -392,9 +392,9 @@ module DeleteRetentionConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchRetentionConfigurationException" ->
+      | _, "NoSuchRetentionConfigurationException" ->
          (`NoSuchRetentionConfigurationException (no_such_retention_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -418,9 +418,9 @@ module DeleteStoredQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -444,11 +444,11 @@ module DeliverConfigSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoRunningConfigurationRecorderException" ->
+      | _, "NoRunningConfigurationRecorderException" ->
          (`NoRunningConfigurationRecorderException (no_running_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchDeliveryChannelException" ->
+      | _, "NoSuchDeliveryChannelException" ->
          (`NoSuchDeliveryChannelException (no_such_delivery_channel_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -472,13 +472,13 @@ module DescribeAggregateComplianceByConfigRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -502,13 +502,13 @@ module DescribeAggregateComplianceByConformancePacks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -532,11 +532,11 @@ module DescribeAggregationAuthorizations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -560,11 +560,11 @@ module DescribeComplianceByConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -588,9 +588,9 @@ module DescribeComplianceByResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -614,11 +614,11 @@ module DescribeConfigRuleEvaluationStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -642,11 +642,11 @@ module DescribeConfigRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -670,13 +670,13 @@ module DescribeConfigurationAggregators = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -700,13 +700,13 @@ module DescribeConfigurationAggregatorSourcesStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -730,7 +730,7 @@ module DescribeConfigurationRecorders = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationRecorderException" ->
+      | _, "NoSuchConfigurationRecorderException" ->
          (`NoSuchConfigurationRecorderException (no_such_configuration_recorder_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -754,7 +754,7 @@ module DescribeConfigurationRecorderStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationRecorderException" ->
+      | _, "NoSuchConfigurationRecorderException" ->
          (`NoSuchConfigurationRecorderException (no_such_configuration_recorder_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -778,15 +778,15 @@ module DescribeConformancePackCompliance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleInConformancePackException" ->
+      | _, "NoSuchConfigRuleInConformancePackException" ->
          (`NoSuchConfigRuleInConformancePackException (no_such_config_rule_in_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConformancePackException" ->
+      | _, "NoSuchConformancePackException" ->
          (`NoSuchConformancePackException (no_such_conformance_pack_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -810,13 +810,13 @@ module DescribeConformancePacks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConformancePackException" ->
+      | _, "NoSuchConformancePackException" ->
          (`NoSuchConformancePackException (no_such_conformance_pack_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -840,11 +840,11 @@ module DescribeConformancePackStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -868,7 +868,7 @@ module DescribeDeliveryChannels = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchDeliveryChannelException" ->
+      | _, "NoSuchDeliveryChannelException" ->
          (`NoSuchDeliveryChannelException (no_such_delivery_channel_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -892,7 +892,7 @@ module DescribeDeliveryChannelStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchDeliveryChannelException" ->
+      | _, "NoSuchDeliveryChannelException" ->
          (`NoSuchDeliveryChannelException (no_such_delivery_channel_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -916,13 +916,13 @@ module DescribeOrganizationConfigRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConfigRuleException" ->
+      | _, "NoSuchOrganizationConfigRuleException" ->
          (`NoSuchOrganizationConfigRuleException (no_such_organization_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -946,13 +946,13 @@ module DescribeOrganizationConfigRuleStatuses = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConfigRuleException" ->
+      | _, "NoSuchOrganizationConfigRuleException" ->
          (`NoSuchOrganizationConfigRuleException (no_such_organization_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -976,13 +976,13 @@ module DescribeOrganizationConformancePacks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConformancePackException" ->
+      | _, "NoSuchOrganizationConformancePackException" ->
          (`NoSuchOrganizationConformancePackException (no_such_organization_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1006,13 +1006,13 @@ module DescribeOrganizationConformancePackStatuses = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConformancePackException" ->
+      | _, "NoSuchOrganizationConformancePackException" ->
          (`NoSuchOrganizationConformancePackException (no_such_organization_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1036,11 +1036,11 @@ module DescribePendingAggregationRequests = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1082,9 +1082,9 @@ module DescribeRemediationExceptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1108,11 +1108,11 @@ module DescribeRemediationExecutionStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchRemediationConfigurationException" ->
+      | _, "NoSuchRemediationConfigurationException" ->
          (`NoSuchRemediationConfigurationException (no_such_remediation_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1136,11 +1136,11 @@ module DescribeRetentionConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchRetentionConfigurationException" ->
+      | _, "NoSuchRetentionConfigurationException" ->
          (`NoSuchRetentionConfigurationException (no_such_retention_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1164,13 +1164,13 @@ module GetAggregateComplianceDetailsByConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1194,13 +1194,13 @@ module GetAggregateConfigRuleComplianceSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1224,13 +1224,13 @@ module GetAggregateConformancePackComplianceSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1254,13 +1254,13 @@ module GetAggregateDiscoveredResourceCounts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1284,13 +1284,13 @@ module GetAggregateResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OversizedConfigurationItemException" ->
+      | _, "OversizedConfigurationItemException" ->
          (`OversizedConfigurationItemException (oversized_configuration_item_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceNotDiscoveredException" ->
+      | _, "ResourceNotDiscoveredException" ->
          (`ResourceNotDiscoveredException (resource_not_discovered_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1314,11 +1314,11 @@ module GetComplianceDetailsByConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1342,7 +1342,7 @@ module GetComplianceDetailsByResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1384,7 +1384,7 @@ module GetComplianceSummaryByResourceType = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1408,15 +1408,15 @@ module GetConformancePackComplianceDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleInConformancePackException" ->
+      | _, "NoSuchConfigRuleInConformancePackException" ->
          (`NoSuchConfigRuleInConformancePackException (no_such_config_rule_in_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConformancePackException" ->
+      | _, "NoSuchConformancePackException" ->
          (`NoSuchConformancePackException (no_such_conformance_pack_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1440,11 +1440,11 @@ module GetConformancePackComplianceSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConformancePackException" ->
+      | _, "NoSuchConformancePackException" ->
          (`NoSuchConformancePackException (no_such_conformance_pack_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1468,7 +1468,7 @@ module GetCustomRulePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1492,11 +1492,11 @@ module GetDiscoveredResourceCounts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1520,13 +1520,13 @@ module GetOrganizationConfigRuleDetailedStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConfigRuleException" ->
+      | _, "NoSuchOrganizationConfigRuleException" ->
          (`NoSuchOrganizationConfigRuleException (no_such_organization_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1550,13 +1550,13 @@ module GetOrganizationConformancePackDetailedStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchOrganizationConformancePackException" ->
+      | _, "NoSuchOrganizationConformancePackException" ->
          (`NoSuchOrganizationConformancePackException (no_such_organization_conformance_pack_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1580,9 +1580,9 @@ module GetOrganizationCustomRulePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchOrganizationConfigRuleException" ->
+      | _, "NoSuchOrganizationConfigRuleException" ->
          (`NoSuchOrganizationConfigRuleException (no_such_organization_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1606,17 +1606,17 @@ module GetResourceConfigHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidTimeRangeException" ->
+      | _, "InvalidTimeRangeException" ->
          (`InvalidTimeRangeException (invalid_time_range_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceNotDiscoveredException" ->
+      | _, "ResourceNotDiscoveredException" ->
          (`ResourceNotDiscoveredException (resource_not_discovered_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1640,7 +1640,7 @@ module GetResourceEvaluationSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1664,9 +1664,9 @@ module GetStoredQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1690,13 +1690,13 @@ module ListAggregateDiscoveredResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1720,11 +1720,11 @@ module ListConformancePackComplianceScores = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1748,13 +1748,13 @@ module ListDiscoveredResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1778,11 +1778,11 @@ module ListResourceEvaluations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidTimeRangeException" ->
+      | _, "InvalidTimeRangeException" ->
          (`InvalidTimeRangeException (invalid_time_range_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1806,9 +1806,9 @@ module ListStoredQueries = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1832,13 +1832,13 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1862,7 +1862,7 @@ module PutAggregationAuthorization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1886,15 +1886,15 @@ module PutConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfConfigRulesExceededException" ->
+      | _, "MaxNumberOfConfigRulesExceededException" ->
          (`MaxNumberOfConfigRulesExceededException (max_number_of_config_rules_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1918,17 +1918,17 @@ module PutConfigurationAggregator = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidRoleException" ->
+      | _, "InvalidRoleException" ->
          (`InvalidRoleException (invalid_role_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableOrganizationException" ->
+      | _, "NoAvailableOrganizationException" ->
          (`NoAvailableOrganizationException (no_available_organization_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAllFeaturesNotEnabledException" ->
+      | _, "OrganizationAllFeaturesNotEnabledException" ->
          (`OrganizationAllFeaturesNotEnabledException (organization_all_features_not_enabled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1952,15 +1952,15 @@ module PutConfigurationRecorder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidConfigurationRecorderNameException" ->
+      | _, "InvalidConfigurationRecorderNameException" ->
          (`InvalidConfigurationRecorderNameException (invalid_configuration_recorder_name_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidRecordingGroupException" ->
+      | _, "InvalidRecordingGroupException" ->
          (`InvalidRecordingGroupException (invalid_recording_group_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidRoleException" ->
+      | _, "InvalidRoleException" ->
          (`InvalidRoleException (invalid_role_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfConfigurationRecordersExceededException" ->
+      | _, "MaxNumberOfConfigurationRecordersExceededException" ->
          (`MaxNumberOfConfigurationRecordersExceededException (max_number_of_configuration_recorders_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1984,15 +1984,15 @@ module PutConformancePack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ConformancePackTemplateValidationException" ->
+      | _, "ConformancePackTemplateValidationException" ->
          (`ConformancePackTemplateValidationException (conformance_pack_template_validation_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfConformancePacksExceededException" ->
+      | _, "MaxNumberOfConformancePacksExceededException" ->
          (`MaxNumberOfConformancePacksExceededException (max_number_of_conformance_packs_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2016,21 +2016,21 @@ module PutDeliveryChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientDeliveryPolicyException" ->
+      | _, "InsufficientDeliveryPolicyException" ->
          (`InsufficientDeliveryPolicyException (insufficient_delivery_policy_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidDeliveryChannelNameException" ->
+      | _, "InvalidDeliveryChannelNameException" ->
          (`InvalidDeliveryChannelNameException (invalid_delivery_channel_name_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidS3KeyPrefixException" ->
+      | _, "InvalidS3KeyPrefixException" ->
          (`InvalidS3KeyPrefixException (invalid_s3_key_prefix_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidS3KmsKeyArnException" ->
+      | _, "InvalidS3KmsKeyArnException" ->
          (`InvalidS3KmsKeyArnException (invalid_s3_kms_key_arn_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidSNSTopicARNException" ->
+      | _, "InvalidSNSTopicARNException" ->
          (`InvalidSNSTopicARNException (invalid_sns_topic_arn_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfDeliveryChannelsExceededException" ->
+      | _, "MaxNumberOfDeliveryChannelsExceededException" ->
          (`MaxNumberOfDeliveryChannelsExceededException (max_number_of_delivery_channels_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableConfigurationRecorderException" ->
+      | _, "NoAvailableConfigurationRecorderException" ->
          (`NoAvailableConfigurationRecorderException (no_available_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchBucketException" ->
+      | _, "NoSuchBucketException" ->
          (`NoSuchBucketException (no_such_bucket_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2054,11 +2054,11 @@ module PutEvaluations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidResultTokenException" ->
+      | _, "InvalidResultTokenException" ->
          (`InvalidResultTokenException (invalid_result_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2082,9 +2082,9 @@ module PutExternalEvaluation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2108,21 +2108,21 @@ module PutOrganizationConfigRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfOrganizationConfigRulesExceededException" ->
+      | _, "MaxNumberOfOrganizationConfigRulesExceededException" ->
          (`MaxNumberOfOrganizationConfigRulesExceededException (max_number_of_organization_config_rules_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableOrganizationException" ->
+      | _, "NoAvailableOrganizationException" ->
          (`NoAvailableOrganizationException (no_available_organization_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAllFeaturesNotEnabledException" ->
+      | _, "OrganizationAllFeaturesNotEnabledException" ->
          (`OrganizationAllFeaturesNotEnabledException (organization_all_features_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2146,21 +2146,21 @@ module PutOrganizationConformancePack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfOrganizationConformancePacksExceededException" ->
+      | _, "MaxNumberOfOrganizationConformancePacksExceededException" ->
          (`MaxNumberOfOrganizationConformancePacksExceededException (max_number_of_organization_conformance_packs_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoAvailableOrganizationException" ->
+      | _, "NoAvailableOrganizationException" ->
          (`NoAvailableOrganizationException (no_available_organization_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAccessDeniedException" ->
+      | _, "OrganizationAccessDeniedException" ->
          (`OrganizationAccessDeniedException (organization_access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationAllFeaturesNotEnabledException" ->
+      | _, "OrganizationAllFeaturesNotEnabledException" ->
          (`OrganizationAllFeaturesNotEnabledException (organization_all_features_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "OrganizationConformancePackTemplateValidationException" ->
+      | _, "OrganizationConformancePackTemplateValidationException" ->
          (`OrganizationConformancePackTemplateValidationException (organization_conformance_pack_template_validation_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2184,9 +2184,9 @@ module PutRemediationConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2210,9 +2210,9 @@ module PutRemediationExceptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2236,13 +2236,13 @@ module PutResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxActiveResourcesExceededException" ->
+      | _, "MaxActiveResourcesExceededException" ->
          (`MaxActiveResourcesExceededException (max_active_resources_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoRunningConfigurationRecorderException" ->
+      | _, "NoRunningConfigurationRecorderException" ->
          (`NoRunningConfigurationRecorderException (no_running_configuration_recorder_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2266,9 +2266,9 @@ module PutRetentionConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "MaxNumberOfRetentionConfigurationsExceededException" ->
+      | _, "MaxNumberOfRetentionConfigurationsExceededException" ->
          (`MaxNumberOfRetentionConfigurationsExceededException (max_number_of_retention_configurations_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2292,11 +2292,11 @@ module PutStoredQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceConcurrentModificationException" ->
+      | _, "ResourceConcurrentModificationException" ->
          (`ResourceConcurrentModificationException (resource_concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2320,13 +2320,13 @@ module SelectAggregateResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidExpressionException" ->
+      | _, "InvalidExpressionException" ->
          (`InvalidExpressionException (invalid_expression_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationAggregatorException" ->
+      | _, "NoSuchConfigurationAggregatorException" ->
          (`NoSuchConfigurationAggregatorException (no_such_configuration_aggregator_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2350,11 +2350,11 @@ module SelectResourceConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidExpressionException" ->
+      | _, "InvalidExpressionException" ->
          (`InvalidExpressionException (invalid_expression_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidLimitException" ->
+      | _, "InvalidLimitException" ->
          (`InvalidLimitException (invalid_limit_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2378,13 +2378,13 @@ module StartConfigRulesEvaluation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigRuleException" ->
+      | _, "NoSuchConfigRuleException" ->
          (`NoSuchConfigRuleException (no_such_config_rule_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2408,9 +2408,9 @@ module StartConfigurationRecorder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoAvailableDeliveryChannelException" ->
+      | _, "NoAvailableDeliveryChannelException" ->
          (`NoAvailableDeliveryChannelException (no_available_delivery_channel_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchConfigurationRecorderException" ->
+      | _, "NoSuchConfigurationRecorderException" ->
          (`NoSuchConfigurationRecorderException (no_such_configuration_recorder_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2434,11 +2434,11 @@ module StartRemediationExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "NoSuchRemediationConfigurationException" ->
+      | _, "NoSuchRemediationConfigurationException" ->
          (`NoSuchRemediationConfigurationException (no_such_remediation_configuration_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2462,9 +2462,9 @@ module StartResourceEvaluation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "IdempotentParameterMismatch" ->
+      | _, "IdempotentParameterMismatch" ->
          (`IdempotentParameterMismatch (idempotent_parameter_mismatch_of_yojson tree path))
-      | "com.amazonaws.configservice", "InvalidParameterValueException" ->
+      | _, "InvalidParameterValueException" ->
          (`InvalidParameterValueException (invalid_parameter_value_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2488,7 +2488,7 @@ module StopConfigurationRecorder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "NoSuchConfigurationRecorderException" ->
+      | _, "NoSuchConfigurationRecorderException" ->
          (`NoSuchConfigurationRecorderException (no_such_configuration_recorder_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2512,11 +2512,11 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2540,9 +2540,9 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.configservice", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.configservice", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

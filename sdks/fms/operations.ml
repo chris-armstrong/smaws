@@ -4,15 +4,15 @@ module AssociateAdminAccount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,13 +36,13 @@ module AssociateThirdPartyFirewall = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -66,15 +66,15 @@ module BatchAssociateResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -98,13 +98,13 @@ module BatchDisassociateResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -128,11 +128,11 @@ module DeleteAppsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -156,11 +156,11 @@ module DeleteNotificationChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -184,15 +184,15 @@ module DeletePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -216,11 +216,11 @@ module DeleteProtocolsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -244,13 +244,13 @@ module DeleteResourceSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -274,11 +274,11 @@ module DisassociateAdminAccount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -302,13 +302,13 @@ module DisassociateThirdPartyFirewall = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -332,11 +332,11 @@ module GetAdminAccount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -360,15 +360,15 @@ module GetAdminScope = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -392,11 +392,11 @@ module GetAppsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -420,13 +420,13 @@ module GetComplianceDetail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -450,11 +450,11 @@ module GetNotificationChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -478,13 +478,13 @@ module GetPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidTypeException" ->
+      | _, "InvalidTypeException" ->
          (`InvalidTypeException (invalid_type_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -508,11 +508,11 @@ module GetProtectionStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -536,11 +536,11 @@ module GetProtocolsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,13 +564,13 @@ module GetResourceSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -594,13 +594,13 @@ module GetThirdPartyFirewallAssociationStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -624,11 +624,11 @@ module GetViolationDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -652,13 +652,13 @@ module ListAdminAccountsForOrganization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -682,11 +682,11 @@ module ListAdminsManagingAccount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -710,13 +710,13 @@ module ListAppsLists = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -740,9 +740,9 @@ module ListComplianceStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -766,11 +766,11 @@ module ListDiscoveredResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -794,9 +794,9 @@ module ListMemberAccounts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -820,13 +820,13 @@ module ListPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -850,11 +850,11 @@ module ListProtocolsLists = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -878,13 +878,13 @@ module ListResourceSetResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -908,11 +908,11 @@ module ListResourceSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -936,13 +936,13 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -966,13 +966,13 @@ module ListThirdPartyFirewallFirewallPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,13 +996,13 @@ module PutAdminAccount = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1026,15 +1026,15 @@ module PutAppsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1058,11 +1058,11 @@ module PutNotificationChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1086,17 +1086,17 @@ module PutPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidTypeException" ->
+      | _, "InvalidTypeException" ->
          (`InvalidTypeException (invalid_type_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1120,15 +1120,15 @@ module PutProtocolsList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1152,13 +1152,13 @@ module PutResourceSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1182,15 +1182,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1214,13 +1214,13 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.fms", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.fms", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

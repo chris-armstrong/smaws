@@ -4,11 +4,11 @@ module CancelCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -32,11 +32,11 @@ module CancelJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -60,9 +60,9 @@ module CreateAddress = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidAddressException" ->
+      | _, "InvalidAddressException" ->
          (`InvalidAddressException (invalid_address_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "UnsupportedAddressException" ->
+      | _, "UnsupportedAddressException" ->
          (`UnsupportedAddressException (unsupported_address_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -86,13 +86,13 @@ module CreateCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "Ec2RequestFailedException" ->
+      | _, "Ec2RequestFailedException" ->
          (`Ec2RequestFailedException (ec2_request_failed_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidInputCombinationException" ->
+      | _, "InvalidInputCombinationException" ->
          (`InvalidInputCombinationException (invalid_input_combination_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -116,15 +116,15 @@ module CreateJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "ClusterLimitExceededException" ->
+      | _, "ClusterLimitExceededException" ->
          (`ClusterLimitExceededException (cluster_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "Ec2RequestFailedException" ->
+      | _, "Ec2RequestFailedException" ->
          (`Ec2RequestFailedException (ec2_request_failed_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidInputCombinationException" ->
+      | _, "InvalidInputCombinationException" ->
          (`InvalidInputCombinationException (invalid_input_combination_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -148,7 +148,7 @@ module CreateLongTermPricing = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -172,15 +172,15 @@ module CreateReturnShippingLabel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidInputCombinationException" ->
+      | _, "InvalidInputCombinationException" ->
          (`InvalidInputCombinationException (invalid_input_combination_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "ReturnShippingLabelAlreadyExistsException" ->
+      | _, "ReturnShippingLabelAlreadyExistsException" ->
          (`ReturnShippingLabelAlreadyExistsException (return_shipping_label_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -204,7 +204,7 @@ module DescribeAddress = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -228,9 +228,9 @@ module DescribeAddresses = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -254,7 +254,7 @@ module DescribeCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -278,7 +278,7 @@ module DescribeJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -302,11 +302,11 @@ module DescribeReturnShippingLabel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -330,9 +330,9 @@ module GetJobManifest = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -356,9 +356,9 @@ module GetJobUnlockCode = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -400,9 +400,9 @@ module GetSoftwareUpdates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,9 +426,9 @@ module ListClusterJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -452,7 +452,7 @@ module ListClusters = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -476,9 +476,9 @@ module ListCompatibleImages = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "Ec2RequestFailedException" ->
+      | _, "Ec2RequestFailedException" ->
          (`Ec2RequestFailedException (ec2_request_failed_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -502,7 +502,7 @@ module ListJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -526,9 +526,9 @@ module ListLongTermPricing = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -552,7 +552,7 @@ module ListPickupLocations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -576,9 +576,9 @@ module ListServiceVersions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -602,15 +602,15 @@ module UpdateCluster = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "Ec2RequestFailedException" ->
+      | _, "Ec2RequestFailedException" ->
          (`Ec2RequestFailedException (ec2_request_failed_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidInputCombinationException" ->
+      | _, "InvalidInputCombinationException" ->
          (`InvalidInputCombinationException (invalid_input_combination_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -634,17 +634,17 @@ module UpdateJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "ClusterLimitExceededException" ->
+      | _, "ClusterLimitExceededException" ->
          (`ClusterLimitExceededException (cluster_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "Ec2RequestFailedException" ->
+      | _, "Ec2RequestFailedException" ->
          (`Ec2RequestFailedException (ec2_request_failed_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidInputCombinationException" ->
+      | _, "InvalidInputCombinationException" ->
          (`InvalidInputCombinationException (invalid_input_combination_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "KMSRequestFailedException" ->
+      | _, "KMSRequestFailedException" ->
          (`KMSRequestFailedException (kms_request_failed_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -668,9 +668,9 @@ module UpdateJobShipmentState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidJobStateException" ->
+      | _, "InvalidJobStateException" ->
          (`InvalidJobStateException (invalid_job_state_exception_of_yojson tree path))
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -694,7 +694,7 @@ module UpdateLongTermPricing = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.snowball", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

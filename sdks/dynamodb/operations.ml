@@ -4,9 +4,9 @@ module BatchExecuteStatement = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -30,15 +30,15 @@ module BatchGetItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -62,17 +62,17 @@ module BatchWriteItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ItemCollectionSizeLimitExceededException" ->
+      | _, "ItemCollectionSizeLimitExceededException" ->
          (`ItemCollectionSizeLimitExceededException (item_collection_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -96,19 +96,19 @@ module CreateBackup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "BackupInUseException" ->
+      | _, "BackupInUseException" ->
          (`BackupInUseException (backup_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ContinuousBackupsUnavailableException" ->
+      | _, "ContinuousBackupsUnavailableException" ->
          (`ContinuousBackupsUnavailableException (continuous_backups_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableInUseException" ->
+      | _, "TableInUseException" ->
          (`TableInUseException (table_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -132,15 +132,15 @@ module CreateGlobalTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "GlobalTableAlreadyExistsException" ->
+      | _, "GlobalTableAlreadyExistsException" ->
          (`GlobalTableAlreadyExistsException (global_table_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -164,13 +164,13 @@ module CreateTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -194,15 +194,15 @@ module DeleteBackup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "BackupInUseException" ->
+      | _, "BackupInUseException" ->
          (`BackupInUseException (backup_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "BackupNotFoundException" ->
+      | _, "BackupNotFoundException" ->
          (`BackupNotFoundException (backup_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -226,21 +226,21 @@ module DeleteItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ConditionalCheckFailedException" ->
+      | _, "ConditionalCheckFailedException" ->
          (`ConditionalCheckFailedException (conditional_check_failed_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ItemCollectionSizeLimitExceededException" ->
+      | _, "ItemCollectionSizeLimitExceededException" ->
          (`ItemCollectionSizeLimitExceededException (item_collection_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionConflictException" ->
+      | _, "TransactionConflictException" ->
          (`TransactionConflictException (transaction_conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -264,17 +264,17 @@ module DeleteResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "PolicyNotFoundException" ->
+      | _, "PolicyNotFoundException" ->
          (`PolicyNotFoundException (policy_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -298,15 +298,15 @@ module DeleteTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -330,11 +330,11 @@ module DescribeBackup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "BackupNotFoundException" ->
+      | _, "BackupNotFoundException" ->
          (`BackupNotFoundException (backup_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -358,11 +358,11 @@ module DescribeContinuousBackups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -386,9 +386,9 @@ module DescribeContributorInsights = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -430,11 +430,11 @@ module DescribeExport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ExportNotFoundException" ->
+      | _, "ExportNotFoundException" ->
          (`ExportNotFoundException (export_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -458,11 +458,11 @@ module DescribeGlobalTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "GlobalTableNotFoundException" ->
+      | _, "GlobalTableNotFoundException" ->
          (`GlobalTableNotFoundException (global_table_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -486,11 +486,11 @@ module DescribeGlobalTableSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "GlobalTableNotFoundException" ->
+      | _, "GlobalTableNotFoundException" ->
          (`GlobalTableNotFoundException (global_table_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -514,7 +514,7 @@ module DescribeImport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ImportNotFoundException" ->
+      | _, "ImportNotFoundException" ->
          (`ImportNotFoundException (import_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -538,11 +538,11 @@ module DescribeKinesisStreamingDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -566,9 +566,9 @@ module DescribeLimits = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -592,11 +592,11 @@ module DescribeTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -620,9 +620,9 @@ module DescribeTableReplicaAutoScaling = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -646,11 +646,11 @@ module DescribeTimeToLive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -674,15 +674,15 @@ module DisableKinesisStreamingDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -706,15 +706,15 @@ module EnableKinesisStreamingDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -738,21 +738,21 @@ module ExecuteStatement = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ConditionalCheckFailedException" ->
+      | _, "ConditionalCheckFailedException" ->
          (`ConditionalCheckFailedException (conditional_check_failed_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "DuplicateItemException" ->
+      | _, "DuplicateItemException" ->
          (`DuplicateItemException (duplicate_item_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ItemCollectionSizeLimitExceededException" ->
+      | _, "ItemCollectionSizeLimitExceededException" ->
          (`ItemCollectionSizeLimitExceededException (item_collection_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionConflictException" ->
+      | _, "TransactionConflictException" ->
          (`TransactionConflictException (transaction_conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -776,19 +776,19 @@ module ExecuteTransaction = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "IdempotentParameterMismatchException" ->
+      | _, "IdempotentParameterMismatchException" ->
          (`IdempotentParameterMismatchException (idempotent_parameter_mismatch_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionCanceledException" ->
+      | _, "TransactionCanceledException" ->
          (`TransactionCanceledException (transaction_canceled_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionInProgressException" ->
+      | _, "TransactionInProgressException" ->
          (`TransactionInProgressException (transaction_in_progress_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -812,17 +812,17 @@ module ExportTableToPointInTime = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ExportConflictException" ->
+      | _, "ExportConflictException" ->
          (`ExportConflictException (export_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidExportTimeException" ->
+      | _, "InvalidExportTimeException" ->
          (`InvalidExportTimeException (invalid_export_time_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "PointInTimeRecoveryUnavailableException" ->
+      | _, "PointInTimeRecoveryUnavailableException" ->
          (`PointInTimeRecoveryUnavailableException (point_in_time_recovery_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -846,15 +846,15 @@ module GetItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -878,13 +878,13 @@ module GetResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "PolicyNotFoundException" ->
+      | _, "PolicyNotFoundException" ->
          (`PolicyNotFoundException (policy_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -908,11 +908,11 @@ module ImportTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ImportConflictException" ->
+      | _, "ImportConflictException" ->
          (`ImportConflictException (import_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -936,9 +936,9 @@ module ListBackups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -962,9 +962,9 @@ module ListContributorInsights = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -988,9 +988,9 @@ module ListExports = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1014,9 +1014,9 @@ module ListGlobalTables = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1040,7 +1040,7 @@ module ListImports = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1064,9 +1064,9 @@ module ListTables = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1090,11 +1090,11 @@ module ListTagsOfResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1118,21 +1118,21 @@ module PutItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ConditionalCheckFailedException" ->
+      | _, "ConditionalCheckFailedException" ->
          (`ConditionalCheckFailedException (conditional_check_failed_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ItemCollectionSizeLimitExceededException" ->
+      | _, "ItemCollectionSizeLimitExceededException" ->
          (`ItemCollectionSizeLimitExceededException (item_collection_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionConflictException" ->
+      | _, "TransactionConflictException" ->
          (`TransactionConflictException (transaction_conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1156,17 +1156,17 @@ module PutResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "PolicyNotFoundException" ->
+      | _, "PolicyNotFoundException" ->
          (`PolicyNotFoundException (policy_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1190,15 +1190,15 @@ module Query = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1222,19 +1222,19 @@ module RestoreTableFromBackup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "BackupInUseException" ->
+      | _, "BackupInUseException" ->
          (`BackupInUseException (backup_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "BackupNotFoundException" ->
+      | _, "BackupNotFoundException" ->
          (`BackupNotFoundException (backup_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableAlreadyExistsException" ->
+      | _, "TableAlreadyExistsException" ->
          (`TableAlreadyExistsException (table_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableInUseException" ->
+      | _, "TableInUseException" ->
          (`TableInUseException (table_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1258,21 +1258,21 @@ module RestoreTableToPointInTime = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidRestoreTimeException" ->
+      | _, "InvalidRestoreTimeException" ->
          (`InvalidRestoreTimeException (invalid_restore_time_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "PointInTimeRecoveryUnavailableException" ->
+      | _, "PointInTimeRecoveryUnavailableException" ->
          (`PointInTimeRecoveryUnavailableException (point_in_time_recovery_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableAlreadyExistsException" ->
+      | _, "TableAlreadyExistsException" ->
          (`TableAlreadyExistsException (table_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableInUseException" ->
+      | _, "TableInUseException" ->
          (`TableInUseException (table_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1296,15 +1296,15 @@ module Scan = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1328,15 +1328,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1360,17 +1360,17 @@ module TransactGetItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionCanceledException" ->
+      | _, "TransactionCanceledException" ->
          (`TransactionCanceledException (transaction_canceled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1394,21 +1394,21 @@ module TransactWriteItems = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "IdempotentParameterMismatchException" ->
+      | _, "IdempotentParameterMismatchException" ->
          (`IdempotentParameterMismatchException (idempotent_parameter_mismatch_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionCanceledException" ->
+      | _, "TransactionCanceledException" ->
          (`TransactionCanceledException (transaction_canceled_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionInProgressException" ->
+      | _, "TransactionInProgressException" ->
          (`TransactionInProgressException (transaction_in_progress_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1432,15 +1432,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1464,13 +1464,13 @@ module UpdateContinuousBackups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ContinuousBackupsUnavailableException" ->
+      | _, "ContinuousBackupsUnavailableException" ->
          (`ContinuousBackupsUnavailableException (continuous_backups_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1494,9 +1494,9 @@ module UpdateContributorInsights = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1520,17 +1520,17 @@ module UpdateGlobalTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "GlobalTableNotFoundException" ->
+      | _, "GlobalTableNotFoundException" ->
          (`GlobalTableNotFoundException (global_table_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ReplicaAlreadyExistsException" ->
+      | _, "ReplicaAlreadyExistsException" ->
          (`ReplicaAlreadyExistsException (replica_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ReplicaNotFoundException" ->
+      | _, "ReplicaNotFoundException" ->
          (`ReplicaNotFoundException (replica_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TableNotFoundException" ->
+      | _, "TableNotFoundException" ->
          (`TableNotFoundException (table_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1554,19 +1554,19 @@ module UpdateGlobalTableSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "GlobalTableNotFoundException" ->
+      | _, "GlobalTableNotFoundException" ->
          (`GlobalTableNotFoundException (global_table_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "IndexNotFoundException" ->
+      | _, "IndexNotFoundException" ->
          (`IndexNotFoundException (index_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ReplicaNotFoundException" ->
+      | _, "ReplicaNotFoundException" ->
          (`ReplicaNotFoundException (replica_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1590,21 +1590,21 @@ module UpdateItem = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "ConditionalCheckFailedException" ->
+      | _, "ConditionalCheckFailedException" ->
          (`ConditionalCheckFailedException (conditional_check_failed_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ItemCollectionSizeLimitExceededException" ->
+      | _, "ItemCollectionSizeLimitExceededException" ->
          (`ItemCollectionSizeLimitExceededException (item_collection_size_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ProvisionedThroughputExceededException" ->
+      | _, "ProvisionedThroughputExceededException" ->
          (`ProvisionedThroughputExceededException (provisioned_throughput_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "TransactionConflictException" ->
+      | _, "TransactionConflictException" ->
          (`TransactionConflictException (transaction_conflict_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1628,15 +1628,15 @@ module UpdateKinesisStreamingDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1660,15 +1660,15 @@ module UpdateTable = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1692,13 +1692,13 @@ module UpdateTableReplicaAutoScaling = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1722,15 +1722,15 @@ module UpdateTimeToLive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.dynamodb", "InternalServerError" ->
+      | _, "InternalServerError" ->
          (`InternalServerError (internal_server_error_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "InvalidEndpointException" ->
+      | _, "InvalidEndpointException" ->
          (`InvalidEndpointException (invalid_endpoint_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.dynamodb", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

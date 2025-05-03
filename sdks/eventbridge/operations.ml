@@ -4,15 +4,15 @@ module ActivateEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,13 +36,13 @@ module CancelReplay = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "IllegalStatusException" ->
+      | _, "IllegalStatusException" ->
          (`IllegalStatusException (illegal_status_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -66,13 +66,13 @@ module CreateApiDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -96,17 +96,17 @@ module CreateArchive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidEventPatternException" ->
+      | _, "InvalidEventPatternException" ->
          (`InvalidEventPatternException (invalid_event_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -130,11 +130,11 @@ module CreateConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -158,11 +158,11 @@ module CreateEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -186,19 +186,19 @@ module CreateEventBus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -222,15 +222,15 @@ module CreatePartnerEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -254,15 +254,15 @@ module DeactivateEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -286,11 +286,11 @@ module DeauthorizeConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -314,11 +314,11 @@ module DeleteApiDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -342,11 +342,11 @@ module DeleteArchive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -370,11 +370,11 @@ module DeleteConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -398,11 +398,11 @@ module DeleteEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,9 +426,9 @@ module DeleteEventBus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -452,11 +452,11 @@ module DeletePartnerEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -480,13 +480,13 @@ module DeleteRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -510,9 +510,9 @@ module DescribeApiDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -536,11 +536,11 @@ module DescribeArchive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,9 +564,9 @@ module DescribeConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -590,9 +590,9 @@ module DescribeEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -616,9 +616,9 @@ module DescribeEventBus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -642,11 +642,11 @@ module DescribeEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -670,11 +670,11 @@ module DescribePartnerEventSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -698,9 +698,9 @@ module DescribeReplay = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -724,9 +724,9 @@ module DescribeRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -750,13 +750,13 @@ module DisableRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -780,13 +780,13 @@ module EnableRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -810,7 +810,7 @@ module ListApiDestinations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -834,9 +834,9 @@ module ListArchives = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -860,7 +860,7 @@ module ListConnections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -884,7 +884,7 @@ module ListEndpoints = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -908,7 +908,7 @@ module ListEventBuses = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -932,9 +932,9 @@ module ListEventSources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -958,11 +958,11 @@ module ListPartnerEventSourceAccounts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -986,9 +986,9 @@ module ListPartnerEventSources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1012,7 +1012,7 @@ module ListReplays = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1036,9 +1036,9 @@ module ListRuleNamesByTarget = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1062,9 +1062,9 @@ module ListRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1088,9 +1088,9 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1114,9 +1114,9 @@ module ListTargetsByRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1140,7 +1140,7 @@ module PutEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1164,9 +1164,9 @@ module PutPartnerEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1190,15 +1190,15 @@ module PutPermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "PolicyLengthExceededException" ->
+      | _, "PolicyLengthExceededException" ->
          (`PolicyLengthExceededException (policy_length_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1222,17 +1222,17 @@ module PutRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidEventPatternException" ->
+      | _, "InvalidEventPatternException" ->
          (`InvalidEventPatternException (invalid_event_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1256,15 +1256,15 @@ module PutTargets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1288,13 +1288,13 @@ module RemovePermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1318,13 +1318,13 @@ module RemoveTargets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1348,15 +1348,15 @@ module StartReplay = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidEventPatternException" ->
+      | _, "InvalidEventPatternException" ->
          (`InvalidEventPatternException (invalid_event_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1380,13 +1380,13 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1410,9 +1410,9 @@ module TestEventPattern = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidEventPatternException" ->
+      | _, "InvalidEventPatternException" ->
          (`InvalidEventPatternException (invalid_event_pattern_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1436,13 +1436,13 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ManagedRuleException" ->
+      | _, "ManagedRuleException" ->
          (`ManagedRuleException (managed_rule_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1466,13 +1466,13 @@ module UpdateApiDestination = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1496,15 +1496,15 @@ module UpdateArchive = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InvalidEventPatternException" ->
+      | _, "InvalidEventPatternException" ->
          (`InvalidEventPatternException (invalid_event_pattern_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1528,13 +1528,13 @@ module UpdateConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1558,11 +1558,11 @@ module UpdateEndpoint = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1586,13 +1586,13 @@ module UpdateEventBus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.eventbridge", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "InternalException" ->
+      | _, "InternalException" ->
          (`InternalException (internal_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "OperationDisabledException" ->
+      | _, "OperationDisabledException" ->
          (`OperationDisabledException (operation_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.eventbridge", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

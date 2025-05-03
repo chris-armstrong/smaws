@@ -4,15 +4,15 @@ module CreateHttpNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceAlreadyExists" ->
+      | _, "NamespaceAlreadyExists" ->
          (`NamespaceAlreadyExists (namespace_already_exists_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceLimitExceeded" ->
+      | _, "ResourceLimitExceeded" ->
          (`ResourceLimitExceeded (resource_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,15 +36,15 @@ module CreatePrivateDnsNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceAlreadyExists" ->
+      | _, "NamespaceAlreadyExists" ->
          (`NamespaceAlreadyExists (namespace_already_exists_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceLimitExceeded" ->
+      | _, "ResourceLimitExceeded" ->
          (`ResourceLimitExceeded (resource_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -68,15 +68,15 @@ module CreatePublicDnsNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceAlreadyExists" ->
+      | _, "NamespaceAlreadyExists" ->
          (`NamespaceAlreadyExists (namespace_already_exists_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceLimitExceeded" ->
+      | _, "ResourceLimitExceeded" ->
          (`ResourceLimitExceeded (resource_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -100,15 +100,15 @@ module CreateService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceLimitExceeded" ->
+      | _, "ResourceLimitExceeded" ->
          (`ResourceLimitExceeded (resource_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceAlreadyExists" ->
+      | _, "ServiceAlreadyExists" ->
          (`ServiceAlreadyExists (service_already_exists_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -132,13 +132,13 @@ module DeleteNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -162,11 +162,11 @@ module DeleteService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -190,15 +190,15 @@ module DeregisterInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InstanceNotFound" ->
+      | _, "InstanceNotFound" ->
          (`InstanceNotFound (instance_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -222,13 +222,13 @@ module DiscoverInstances = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -252,13 +252,13 @@ module DiscoverInstancesRevision = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "RequestLimitExceeded" ->
+      | _, "RequestLimitExceeded" ->
          (`RequestLimitExceeded (request_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -282,11 +282,11 @@ module GetInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InstanceNotFound" ->
+      | _, "InstanceNotFound" ->
          (`InstanceNotFound (instance_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -310,11 +310,11 @@ module GetInstancesHealthStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InstanceNotFound" ->
+      | _, "InstanceNotFound" ->
          (`InstanceNotFound (instance_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -338,9 +338,9 @@ module GetNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -364,9 +364,9 @@ module GetOperation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "OperationNotFound" ->
+      | _, "OperationNotFound" ->
          (`OperationNotFound (operation_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -390,9 +390,9 @@ module GetService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -416,9 +416,9 @@ module ListInstances = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -442,7 +442,7 @@ module ListNamespaces = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -466,7 +466,7 @@ module ListOperations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -490,7 +490,7 @@ module ListServices = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -514,9 +514,9 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -540,15 +540,15 @@ module RegisterInstance = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceLimitExceeded" ->
+      | _, "ResourceLimitExceeded" ->
          (`ResourceLimitExceeded (resource_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -572,11 +572,11 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -600,9 +600,9 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -626,13 +626,13 @@ module UpdateHttpNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -656,13 +656,13 @@ module UpdateInstanceCustomHealthStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "CustomHealthNotFound" ->
+      | _, "CustomHealthNotFound" ->
          (`CustomHealthNotFound (custom_health_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InstanceNotFound" ->
+      | _, "InstanceNotFound" ->
          (`InstanceNotFound (instance_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -686,13 +686,13 @@ module UpdatePrivateDnsNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -716,13 +716,13 @@ module UpdatePublicDnsNamespace = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "NamespaceNotFound" ->
+      | _, "NamespaceNotFound" ->
          (`NamespaceNotFound (namespace_not_found_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ResourceInUse" ->
+      | _, "ResourceInUse" ->
          (`ResourceInUse (resource_in_use_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -746,11 +746,11 @@ module UpdateService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.servicediscovery", "DuplicateRequest" ->
+      | _, "DuplicateRequest" ->
          (`DuplicateRequest (duplicate_request_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "InvalidInput" ->
+      | _, "InvalidInput" ->
          (`InvalidInput (invalid_input_of_yojson tree path))
-      | "com.amazonaws.servicediscovery", "ServiceNotFound" ->
+      | _, "ServiceNotFound" ->
          (`ServiceNotFound (service_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       

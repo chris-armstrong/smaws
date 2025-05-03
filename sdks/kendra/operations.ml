@@ -4,17 +4,17 @@ module AssociateEntitiesToExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceAlreadyExistException" ->
+      | _, "ResourceAlreadyExistException" ->
          (`ResourceAlreadyExistException (resource_already_exist_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,17 +38,17 @@ module AssociatePersonasToEntities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceAlreadyExistException" ->
+      | _, "ResourceAlreadyExistException" ->
          (`ResourceAlreadyExistException (resource_already_exist_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -72,17 +72,17 @@ module BatchDeleteDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -106,15 +106,15 @@ module BatchDeleteFeaturedResultsSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -138,17 +138,17 @@ module BatchGetDocumentStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -172,19 +172,19 @@ module BatchPutDocument = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -208,17 +208,17 @@ module ClearQuerySuggestions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -242,19 +242,19 @@ module CreateAccessControlConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -278,21 +278,21 @@ module CreateDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceAlreadyExistException" ->
+      | _, "ResourceAlreadyExistException" ->
          (`ResourceAlreadyExistException (resource_already_exist_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -316,19 +316,19 @@ module CreateExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -352,19 +352,19 @@ module CreateFaq = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -388,19 +388,19 @@ module CreateFeaturedResultsSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "FeaturedResultsConflictException" ->
+      | _, "FeaturedResultsConflictException" ->
          (`FeaturedResultsConflictException (featured_results_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -424,19 +424,19 @@ module CreateIndex = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceAlreadyExistException" ->
+      | _, "ResourceAlreadyExistException" ->
          (`ResourceAlreadyExistException (resource_already_exist_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -460,19 +460,19 @@ module CreateQuerySuggestionsBlockList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -496,19 +496,19 @@ module CreateThesaurus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -532,17 +532,17 @@ module DeleteAccessControlConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -566,17 +566,17 @@ module DeleteDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -600,17 +600,17 @@ module DeleteExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -634,17 +634,17 @@ module DeleteFaq = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -668,17 +668,17 @@ module DeleteIndex = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -702,17 +702,17 @@ module DeletePrincipalMapping = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -736,17 +736,17 @@ module DeleteQuerySuggestionsBlockList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -770,17 +770,17 @@ module DeleteThesaurus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -804,15 +804,15 @@ module DescribeAccessControlConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -836,15 +836,15 @@ module DescribeDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -868,15 +868,15 @@ module DescribeExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -900,15 +900,15 @@ module DescribeFaq = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -932,15 +932,15 @@ module DescribeFeaturedResultsSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -964,15 +964,15 @@ module DescribeIndex = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,15 +996,15 @@ module DescribePrincipalMapping = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1028,15 +1028,15 @@ module DescribeQuerySuggestionsBlockList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1060,15 +1060,15 @@ module DescribeQuerySuggestionsConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1092,15 +1092,15 @@ module DescribeThesaurus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1124,15 +1124,15 @@ module DisassociateEntitiesFromExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1156,15 +1156,15 @@ module DisassociatePersonasFromEntities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1188,19 +1188,19 @@ module GetQuerySuggestions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1224,13 +1224,13 @@ module GetSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1254,15 +1254,15 @@ module ListAccessControlConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1286,17 +1286,17 @@ module ListDataSourceSyncJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1320,15 +1320,15 @@ module ListDataSources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1352,15 +1352,15 @@ module ListEntityPersonas = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1384,15 +1384,15 @@ module ListExperienceEntities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1416,15 +1416,15 @@ module ListExperiences = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1448,15 +1448,15 @@ module ListFaqs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1480,15 +1480,15 @@ module ListFeaturedResultsSets = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1512,17 +1512,17 @@ module ListGroupsOlderThanOrderingId = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1546,13 +1546,13 @@ module ListIndices = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1576,15 +1576,15 @@ module ListQuerySuggestionsBlockLists = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1608,15 +1608,15 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1640,15 +1640,15 @@ module ListThesauri = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1672,19 +1672,19 @@ module PutPrincipalMapping = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1708,19 +1708,19 @@ module Query = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1744,19 +1744,19 @@ module Retrieve = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1780,19 +1780,19 @@ module StartDataSourceSyncJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceInUseException" ->
+      | _, "ResourceInUseException" ->
          (`ResourceInUseException (resource_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1816,15 +1816,15 @@ module StopDataSourceSyncJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1848,17 +1848,17 @@ module SubmitFeedback = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1882,15 +1882,15 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1914,15 +1914,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1946,19 +1946,19 @@ module UpdateAccessControlConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1982,17 +1982,17 @@ module UpdateDataSource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2016,17 +2016,17 @@ module UpdateExperience = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2050,17 +2050,17 @@ module UpdateFeaturedResultsSet = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "FeaturedResultsConflictException" ->
+      | _, "FeaturedResultsConflictException" ->
          (`FeaturedResultsConflictException (featured_results_conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2084,19 +2084,19 @@ module UpdateIndex = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2120,17 +2120,17 @@ module UpdateQuerySuggestionsBlockList = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2154,17 +2154,17 @@ module UpdateQuerySuggestionsConfig = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2188,17 +2188,17 @@ module UpdateThesaurus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kendra", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.kendra", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

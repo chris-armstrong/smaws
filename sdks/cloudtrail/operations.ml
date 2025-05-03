@@ -4,37 +4,37 @@ module AddTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelNotFoundException" ->
+      | _, "ChannelNotFoundException" ->
          (`ChannelNotFoundException (channel_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTagParameterException" ->
+      | _, "InvalidTagParameterException" ->
          (`InvalidTagParameterException (invalid_tag_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TagsLimitExceededException" ->
+      | _, "TagsLimitExceededException" ->
          (`TagsLimitExceededException (tags_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -58,25 +58,25 @@ module CancelQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveQueryException" ->
+      | _, "InactiveQueryException" ->
          (`InactiveQueryException (inactive_query_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "QueryIdNotFoundException" ->
+      | _, "QueryIdNotFoundException" ->
          (`QueryIdNotFoundException (query_id_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -100,29 +100,29 @@ module CreateChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelAlreadyExistsException" ->
+      | _, "ChannelAlreadyExistsException" ->
          (`ChannelAlreadyExistsException (channel_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelMaxLimitExceededException" ->
+      | _, "ChannelMaxLimitExceededException" ->
          (`ChannelMaxLimitExceededException (channel_max_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreCategoryException" ->
+      | _, "InvalidEventDataStoreCategoryException" ->
          (`InvalidEventDataStoreCategoryException (invalid_event_data_store_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidSourceException" ->
+      | _, "InvalidSourceException" ->
          (`InvalidSourceException (invalid_source_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTagParameterException" ->
+      | _, "InvalidTagParameterException" ->
          (`InvalidTagParameterException (invalid_tag_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TagsLimitExceededException" ->
+      | _, "TagsLimitExceededException" ->
          (`TagsLimitExceededException (tags_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -146,41 +146,41 @@ module CreateEventDataStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreAlreadyExistsException" ->
+      | _, "EventDataStoreAlreadyExistsException" ->
          (`EventDataStoreAlreadyExistsException (event_data_store_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreMaxLimitExceededException" ->
+      | _, "EventDataStoreMaxLimitExceededException" ->
          (`EventDataStoreMaxLimitExceededException (event_data_store_max_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventSelectorsException" ->
+      | _, "InvalidEventSelectorsException" ->
          (`InvalidEventSelectorsException (invalid_event_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidKmsKeyIdException" ->
+      | _, "InvalidKmsKeyIdException" ->
          (`InvalidKmsKeyIdException (invalid_kms_key_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTagParameterException" ->
+      | _, "InvalidTagParameterException" ->
          (`InvalidTagParameterException (invalid_tag_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsException" ->
+      | _, "KmsException" ->
          (`KmsException (kms_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyNotFoundException" ->
+      | _, "KmsKeyNotFoundException" ->
          (`KmsKeyNotFoundException (kms_key_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -204,71 +204,71 @@ module CreateTrail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailInvalidClientTokenIdException" ->
+      | _, "CloudTrailInvalidClientTokenIdException" ->
          (`CloudTrailInvalidClientTokenIdException (cloud_trail_invalid_client_token_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudWatchLogsDeliveryUnavailableException" ->
+      | _, "CloudWatchLogsDeliveryUnavailableException" ->
          (`CloudWatchLogsDeliveryUnavailableException (cloud_watch_logs_delivery_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientS3BucketPolicyException" ->
+      | _, "InsufficientS3BucketPolicyException" ->
          (`InsufficientS3BucketPolicyException (insufficient_s3_bucket_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientSnsTopicPolicyException" ->
+      | _, "InsufficientSnsTopicPolicyException" ->
          (`InsufficientSnsTopicPolicyException (insufficient_sns_topic_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidCloudWatchLogsLogGroupArnException" ->
+      | _, "InvalidCloudWatchLogsLogGroupArnException" ->
          (`InvalidCloudWatchLogsLogGroupArnException (invalid_cloud_watch_logs_log_group_arn_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidCloudWatchLogsRoleArnException" ->
+      | _, "InvalidCloudWatchLogsRoleArnException" ->
          (`InvalidCloudWatchLogsRoleArnException (invalid_cloud_watch_logs_role_arn_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidKmsKeyIdException" ->
+      | _, "InvalidKmsKeyIdException" ->
          (`InvalidKmsKeyIdException (invalid_kms_key_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3BucketNameException" ->
+      | _, "InvalidS3BucketNameException" ->
          (`InvalidS3BucketNameException (invalid_s3_bucket_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3PrefixException" ->
+      | _, "InvalidS3PrefixException" ->
          (`InvalidS3PrefixException (invalid_s3_prefix_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidSnsTopicNameException" ->
+      | _, "InvalidSnsTopicNameException" ->
          (`InvalidSnsTopicNameException (invalid_sns_topic_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTagParameterException" ->
+      | _, "InvalidTagParameterException" ->
          (`InvalidTagParameterException (invalid_tag_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsException" ->
+      | _, "KmsException" ->
          (`KmsException (kms_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyDisabledException" ->
+      | _, "KmsKeyDisabledException" ->
          (`KmsKeyDisabledException (kms_key_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyNotFoundException" ->
+      | _, "KmsKeyNotFoundException" ->
          (`KmsKeyNotFoundException (kms_key_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "MaximumNumberOfTrailsExceededException" ->
+      | _, "MaximumNumberOfTrailsExceededException" ->
          (`MaximumNumberOfTrailsExceededException (maximum_number_of_trails_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "S3BucketDoesNotExistException" ->
+      | _, "S3BucketDoesNotExistException" ->
          (`S3BucketDoesNotExistException (s3_bucket_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TagsLimitExceededException" ->
+      | _, "TagsLimitExceededException" ->
          (`TagsLimitExceededException (tags_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailAlreadyExistsException" ->
+      | _, "TrailAlreadyExistsException" ->
          (`TrailAlreadyExistsException (trail_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotProvidedException" ->
+      | _, "TrailNotProvidedException" ->
          (`TrailNotProvidedException (trail_not_provided_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -292,13 +292,13 @@ module DeleteChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelNotFoundException" ->
+      | _, "ChannelNotFoundException" ->
          (`ChannelNotFoundException (channel_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -322,33 +322,33 @@ module DeleteEventDataStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelExistsForEDSException" ->
+      | _, "ChannelExistsForEDSException" ->
          (`ChannelExistsForEDSException (channel_exists_for_eds_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreFederationEnabledException" ->
+      | _, "EventDataStoreFederationEnabledException" ->
          (`EventDataStoreFederationEnabledException (event_data_store_federation_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreHasOngoingImportException" ->
+      | _, "EventDataStoreHasOngoingImportException" ->
          (`EventDataStoreHasOngoingImportException (event_data_store_has_ongoing_import_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreTerminationProtectedException" ->
+      | _, "EventDataStoreTerminationProtectedException" ->
          (`EventDataStoreTerminationProtectedException (event_data_store_termination_protected_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -372,17 +372,17 @@ module DeleteResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceARNNotValidException" ->
+      | _, "ResourceARNNotValidException" ->
          (`ResourceARNNotValidException (resource_arn_not_valid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourcePolicyNotFoundException" ->
+      | _, "ResourcePolicyNotFoundException" ->
          (`ResourcePolicyNotFoundException (resource_policy_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -406,27 +406,27 @@ module DeleteTrail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -450,27 +450,27 @@ module DeregisterOrganizationDelegatedAdmin = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "AccountNotFoundException" ->
+      | _, "AccountNotFoundException" ->
          (`AccountNotFoundException (account_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "AccountNotRegisteredException" ->
+      | _, "AccountNotRegisteredException" ->
          (`AccountNotRegisteredException (account_not_registered_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationManagementAccountException" ->
+      | _, "NotOrganizationManagementAccountException" ->
          (`NotOrganizationManagementAccountException (not_organization_management_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -494,21 +494,21 @@ module DescribeQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "QueryIdNotFoundException" ->
+      | _, "QueryIdNotFoundException" ->
          (`QueryIdNotFoundException (query_id_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -532,15 +532,15 @@ module DescribeTrails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,33 +564,33 @@ module DisableFederation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -614,35 +614,35 @@ module EnableFederation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreFederationEnabledException" ->
+      | _, "EventDataStoreFederationEnabledException" ->
          (`EventDataStoreFederationEnabledException (event_data_store_federation_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -666,13 +666,13 @@ module GetChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelNotFoundException" ->
+      | _, "ChannelNotFoundException" ->
          (`ChannelNotFoundException (channel_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -696,17 +696,17 @@ module GetEventDataStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -730,17 +730,17 @@ module GetEventSelectors = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -764,13 +764,13 @@ module GetImport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ImportNotFoundException" ->
+      | _, "ImportNotFoundException" ->
          (`ImportNotFoundException (import_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -794,25 +794,25 @@ module GetInsightSelectors = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsightNotEnabledException" ->
+      | _, "InsightNotEnabledException" ->
          (`InsightNotEnabledException (insight_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -836,27 +836,27 @@ module GetQueryResults = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidMaxResultsException" ->
+      | _, "InvalidMaxResultsException" ->
          (`InvalidMaxResultsException (invalid_max_results_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "QueryIdNotFoundException" ->
+      | _, "QueryIdNotFoundException" ->
          (`QueryIdNotFoundException (query_id_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -880,17 +880,17 @@ module GetResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceARNNotValidException" ->
+      | _, "ResourceARNNotValidException" ->
          (`ResourceARNNotValidException (resource_arn_not_valid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourcePolicyNotFoundException" ->
+      | _, "ResourcePolicyNotFoundException" ->
          (`ResourcePolicyNotFoundException (resource_policy_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -914,15 +914,15 @@ module GetTrail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -946,15 +946,15 @@ module GetTrailStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -978,11 +978,11 @@ module ListChannels = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1006,15 +1006,15 @@ module ListEventDataStores = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidMaxResultsException" ->
+      | _, "InvalidMaxResultsException" ->
          (`InvalidMaxResultsException (invalid_max_results_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1038,13 +1038,13 @@ module ListImportFailures = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1068,15 +1068,15 @@ module ListImports = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1100,11 +1100,11 @@ module ListInsightsMetricData = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1128,13 +1128,13 @@ module ListPublicKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidTimeRangeException" ->
+      | _, "InvalidTimeRangeException" ->
          (`InvalidTimeRangeException (invalid_time_range_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTokenException" ->
+      | _, "InvalidTokenException" ->
          (`InvalidTokenException (invalid_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1158,27 +1158,27 @@ module ListQueries = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidDateRangeException" ->
+      | _, "InvalidDateRangeException" ->
          (`InvalidDateRangeException (invalid_date_range_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidMaxResultsException" ->
+      | _, "InvalidMaxResultsException" ->
          (`InvalidMaxResultsException (invalid_max_results_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidQueryStatusException" ->
+      | _, "InvalidQueryStatusException" ->
          (`InvalidQueryStatusException (invalid_query_status_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1202,29 +1202,29 @@ module ListTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTokenException" ->
+      | _, "InvalidTokenException" ->
          (`InvalidTokenException (invalid_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1248,9 +1248,9 @@ module ListTrails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1274,19 +1274,19 @@ module LookupEvents = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "InvalidEventCategoryException" ->
+      | _, "InvalidEventCategoryException" ->
          (`InvalidEventCategoryException (invalid_event_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidLookupAttributesException" ->
+      | _, "InvalidLookupAttributesException" ->
          (`InvalidLookupAttributesException (invalid_lookup_attributes_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidMaxResultsException" ->
+      | _, "InvalidMaxResultsException" ->
          (`InvalidMaxResultsException (invalid_max_results_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTimeRangeException" ->
+      | _, "InvalidTimeRangeException" ->
          (`InvalidTimeRangeException (invalid_time_range_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1310,29 +1310,29 @@ module PutEventSelectors = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventSelectorsException" ->
+      | _, "InvalidEventSelectorsException" ->
          (`InvalidEventSelectorsException (invalid_event_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1356,37 +1356,37 @@ module PutInsightSelectors = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientS3BucketPolicyException" ->
+      | _, "InsufficientS3BucketPolicyException" ->
          (`InsufficientS3BucketPolicyException (insufficient_s3_bucket_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidInsightSelectorsException" ->
+      | _, "InvalidInsightSelectorsException" ->
          (`InvalidInsightSelectorsException (invalid_insight_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsException" ->
+      | _, "KmsException" ->
          (`KmsException (kms_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "S3BucketDoesNotExistException" ->
+      | _, "S3BucketDoesNotExistException" ->
          (`S3BucketDoesNotExistException (s3_bucket_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1410,17 +1410,17 @@ module PutResourcePolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceARNNotValidException" ->
+      | _, "ResourceARNNotValidException" ->
          (`ResourceARNNotValidException (resource_arn_not_valid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourcePolicyNotValidException" ->
+      | _, "ResourcePolicyNotValidException" ->
          (`ResourcePolicyNotValidException (resource_policy_not_valid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1444,31 +1444,31 @@ module RegisterOrganizationDelegatedAdmin = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "AccountNotFoundException" ->
+      | _, "AccountNotFoundException" ->
          (`AccountNotFoundException (account_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "AccountRegisteredException" ->
+      | _, "AccountRegisteredException" ->
          (`AccountRegisteredException (account_registered_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CannotDelegateManagementAccountException" ->
+      | _, "CannotDelegateManagementAccountException" ->
          (`CannotDelegateManagementAccountException (cannot_delegate_management_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "DelegatedAdminAccountLimitExceededException" ->
+      | _, "DelegatedAdminAccountLimitExceededException" ->
          (`DelegatedAdminAccountLimitExceededException (delegated_admin_account_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationManagementAccountException" ->
+      | _, "NotOrganizationManagementAccountException" ->
          (`NotOrganizationManagementAccountException (not_organization_management_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1492,33 +1492,33 @@ module RemoveTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelNotFoundException" ->
+      | _, "ChannelNotFoundException" ->
          (`ChannelNotFoundException (channel_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTagParameterException" ->
+      | _, "InvalidTagParameterException" ->
          (`InvalidTagParameterException (invalid_tag_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ResourceTypeNotSupportedException" ->
+      | _, "ResourceTypeNotSupportedException" ->
          (`ResourceTypeNotSupportedException (resource_type_not_supported_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1542,31 +1542,31 @@ module RestoreEventDataStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreMaxLimitExceededException" ->
+      | _, "EventDataStoreMaxLimitExceededException" ->
          (`EventDataStoreMaxLimitExceededException (event_data_store_max_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreStatusException" ->
+      | _, "InvalidEventDataStoreStatusException" ->
          (`InvalidEventDataStoreStatusException (invalid_event_data_store_status_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1590,25 +1590,25 @@ module StartEventDataStoreIngestion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreCategoryException" ->
+      | _, "InvalidEventDataStoreCategoryException" ->
          (`InvalidEventDataStoreCategoryException (invalid_event_data_store_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreStatusException" ->
+      | _, "InvalidEventDataStoreStatusException" ->
          (`InvalidEventDataStoreStatusException (invalid_event_data_store_status_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1632,29 +1632,29 @@ module StartImport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "AccountHasOngoingImportException" ->
+      | _, "AccountHasOngoingImportException" ->
          (`AccountHasOngoingImportException (account_has_ongoing_import_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ImportNotFoundException" ->
+      | _, "ImportNotFoundException" ->
          (`ImportNotFoundException (import_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreCategoryException" ->
+      | _, "InvalidEventDataStoreCategoryException" ->
          (`InvalidEventDataStoreCategoryException (invalid_event_data_store_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreStatusException" ->
+      | _, "InvalidEventDataStoreStatusException" ->
          (`InvalidEventDataStoreStatusException (invalid_event_data_store_status_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidImportSourceException" ->
+      | _, "InvalidImportSourceException" ->
          (`InvalidImportSourceException (invalid_import_source_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1678,27 +1678,27 @@ module StartLogging = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1722,33 +1722,33 @@ module StartQuery = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientS3BucketPolicyException" ->
+      | _, "InsufficientS3BucketPolicyException" ->
          (`InsufficientS3BucketPolicyException (insufficient_s3_bucket_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidQueryStatementException" ->
+      | _, "InvalidQueryStatementException" ->
          (`InvalidQueryStatementException (invalid_query_statement_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3BucketNameException" ->
+      | _, "InvalidS3BucketNameException" ->
          (`InvalidS3BucketNameException (invalid_s3_bucket_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3PrefixException" ->
+      | _, "InvalidS3PrefixException" ->
          (`InvalidS3PrefixException (invalid_s3_prefix_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "MaxConcurrentQueriesException" ->
+      | _, "MaxConcurrentQueriesException" ->
          (`MaxConcurrentQueriesException (max_concurrent_queries_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "S3BucketDoesNotExistException" ->
+      | _, "S3BucketDoesNotExistException" ->
          (`S3BucketDoesNotExistException (s3_bucket_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1772,25 +1772,25 @@ module StopEventDataStoreIngestion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreCategoryException" ->
+      | _, "InvalidEventDataStoreCategoryException" ->
          (`InvalidEventDataStoreCategoryException (invalid_event_data_store_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreStatusException" ->
+      | _, "InvalidEventDataStoreStatusException" ->
          (`InvalidEventDataStoreStatusException (invalid_event_data_store_status_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1814,13 +1814,13 @@ module StopImport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ImportNotFoundException" ->
+      | _, "ImportNotFoundException" ->
          (`ImportNotFoundException (import_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1844,27 +1844,27 @@ module StopLogging = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1888,25 +1888,25 @@ module UpdateChannel = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "ChannelAlreadyExistsException" ->
+      | _, "ChannelAlreadyExistsException" ->
          (`ChannelAlreadyExistsException (channel_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelARNInvalidException" ->
+      | _, "ChannelARNInvalidException" ->
          (`ChannelARNInvalidException (channel_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ChannelNotFoundException" ->
+      | _, "ChannelNotFoundException" ->
          (`ChannelNotFoundException (channel_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventDataStoreCategoryException" ->
+      | _, "InvalidEventDataStoreCategoryException" ->
          (`InvalidEventDataStoreCategoryException (invalid_event_data_store_category_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1930,45 +1930,45 @@ module UpdateEventDataStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreAlreadyExistsException" ->
+      | _, "EventDataStoreAlreadyExistsException" ->
          (`EventDataStoreAlreadyExistsException (event_data_store_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreARNInvalidException" ->
+      | _, "EventDataStoreARNInvalidException" ->
          (`EventDataStoreARNInvalidException (event_data_store_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreHasOngoingImportException" ->
+      | _, "EventDataStoreHasOngoingImportException" ->
          (`EventDataStoreHasOngoingImportException (event_data_store_has_ongoing_import_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "EventDataStoreNotFoundException" ->
+      | _, "EventDataStoreNotFoundException" ->
          (`EventDataStoreNotFoundException (event_data_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InactiveEventDataStoreException" ->
+      | _, "InactiveEventDataStoreException" ->
          (`InactiveEventDataStoreException (inactive_event_data_store_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventSelectorsException" ->
+      | _, "InvalidEventSelectorsException" ->
          (`InvalidEventSelectorsException (invalid_event_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidInsightSelectorsException" ->
+      | _, "InvalidInsightSelectorsException" ->
          (`InvalidInsightSelectorsException (invalid_insight_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidKmsKeyIdException" ->
+      | _, "InvalidKmsKeyIdException" ->
          (`InvalidKmsKeyIdException (invalid_kms_key_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsException" ->
+      | _, "KmsException" ->
          (`KmsException (kms_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyNotFoundException" ->
+      | _, "KmsKeyNotFoundException" ->
          (`KmsKeyNotFoundException (kms_key_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1992,71 +1992,71 @@ module UpdateTrail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.cloudtrail", "CloudTrailAccessNotEnabledException" ->
+      | _, "CloudTrailAccessNotEnabledException" ->
          (`CloudTrailAccessNotEnabledException (cloud_trail_access_not_enabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailARNInvalidException" ->
+      | _, "CloudTrailARNInvalidException" ->
          (`CloudTrailARNInvalidException (cloud_trail_arn_invalid_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudTrailInvalidClientTokenIdException" ->
+      | _, "CloudTrailInvalidClientTokenIdException" ->
          (`CloudTrailInvalidClientTokenIdException (cloud_trail_invalid_client_token_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "CloudWatchLogsDeliveryUnavailableException" ->
+      | _, "CloudWatchLogsDeliveryUnavailableException" ->
          (`CloudWatchLogsDeliveryUnavailableException (cloud_watch_logs_delivery_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientDependencyServiceAccessPermissionException" ->
+      | _, "InsufficientDependencyServiceAccessPermissionException" ->
          (`InsufficientDependencyServiceAccessPermissionException (insufficient_dependency_service_access_permission_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientEncryptionPolicyException" ->
+      | _, "InsufficientEncryptionPolicyException" ->
          (`InsufficientEncryptionPolicyException (insufficient_encryption_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientS3BucketPolicyException" ->
+      | _, "InsufficientS3BucketPolicyException" ->
          (`InsufficientS3BucketPolicyException (insufficient_s3_bucket_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InsufficientSnsTopicPolicyException" ->
+      | _, "InsufficientSnsTopicPolicyException" ->
          (`InsufficientSnsTopicPolicyException (insufficient_sns_topic_policy_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidCloudWatchLogsLogGroupArnException" ->
+      | _, "InvalidCloudWatchLogsLogGroupArnException" ->
          (`InvalidCloudWatchLogsLogGroupArnException (invalid_cloud_watch_logs_log_group_arn_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidCloudWatchLogsRoleArnException" ->
+      | _, "InvalidCloudWatchLogsRoleArnException" ->
          (`InvalidCloudWatchLogsRoleArnException (invalid_cloud_watch_logs_role_arn_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidEventSelectorsException" ->
+      | _, "InvalidEventSelectorsException" ->
          (`InvalidEventSelectorsException (invalid_event_selectors_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidHomeRegionException" ->
+      | _, "InvalidHomeRegionException" ->
          (`InvalidHomeRegionException (invalid_home_region_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidKmsKeyIdException" ->
+      | _, "InvalidKmsKeyIdException" ->
          (`InvalidKmsKeyIdException (invalid_kms_key_id_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterCombinationException" ->
+      | _, "InvalidParameterCombinationException" ->
          (`InvalidParameterCombinationException (invalid_parameter_combination_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3BucketNameException" ->
+      | _, "InvalidS3BucketNameException" ->
          (`InvalidS3BucketNameException (invalid_s3_bucket_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidS3PrefixException" ->
+      | _, "InvalidS3PrefixException" ->
          (`InvalidS3PrefixException (invalid_s3_prefix_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidSnsTopicNameException" ->
+      | _, "InvalidSnsTopicNameException" ->
          (`InvalidSnsTopicNameException (invalid_sns_topic_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "InvalidTrailNameException" ->
+      | _, "InvalidTrailNameException" ->
          (`InvalidTrailNameException (invalid_trail_name_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsException" ->
+      | _, "KmsException" ->
          (`KmsException (kms_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyDisabledException" ->
+      | _, "KmsKeyDisabledException" ->
          (`KmsKeyDisabledException (kms_key_disabled_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "KmsKeyNotFoundException" ->
+      | _, "KmsKeyNotFoundException" ->
          (`KmsKeyNotFoundException (kms_key_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NoManagementAccountSLRExistsException" ->
+      | _, "NoManagementAccountSLRExistsException" ->
          (`NoManagementAccountSLRExistsException (no_management_account_slr_exists_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "NotOrganizationMasterAccountException" ->
+      | _, "NotOrganizationMasterAccountException" ->
          (`NotOrganizationMasterAccountException (not_organization_master_account_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OperationNotPermittedException" ->
+      | _, "OperationNotPermittedException" ->
          (`OperationNotPermittedException (operation_not_permitted_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationNotInAllFeaturesModeException" ->
+      | _, "OrganizationNotInAllFeaturesModeException" ->
          (`OrganizationNotInAllFeaturesModeException (organization_not_in_all_features_mode_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "OrganizationsNotInUseException" ->
+      | _, "OrganizationsNotInUseException" ->
          (`OrganizationsNotInUseException (organizations_not_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "S3BucketDoesNotExistException" ->
+      | _, "S3BucketDoesNotExistException" ->
          (`S3BucketDoesNotExistException (s3_bucket_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotFoundException" ->
+      | _, "TrailNotFoundException" ->
          (`TrailNotFoundException (trail_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "TrailNotProvidedException" ->
+      | _, "TrailNotProvidedException" ->
          (`TrailNotProvidedException (trail_not_provided_exception_of_yojson tree path))
-      | "com.amazonaws.cloudtrail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

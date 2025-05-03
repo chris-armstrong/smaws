@@ -4,15 +4,15 @@ module AcceptSharedDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryAlreadySharedException" ->
+      | _, "DirectoryAlreadySharedException" ->
          (`DirectoryAlreadySharedException (directory_already_shared_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,19 +36,19 @@ module AddIpRoutes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "IpRouteLimitExceededException" ->
+      | _, "IpRouteLimitExceededException" ->
          (`IpRouteLimitExceededException (ip_route_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -72,25 +72,25 @@ module AddRegion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryAlreadyInRegionException" ->
+      | _, "DirectoryAlreadyInRegionException" ->
          (`DirectoryAlreadyInRegionException (directory_already_in_region_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "RegionLimitExceededException" ->
+      | _, "RegionLimitExceededException" ->
          (`RegionLimitExceededException (region_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -114,15 +114,15 @@ module AddTagsToResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "TagLimitExceededException" ->
+      | _, "TagLimitExceededException" ->
          (`TagLimitExceededException (tag_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -146,11 +146,11 @@ module CancelSchemaExtension = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -174,13 +174,13 @@ module ConnectDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryLimitExceededException" ->
+      | _, "DirectoryLimitExceededException" ->
          (`DirectoryLimitExceededException (directory_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -204,15 +204,15 @@ module CreateAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -236,21 +236,21 @@ module CreateComputer = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AuthenticationFailedException" ->
+      | _, "AuthenticationFailedException" ->
          (`AuthenticationFailedException (authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -274,19 +274,19 @@ module CreateConditionalForwarder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -310,13 +310,13 @@ module CreateDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryLimitExceededException" ->
+      | _, "DirectoryLimitExceededException" ->
          (`DirectoryLimitExceededException (directory_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -340,17 +340,17 @@ module CreateLogSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -374,15 +374,15 @@ module CreateMicrosoftAD = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryLimitExceededException" ->
+      | _, "DirectoryLimitExceededException" ->
          (`DirectoryLimitExceededException (directory_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -406,15 +406,15 @@ module CreateSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "SnapshotLimitExceededException" ->
+      | _, "SnapshotLimitExceededException" ->
          (`SnapshotLimitExceededException (snapshot_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -438,17 +438,17 @@ module CreateTrust = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -472,17 +472,17 @@ module DeleteConditionalForwarder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -506,11 +506,11 @@ module DeleteDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -534,13 +534,13 @@ module DeleteLogSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -564,13 +564,13 @@ module DeleteSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -594,15 +594,15 @@ module DeleteTrust = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -626,21 +626,21 @@ module DeregisterCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "CertificateDoesNotExistException" ->
+      | _, "CertificateDoesNotExistException" ->
          (`CertificateDoesNotExistException (certificate_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "CertificateInUseException" ->
+      | _, "CertificateInUseException" ->
          (`CertificateInUseException (certificate_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -664,13 +664,13 @@ module DeregisterEventTopic = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -694,17 +694,17 @@ module DescribeCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "CertificateDoesNotExistException" ->
+      | _, "CertificateDoesNotExistException" ->
          (`CertificateDoesNotExistException (certificate_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -728,17 +728,17 @@ module DescribeClientAuthenticationSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -762,17 +762,17 @@ module DescribeConditionalForwarders = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -796,15 +796,15 @@ module DescribeDirectories = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -828,17 +828,17 @@ module DescribeDomainControllers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -862,13 +862,13 @@ module DescribeEventTopics = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -892,17 +892,17 @@ module DescribeLDAPSSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -926,19 +926,19 @@ module DescribeRegions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -962,17 +962,17 @@ module DescribeSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,17 +996,17 @@ module DescribeSharedDirectories = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1030,15 +1030,15 @@ module DescribeSnapshots = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1062,17 +1062,17 @@ module DescribeTrusts = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1096,17 +1096,17 @@ module DescribeUpdateDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1130,17 +1130,17 @@ module DisableClientAuthentication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidClientAuthStatusException" ->
+      | _, "InvalidClientAuthStatusException" ->
          (`InvalidClientAuthStatusException (invalid_client_auth_status_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1164,19 +1164,19 @@ module DisableLDAPS = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidLDAPSStatusException" ->
+      | _, "InvalidLDAPSStatusException" ->
          (`InvalidLDAPSStatusException (invalid_ldaps_status_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1200,11 +1200,11 @@ module DisableRadius = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1228,15 +1228,15 @@ module DisableSso = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AuthenticationFailedException" ->
+      | _, "AuthenticationFailedException" ->
          (`AuthenticationFailedException (authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1260,19 +1260,19 @@ module EnableClientAuthentication = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidClientAuthStatusException" ->
+      | _, "InvalidClientAuthStatusException" ->
          (`InvalidClientAuthStatusException (invalid_client_auth_status_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "NoAvailableCertificateException" ->
+      | _, "NoAvailableCertificateException" ->
          (`NoAvailableCertificateException (no_available_certificate_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1296,21 +1296,21 @@ module EnableLDAPS = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidLDAPSStatusException" ->
+      | _, "InvalidLDAPSStatusException" ->
          (`InvalidLDAPSStatusException (invalid_ldaps_status_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "NoAvailableCertificateException" ->
+      | _, "NoAvailableCertificateException" ->
          (`NoAvailableCertificateException (no_available_certificate_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1334,15 +1334,15 @@ module EnableRadius = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityAlreadyExistsException" ->
+      | _, "EntityAlreadyExistsException" ->
          (`EntityAlreadyExistsException (entity_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1366,15 +1366,15 @@ module EnableSso = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AuthenticationFailedException" ->
+      | _, "AuthenticationFailedException" ->
          (`AuthenticationFailedException (authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InsufficientPermissionsException" ->
+      | _, "InsufficientPermissionsException" ->
          (`InsufficientPermissionsException (insufficient_permissions_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1398,11 +1398,11 @@ module GetDirectoryLimits = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1426,11 +1426,11 @@ module GetSnapshotLimits = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1454,17 +1454,17 @@ module ListCertificates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1488,15 +1488,15 @@ module ListIpRoutes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1520,13 +1520,13 @@ module ListLogSubscriptions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1550,13 +1550,13 @@ module ListSchemaExtensions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1580,15 +1580,15 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidNextTokenException" ->
+      | _, "InvalidNextTokenException" ->
          (`InvalidNextTokenException (invalid_next_token_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1612,23 +1612,23 @@ module RegisterCertificate = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "CertificateAlreadyExistsException" ->
+      | _, "CertificateAlreadyExistsException" ->
          (`CertificateAlreadyExistsException (certificate_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "CertificateLimitExceededException" ->
+      | _, "CertificateLimitExceededException" ->
          (`CertificateLimitExceededException (certificate_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidCertificateException" ->
+      | _, "InvalidCertificateException" ->
          (`InvalidCertificateException (invalid_certificate_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1652,13 +1652,13 @@ module RegisterEventTopic = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1682,15 +1682,15 @@ module RejectSharedDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryAlreadySharedException" ->
+      | _, "DirectoryAlreadySharedException" ->
          (`DirectoryAlreadySharedException (directory_already_shared_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1714,15 +1714,15 @@ module RemoveIpRoutes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1746,17 +1746,17 @@ module RemoveRegion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1780,13 +1780,13 @@ module RemoveTagsFromResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1810,19 +1810,19 @@ module ResetUserPassword = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidPasswordException" ->
+      | _, "InvalidPasswordException" ->
          (`InvalidPasswordException (invalid_password_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UserDoesNotExistException" ->
+      | _, "UserDoesNotExistException" ->
          (`UserDoesNotExistException (user_does_not_exist_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1846,13 +1846,13 @@ module RestoreFromSnapshot = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1876,25 +1876,25 @@ module ShareDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryAlreadySharedException" ->
+      | _, "DirectoryAlreadySharedException" ->
          (`DirectoryAlreadySharedException (directory_already_shared_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidTargetException" ->
+      | _, "InvalidTargetException" ->
          (`InvalidTargetException (invalid_target_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "OrganizationsException" ->
+      | _, "OrganizationsException" ->
          (`OrganizationsException (organizations_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ShareLimitExceededException" ->
+      | _, "ShareLimitExceededException" ->
          (`ShareLimitExceededException (share_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1918,17 +1918,17 @@ module StartSchemaExtension = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "SnapshotLimitExceededException" ->
+      | _, "SnapshotLimitExceededException" ->
          (`SnapshotLimitExceededException (snapshot_limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1952,15 +1952,15 @@ module UnshareDirectory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryNotSharedException" ->
+      | _, "DirectoryNotSharedException" ->
          (`DirectoryNotSharedException (directory_not_shared_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidTargetException" ->
+      | _, "InvalidTargetException" ->
          (`InvalidTargetException (invalid_target_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1984,17 +1984,17 @@ module UpdateConditionalForwarder = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2018,23 +2018,23 @@ module UpdateDirectorySetup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryInDesiredStateException" ->
+      | _, "DirectoryInDesiredStateException" ->
          (`DirectoryInDesiredStateException (directory_in_desired_state_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "SnapshotLimitExceededException" ->
+      | _, "SnapshotLimitExceededException" ->
          (`SnapshotLimitExceededException (snapshot_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2058,19 +2058,19 @@ module UpdateNumberOfDomainControllers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DomainControllerLimitExceededException" ->
+      | _, "DomainControllerLimitExceededException" ->
          (`DomainControllerLimitExceededException (domain_controller_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2094,13 +2094,13 @@ module UpdateRadius = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2124,21 +2124,21 @@ module UpdateSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryDoesNotExistException" ->
+      | _, "DirectoryDoesNotExistException" ->
          (`DirectoryDoesNotExistException (directory_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "IncompatibleSettingsException" ->
+      | _, "IncompatibleSettingsException" ->
          (`IncompatibleSettingsException (incompatible_settings_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedSettingsException" ->
+      | _, "UnsupportedSettingsException" ->
          (`UnsupportedSettingsException (unsupported_settings_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2162,13 +2162,13 @@ module UpdateTrust = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2192,15 +2192,15 @@ module VerifyTrust = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.directoryservice", "ClientException" ->
+      | _, "ClientException" ->
          (`ClientException (client_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "EntityDoesNotExistException" ->
+      | _, "EntityDoesNotExistException" ->
          (`EntityDoesNotExistException (entity_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "ServiceException" ->
+      | _, "ServiceException" ->
          (`ServiceException (service_exception_of_yojson tree path))
-      | "com.amazonaws.directoryservice", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

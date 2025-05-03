@@ -4,15 +4,15 @@ module DescribeAgreement = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.marketplaceagreement", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,15 +36,15 @@ module GetAgreementTerms = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.marketplaceagreement", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -68,13 +68,13 @@ module SearchAgreements = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.marketplaceagreement", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.marketplaceagreement", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

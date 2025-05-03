@@ -4,17 +4,17 @@ module AddPermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "OverLimit" ->
+      | _, "OverLimit" ->
          (`OverLimit (over_limit_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,15 +38,15 @@ module CancelMessageMoveTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -70,19 +70,19 @@ module ChangeMessageVisibility = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "MessageNotInflight" ->
+      | _, "MessageNotInflight" ->
          (`MessageNotInflight (message_not_inflight_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "ReceiptHandleIsInvalid" ->
+      | _, "ReceiptHandleIsInvalid" ->
          (`ReceiptHandleIsInvalid (receipt_handle_is_invalid_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -106,23 +106,23 @@ module ChangeMessageVisibilityBatch = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "BatchEntryIdsNotDistinct" ->
+      | _, "BatchEntryIdsNotDistinct" ->
          (`BatchEntryIdsNotDistinct (batch_entry_ids_not_distinct_of_yojson tree path))
-      | "com.amazonaws.sqs", "EmptyBatchRequest" ->
+      | _, "EmptyBatchRequest" ->
          (`EmptyBatchRequest (empty_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidBatchEntryId" ->
+      | _, "InvalidBatchEntryId" ->
          (`InvalidBatchEntryId (invalid_batch_entry_id_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "TooManyEntriesInBatchRequest" ->
+      | _, "TooManyEntriesInBatchRequest" ->
          (`TooManyEntriesInBatchRequest (too_many_entries_in_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -146,21 +146,21 @@ module CreateQueue = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAttributeName" ->
+      | _, "InvalidAttributeName" ->
          (`InvalidAttributeName (invalid_attribute_name_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAttributeValue" ->
+      | _, "InvalidAttributeValue" ->
          (`InvalidAttributeValue (invalid_attribute_value_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDeletedRecently" ->
+      | _, "QueueDeletedRecently" ->
          (`QueueDeletedRecently (queue_deleted_recently_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueNameExists" ->
+      | _, "QueueNameExists" ->
          (`QueueNameExists (queue_name_exists_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -184,19 +184,19 @@ module DeleteMessage = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidIdFormat" ->
+      | _, "InvalidIdFormat" ->
          (`InvalidIdFormat (invalid_id_format_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "ReceiptHandleIsInvalid" ->
+      | _, "ReceiptHandleIsInvalid" ->
          (`ReceiptHandleIsInvalid (receipt_handle_is_invalid_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -220,23 +220,23 @@ module DeleteMessageBatch = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "BatchEntryIdsNotDistinct" ->
+      | _, "BatchEntryIdsNotDistinct" ->
          (`BatchEntryIdsNotDistinct (batch_entry_ids_not_distinct_of_yojson tree path))
-      | "com.amazonaws.sqs", "EmptyBatchRequest" ->
+      | _, "EmptyBatchRequest" ->
          (`EmptyBatchRequest (empty_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidBatchEntryId" ->
+      | _, "InvalidBatchEntryId" ->
          (`InvalidBatchEntryId (invalid_batch_entry_id_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "TooManyEntriesInBatchRequest" ->
+      | _, "TooManyEntriesInBatchRequest" ->
          (`TooManyEntriesInBatchRequest (too_many_entries_in_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -260,15 +260,15 @@ module DeleteQueue = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -292,17 +292,17 @@ module GetQueueAttributes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAttributeName" ->
+      | _, "InvalidAttributeName" ->
          (`InvalidAttributeName (invalid_attribute_name_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -326,15 +326,15 @@ module GetQueueUrl = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -358,15 +358,15 @@ module ListDeadLetterSourceQueues = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -390,15 +390,15 @@ module ListMessageMoveTasks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -422,15 +422,15 @@ module ListQueueTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -454,13 +454,13 @@ module ListQueues = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -484,17 +484,17 @@ module PurgeQueue = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "PurgeQueueInProgress" ->
+      | _, "PurgeQueueInProgress" ->
          (`PurgeQueueInProgress (purge_queue_in_progress_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -518,31 +518,31 @@ module ReceiveMessage = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsAccessDenied" ->
+      | _, "KmsAccessDenied" ->
          (`KmsAccessDenied (kms_access_denied_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsDisabled" ->
+      | _, "KmsDisabled" ->
          (`KmsDisabled (kms_disabled_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidKeyUsage" ->
+      | _, "KmsInvalidKeyUsage" ->
          (`KmsInvalidKeyUsage (kms_invalid_key_usage_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidState" ->
+      | _, "KmsInvalidState" ->
          (`KmsInvalidState (kms_invalid_state_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsNotFound" ->
+      | _, "KmsNotFound" ->
          (`KmsNotFound (kms_not_found_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsOptInRequired" ->
+      | _, "KmsOptInRequired" ->
          (`KmsOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsThrottled" ->
+      | _, "KmsThrottled" ->
          (`KmsThrottled (kms_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "OverLimit" ->
+      | _, "OverLimit" ->
          (`OverLimit (over_limit_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -566,15 +566,15 @@ module RemovePermission = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -598,31 +598,31 @@ module SendMessage = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidMessageContents" ->
+      | _, "InvalidMessageContents" ->
          (`InvalidMessageContents (invalid_message_contents_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsAccessDenied" ->
+      | _, "KmsAccessDenied" ->
          (`KmsAccessDenied (kms_access_denied_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsDisabled" ->
+      | _, "KmsDisabled" ->
          (`KmsDisabled (kms_disabled_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidKeyUsage" ->
+      | _, "KmsInvalidKeyUsage" ->
          (`KmsInvalidKeyUsage (kms_invalid_key_usage_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidState" ->
+      | _, "KmsInvalidState" ->
          (`KmsInvalidState (kms_invalid_state_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsNotFound" ->
+      | _, "KmsNotFound" ->
          (`KmsNotFound (kms_not_found_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsOptInRequired" ->
+      | _, "KmsOptInRequired" ->
          (`KmsOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsThrottled" ->
+      | _, "KmsThrottled" ->
          (`KmsThrottled (kms_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -646,39 +646,39 @@ module SendMessageBatch = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "BatchEntryIdsNotDistinct" ->
+      | _, "BatchEntryIdsNotDistinct" ->
          (`BatchEntryIdsNotDistinct (batch_entry_ids_not_distinct_of_yojson tree path))
-      | "com.amazonaws.sqs", "BatchRequestTooLong" ->
+      | _, "BatchRequestTooLong" ->
          (`BatchRequestTooLong (batch_request_too_long_of_yojson tree path))
-      | "com.amazonaws.sqs", "EmptyBatchRequest" ->
+      | _, "EmptyBatchRequest" ->
          (`EmptyBatchRequest (empty_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidBatchEntryId" ->
+      | _, "InvalidBatchEntryId" ->
          (`InvalidBatchEntryId (invalid_batch_entry_id_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsAccessDenied" ->
+      | _, "KmsAccessDenied" ->
          (`KmsAccessDenied (kms_access_denied_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsDisabled" ->
+      | _, "KmsDisabled" ->
          (`KmsDisabled (kms_disabled_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidKeyUsage" ->
+      | _, "KmsInvalidKeyUsage" ->
          (`KmsInvalidKeyUsage (kms_invalid_key_usage_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsInvalidState" ->
+      | _, "KmsInvalidState" ->
          (`KmsInvalidState (kms_invalid_state_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsNotFound" ->
+      | _, "KmsNotFound" ->
          (`KmsNotFound (kms_not_found_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsOptInRequired" ->
+      | _, "KmsOptInRequired" ->
          (`KmsOptInRequired (kms_opt_in_required_of_yojson tree path))
-      | "com.amazonaws.sqs", "KmsThrottled" ->
+      | _, "KmsThrottled" ->
          (`KmsThrottled (kms_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "TooManyEntriesInBatchRequest" ->
+      | _, "TooManyEntriesInBatchRequest" ->
          (`TooManyEntriesInBatchRequest (too_many_entries_in_batch_request_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -702,21 +702,21 @@ module SetQueueAttributes = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAttributeName" ->
+      | _, "InvalidAttributeName" ->
          (`InvalidAttributeName (invalid_attribute_name_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidAttributeValue" ->
+      | _, "InvalidAttributeValue" ->
          (`InvalidAttributeValue (invalid_attribute_value_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "OverLimit" ->
+      | _, "OverLimit" ->
          (`OverLimit (over_limit_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -740,15 +740,15 @@ module StartMessageMoveTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -772,15 +772,15 @@ module TagQueue = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -804,15 +804,15 @@ module UntagQueue = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sqs", "InvalidAddress" ->
+      | _, "InvalidAddress" ->
          (`InvalidAddress (invalid_address_of_yojson tree path))
-      | "com.amazonaws.sqs", "InvalidSecurity" ->
+      | _, "InvalidSecurity" ->
          (`InvalidSecurity (invalid_security_of_yojson tree path))
-      | "com.amazonaws.sqs", "QueueDoesNotExist" ->
+      | _, "QueueDoesNotExist" ->
          (`QueueDoesNotExist (queue_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sqs", "RequestThrottled" ->
+      | _, "RequestThrottled" ->
          (`RequestThrottled (request_throttled_of_yojson tree path))
-      | "com.amazonaws.sqs", "UnsupportedOperation" ->
+      | _, "UnsupportedOperation" ->
          (`UnsupportedOperation (unsupported_operation_of_yojson tree path))
       | _type -> handler tree path _type
       

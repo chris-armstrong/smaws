@@ -4,11 +4,11 @@ module CreatePerformanceAnalysisReport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -32,11 +32,11 @@ module DeletePerformanceAnalysisReport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -60,11 +60,11 @@ module DescribeDimensionKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -88,11 +88,11 @@ module GetDimensionKeyDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -116,11 +116,11 @@ module GetPerformanceAnalysisReport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -144,11 +144,11 @@ module GetResourceMetadata = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -172,11 +172,11 @@ module GetResourceMetrics = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -200,11 +200,11 @@ module ListAvailableResourceDimensions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -228,11 +228,11 @@ module ListAvailableResourceMetrics = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -256,11 +256,11 @@ module ListPerformanceAnalysisReports = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -284,11 +284,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -312,11 +312,11 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -340,11 +340,11 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.pi", "InternalServiceError" ->
+      | _, "InternalServiceError" ->
          (`InternalServiceError (internal_service_error_of_yojson tree path))
-      | "com.amazonaws.pi", "InvalidArgumentException" ->
+      | _, "InvalidArgumentException" ->
          (`InvalidArgumentException (invalid_argument_exception_of_yojson tree path))
-      | "com.amazonaws.pi", "NotAuthorizedException" ->
+      | _, "NotAuthorizedException" ->
          (`NotAuthorizedException (not_authorized_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

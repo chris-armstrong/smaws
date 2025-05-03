@@ -4,17 +4,17 @@ module GetRoutingControlState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.route53recoverycluster", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "EndpointTemporarilyUnavailableException" ->
+      | _, "EndpointTemporarilyUnavailableException" ->
          (`EndpointTemporarilyUnavailableException (endpoint_temporarily_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,17 +38,17 @@ module ListRoutingControls = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.route53recoverycluster", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "EndpointTemporarilyUnavailableException" ->
+      | _, "EndpointTemporarilyUnavailableException" ->
          (`EndpointTemporarilyUnavailableException (endpoint_temporarily_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -72,19 +72,19 @@ module UpdateRoutingControlState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.route53recoverycluster", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "EndpointTemporarilyUnavailableException" ->
+      | _, "EndpointTemporarilyUnavailableException" ->
          (`EndpointTemporarilyUnavailableException (endpoint_temporarily_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -108,21 +108,21 @@ module UpdateRoutingControlStates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.route53recoverycluster", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "EndpointTemporarilyUnavailableException" ->
+      | _, "EndpointTemporarilyUnavailableException" ->
          (`EndpointTemporarilyUnavailableException (endpoint_temporarily_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ServiceLimitExceededException" ->
+      | _, "ServiceLimitExceededException" ->
          (`ServiceLimitExceededException (service_limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.route53recoverycluster", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

@@ -4,13 +4,13 @@ module DescribeReportCreation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "ConstraintViolationException" ->
+      | _, "ConstraintViolationException" ->
          (`ConstraintViolationException (constraint_violation_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -34,13 +34,13 @@ module GetComplianceSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "ConstraintViolationException" ->
+      | _, "ConstraintViolationException" ->
          (`ConstraintViolationException (constraint_violation_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -64,13 +64,13 @@ module GetResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "PaginationTokenExpiredException" ->
+      | _, "PaginationTokenExpiredException" ->
          (`PaginationTokenExpiredException (pagination_token_expired_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -94,13 +94,13 @@ module GetTagKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "PaginationTokenExpiredException" ->
+      | _, "PaginationTokenExpiredException" ->
          (`PaginationTokenExpiredException (pagination_token_expired_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -124,13 +124,13 @@ module GetTagValues = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "PaginationTokenExpiredException" ->
+      | _, "PaginationTokenExpiredException" ->
          (`PaginationTokenExpiredException (pagination_token_expired_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -154,15 +154,15 @@ module StartReportCreation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ConstraintViolationException" ->
+      | _, "ConstraintViolationException" ->
          (`ConstraintViolationException (constraint_violation_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -186,11 +186,11 @@ module TagResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -214,11 +214,11 @@ module UntagResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.resourcegroupstaggingapi", "InternalServiceException" ->
+      | _, "InternalServiceException" ->
          (`InternalServiceException (internal_service_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.resourcegroupstaggingapi", "ThrottledException" ->
+      | _, "ThrottledException" ->
          (`ThrottledException (throttled_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

@@ -4,11 +4,11 @@ module AssociateCustomDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -32,11 +32,11 @@ module CreateAutoScalingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -60,11 +60,11 @@ module CreateConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -88,11 +88,11 @@ module CreateObservabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -116,11 +116,11 @@ module CreateService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -144,11 +144,11 @@ module CreateVpcConnector = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -172,13 +172,13 @@ module CreateVpcIngressConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -202,11 +202,11 @@ module DeleteAutoScalingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -230,11 +230,11 @@ module DeleteConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -258,11 +258,11 @@ module DeleteObservabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -286,13 +286,13 @@ module DeleteService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -316,11 +316,11 @@ module DeleteVpcConnector = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -344,13 +344,13 @@ module DeleteVpcIngressConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -374,11 +374,11 @@ module DescribeAutoScalingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -402,11 +402,11 @@ module DescribeCustomDomains = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -430,11 +430,11 @@ module DescribeObservabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -458,11 +458,11 @@ module DescribeService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -486,11 +486,11 @@ module DescribeVpcConnector = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -514,11 +514,11 @@ module DescribeVpcIngressConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -542,13 +542,13 @@ module DisassociateCustomDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -572,9 +572,9 @@ module ListAutoScalingConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -598,9 +598,9 @@ module ListConnections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -624,9 +624,9 @@ module ListObservabilityConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -650,11 +650,11 @@ module ListOperations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -678,9 +678,9 @@ module ListServices = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -704,11 +704,11 @@ module ListServicesForAutoScalingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -732,13 +732,13 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -762,9 +762,9 @@ module ListVpcConnectors = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -788,9 +788,9 @@ module ListVpcIngressConnections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -814,13 +814,13 @@ module PauseService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -844,13 +844,13 @@ module ResumeService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -874,11 +874,11 @@ module StartDeployment = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -902,13 +902,13 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -932,13 +932,13 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -962,11 +962,11 @@ module UpdateDefaultAutoScalingConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -990,13 +990,13 @@ module UpdateService = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1020,13 +1020,13 @@ module UpdateVpcIngressConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.apprunner", "InternalServiceErrorException" ->
+      | _, "InternalServiceErrorException" ->
          (`InternalServiceErrorException (internal_service_error_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidRequestException" ->
+      | _, "InvalidRequestException" ->
          (`InvalidRequestException (invalid_request_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "InvalidStateException" ->
+      | _, "InvalidStateException" ->
          (`InvalidStateException (invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.apprunner", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

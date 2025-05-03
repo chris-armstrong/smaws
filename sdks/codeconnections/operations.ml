@@ -4,11 +4,11 @@ module CreateConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -32,7 +32,7 @@ module CreateHost = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -56,19 +56,19 @@ module CreateRepositoryLink = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -92,19 +92,19 @@ module CreateSyncConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -128,7 +128,7 @@ module DeleteConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -152,9 +152,9 @@ module DeleteHost = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -178,21 +178,21 @@ module DeleteRepositoryLink = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "SyncConfigurationStillExistsException" ->
+      | _, "SyncConfigurationStillExistsException" ->
          (`SyncConfigurationStillExistsException (sync_configuration_still_exists_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "UnsupportedProviderTypeException" ->
+      | _, "UnsupportedProviderTypeException" ->
          (`UnsupportedProviderTypeException (unsupported_provider_type_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -216,17 +216,17 @@ module DeleteSyncConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -250,9 +250,9 @@ module GetConnection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -276,9 +276,9 @@ module GetHost = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -302,17 +302,17 @@ module GetRepositoryLink = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -336,15 +336,15 @@ module GetRepositorySyncStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -368,15 +368,15 @@ module GetResourceSyncStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -400,15 +400,15 @@ module GetSyncBlockerSummary = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -432,15 +432,15 @@ module GetSyncConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -464,7 +464,7 @@ module ListConnections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -506,17 +506,17 @@ module ListRepositoryLinks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -540,15 +540,15 @@ module ListRepositorySyncDefinitions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -572,15 +572,15 @@ module ListSyncConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -604,7 +604,7 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -628,9 +628,9 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -654,7 +654,7 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -678,13 +678,13 @@ module UpdateHost = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceUnavailableException" ->
+      | _, "ResourceUnavailableException" ->
          (`ResourceUnavailableException (resource_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -708,19 +708,19 @@ module UpdateRepositoryLink = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConditionalCheckFailedException" ->
+      | _, "ConditionalCheckFailedException" ->
          (`ConditionalCheckFailedException (conditional_check_failed_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "UpdateOutOfSyncException" ->
+      | _, "UpdateOutOfSyncException" ->
          (`UpdateOutOfSyncException (update_out_of_sync_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -744,19 +744,19 @@ module UpdateSyncBlocker = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "RetryLatestCommitFailedException" ->
+      | _, "RetryLatestCommitFailedException" ->
          (`RetryLatestCommitFailedException (retry_latest_commit_failed_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "SyncBlockerDoesNotExistException" ->
+      | _, "SyncBlockerDoesNotExistException" ->
          (`SyncBlockerDoesNotExistException (sync_blocker_does_not_exist_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -780,19 +780,19 @@ module UpdateSyncConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.codeconnections", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ConcurrentModificationException" ->
+      | _, "ConcurrentModificationException" ->
          (`ConcurrentModificationException (concurrent_modification_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InternalServerException" ->
+      | _, "InternalServerException" ->
          (`InternalServerException (internal_server_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "InvalidInputException" ->
+      | _, "InvalidInputException" ->
          (`InvalidInputException (invalid_input_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "ThrottlingException" ->
+      | _, "ThrottlingException" ->
          (`ThrottlingException (throttling_exception_of_yojson tree path))
-      | "com.amazonaws.codeconnections", "UpdateOutOfSyncException" ->
+      | _, "UpdateOutOfSyncException" ->
          (`UpdateOutOfSyncException (update_out_of_sync_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

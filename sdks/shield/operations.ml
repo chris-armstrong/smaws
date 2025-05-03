@@ -4,21 +4,21 @@ module AssociateDRTLogBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "AccessDeniedForDependencyException" ->
+      | _, "AccessDeniedForDependencyException" ->
          (`AccessDeniedForDependencyException (access_denied_for_dependency_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LimitsExceededException" ->
+      | _, "LimitsExceededException" ->
          (`LimitsExceededException (limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "NoAssociatedRoleException" ->
+      | _, "NoAssociatedRoleException" ->
          (`NoAssociatedRoleException (no_associated_role_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -42,17 +42,17 @@ module AssociateDRTRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "AccessDeniedForDependencyException" ->
+      | _, "AccessDeniedForDependencyException" ->
          (`AccessDeniedForDependencyException (access_denied_for_dependency_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -76,17 +76,17 @@ module AssociateHealthCheck = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LimitsExceededException" ->
+      | _, "LimitsExceededException" ->
          (`LimitsExceededException (limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -110,15 +110,15 @@ module AssociateProactiveEngagementDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -142,21 +142,21 @@ module CreateProtection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LimitsExceededException" ->
+      | _, "LimitsExceededException" ->
          (`LimitsExceededException (limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -180,17 +180,17 @@ module CreateProtectionGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LimitsExceededException" ->
+      | _, "LimitsExceededException" ->
          (`LimitsExceededException (limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -214,9 +214,9 @@ module CreateSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceAlreadyExistsException" ->
+      | _, "ResourceAlreadyExistsException" ->
          (`ResourceAlreadyExistsException (resource_already_exists_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -240,11 +240,11 @@ module DeleteProtection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -268,11 +268,11 @@ module DeleteProtectionGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -296,11 +296,11 @@ module DeleteSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LockedSubscriptionException" ->
+      | _, "LockedSubscriptionException" ->
          (`LockedSubscriptionException (locked_subscription_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -324,9 +324,9 @@ module DescribeAttack = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "AccessDeniedException" ->
+      | _, "AccessDeniedException" ->
          (`AccessDeniedException (access_denied_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -350,7 +350,7 @@ module DescribeAttackStatistics = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -374,9 +374,9 @@ module DescribeDRTAccess = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -400,9 +400,9 @@ module DescribeEmergencyContactSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,11 +426,11 @@ module DescribeProtection = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -454,9 +454,9 @@ module DescribeProtectionGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -480,9 +480,9 @@ module DescribeSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -506,15 +506,15 @@ module DisableApplicationLayerAutomaticResponse = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -538,15 +538,15 @@ module DisableProactiveEngagement = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -570,17 +570,17 @@ module DisassociateDRTLogBucket = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "AccessDeniedForDependencyException" ->
+      | _, "AccessDeniedForDependencyException" ->
          (`AccessDeniedForDependencyException (access_denied_for_dependency_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "NoAssociatedRoleException" ->
+      | _, "NoAssociatedRoleException" ->
          (`NoAssociatedRoleException (no_associated_role_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -604,13 +604,13 @@ module DisassociateDRTRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -634,15 +634,15 @@ module DisassociateHealthCheck = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -666,17 +666,17 @@ module EnableApplicationLayerAutomaticResponse = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LimitsExceededException" ->
+      | _, "LimitsExceededException" ->
          (`LimitsExceededException (limits_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -700,15 +700,15 @@ module EnableProactiveEngagement = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -732,7 +732,7 @@ module GetSubscriptionState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -756,11 +756,11 @@ module ListAttacks = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -784,11 +784,11 @@ module ListProtectionGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidPaginationTokenException" ->
+      | _, "InvalidPaginationTokenException" ->
          (`InvalidPaginationTokenException (invalid_pagination_token_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -812,11 +812,11 @@ module ListProtections = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidPaginationTokenException" ->
+      | _, "InvalidPaginationTokenException" ->
          (`InvalidPaginationTokenException (invalid_pagination_token_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -840,11 +840,11 @@ module ListResourcesInProtectionGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidPaginationTokenException" ->
+      | _, "InvalidPaginationTokenException" ->
          (`InvalidPaginationTokenException (invalid_pagination_token_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -868,11 +868,11 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -896,13 +896,13 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -926,13 +926,13 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidResourceException" ->
+      | _, "InvalidResourceException" ->
          (`InvalidResourceException (invalid_resource_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -956,15 +956,15 @@ module UpdateApplicationLayerAutomaticResponse = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidOperationException" ->
+      | _, "InvalidOperationException" ->
          (`InvalidOperationException (invalid_operation_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -988,13 +988,13 @@ module UpdateEmergencyContactSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1018,13 +1018,13 @@ module UpdateProtectionGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1048,15 +1048,15 @@ module UpdateSubscription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.shield", "InternalErrorException" ->
+      | _, "InternalErrorException" ->
          (`InternalErrorException (internal_error_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "LockedSubscriptionException" ->
+      | _, "LockedSubscriptionException" ->
          (`LockedSubscriptionException (locked_subscription_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "OptimisticLockException" ->
+      | _, "OptimisticLockException" ->
          (`OptimisticLockException (optimistic_lock_exception_of_yojson tree path))
-      | "com.amazonaws.shield", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

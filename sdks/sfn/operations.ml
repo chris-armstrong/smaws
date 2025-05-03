@@ -4,11 +4,11 @@ module CreateActivity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ActivityLimitExceeded" ->
+      | _, "ActivityLimitExceeded" ->
          (`ActivityLimitExceeded (activity_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidName" ->
+      | _, "InvalidName" ->
          (`InvalidName (invalid_name_of_yojson tree path))
-      | "com.amazonaws.sfn", "TooManyTags" ->
+      | _, "TooManyTags" ->
          (`TooManyTags (too_many_tags_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -32,29 +32,29 @@ module CreateStateMachine = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidDefinition" ->
+      | _, "InvalidDefinition" ->
          (`InvalidDefinition (invalid_definition_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidLoggingConfiguration" ->
+      | _, "InvalidLoggingConfiguration" ->
          (`InvalidLoggingConfiguration (invalid_logging_configuration_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidName" ->
+      | _, "InvalidName" ->
          (`InvalidName (invalid_name_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidTracingConfiguration" ->
+      | _, "InvalidTracingConfiguration" ->
          (`InvalidTracingConfiguration (invalid_tracing_configuration_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineAlreadyExists" ->
+      | _, "StateMachineAlreadyExists" ->
          (`StateMachineAlreadyExists (state_machine_already_exists_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineLimitExceeded" ->
+      | _, "StateMachineLimitExceeded" ->
          (`StateMachineLimitExceeded (state_machine_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineTypeNotSupported" ->
+      | _, "StateMachineTypeNotSupported" ->
          (`StateMachineTypeNotSupported (state_machine_type_not_supported_of_yojson tree path))
-      | "com.amazonaws.sfn", "TooManyTags" ->
+      | _, "TooManyTags" ->
          (`TooManyTags (too_many_tags_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -78,19 +78,19 @@ module CreateStateMachineAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidName" ->
+      | _, "InvalidName" ->
          (`InvalidName (invalid_name_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -114,7 +114,7 @@ module DeleteActivity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -138,9 +138,9 @@ module DeleteStateMachine = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -164,13 +164,13 @@ module DeleteStateMachineAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -194,11 +194,11 @@ module DeleteStateMachineVersion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -222,9 +222,9 @@ module DescribeActivity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ActivityDoesNotExist" ->
+      | _, "ActivityDoesNotExist" ->
          (`ActivityDoesNotExist (activity_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -248,9 +248,9 @@ module DescribeExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -274,9 +274,9 @@ module DescribeMapRun = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -300,9 +300,9 @@ module DescribeStateMachine = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -326,11 +326,11 @@ module DescribeStateMachineAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -354,9 +354,9 @@ module DescribeStateMachineForExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -380,11 +380,11 @@ module GetActivityTask = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ActivityDoesNotExist" ->
+      | _, "ActivityDoesNotExist" ->
          (`ActivityDoesNotExist (activity_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "ActivityWorkerLimitExceeded" ->
+      | _, "ActivityWorkerLimitExceeded" ->
          (`ActivityWorkerLimitExceeded (activity_worker_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -408,11 +408,11 @@ module GetExecutionHistory = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -436,7 +436,7 @@ module ListActivities = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -460,17 +460,17 @@ module ListExecutions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineTypeNotSupported" ->
+      | _, "StateMachineTypeNotSupported" ->
          (`StateMachineTypeNotSupported (state_machine_type_not_supported_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -494,11 +494,11 @@ module ListMapRuns = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -522,15 +522,15 @@ module ListStateMachineAliases = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -554,11 +554,11 @@ module ListStateMachineVersions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -582,7 +582,7 @@ module ListStateMachines = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -606,9 +606,9 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -632,17 +632,17 @@ module PublishStateMachineVersion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -666,15 +666,15 @@ module RedriveExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "ExecutionLimitExceeded" ->
+      | _, "ExecutionLimitExceeded" ->
          (`ExecutionLimitExceeded (execution_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.sfn", "ExecutionNotRedrivable" ->
+      | _, "ExecutionNotRedrivable" ->
          (`ExecutionNotRedrivable (execution_not_redrivable_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -698,11 +698,11 @@ module SendTaskFailure = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskDoesNotExist" ->
+      | _, "TaskDoesNotExist" ->
          (`TaskDoesNotExist (task_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskTimedOut" ->
+      | _, "TaskTimedOut" ->
          (`TaskTimedOut (task_timed_out_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -726,11 +726,11 @@ module SendTaskHeartbeat = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskDoesNotExist" ->
+      | _, "TaskDoesNotExist" ->
          (`TaskDoesNotExist (task_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskTimedOut" ->
+      | _, "TaskTimedOut" ->
          (`TaskTimedOut (task_timed_out_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -754,13 +754,13 @@ module SendTaskSuccess = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidOutput" ->
+      | _, "InvalidOutput" ->
          (`InvalidOutput (invalid_output_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidToken" ->
+      | _, "InvalidToken" ->
          (`InvalidToken (invalid_token_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskDoesNotExist" ->
+      | _, "TaskDoesNotExist" ->
          (`TaskDoesNotExist (task_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "TaskTimedOut" ->
+      | _, "TaskTimedOut" ->
          (`TaskTimedOut (task_timed_out_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -784,21 +784,21 @@ module StartExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionAlreadyExists" ->
+      | _, "ExecutionAlreadyExists" ->
          (`ExecutionAlreadyExists (execution_already_exists_of_yojson tree path))
-      | "com.amazonaws.sfn", "ExecutionLimitExceeded" ->
+      | _, "ExecutionLimitExceeded" ->
          (`ExecutionLimitExceeded (execution_limit_exceeded_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidExecutionInput" ->
+      | _, "InvalidExecutionInput" ->
          (`InvalidExecutionInput (invalid_execution_input_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidName" ->
+      | _, "InvalidName" ->
          (`InvalidName (invalid_name_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -822,17 +822,17 @@ module StartSyncExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidExecutionInput" ->
+      | _, "InvalidExecutionInput" ->
          (`InvalidExecutionInput (invalid_execution_input_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidName" ->
+      | _, "InvalidName" ->
          (`InvalidName (invalid_name_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineTypeNotSupported" ->
+      | _, "StateMachineTypeNotSupported" ->
          (`StateMachineTypeNotSupported (state_machine_type_not_supported_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -856,11 +856,11 @@ module StopExecution = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ExecutionDoesNotExist" ->
+      | _, "ExecutionDoesNotExist" ->
          (`ExecutionDoesNotExist (execution_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -884,11 +884,11 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "TooManyTags" ->
+      | _, "TooManyTags" ->
          (`TooManyTags (too_many_tags_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -912,13 +912,13 @@ module TestState = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidDefinition" ->
+      | _, "InvalidDefinition" ->
          (`InvalidDefinition (invalid_definition_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidExecutionInput" ->
+      | _, "InvalidExecutionInput" ->
          (`InvalidExecutionInput (invalid_execution_input_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -942,9 +942,9 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -968,11 +968,11 @@ module UpdateMapRun = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -996,25 +996,25 @@ module UpdateStateMachine = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidDefinition" ->
+      | _, "InvalidDefinition" ->
          (`InvalidDefinition (invalid_definition_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidLoggingConfiguration" ->
+      | _, "InvalidLoggingConfiguration" ->
          (`InvalidLoggingConfiguration (invalid_logging_configuration_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidTracingConfiguration" ->
+      | _, "InvalidTracingConfiguration" ->
          (`InvalidTracingConfiguration (invalid_tracing_configuration_of_yojson tree path))
-      | "com.amazonaws.sfn", "MissingRequiredParameter" ->
+      | _, "MissingRequiredParameter" ->
          (`MissingRequiredParameter (missing_required_parameter_of_yojson tree path))
-      | "com.amazonaws.sfn", "ServiceQuotaExceededException" ->
+      | _, "ServiceQuotaExceededException" ->
          (`ServiceQuotaExceededException (service_quota_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDoesNotExist" ->
+      | _, "StateMachineDoesNotExist" ->
          (`StateMachineDoesNotExist (state_machine_does_not_exist_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1038,15 +1038,15 @@ module UpdateStateMachineAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.sfn", "InvalidArn" ->
+      | _, "InvalidArn" ->
          (`InvalidArn (invalid_arn_of_yojson tree path))
-      | "com.amazonaws.sfn", "ResourceNotFound" ->
+      | _, "ResourceNotFound" ->
          (`ResourceNotFound (resource_not_found_of_yojson tree path))
-      | "com.amazonaws.sfn", "StateMachineDeleting" ->
+      | _, "StateMachineDeleting" ->
          (`StateMachineDeleting (state_machine_deleting_of_yojson tree path))
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1070,7 +1070,7 @@ module ValidateStateMachineDefinition = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.sfn", "ValidationException" ->
+      | _, "ValidationException" ->
          (`ValidationException (validation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

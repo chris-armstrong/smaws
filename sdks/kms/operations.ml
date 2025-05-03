@@ -4,15 +4,15 @@ module CancelKeyDeletion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -36,15 +36,15 @@ module ConnectCustomKeyStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CloudHsmClusterInvalidConfigurationException" ->
+      | _, "CloudHsmClusterInvalidConfigurationException" ->
          (`CloudHsmClusterInvalidConfigurationException (cloud_hsm_cluster_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotActiveException" ->
+      | _, "CloudHsmClusterNotActiveException" ->
          (`CloudHsmClusterNotActiveException (cloud_hsm_cluster_not_active_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -68,19 +68,19 @@ module CreateAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "AlreadyExistsException" ->
+      | _, "AlreadyExistsException" ->
          (`AlreadyExistsException (already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidAliasNameException" ->
+      | _, "InvalidAliasNameException" ->
          (`InvalidAliasNameException (invalid_alias_name_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -104,39 +104,39 @@ module CreateCustomKeyStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CloudHsmClusterInUseException" ->
+      | _, "CloudHsmClusterInUseException" ->
          (`CloudHsmClusterInUseException (cloud_hsm_cluster_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterInvalidConfigurationException" ->
+      | _, "CloudHsmClusterInvalidConfigurationException" ->
          (`CloudHsmClusterInvalidConfigurationException (cloud_hsm_cluster_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotActiveException" ->
+      | _, "CloudHsmClusterNotActiveException" ->
          (`CloudHsmClusterNotActiveException (cloud_hsm_cluster_not_active_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotFoundException" ->
+      | _, "CloudHsmClusterNotFoundException" ->
          (`CloudHsmClusterNotFoundException (cloud_hsm_cluster_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNameInUseException" ->
+      | _, "CustomKeyStoreNameInUseException" ->
          (`CustomKeyStoreNameInUseException (custom_key_store_name_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "IncorrectTrustAnchorException" ->
+      | _, "IncorrectTrustAnchorException" ->
          (`IncorrectTrustAnchorException (incorrect_trust_anchor_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyIncorrectAuthenticationCredentialException" ->
+      | _, "XksProxyIncorrectAuthenticationCredentialException" ->
          (`XksProxyIncorrectAuthenticationCredentialException (xks_proxy_incorrect_authentication_credential_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyInvalidConfigurationException" ->
+      | _, "XksProxyInvalidConfigurationException" ->
          (`XksProxyInvalidConfigurationException (xks_proxy_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyInvalidResponseException" ->
+      | _, "XksProxyInvalidResponseException" ->
          (`XksProxyInvalidResponseException (xks_proxy_invalid_response_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriEndpointInUseException" ->
+      | _, "XksProxyUriEndpointInUseException" ->
          (`XksProxyUriEndpointInUseException (xks_proxy_uri_endpoint_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriInUseException" ->
+      | _, "XksProxyUriInUseException" ->
          (`XksProxyUriInUseException (xks_proxy_uri_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriUnreachableException" ->
+      | _, "XksProxyUriUnreachableException" ->
          (`XksProxyUriUnreachableException (xks_proxy_uri_unreachable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceInUseException" ->
+      | _, "XksProxyVpcEndpointServiceInUseException" ->
          (`XksProxyVpcEndpointServiceInUseException (xks_proxy_vpc_endpoint_service_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceInvalidConfigurationException" ->
+      | _, "XksProxyVpcEndpointServiceInvalidConfigurationException" ->
          (`XksProxyVpcEndpointServiceInvalidConfigurationException (xks_proxy_vpc_endpoint_service_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceNotFoundException" ->
+      | _, "XksProxyVpcEndpointServiceNotFoundException" ->
          (`XksProxyVpcEndpointServiceNotFoundException (xks_proxy_vpc_endpoint_service_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -160,23 +160,23 @@ module CreateGrant = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -200,31 +200,31 @@ module CreateKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CloudHsmClusterInvalidConfigurationException" ->
+      | _, "CloudHsmClusterInvalidConfigurationException" ->
          (`CloudHsmClusterInvalidConfigurationException (cloud_hsm_cluster_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "MalformedPolicyDocumentException" ->
+      | _, "MalformedPolicyDocumentException" ->
          (`MalformedPolicyDocumentException (malformed_policy_document_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "TagException" ->
+      | _, "TagException" ->
          (`TagException (tag_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksKeyAlreadyInUseException" ->
+      | _, "XksKeyAlreadyInUseException" ->
          (`XksKeyAlreadyInUseException (xks_key_already_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksKeyInvalidConfigurationException" ->
+      | _, "XksKeyInvalidConfigurationException" ->
          (`XksKeyInvalidConfigurationException (xks_key_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksKeyNotFoundException" ->
+      | _, "XksKeyNotFoundException" ->
          (`XksKeyNotFoundException (xks_key_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -248,27 +248,27 @@ module Decrypt = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "IncorrectKeyException" ->
+      | _, "IncorrectKeyException" ->
          (`IncorrectKeyException (incorrect_key_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidCiphertextException" ->
+      | _, "InvalidCiphertextException" ->
          (`InvalidCiphertextException (invalid_ciphertext_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -292,13 +292,13 @@ module DeleteAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -322,13 +322,13 @@ module DeleteCustomKeyStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CustomKeyStoreHasCMKsException" ->
+      | _, "CustomKeyStoreHasCMKsException" ->
          (`CustomKeyStoreHasCMKsException (custom_key_store_has_cm_ks_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -352,17 +352,17 @@ module DeleteImportedKeyMaterial = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -386,23 +386,23 @@ module DeriveSharedSecret = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -426,11 +426,11 @@ module DescribeCustomKeyStores = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -454,13 +454,13 @@ module DescribeKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -484,15 +484,15 @@ module DisableKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -516,19 +516,19 @@ module DisableKeyRotation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -552,11 +552,11 @@ module DisconnectCustomKeyStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -580,17 +580,17 @@ module EnableKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -614,19 +614,19 @@ module EnableKeyRotation = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -650,23 +650,23 @@ module Encrypt = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -690,23 +690,23 @@ module GenerateDataKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -730,25 +730,25 @@ module GenerateDataKeyPair = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -772,25 +772,25 @@ module GenerateDataKeyPairWithoutPlaintext = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -814,23 +814,23 @@ module GenerateDataKeyWithoutPlaintext = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -854,21 +854,21 @@ module GenerateMac = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -892,15 +892,15 @@ module GenerateRandom = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -924,15 +924,15 @@ module GetKeyPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -956,17 +956,17 @@ module GetKeyRotationStatus = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -990,17 +990,17 @@ module GetParametersForImport = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1024,25 +1024,25 @@ module GetPublicKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1066,25 +1066,25 @@ module ImportKeyMaterial = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "ExpiredImportTokenException" ->
+      | _, "ExpiredImportTokenException" ->
          (`ExpiredImportTokenException (expired_import_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "IncorrectKeyMaterialException" ->
+      | _, "IncorrectKeyMaterialException" ->
          (`IncorrectKeyMaterialException (incorrect_key_material_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidCiphertextException" ->
+      | _, "InvalidCiphertextException" ->
          (`InvalidCiphertextException (invalid_ciphertext_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidImportTokenException" ->
+      | _, "InvalidImportTokenException" ->
          (`InvalidImportTokenException (invalid_import_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1108,15 +1108,15 @@ module ListAliases = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1140,19 +1140,19 @@ module ListGrants = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantIdException" ->
+      | _, "InvalidGrantIdException" ->
          (`InvalidGrantIdException (invalid_grant_id_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1176,15 +1176,15 @@ module ListKeyPolicies = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1208,17 +1208,17 @@ module ListKeyRotations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1242,11 +1242,11 @@ module ListKeys = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1270,13 +1270,13 @@ module ListResourceTags = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1300,15 +1300,15 @@ module ListRetirableGrants = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidMarkerException" ->
+      | _, "InvalidMarkerException" ->
          (`InvalidMarkerException (invalid_marker_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1332,21 +1332,21 @@ module PutKeyPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "MalformedPolicyDocumentException" ->
+      | _, "MalformedPolicyDocumentException" ->
          (`MalformedPolicyDocumentException (malformed_policy_document_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1370,27 +1370,27 @@ module ReEncrypt = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "IncorrectKeyException" ->
+      | _, "IncorrectKeyException" ->
          (`IncorrectKeyException (incorrect_key_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidCiphertextException" ->
+      | _, "InvalidCiphertextException" ->
          (`InvalidCiphertextException (invalid_ciphertext_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1414,25 +1414,25 @@ module ReplicateKey = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "AlreadyExistsException" ->
+      | _, "AlreadyExistsException" ->
          (`AlreadyExistsException (already_exists_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "MalformedPolicyDocumentException" ->
+      | _, "MalformedPolicyDocumentException" ->
          (`MalformedPolicyDocumentException (malformed_policy_document_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "TagException" ->
+      | _, "TagException" ->
          (`TagException (tag_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1456,21 +1456,21 @@ module RetireGrant = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantIdException" ->
+      | _, "InvalidGrantIdException" ->
          (`InvalidGrantIdException (invalid_grant_id_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1494,19 +1494,19 @@ module RevokeGrant = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantIdException" ->
+      | _, "InvalidGrantIdException" ->
          (`InvalidGrantIdException (invalid_grant_id_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1530,23 +1530,23 @@ module RotateKeyOnDemand = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "ConflictException" ->
+      | _, "ConflictException" ->
          (`ConflictException (conflict_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1570,15 +1570,15 @@ module ScheduleKeyDeletion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1602,23 +1602,23 @@ module Sign = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1642,17 +1642,17 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "TagException" ->
+      | _, "TagException" ->
          (`TagException (tag_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1676,15 +1676,15 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "TagException" ->
+      | _, "TagException" ->
          (`TagException (tag_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1708,15 +1708,15 @@ module UpdateAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1740,39 +1740,39 @@ module UpdateCustomKeyStore = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "CloudHsmClusterInvalidConfigurationException" ->
+      | _, "CloudHsmClusterInvalidConfigurationException" ->
          (`CloudHsmClusterInvalidConfigurationException (cloud_hsm_cluster_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotActiveException" ->
+      | _, "CloudHsmClusterNotActiveException" ->
          (`CloudHsmClusterNotActiveException (cloud_hsm_cluster_not_active_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotFoundException" ->
+      | _, "CloudHsmClusterNotFoundException" ->
          (`CloudHsmClusterNotFoundException (cloud_hsm_cluster_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CloudHsmClusterNotRelatedException" ->
+      | _, "CloudHsmClusterNotRelatedException" ->
          (`CloudHsmClusterNotRelatedException (cloud_hsm_cluster_not_related_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreInvalidStateException" ->
+      | _, "CustomKeyStoreInvalidStateException" ->
          (`CustomKeyStoreInvalidStateException (custom_key_store_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNameInUseException" ->
+      | _, "CustomKeyStoreNameInUseException" ->
          (`CustomKeyStoreNameInUseException (custom_key_store_name_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "CustomKeyStoreNotFoundException" ->
+      | _, "CustomKeyStoreNotFoundException" ->
          (`CustomKeyStoreNotFoundException (custom_key_store_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyIncorrectAuthenticationCredentialException" ->
+      | _, "XksProxyIncorrectAuthenticationCredentialException" ->
          (`XksProxyIncorrectAuthenticationCredentialException (xks_proxy_incorrect_authentication_credential_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyInvalidConfigurationException" ->
+      | _, "XksProxyInvalidConfigurationException" ->
          (`XksProxyInvalidConfigurationException (xks_proxy_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyInvalidResponseException" ->
+      | _, "XksProxyInvalidResponseException" ->
          (`XksProxyInvalidResponseException (xks_proxy_invalid_response_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriEndpointInUseException" ->
+      | _, "XksProxyUriEndpointInUseException" ->
          (`XksProxyUriEndpointInUseException (xks_proxy_uri_endpoint_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriInUseException" ->
+      | _, "XksProxyUriInUseException" ->
          (`XksProxyUriInUseException (xks_proxy_uri_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyUriUnreachableException" ->
+      | _, "XksProxyUriUnreachableException" ->
          (`XksProxyUriUnreachableException (xks_proxy_uri_unreachable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceInUseException" ->
+      | _, "XksProxyVpcEndpointServiceInUseException" ->
          (`XksProxyVpcEndpointServiceInUseException (xks_proxy_vpc_endpoint_service_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceInvalidConfigurationException" ->
+      | _, "XksProxyVpcEndpointServiceInvalidConfigurationException" ->
          (`XksProxyVpcEndpointServiceInvalidConfigurationException (xks_proxy_vpc_endpoint_service_invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "XksProxyVpcEndpointServiceNotFoundException" ->
+      | _, "XksProxyVpcEndpointServiceNotFoundException" ->
          (`XksProxyVpcEndpointServiceNotFoundException (xks_proxy_vpc_endpoint_service_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1796,15 +1796,15 @@ module UpdateKeyDescription = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1828,17 +1828,17 @@ module UpdatePrimaryRegion = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidArnException" ->
+      | _, "InvalidArnException" ->
          (`InvalidArnException (invalid_arn_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1862,25 +1862,25 @@ module Verify = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DependencyTimeoutException" ->
+      | _, "DependencyTimeoutException" ->
          (`DependencyTimeoutException (dependency_timeout_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidSignatureException" ->
+      | _, "KMSInvalidSignatureException" ->
          (`KMSInvalidSignatureException (kms_invalid_signature_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1904,23 +1904,23 @@ module VerifyMac = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.kms", "DisabledException" ->
+      | _, "DisabledException" ->
          (`DisabledException (disabled_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "DryRunOperationException" ->
+      | _, "DryRunOperationException" ->
          (`DryRunOperationException (dry_run_operation_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidGrantTokenException" ->
+      | _, "InvalidGrantTokenException" ->
          (`InvalidGrantTokenException (invalid_grant_token_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "InvalidKeyUsageException" ->
+      | _, "InvalidKeyUsageException" ->
          (`InvalidKeyUsageException (invalid_key_usage_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KeyUnavailableException" ->
+      | _, "KeyUnavailableException" ->
          (`KeyUnavailableException (key_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInternalException" ->
+      | _, "KMSInternalException" ->
          (`KMSInternalException (kms_internal_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidMacException" ->
+      | _, "KMSInvalidMacException" ->
          (`KMSInvalidMacException (kms_invalid_mac_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "KMSInvalidStateException" ->
+      | _, "KMSInvalidStateException" ->
          (`KMSInvalidStateException (kms_invalid_state_exception_of_yojson tree path))
-      | "com.amazonaws.kms", "NotFoundException" ->
+      | _, "NotFoundException" ->
          (`NotFoundException (not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       

@@ -4,17 +4,17 @@ module AssociateDelegateToResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -38,21 +38,21 @@ module AssociateMemberToGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -76,13 +76,13 @@ module AssumeImpersonationRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -106,13 +106,13 @@ module CancelMailboxExportJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -136,23 +136,23 @@ module CreateAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EmailAddressInUseException" ->
+      | _, "EmailAddressInUseException" ->
          (`EmailAddressInUseException (email_address_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainStateException" ->
+      | _, "MailDomainStateException" ->
          (`MailDomainStateException (mail_domain_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -176,15 +176,15 @@ module CreateAvailabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -208,21 +208,21 @@ module CreateGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ReservedNameException" ->
+      | _, "ReservedNameException" ->
          (`ReservedNameException (reserved_name_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -246,17 +246,17 @@ module CreateImpersonationRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -280,13 +280,13 @@ module CreateMobileDeviceAccessRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -310,15 +310,15 @@ module CreateOrganization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryInUseException" ->
+      | _, "DirectoryInUseException" ->
          (`DirectoryInUseException (directory_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -342,21 +342,21 @@ module CreateResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ReservedNameException" ->
+      | _, "ReservedNameException" ->
          (`ReservedNameException (reserved_name_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -380,23 +380,23 @@ module CreateUser = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidPasswordException" ->
+      | _, "InvalidPasswordException" ->
          (`InvalidPasswordException (invalid_password_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ReservedNameException" ->
+      | _, "ReservedNameException" ->
          (`ReservedNameException (reserved_name_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -420,9 +420,9 @@ module DeleteAccessControlRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -446,15 +446,15 @@ module DeleteAlias = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -478,9 +478,9 @@ module DeleteAvailabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -504,11 +504,11 @@ module DeleteEmailMonitoringConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -532,19 +532,19 @@ module DeleteGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -568,11 +568,11 @@ module DeleteImpersonationRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -596,15 +596,15 @@ module DeleteMailboxPermissions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -628,13 +628,13 @@ module DeleteMobileDeviceAccessOverride = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -658,11 +658,11 @@ module DeleteMobileDeviceAccessRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -686,11 +686,11 @@ module DeleteOrganization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -714,15 +714,15 @@ module DeleteResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -746,11 +746,11 @@ module DeleteRetentionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -774,19 +774,19 @@ module DeleteUser = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -810,15 +810,15 @@ module DeregisterFromWorkMail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -842,15 +842,15 @@ module DeregisterMailDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidCustomSesConfigurationException" ->
+      | _, "InvalidCustomSesConfigurationException" ->
          (`InvalidCustomSesConfigurationException (invalid_custom_ses_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainInUseException" ->
+      | _, "MailDomainInUseException" ->
          (`MailDomainInUseException (mail_domain_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -874,13 +874,13 @@ module DescribeEmailMonitoringConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -904,13 +904,13 @@ module DescribeEntity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -934,13 +934,13 @@ module DescribeGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -964,9 +964,9 @@ module DescribeInboundDmarcSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -990,13 +990,13 @@ module DescribeMailboxExportJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1020,9 +1020,9 @@ module DescribeOrganization = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1046,15 +1046,15 @@ module DescribeResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1078,13 +1078,13 @@ module DescribeUser = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1108,17 +1108,17 @@ module DisassociateDelegateFromResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1142,21 +1142,21 @@ module DisassociateMemberFromGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1180,15 +1180,15 @@ module GetAccessControlEffect = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1212,13 +1212,13 @@ module GetDefaultRetentionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1242,13 +1242,13 @@ module GetImpersonationRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1272,17 +1272,17 @@ module GetImpersonationRoleEffect = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1306,13 +1306,13 @@ module GetMailboxDetails = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1336,13 +1336,13 @@ module GetMailDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1366,11 +1366,11 @@ module GetMobileDeviceAccessEffect = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1394,15 +1394,15 @@ module GetMobileDeviceAccessOverride = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1426,9 +1426,9 @@ module ListAccessControlRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1452,15 +1452,15 @@ module ListAliases = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1484,9 +1484,9 @@ module ListAvailabilityConfigurations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1510,15 +1510,15 @@ module ListGroupMembers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1542,13 +1542,13 @@ module ListGroups = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1572,15 +1572,15 @@ module ListGroupsForEntity = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1604,11 +1604,11 @@ module ListImpersonationRoles = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1632,11 +1632,11 @@ module ListMailboxExportJobs = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1660,13 +1660,13 @@ module ListMailboxPermissions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1690,11 +1690,11 @@ module ListMailDomains = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1718,13 +1718,13 @@ module ListMobileDeviceAccessOverrides = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1748,11 +1748,11 @@ module ListMobileDeviceAccessRules = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1776,7 +1776,7 @@ module ListOrganizations = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1800,17 +1800,17 @@ module ListResourceDelegates = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1834,13 +1834,13 @@ module ListResources = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1864,7 +1864,7 @@ module ListTagsForResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1888,11 +1888,11 @@ module ListUsers = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1916,17 +1916,17 @@ module PutAccessControlRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1950,13 +1950,13 @@ module PutEmailMonitoringConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -1980,9 +1980,9 @@ module PutInboundDmarcSettings = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2006,15 +2006,15 @@ module PutMailboxPermissions = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2038,15 +2038,15 @@ module PutMobileDeviceAccessOverride = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2070,13 +2070,13 @@ module PutRetentionPolicy = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2100,15 +2100,15 @@ module RegisterMailDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainInUseException" ->
+      | _, "MailDomainInUseException" ->
          (`MailDomainInUseException (mail_domain_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2132,27 +2132,27 @@ module RegisterToWorkMail = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EmailAddressInUseException" ->
+      | _, "EmailAddressInUseException" ->
          (`EmailAddressInUseException (email_address_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityAlreadyRegisteredException" ->
+      | _, "EntityAlreadyRegisteredException" ->
          (`EntityAlreadyRegisteredException (entity_already_registered_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainStateException" ->
+      | _, "MailDomainStateException" ->
          (`MailDomainStateException (mail_domain_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2176,23 +2176,23 @@ module ResetPassword = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidPasswordException" ->
+      | _, "InvalidPasswordException" ->
          (`InvalidPasswordException (invalid_password_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2216,15 +2216,15 @@ module StartMailboxExportJob = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2248,13 +2248,13 @@ module TagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "TooManyTagsException" ->
+      | _, "TooManyTagsException" ->
          (`TooManyTagsException (too_many_tags_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2278,13 +2278,13 @@ module TestAvailabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2308,7 +2308,7 @@ module UntagResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2332,13 +2332,13 @@ module UpdateAvailabilityConfiguration = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2362,15 +2362,15 @@ module UpdateDefaultMailDomain = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainStateException" ->
+      | _, "MailDomainStateException" ->
          (`MailDomainStateException (mail_domain_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2394,17 +2394,17 @@ module UpdateGroup = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2428,19 +2428,19 @@ module UpdateImpersonationRole = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "LimitExceededException" ->
+      | _, "LimitExceededException" ->
          (`LimitExceededException (limit_exceeded_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "ResourceNotFoundException" ->
+      | _, "ResourceNotFoundException" ->
          (`ResourceNotFoundException (resource_not_found_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2464,15 +2464,15 @@ module UpdateMailboxQuota = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2496,13 +2496,13 @@ module UpdateMobileDeviceAccessRule = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2526,27 +2526,27 @@ module UpdatePrimaryEmailAddress = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EmailAddressInUseException" ->
+      | _, "EmailAddressInUseException" ->
          (`EmailAddressInUseException (email_address_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainStateException" ->
+      | _, "MailDomainStateException" ->
          (`MailDomainStateException (mail_domain_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2570,29 +2570,29 @@ module UpdateResource = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EmailAddressInUseException" ->
+      | _, "EmailAddressInUseException" ->
          (`EmailAddressInUseException (email_address_in_use_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidConfigurationException" ->
+      | _, "InvalidConfigurationException" ->
          (`InvalidConfigurationException (invalid_configuration_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainNotFoundException" ->
+      | _, "MailDomainNotFoundException" ->
          (`MailDomainNotFoundException (mail_domain_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "MailDomainStateException" ->
+      | _, "MailDomainStateException" ->
          (`MailDomainStateException (mail_domain_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "NameAvailabilityException" ->
+      | _, "NameAvailabilityException" ->
          (`NameAvailabilityException (name_availability_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
@@ -2616,21 +2616,21 @@ module UpdateUser = struct
   let error_deserializer tree path = 
     let open Deserializers in
     let handler = fun handler tree path -> function
-      | "com.amazonaws.workmail", "DirectoryServiceAuthenticationFailedException" ->
+      | _, "DirectoryServiceAuthenticationFailedException" ->
          (`DirectoryServiceAuthenticationFailedException (directory_service_authentication_failed_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "DirectoryUnavailableException" ->
+      | _, "DirectoryUnavailableException" ->
          (`DirectoryUnavailableException (directory_unavailable_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityNotFoundException" ->
+      | _, "EntityNotFoundException" ->
          (`EntityNotFoundException (entity_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "EntityStateException" ->
+      | _, "EntityStateException" ->
          (`EntityStateException (entity_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "InvalidParameterException" ->
+      | _, "InvalidParameterException" ->
          (`InvalidParameterException (invalid_parameter_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationNotFoundException" ->
+      | _, "OrganizationNotFoundException" ->
          (`OrganizationNotFoundException (organization_not_found_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "OrganizationStateException" ->
+      | _, "OrganizationStateException" ->
          (`OrganizationStateException (organization_state_exception_of_yojson tree path))
-      | "com.amazonaws.workmail", "UnsupportedOperationException" ->
+      | _, "UnsupportedOperationException" ->
          (`UnsupportedOperationException (unsupported_operation_exception_of_yojson tree path))
       | _type -> handler tree path _type
       
