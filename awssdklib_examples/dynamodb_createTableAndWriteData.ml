@@ -15,12 +15,12 @@ let _ =
               }
           in
           let context = Context.make ~sw ~config env in
-          let ( let+ ) res map = Result.bind res map in
+          let ( let* ) res map = Result.bind res map in
 
           match
             let open Smaws_Clients.DynamoDB in
             let table = "create-table-test" in
-            let+ { table_names; _ } = ListTables.request context (make_list_tables_input ()) in
+            let* { table_names; _ } = ListTables.request context (make_list_tables_input ()) in
             Logs.info (fun m ->
                 m "SUCCESS: table list %a" (Fmt.list Fmt.string) (table_names |> optional_empty_list));
             let table_exists =
@@ -28,7 +28,7 @@ let _ =
                 (fun table_name -> String.equal table_name table)
                 (table_names |> optional_empty_list)
             in
-            let+ ctr =
+            let* ctr =
               if not table_exists then
                 CreateTable.request context
                   (make_create_table_input ~table_name:table ~table_class:STANDARD
@@ -52,20 +52,27 @@ let _ =
                   |> Option.map (fun (x : table_description) -> x.table_id)
                   |> Option.join
                   |> Option.value ~default:"<unknown id>"));
-            let+ ctr =
+            let* ctr =
               PutItem.request context
                 (make_put_item_input ~table_name:table ~return_values:ALL_OLD
-                   ~item:[ ("pk", S "item1"); ("sk", S "item1") ]
+                   ~condition_expression:"attribute_not_exists(#pk) and attribute_not_exists(#sk)"
+                   ~expression_attribute_names:[ ("#pk", "pk"); ("#sk", "sk") ]
+                   ~item:
+                     [
+                       ("pk", S "item1");
+                       ("sk", S "item1");
+                       ("value", M [ ("level", N "10"); ("name", S "volume") ]);
+                     ]
                    ())
             in
             Ok ()
           with
           | Ok _ -> ()
-          | Error (`AWSServiceError e) when e._type.name = "SomeError" -> ()
+          | Error (`ConditionalCheckFailedException e) ->
+              Logs.err (fun m -> m "ConditionalCheckFailed !")
           | Error (`HttpError e) ->
               Logs.err (fun m -> m "HTTP Error %a" Smaws_Lib.Http.pp_http_failure e)
           | Error (`JsonParseError e) ->
               Logs.err (fun m ->
-                  m "Parse Error! %s"
-                    (Smaws_Lib.Json.DeserializeHelpers.jsonParseErrorToString e))
-          | Error _ -> Logs.err (fun m -> m "Another error")))
+                  m "Parse Error! %s" (Smaws_Lib.Json.DeserializeHelpers.jsonParseErrorToString e))
+          | Error _ -> Logs.err (fun m -> m "Unknown error")))
