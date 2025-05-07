@@ -20,7 +20,7 @@ let resolve ctx ~name =
   let resolution =
     Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name)
   in
-  Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution;
+  (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   resolution
 
 (** Use the aliasing context to resolve the type for the specified name, using `traits` to determine
@@ -29,7 +29,7 @@ let resolve_for_target ctx ~name ~traits =
   let resolution =
     Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name)
   in
-  Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution;
+  (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   let is_required = Ast.Trait.(hasTrait traits isRequiredTrait) in
   if is_required then resolution
   else B.ptyp_constr (Location.mknoloc (Longident.Lident "option")) [ resolution ]
@@ -141,7 +141,7 @@ let create_alias_context shapes : t =
       | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _ | LongShape _
       | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape ->
           let alias = make_basic_type_manifest tbl descriptor in
-          Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias;
+          (* Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias; *)
           ignore (Hashtbl.add ~key:name ~data:alias tbl)
       | _ -> ())
     shapes;
@@ -237,18 +237,3 @@ let sigi_structure_shapes ctx structure_shapes fmt =
 
            type_declaration
            |> Option.map ~f:(fun type_declaration -> B.psig_type Nonrecursive [ type_declaration ]))
-
-let make_lident ~names =
-  match names with
-  | [] -> failwith "Empty list of names"
-  | [ name ] -> Longident.Lident name
-  | head :: tail ->
-      let lident = Longident.Lident head in
-      List.fold tail ~init:lident ~f:(fun acc name -> Longident.Ldot (acc, name))
-
-let stri_open names =
-  B.pstr_open
-    (B.open_infos ~expr:(B.pmod_ident (Location.mknoloc (make_lident ~names))) ~override:Fresh)
-
-let sigi_open names =
-  B.psig_open (B.open_infos ~expr:(Location.mknoloc (make_lident ~names)) ~override:Fresh)

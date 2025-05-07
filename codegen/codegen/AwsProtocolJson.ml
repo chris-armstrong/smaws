@@ -240,8 +240,8 @@ module Operations = struct
           let _, exc_name = Util.symbolPair exc in
           let constructor_name = SafeNames.safeConstructorName exc in
           let deserializer_func_name = Deserialiser.func_name exc ~is_exception_type:true in
-          Fmt.pf fmt "| _, \"%s\" ->@;<1 2> (`%s (%s tree path))@;" exc_name constructor_name
-            deserializer_func_name)
+          Fmt.pf fmt "| _, \"%s\" ->@;<1 2> (`%s (%s tree path))@;" exc_name
+            constructor_name deserializer_func_name)
         errors;
       Fmt.pf fmt "| _type -> handler tree path _type@;";
       Fmt.pf fmt "@]@ in@\n"

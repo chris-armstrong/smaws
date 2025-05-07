@@ -124,7 +124,7 @@ let _ =
                     ~alias_context output_fmt)
           | SerialisersCommand ->
               write_output "serializers.ml" (fun output_fmt ->
-                  Gen_serialisers.generate ~name ~service ~operation_shapes ~structure_shapes
+                  Gen_serialisers_ppx.generate ~name ~service ~operation_shapes ~structure_shapes
                     output_fmt)
           | DeserialisersCommand ->
               write_output "deserializers.ml" (fun output_fmt ->
