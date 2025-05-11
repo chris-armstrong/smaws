@@ -117,8 +117,8 @@ let _ =
               write_output "service.ml" (fun output_fmt -> SmithyHelpers.printServiceDetails shapes)
           | OperationsCommand ->
               write_output "operations.ml" (fun output_fmt ->
-                  Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt);
+                  Gen_operations_ppx.generate ~name ~service ~operation_shapes ~structure_shapes
+                    ~alias_context:alias_context_ppx output_fmt);
               write_output "operations.mli" (fun output_fmt ->
                   Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
                     ~alias_context output_fmt)

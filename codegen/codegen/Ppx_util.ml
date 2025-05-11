@@ -36,3 +36,4 @@ let exp_fun_untyped arg_name exp =
   B.pexp_fun Nolabel None (B.ppat_var (Location.mknoloc arg_name)) exp
 
 let const_str s = B.pexp_constant (Pconst_string (s, loc, None))
+let pat_const_str s = B.ppat_constant (Pconst_string (s, loc, None))

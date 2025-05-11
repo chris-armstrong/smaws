@@ -240,8 +240,8 @@ module Operations = struct
           let _, exc_name = Util.symbolPair exc in
           let constructor_name = SafeNames.safeConstructorName exc in
           let deserializer_func_name = Deserialiser.func_name exc ~is_exception_type:true in
-          Fmt.pf fmt "| _, \"%s\" ->@;<1 2> (`%s (%s tree path))@;" exc_name
-            constructor_name deserializer_func_name)
+          Fmt.pf fmt "| _, \"%s\" ->@;<1 2> (`%s (%s tree path))@;" exc_name constructor_name
+            deserializer_func_name)
         errors;
       Fmt.pf fmt "| _type -> handler tree path _type@;";
       Fmt.pf fmt "@]@ in@\n"
@@ -252,7 +252,6 @@ module Operations = struct
 
   let generate ~name ~operation_shapes ~alias_context fmt =
     Fmt.pf fmt "open Types @\n";
-    Fmt.pf fmt "let (let+) res map = Result.map map res@\n";
     operation_shapes
     |> List.iter ~f:(fun (operation_name, os, dependencies) ->
            Fmt.pf fmt "module %s = struct@;<0 2>@[<v>"

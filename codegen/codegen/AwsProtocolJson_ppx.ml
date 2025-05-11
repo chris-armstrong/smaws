@@ -217,7 +217,7 @@ module Deserialiser = struct
     let cases =
       s.members
       |> List.map ~f:(fun (m : Ast.Shape.member) ->
-             let pattern = B.ppat_constant (Pconst_string (m.name, loc, None)) in
+             let pattern = pat_const_str m.name in
              let application =
                B.pexp_apply
                  (exp_ident (func_name m.target))
@@ -438,4 +438,123 @@ module Deserialiser = struct
                (B.pstr_value
                   (if List.length all_shapes > 1 then Recursive else Nonrecursive)
                   all_shapes))
+end
+
+module Operations = struct
+  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails) =
+    let errors = operation_shape.errors |> Option.value ~default:[] in
+    let handler_body =
+      let protocol_aws_json_module = B.pmod_ident (lident_noloc Modules.protocolAwsJson) in
+      let request_func_name =
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson ]))
+      in
+      let error_default_handler_name =
+        B.pexp_ident
+          (Location.mknoloc
+             (make_lident ~names:[ Modules.protocolAwsJson; "Errors"; "default_handler" ]))
+      in
+      let call_handler =
+        [%expr
+          [%e request_func_name].(error_deserializer
+                                    (handler [%e error_default_handler_name])
+                                    tree path)]
+      in
+      if List.length errors > 0 then begin
+        let failure_cases =
+          [
+            B.case
+              ~lhs:(B.ppat_var (Location.mknoloc "_type"))
+              ~guard:None ~rhs:[%expr handler tree path _type];
+          ]
+        in
+        let cases =
+          errors
+          |> List.map ~f:(fun error ->
+                 let _, exc_name = Util.symbolPair error in
+                 let pattern = B.ppat_tuple [ B.ppat_any; pat_const_str exc_name ] in
+                 let deserialiser_func_name = exp_ident (Deserialiser.func_name error) in
+                 let expression =
+                   B.pexp_variant
+                     (SafeNames.safeConstructorName error)
+                     (Some [%expr [%e deserialiser_func_name] tree path])
+                 in
+                 B.case ~lhs:pattern ~guard:None ~rhs:expression)
+        in
+        let matchers = B.pexp_function (cases @ failure_cases) in
+
+        [%expr
+          let open Deserializers in
+          let handler = fun handler tree path -> [%e matchers] in
+          [%e call_handler]]
+      end
+      else
+        [%expr
+          let handler a = a in
+          [%e call_handler]]
+    in
+    [%stri let error_deserializer tree path = [%e handler_body]]
+
+  let generate_request_handler ~name ~operation_name
+      ~(operation_shape : Ast.Shape.operationShapeDetails) ~alias_context =
+    let shape_func_body =
+      let input =
+        operation_shape.input
+        |> Option.value_map ~default:[%expr `Assoc ()] ~f:(fun input ->
+               B.pexp_apply
+                 (B.pexp_ident
+                    (Location.mknoloc
+                       Longident.(Ldot (Lident "Serializers", Serialiser.func_name input))))
+                 [ (Nolabel, exp_ident "request") ])
+      in
+      let service_shape = Util.symbolName name ^ Util.symbolName operation_name in
+      let response_shape_deserializer =
+        operation_shape.output
+        |> Option.map ~f:(fun output -> Deserialiser.func_name output)
+        |> Option.value ~default:"base_unit_of_yojson"
+      in
+      let request_func_name =
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
+      in
+      let config_func_name =
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "config" ]))
+      in
+      let http_func_name =
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "http" ]))
+      in
+      [%expr
+        let open Smaws_Lib.Context in
+        let open Deserializers in
+        let input = [%e input] in
+        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service
+          ~config:[%e config_func_name] ~http:[%e http_func_name] ~input
+          ~output_deserializer:[%e exp_ident response_shape_deserializer]
+          ~error_deserializer]
+    in
+
+    let shape_func =
+      Option.value_map operation_shape.input ~default:shape_func_body ~f:(fun input_name ->
+          B.pexp_fun Nolabel None
+            (B.ppat_constraint
+               (B.ppat_var (Location.mknoloc "request"))
+               (Types_ppx.resolve alias_context ~name:input_name))
+            shape_func_body)
+    in
+    [%stri let request = fun context -> [%e shape_func]]
+
+  let generate_operation_module ~name ~operation_name ~operation_shape ~dependencies ~alias_context
+      =
+    let module_name = SafeNames.safeConstructorName operation_name in
+    let request_handler =
+      generate_request_handler ~name ~operation_name ~operation_shape ~alias_context
+    in
+    let error_handler = generate_error_handler ~operation_shape in
+    let module_items = [ error_handler; request_handler ] in
+    let module_expr = B.pmod_structure module_items in
+    B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
+
+  let generate ~name ~operation_shapes ~alias_context =
+    operation_shapes
+    |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
+           generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
+             ~alias_context)
 end
