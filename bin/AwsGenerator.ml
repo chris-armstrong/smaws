@@ -128,7 +128,7 @@ let _ =
                     output_fmt)
           | DeserialisersCommand ->
               write_output "deserializers.ml" (fun output_fmt ->
-                  Gen_deserialisers.generate ~name ~service ~operation_shapes ~structure_shapes
+                  Gen_deserialisers_ppx.generate ~name ~service ~operation_shapes ~structure_shapes
                     output_fmt)
           | ModuleCommand ->
               let module_name = sdkId |> String.capitalize in

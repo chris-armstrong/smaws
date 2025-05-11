@@ -207,3 +207,235 @@ module Serialiser = struct
                   (if List.length all_shapes > 1 then Recursive else Nonrecursive)
                   all_shapes))
 end
+
+module Deserialiser = struct
+  let func_name ?(is_exception_type = false) name =
+    let exception_extension = if is_exception_type then "" else "" in
+    Fmt.str "%s%s_of_yojson" (SafeNames.safeFunctionName name) exception_extension
+
+  let union_func_body name (s : Shape.structureShapeDetails) =
+    let cases =
+      s.members
+      |> List.map ~f:(fun (m : Ast.Shape.member) ->
+             let pattern = B.ppat_constant (Pconst_string (m.name, loc, None)) in
+             let application =
+               B.pexp_apply
+                 (exp_ident (func_name m.target))
+                 [ (Nolabel, exp_ident "value_"); (Nolabel, exp_ident "path") ]
+             in
+             let expression =
+               B.pexp_construct
+                 (lident_noloc (SafeNames.safeConstructorName m.name))
+                 (Some application)
+             in
+             B.case ~lhs:pattern ~guard:None ~rhs:expression)
+    in
+    let failure_cases =
+      [
+        B.case
+          ~lhs:(B.ppat_alias B.ppat_any (Location.mknoloc "unknown"))
+          ~guard:None
+          ~rhs:
+            [%expr
+              raise
+                (deserialize_unknown_enum_value_error path
+                   [%e B.pexp_constant (Pconst_string (name |> Util.symbolName, loc, None))]
+                   unknown)];
+      ]
+    in
+    let match_exp = B.pexp_match (exp_ident "key") (cases @ failure_cases) in
+    let forecode =
+      [%expr
+        let _list = assoc_of_yojson tree path in
+        let key, value_ =
+          match _list with
+          | (key, value_) :: _ -> (key, value_)
+          | _ -> raise (deserialize_wrong_type_error path "union")
+        in
+        [%e match_exp]]
+    in
+    exp_fun "tree" "t" (exp_fun_untyped "path" forecode)
+
+  let enum_func_body name (s : Shape.enumShapeDetails) =
+    let cases =
+      s.members
+      |> List.map ~f:(fun (m : Ast.Shape.member) ->
+             let pattern =
+               B.ppat_variant "String" (Some (B.ppat_constant (Pconst_string (m.name, loc, None))))
+             in
+             let constructor_exp =
+               B.pexp_construct (lident_noloc (SafeNames.safeConstructorName m.name)) None
+             in
+             B.case ~lhs:pattern ~guard:None ~rhs:constructor_exp)
+    in
+    let name_const = B.pexp_constant (Pconst_string (name |> Util.symbolName, loc, None)) in
+    let failure_cases =
+      [
+        B.case
+          ~lhs:(B.ppat_variant "String" (Some (B.ppat_var (Location.mknoloc "value"))))
+          ~guard:None
+          ~rhs:[%expr raise (deserialize_unknown_enum_value_error path [%e name_const] value)];
+        B.case ~lhs:B.ppat_any ~guard:None
+          ~rhs:[%expr raise (deserialize_wrong_type_error path [%e name_const])];
+      ]
+    in
+    let match_exp = B.pexp_match (exp_ident "tree") (cases @ failure_cases) in
+    let type_name = SafeNames.safeTypeName name in
+    exp_fun "tree" "t"
+      (exp_fun_untyped "path"
+         (B.pexp_constraint match_exp (B.ptyp_constr (lident_noloc type_name) [])))
+
+  let structure_func_body name (descriptor : Shape.structureShapeDetails) =
+    let type_name = Types.type_name ~is_exception_type:false name in
+    let member_exp =
+      if List.length descriptor.members > 0 then
+        B.pexp_record
+          (List.map descriptor.members ~f:(fun mem ->
+               let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
+               let converter_name = func_name ~is_exception_type:false mem.target in
+               let key_name = SafeNames.safeMemberName mem.name in
+               let key = lident_noloc key_name in
+               let base_field_expr =
+                 B.pexp_apply
+                   (B.pexp_ident (lident_noloc "value_for_key"))
+                   [
+                     (Nolabel, B.pexp_ident (lident_noloc converter_name));
+                     (Nolabel, const_str mem.name);
+                   ]
+               in
+
+               let field_value =
+                 if is_required then
+                   B.pexp_apply base_field_expr
+                     [
+                       (Nolabel, B.pexp_ident (lident_noloc "_list"));
+                       (Nolabel, B.pexp_ident (lident_noloc "path"));
+                     ]
+                 else
+                   B.pexp_apply
+                     (B.pexp_ident (lident_noloc "option_of_yojson"))
+                     [
+                       (Nolabel, base_field_expr);
+                       (Nolabel, B.pexp_ident (lident_noloc "_list"));
+                       (Nolabel, B.pexp_ident (lident_noloc "path"));
+                     ]
+               in
+               (key, field_value)))
+          None
+      else B.pexp_tuple []
+    in
+    let code =
+      [%expr
+        let _list = assoc_of_yojson tree path in
+        let _res : [%t B.ptyp_constr (lident_noloc type_name) []] = [%e member_exp] in
+        _res]
+    in
+    exp_fun_untyped "tree" (exp_fun_untyped "path" code)
+
+  let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget) =
+    let exp_func name = Some (exp_ident name) in
+    match shapeWithTarget.descriptor with
+    | StructureShape x -> Some (structure_func_body shapeWithTarget.name x)
+    | StringShape x -> exp_func "string_of_yojson"
+    | IntegerShape x -> exp_func "int_of_yojson"
+    | BooleanShape x -> exp_func "bool_of_yojson"
+    | BigIntegerShape x -> exp_func "big_int_of_yojson"
+    | BigDecimalShape x -> exp_func "big_decimal_of_yojson"
+    | TimestampShape x -> exp_func "timestamp_epoch_seconds_of_yojson"
+    | BlobShape x -> exp_func "blob_of_yojson"
+    | LongShape x -> exp_func "long_of_yojson"
+    | FloatShape x -> exp_func "float_of_yojson"
+    | DoubleShape x -> exp_func "double_of_yojson"
+    | UnitShape -> exp_func "unit_of_yojson"
+    | DocumentShape -> exp_func "json_of_yojson"
+    | ServiceShape x -> None
+    | MapShape x ->
+        Some
+          (exp_fun_untyped "tree"
+             (exp_fun_untyped "path"
+                (B.pexp_apply (exp_ident "map_of_yojson")
+                   [
+                     (Nolabel, exp_ident (func_name x.mapKey.target));
+                     (Nolabel, exp_ident (func_name x.mapValue.target));
+                     (Nolabel, exp_ident "tree");
+                     (Nolabel, exp_ident "path");
+                   ])))
+    | EnumShape s -> Some (enum_func_body shapeWithTarget.name s)
+    | UnionShape x -> Some (union_func_body shapeWithTarget.name x)
+    | SetShape x ->
+        Some
+          (exp_fun_untyped "tree"
+             (exp_fun_untyped "path"
+                (B.pexp_apply (exp_ident "list_of_yojson")
+                   [
+                     (Nolabel, exp_ident (func_name x.target));
+                     (Nolabel, exp_ident "tree");
+                     (Nolabel, exp_ident "path");
+                   ])))
+    | ListShape x ->
+        Some
+          (exp_fun_untyped "tree"
+             (exp_fun_untyped "path"
+                (B.pexp_apply (exp_ident "list_of_yojson")
+                   [
+                     (Nolabel, exp_ident (func_name x.target));
+                     (Nolabel, exp_ident "tree");
+                     (Nolabel, exp_ident "path");
+                   ])))
+    | OperationShape x -> None
+    | ResourceShape -> None
+
+  let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list) =
+    let open Trait in
+    structure_shapes
+    |> List.filter_map ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
+           let serialiser_name =
+             let is_exception_type =
+               match shapeWithTarget.descriptor with
+               | StructureShape s when hasTrait s.traits isErrorTrait -> true
+               | _ -> false
+             in
+             func_name ~is_exception_type shapeWithTarget.name
+           in
+           let func_body = generate_func_body shapeWithTarget in
+           let shape =
+             Option.value_map func_body ~default:[] ~f:(fun func_body ->
+                 [
+                   B.value_binding
+                     ~pat:(B.ppat_var (Location.mknoloc serialiser_name))
+                     ~expr:func_body;
+                 ])
+           in
+           let all_shapes =
+             match shapeWithTarget.recursWith with
+             | Some recursWith ->
+                 let all_recurs =
+                   List.filter_map recursWith
+                     ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
+                       let serialiser_name =
+                         let is_exception_type =
+                           match shapeWithTarget.descriptor with
+                           | StructureShape s when hasTrait s.traits isErrorTrait -> true
+                           | _ -> false
+                         in
+                         func_name ~is_exception_type shapeWithTarget.name
+                       in
+                       let func_body = generate_func_body shapeWithTarget in
+                       match func_body with
+                       | Some body ->
+                           Some
+                             (B.value_binding
+                                ~pat:(B.ppat_var (Location.mknoloc serialiser_name))
+                                ~expr:body)
+                       | None -> None)
+                 in
+                 shape @ all_recurs
+             | None -> shape
+           in
+           if List.is_empty all_shapes then None
+           else
+             Some
+               (B.pstr_value
+                  (if List.length all_shapes > 1 then Recursive else Nonrecursive)
+                  all_shapes))
+end
