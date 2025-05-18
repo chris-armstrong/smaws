@@ -6,6 +6,7 @@ end)
 
 let loc = Location.none
 let lident_noloc name = Location.mknoloc (Longident.Lident name)
+let lstr_noloc (name : string) = Location.mknoloc name
 
 let make_lident ~names =
   match names with

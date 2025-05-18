@@ -7,7 +7,6 @@ module B = Ppxlib.Ast_builder.Make (struct
 end)
 
 let loc = Location.none
-let lident_noloc name = Location.mknoloc (Longident.Lident name)
 
 exception UnexpectedType of string
 
@@ -552,9 +551,61 @@ module Operations = struct
     let module_expr = B.pmod_structure module_items in
     B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
 
+  let generate_error_type alias_ctx errors =
+    let smaws_lib_constructor =
+      [
+        B.rinherit
+          (B.ptyp_constr
+             (Location.mknoloc
+                (make_lident ~names:[ "Smaws_Lib"; "Protocols"; "AwsJson"; "error" ]))
+             []);
+      ]
+    in
+    errors |> Option.value ~default:[]
+    |> List.map ~f:(fun error ->
+           let name = SafeNames.safeConstructorName error in
+           B.rtag (lstr_noloc name) false [ Types_ppx.resolve alias_ctx ~name:error ])
+    |> fun constructors -> B.ptyp_variant (smaws_lib_constructor @ constructors) Open None
+
+  let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
+      ~alias_context =
+    let open Ast.Shape in
+    let module_name = SafeNames.safeConstructorName operation_name in
+    let input_type =
+      operation_shape.input
+      |> Option.value_map
+           ~f:(fun input -> Types_ppx.resolve alias_context ~name:input)
+           ~default:(B.ptyp_constr (lident_noloc "unit") [])
+    in
+    let output_type =
+      operation_shape.output
+      |> Option.value_map
+           ~f:(fun output -> Types_ppx.resolve alias_context ~name:output)
+           ~default:(B.ptyp_constr (lident_noloc "unit") [])
+    in
+
+    let exception_type = generate_error_type alias_context operation_shape.errors in
+
+    B.psig_module
+      (B.module_declaration
+         ~name:(Location.mknoloc (Some module_name))
+         ~type_:
+           (B.pmty_signature
+              [%sig:
+                val request :
+                  Smaws_Lib.Context.t ->
+                  [%t input_type] ->
+                  ([%t output_type], [%t exception_type]) result]))
+
   let generate ~name ~operation_shapes ~alias_context =
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
            generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
+             ~alias_context)
+
+  let generate_mli ~name ~operation_shapes ~alias_context =
+    operation_shapes
+    |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
+           generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
              ~alias_context)
 end
