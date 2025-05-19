@@ -18,7 +18,7 @@ let _ =
           match
             begin
               let open Smaws_Client_SQS in
-              let+ result =
+              let+ result : list_queues_result =
                 ListQueues.request context
                   (make_list_queues_request ~max_results:10
                      ~queue_name_prefix:(Array.get Sys.argv 1) ())

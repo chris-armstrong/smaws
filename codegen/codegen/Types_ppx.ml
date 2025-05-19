@@ -76,6 +76,20 @@ let empty_type_constructor ~name =
     ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
     ~args:(Pcstr_tuple []) ~res:None
 
+let type_declaration ~name ~is_exception_type ~kind
+    ?(manifest : Ppxlib.Parsetree.core_type option = None) ~doc_string () =
+  let open Ppxlib.Parsetree in
+  {
+    ptype_name = Location.mknoloc (Types.type_name ~is_exception_type name);
+    ptype_params = [];
+    ptype_cstrs = [];
+    ptype_kind = kind;
+    ptype_private = Public;
+    ptype_manifest = manifest;
+    ptype_loc = loc;
+    ptype_attributes = [ Docs.create_doc_attr ~loc doc_string ];
+  }
+
 let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor) =
   let open Ast.Shape in
   let is_exception_type =
@@ -86,7 +100,7 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
   match descriptor with
   | StructureShape { members = []; _ } ->
       manifest_type ~name ~manifest:[%type: unit] ~is_exception_type
-  | StructureShape { members; _ } ->
+  | StructureShape { members; traits } ->
       let structure_members =
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->
@@ -95,18 +109,18 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
                  ~mutable_:Immutable
                  ~type_:(resolve_for_target ctx ~name:target ~traits))
       in
+      let doc_string = Docs.convert_docs traits in
 
-      B.type_declaration
-        ~name:(Location.mknoloc (Types.type_name ~is_exception_type name))
-        ~params:[] ~cstrs:[] ~kind:(Ptype_record structure_members) ~private_:Public ~manifest:None
+      type_declaration ~name ~is_exception_type ~kind:(Ptype_record structure_members) ~doc_string
+        ()
   | EnumShape { traits; members } ->
       let enum_members =
         members |> List.map ~f:(fun ({ name; _ } : member) -> empty_type_constructor ~name)
       in
 
-      B.type_declaration
-        ~name:(Location.mknoloc (Types.type_name ~is_exception_type name))
-        ~params:[] ~cstrs:[] ~kind:(Ptype_variant enum_members) ~private_:Public ~manifest:None
+      let doc_string = Docs.convert_docs traits in
+
+      type_declaration ~name ~is_exception_type ~kind:(Ptype_variant enum_members) ~doc_string ()
       (* | UnionShape { traits; _ } -> *)
   | MapShape { traits; mapKey; mapValue } ->
       let key_type = resolve ctx ~name:mapKey.target in
@@ -114,9 +128,9 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       let tuple = B.ptyp_tuple [ key_type; value_type ] in
       let list_type = B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ tuple ] in
 
-      B.type_declaration
-        ~name:(Location.mknoloc (Types.type_name ~is_exception_type name))
-        ~params:[] ~cstrs:[] ~kind:Ptype_abstract ~private_:Public ~manifest:(Some list_type)
+      let doc_string = Docs.convert_docs traits in
+      type_declaration ~name ~is_exception_type ~kind:Ptype_abstract ~manifest:(Some list_type)
+        ~doc_string ()
   | UnionShape { traits; members } ->
       let union_members =
         members
@@ -127,9 +141,8 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
                  ~res:None)
       in
 
-      B.type_declaration
-        ~name:(Location.mknoloc (Types.type_name ~is_exception_type name))
-        ~params:[] ~cstrs:[] ~kind:(Ptype_variant union_members) ~private_:Public ~manifest:None
+      let doc_string = Docs.convert_docs traits in
+      type_declaration ~name ~kind:(Ptype_variant union_members) ~is_exception_type ~doc_string ()
   | _ -> failwith (Fmt.str "non-complex target not supported: %s" name)
 
 let create_alias_context shapes : t =
@@ -210,7 +223,11 @@ let stri_structure_shapes ctx structure_shapes fmt =
                ~f:(fun item -> generate_type_target ctx item.name item.descriptor)
                items
            in
-           if List.length filtered_items > 0 then Some (B.pstr_type Recursive filtered_items)
+           if List.length filtered_items > 0 then
+             Some
+               (*(B.pstr_type Recursive filtered_items)*)
+               Ppxlib_ast.Parsetree.
+                 { pstr_loc = Location.none; pstr_desc = Pstr_type (Recursive, filtered_items) }
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
        | Ast.Dependencies.{ name; descriptor; _ } ->
            let type_declaration = generate_type_target ctx name descriptor in
@@ -230,6 +247,7 @@ let sigi_structure_shapes ctx structure_shapes fmt =
                ~f:(fun item -> generate_type_target ctx item.name item.descriptor)
                items
            in
+
            if List.length filtered_items > 0 then Some (B.psig_type Recursive filtered_items)
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
        | Ast.Dependencies.{ name; descriptor; _ } ->

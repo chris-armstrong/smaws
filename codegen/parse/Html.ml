@@ -135,12 +135,12 @@ and transform ~ctx dom =
             end)
       | Element (_, _, children) -> transform_children ~ctx children
       | Text str ->
-          let str =
-            if first then Re.replace_string ~all:false beginning_whitespace ~by:"" str else str
-          in
-          let str =
-            if last then Re.replace_string ~all:false trailing_whitespace ~by:"" str else str
-          in
+          (* let str = *)
+          (*   if first then Re.replace_string ~all:false beginning_whitespace ~by:"" str else str *)
+          (* in *)
+          (* let str = *)
+          (*   if last then Re.replace_string ~all:false trailing_whitespace ~by:"" str else str *)
+          (* in *)
           let str = Re.replace_string ~all:true multi_whitespace_regex ~by:" " str in
           let str =
             str
@@ -157,9 +157,9 @@ and html_to_odoc ?(indent = 2) ?(start_indent = 4) html =
   let buffer = Buffer.create (String.length html) in
   let fmt = Format.formatter_of_buffer buffer in
   Format.pp_set_geometry ~max_indent:80 ~margin:100 fmt;
-  if start_indent > 0 then Format.pp_open_vbox fmt start_indent;
-  Format.pp_print_break fmt 0 0;
+  (* if start_indent > 0 then Format.pp_open_vbox fmt start_indent; *)
+  (* Format.pp_print_break fmt 0 0; *)
   html |> html_to_tree |> transform ~ctx:(context ~fmt ~indent ~list_type:Undefined ());
-  Format.pp_close_box fmt ();
+  (* Format.pp_close_box fmt (); *)
   Format.pp_print_flush fmt ();
   buffer |> Buffer.contents

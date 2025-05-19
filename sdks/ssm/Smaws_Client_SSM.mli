@@ -12,21 +12,27 @@ type nonrec update_service_setting_result = unit
 type nonrec update_service_setting_request =
   {
   setting_value: string ;
-  setting_id: string }
+  setting_id: string }[@@ocaml.doc
+                        "The request body of the UpdateServiceSetting API operation.\n"]
 type nonrec too_many_updates = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "There are concurrent updates for a resource that supports one update at a time.\n"]
 type nonrec service_setting_not_found = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified service setting wasn't found. Either the service name or the setting hasn't been provisioned by the Amazon Web Services service team.\n"]
 type nonrec internal_server_error = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An error occurred on the server side.\n"]
 type nonrec update_resource_data_sync_result = unit
 type nonrec resource_data_sync_organizational_unit =
   {
-  organizational_unit_id: string option }
+  organizational_unit_id: string option }[@@ocaml.doc
+                                           "The Organizations organizational unit data source for the sync.\n"]
 type nonrec resource_data_sync_aws_organizations_source =
   {
   organizational_units: resource_data_sync_organizational_unit list option ;
-  organization_source_type: string }
+  organization_source_type: string }[@@ocaml.doc
+                                      "Information about the [AwsOrganizationsSource] resource data sync source. A sync source of this type can synchronize data from Organizations or, if an Amazon Web Services organization isn't present, from multiple Amazon Web Services Regions.\n"]
 type nonrec resource_data_sync_source =
   {
   enable_all_ops_data_sources: bool option ;
@@ -34,22 +40,26 @@ type nonrec resource_data_sync_source =
   source_regions: string list ;
   aws_organizations_source:
     resource_data_sync_aws_organizations_source option ;
-  source_type: string }
+  source_type: string }[@@ocaml.doc
+                         "Information about the source of the data included in the resource data sync.\n"]
 type nonrec update_resource_data_sync_request =
   {
   sync_source: resource_data_sync_source ;
   sync_type: string ;
-  sync_name: string }
+  sync_name: string }[@@ocaml.doc ""]
 type nonrec resource_data_sync_not_found_exception =
   {
   message: string option ;
   sync_type: string option ;
-  sync_name: string option }
+  sync_name: string option }[@@ocaml.doc
+                              "The specified sync name wasn't found.\n"]
 type nonrec resource_data_sync_invalid_configuration_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified sync configuration is invalid.\n"]
 type nonrec resource_data_sync_conflict_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Another [UpdateResourceDataSync] request is being processed. Wait a few minutes and try again.\n"]
 type nonrec operating_system =
   | AmazonLinux2023 
   | AlmaLinux 
@@ -65,7 +75,7 @@ type nonrec operating_system =
   | AmazonLinux2022 
   | AmazonLinux2 
   | AmazonLinux 
-  | Windows 
+  | Windows [@@ocaml.doc ""]
 type nonrec patch_filter_key =
   | Version 
   | Security 
@@ -85,36 +95,41 @@ type nonrec patch_filter_key =
   | PatchSet 
   | BugzillaId 
   | AdvisoryId 
-  | Arch 
+  | Arch [@@ocaml.doc ""]
 type nonrec patch_filter = {
   values: string list ;
-  key: patch_filter_key }
+  key: patch_filter_key }[@@ocaml.doc
+                           " Defines which patches should be included in a patch baseline.\n\n A patch filter consists of a key and a set of values. The filter key is a patch property. For example, the available filter keys for [WINDOWS] are [PATCH_SET], [PRODUCT], [PRODUCT_FAMILY], [CLASSIFICATION], and [MSRC_SEVERITY].\n \n  The filter values define a matching criterion for the patch property indicated by the key. For example, if the filter key is [PRODUCT] and the filter values are [\\[\"Office\n    2013\", \"Office 2016\"\\]], then the filter accepts all patches where product name is either \"Office 2013\" or \"Office 2016\". The filter values can be exact values for the patch property given as a key, or a wildcard (*), which matches all values.\n  \n   You can view lists of valid values for the patch properties by running the [DescribePatchProperties] command. For information about which patch properties can be used with each major operating system, see [DescribePatchProperties].\n   "]
 type nonrec patch_filter_group = {
-  patch_filters: patch_filter list }
+  patch_filters: patch_filter list }[@@ocaml.doc
+                                      "A set of patch filters, typically used for approval rules.\n"]
 type nonrec patch_compliance_level =
   | Unspecified 
   | Informational 
   | Low 
   | Medium 
   | High 
-  | Critical 
+  | Critical [@@ocaml.doc ""]
 type nonrec patch_rule =
   {
   enable_non_security: bool option ;
   approve_until_date: string option ;
   approve_after_days: int option ;
   compliance_level: patch_compliance_level option ;
-  patch_filter_group: patch_filter_group }
+  patch_filter_group: patch_filter_group }[@@ocaml.doc
+                                            "Defines an approval rule for a patch baseline.\n"]
 type nonrec patch_rule_group = {
-  patch_rules: patch_rule list }
+  patch_rules: patch_rule list }[@@ocaml.doc
+                                  "A set of rules defining the approval rules for a patch baseline.\n"]
 type nonrec patch_action =
   | Block 
-  | AllowAsDependency 
+  | AllowAsDependency [@@ocaml.doc ""]
 type nonrec patch_source =
   {
   configuration: string ;
   products: string list ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "Information about the patches to use to update the managed nodes, including target operating systems and source repository. Applies to Linux managed nodes only.\n"]
 type nonrec update_patch_baseline_result =
   {
   sources: patch_source list option ;
@@ -130,7 +145,7 @@ type nonrec update_patch_baseline_result =
   global_filters: patch_filter_group option ;
   operating_system: operating_system option ;
   name: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec update_patch_baseline_request =
   {
   replace: bool option ;
@@ -144,43 +159,52 @@ type nonrec update_patch_baseline_request =
   approval_rules: patch_rule_group option ;
   global_filters: patch_filter_group option ;
   name: string option ;
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec does_not_exist_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Error returned when the ID specified for a resource, such as a maintenance window or patch baseline, doesn't exist.\n\n For information about resource quotas in Amazon Web Services Systems Manager, see {{:https://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm}Systems Manager service quotas} in the {i Amazon Web Services General Reference}.\n "]
 type nonrec update_ops_metadata_result = {
-  ops_metadata_arn: string option }
+  ops_metadata_arn: string option }[@@ocaml.doc ""]
 type nonrec metadata_value = {
-  value: string option }
-type nonrec metadata_map = (string * metadata_value) list
+  value: string option }[@@ocaml.doc
+                          "Metadata to assign to an Application Manager application.\n"]
+type nonrec metadata_map = (string * metadata_value) list[@@ocaml.doc ""]
 type nonrec update_ops_metadata_request =
   {
   keys_to_delete: string list option ;
   metadata_to_update: metadata_map option ;
-  ops_metadata_arn: string }
+  ops_metadata_arn: string }[@@ocaml.doc ""]
 type nonrec ops_metadata_too_many_updates_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The system is processing too many concurrent updates. Wait a few moments and try again.\n"]
 type nonrec ops_metadata_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The OpsMetadata object doesn't exist. \n"]
 type nonrec ops_metadata_key_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The OpsMetadata object exceeds the maximum number of OpsMetadata keys that you can assign to an application in Application Manager.\n"]
 type nonrec ops_metadata_invalid_argument_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "One of the arguments passed is invalid. \n"]
 type nonrec update_ops_item_response = unit
 type nonrec ops_item_data_type =
   | STRING 
-  | SEARCHABLE_STRING 
+  | SEARCHABLE_STRING [@@ocaml.doc ""]
 type nonrec ops_item_data_value =
   {
   type_: ops_item_data_type option ;
-  value: string option }
+  value: string option }[@@ocaml.doc
+                          "An object that defines the value of the key and its type in the OperationalData map.\n"]
 type nonrec ops_item_operational_data = (string * ops_item_data_value) list
+[@@ocaml.doc ""]
 type nonrec ops_item_notification = {
-  arn: string option }
+  arn: string option }[@@ocaml.doc "A notification about the OpsItem.\n"]
 type nonrec related_ops_item = {
-  ops_item_id: string }
+  ops_item_id: string }[@@ocaml.doc
+                         "An OpsItems that shares something in common with the current OpsItem. For example, related OpsItems can include OpsItems with similar error messages, impacted resources, or statuses for the impacted resource.\n"]
 type nonrec ops_item_status =
   | CLOSED 
   | REJECTED 
@@ -200,7 +224,7 @@ type nonrec ops_item_status =
   | PENDING 
   | RESOLVED 
   | IN_PROGRESS 
-  | OPEN 
+  | OPEN [@@ocaml.doc ""]
 type nonrec update_ops_item_request =
   {
   ops_item_arn: string option ;
@@ -218,65 +242,76 @@ type nonrec update_ops_item_request =
   notifications: ops_item_notification list option ;
   operational_data_to_delete: string list option ;
   operational_data: ops_item_operational_data option ;
-  description: string option }
+  description: string option }[@@ocaml.doc ""]
 type nonrec ops_item_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified OpsItem ID doesn't exist. Verify the ID and try again.\n"]
 type nonrec ops_item_limit_exceeded_exception =
   {
   message: string option ;
   limit_type: string option ;
   limit: int option ;
-  resource_types: string list option }
+  resource_types: string list option }[@@ocaml.doc
+                                        "The request caused OpsItems to exceed one or more quotas.\n"]
 type nonrec ops_item_invalid_parameter_exception =
   {
   message: string option ;
-  parameter_names: string list option }
+  parameter_names: string list option }[@@ocaml.doc
+                                         "A specified parameter argument isn't valid. Verify the available arguments and try again.\n"]
 type nonrec ops_item_conflict_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified OpsItem is in the process of being deleted.\n"]
 type nonrec ops_item_already_exists_exception =
   {
   ops_item_id: string option ;
-  message: string option }
+  message: string option }[@@ocaml.doc "The OpsItem already exists.\n"]
 type nonrec ops_item_access_denied_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You don't have permission to view OpsItems in the specified account. Verify that your account is configured either as a Systems Manager delegated administrator or that you are logged into the Organizations management account.\n"]
 type nonrec update_managed_instance_role_result = unit
 type nonrec update_managed_instance_role_request =
   {
   iam_role: string ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec invalid_instance_id = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The following problems can cause this exception:\n\n {ul\n       {-  You don't have permission to access the managed node.\n           \n            }\n       {-  Amazon Web Services Systems Manager Agent (SSM Agent) isn't running. Verify that SSM Agent is running.\n           \n            }\n       {-  SSM Agent isn't registered with the SSM endpoint. Try reinstalling SSM Agent.\n           \n            }\n       {-  The managed node isn't in a valid state. Valid states are: [Running], [Pending], [Stopped], and [Stopping]. Invalid states are: [Shutting-down] and [Terminated].\n           \n            }\n       }\n  "]
 type nonrec target = {
   values: string list option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "An array of search criteria that targets managed nodes using a key-value pair that you specify.\n\n   One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}Registering maintenance window tasks without targets} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n    Supported formats include the following.\n    \n      {b For all Systems Manager capabilities:} \n     \n      {ul\n            {-   [Key=tag-key,Values=tag-value-1,tag-value-2] \n                \n                 }\n            }\n    {b For Automation and Change Manager:} \n   \n    {ul\n          {-   [Key=tag:tag-key,Values=tag-value] \n              \n               }\n          {-   [Key=ResourceGroup,Values=resource-group-name] \n              \n               }\n          {-   [Key=ParameterValues,Values=value-1,value-2,value-3] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=AWS::EC2::Instance,Values=*] \n                         \n                          }\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For Run Command and Maintenance Windows:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-   [Key=resource-groups:Name,Values=resource-group-name] \n              \n               }\n          {-  Additionally, Maintenance Windows support targeting resource types:\n              \n               {ul\n                     {-   [Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For State Manager:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n   For more information about how to send commands that target managed nodes using [Key,Value] parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting}Targeting multiple managed nodes} in the {i Amazon Web Services Systems Manager User Guide}.\n   "]
 type nonrec maintenance_window_task_parameter_value_expression =
   {
-  values: string list option }
+  values: string list option }[@@ocaml.doc
+                                "Defines the values for a task parameter.\n"]
 type nonrec maintenance_window_task_parameters =
-  (string * maintenance_window_task_parameter_value_expression) list
+  (string * maintenance_window_task_parameter_value_expression) list[@@ocaml.doc
+                                                                    ""]
 type nonrec cloud_watch_output_config =
   {
   cloud_watch_output_enabled: bool option ;
-  cloud_watch_log_group_name: string option }
+  cloud_watch_log_group_name: string option }[@@ocaml.doc
+                                               "Configuration options for sending command output to Amazon CloudWatch Logs.\n"]
 type nonrec document_hash_type =
   | SHA1 
-  | SHA256 
+  | SHA256 [@@ocaml.doc ""]
 type nonrec notification_event =
   | FAILED 
   | CANCELLED 
   | TIMED_OUT 
   | SUCCESS 
   | IN_PROGRESS 
-  | ALL 
+  | ALL [@@ocaml.doc ""]
 type nonrec notification_type =
   | Invocation 
-  | Command 
+  | Command [@@ocaml.doc ""]
 type nonrec notification_config =
   {
   notification_type: notification_type option ;
   notification_events: notification_event list option ;
-  notification_arn: string option }
-type nonrec parameters = (string * string list) list
+  notification_arn: string option }[@@ocaml.doc
+                                     "Configurations for sending notifications.\n"]
+type nonrec parameters = (string * string list) list[@@ocaml.doc ""]
 type nonrec maintenance_window_run_command_parameters =
   {
   timeout_seconds: int option ;
@@ -289,41 +324,50 @@ type nonrec maintenance_window_run_command_parameters =
   document_hash_type: document_hash_type option ;
   document_hash: string option ;
   cloud_watch_output_config: cloud_watch_output_config option ;
-  comment: string option }
-type nonrec automation_parameter_map = (string * string list) list
+  comment: string option }[@@ocaml.doc
+                            "The parameters for a [RUN_COMMAND] task type.\n\n For information about specifying and updating task parameters, see [RegisterTaskWithMaintenanceWindow] and [UpdateMaintenanceWindowTask].\n \n    [LoggingInfo] has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the [OutputS3BucketName] and [OutputS3KeyPrefix] options in the [TaskInvocationParameters] structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n   \n     [TaskParameters] has been deprecated. To specify parameters to pass to a task when it runs, instead use the [Parameters] option in the [TaskInvocationParameters] structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n    \n     For [RUN_COMMAND] tasks, Systems Manager uses specified values for [TaskParameters] and [LoggingInfo] only if no values are specified for [TaskInvocationParameters]. \n     \n      "]
+type nonrec automation_parameter_map = (string * string list) list[@@ocaml.doc
+                                                                    ""]
 type nonrec maintenance_window_automation_parameters =
   {
   parameters: automation_parameter_map option ;
-  document_version: string option }
+  document_version: string option }[@@ocaml.doc
+                                     "The parameters for an [AUTOMATION] task type.\n"]
 type nonrec maintenance_window_step_functions_parameters =
   {
   name: string option ;
-  input: string option }
+  input: string option }[@@ocaml.doc
+                          "The parameters for a [STEP_FUNCTIONS] task.\n\n For information about specifying and updating task parameters, see [RegisterTaskWithMaintenanceWindow] and [UpdateMaintenanceWindowTask].\n \n    [LoggingInfo] has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the [OutputS3BucketName] and [OutputS3KeyPrefix] options in the [TaskInvocationParameters] structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n   \n     [TaskParameters] has been deprecated. To specify parameters to pass to a task when it runs, instead use the [Parameters] option in the [TaskInvocationParameters] structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n    \n     For Step Functions tasks, Systems Manager ignores any values specified for [TaskParameters] and [LoggingInfo].\n     \n      "]
 type nonrec maintenance_window_lambda_parameters =
   {
   payload: bytes option ;
   qualifier: string option ;
-  client_context: string option }
+  client_context: string option }[@@ocaml.doc
+                                   "The parameters for a [LAMBDA] task type.\n\n For information about specifying and updating task parameters, see [RegisterTaskWithMaintenanceWindow] and [UpdateMaintenanceWindowTask].\n \n    [LoggingInfo] has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the [OutputS3BucketName] and [OutputS3KeyPrefix] options in the [TaskInvocationParameters] structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n   \n     [TaskParameters] has been deprecated. To specify parameters to pass to a task when it runs, instead use the [Parameters] option in the [TaskInvocationParameters] structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n    \n     For Lambda tasks, Systems Manager ignores any values specified for TaskParameters and LoggingInfo.\n     \n      "]
 type nonrec maintenance_window_task_invocation_parameters =
   {
   lambda: maintenance_window_lambda_parameters option ;
   step_functions: maintenance_window_step_functions_parameters option ;
   automation: maintenance_window_automation_parameters option ;
-  run_command: maintenance_window_run_command_parameters option }
+  run_command: maintenance_window_run_command_parameters option }[@@ocaml.doc
+                                                                   "The parameters for task execution.\n"]
 type nonrec logging_info =
   {
   s3_region: string ;
   s3_key_prefix: string option ;
-  s3_bucket_name: string }
+  s3_bucket_name: string }[@@ocaml.doc
+                            "Information about an Amazon Simple Storage Service (Amazon S3) bucket to write managed node-level logs to.\n\n   [LoggingInfo] has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the [OutputS3BucketName] and [OutputS3KeyPrefix] options in the [TaskInvocationParameters] structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n  \n   "]
 type nonrec maintenance_window_task_cutoff_behavior =
   | CancelTask 
-  | ContinueTask 
+  | ContinueTask [@@ocaml.doc ""]
 type nonrec alarm = {
-  name: string }
+  name: string }[@@ocaml.doc
+                  "A CloudWatch alarm you apply to an automation or command.\n"]
 type nonrec alarm_configuration =
   {
   alarms: alarm list ;
-  ignore_poll_alarm_failure: bool option }
+  ignore_poll_alarm_failure: bool option }[@@ocaml.doc
+                                            "The details for the CloudWatch alarm you want to apply to an automation or command.\n"]
 type nonrec update_maintenance_window_task_result =
   {
   alarm_configuration: alarm_configuration option ;
@@ -341,7 +385,7 @@ type nonrec update_maintenance_window_task_result =
   task_arn: string option ;
   targets: target list option ;
   window_task_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec update_maintenance_window_task_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -360,7 +404,7 @@ type nonrec update_maintenance_window_task_request =
   task_arn: string option ;
   targets: target list option ;
   window_task_id: string ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec update_maintenance_window_target_result =
   {
   description: string option ;
@@ -368,7 +412,7 @@ type nonrec update_maintenance_window_target_result =
   owner_information: string option ;
   targets: target list option ;
   window_target_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec update_maintenance_window_target_request =
   {
   replace: bool option ;
@@ -377,7 +421,7 @@ type nonrec update_maintenance_window_target_request =
   owner_information: string option ;
   targets: target list option ;
   window_target_id: string ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec update_maintenance_window_result =
   {
   enabled: bool option ;
@@ -391,7 +435,7 @@ type nonrec update_maintenance_window_result =
   start_date: string option ;
   description: string option ;
   name: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec update_maintenance_window_request =
   {
   replace: bool option ;
@@ -406,26 +450,27 @@ type nonrec update_maintenance_window_request =
   start_date: string option ;
   description: string option ;
   name: string option ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec document_status =
   | Failed 
   | Deleting 
   | Updating 
   | Active 
-  | Creating 
+  | Creating [@@ocaml.doc "The status of a document.\n"]
 type nonrec document_parameter_type =
   | StringList 
-  | String 
+  | String [@@ocaml.doc ""]
 type nonrec document_parameter =
   {
   default_value: string option ;
   description: string option ;
   type_: document_parameter_type option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Parameters specified in a Systems Manager document that run on the server when the command is run. \n"]
 type nonrec platform_type =
   | MACOS 
   | LINUX 
-  | WINDOWS 
+  | WINDOWS [@@ocaml.doc ""]
 type nonrec document_type =
   | QuickSetup 
   | ConformancePackTemplate 
@@ -441,32 +486,36 @@ type nonrec document_type =
   | Session 
   | Automation 
   | Policy 
-  | Command 
+  | Command [@@ocaml.doc ""]
 type nonrec document_format =
   | TEXT 
   | JSON 
-  | YAML 
+  | YAML [@@ocaml.doc ""]
 type nonrec tag = {
   value: string ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "Metadata that you assign to your Amazon Web Services resources. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. In Amazon Web Services Systems Manager, you can apply tags to Systems Manager documents (SSM documents), managed nodes, maintenance windows, parameters, patch baselines, OpsItems, and OpsMetadata.\n"]
 type nonrec attachment_information = {
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "An attribute of an attachment, such as the attachment name.\n"]
 type nonrec document_requires =
   {
   version_name: string option ;
   require_type: string option ;
   version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "An SSM document required by the current document.\n"]
 type nonrec review_status =
   | REJECTED 
   | PENDING 
   | NOT_REVIEWED 
-  | APPROVED 
+  | APPROVED [@@ocaml.doc ""]
 type nonrec review_information =
   {
   reviewer: string option ;
   status: review_status option ;
-  reviewed_time: CoreTypes.Timestamp.t option }
+  reviewed_time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                                 "Information about the result of a document review request.\n"]
 type nonrec document_description =
   {
   category_enum: string list option ;
@@ -498,19 +547,21 @@ type nonrec document_description =
   name: string option ;
   hash_type: document_hash_type option ;
   hash: string option ;
-  sha1: string option }
+  sha1: string option }[@@ocaml.doc
+                         "Describes an Amazon Web Services Systems Manager document (SSM document). \n"]
 type nonrec update_document_result =
   {
-  document_description: document_description option }
+  document_description: document_description option }[@@ocaml.doc ""]
 type nonrec attachments_source_key =
   | AttachmentReference 
   | S3FileUrl 
-  | SourceUrl 
+  | SourceUrl [@@ocaml.doc ""]
 type nonrec attachments_source =
   {
   name: string option ;
   values: string list option ;
-  key: attachments_source_key option }
+  key: attachments_source_key option }[@@ocaml.doc
+                                        "Identifying information about a document attachment, including the file name and a key-value pair that identifies the location of an attachment to a document.\n"]
 type nonrec update_document_request =
   {
   target_type: string option ;
@@ -520,92 +571,107 @@ type nonrec update_document_request =
   display_name: string option ;
   name: string ;
   attachments: attachments_source list option ;
-  content: string }
+  content: string }[@@ocaml.doc ""]
 type nonrec update_document_metadata_response = unit
 type nonrec document_review_action =
   | Reject 
   | Approve 
   | UpdateReview 
-  | SendForReview 
+  | SendForReview [@@ocaml.doc ""]
 type nonrec document_review_comment_type =
-  | Comment 
+  | Comment [@@ocaml.doc ""]
 type nonrec document_review_comment_source =
   {
   content: string option ;
-  type_: document_review_comment_type option }
+  type_: document_review_comment_type option }[@@ocaml.doc
+                                                "Information about comments added to a document review request.\n"]
 type nonrec document_reviews =
   {
   comment: document_review_comment_source list option ;
-  action: document_review_action }
+  action: document_review_action }[@@ocaml.doc
+                                    "Information about a document approval review.\n"]
 type nonrec update_document_metadata_request =
   {
   document_reviews: document_reviews ;
   document_version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec invalid_document_version = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The document version isn't valid or doesn't exist.\n"]
 type nonrec invalid_document_operation = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You attempted to delete a document while it is still shared. You must stop sharing the document before you can delete it.\n"]
 type nonrec invalid_document = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified SSM document doesn't exist.\n"]
 type nonrec document_default_version_description =
   {
   default_version_name: string option ;
   default_version: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "A default version of a document.\n"]
 type nonrec update_document_default_version_result =
   {
-  description: document_default_version_description option }
+  description: document_default_version_description option }[@@ocaml.doc ""]
 type nonrec update_document_default_version_request =
   {
   document_version: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec invalid_document_schema_version = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The version of the document schema isn't supported.\n"]
 type nonrec max_document_size_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The size limit of a document is 64 KB.\n"]
 type nonrec invalid_document_content = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The content for the document isn't valid.\n"]
 type nonrec duplicate_document_version_name = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The version name has already been used in this document. Specify a different version name, and then try again.\n"]
 type nonrec duplicate_document_content = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The content of the association document matches another document. Change the content of the document and try again.\n"]
 type nonrec document_version_limit_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The document has too many versions. Delete one or more document versions and try again.\n"]
 type nonrec association_status_name =
   | Failed 
   | Success 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec association_status =
   {
   additional_info: string option ;
   message: string ;
   name: association_status_name ;
-  date: CoreTypes.Timestamp.t }
+  date: CoreTypes.Timestamp.t }[@@ocaml.doc
+                                 "Describes an association status.\n"]
 type nonrec association_status_aggregated_count = (string * int) list
+[@@ocaml.doc ""]
 type nonrec association_overview =
   {
   association_status_aggregated_count:
     association_status_aggregated_count option ;
   detailed_status: string option ;
-  status: string option }
+  status: string option }[@@ocaml.doc "Information about the association.\n"]
 type nonrec s3_output_location =
   {
   output_s3_key_prefix: string option ;
   output_s3_bucket_name: string option ;
-  output_s3_region: string option }
+  output_s3_region: string option }[@@ocaml.doc
+                                     "An S3 bucket where you want to store the results of this request.\n"]
 type nonrec instance_association_output_location =
   {
-  s3_location: s3_output_location option }
+  s3_location: s3_output_location option }[@@ocaml.doc
+                                            "An S3 bucket where you want to store the results of this request.\n\n For the minimal permissions required to enable Amazon S3 output for an association, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-associations-creating.html#state-manager-associations-console}Create an association (console)} in the {i Systems Manager User Guide}. \n "]
 type nonrec association_compliance_severity =
   | Unspecified 
   | Low 
   | Medium 
   | High 
-  | Critical 
+  | Critical [@@ocaml.doc ""]
 type nonrec association_sync_compliance =
   | Manual 
-  | Auto 
+  | Auto [@@ocaml.doc ""]
 type nonrec target_location =
   {
   target_location_alarm_configuration: alarm_configuration option ;
@@ -613,15 +679,17 @@ type nonrec target_location =
   target_location_max_errors: string option ;
   target_location_max_concurrency: string option ;
   regions: string list option ;
-  accounts: string list option }
-type nonrec target_map = (string * string list) list
+  accounts: string list option }[@@ocaml.doc
+                                  "The combination of Amazon Web Services Regions and Amazon Web Services accounts targeted by the current Automation execution.\n"]
+type nonrec target_map = (string * string list) list[@@ocaml.doc ""]
 type nonrec external_alarm_state =
   | ALARM 
-  | UNKNOWN 
+  | UNKNOWN [@@ocaml.doc ""]
 type nonrec alarm_state_information =
   {
   state: external_alarm_state ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "The details about the state of your CloudWatch alarm.\n"]
 type nonrec association_description =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -652,21 +720,23 @@ type nonrec association_description =
   date: CoreTypes.Timestamp.t option ;
   association_version: string option ;
   instance_id: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the parameters for a document.\n"]
 type nonrec update_association_status_result =
   {
-  association_description: association_description option }
+  association_description: association_description option }[@@ocaml.doc ""]
 type nonrec update_association_status_request =
   {
   association_status: association_status ;
   instance_id: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec status_unchanged = unit
 type nonrec association_does_not_exist = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified association doesn't exist.\n"]
 type nonrec update_association_result =
   {
-  association_description: association_description option }
+  association_description: association_description option }[@@ocaml.doc ""]
 type nonrec update_association_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -689,81 +759,101 @@ type nonrec update_association_request =
   schedule_expression: string option ;
   document_version: string option ;
   parameters: parameters option ;
-  association_id: string }
+  association_id: string }[@@ocaml.doc ""]
 type nonrec invalid_update = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The update isn't valid.\n"]
 type nonrec invalid_target_maps = {
-  message: string option }
+  message: string option }[@@ocaml.doc "TargetMap parameter isn't valid.\n"]
 type nonrec invalid_target = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The target isn't valid or doesn't exist. It might not be configured for Systems Manager or you might not have permission to perform the operation.\n"]
 type nonrec invalid_schedule = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The schedule is invalid. Verify your cron or rate expression and try again.\n"]
 type nonrec invalid_parameters = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You must specify values for all required parameters in the Amazon Web Services Systems Manager document (SSM document). You can only supply values to parameters defined in the SSM document.\n"]
 type nonrec invalid_output_location = unit
 type nonrec invalid_association_version = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The version you specified isn't valid. Use ListAssociationVersions to view all versions of an association according to the association ID. Or, use the [$LATEST] parameter to view the latest version of the association.\n"]
 type nonrec association_version_limit_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You have reached the maximum number versions allowed for an association. Each association has a limit of 1,000 versions. \n"]
 type nonrec unsupported_platform_type = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The document doesn't support the platform type of the given managed node IDs. For example, you sent an document for a Windows managed node to a Linux node.\n"]
 type nonrec unsupported_parameter_type = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The parameter type isn't supported.\n"]
 type nonrec unsupported_operating_system = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The operating systems you specified isn't supported, or the operation isn't supported for the operating system.\n"]
 type nonrec unsupported_inventory_schema_version_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Inventory item type schema version has to match supported versions in the service. Check output of GetInventorySchema to see the available schema version for each type.\n"]
 type nonrec unsupported_inventory_item_context_exception =
   {
   message: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc
+                              "The [Context] attribute that you specified for the [InventoryItem] isn't allowed for this inventory type. You can only use the [Context] attribute with inventory types like [AWS:ComplianceItem].\n"]
 type nonrec unsupported_feature_required_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Patching for applications released by Microsoft is only available on EC2 instances and advanced instances. To patch applications released by Microsoft on on-premises servers and VMs, you must enable advanced instances. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances-advanced.html}Turning on the advanced-instances tier} in the {i Amazon Web Services Systems Manager User Guide}.\n"]
 type nonrec unsupported_calendar_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The calendar entry contained in the specified SSM document isn't supported.\n"]
 type nonrec unlabel_parameter_version_result =
   {
   invalid_labels: string list option ;
-  removed_labels: string list option }
+  removed_labels: string list option }[@@ocaml.doc ""]
 type nonrec unlabel_parameter_version_request =
   {
   labels: string list ;
   parameter_version: int ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec parameter_version_not_found = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified parameter version wasn't found. Verify the parameter name and version, and try again.\n"]
 type nonrec parameter_not_found = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The parameter couldn't be found. Verify the name and try again.\n"]
 type nonrec total_size_limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The size of inventory data has exceeded the total size limit for the resource.\n"]
 type nonrec too_many_tags_error = unit
 type nonrec terminate_session_response = {
-  session_id: string option }
+  session_id: string option }[@@ocaml.doc ""]
 type nonrec terminate_session_request = {
-  session_id: string }
+  session_id: string }[@@ocaml.doc ""]
 type nonrec target_not_connected = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified target managed node for the session isn't fully configured for use with Session Manager. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html}Getting started with Session Manager} in the {i Amazon Web Services Systems Manager User Guide}. This error is also returned if you attempt to start a session on a managed node that is located in a different account or Region\n"]
 type nonrec target_in_use_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You specified the [Safe] option for the DeregisterTargetFromMaintenanceWindow operation, but the target is still referenced in a task.\n"]
 type nonrec sub_type_count_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The sub-type count exceeded the limit for the inventory type.\n"]
 type nonrec stop_type =
   | CANCEL 
-  | COMPLETE 
+  | COMPLETE [@@ocaml.doc ""]
 type nonrec stop_automation_execution_result = unit
 type nonrec stop_automation_execution_request =
   {
   type_: stop_type option ;
-  automation_execution_id: string }
+  automation_execution_id: string }[@@ocaml.doc ""]
 type nonrec invalid_automation_status_update_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified update status operation isn't valid.\n"]
 type nonrec automation_execution_not_found_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "There is no automation execution information for the requested automation execution ID.\n"]
 type nonrec automation_execution_status =
   | EXITED 
   | COMPLETED_WITH_FAILURE 
@@ -783,20 +873,22 @@ type nonrec automation_execution_status =
   | SUCCESS 
   | WAITING 
   | INPROGRESS 
-  | PENDING 
-type nonrec normal_string_map = (string * string) list
+  | PENDING [@@ocaml.doc ""]
+type nonrec normal_string_map = (string * string) list[@@ocaml.doc ""]
 type nonrec failure_details =
   {
   details: automation_parameter_map option ;
   failure_type: string option ;
-  failure_stage: string option }
+  failure_stage: string option }[@@ocaml.doc
+                                  "Information about an Automation failure.\n"]
 type nonrec parent_step_details =
   {
   iterator_value: string option ;
   iteration: int option ;
   action: string option ;
   step_name: string option ;
-  step_execution_id: string option }
+  step_execution_id: string option }[@@ocaml.doc
+                                      "A detailed status of the parent step.\n"]
 type nonrec step_execution =
   {
   parent_step_details: parent_step_details option ;
@@ -822,7 +914,8 @@ type nonrec step_execution =
   on_failure: string option ;
   timeout_seconds: int option ;
   action: string option ;
-  step_name: string option }
+  step_name: string option }[@@ocaml.doc
+                              "Detailed information about an the execution state of an Automation step.\n"]
 type nonrec step_execution_filter_key =
   | PARENT_STEP_ITERATOR_VALUE 
   | PARENT_STEP_ITERATION 
@@ -832,26 +925,28 @@ type nonrec step_execution_filter_key =
   | STEP_EXECUTION_ID 
   | STEP_EXECUTION_STATUS 
   | START_TIME_AFTER 
-  | START_TIME_BEFORE 
+  | START_TIME_BEFORE [@@ocaml.doc ""]
 type nonrec step_execution_filter =
   {
   values: string list ;
-  key: step_execution_filter_key }
+  key: step_execution_filter_key }[@@ocaml.doc
+                                    "A filter to limit the amount of step execution information returned by the call.\n"]
 type nonrec start_session_response =
   {
   stream_url: string option ;
   token_value: string option ;
-  session_id: string option }
-type nonrec session_manager_parameters = (string * string list) list
+  session_id: string option }[@@ocaml.doc ""]
+type nonrec session_manager_parameters = (string * string list) list[@@ocaml.doc
+                                                                    ""]
 type nonrec start_session_request =
   {
   parameters: session_manager_parameters option ;
   reason: string option ;
   document_name: string option ;
-  target: string }
+  target: string }[@@ocaml.doc ""]
 type nonrec start_change_request_execution_result =
   {
-  automation_execution_id: string option }
+  automation_execution_id: string option }[@@ocaml.doc ""]
 type nonrec runbook =
   {
   target_locations: target_location list option ;
@@ -862,7 +957,8 @@ type nonrec runbook =
   target_parameter_name: string option ;
   parameters: automation_parameter_map option ;
   document_version: string option ;
-  document_name: string }
+  document_name: string }[@@ocaml.doc
+                           "Information about an Automation runbook used in a runbook workflow in Change Manager.\n\n  The Automation runbooks specified for the runbook workflow can't run until all required approvals for the change request have been received.\n  \n   "]
 type nonrec start_change_request_execution_request =
   {
   change_details: string option ;
@@ -875,30 +971,36 @@ type nonrec start_change_request_execution_request =
   parameters: automation_parameter_map option ;
   document_version: string option ;
   document_name: string ;
-  scheduled_time: CoreTypes.Timestamp.t option }
+  scheduled_time: CoreTypes.Timestamp.t option }[@@ocaml.doc ""]
 type nonrec invalid_automation_execution_parameters_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The supplied parameters for invoking the specified Automation runbook are incorrect. For example, they may not match the set of parameters permitted for the specified Automation document.\n"]
 type nonrec idempotent_parameter_mismatch = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Error returned when an idempotent operation is retried and the parameters don't match the original call to the API with the same idempotency token. \n"]
 type nonrec automation_execution_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The number of simultaneously running Automation executions exceeded the allowable limit.\n"]
 type nonrec automation_definition_version_not_found_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An Automation runbook with the specified name and version couldn't be found.\n"]
 type nonrec automation_definition_not_found_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An Automation runbook with the specified name couldn't be found.\n"]
 type nonrec automation_definition_not_approved_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Indicates that the Change Manager change template used in the change request was rejected or is still in a pending state.\n"]
 type nonrec start_automation_execution_result =
   {
-  automation_execution_id: string option }
+  automation_execution_id: string option }[@@ocaml.doc ""]
 type nonrec execution_mode =
   | Interactive 
-  | Auto 
+  | Auto [@@ocaml.doc ""]
 type nonrec start_automation_execution_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -913,22 +1015,23 @@ type nonrec start_automation_execution_request =
   client_token: string option ;
   parameters: automation_parameter_map option ;
   document_version: string option ;
-  document_name: string }
+  document_name: string }[@@ocaml.doc ""]
 type nonrec start_associations_once_result = unit
 type nonrec start_associations_once_request = {
-  association_ids: string list }
+  association_ids: string list }[@@ocaml.doc ""]
 type nonrec invalid_association = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The association isn't valid or doesn't exist. \n"]
 type nonrec source_type =
   | AWS_SSM_MANAGEDINSTANCE 
   | AWS_IOT_THING 
-  | AWS_EC2_INSTANCE 
+  | AWS_EC2_INSTANCE [@@ocaml.doc ""]
 type nonrec signal_type =
   | RESUME 
   | STOP_STEP 
   | START_STEP 
   | REJECT 
-  | APPROVE 
+  | APPROVE [@@ocaml.doc ""]
 type nonrec severity_summary =
   {
   unspecified_count: int option ;
@@ -936,21 +1039,22 @@ type nonrec severity_summary =
   low_count: int option ;
   medium_count: int option ;
   high_count: int option ;
-  critical_count: int option }
+  critical_count: int option }[@@ocaml.doc
+                                "The number of managed nodes found for each patch severity level defined in the request filter.\n"]
 type nonrec session_status =
   | FAILED 
   | TERMINATING 
   | TERMINATED 
   | DISCONNECTED 
   | CONNECTING 
-  | CONNECTED 
+  | CONNECTED [@@ocaml.doc ""]
 type nonrec session_state =
   | HISTORY 
-  | ACTIVE 
+  | ACTIVE [@@ocaml.doc ""]
 type nonrec session_manager_output_url =
   {
   cloud_watch_output_url: string option ;
-  s3_output_url: string option }
+  s3_output_url: string option }[@@ocaml.doc "Reserved for future use.\n"]
 type nonrec session =
   {
   max_session_duration: string option ;
@@ -963,17 +1067,19 @@ type nonrec session =
   start_date: CoreTypes.Timestamp.t option ;
   status: session_status option ;
   target: string option ;
-  session_id: string option }
+  session_id: string option }[@@ocaml.doc
+                               "Information about a Session Manager connection to a managed node.\n"]
 type nonrec session_filter_key =
   | SESSION_ID 
   | STATUS 
   | OWNER 
   | TARGET_ID 
   | INVOKED_BEFORE 
-  | INVOKED_AFTER 
+  | INVOKED_AFTER [@@ocaml.doc ""]
 type nonrec session_filter = {
   value: string ;
-  key: session_filter_key }
+  key: session_filter_key }[@@ocaml.doc
+                             "Describes a filter for Session Manager information.\n"]
 type nonrec service_setting =
   {
   status: string option ;
@@ -981,7 +1087,8 @@ type nonrec service_setting =
   last_modified_user: string option ;
   last_modified_date: CoreTypes.Timestamp.t option ;
   setting_value: string option ;
-  setting_id: string option }
+  setting_id: string option }[@@ocaml.doc
+                               "The service setting data structure.\n\n  [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of \"false\". This means the user can't use this feature unless they change the setting to \"true\" and intentionally opt in for a paid feature.\n \n  Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [UpdateServiceSetting] API operation to change the default setting. Or, use the [ResetServiceSetting] to change the value back to the original value defined by the Amazon Web Services service team.\n  "]
 type nonrec command_status =
   | CANCELLING 
   | TIMED_OUT 
@@ -989,7 +1096,7 @@ type nonrec command_status =
   | CANCELLED 
   | SUCCESS 
   | IN_PROGRESS 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec command =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -1017,9 +1124,9 @@ type nonrec command =
   comment: string option ;
   document_version: string option ;
   document_name: string option ;
-  command_id: string option }
+  command_id: string option }[@@ocaml.doc "Describes a command request.\n"]
 type nonrec send_command_result = {
-  command: command option }
+  command: command option }[@@ocaml.doc ""]
 type nonrec send_command_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -1039,39 +1146,45 @@ type nonrec send_command_request =
   document_version: string option ;
   document_name: string ;
   targets: target list option ;
-  instance_ids: string list option }
+  instance_ids: string list option }[@@ocaml.doc ""]
 type nonrec invalid_role = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/monitoring-sns-notifications.html}Monitoring Systems Manager status changes using Amazon SNS notifications} in the {i Amazon Web Services Systems Manager User Guide}.\n"]
 type nonrec invalid_output_folder = unit
 type nonrec invalid_notification_config = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "One or more configuration items isn't valid. Verify that a valid Amazon Resource Name (ARN) was provided for an Amazon Simple Notification Service topic.\n"]
 type nonrec duplicate_instance_id = unit
 type nonrec send_automation_signal_result = unit
 type nonrec send_automation_signal_request =
   {
   payload: automation_parameter_map option ;
   signal_type: signal_type ;
-  automation_execution_id: string }
+  automation_execution_id: string }[@@ocaml.doc ""]
 type nonrec invalid_automation_signal_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The signal isn't valid for the current Automation execution.\n"]
 type nonrec automation_step_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified step name and execution ID don't exist. Verify the information and try again.\n"]
 type nonrec scheduled_window_execution =
   {
   execution_time: string option ;
   name: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "Information about a scheduled execution for a maintenance window.\n"]
 type nonrec s3_output_url = {
-  output_url: string option }
+  output_url: string option }[@@ocaml.doc
+                               "A URL for the Amazon Web Services Systems Manager (Systems Manager) bucket where you want to store the results of this request.\n"]
 type nonrec resume_session_response =
   {
   stream_url: string option ;
   token_value: string option ;
-  session_id: string option }
+  session_id: string option }[@@ocaml.doc ""]
 type nonrec resume_session_request = {
-  session_id: string }
+  session_id: string }[@@ocaml.doc ""]
 type nonrec result_attribute = {
-  type_name: string }
+  type_name: string }[@@ocaml.doc "The inventory item result attribute.\n"]
 type nonrec resource_type_for_tagging =
   | ASSOCIATION 
   | AUTOMATION 
@@ -1081,29 +1194,36 @@ type nonrec resource_type_for_tagging =
   | PARAMETER 
   | MAINTENANCE_WINDOW 
   | MANAGED_INSTANCE 
-  | DOCUMENT 
+  | DOCUMENT [@@ocaml.doc ""]
 type nonrec resource_type =
   | EC2_INSTANCE 
-  | MANAGED_INSTANCE 
+  | MANAGED_INSTANCE [@@ocaml.doc ""]
 type nonrec resource_policy_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "No policies with the specified policy ID and hash could be found.\n"]
 type nonrec resource_policy_limit_exceeded_exception =
   {
   message: string option ;
   limit_type: string option ;
-  limit: int option }
+  limit: int option }[@@ocaml.doc
+                       "The [PutResourcePolicy] API action enforces two limits. A policy can't be greater than 1024 bytes in size. And only one policy can be attached to [OpsItemGroup]. Verify these limits and try again.\n"]
 type nonrec resource_policy_invalid_parameter_exception =
   {
   message: string option ;
-  parameter_names: string list option }
+  parameter_names: string list option }[@@ocaml.doc
+                                         "One or more parameters specified for the call aren't valid. Verify the parameters and their values and try again.\n"]
 type nonrec resource_policy_conflict_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The hash provided in the call doesn't match the stored hash. This exception is thrown when trying to update an obsolete policy version or when multiple requests to update a policy are sent.\n"]
 type nonrec resource_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified parameter to be shared could not be found.\n"]
 type nonrec resource_limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Error returned when the caller has exceeded the default resource quotas. For example, too many maintenance windows or patch baselines have been created.\n\n For information about resource quotas in Systems Manager, see {{:https://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm}Systems Manager service quotas} in the {i Amazon Web Services General Reference}.\n "]
 type nonrec resource_in_use_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Error returned if an attempt is made to delete a patch baseline that is registered for a patch group.\n"]
 type nonrec resource_data_sync_source_with_state =
   {
   enable_all_ops_data_sources: bool option ;
@@ -1112,12 +1232,14 @@ type nonrec resource_data_sync_source_with_state =
   source_regions: string list option ;
   aws_organizations_source:
     resource_data_sync_aws_organizations_source option ;
-  source_type: string option }
+  source_type: string option }[@@ocaml.doc
+                                "The data type name for including resource data sync state. There are four sync states:\n\n  [OrganizationNotExists] (Your organization doesn't exist)\n \n   [NoPermissions] (The system can't locate the service-linked role. This role is automatically created when a user creates a resource data sync in Amazon Web Services Systems Manager Explorer.)\n  \n    [InvalidOrganizationalUnit] (You specified or selected an invalid unit in the resource data sync configuration.)\n   \n     [TrustedAccessDisabled] (You disabled Systems Manager access in the organization in Organizations.)\n    "]
 type nonrec resource_data_sync_s3_format =
-  | JSON_SERDE 
+  | JSON_SERDE [@@ocaml.doc ""]
 type nonrec resource_data_sync_destination_data_sharing =
   {
-  destination_data_sharing_type: string option }
+  destination_data_sharing_type: string option }[@@ocaml.doc
+                                                  "Synchronize Amazon Web Services Systems Manager Inventory data from multiple Amazon Web Services accounts defined in Organizations to a centralized Amazon S3 bucket. Data is synchronized to individual key prefixes in the central bucket. Each key prefix represents a different Amazon Web Services account ID.\n"]
 type nonrec resource_data_sync_s3_destination =
   {
   destination_data_sharing:
@@ -1126,11 +1248,12 @@ type nonrec resource_data_sync_s3_destination =
   region: string ;
   sync_format: resource_data_sync_s3_format ;
   prefix: string option ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc
+                         "Information about the target S3 bucket for the resource data sync.\n"]
 type nonrec last_resource_data_sync_status =
   | INPROGRESS 
   | FAILED 
-  | SUCCESSFUL 
+  | SUCCESSFUL [@@ocaml.doc ""]
 type nonrec resource_data_sync_item =
   {
   last_sync_status_message: string option ;
@@ -1142,36 +1265,42 @@ type nonrec resource_data_sync_item =
   s3_destination: resource_data_sync_s3_destination option ;
   sync_source: resource_data_sync_source_with_state option ;
   sync_type: string option ;
-  sync_name: string option }
+  sync_name: string option }[@@ocaml.doc
+                              "Information about a resource data sync configuration, including its current status and last successful sync.\n"]
 type nonrec resource_data_sync_count_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You have exceeded the allowed maximum sync configurations.\n"]
 type nonrec resource_data_sync_already_exists_exception =
   {
-  sync_name: string option }
+  sync_name: string option }[@@ocaml.doc
+                              "A sync configuration with the same name already exists.\n"]
 type nonrec compliance_status =
   | NonCompliant 
-  | Compliant 
+  | Compliant [@@ocaml.doc ""]
 type nonrec compliance_severity =
   | Unspecified 
   | Informational 
   | Low 
   | Medium 
   | High 
-  | Critical 
+  | Critical [@@ocaml.doc ""]
 type nonrec compliance_execution_summary =
   {
   execution_type: string option ;
   execution_id: string option ;
-  execution_time: CoreTypes.Timestamp.t }
+  execution_time: CoreTypes.Timestamp.t }[@@ocaml.doc
+                                           "A summary of the call execution that includes an execution ID, the type of execution (for example, [Command]), and the date/time of the execution using a datetime object that is saved in the following format: [yyyy-MM-dd'T'HH:mm:ss'Z'] \n"]
 type nonrec compliant_summary =
   {
   severity_summary: severity_summary option ;
-  compliant_count: int option }
+  compliant_count: int option }[@@ocaml.doc
+                                 "A summary of resources that are compliant. The summary is organized according to the resource count for each compliance type.\n"]
 type nonrec non_compliant_summary =
   {
   severity_summary: severity_summary option ;
-  non_compliant_count: int option }
+  non_compliant_count: int option }[@@ocaml.doc
+                                     "A summary of resources that aren't compliant. The summary is organized according to resource type.\n"]
 type nonrec resource_compliance_summary_item =
   {
   non_compliant_summary: non_compliant_summary option ;
@@ -1181,35 +1310,39 @@ type nonrec resource_compliance_summary_item =
   status: compliance_status option ;
   resource_id: string option ;
   resource_type: string option ;
-  compliance_type: string option }
+  compliance_type: string option }[@@ocaml.doc
+                                    "Compliance summary information for a specific resource. \n"]
 type nonrec resolved_targets =
   {
   truncated: bool option ;
-  parameter_values: string list option }
+  parameter_values: string list option }[@@ocaml.doc
+                                          "Information about targets that resolved during the Automation execution.\n"]
 type nonrec reset_service_setting_result =
   {
-  service_setting: service_setting option }
+  service_setting: service_setting option }[@@ocaml.doc
+                                             "The result body of the ResetServiceSetting API operation.\n"]
 type nonrec reset_service_setting_request = {
-  setting_id: string }
+  setting_id: string }[@@ocaml.doc
+                        "The request body of the ResetServiceSetting API operation.\n"]
 type nonrec remove_tags_from_resource_result = unit
 type nonrec remove_tags_from_resource_request =
   {
   tag_keys: string list ;
   resource_id: string ;
-  resource_type: resource_type_for_tagging }
+  resource_type: resource_type_for_tagging }[@@ocaml.doc ""]
 type nonrec invalid_resource_type = unit
 type nonrec invalid_resource_id = unit
 type nonrec registration_metadata_item = {
   value: string ;
-  key: string }
+  key: string }[@@ocaml.doc "Reserved for internal use.\n"]
 type nonrec register_task_with_maintenance_window_result =
   {
-  window_task_id: string option }
+  window_task_id: string option }[@@ocaml.doc ""]
 type nonrec maintenance_window_task_type =
   | Lambda 
   | StepFunctions 
   | Automation 
-  | RunCommand 
+  | RunCommand [@@ocaml.doc ""]
 type nonrec register_task_with_maintenance_window_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -1228,15 +1361,16 @@ type nonrec register_task_with_maintenance_window_request =
   service_role_arn: string option ;
   task_arn: string ;
   targets: target list option ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec feature_not_available_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You attempted to register a [LAMBDA] or [STEP_FUNCTIONS] task in a region where the corresponding service isn't available. \n"]
 type nonrec register_target_with_maintenance_window_result =
   {
-  window_target_id: string option }
+  window_target_id: string option }[@@ocaml.doc ""]
 type nonrec maintenance_window_resource_type =
   | ResourceGroup 
-  | Instance 
+  | Instance [@@ocaml.doc ""]
 type nonrec register_target_with_maintenance_window_request =
   {
   client_token: string option ;
@@ -1245,50 +1379,52 @@ type nonrec register_target_with_maintenance_window_request =
   owner_information: string option ;
   targets: target list ;
   resource_type: maintenance_window_resource_type ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec register_patch_baseline_for_patch_group_result =
   {
   patch_group: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec register_patch_baseline_for_patch_group_request =
   {
   patch_group: string ;
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec already_exists_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Error returned if an attempt is made to register a patch group with a patch baseline that is already registered with a different patch baseline.\n"]
 type nonrec register_default_patch_baseline_result =
   {
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec register_default_patch_baseline_request = {
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec reboot_option =
   | NO_REBOOT 
-  | REBOOT_IF_NEEDED 
+  | REBOOT_IF_NEEDED [@@ocaml.doc ""]
 type nonrec put_resource_policy_response =
   {
   policy_hash: string option ;
-  policy_id: string option }
+  policy_id: string option }[@@ocaml.doc ""]
 type nonrec put_resource_policy_request =
   {
   policy_hash: string option ;
   policy_id: string option ;
   policy: string ;
-  resource_arn: string }
+  resource_arn: string }[@@ocaml.doc ""]
 type nonrec malformed_resource_policy_document_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified policy document is malformed or invalid, or excessive [PutResourcePolicy] or [DeleteResourcePolicy] calls have been made.\n"]
 type nonrec parameter_tier =
   | INTELLIGENT_TIERING 
   | ADVANCED 
-  | STANDARD 
+  | STANDARD [@@ocaml.doc ""]
 type nonrec put_parameter_result =
   {
   tier: parameter_tier option ;
-  version: int option }
+  version: int option }[@@ocaml.doc ""]
 type nonrec parameter_type =
   | SECURE_STRING 
   | STRING_LIST 
-  | STRING 
+  | STRING [@@ocaml.doc ""]
 type nonrec put_parameter_request =
   {
   data_type: string option ;
@@ -1301,36 +1437,47 @@ type nonrec put_parameter_request =
   type_: parameter_type option ;
   value: string ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec policies_limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You specified more than the maximum number of allowed policies for the parameter. The maximum is 10.\n"]
 type nonrec parameter_pattern_mismatch_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The parameter name isn't valid.\n"]
 type nonrec parameter_max_version_limit_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Parameter Store retains the 100 most recently created versions of a parameter. After this number of versions has been created, Parameter Store deletes the oldest version when a new one is created. However, if the oldest version has a {i label} attached to it, Parameter Store won't delete the version and instead presents this error message:\n\n  \n {[\n An error occurred (ParameterMaxVersionLimitExceeded) when calling the PutParameter operation: You attempted to create a new version of {i parameter-name} by calling the PutParameter API with the overwrite flag. Version {i version-number}, the oldest version, can't be deleted because it has a label associated with it. Move the label to another version of the parameter, and try again.\n ]}\n  \n \n  This safeguard is to prevent parameter versions with mission critical labels assigned to them from being deleted. To continue creating new parameters, first move the label from the oldest version of the parameter to a newer one for use in your operations. For information about moving parameter labels, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html#sysman-paramstore-labels-console-move}Move a parameter label (console)} or {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html#sysman-paramstore-labels-cli-move}Move a parameter label (CLI)} in the {i Amazon Web Services Systems Manager User Guide}. \n  "]
 type nonrec parameter_limit_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You have exceeded the number of parameters for this Amazon Web Services account. Delete one or more parameters and try again.\n"]
 type nonrec parameter_already_exists = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The parameter already exists. You can't create duplicate parameters.\n"]
 type nonrec invalid_policy_type_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The policy type isn't supported. Parameter Store supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification.\n"]
 type nonrec invalid_policy_attribute_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "A policy attribute or its value is invalid. \n"]
 type nonrec invalid_key_id = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The query key ID isn't valid.\n"]
 type nonrec invalid_allowed_pattern_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The request doesn't meet the regular expression requirement.\n"]
 type nonrec incompatible_policy_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "There is a conflict in the policies specified for this parameter. You can't, for example, specify two Expiration policies for a parameter. Review your policies, and try again.\n"]
 type nonrec hierarchy_type_mismatch_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Parameter Store doesn't support changing a parameter type in a hierarchy. For example, you can't change a parameter from a [String] type to a [SecureString] type. You must create a new, unique parameter.\n"]
 type nonrec hierarchy_level_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "A hierarchy can have a maximum of 15 levels. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html}Requirements and constraints for parameter names} in the {i Amazon Web Services Systems Manager User Guide}. \n"]
 type nonrec put_inventory_result = {
-  message: string option }
-type nonrec inventory_item_entry = (string * string) list
-type nonrec inventory_item_content_context = (string * string) list
+  message: string option }[@@ocaml.doc ""]
+type nonrec inventory_item_entry = (string * string) list[@@ocaml.doc ""]
+type nonrec inventory_item_content_context = (string * string) list[@@ocaml.doc
+                                                                    ""]
 type nonrec inventory_item =
   {
   context: inventory_item_content_context option ;
@@ -1338,43 +1485,50 @@ type nonrec inventory_item =
   content_hash: string option ;
   capture_time: string ;
   schema_version: string ;
-  type_name: string }
+  type_name: string }[@@ocaml.doc
+                       "Information collected from managed nodes based on your inventory policy document\n"]
 type nonrec put_inventory_request =
   {
   items: inventory_item list ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec item_size_limit_exceeded_exception =
   {
   message: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc
+                              "The inventory item size has exceeded the size limit.\n"]
 type nonrec item_content_mismatch_exception =
   {
   message: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc
+                              "The inventory item has invalid content. \n"]
 type nonrec invalid_type_name_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The parameter type name isn't valid.\n"]
 type nonrec invalid_item_content_exception =
   {
   message: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc
+                              "One or more content items isn't valid.\n"]
 type nonrec invalid_inventory_item_context_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You specified invalid keys or values in the [Context] attribute for [InventoryItem]. Verify the keys and values, and try again.\n"]
 type nonrec custom_schema_count_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You have exceeded the limit for custom schemas. Delete one or more custom schemas and try again.\n"]
 type nonrec put_compliance_items_result = unit
-type nonrec compliance_item_details = (string * string) list
+type nonrec compliance_item_details = (string * string) list[@@ocaml.doc ""]
 type nonrec compliance_item_entry =
   {
   details: compliance_item_details option ;
   status: compliance_status ;
   severity: compliance_severity ;
   title: string option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Information about a compliance item.\n"]
 type nonrec compliance_upload_type =
   | Partial 
-  | Complete 
+  | Complete [@@ocaml.doc ""]
 type nonrec put_compliance_items_request =
   {
   upload_type: compliance_upload_type option ;
@@ -1383,49 +1537,53 @@ type nonrec put_compliance_items_request =
   execution_summary: compliance_execution_summary ;
   compliance_type: string ;
   resource_type: string ;
-  resource_id: string }
+  resource_id: string }[@@ocaml.doc ""]
 type nonrec compliance_type_count_limit_exceeded_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You specified too many custom compliance types. You can specify a maximum of 10 different types. \n"]
 type nonrec progress_counters =
   {
   timed_out_steps: int option ;
   cancelled_steps: int option ;
   failed_steps: int option ;
   success_steps: int option ;
-  total_steps: int option }
+  total_steps: int option }[@@ocaml.doc
+                             "An aggregate of step execution statuses displayed in the Amazon Web Services Systems Manager console for a multi-Region and multi-account Automation execution.\n"]
 type nonrec ping_status =
   | INACTIVE 
   | CONNECTION_LOST 
-  | ONLINE 
+  | ONLINE [@@ocaml.doc ""]
 type nonrec patch_deployment_status =
   | ExplicitRejected 
   | ExplicitApproved 
   | PendingApproval 
-  | Approved 
+  | Approved [@@ocaml.doc ""]
 type nonrec patch_status =
   {
   approval_date: CoreTypes.Timestamp.t option ;
   compliance_level: patch_compliance_level option ;
-  deployment_status: patch_deployment_status option }
+  deployment_status: patch_deployment_status option }[@@ocaml.doc
+                                                       "Information about the approval status of a patch.\n"]
 type nonrec patch_set =
   | Application 
-  | Os 
-type nonrec patch_property_entry = (string * string) list
+  | Os [@@ocaml.doc ""]
+type nonrec patch_property_entry = (string * string) list[@@ocaml.doc ""]
 type nonrec patch_property =
   | PatchSeverity 
   | PatchPriority 
   | PatchMsrcSeverity 
   | PatchClassification 
   | PatchProductFamily 
-  | Product 
+  | Product [@@ocaml.doc ""]
 type nonrec patch_orchestrator_filter =
   {
   values: string list option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Defines a filter used in Patch Manager APIs. Supported filter keys depend on the API operation that includes the filter. Patch Manager API operations that use [PatchOrchestratorFilter] include the following:\n\n {ul\n       {-   [DescribeAvailablePatches] \n           \n            }\n       {-   [DescribeInstancePatches] \n           \n            }\n       {-   [DescribePatchBaselines] \n           \n            }\n       {-   [DescribePatchGroups] \n           \n            }\n       }\n  "]
 type nonrec patch_operation_type =
   | INSTALL 
-  | SCAN 
+  | SCAN [@@ocaml.doc ""]
 type nonrec patch =
   {
   repository: string option ;
@@ -1450,18 +1608,20 @@ type nonrec patch =
   description: string option ;
   title: string option ;
   release_date: CoreTypes.Timestamp.t option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Represents metadata about a patch.\n"]
 type nonrec patch_baseline_identity =
   {
   default_baseline: bool option ;
   baseline_description: string option ;
   operating_system: operating_system option ;
   baseline_name: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc
+                                "Defines the basic information about a patch baseline.\n"]
 type nonrec patch_group_patch_baseline_mapping =
   {
   baseline_identity: patch_baseline_identity option ;
-  patch_group: string option }
+  patch_group: string option }[@@ocaml.doc
+                                "The mapping between a patch group and the patch baseline the patch group is registered with.\n"]
 type nonrec patch_compliance_data_state =
   | Failed 
   | NotApplicable 
@@ -1469,7 +1629,7 @@ type nonrec patch_compliance_data_state =
   | InstalledRejected 
   | InstalledPendingReboot 
   | InstalledOther 
-  | Installed 
+  | Installed [@@ocaml.doc ""]
 type nonrec patch_compliance_data =
   {
   cve_ids: string option ;
@@ -1478,28 +1638,33 @@ type nonrec patch_compliance_data =
   severity: string ;
   classification: string ;
   kb_id: string ;
-  title: string }
+  title: string }[@@ocaml.doc
+                   "Information about the state of a patch on a particular managed node as it relates to the patch baseline used to patch the node.\n"]
 type nonrec parameters_filter_key =
   | KEY_ID 
   | TYPE 
-  | NAME 
+  | NAME [@@ocaml.doc ""]
 type nonrec parameters_filter =
   {
   values: string list ;
-  key: parameters_filter_key }
+  key: parameters_filter_key }[@@ocaml.doc
+                                "This data type is deprecated. Instead, use [ParameterStringFilter].\n"]
 type nonrec parameter_version_label_limit_exceeded =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "A parameter version can have a maximum of ten labels.\n"]
 type nonrec parameter_string_filter =
   {
   values: string list option ;
   option_: string option ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "One or more filters. Use a filter to return a more specific list of results.\n"]
 type nonrec parameter_inline_policy =
   {
   policy_status: string option ;
   policy_type: string option ;
-  policy_text: string option }
+  policy_text: string option }[@@ocaml.doc
+                                "One or more policies assigned to a parameter.\n"]
 type nonrec parameter_metadata =
   {
   data_type: string option ;
@@ -1513,7 +1678,8 @@ type nonrec parameter_metadata =
   key_id: string option ;
   type_: parameter_type option ;
   ar_n: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Metadata includes information like the Amazon Resource Name (ARN) of the last user to update the parameter and the date and time the parameter was last used.\n"]
 type nonrec parameter =
   {
   data_type: string option ;
@@ -1524,7 +1690,8 @@ type nonrec parameter =
   version: int option ;
   value: string option ;
   type_: parameter_type option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "An Amazon Web Services Systems Manager parameter in Parameter Store.\n"]
 type nonrec parameter_history =
   {
   data_type: string option ;
@@ -1539,27 +1706,32 @@ type nonrec parameter_history =
   last_modified_date: CoreTypes.Timestamp.t option ;
   key_id: string option ;
   type_: parameter_type option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Information about parameter usage.\n"]
 type nonrec output_source =
   {
   output_source_type: string option ;
-  output_source_id: string option }
+  output_source_id: string option }[@@ocaml.doc
+                                     "Information about the source where the association execution details are stored.\n"]
 type nonrec ops_result_attribute = {
-  type_name: string }
+  type_name: string }[@@ocaml.doc "The OpsItem data type to return.\n"]
 type nonrec ops_metadata =
   {
   creation_date: CoreTypes.Timestamp.t option ;
   last_modified_user: string option ;
   last_modified_date: CoreTypes.Timestamp.t option ;
   ops_metadata_arn: string option ;
-  resource_id: string option }
+  resource_id: string option }[@@ocaml.doc
+                                "Operational metadata for an application in Application Manager.\n"]
 type nonrec ops_metadata_limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "Your account reached the maximum number of OpsMetadata objects allowed by Application Manager. The maximum is 200 OpsMetadata objects. Delete one or more OpsMetadata object and try again.\n"]
 type nonrec ops_metadata_filter = {
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "A filter to limit the number of OpsMetadata objects displayed.\n"]
 type nonrec ops_metadata_already_exists_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An OpsMetadata object already exists for the selected resource.\n"]
 type nonrec ops_item_summary =
   {
   planned_end_time: CoreTypes.Timestamp.t option ;
@@ -1578,20 +1750,22 @@ type nonrec ops_item_summary =
   last_modified_time: CoreTypes.Timestamp.t option ;
   last_modified_by: string option ;
   created_time: CoreTypes.Timestamp.t option ;
-  created_by: string option }
+  created_by: string option }[@@ocaml.doc "A count of OpsItems.\n"]
 type nonrec ops_item_related_items_filter_key =
   | RESOURCE_URI 
   | ASSOCIATION_ID 
-  | RESOURCE_TYPE 
+  | RESOURCE_TYPE [@@ocaml.doc ""]
 type nonrec ops_item_related_items_filter_operator =
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec ops_item_related_items_filter =
   {
   operator: ops_item_related_items_filter_operator ;
   values: string list ;
-  key: ops_item_related_items_filter_key }
+  key: ops_item_related_items_filter_key }[@@ocaml.doc
+                                            "Describes a filter for a specific list of related-item resources. \n"]
 type nonrec ops_item_identity = {
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "Information about the user or resource that created an OpsItem event.\n"]
 type nonrec ops_item_related_item_summary =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -1602,15 +1776,18 @@ type nonrec ops_item_related_item_summary =
   association_type: string option ;
   resource_type: string option ;
   association_id: string option ;
-  ops_item_id: string option }
+  ops_item_id: string option }[@@ocaml.doc
+                                "Summary information about related-item resources for an OpsItem.\n"]
 type nonrec ops_item_related_item_association_not_found_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The association wasn't found using the parameters you specified in the call. Verify the information and try again.\n"]
 type nonrec ops_item_related_item_already_exists_exception =
   {
   ops_item_id: string option ;
   resource_uri: string option ;
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The Amazon Resource Name (ARN) is already associated with the OpsItem.\n"]
 type nonrec ops_item_filter_key =
   | ACCOUNT_ID 
   | INSIGHT_TYPE 
@@ -1639,17 +1816,17 @@ type nonrec ops_item_filter_key =
   | PRIORITY 
   | SOURCE 
   | CREATED_BY 
-  | STATUS 
+  | STATUS [@@ocaml.doc ""]
 type nonrec ops_item_filter_operator =
   | LESS_THAN 
   | GREATER_THAN 
   | CONTAINS 
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec ops_item_filter =
   {
   operator: ops_item_filter_operator ;
   values: string list ;
-  key: ops_item_filter_key }
+  key: ops_item_filter_key }[@@ocaml.doc "Describes an OpsItem filter.\n"]
 type nonrec ops_item_event_summary =
   {
   created_time: CoreTypes.Timestamp.t option ;
@@ -1658,16 +1835,18 @@ type nonrec ops_item_event_summary =
   detail_type: string option ;
   source: string option ;
   event_id: string option ;
-  ops_item_id: string option }
+  ops_item_id: string option }[@@ocaml.doc
+                                "Summary information about an OpsItem event or that associated an OpsItem with a related item.\n"]
 type nonrec ops_item_event_filter_key =
-  | OPSITEM_ID 
+  | OPSITEM_ID [@@ocaml.doc ""]
 type nonrec ops_item_event_filter_operator =
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec ops_item_event_filter =
   {
   operator: ops_item_event_filter_operator ;
   values: string list ;
-  key: ops_item_event_filter_key }
+  key: ops_item_event_filter_key }[@@ocaml.doc
+                                    "Describes a filter for a specific list of OpsItem events. You can filter event information by using tags. You specify tags by using a key-value pair mapping. \n"]
 type nonrec ops_item =
   {
   ops_item_arn: string option ;
@@ -1691,30 +1870,32 @@ type nonrec ops_item =
   description: string option ;
   created_time: CoreTypes.Timestamp.t option ;
   ops_item_type: string option ;
-  created_by: string option }
+  created_by: string option }[@@ocaml.doc
+                               "Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational work items (OpsItems) impacting the performance and health of their Amazon Web Services resources. OpsCenter is integrated with Amazon EventBridge and Amazon CloudWatch. This means you can configure these services to automatically create an OpsItem in OpsCenter when a CloudWatch alarm enters the ALARM state or when EventBridge processes an event from any Amazon Web Services service that publishes events. Configuring Amazon CloudWatch alarms and EventBridge events to automatically create OpsItems allows you to quickly diagnose and remediate issues with Amazon Web Services resources from a single console.\n\n To help you diagnose issues, each OpsItem includes contextually relevant information such as the name and ID of the Amazon Web Services resource that generated the OpsItem, alarm or event details, alarm history, and an alarm timeline graph. For the Amazon Web Services resource, OpsCenter aggregates information from Config, CloudTrail logs, and EventBridge, so you don't have to navigate across multiple console pages during your investigation. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}. \n "]
 type nonrec ops_filter_operator_type =
   | EXISTS 
   | GREATER_THAN 
   | LESS_THAN 
   | BEGIN_WITH 
   | NOT_EQUAL 
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec ops_filter =
   {
   type_: ops_filter_operator_type option ;
   values: string list ;
-  key: string }
-type nonrec ops_entity_item_entry = (string * string) list
+  key: string }[@@ocaml.doc "A filter for viewing OpsData summaries.\n"]
+type nonrec ops_entity_item_entry = (string * string) list[@@ocaml.doc ""]
 type nonrec ops_entity_item =
   {
   content: ops_entity_item_entry list option ;
-  capture_time: string option }
-type nonrec ops_entity_item_map = (string * ops_entity_item) list
+  capture_time: string option }[@@ocaml.doc "The OpsData summary.\n"]
+type nonrec ops_entity_item_map = (string * ops_entity_item) list[@@ocaml.doc
+                                                                   ""]
 type nonrec ops_entity =
   {
   data: ops_entity_item_map option ;
-  id: string option }
-type nonrec ops_aggregator_value_map = (string * string) list
+  id: string option }[@@ocaml.doc "The result of the query.\n"]
+type nonrec ops_aggregator_value_map = (string * string) list[@@ocaml.doc ""]
 type ops_aggregator =
   {
   aggregators: ops_aggregator list option ;
@@ -1722,27 +1903,32 @@ type ops_aggregator =
   values: ops_aggregator_value_map option ;
   attribute_name: string option ;
   type_name: string option ;
-  aggregator_type: string option }
+  aggregator_type: string option }[@@ocaml.doc
+                                    "One or more aggregators for viewing counts of OpsData using different dimensions such as [Source], [CreatedTime], or [Source and CreatedTime], to name a few.\n"]
 type nonrec modify_document_permission_response = unit
 type nonrec document_permission_type =
-  | SHARE 
+  | SHARE [@@ocaml.doc ""]
 type nonrec modify_document_permission_request =
   {
   shared_document_version: string option ;
   account_ids_to_remove: string list option ;
   account_ids_to_add: string list option ;
   permission_type: document_permission_type ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec invalid_permission_type = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The permission type isn't supported. {i Share} is the only supported permission type.\n"]
 type nonrec document_permission_limit = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The document can't be shared with more Amazon Web Services accounts. You can specify a maximum of 20 accounts per API operation to share a private document.\n\n By default, you can share a private document with a maximum of 1,000 accounts and publicly share up to five documents.\n \n  If you need to increase the quota for privately or publicly shared Systems Manager documents, contact Amazon Web Services Support.\n  "]
 type nonrec document_limit_exceeded = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "You can have at most 500 active SSM documents.\n"]
 type nonrec maintenance_window_identity_for_target =
   {
   name: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "The maintenance window to which the specified target belongs.\n"]
 type nonrec maintenance_window_task =
   {
   alarm_configuration: alarm_configuration option ;
@@ -1759,7 +1945,8 @@ type nonrec maintenance_window_task =
   type_: maintenance_window_task_type option ;
   task_arn: string option ;
   window_task_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "Information about a task defined for a maintenance window.\n"]
 type nonrec maintenance_window_target =
   {
   description: string option ;
@@ -1768,7 +1955,8 @@ type nonrec maintenance_window_target =
   targets: target list option ;
   resource_type: maintenance_window_resource_type option ;
   window_target_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "The target registered with the maintenance window.\n"]
 type nonrec maintenance_window_identity =
   {
   next_execution_time: string option ;
@@ -1782,11 +1970,13 @@ type nonrec maintenance_window_identity =
   enabled: bool option ;
   description: string option ;
   name: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "Information about the maintenance window.\n"]
 type nonrec maintenance_window_filter =
   {
   values: string list option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Filter used in the request. Supported filter keys depend on the API operation that includes the filter. API operations that use [MaintenanceWindowFilter>] include the following:\n\n {ul\n       {-   [DescribeMaintenanceWindowExecutions] \n           \n            }\n       {-   [DescribeMaintenanceWindowExecutionTaskInvocations] \n           \n            }\n       {-   [DescribeMaintenanceWindowExecutionTasks] \n           \n            }\n       {-   [DescribeMaintenanceWindows] \n           \n            }\n       {-   [DescribeMaintenanceWindowTargets] \n           \n            }\n       {-   [DescribeMaintenanceWindowTasks] \n           \n            }\n       }\n  "]
 type nonrec maintenance_window_execution_status =
   | SkippedOverlapping 
   | Cancelled 
@@ -1795,7 +1985,7 @@ type nonrec maintenance_window_execution_status =
   | Failed 
   | Success 
   | InProgress 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec maintenance_window_execution_task_invocation_identity =
   {
   window_target_id: string option ;
@@ -1809,7 +1999,8 @@ type nonrec maintenance_window_execution_task_invocation_identity =
   execution_id: string option ;
   invocation_id: string option ;
   task_execution_id: string option ;
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc
+                                        "Describes the information about a task invocation for a particular target as part of a task execution performed as part of a maintenance window execution.\n"]
 type nonrec maintenance_window_execution_task_identity =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -1821,7 +2012,8 @@ type nonrec maintenance_window_execution_task_identity =
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   task_execution_id: string option ;
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc
+                                        "Information about a task execution performed as part of a maintenance window execution.\n"]
 type nonrec maintenance_window_execution =
   {
   end_time: CoreTypes.Timestamp.t option ;
@@ -1829,75 +2021,79 @@ type nonrec maintenance_window_execution =
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   window_execution_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc
+                              "Describes the information about an execution of a maintenance window. \n"]
 type nonrec list_tags_for_resource_result = {
-  tag_list: tag list option }
+  tag_list: tag list option }[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_request =
   {
   resource_id: string ;
-  resource_type: resource_type_for_tagging }
+  resource_type: resource_type_for_tagging }[@@ocaml.doc ""]
 type nonrec list_resource_data_sync_result =
   {
   next_token: string option ;
-  resource_data_sync_items: resource_data_sync_item list option }
+  resource_data_sync_items: resource_data_sync_item list option }[@@ocaml.doc
+                                                                   ""]
 type nonrec list_resource_data_sync_request =
   {
   max_results: int option ;
   next_token: string option ;
-  sync_type: string option }
+  sync_type: string option }[@@ocaml.doc ""]
 type nonrec invalid_next_token = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The specified token isn't valid.\n"]
 type nonrec list_resource_compliance_summaries_result =
   {
   next_token: string option ;
   resource_compliance_summary_items:
-    resource_compliance_summary_item list option }
+    resource_compliance_summary_item list option }[@@ocaml.doc ""]
 type nonrec compliance_query_operator_type =
   | GreaterThan 
   | LessThan 
   | BeginWith 
   | NotEqual 
-  | Equal 
+  | Equal [@@ocaml.doc ""]
 type nonrec compliance_string_filter =
   {
   type_: compliance_query_operator_type option ;
   values: string list option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "One or more filters. Use a filter to return a more specific list of results.\n"]
 type nonrec list_resource_compliance_summaries_request =
   {
   max_results: int option ;
   next_token: string option ;
-  filters: compliance_string_filter list option }
+  filters: compliance_string_filter list option }[@@ocaml.doc ""]
 type nonrec invalid_filter = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The filter name isn't valid. Verify the you entered the correct name and try again.\n"]
 type nonrec list_ops_metadata_result =
   {
   next_token: string option ;
-  ops_metadata_list: ops_metadata list option }
+  ops_metadata_list: ops_metadata list option }[@@ocaml.doc ""]
 type nonrec list_ops_metadata_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: ops_metadata_filter list option }
+  filters: ops_metadata_filter list option }[@@ocaml.doc ""]
 type nonrec list_ops_item_related_items_response =
   {
   summaries: ops_item_related_item_summary list option ;
-  next_token: string option }
+  next_token: string option }[@@ocaml.doc ""]
 type nonrec list_ops_item_related_items_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: ops_item_related_items_filter list option ;
-  ops_item_id: string option }
+  ops_item_id: string option }[@@ocaml.doc ""]
 type nonrec list_ops_item_events_response =
   {
   summaries: ops_item_event_summary list option ;
-  next_token: string option }
+  next_token: string option }[@@ocaml.doc ""]
 type nonrec list_ops_item_events_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: ops_item_event_filter list option }
+  filters: ops_item_event_filter list option }[@@ocaml.doc ""]
 type nonrec list_inventory_entries_result =
   {
   next_token: string option ;
@@ -1905,26 +2101,27 @@ type nonrec list_inventory_entries_result =
   capture_time: string option ;
   schema_version: string option ;
   instance_id: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc ""]
 type nonrec inventory_query_operator_type =
   | EXISTS 
   | GREATER_THAN 
   | LESS_THAN 
   | BEGIN_WITH 
   | NOT_EQUAL 
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec inventory_filter =
   {
   type_: inventory_query_operator_type option ;
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "One or more filters. Use a filter to return a more specific list of results.\n"]
 type nonrec list_inventory_entries_request =
   {
   max_results: int option ;
   next_token: string option ;
   filters: inventory_filter list option ;
   type_name: string ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec document_identifier =
   {
   author: string option ;
@@ -1941,29 +2138,32 @@ type nonrec document_identifier =
   owner: string option ;
   display_name: string option ;
   created_date: CoreTypes.Timestamp.t option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the name of a SSM document.\n"]
 type nonrec list_documents_result =
   {
   next_token: string option ;
-  document_identifiers: document_identifier list option }
+  document_identifiers: document_identifier list option }[@@ocaml.doc ""]
 type nonrec document_filter_key =
   | DocumentType 
   | PlatformTypes 
   | Owner 
-  | Name 
+  | Name [@@ocaml.doc ""]
 type nonrec document_filter = {
   value: string ;
-  key: document_filter_key }
+  key: document_filter_key }[@@ocaml.doc
+                              "This data type is deprecated. Instead, use [DocumentKeyValuesFilter].\n"]
 type nonrec document_key_values_filter =
   {
   values: string list option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "One or more filters. Use a filter to return a more specific list of documents.\n\n For keys, you can specify one or more tags that have been applied to a document. \n \n  You can also use Amazon Web Services-provided keys, some of which have specific allowed values. These keys and their associated values are as follows:\n  \n    DocumentType  {ul\n                        {-   [ApplicationConfiguration] \n                            \n                             }\n                        {-   [ApplicationConfigurationSchema] \n                            \n                             }\n                        {-   [Automation] \n                            \n                             }\n                        {-   [ChangeCalendar] \n                            \n                             }\n                        {-   [Command] \n                            \n                             }\n                        {-   [Package] \n                            \n                             }\n                        {-   [Policy] \n                            \n                             }\n                        {-   [Session] \n                            \n                             }\n                        }\n    Owner  Note that only one [Owner] can be specified in a request. For example: [Key=Owner,Values=Self].\n           \n            {ul\n                  {-   [Amazon] \n                      \n                       }\n                  {-   [Private] \n                      \n                       }\n                  {-   [Public] \n                      \n                       }\n                  {-   [Self] \n                      \n                       }\n                  {-   [ThirdParty] \n                      \n                       }\n                  }  PlatformTypes  {ul\n                                          {-   [Linux] \n                                              \n                                               }\n                                          {-   [Windows] \n                                              \n                                               }\n                                          }\n      [Name] is another Amazon Web Services-provided key. If you use [Name] as a key, you can use a name prefix to return a list of documents. For example, in the Amazon Web Services CLI, to return a list of all documents that begin with [Te], run the following command:\n     \n       [aws ssm list-documents --filters Key=Name,Values=Te] \n      \n       You can also use the [TargetType] Amazon Web Services-provided key. For a list of valid resource type values that can be used with this key, see {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html}Amazon Web Services resource and property types reference} in the {i CloudFormation User Guide}.\n       \n        If you specify more than two keys, only documents that are identified by all the tags are returned in the results. If you specify more than two values for a key, documents that are identified by any of the values are returned in the results.\n        \n         To specify a custom key-value pair, use the format [Key=tag:tagName,Values=valueName].\n         \n          For example, if you created a key called region and are using the Amazon Web Services CLI to call the [list-documents] command: \n          \n            [aws ssm list-documents --filters Key=tag:region,Values=east,west\n    Key=Owner,Values=Self] \n           "]
 type nonrec list_documents_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: document_key_values_filter list option ;
-  document_filter_list: document_filter list option }
+  document_filter_list: document_filter list option }[@@ocaml.doc ""]
 type nonrec invalid_filter_key = unit
 type nonrec document_version_info =
   {
@@ -1976,56 +2176,61 @@ type nonrec document_version_info =
   version_name: string option ;
   document_version: string option ;
   display_name: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Version information about the document.\n"]
 type nonrec list_document_versions_result =
   {
   next_token: string option ;
-  document_versions: document_version_info list option }
+  document_versions: document_version_info list option }[@@ocaml.doc ""]
 type nonrec list_document_versions_request =
   {
   next_token: string option ;
   max_results: int option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec document_reviewer_response_source =
   {
   reviewer: string option ;
   comment: document_review_comment_source list option ;
   review_status: review_status option ;
   updated_time: CoreTypes.Timestamp.t option ;
-  create_time: CoreTypes.Timestamp.t option }
+  create_time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                               "Information about a reviewer's response to a document review request.\n"]
 type nonrec document_metadata_response_info =
   {
-  reviewer_response: document_reviewer_response_source list option }
+  reviewer_response: document_reviewer_response_source list option }[@@ocaml.doc
+                                                                    "Details about the response to a document review request.\n"]
 type nonrec list_document_metadata_history_response =
   {
   next_token: string option ;
   metadata: document_metadata_response_info option ;
   author: string option ;
   document_version: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec document_metadata_enum =
-  | DocumentReviews 
+  | DocumentReviews [@@ocaml.doc ""]
 type nonrec list_document_metadata_history_request =
   {
   max_results: int option ;
   next_token: string option ;
   metadata: document_metadata_enum ;
   document_version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec compliance_summary_item =
   {
   non_compliant_summary: non_compliant_summary option ;
   compliant_summary: compliant_summary option ;
-  compliance_type: string option }
+  compliance_type: string option }[@@ocaml.doc
+                                    "A summary of compliance information by compliance type.\n"]
 type nonrec list_compliance_summaries_result =
   {
   next_token: string option ;
-  compliance_summary_items: compliance_summary_item list option }
+  compliance_summary_items: compliance_summary_item list option }[@@ocaml.doc
+                                                                   ""]
 type nonrec list_compliance_summaries_request =
   {
   max_results: int option ;
   next_token: string option ;
-  filters: compliance_string_filter list option }
+  filters: compliance_string_filter list option }[@@ocaml.doc ""]
 type nonrec compliance_item =
   {
   details: compliance_item_details option ;
@@ -2036,38 +2241,40 @@ type nonrec compliance_item =
   id: string option ;
   resource_id: string option ;
   resource_type: string option ;
-  compliance_type: string option }
+  compliance_type: string option }[@@ocaml.doc
+                                    "Information about the compliance as defined by the resource type. For example, for a patch resource type, [Items] includes information about the PatchSeverity, Classification, and so on.\n"]
 type nonrec list_compliance_items_result =
   {
   next_token: string option ;
-  compliance_items: compliance_item list option }
+  compliance_items: compliance_item list option }[@@ocaml.doc ""]
 type nonrec list_compliance_items_request =
   {
   max_results: int option ;
   next_token: string option ;
   resource_types: string list option ;
   resource_ids: string list option ;
-  filters: compliance_string_filter list option }
+  filters: compliance_string_filter list option }[@@ocaml.doc ""]
 type nonrec list_commands_result =
   {
   next_token: string option ;
-  commands: command list option }
+  commands: command list option }[@@ocaml.doc ""]
 type nonrec command_filter_key =
   | DOCUMENT_NAME 
   | EXECUTION_STAGE 
   | STATUS 
   | INVOKED_BEFORE 
-  | INVOKED_AFTER 
+  | INVOKED_AFTER [@@ocaml.doc ""]
 type nonrec command_filter = {
   value: string ;
-  key: command_filter_key }
+  key: command_filter_key }[@@ocaml.doc
+                             "Describes a command filter.\n\n  A managed node ID can't be specified when a command status is [Pending] because the command hasn't run on the node yet.\n  \n   "]
 type nonrec list_commands_request =
   {
   filters: command_filter list option ;
   next_token: string option ;
   max_results: int option ;
   instance_id: string option ;
-  command_id: string option }
+  command_id: string option }[@@ocaml.doc ""]
 type nonrec invalid_command_id = unit
 type nonrec command_invocation_status =
   | CANCELLING 
@@ -2077,14 +2284,14 @@ type nonrec command_invocation_status =
   | SUCCESS 
   | DELAYED 
   | IN_PROGRESS 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec command_plugin_status =
   | FAILED 
   | CANCELLED 
   | TIMED_OUT 
   | SUCCESS 
   | IN_PROGRESS 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec command_plugin =
   {
   output_s3_key_prefix: string option ;
@@ -2098,7 +2305,7 @@ type nonrec command_plugin =
   response_code: int option ;
   status_details: string option ;
   status: command_plugin_status option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes plugin details.\n"]
 type nonrec command_invocation =
   {
   cloud_watch_output_config: cloud_watch_output_config option ;
@@ -2116,11 +2323,12 @@ type nonrec command_invocation =
   comment: string option ;
   instance_name: string option ;
   instance_id: string option ;
-  command_id: string option }
+  command_id: string option }[@@ocaml.doc
+                               "An invocation is a copy of a command sent to a specific managed node. A command can apply to one or more managed nodes. A command invocation applies to one managed node. For example, if a user runs [SendCommand] against three managed nodes, then a command invocation is created for each requested managed node ID. A command invocation returns status and detail information about a command you ran. \n"]
 type nonrec list_command_invocations_result =
   {
   next_token: string option ;
-  command_invocations: command_invocation list option }
+  command_invocations: command_invocation list option }[@@ocaml.doc ""]
 type nonrec list_command_invocations_request =
   {
   details: bool option ;
@@ -2128,7 +2336,7 @@ type nonrec list_command_invocations_request =
   next_token: string option ;
   max_results: int option ;
   instance_id: string option ;
-  command_id: string option }
+  command_id: string option }[@@ocaml.doc ""]
 type nonrec association =
   {
   target_maps: target_map list option ;
@@ -2143,11 +2351,12 @@ type nonrec association =
   association_version: string option ;
   association_id: string option ;
   instance_id: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an association of a Amazon Web Services Systems Manager document (SSM document) and a managed node.\n"]
 type nonrec list_associations_result =
   {
   next_token: string option ;
-  associations: association list option }
+  associations: association list option }[@@ocaml.doc ""]
 type nonrec association_filter_key =
   | ResourceGroupName 
   | AssociationName 
@@ -2156,16 +2365,16 @@ type nonrec association_filter_key =
   | Status 
   | AssociationId 
   | Name 
-  | InstanceId 
+  | InstanceId [@@ocaml.doc ""]
 type nonrec association_filter =
   {
   value: string ;
-  key: association_filter_key }
+  key: association_filter_key }[@@ocaml.doc "Describes a filter.\n"]
 type nonrec list_associations_request =
   {
   next_token: string option ;
   max_results: int option ;
-  association_filter_list: association_filter list option }
+  association_filter_list: association_filter list option }[@@ocaml.doc ""]
 type nonrec association_version_info =
   {
   target_maps: target_map list option ;
@@ -2187,70 +2396,78 @@ type nonrec association_version_info =
   name: string option ;
   created_date: CoreTypes.Timestamp.t option ;
   association_version: string option ;
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc
+                                   "Information about the association version.\n"]
 type nonrec list_association_versions_result =
   {
   next_token: string option ;
-  association_versions: association_version_info list option }
+  association_versions: association_version_info list option }[@@ocaml.doc
+                                                                ""]
 type nonrec list_association_versions_request =
   {
   next_token: string option ;
   max_results: int option ;
-  association_id: string }
+  association_id: string }[@@ocaml.doc ""]
 type nonrec label_parameter_version_result =
   {
   parameter_version: int option ;
-  invalid_labels: string list option }
+  invalid_labels: string list option }[@@ocaml.doc ""]
 type nonrec label_parameter_version_request =
   {
   labels: string list ;
   parameter_version: int option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec invocation_does_not_exist = unit
 type nonrec inventory_schema_delete_option =
   | DELETE_SCHEMA 
-  | DISABLE_SCHEMA 
+  | DISABLE_SCHEMA [@@ocaml.doc ""]
 type nonrec inventory_result_item =
   {
   content: inventory_item_entry list ;
   content_hash: string option ;
   capture_time: string option ;
   schema_version: string ;
-  type_name: string }
+  type_name: string }[@@ocaml.doc "The inventory result item.\n"]
 type nonrec inventory_result_item_map = (string * inventory_result_item) list
+[@@ocaml.doc ""]
 type nonrec inventory_result_entity =
   {
   data: inventory_result_item_map option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Inventory query results.\n"]
 type nonrec inventory_attribute_data_type =
   | NUMBER 
-  | STRING 
+  | STRING [@@ocaml.doc ""]
 type nonrec inventory_item_attribute =
   {
   data_type: inventory_attribute_data_type ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "Attributes are the entries within the inventory item content. It contains name and value.\n"]
 type nonrec inventory_item_schema =
   {
   display_name: string option ;
   attributes: inventory_item_attribute list ;
   version: string option ;
-  type_name: string }
+  type_name: string }[@@ocaml.doc
+                       "The inventory item schema definition. Users can use this to compose inventory query filters.\n"]
 type nonrec inventory_group = {
   filters: inventory_filter list ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "A user-defined set of one or more filters on which to aggregate inventory data. Groups return a count of resources that match and don't match the specified criteria.\n"]
 type nonrec inventory_deletion_status =
   | COMPLETE 
-  | IN_PROGRESS 
+  | IN_PROGRESS [@@ocaml.doc ""]
 type nonrec inventory_deletion_summary_item =
   {
   remaining_count: int option ;
   count: int option ;
-  version: string option }
+  version: string option }[@@ocaml.doc
+                            "Either a count, remaining count, or a version number in a delete inventory summary.\n"]
 type nonrec inventory_deletion_summary =
   {
   summary_items: inventory_deletion_summary_item list option ;
   remaining_count: int option ;
-  total_count: int option }
+  total_count: int option }[@@ocaml.doc
+                             "Information about the delete operation.\n"]
 type nonrec inventory_deletion_status_item =
   {
   last_status_update_time: CoreTypes.Timestamp.t option ;
@@ -2259,57 +2476,74 @@ type nonrec inventory_deletion_status_item =
   last_status: inventory_deletion_status option ;
   deletion_start_time: CoreTypes.Timestamp.t option ;
   type_name: string option ;
-  deletion_id: string option }
+  deletion_id: string option }[@@ocaml.doc
+                                "Status information returned by the [DeleteInventory] operation.\n"]
 type inventory_aggregator =
   {
   groups: inventory_group list option ;
   aggregators: inventory_aggregator list option ;
-  expression: string option }
+  expression: string option }[@@ocaml.doc
+                               "Specifies the inventory type and attribute for the aggregation execution.\n"]
 type nonrec invalid_tag = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified tag key or value isn't valid.\n"]
 type nonrec invalid_result_attribute_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified inventory item result attribute isn't valid.\n"]
 type nonrec invalid_plugin_name = unit
 type nonrec invalid_option_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The delete inventory option specified isn't valid. Verify the option and try again.\n"]
 type nonrec invalid_inventory_request_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The request isn't valid.\n"]
 type nonrec invalid_inventory_group_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified inventory group isn't valid.\n"]
 type nonrec invalid_instance_property_filter_value =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified filter value isn't valid.\n"]
 type nonrec invalid_instance_information_filter_value =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified filter value isn't valid.\n"]
 type nonrec invalid_filter_value = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The filter value isn't valid. Verify the value and try again.\n"]
 type nonrec invalid_filter_option = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified filter option isn't valid. Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.\n"]
 type nonrec invalid_document_type = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The SSM document type isn't valid. Valid document types are described in the [DocumentType] property.\n"]
 type nonrec invalid_deletion_id_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The ID specified for the delete operation doesn't exist or isn't valid. Verify the ID and try again.\n"]
 type nonrec invalid_delete_inventory_parameters_exception =
   {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "One or more of the parameters specified for the delete operation isn't valid. Verify all parameters and try again.\n"]
 type nonrec invalid_aggregator_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified aggregator isn't valid for inventory groups. Verify that the aggregator uses a valid inventory type such as [AWS:Application] or [AWS:InstanceInformation].\n"]
 type nonrec invalid_activation_id = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The activation ID isn't valid. Verify the you entered the correct ActivationId or ActivationCode and try again.\n"]
 type nonrec invalid_activation = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The activation isn't valid. The activation might have been deleted, or the ActivationId and the ActivationCode don't match.\n"]
 type nonrec instance_property_filter_operator =
   | GREATER_THAN 
   | LESS_THAN 
   | BEGIN_WITH 
   | NOT_EQUAL 
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec instance_property_string_filter =
   {
   operator: instance_property_filter_operator option ;
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "The filters to describe or get information about your managed nodes.\n"]
 type nonrec instance_property_filter_key =
   | ASSOCIATION_STATUS 
   | RESOURCE_TYPE 
@@ -2319,18 +2553,20 @@ type nonrec instance_property_filter_key =
   | PLATFORM_TYPES 
   | PING_STATUS 
   | AGENT_VERSION 
-  | INSTANCE_IDS 
+  | INSTANCE_IDS [@@ocaml.doc ""]
 type nonrec instance_property_filter =
   {
   value_set: string list ;
-  key: instance_property_filter_key }
+  key: instance_property_filter_key }[@@ocaml.doc
+                                       "Describes a filter for a specific list of managed nodes. You can filter node information by using tags. You specify tags by using a key-value mapping.\n"]
 type nonrec instance_association_status_aggregated_count =
-  (string * int) list
+  (string * int) list[@@ocaml.doc ""]
 type nonrec instance_aggregated_association_overview =
   {
   instance_association_status_aggregated_count:
     instance_association_status_aggregated_count option ;
-  detailed_status: string option }
+  detailed_status: string option }[@@ocaml.doc
+                                    "Status information about the aggregated associations.\n"]
 type nonrec instance_property =
   {
   source_type: source_type option ;
@@ -2358,7 +2594,8 @@ type nonrec instance_property =
   instance_role: string option ;
   instance_type: string option ;
   instance_id: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "An object containing various properties of a managed node.\n"]
 type nonrec instance_patch_state =
   {
   other_non_compliant_count: int option ;
@@ -2382,21 +2619,24 @@ type nonrec instance_patch_state =
   snapshot_id: string option ;
   baseline_id: string ;
   patch_group: string ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc
+                         "Defines the high-level patch compliance state for a managed node, providing information about the number of installed, missing, not applicable, and failed patches along with metadata about the operation when this information was gathered for the managed node.\n"]
 type nonrec instance_patch_state_operator_type =
   | GREATER_THAN 
   | LESS_THAN 
   | NOT_EQUAL 
-  | EQUAL 
+  | EQUAL [@@ocaml.doc ""]
 type nonrec instance_patch_state_filter =
   {
   type_: instance_patch_state_operator_type ;
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "Defines a filter used in [DescribeInstancePatchStatesForPatchGroup] to scope down the information returned by the API.\n\n  {b Example}: To filter for all managed nodes in a patch group having more than three patches with a [FailedCount] status, use the following for the filter:\n \n  {ul\n        {-  Value for [Key]: [FailedCount] \n            \n             }\n        {-  Value for [Type]: [GreaterThan] \n            \n             }\n        {-  Value for [Values]: [3] \n            \n             }\n        }\n  "]
 type nonrec instance_information_string_filter =
   {
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "The filters to describe or get information about your managed nodes.\n"]
 type nonrec instance_information =
   {
   source_type: source_type option ;
@@ -2419,7 +2659,8 @@ type nonrec instance_information =
   agent_version: string option ;
   last_ping_date_time: CoreTypes.Timestamp.t option ;
   ping_status: ping_status option ;
-  instance_id: string option }
+  instance_id: string option }[@@ocaml.doc
+                                "Describes a filter for a specific list of managed nodes. \n"]
 type nonrec instance_information_filter_key =
   | ASSOCIATION_STATUS 
   | RESOURCE_TYPE 
@@ -2428,14 +2669,16 @@ type nonrec instance_information_filter_key =
   | PLATFORM_TYPES 
   | PING_STATUS 
   | AGENT_VERSION 
-  | INSTANCE_IDS 
+  | INSTANCE_IDS [@@ocaml.doc ""]
 type nonrec instance_information_filter =
   {
   value_set: string list ;
-  key: instance_information_filter_key }
+  key: instance_information_filter_key }[@@ocaml.doc
+                                          "Describes a filter for a specific list of managed nodes. You can filter node information by using tags. You specify tags by using a key-value mapping.\n\n Use this operation instead of the [DescribeInstanceInformationRequest$InstanceInformationFilterList] method. The [InstanceInformationFilterList] method is a legacy method and doesn't support tags. \n "]
 type nonrec instance_association_output_url =
   {
-  s3_output_url: s3_output_url option }
+  s3_output_url: s3_output_url option }[@@ocaml.doc
+                                         "The URL of S3 bucket where you want to store the results of this request.\n"]
 type nonrec instance_association_status_info =
   {
   association_name: string option ;
@@ -2449,32 +2692,37 @@ type nonrec instance_association_status_info =
   association_version: string option ;
   document_version: string option ;
   name: string option ;
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc
+                                   "Status information about the association.\n"]
 type nonrec instance_association =
   {
   association_version: string option ;
   content: string option ;
   instance_id: string option ;
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc
+                                   "One or more association documents on the managed node. \n"]
 type nonrec get_service_setting_result =
   {
-  service_setting: service_setting option }
+  service_setting: service_setting option }[@@ocaml.doc
+                                             "The query result body of the GetServiceSetting API operation.\n"]
 type nonrec get_service_setting_request = {
-  setting_id: string }
+  setting_id: string }[@@ocaml.doc
+                        "The request body of the GetServiceSetting API operation.\n"]
 type nonrec get_resource_policies_response_entry =
   {
   policy: string option ;
   policy_hash: string option ;
-  policy_id: string option }
+  policy_id: string option }[@@ocaml.doc
+                              "A resource policy helps you to define the IAM entity (for example, an Amazon Web Services account) that can manage your Systems Manager resources. Currently, [OpsItemGroup] is the only resource that supports Systems Manager resource policies. The resource policy for [OpsItemGroup] enables Amazon Web Services accounts to view and interact with OpsCenter operational work items (OpsItems).\n"]
 type nonrec get_resource_policies_response =
   {
   policies: get_resource_policies_response_entry list option ;
-  next_token: string option }
+  next_token: string option }[@@ocaml.doc ""]
 type nonrec get_resource_policies_request =
   {
   max_results: int option ;
   next_token: string option ;
-  resource_arn: string }
+  resource_arn: string }[@@ocaml.doc ""]
 type nonrec get_patch_baseline_result =
   {
   sources: patch_source list option ;
@@ -2491,30 +2739,30 @@ type nonrec get_patch_baseline_result =
   global_filters: patch_filter_group option ;
   operating_system: operating_system option ;
   name: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec get_patch_baseline_request = {
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec get_patch_baseline_for_patch_group_result =
   {
   operating_system: operating_system option ;
   patch_group: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec get_patch_baseline_for_patch_group_request =
   {
   operating_system: operating_system option ;
-  patch_group: string }
+  patch_group: string }[@@ocaml.doc ""]
 type nonrec get_parameters_result =
   {
   invalid_parameters: string list option ;
-  parameters: parameter list option }
+  parameters: parameter list option }[@@ocaml.doc ""]
 type nonrec get_parameters_request =
   {
   with_decryption: bool option ;
-  names: string list }
+  names: string list }[@@ocaml.doc ""]
 type nonrec get_parameters_by_path_result =
   {
   next_token: string option ;
-  parameters: parameter list option }
+  parameters: parameter list option }[@@ocaml.doc ""]
 type nonrec get_parameters_by_path_request =
   {
   next_token: string option ;
@@ -2522,27 +2770,27 @@ type nonrec get_parameters_by_path_request =
   with_decryption: bool option ;
   parameter_filters: parameter_string_filter list option ;
   recursive: bool option ;
-  path: string }
+  path: string }[@@ocaml.doc ""]
 type nonrec get_parameter_result = {
-  parameter: parameter option }
+  parameter: parameter option }[@@ocaml.doc ""]
 type nonrec get_parameter_request =
   {
   with_decryption: bool option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec get_parameter_history_result =
   {
   next_token: string option ;
-  parameters: parameter_history list option }
+  parameters: parameter_history list option }[@@ocaml.doc ""]
 type nonrec get_parameter_history_request =
   {
   next_token: string option ;
   max_results: int option ;
   with_decryption: bool option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec get_ops_summary_result =
   {
   next_token: string option ;
-  entities: ops_entity list option }
+  entities: ops_entity list option }[@@ocaml.doc ""]
 type nonrec get_ops_summary_request =
   {
   max_results: int option ;
@@ -2550,23 +2798,23 @@ type nonrec get_ops_summary_request =
   result_attributes: ops_result_attribute list option ;
   aggregators: ops_aggregator list option ;
   filters: ops_filter list option ;
-  sync_name: string option }
+  sync_name: string option }[@@ocaml.doc ""]
 type nonrec get_ops_metadata_result =
   {
   next_token: string option ;
   metadata: metadata_map option ;
-  resource_id: string option }
+  resource_id: string option }[@@ocaml.doc ""]
 type nonrec get_ops_metadata_request =
   {
   next_token: string option ;
   max_results: int option ;
-  ops_metadata_arn: string }
+  ops_metadata_arn: string }[@@ocaml.doc ""]
 type nonrec get_ops_item_response = {
-  ops_item: ops_item option }
+  ops_item: ops_item option }[@@ocaml.doc ""]
 type nonrec get_ops_item_request =
   {
   ops_item_arn: string option ;
-  ops_item_id: string }
+  ops_item_id: string }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_task_result =
   {
   alarm_configuration: alarm_configuration option ;
@@ -2585,11 +2833,11 @@ type nonrec get_maintenance_window_task_result =
   task_arn: string option ;
   targets: target list option ;
   window_task_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_task_request =
   {
   window_task_id: string ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_result =
   {
   modified_date: CoreTypes.Timestamp.t option ;
@@ -2606,9 +2854,9 @@ type nonrec get_maintenance_window_result =
   start_date: string option ;
   description: string option ;
   name: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_request = {
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_task_result =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -2625,11 +2873,11 @@ type nonrec get_maintenance_window_execution_task_result =
   service_role: string option ;
   task_arn: string option ;
   task_execution_id: string option ;
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_task_request =
   {
   task_id: string ;
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_task_invocation_result =
   {
   window_target_id: string option ;
@@ -2643,12 +2891,12 @@ type nonrec get_maintenance_window_execution_task_invocation_result =
   execution_id: string option ;
   invocation_id: string option ;
   task_execution_id: string option ;
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_task_invocation_request =
   {
   invocation_id: string ;
   task_id: string ;
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_result =
   {
   end_time: CoreTypes.Timestamp.t option ;
@@ -2656,41 +2904,42 @@ type nonrec get_maintenance_window_execution_result =
   status_details: string option ;
   status: maintenance_window_execution_status option ;
   task_ids: string list option ;
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc ""]
 type nonrec get_maintenance_window_execution_request =
   {
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec get_inventory_schema_result =
   {
   next_token: string option ;
-  schemas: inventory_item_schema list option }
+  schemas: inventory_item_schema list option }[@@ocaml.doc ""]
 type nonrec get_inventory_schema_request =
   {
   sub_type: bool option ;
   aggregator: bool option ;
   max_results: int option ;
   next_token: string option ;
-  type_name: string option }
+  type_name: string option }[@@ocaml.doc ""]
 type nonrec get_inventory_result =
   {
   next_token: string option ;
-  entities: inventory_result_entity list option }
+  entities: inventory_result_entity list option }[@@ocaml.doc ""]
 type nonrec get_inventory_request =
   {
   max_results: int option ;
   next_token: string option ;
   result_attributes: result_attribute list option ;
   aggregators: inventory_aggregator list option ;
-  filters: inventory_filter list option }
+  filters: inventory_filter list option }[@@ocaml.doc ""]
 type nonrec attachment_hash_type =
-  | SHA256 
+  | SHA256 [@@ocaml.doc ""]
 type nonrec attachment_content =
   {
   url: string option ;
   hash_type: attachment_hash_type option ;
   hash: string option ;
   size: int option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "A structure that includes attributes that describe a document attachment.\n"]
 type nonrec get_document_result =
   {
   review_status: review_status option ;
@@ -2705,19 +2954,19 @@ type nonrec get_document_result =
   version_name: string option ;
   display_name: string option ;
   created_date: CoreTypes.Timestamp.t option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec get_document_request =
   {
   document_format: document_format option ;
   document_version: string option ;
   version_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec get_deployable_patch_snapshot_for_instance_result =
   {
   product: string option ;
   snapshot_download_url: string option ;
   snapshot_id: string option ;
-  instance_id: string option }
+  instance_id: string option }[@@ocaml.doc ""]
 type nonrec baseline_override =
   {
   sources: patch_source list option ;
@@ -2728,28 +2977,29 @@ type nonrec baseline_override =
   approved_patches: string list option ;
   approval_rules: patch_rule_group option ;
   global_filters: patch_filter_group option ;
-  operating_system: operating_system option }
+  operating_system: operating_system option }[@@ocaml.doc
+                                               "Defines the basic information about a patch baseline override.\n"]
 type nonrec get_deployable_patch_snapshot_for_instance_request =
   {
   baseline_override: baseline_override option ;
   snapshot_id: string ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec get_default_patch_baseline_result =
   {
   operating_system: operating_system option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec get_default_patch_baseline_request =
   {
-  operating_system: operating_system option }
+  operating_system: operating_system option }[@@ocaml.doc ""]
 type nonrec connection_status =
   | NOT_CONNECTED 
-  | CONNECTED 
+  | CONNECTED [@@ocaml.doc ""]
 type nonrec get_connection_status_response =
   {
   status: connection_status option ;
-  target: string option }
+  target: string option }[@@ocaml.doc ""]
 type nonrec get_connection_status_request = {
-  target: string }
+  target: string }[@@ocaml.doc ""]
 type nonrec get_command_invocation_result =
   {
   cloud_watch_output_config: cloud_watch_output_config option ;
@@ -2768,26 +3018,26 @@ type nonrec get_command_invocation_result =
   document_name: string option ;
   comment: string option ;
   instance_id: string option ;
-  command_id: string option }
+  command_id: string option }[@@ocaml.doc ""]
 type nonrec get_command_invocation_request =
   {
   plugin_name: string option ;
   instance_id: string ;
-  command_id: string }
+  command_id: string }[@@ocaml.doc ""]
 type nonrec calendar_state =
   | CLOSED 
-  | OPEN 
+  | OPEN [@@ocaml.doc ""]
 type nonrec get_calendar_state_response =
   {
   next_transition_time: string option ;
   at_time: string option ;
-  state: calendar_state option }
+  state: calendar_state option }[@@ocaml.doc ""]
 type nonrec get_calendar_state_request =
   {
   at_time: string option ;
-  calendar_names: string list }
+  calendar_names: string list }[@@ocaml.doc ""]
 type nonrec automation_subtype =
-  | ChangeRequest 
+  | ChangeRequest [@@ocaml.doc ""]
 type nonrec automation_execution =
   {
   variables: automation_parameter_map option ;
@@ -2823,17 +3073,18 @@ type nonrec automation_execution =
   execution_start_time: CoreTypes.Timestamp.t option ;
   document_version: string option ;
   document_name: string option ;
-  automation_execution_id: string option }
+  automation_execution_id: string option }[@@ocaml.doc
+                                            "Detailed information about the current state of an individual Automation execution.\n"]
 type nonrec get_automation_execution_result =
   {
-  automation_execution: automation_execution option }
+  automation_execution: automation_execution option }[@@ocaml.doc ""]
 type nonrec get_automation_execution_request =
   {
-  automation_execution_id: string }
+  automation_execution_id: string }[@@ocaml.doc ""]
 type nonrec fault =
   | Unknown 
   | Server 
-  | Client 
+  | Client [@@ocaml.doc ""]
 type nonrec create_association_batch_request_entry =
   {
   alarm_configuration: alarm_configuration option ;
@@ -2855,53 +3106,57 @@ type nonrec create_association_batch_request_entry =
   automation_target_parameter_name: string option ;
   parameters: parameters option ;
   instance_id: string option ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "Describes the association of a Amazon Web Services Systems Manager document (SSM document) and a managed node.\n"]
 type nonrec failed_create_association =
   {
   fault: fault option ;
   message: string option ;
-  entry: create_association_batch_request_entry option }
+  entry: create_association_batch_request_entry option }[@@ocaml.doc
+                                                          "Describes a failed association.\n"]
 type nonrec effective_patch =
   {
   patch_status: patch_status option ;
-  patch: patch option }
+  patch: patch option }[@@ocaml.doc
+                         "The [EffectivePatch] structure defines metadata about a patch along with the approval state of the patch in a particular patch baseline. The approval state includes information about whether the patch is currently approved, due to be approved by a rule, explicitly approved, or explicitly rejected and the date the patch was or will be approved.\n"]
 type nonrec document_already_exists = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified document already exists.\n"]
 type nonrec disassociate_ops_item_related_item_response = unit
 type nonrec disassociate_ops_item_related_item_request =
   {
   association_id: string ;
-  ops_item_id: string }
+  ops_item_id: string }[@@ocaml.doc ""]
 type nonrec describe_sessions_response =
   {
   next_token: string option ;
-  sessions: session list option }
+  sessions: session list option }[@@ocaml.doc ""]
 type nonrec describe_sessions_request =
   {
   filters: session_filter list option ;
   next_token: string option ;
   max_results: int option ;
-  state: session_state }
+  state: session_state }[@@ocaml.doc ""]
 type nonrec describe_patch_properties_result =
   {
   next_token: string option ;
-  properties: patch_property_entry list option }
+  properties: patch_property_entry list option }[@@ocaml.doc ""]
 type nonrec describe_patch_properties_request =
   {
   next_token: string option ;
   max_results: int option ;
   patch_set: patch_set option ;
   property: patch_property ;
-  operating_system: operating_system }
+  operating_system: operating_system }[@@ocaml.doc ""]
 type nonrec describe_patch_groups_result =
   {
   next_token: string option ;
-  mappings: patch_group_patch_baseline_mapping list option }
+  mappings: patch_group_patch_baseline_mapping list option }[@@ocaml.doc ""]
 type nonrec describe_patch_groups_request =
   {
   next_token: string option ;
   filters: patch_orchestrator_filter list option ;
-  max_results: int option }
+  max_results: int option }[@@ocaml.doc ""]
 type nonrec describe_patch_group_state_result =
   {
   instances_with_other_non_compliant_patches: int option ;
@@ -2915,81 +3170,84 @@ type nonrec describe_patch_group_state_result =
   instances_with_installed_pending_reboot_patches: int option ;
   instances_with_installed_other_patches: int option ;
   instances_with_installed_patches: int option ;
-  instances: int option }
+  instances: int option }[@@ocaml.doc ""]
 type nonrec describe_patch_group_state_request = {
-  patch_group: string }
+  patch_group: string }[@@ocaml.doc ""]
 type nonrec describe_patch_baselines_result =
   {
   next_token: string option ;
-  baseline_identities: patch_baseline_identity list option }
+  baseline_identities: patch_baseline_identity list option }[@@ocaml.doc ""]
 type nonrec describe_patch_baselines_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: patch_orchestrator_filter list option }
+  filters: patch_orchestrator_filter list option }[@@ocaml.doc ""]
 type nonrec describe_parameters_result =
   {
   next_token: string option ;
-  parameters: parameter_metadata list option }
+  parameters: parameter_metadata list option }[@@ocaml.doc ""]
 type nonrec describe_parameters_request =
   {
   shared: bool option ;
   next_token: string option ;
   max_results: int option ;
   parameter_filters: parameter_string_filter list option ;
-  filters: parameters_filter list option }
+  filters: parameters_filter list option }[@@ocaml.doc ""]
 type nonrec describe_ops_items_response =
   {
   ops_item_summaries: ops_item_summary list option ;
-  next_token: string option }
+  next_token: string option }[@@ocaml.doc ""]
 type nonrec describe_ops_items_request =
   {
   next_token: string option ;
   max_results: int option ;
-  ops_item_filters: ops_item_filter list option }
+  ops_item_filters: ops_item_filter list option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_windows_result =
   {
   next_token: string option ;
-  window_identities: maintenance_window_identity list option }
+  window_identities: maintenance_window_identity list option }[@@ocaml.doc
+                                                                ""]
 type nonrec describe_maintenance_windows_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: maintenance_window_filter list option }
+  filters: maintenance_window_filter list option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_windows_for_target_result =
   {
   next_token: string option ;
   window_identities: maintenance_window_identity_for_target list option }
+[@@ocaml.doc ""]
 type nonrec describe_maintenance_windows_for_target_request =
   {
   next_token: string option ;
   max_results: int option ;
   resource_type: maintenance_window_resource_type ;
-  targets: target list }
+  targets: target list }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_tasks_result =
   {
   next_token: string option ;
-  tasks: maintenance_window_task list option }
+  tasks: maintenance_window_task list option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_tasks_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: maintenance_window_filter list option ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_targets_result =
   {
   next_token: string option ;
-  targets: maintenance_window_target list option }
+  targets: maintenance_window_target list option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_targets_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: maintenance_window_filter list option ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_schedule_result =
   {
   next_token: string option ;
   scheduled_window_executions: scheduled_window_execution list option }
+[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_schedule_request =
   {
   next_token: string option ;
@@ -2997,172 +3255,179 @@ type nonrec describe_maintenance_window_schedule_request =
   filters: patch_orchestrator_filter list option ;
   resource_type: maintenance_window_resource_type option ;
   targets: target list option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_executions_result =
   {
   next_token: string option ;
-  window_executions: maintenance_window_execution list option }
+  window_executions: maintenance_window_execution list option }[@@ocaml.doc
+                                                                 ""]
 type nonrec describe_maintenance_window_executions_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: maintenance_window_filter list option ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_execution_tasks_result =
   {
   next_token: string option ;
   window_execution_task_identities:
-    maintenance_window_execution_task_identity list option }
+    maintenance_window_execution_task_identity list option }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_execution_tasks_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: maintenance_window_filter list option ;
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_execution_task_invocations_result =
   {
   next_token: string option ;
   window_execution_task_invocation_identities:
     maintenance_window_execution_task_invocation_identity list option }
+[@@ocaml.doc ""]
 type nonrec describe_maintenance_window_execution_task_invocations_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: maintenance_window_filter list option ;
   task_id: string ;
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec describe_inventory_deletions_result =
   {
   next_token: string option ;
-  inventory_deletions: inventory_deletion_status_item list option }
+  inventory_deletions: inventory_deletion_status_item list option }[@@ocaml.doc
+                                                                    ""]
 type nonrec describe_inventory_deletions_request =
   {
   max_results: int option ;
   next_token: string option ;
-  deletion_id: string option }
+  deletion_id: string option }[@@ocaml.doc ""]
 type nonrec describe_instance_properties_result =
   {
   next_token: string option ;
-  instance_properties: instance_property list option }
+  instance_properties: instance_property list option }[@@ocaml.doc ""]
 type nonrec describe_instance_properties_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters_with_operator: instance_property_string_filter list option ;
   instance_property_filter_list: instance_property_filter list option }
+[@@ocaml.doc ""]
 type nonrec describe_instance_patches_result =
   {
   next_token: string option ;
-  patches: patch_compliance_data list option }
+  patches: patch_compliance_data list option }[@@ocaml.doc ""]
 type nonrec describe_instance_patches_request =
   {
   max_results: int option ;
   next_token: string option ;
   filters: patch_orchestrator_filter list option ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec describe_instance_patch_states_result =
   {
   next_token: string option ;
-  instance_patch_states: instance_patch_state list option }
+  instance_patch_states: instance_patch_state list option }[@@ocaml.doc ""]
 type nonrec describe_instance_patch_states_request =
   {
   max_results: int option ;
   next_token: string option ;
-  instance_ids: string list }
+  instance_ids: string list }[@@ocaml.doc ""]
 type nonrec describe_instance_patch_states_for_patch_group_result =
   {
   next_token: string option ;
-  instance_patch_states: instance_patch_state list option }
+  instance_patch_states: instance_patch_state list option }[@@ocaml.doc ""]
 type nonrec describe_instance_patch_states_for_patch_group_request =
   {
   max_results: int option ;
   next_token: string option ;
   filters: instance_patch_state_filter list option ;
-  patch_group: string }
+  patch_group: string }[@@ocaml.doc ""]
 type nonrec describe_instance_information_result =
   {
   next_token: string option ;
-  instance_information_list: instance_information list option }
+  instance_information_list: instance_information list option }[@@ocaml.doc
+                                                                 ""]
 type nonrec describe_instance_information_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: instance_information_string_filter list option ;
   instance_information_filter_list: instance_information_filter list option }
+[@@ocaml.doc ""]
 type nonrec describe_instance_associations_status_result =
   {
   next_token: string option ;
   instance_association_status_infos:
-    instance_association_status_info list option }
+    instance_association_status_info list option }[@@ocaml.doc ""]
 type nonrec describe_instance_associations_status_request =
   {
   next_token: string option ;
   max_results: int option ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec describe_effective_patches_for_patch_baseline_result =
   {
   next_token: string option ;
-  effective_patches: effective_patch list option }
+  effective_patches: effective_patch list option }[@@ocaml.doc ""]
 type nonrec describe_effective_patches_for_patch_baseline_request =
   {
   next_token: string option ;
   max_results: int option ;
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec describe_effective_instance_associations_result =
   {
   next_token: string option ;
-  associations: instance_association list option }
+  associations: instance_association list option }[@@ocaml.doc ""]
 type nonrec describe_effective_instance_associations_request =
   {
   next_token: string option ;
   max_results: int option ;
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec describe_document_result =
   {
-  document: document_description option }
+  document: document_description option }[@@ocaml.doc ""]
 type nonrec describe_document_request =
   {
   version_name: string option ;
   document_version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec account_sharing_info =
   {
   shared_document_version: string option ;
-  account_id: string option }
+  account_id: string option }[@@ocaml.doc
+                               "Information includes the Amazon Web Services account ID where the current document is shared and the version shared with that account.\n"]
 type nonrec describe_document_permission_response =
   {
   next_token: string option ;
   account_sharing_info_list: account_sharing_info list option ;
-  account_ids: string list option }
+  account_ids: string list option }[@@ocaml.doc ""]
 type nonrec describe_document_permission_request =
   {
   next_token: string option ;
   max_results: int option ;
   permission_type: document_permission_type ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_available_patches_result =
   {
   next_token: string option ;
-  patches: patch list option }
+  patches: patch list option }[@@ocaml.doc ""]
 type nonrec describe_available_patches_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: patch_orchestrator_filter list option }
+  filters: patch_orchestrator_filter list option }[@@ocaml.doc ""]
 type nonrec describe_automation_step_executions_result =
   {
   next_token: string option ;
-  step_executions: step_execution list option }
+  step_executions: step_execution list option }[@@ocaml.doc ""]
 type nonrec describe_automation_step_executions_request =
   {
   reverse_order: bool option ;
   max_results: int option ;
   next_token: string option ;
   filters: step_execution_filter list option ;
-  automation_execution_id: string }
+  automation_execution_id: string }[@@ocaml.doc ""]
 type nonrec automation_type =
   | Local 
-  | CrossAccount 
+  | CrossAccount [@@ocaml.doc ""]
 type nonrec automation_execution_metadata =
   {
   change_request_name: string option ;
@@ -3194,12 +3459,13 @@ type nonrec automation_execution_metadata =
   automation_execution_status: automation_execution_status option ;
   document_version: string option ;
   document_name: string option ;
-  automation_execution_id: string option }
+  automation_execution_id: string option }[@@ocaml.doc
+                                            "Details about a specific Automation execution.\n"]
 type nonrec describe_automation_executions_result =
   {
   next_token: string option ;
   automation_execution_metadata_list:
-    automation_execution_metadata list option }
+    automation_execution_metadata list option }[@@ocaml.doc ""]
 type nonrec automation_execution_filter_key =
   | OPS_ITEM_ID 
   | AUTOMATION_SUBTYPE 
@@ -3212,25 +3478,26 @@ type nonrec automation_execution_filter_key =
   | PARENT_EXECUTION_ID 
   | EXECUTION_ID 
   | EXECUTION_STATUS 
-  | DOCUMENT_NAME_PREFIX 
+  | DOCUMENT_NAME_PREFIX [@@ocaml.doc ""]
 type nonrec automation_execution_filter =
   {
   values: string list ;
-  key: automation_execution_filter_key }
+  key: automation_execution_filter_key }[@@ocaml.doc
+                                          "A filter used to match specific automation executions. This is used to limit the scope of Automation execution information returned.\n"]
 type nonrec describe_automation_executions_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: automation_execution_filter list option }
+  filters: automation_execution_filter list option }[@@ocaml.doc ""]
 type nonrec describe_association_result =
   {
-  association_description: association_description option }
+  association_description: association_description option }[@@ocaml.doc ""]
 type nonrec describe_association_request =
   {
   association_version: string option ;
   association_id: string option ;
   instance_id: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec association_execution =
   {
   triggered_alarms: alarm_state_information list option ;
@@ -3242,30 +3509,32 @@ type nonrec association_execution =
   status: string option ;
   execution_id: string option ;
   association_version: string option ;
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc
+                                   "Includes information about the specified association.\n"]
 type nonrec describe_association_executions_result =
   {
   next_token: string option ;
-  association_executions: association_execution list option }
+  association_executions: association_execution list option }[@@ocaml.doc ""]
 type nonrec association_execution_filter_key =
   | CreatedTime 
   | Status 
-  | ExecutionId 
+  | ExecutionId [@@ocaml.doc ""]
 type nonrec association_filter_operator_type =
   | GreaterThan 
   | LessThan 
-  | Equal 
+  | Equal [@@ocaml.doc ""]
 type nonrec association_execution_filter =
   {
   type_: association_filter_operator_type ;
   value: string ;
-  key: association_execution_filter_key }
+  key: association_execution_filter_key }[@@ocaml.doc
+                                           "Filters used in the request.\n"]
 type nonrec describe_association_executions_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: association_execution_filter list option ;
-  association_id: string }
+  association_id: string }[@@ocaml.doc ""]
 type nonrec association_execution_target =
   {
   output_source: output_source option ;
@@ -3276,28 +3545,32 @@ type nonrec association_execution_target =
   resource_id: string option ;
   execution_id: string option ;
   association_version: string option ;
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc
+                                   "Includes information about the specified association execution.\n"]
 type nonrec describe_association_execution_targets_result =
   {
   next_token: string option ;
   association_execution_targets: association_execution_target list option }
+[@@ocaml.doc ""]
 type nonrec association_execution_targets_filter_key =
   | ResourceType 
   | ResourceId 
-  | Status 
+  | Status [@@ocaml.doc ""]
 type nonrec association_execution_targets_filter =
   {
   value: string ;
-  key: association_execution_targets_filter_key }
+  key: association_execution_targets_filter_key }[@@ocaml.doc
+                                                   "Filters for the association execution.\n"]
 type nonrec describe_association_execution_targets_request =
   {
   next_token: string option ;
   max_results: int option ;
   filters: association_execution_targets_filter list option ;
   execution_id: string ;
-  association_id: string }
+  association_id: string }[@@ocaml.doc ""]
 type nonrec association_execution_does_not_exist = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified execution ID doesn't exist. Verify the ID number and try again.\n"]
 type nonrec activation =
   {
   tags: tag list option ;
@@ -3309,123 +3582,125 @@ type nonrec activation =
   iam_role: string option ;
   default_instance_name: string option ;
   description: string option ;
-  activation_id: string option }
+  activation_id: string option }[@@ocaml.doc
+                                  "An activation registers one or more on-premises servers or virtual machines (VMs) with Amazon Web Services so that you can configure those servers or VMs using Run Command. A server or VM that has been registered with Amazon Web Services Systems Manager is called a managed node.\n"]
 type nonrec describe_activations_result =
   {
   next_token: string option ;
-  activation_list: activation list option }
+  activation_list: activation list option }[@@ocaml.doc ""]
 type nonrec describe_activations_filter_keys =
   | IAM_ROLE 
   | DEFAULT_INSTANCE_NAME 
-  | ACTIVATION_IDS 
+  | ACTIVATION_IDS [@@ocaml.doc ""]
 type nonrec describe_activations_filter =
   {
   filter_values: string list option ;
-  filter_key: describe_activations_filter_keys option }
+  filter_key: describe_activations_filter_keys option }[@@ocaml.doc
+                                                         "Filter for the DescribeActivation API.\n"]
 type nonrec describe_activations_request =
   {
   next_token: string option ;
   max_results: int option ;
-  filters: describe_activations_filter list option }
+  filters: describe_activations_filter list option }[@@ocaml.doc ""]
 type nonrec deregister_task_from_maintenance_window_result =
   {
   window_task_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec deregister_task_from_maintenance_window_request =
   {
   window_task_id: string ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec deregister_target_from_maintenance_window_result =
   {
   window_target_id: string option ;
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec deregister_target_from_maintenance_window_request =
   {
   safe: bool option ;
   window_target_id: string ;
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec deregister_patch_baseline_for_patch_group_result =
   {
   patch_group: string option ;
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec deregister_patch_baseline_for_patch_group_request =
   {
   patch_group: string ;
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec deregister_managed_instance_result = unit
 type nonrec deregister_managed_instance_request = {
-  instance_id: string }
+  instance_id: string }[@@ocaml.doc ""]
 type nonrec delete_resource_policy_response = unit
 type nonrec delete_resource_policy_request =
   {
   policy_hash: string ;
   policy_id: string ;
-  resource_arn: string }
+  resource_arn: string }[@@ocaml.doc ""]
 type nonrec delete_resource_data_sync_result = unit
 type nonrec delete_resource_data_sync_request =
   {
   sync_type: string option ;
-  sync_name: string }
+  sync_name: string }[@@ocaml.doc ""]
 type nonrec delete_patch_baseline_result = {
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec delete_patch_baseline_request = {
-  baseline_id: string }
+  baseline_id: string }[@@ocaml.doc ""]
 type nonrec delete_parameters_result =
   {
   invalid_parameters: string list option ;
-  deleted_parameters: string list option }
+  deleted_parameters: string list option }[@@ocaml.doc ""]
 type nonrec delete_parameters_request = {
-  names: string list }
+  names: string list }[@@ocaml.doc ""]
 type nonrec delete_parameter_result = unit
 type nonrec delete_parameter_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_ops_metadata_result = unit
 type nonrec delete_ops_metadata_request = {
-  ops_metadata_arn: string }
+  ops_metadata_arn: string }[@@ocaml.doc ""]
 type nonrec delete_ops_item_response = unit
 type nonrec delete_ops_item_request = {
-  ops_item_id: string }
+  ops_item_id: string }[@@ocaml.doc ""]
 type nonrec delete_maintenance_window_result = {
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec delete_maintenance_window_request = {
-  window_id: string }
+  window_id: string }[@@ocaml.doc ""]
 type nonrec delete_inventory_result =
   {
   deletion_summary: inventory_deletion_summary option ;
   type_name: string option ;
-  deletion_id: string option }
+  deletion_id: string option }[@@ocaml.doc ""]
 type nonrec delete_inventory_request =
   {
   client_token: string option ;
   dry_run: bool option ;
   schema_delete_option: inventory_schema_delete_option option ;
-  type_name: string }
+  type_name: string }[@@ocaml.doc ""]
 type nonrec delete_document_result = unit
 type nonrec delete_document_request =
   {
   force: bool option ;
   version_name: string option ;
   document_version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec associated_instances = unit
 type nonrec delete_association_result = unit
 type nonrec delete_association_request =
   {
   association_id: string option ;
   instance_id: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec delete_activation_result = unit
 type nonrec delete_activation_request = {
-  activation_id: string }
+  activation_id: string }[@@ocaml.doc ""]
 type nonrec create_resource_data_sync_result = unit
 type nonrec create_resource_data_sync_request =
   {
   sync_source: resource_data_sync_source option ;
   sync_type: string option ;
   s3_destination: resource_data_sync_s3_destination option ;
-  sync_name: string }
+  sync_name: string }[@@ocaml.doc ""]
 type nonrec create_patch_baseline_result = {
-  baseline_id: string option }
+  baseline_id: string option }[@@ocaml.doc ""]
 type nonrec create_patch_baseline_request =
   {
   tags: tag list option ;
@@ -3440,18 +3715,18 @@ type nonrec create_patch_baseline_request =
   approval_rules: patch_rule_group option ;
   global_filters: patch_filter_group option ;
   name: string ;
-  operating_system: operating_system option }
+  operating_system: operating_system option }[@@ocaml.doc ""]
 type nonrec create_ops_metadata_result = {
-  ops_metadata_arn: string option }
+  ops_metadata_arn: string option }[@@ocaml.doc ""]
 type nonrec create_ops_metadata_request =
   {
   tags: tag list option ;
   metadata: metadata_map option ;
-  resource_id: string }
+  resource_id: string }[@@ocaml.doc ""]
 type nonrec create_ops_item_response =
   {
   ops_item_arn: string option ;
-  ops_item_id: string option }
+  ops_item_id: string option }[@@ocaml.doc ""]
 type nonrec create_ops_item_request =
   {
   account_id: string option ;
@@ -3469,9 +3744,9 @@ type nonrec create_ops_item_request =
   notifications: ops_item_notification list option ;
   operational_data: ops_item_operational_data option ;
   ops_item_type: string option ;
-  description: string }
+  description: string }[@@ocaml.doc ""]
 type nonrec create_maintenance_window_result = {
-  window_id: string option }
+  window_id: string option }[@@ocaml.doc ""]
 type nonrec create_maintenance_window_request =
   {
   tags: tag list option ;
@@ -3485,10 +3760,10 @@ type nonrec create_maintenance_window_request =
   end_date: string option ;
   start_date: string option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_document_result =
   {
-  document_description: document_description option }
+  document_description: document_description option }[@@ocaml.doc ""]
 type nonrec create_document_request =
   {
   tags: tag list option ;
@@ -3500,10 +3775,10 @@ type nonrec create_document_request =
   name: string ;
   attachments: attachments_source list option ;
   requires: document_requires list option ;
-  content: string }
+  content: string }[@@ocaml.doc ""]
 type nonrec create_association_result =
   {
-  association_description: association_description option }
+  association_description: association_description option }[@@ocaml.doc ""]
 type nonrec create_association_request =
   {
   alarm_configuration: alarm_configuration option ;
@@ -3526,20 +3801,20 @@ type nonrec create_association_request =
   parameters: parameters option ;
   instance_id: string option ;
   document_version: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_association_batch_result =
   {
   failed: failed_create_association list option ;
-  successful: association_description list option }
+  successful: association_description list option }[@@ocaml.doc ""]
 type nonrec create_association_batch_request =
   {
-  entries: create_association_batch_request_entry list }
+  entries: create_association_batch_request_entry list }[@@ocaml.doc ""]
 type nonrec association_limit_exceeded = unit
 type nonrec association_already_exists = unit
 type nonrec create_activation_result =
   {
   activation_code: string option ;
-  activation_id: string option }
+  activation_id: string option }[@@ocaml.doc ""]
 type nonrec create_activation_request =
   {
   registration_metadata: registration_metadata_item list option ;
@@ -3548,33 +3823,33 @@ type nonrec create_activation_request =
   registration_limit: int option ;
   iam_role: string ;
   default_instance_name: string option ;
-  description: string option }
+  description: string option }[@@ocaml.doc ""]
 type nonrec cancel_maintenance_window_execution_result =
   {
-  window_execution_id: string option }
+  window_execution_id: string option }[@@ocaml.doc ""]
 type nonrec cancel_maintenance_window_execution_request =
   {
-  window_execution_id: string }
+  window_execution_id: string }[@@ocaml.doc ""]
 type nonrec cancel_command_result = unit
 type nonrec cancel_command_request =
   {
   instance_ids: string list option ;
-  command_id: string }
+  command_id: string }[@@ocaml.doc "\n"]
 type nonrec associate_ops_item_related_item_response =
   {
-  association_id: string option }
+  association_id: string option }[@@ocaml.doc ""]
 type nonrec associate_ops_item_related_item_request =
   {
   resource_uri: string ;
   resource_type: string ;
   association_type: string ;
-  ops_item_id: string }
+  ops_item_id: string }[@@ocaml.doc ""]
 type nonrec add_tags_to_resource_result = unit
 type nonrec add_tags_to_resource_request =
   {
   tags: tag list ;
   resource_id: string ;
-  resource_type: resource_type_for_tagging }(** {1:builders Builders} *)
+  resource_type: resource_type_for_tagging }[@@ocaml.doc ""](** {1:builders Builders} *)
 
 val make_update_service_setting_request :
   setting_value:string ->
@@ -5627,36 +5902,34 @@ module AddTagsToResource : sig
             
         ]
       ) result
-  (** 
-    Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:
+  (** Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:
+
+ {ul
+       {-   [Key=Owner,Value=DbAdmin] 
+           
+            }
+       {-   [Key=Owner,Value=SysAdmin] 
+           
+            }
+       {-   [Key=Owner,Value=Dev] 
+           
+            }
+       {-   [Key=Stack,Value=Production] 
+           
+            }
+       {-   [Key=Stack,Value=Pre-Production] 
+           
+            }
+       {-   [Key=Stack,Value=Test] 
+           
+            }
+       }
+   Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.
+   
+    We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.
     
-     {ul
-          {- [Key=Owner,Value=DbAdmin]
-             
-             }
-           {- [Key=Owner,Value=SysAdmin]
-              
-              }
-           {- [Key=Owner,Value=Dev]
-              
-              }
-           {- [Key=Stack,Value=Production]
-              
-              }
-           {- [Key=Stack,Value=Pre-Production]
-              
-              }
-           {- [Key=Stack,Value=Test]
-              
-              }
-          
-      }
-       Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.
-       
-        We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.
-        
-         For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your Amazon EC2 resources} in the {i Amazon EC2 User Guide}.
-          *)
+     For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your Amazon EC2 resources} in the {i Amazon EC2 User Guide}.
+      *)
 
   
 end
@@ -5676,9 +5949,8 @@ module AssociateOpsItemRelatedItem : sig
             
         ]
       ) result
-  (** 
-    Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are capabilities of Amazon Web Services Systems Manager.
-     *)
+  (** Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are capabilities of Amazon Web Services Systems Manager.
+ *)
 
   
 end
@@ -5696,9 +5968,8 @@ module CancelCommand : sig
             
         ]
       ) result
-  (** 
-    Attempts to cancel the command specified by the Command ID. There is no guarantee that the command will be terminated and the underlying process stopped.
-     *)
+  (** Attempts to cancel the command specified by the Command ID. There is no guarantee that the command will be terminated and the underlying process stopped.
+ *)
 
   
 end
@@ -5714,9 +5985,8 @@ module CancelMaintenanceWindowExecution : sig
             
         ]
       ) result
-  (** 
-    Stops a maintenance window execution that is already in progress and cancels any tasks in the window that haven't already starting running. Tasks already in progress will continue to completion.
-     *)
+  (** Stops a maintenance window execution that is already in progress and cancels any tasks in the window that haven't already starting running. Tasks already in progress will continue to completion.
+ *)
 
   
 end
@@ -5732,12 +6002,11 @@ module CreateActivation : sig
             
         ]
       ) result
-  (** 
-    Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager capabilities. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances.html}Setting up Amazon Web Services Systems Manager for hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}.
-    
-     Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called {i managed nodes}.
-     
-      *)
+  (** Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager capabilities. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances.html}Setting up Amazon Web Services Systems Manager for hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}. 
+
+  Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called {i managed nodes}.
+  
+    *)
 
   
 end
@@ -5764,9 +6033,8 @@ module CreateAssociation : sig
             
         ]
       ) result
-  (** 
-    A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a capability of Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service.
-     *)
+  (** A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a capability of Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service. 
+ *)
 
   
 end
@@ -5792,13 +6060,12 @@ module CreateAssociationBatch : sig
             
         ]
       ) result
-  (** 
-    Associates the specified Amazon Web Services Systems Manager document (SSM document) with the specified managed nodes or targets.
-    
-     When you associate a document with one or more managed nodes using IDs or tags, Amazon Web Services Systems Manager Agent (SSM Agent) running on the managed node processes the document and configures the node as specified.
-     
-      If you associate a document with a managed node that already has an associated document, the system returns the AssociationAlreadyExists exception.
-       *)
+  (** Associates the specified Amazon Web Services Systems Manager document (SSM document) with the specified managed nodes or targets.
+
+ When you associate a document with one or more managed nodes using IDs or tags, Amazon Web Services Systems Manager Agent (SSM Agent) running on the managed node processes the document and configures the node as specified.
+ 
+  If you associate a document with a managed node that already has an associated document, the system returns the AssociationAlreadyExists exception.
+   *)
 
   
 end
@@ -5818,9 +6085,8 @@ module CreateDocument : sig
             
         ]
       ) result
-  (** 
-    Creates a Amazon Web Services Systems Manager (SSM document). An SSM document defines the actions that Systems Manager performs on your managed nodes. For more information about SSM documents, including information about supported schemas, features, and syntax, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-ssm-docs.html}Amazon Web Services Systems Manager Documents} in the {i Amazon Web Services Systems Manager User Guide}.
-     *)
+  (** Creates a Amazon Web Services Systems Manager (SSM document). An SSM document defines the actions that Systems Manager performs on your managed nodes. For more information about SSM documents, including information about supported schemas, features, and syntax, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-ssm-docs.html}Amazon Web Services Systems Manager Documents} in the {i Amazon Web Services Systems Manager User Guide}.
+ *)
 
   
 end
@@ -5837,12 +6103,11 @@ module CreateMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Creates a new maintenance window.
-    
-     The value you specify for [Duration] determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for [Cutoff]. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for [Cutoff] is one hour, no maintenance window tasks can start after 5 PM.
-     
-      *)
+  (** Creates a new maintenance window.
+
+  The value you specify for [Duration] determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for [Cutoff]. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for [Cutoff] is one hour, no maintenance window tasks can start after 5 PM.
+  
+    *)
 
   
 end
@@ -5861,11 +6126,10 @@ module CreateOpsItem : sig
             
         ]
       ) result
-  (** 
-    Creates a new OpsItem. You must have permission in Identity and Access Management (IAM) to create a new OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-    
-     Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-      *)
+  (** Creates a new OpsItem. You must have permission in Identity and Access Management (IAM) to create a new OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
+
+ Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}. 
+  *)
 
   
 end
@@ -5884,9 +6148,8 @@ module CreateOpsMetadata : sig
             
         ]
       ) result
-  (** 
-    If you create a new application in Application Manager, Amazon Web Services Systems Manager calls this API operation to specify information about the new application, including the application type.
-     *)
+  (** If you create a new application in Application Manager, Amazon Web Services Systems Manager calls this API operation to specify information about the new application, including the application type.
+ *)
 
   
 end
@@ -5903,12 +6166,11 @@ module CreatePatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Creates a patch baseline.
-    
-     For information about valid key-value pairs in [PatchFilters] for each supported operating system type, see [PatchFilter].
-     
-      *)
+  (** Creates a patch baseline.
+
+  For information about valid key-value pairs in [PatchFilters] for each supported operating system type, see [PatchFilter].
+  
+    *)
 
   
 end
@@ -5926,18 +6188,17 @@ module CreateResourceDataSync : sig
             
         ]
       ) result
-  (** 
-    A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: [SyncToDestination] and [SyncFromSource].
-    
-     You can configure Systems Manager Inventory to use the [SyncToDestination] type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-datasync.html}Configuring resource data sync for Inventory} in the {i Amazon Web Services Systems Manager User Guide}.
+  (** A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: [SyncToDestination] and [SyncFromSource].
+
+ You can configure Systems Manager Inventory to use the [SyncToDestination] type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-datasync.html}Configuring resource data sync for Inventory} in the {i Amazon Web Services Systems Manager User Guide}.
+ 
+  You can configure Systems Manager Explorer to use the [SyncFromSource] type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or [EntireOrganization] by using Organizations. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html}Setting up Systems Manager Explorer to display data from multiple accounts and Regions} in the {i Amazon Web Services Systems Manager User Guide}.
+  
+   A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the [ListResourceDataSync].
+   
+     By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. 
      
-      You can configure Systems Manager Explorer to use the [SyncFromSource] type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or [EntireOrganization] by using Organizations. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html}Setting up Systems Manager Explorer to display data from multiple accounts and Regions} in the {i Amazon Web Services Systems Manager User Guide}.
-      
-       A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the [ListResourceDataSync].
-       
-        By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy.
-        
-         *)
+       *)
 
   
 end
@@ -5955,9 +6216,8 @@ module DeleteActivation : sig
             
         ]
       ) result
-  (** 
-    Deletes an activation. You aren't required to delete an activation. If you delete an activation, you can no longer use it to register additional managed nodes. Deleting an activation doesn't de-register managed nodes. You must manually de-register managed nodes.
-     *)
+  (** Deletes an activation. You aren't required to delete an activation. If you delete an activation, you can no longer use it to register additional managed nodes. Deleting an activation doesn't de-register managed nodes. You must manually de-register managed nodes.
+ *)
 
   
 end
@@ -5976,11 +6236,10 @@ module DeleteAssociation : sig
             
         ]
       ) result
-  (** 
-    Disassociates the specified Amazon Web Services Systems Manager document (SSM document) from the specified managed node. If you created the association by using the [Targets] parameter, then you must delete the association by using the association ID.
-    
-     When you disassociate a document from a managed node, it doesn't change the configuration of the node. To change the configuration state of a managed node after you disassociate a document, you must create a new document with the desired configuration and associate it with the node.
-      *)
+  (** Disassociates the specified Amazon Web Services Systems Manager document (SSM document) from the specified managed node. If you created the association by using the [Targets] parameter, then you must delete the association by using the association ID.
+
+ When you disassociate a document from a managed node, it doesn't change the configuration of the node. To change the configuration state of a managed node after you disassociate a document, you must create a new document with the desired configuration and associate it with the node.
+  *)
 
   
 end
@@ -5998,11 +6257,10 @@ module DeleteDocument : sig
             
         ]
       ) result
-  (** 
-    Deletes the Amazon Web Services Systems Manager document (SSM document) and all managed node associations to the document.
-    
-     Before you delete the document, we recommend that you use [DeleteAssociation] to disassociate all managed nodes that are associated with the document.
-      *)
+  (** Deletes the Amazon Web Services Systems Manager document (SSM document) and all managed node associations to the document.
+
+ Before you delete the document, we recommend that you use [DeleteAssociation] to disassociate all managed nodes that are associated with the document.
+  *)
 
   
 end
@@ -6021,9 +6279,8 @@ module DeleteInventory : sig
             
         ]
       ) result
-  (** 
-    Delete a custom inventory type or the data associated with a custom Inventory type. Deleting a custom inventory type is also referred to as deleting a custom inventory schema.
-     *)
+  (** Delete a custom inventory type or the data associated with a custom Inventory type. Deleting a custom inventory type is also referred to as deleting a custom inventory schema.
+ *)
 
   
 end
@@ -6038,9 +6295,8 @@ module DeleteMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Deletes a maintenance window.
-     *)
+  (** Deletes a maintenance window.
+ *)
 
   
 end
@@ -6056,27 +6312,25 @@ module DeleteOpsItem : sig
             
         ]
       ) result
-  (** 
-    Delete an OpsItem. You must have permission in Identity and Access Management (IAM) to delete an OpsItem.
-    
-     Note the following important information about this operation.
-     
-      {ul
-           {- Deleting an OpsItem is irreversible. You can't restore a deleted OpsItem.
-              
+  (** Delete an OpsItem. You must have permission in Identity and Access Management (IAM) to delete an OpsItem. 
+
+  Note the following important information about this operation.
+  
+   {ul
+         {-  Deleting an OpsItem is irreversible. You can't restore a deleted OpsItem.
+             
               }
-            {- This operation uses an {i eventual consistency model}, which means the system can take a few minutes to complete this operation. If you delete an OpsItem and immediately call, for example, [GetOpsItem], the deleted OpsItem might still appear in the response.
-               
-               }
-            {- This operation is idempotent. The system doesn't throw an exception if you repeatedly call this operation for the same OpsItem. If the first call is successful, all additional calls return the same successful response as the first call.
-               
-               }
-            {- This operation doesn't support cross-account calls. A delegated administrator or management account can't delete OpsItems in other accounts, even if OpsCenter has been set up for cross-account administration. For more information about cross-account administration, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setting-up-cross-account.html}Setting up OpsCenter to centrally manage OpsItems across accounts} in the {i Systems Manager User Guide}.
-               
-               }
-           
-      }
-       *)
+         {-  This operation uses an {i eventual consistency model}, which means the system can take a few minutes to complete this operation. If you delete an OpsItem and immediately call, for example, [GetOpsItem], the deleted OpsItem might still appear in the response. 
+             
+              }
+         {-  This operation is idempotent. The system doesn't throw an exception if you repeatedly call this operation for the same OpsItem. If the first call is successful, all additional calls return the same successful response as the first call.
+             
+              }
+         {-  This operation doesn't support cross-account calls. A delegated administrator or management account can't delete OpsItems in other accounts, even if OpsCenter has been set up for cross-account administration. For more information about cross-account administration, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setting-up-cross-account.html}Setting up OpsCenter to centrally manage OpsItems across accounts} in the {i Systems Manager User Guide}.
+             
+              }
+         }
+    *)
 
   
 end
@@ -6093,9 +6347,8 @@ module DeleteOpsMetadata : sig
             
         ]
       ) result
-  (** 
-    Delete OpsMetadata related to an application.
-     *)
+  (** Delete OpsMetadata related to an application.
+ *)
 
   
 end
@@ -6111,9 +6364,8 @@ module DeleteParameter : sig
             
         ]
       ) result
-  (** 
-    Delete a parameter from the system. After deleting a parameter, wait for at least 30 seconds to create a parameter with the same name.
-     *)
+  (** Delete a parameter from the system. After deleting a parameter, wait for at least 30 seconds to create a parameter with the same name.
+ *)
 
   
 end
@@ -6128,9 +6380,8 @@ module DeleteParameters : sig
             
         ]
       ) result
-  (** 
-    Delete a list of parameters. After deleting a parameter, wait for at least 30 seconds to create a parameter with the same name.
-     *)
+  (** Delete a list of parameters. After deleting a parameter, wait for at least 30 seconds to create a parameter with the same name.
+ *)
 
   
 end
@@ -6146,9 +6397,8 @@ module DeletePatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Deletes a patch baseline.
-     *)
+  (** Deletes a patch baseline.
+ *)
 
   
 end
@@ -6165,9 +6415,8 @@ module DeleteResourceDataSync : sig
             
         ]
       ) result
-  (** 
-    Deletes a resource data sync configuration. After the configuration is deleted, changes to data on managed nodes are no longer synced to or from the target. Deleting a sync configuration doesn't delete data.
-     *)
+  (** Deletes a resource data sync configuration. After the configuration is deleted, changes to data on managed nodes are no longer synced to or from the target. Deleting a sync configuration doesn't delete data.
+ *)
 
   
 end
@@ -6187,19 +6436,17 @@ module DeleteResourcePolicy : sig
             
         ]
       ) result
-  (** 
-    Deletes a Systems Manager resource policy. A resource policy helps you to define the IAM entity (for example, an Amazon Web Services account) that can manage your Systems Manager resources. The following resources support Systems Manager resource policies.
-    
-     {ul
-          {- [OpsItemGroup] - The resource policy for [OpsItemGroup] enables Amazon Web Services accounts to view and interact with OpsCenter operational work items (OpsItems).
-             
-             }
-           {- [Parameter] - The resource policy is used to share a parameter with other accounts using Resource Access Manager (RAM). For more information about cross-account sharing of parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html}Working with shared parameters} in the {i Amazon Web Services Systems Manager User Guide}.
-              
-              }
-          
-      }
-       *)
+  (** Deletes a Systems Manager resource policy. A resource policy helps you to define the IAM entity (for example, an Amazon Web Services account) that can manage your Systems Manager resources. The following resources support Systems Manager resource policies.
+
+ {ul
+       {-   [OpsItemGroup] - The resource policy for [OpsItemGroup] enables Amazon Web Services accounts to view and interact with OpsCenter operational work items (OpsItems).
+           
+            }
+       {-   [Parameter] - The resource policy is used to share a parameter with other accounts using Resource Access Manager (RAM). For more information about cross-account sharing of parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html}Working with shared parameters} in the {i Amazon Web Services Systems Manager User Guide}.
+           
+            }
+       }
+   *)
 
   
 end
@@ -6215,9 +6462,8 @@ module DeregisterManagedInstance : sig
             
         ]
       ) result
-  (** 
-    Removes the server or virtual machine from the list of registered servers. You can reregister the node again at any time. If you don't plan to use Run Command on the server, we suggest uninstalling SSM Agent first.
-     *)
+  (** Removes the server or virtual machine from the list of registered servers. You can reregister the node again at any time. If you don't plan to use Run Command on the server, we suggest uninstalling SSM Agent first.
+ *)
 
   
 end
@@ -6233,9 +6479,8 @@ module DeregisterPatchBaselineForPatchGroup : sig
             
         ]
       ) result
-  (** 
-    Removes a patch group from a patch baseline.
-     *)
+  (** Removes a patch group from a patch baseline.
+ *)
 
   
 end
@@ -6252,9 +6497,8 @@ module DeregisterTargetFromMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Removes a target from a maintenance window.
-     *)
+  (** Removes a target from a maintenance window.
+ *)
 
   
 end
@@ -6270,9 +6514,8 @@ module DeregisterTaskFromMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Removes a task from a maintenance window.
-     *)
+  (** Removes a task from a maintenance window.
+ *)
 
   
 end
@@ -6289,9 +6532,8 @@ module DescribeActivations : sig
             
         ]
       ) result
-  (** 
-    Describes details about the activation, such as the date and time the activation was created, its expiration date, the Identity and Access Management (IAM) role assigned to the managed nodes in the activation, and the number of nodes registered by using this activation.
-     *)
+  (** Describes details about the activation, such as the date and time the activation was created, its expiration date, the Identity and Access Management (IAM) role assigned to the managed nodes in the activation, and the number of nodes registered by using this activation.
+ *)
 
   
 end
@@ -6310,9 +6552,8 @@ module DescribeAssociation : sig
             
         ]
       ) result
-  (** 
-    Describes the association for the specified target or managed node. If you created the association by using the [Targets] parameter, then you must retrieve the association by using the association ID.
-     *)
+  (** Describes the association for the specified target or managed node. If you created the association by using the [Targets] parameter, then you must retrieve the association by using the association ID.
+ *)
 
   
 end
@@ -6330,9 +6571,8 @@ module DescribeAssociationExecutionTargets : sig
             
         ]
       ) result
-  (** 
-    Views information about a specific execution of a specific association.
-     *)
+  (** Views information about a specific execution of a specific association.
+ *)
 
   
 end
@@ -6349,9 +6589,8 @@ module DescribeAssociationExecutions : sig
             
         ]
       ) result
-  (** 
-    Views all executions for a specific association ID.
-     *)
+  (** Views all executions for a specific association ID. 
+ *)
 
   
 end
@@ -6369,9 +6608,8 @@ module DescribeAutomationExecutions : sig
             
         ]
       ) result
-  (** 
-    Provides details about all active and terminated Automation executions.
-     *)
+  (** Provides details about all active and terminated Automation executions.
+ *)
 
   
 end
@@ -6390,9 +6628,8 @@ module DescribeAutomationStepExecutions : sig
             
         ]
       ) result
-  (** 
-    Information about all active and terminated step executions in an Automation workflow.
-     *)
+  (** Information about all active and terminated step executions in an Automation workflow.
+ *)
 
   
 end
@@ -6407,12 +6644,11 @@ module DescribeAvailablePatches : sig
             
         ]
       ) result
-  (** 
-    Lists all patches eligible to be included in a patch baseline.
-    
-     Currently, [DescribeAvailablePatches] supports only the Amazon Linux 1, Amazon Linux 2, and Windows Server operating systems.
-     
-      *)
+  (** Lists all patches eligible to be included in a patch baseline.
+
+  Currently, [DescribeAvailablePatches] supports only the Amazon Linux 1, Amazon Linux 2, and Windows Server operating systems.
+  
+    *)
 
   
 end
@@ -6429,9 +6665,8 @@ module DescribeDocument : sig
             
         ]
       ) result
-  (** 
-    Describes the specified Amazon Web Services Systems Manager document (SSM document).
-     *)
+  (** Describes the specified Amazon Web Services Systems Manager document (SSM document).
+ *)
 
   
 end
@@ -6450,9 +6685,8 @@ module DescribeDocumentPermission : sig
             
         ]
       ) result
-  (** 
-    Describes the permissions for a Amazon Web Services Systems Manager document (SSM document). If you created the document, you are the owner. If a document is shared, it can either be shared privately (by specifying a user's Amazon Web Services account ID) or publicly ({i All}).
-     *)
+  (** Describes the permissions for a Amazon Web Services Systems Manager document (SSM document). If you created the document, you are the owner. If a document is shared, it can either be shared privately (by specifying a user's Amazon Web Services account ID) or publicly ({i All}). 
+ *)
 
   
 end
@@ -6469,9 +6703,8 @@ module DescribeEffectiveInstanceAssociations : sig
             
         ]
       ) result
-  (** 
-    All associations for the managed nodes.
-     *)
+  (** All associations for the managed nodes.
+ *)
 
   
 end
@@ -6489,9 +6722,8 @@ module DescribeEffectivePatchesForPatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline. Applies to patch baselines for Windows only.
-     *)
+  (** Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline. Applies to patch baselines for Windows only.
+ *)
 
   
 end
@@ -6508,9 +6740,8 @@ module DescribeInstanceAssociationsStatus : sig
             
         ]
       ) result
-  (** 
-    The status of the associations for the managed nodes.
-     *)
+  (** The status of the associations for the managed nodes.
+ *)
 
   
 end
@@ -6529,14 +6760,13 @@ module DescribeInstanceInformation : sig
             
         ]
       ) result
-  (** 
-    Provides information about one or more of your managed nodes, including the operating system platform, SSM Agent version, association status, and IP address. This operation does not return information for nodes that are either Stopped or Terminated.
-    
-     If you specify one or more node IDs, the operation returns information for those managed nodes. If you don't specify node IDs, it returns information for all your managed nodes. If you specify a node ID that isn't valid or a node that you don't own, you receive an error.
-     
-      The [IamRole] field returned for this API operation is the Identity and Access Management (IAM) role assigned to on-premises managed nodes. This operation does not return the IAM role for EC2 instances.
-      
-       *)
+  (** Provides information about one or more of your managed nodes, including the operating system platform, SSM Agent version, association status, and IP address. This operation does not return information for nodes that are either Stopped or Terminated.
+
+ If you specify one or more node IDs, the operation returns information for those managed nodes. If you don't specify node IDs, it returns information for all your managed nodes. If you specify a node ID that isn't valid or a node that you don't own, you receive an error.
+ 
+   The [IamRole] field returned for this API operation is the Identity and Access Management (IAM) role assigned to on-premises managed nodes. This operation does not return the IAM role for EC2 instances.
+   
+     *)
 
   
 end
@@ -6552,9 +6782,8 @@ module DescribeInstancePatchStates : sig
             
         ]
       ) result
-  (** 
-    Retrieves the high-level patch state of one or more managed nodes.
-     *)
+  (** Retrieves the high-level patch state of one or more managed nodes.
+ *)
 
   
 end
@@ -6571,9 +6800,8 @@ module DescribeInstancePatchStatesForPatchGroup : sig
             
         ]
       ) result
-  (** 
-    Retrieves the high-level patch state for the managed nodes in the specified patch group.
-     *)
+  (** Retrieves the high-level patch state for the managed nodes in the specified patch group.
+ *)
 
   
 end
@@ -6591,9 +6819,8 @@ module DescribeInstancePatches : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about the patches on the specified managed node and their state relative to the patch baseline being used for the node.
-     *)
+  (** Retrieves information about the patches on the specified managed node and their state relative to the patch baseline being used for the node.
+ *)
 
   
 end
@@ -6614,9 +6841,8 @@ module DescribeInstanceProperties : sig
             
         ]
       ) result
-  (** 
-    An API operation used by the Systems Manager console to display information about Systems Manager managed nodes.
-     *)
+  (** An API operation used by the Systems Manager console to display information about Systems Manager managed nodes.
+ *)
 
   
 end
@@ -6633,9 +6859,8 @@ module DescribeInventoryDeletions : sig
             
         ]
       ) result
-  (** 
-    Describes a specific delete inventory operation.
-     *)
+  (** Describes a specific delete inventory operation.
+ *)
 
   
 end
@@ -6651,9 +6876,8 @@ module DescribeMaintenanceWindowExecutionTaskInvocations : sig
             
         ]
       ) result
-  (** 
-    Retrieves the individual task executions (one per target) for a particular task run as part of a maintenance window execution.
-     *)
+  (** Retrieves the individual task executions (one per target) for a particular task run as part of a maintenance window execution.
+ *)
 
   
 end
@@ -6669,9 +6893,8 @@ module DescribeMaintenanceWindowExecutionTasks : sig
             
         ]
       ) result
-  (** 
-    For a given maintenance window execution, lists the tasks that were run.
-     *)
+  (** For a given maintenance window execution, lists the tasks that were run.
+ *)
 
   
 end
@@ -6686,9 +6909,8 @@ module DescribeMaintenanceWindowExecutions : sig
             
         ]
       ) result
-  (** 
-    Lists the executions of a maintenance window. This includes information about when the maintenance window was scheduled to be active, and information about tasks registered and run with the maintenance window.
-     *)
+  (** Lists the executions of a maintenance window. This includes information about when the maintenance window was scheduled to be active, and information about tasks registered and run with the maintenance window.
+ *)
 
   
 end
@@ -6704,9 +6926,8 @@ module DescribeMaintenanceWindowSchedule : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about upcoming executions of a maintenance window.
-     *)
+  (** Retrieves information about upcoming executions of a maintenance window.
+ *)
 
   
 end
@@ -6722,9 +6943,8 @@ module DescribeMaintenanceWindowTargets : sig
             
         ]
       ) result
-  (** 
-    Lists the targets registered with the maintenance window.
-     *)
+  (** Lists the targets registered with the maintenance window.
+ *)
 
   
 end
@@ -6740,12 +6960,11 @@ module DescribeMaintenanceWindowTasks : sig
             
         ]
       ) result
-  (** 
-    Lists the tasks in a maintenance window.
-    
-     For maintenance window tasks without a specified target, you can't supply values for [--max-errors] and [--max-concurrency]. Instead, the system inserts a placeholder value of [1], which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.
-     
-      *)
+  (** Lists the tasks in a maintenance window.
+
+  For maintenance window tasks without a specified target, you can't supply values for [--max-errors] and [--max-concurrency]. Instead, the system inserts a placeholder value of [1], which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.
+  
+    *)
 
   
 end
@@ -6760,9 +6979,8 @@ module DescribeMaintenanceWindows : sig
             
         ]
       ) result
-  (** 
-    Retrieves the maintenance windows in an Amazon Web Services account.
-     *)
+  (** Retrieves the maintenance windows in an Amazon Web Services account.
+ *)
 
   
 end
@@ -6777,9 +6995,8 @@ module DescribeMaintenanceWindowsForTarget : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about the maintenance window targets or tasks that a managed node is associated with.
-     *)
+  (** Retrieves information about the maintenance window targets or tasks that a managed node is associated with.
+ *)
 
   
 end
@@ -6794,11 +7011,10 @@ module DescribeOpsItems : sig
             
         ]
       ) result
-  (** 
-    Query a set of OpsItems. You must have permission in Identity and Access Management (IAM) to query a list of OpsItems. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-    
-     Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-      *)
+  (** Query a set of OpsItems. You must have permission in Identity and Access Management (IAM) to query a list of OpsItems. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
+
+ Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}. 
+  *)
 
   
 end
@@ -6817,14 +7033,13 @@ module DescribeParameters : sig
             
         ]
       ) result
-  (** 
-    Lists the parameters in your Amazon Web Services account or the parameters shared with you when you enable the {{:https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeParameters.html#systemsmanager-DescribeParameters-request-Shared}Shared} option.
-    
-     Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.
-     
-      If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also update the key alias the parameter uses to reference KMS. Otherwise, [DescribeParameters] retrieves whatever the original key alias was referencing.
-      
-       *)
+  (** Lists the parameters in your Amazon Web Services account or the parameters shared with you when you enable the {{:https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeParameters.html#systemsmanager-DescribeParameters-request-Shared}Shared} option.
+
+ Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.
+ 
+   If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also update the key alias the parameter uses to reference KMS. Otherwise, [DescribeParameters] retrieves whatever the original key alias was referencing.
+   
+     *)
 
   
 end
@@ -6839,9 +7054,8 @@ module DescribePatchBaselines : sig
             
         ]
       ) result
-  (** 
-    Lists the patch baselines in your Amazon Web Services account.
-     *)
+  (** Lists the patch baselines in your Amazon Web Services account.
+ *)
 
   
 end
@@ -6857,9 +7071,8 @@ module DescribePatchGroupState : sig
             
         ]
       ) result
-  (** 
-    Returns high-level aggregated patch compliance state information for a patch group.
-     *)
+  (** Returns high-level aggregated patch compliance state information for a patch group.
+ *)
 
   
 end
@@ -6874,9 +7087,8 @@ module DescribePatchGroups : sig
             
         ]
       ) result
-  (** 
-    Lists all patch groups that have been registered with patch baselines.
-     *)
+  (** Lists all patch groups that have been registered with patch baselines.
+ *)
 
   
 end
@@ -6891,33 +7103,32 @@ module DescribePatchProperties : sig
             
         ]
       ) result
-  (** 
-    Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as [CreatePatchBaseline], [UpdatePatchBaseline], [DescribeAvailablePatches], and [DescribePatchBaselines].
-    
-     The following section lists the properties that can be used in filters for each major operating system type:
-     
-      AMAZON_LINUX Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
-                   
-                    AMAZON_LINUX_2 Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
+  (** Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as [CreatePatchBaseline], [UpdatePatchBaseline], [DescribeAvailablePatches], and [DescribePatchBaselines].
+
+ The following section lists the properties that can be used in filters for each major operating system type:
+ 
+   AMAZON_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
+                 
+                   AMAZON_LINUX_2  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
                                    
-                                    CENTOS Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
-                                           
-                                            DEBIAN Valid properties: [PRODUCT] | [PRIORITY]
-                                                   
-                                                    MACOS Valid properties: [PRODUCT] | [CLASSIFICATION]
-                                                          
-                                                           ORACLE_LINUX Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
-                                                                        
-                                                                         REDHAT_ENTERPRISE_LINUX 
-    Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
-    
-     SUSE Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY]
-          
-           UBUNTU Valid properties: [PRODUCT] | [PRIORITY]
+                                     CENTOS  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
+                                             
+                                               DEBIAN  Valid properties: [PRODUCT] | [PRIORITY] 
+                                                       
+                                                         MACOS  Valid properties: [PRODUCT] | [CLASSIFICATION] 
+                                                                
+                                                                  ORACLE_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
+                                                                                
+                                                                                  REDHAT_ENTERPRISE_LINUX  
+Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
+
+  SUSE  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] 
+        
+          UBUNTU  Valid properties: [PRODUCT] | [PRIORITY] 
                   
-                   WINDOWS Valid properties: [PRODUCT] | [PRODUCT_FAMILY] | [CLASSIFICATION] | [MSRC_SEVERITY]
-                           
-                            *)
+                    WINDOWS  Valid properties: [PRODUCT] | [PRODUCT_FAMILY] | [CLASSIFICATION] | [MSRC_SEVERITY] 
+                             
+                                *)
 
   
 end
@@ -6934,9 +7145,8 @@ module DescribeSessions : sig
             
         ]
       ) result
-  (** 
-    Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.
-     *)
+  (** Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.
+ *)
 
   
 end
@@ -6955,9 +7165,8 @@ module DisassociateOpsItemRelatedItem : sig
             
         ]
       ) result
-  (** 
-    Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a capability of Amazon Web Services Systems Manager.
-     *)
+  (** Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a capability of Amazon Web Services Systems Manager.
+ *)
 
   
 end
@@ -6973,9 +7182,8 @@ module GetAutomationExecution : sig
             
         ]
       ) result
-  (** 
-    Get detailed information about a particular Automation execution.
-     *)
+  (** Get detailed information about a particular Automation execution.
+ *)
 
   
 end
@@ -6993,13 +7201,12 @@ module GetCalendarState : sig
             
         ]
       ) result
-  (** 
-    Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, [GetCalendarState] returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, [GetCalendarState] uses the current time. Change Calendar entries have two possible states: [OPEN] or [CLOSED].
-    
-     If you specify more than one calendar in a request, the command returns the status of [OPEN] only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is [CLOSED].
-     
-      For more information about Change Calendar, a capability of Amazon Web Services Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.
-       *)
+  (** Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, [GetCalendarState] returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, [GetCalendarState] uses the current time. Change Calendar entries have two possible states: [OPEN] or [CLOSED].
+
+ If you specify more than one calendar in a request, the command returns the status of [OPEN] only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is [CLOSED].
+ 
+  For more information about Change Calendar, a capability of Amazon Web Services Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.
+   *)
 
   
 end
@@ -7018,11 +7225,10 @@ module GetCommandInvocation : sig
             
         ]
       ) result
-  (** 
-    Returns detailed information about command execution for an invocation or plugin.
-    
-     [GetCommandInvocation] only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use [ListCommandInvocations]. To get the command execution status across managed nodes, use [ListCommands].
-      *)
+  (** Returns detailed information about command execution for an invocation or plugin.
+
+  [GetCommandInvocation] only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use [ListCommandInvocations]. To get the command execution status across managed nodes, use [ListCommands].
+  *)
 
   
 end
@@ -7037,9 +7243,8 @@ module GetConnectionStatus : sig
             
         ]
       ) result
-  (** 
-    Retrieves the Session Manager connection status for a managed node to determine whether it is running and ready to receive Session Manager connections.
-     *)
+  (** Retrieves the Session Manager connection status for a managed node to determine whether it is running and ready to receive Session Manager connections.
+ *)
 
   
 end
@@ -7054,11 +7259,10 @@ module GetDefaultPatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Retrieves the default patch baseline. Amazon Web Services Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.
-    
-     If you don't specify an operating system value, the default patch baseline for Windows is returned.
-      *)
+  (** Retrieves the default patch baseline. Amazon Web Services Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.
+
+ If you don't specify an operating system value, the default patch baseline for Windows is returned.
+  *)
 
   
 end
@@ -7075,12 +7279,11 @@ module GetDeployablePatchSnapshotForInstance : sig
             
         ]
       ) result
-  (** 
-    Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the [AWS-RunPatchBaseline] Systems Manager document (SSM document).
-    
-     If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a capability of Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the [AWS-RunShellScript] document or the [AWS-RunPowerShellScript] document.
-     
-      *)
+  (** Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the [AWS-RunPatchBaseline] Systems Manager document (SSM document).
+
+  If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a capability of Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the [AWS-RunShellScript] document or the [AWS-RunPowerShellScript] document.
+  
+    *)
 
   
 end
@@ -7097,9 +7300,8 @@ module GetDocument : sig
             
         ]
       ) result
-  (** 
-    Gets the contents of the specified Amazon Web Services Systems Manager document (SSM document).
-     *)
+  (** Gets the contents of the specified Amazon Web Services Systems Manager document (SSM document).
+ *)
 
   
 end
@@ -7120,9 +7322,8 @@ module GetInventory : sig
             
         ]
       ) result
-  (** 
-    Query inventory information. This includes managed node status, such as [Stopped] or [Terminated].
-     *)
+  (** Query inventory information. This includes managed node status, such as [Stopped] or [Terminated].
+ *)
 
   
 end
@@ -7139,9 +7340,8 @@ module GetInventorySchema : sig
             
         ]
       ) result
-  (** 
-    Return a list of inventory type names for the account, or return a list of attribute names for a specific Inventory item type.
-     *)
+  (** Return a list of inventory type names for the account, or return a list of attribute names for a specific Inventory item type.
+ *)
 
   
 end
@@ -7157,9 +7357,8 @@ module GetMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Retrieves a maintenance window.
-     *)
+  (** Retrieves a maintenance window.
+ *)
 
   
 end
@@ -7175,9 +7374,8 @@ module GetMaintenanceWindowExecution : sig
             
         ]
       ) result
-  (** 
-    Retrieves details about a specific a maintenance window execution.
-     *)
+  (** Retrieves details about a specific a maintenance window execution.
+ *)
 
   
 end
@@ -7193,9 +7391,8 @@ module GetMaintenanceWindowExecutionTask : sig
             
         ]
       ) result
-  (** 
-    Retrieves the details about a specific task run as part of a maintenance window execution.
-     *)
+  (** Retrieves the details about a specific task run as part of a maintenance window execution.
+ *)
 
   
 end
@@ -7211,9 +7408,8 @@ module GetMaintenanceWindowExecutionTaskInvocation : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about a specific task running on a specific target.
-     *)
+  (** Retrieves information about a specific task running on a specific target.
+ *)
 
   
 end
@@ -7229,13 +7425,12 @@ module GetMaintenanceWindowTask : sig
             
         ]
       ) result
-  (** 
-    Retrieves the details of a maintenance window task.
-    
-     For maintenance window tasks without a specified target, you can't supply values for [--max-errors] and [--max-concurrency]. Instead, the system inserts a placeholder value of [1], which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.
-     
-      To retrieve a list of tasks in a maintenance window, instead use the [DescribeMaintenanceWindowTasks] command.
-       *)
+  (** Retrieves the details of a maintenance window task.
+
+  For maintenance window tasks without a specified target, you can't supply values for [--max-errors] and [--max-concurrency]. Instead, the system inserts a placeholder value of [1], which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.
+  
+    To retrieve a list of tasks in a maintenance window, instead use the [DescribeMaintenanceWindowTasks] command.
+     *)
 
   
 end
@@ -7252,11 +7447,10 @@ module GetOpsItem : sig
             
         ]
       ) result
-  (** 
-    Get information about an OpsItem by using the ID. You must have permission in Identity and Access Management (IAM) to view information about an OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-    
-     Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-      *)
+  (** Get information about an OpsItem by using the ID. You must have permission in Identity and Access Management (IAM) to view information about an OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
+
+ Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}. 
+  *)
 
   
 end
@@ -7273,9 +7467,8 @@ module GetOpsMetadata : sig
             
         ]
       ) result
-  (** 
-    View operational metadata related to an application in Application Manager.
-     *)
+  (** View operational metadata related to an application in Application Manager.
+ *)
 
   
 end
@@ -7295,9 +7488,8 @@ module GetOpsSummary : sig
             
         ]
       ) result
-  (** 
-    View a summary of operations metadata (OpsData) based on specified filters and aggregators. OpsData can include information about Amazon Web Services Systems Manager OpsCenter operational workitems (OpsItems) as well as information about any Amazon Web Services resource or service configured to report OpsData to Amazon Web Services Systems Manager Explorer.
-     *)
+  (** View a summary of operations metadata (OpsData) based on specified filters and aggregators. OpsData can include information about Amazon Web Services Systems Manager OpsCenter operational workitems (OpsItems) as well as information about any Amazon Web Services resource or service configured to report OpsData to Amazon Web Services Systems Manager Explorer. 
+ *)
 
   
 end
@@ -7315,12 +7507,11 @@ module GetParameter : sig
             
         ]
       ) result
-  (** 
-    Get information about a single parameter by specifying the parameter name.
-    
-     To get information about more than one parameter at a time, use the [GetParameters] operation.
-     
-      *)
+  (** Get information about a single parameter by specifying the parameter name.
+
+  To get information about more than one parameter at a time, use the [GetParameters] operation.
+  
+    *)
 
   
 end
@@ -7338,12 +7529,11 @@ module GetParameterHistory : sig
             
         ]
       ) result
-  (** 
-    Retrieves the history of all changes to a parameter.
-    
-     If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also update the key alias the parameter uses to reference KMS. Otherwise, [GetParameterHistory] retrieves whatever the original key alias was referencing.
-     
-      *)
+  (** Retrieves the history of all changes to a parameter.
+
+  If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also update the key alias the parameter uses to reference KMS. Otherwise, [GetParameterHistory] retrieves whatever the original key alias was referencing.
+  
+    *)
 
   
 end
@@ -7359,12 +7549,11 @@ module GetParameters : sig
             
         ]
       ) result
-  (** 
-    Get information about one or more parameters by specifying multiple parameter names.
-    
-     To get information about a single parameter, you can use the [GetParameter] operation instead.
-     
-      *)
+  (** Get information about one or more parameters by specifying multiple parameter names.
+
+  To get information about a single parameter, you can use the [GetParameter] operation instead.
+  
+    *)
 
   
 end
@@ -7384,11 +7573,10 @@ module GetParametersByPath : sig
             
         ]
       ) result
-  (** 
-    Retrieve information about one or more parameters in a specific hierarchy.
-    
-     Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.
-      *)
+  (** Retrieve information about one or more parameters in a specific hierarchy. 
+
+ Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.
+  *)
 
   
 end
@@ -7405,9 +7593,8 @@ module GetPatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about a patch baseline.
-     *)
+  (** Retrieves information about a patch baseline.
+ *)
 
   
 end
@@ -7422,9 +7609,8 @@ module GetPatchBaselineForPatchGroup : sig
             
         ]
       ) result
-  (** 
-    Retrieves the patch baseline that should be used for the specified patch group.
-     *)
+  (** Retrieves the patch baseline that should be used for the specified patch group.
+ *)
 
   
 end
@@ -7441,9 +7627,8 @@ module GetResourcePolicies : sig
             
         ]
       ) result
-  (** 
-    Returns an array of the [Policy] object.
-     *)
+  (** Returns an array of the [Policy] object.
+ *)
 
   
 end
@@ -7459,13 +7644,12 @@ module GetServiceSetting : sig
             
         ]
       ) result
-  (** 
-    [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of [false]. This means the user can't use this feature unless they change the setting to [true] and intentionally opt in for a paid feature.
-    
-     Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [UpdateServiceSetting] API operation to change the default setting. Or use the [ResetServiceSetting] to change the value back to the original value defined by the Amazon Web Services service team.
-     
-      Query the current service setting for the Amazon Web Services account.
-       *)
+  (**  [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of [false]. This means the user can't use this feature unless they change the setting to [true] and intentionally opt in for a paid feature.
+
+ Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [UpdateServiceSetting] API operation to change the default setting. Or use the [ResetServiceSetting] to change the value back to the original value defined by the Amazon Web Services service team.
+ 
+  Query the current service setting for the Amazon Web Services account. 
+   *)
 
   
 end
@@ -7484,39 +7668,37 @@ module LabelParameterVersion : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    A parameter label is a user-defined alias to help you manage different versions of a parameter. When you modify a parameter, Amazon Web Services Systems Manager automatically saves a new version and increments the version number by one. A label can help you remember the purpose of a parameter when there are multiple versions.
-    
-     Parameter labels have the following requirements and restrictions.
-     
-      {ul
-           {- A version of a parameter can have a maximum of 10 labels.
-              
-              }
-            {- You can't attach the same label to different versions of the same parameter. For example, if version 1 has the label Production, then you can't attach Production to version 2.
-               
-               }
-            {- You can move a label from one version of a parameter to another.
-               
-               }
-            {- You can't create a label when you create a new parameter. You must attach a label to a specific version of a parameter.
-               
-               }
-            {- If you no longer want to use a parameter label, then you can either delete it or move it to a different version of a parameter.
-               
-               }
-            {- A label can have a maximum of 100 characters.
-               
-               }
-            {- Labels can contain letters (case sensitive), numbers, periods (.), hyphens (-), or underscores (_).
-               
-               }
-            {- Labels can't begin with a number, "[aws]" or "[ssm]" (not case sensitive). If a label fails to meet these requirements, then the label isn't associated with a parameter and the system displays it in the list of InvalidLabels.
-               
-               }
-           
-      }
-       |}]
+  [@@ocaml.doc {| A parameter label is a user-defined alias to help you manage different versions of a parameter. When you modify a parameter, Amazon Web Services Systems Manager automatically saves a new version and increments the version number by one. A label can help you remember the purpose of a parameter when there are multiple versions. 
+
+ Parameter labels have the following requirements and restrictions.
+ 
+  {ul
+        {-  A version of a parameter can have a maximum of 10 labels.
+            
+             }
+        {-  You can't attach the same label to different versions of the same parameter. For example, if version 1 has the label Production, then you can't attach Production to version 2.
+            
+             }
+        {-  You can move a label from one version of a parameter to another.
+            
+             }
+        {-  You can't create a label when you create a new parameter. You must attach a label to a specific version of a parameter.
+            
+             }
+        {-  If you no longer want to use a parameter label, then you can either delete it or move it to a different version of a parameter.
+            
+             }
+        {-  A label can have a maximum of 100 characters.
+            
+             }
+        {-  Labels can contain letters (case sensitive), numbers, periods (.), hyphens (-), or underscores (_).
+            
+             }
+        {-  Labels can't begin with a number, "[aws]" or "[ssm]" (not case sensitive). If a label fails to meet these requirements, then the label isn't associated with a parameter and the system displays it in the list of InvalidLabels.
+            
+             }
+        }
+   |}]
 
   
 end
@@ -7533,9 +7715,8 @@ module ListAssociationVersions : sig
             
         ]
       ) result
-  (** 
-    Retrieves all versions of an association for a specific association ID.
-     *)
+  (** Retrieves all versions of an association for a specific association ID.
+ *)
 
   
 end
@@ -7551,9 +7732,8 @@ module ListAssociations : sig
             
         ]
       ) result
-  (** 
-    Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a capability of Amazon Web Services Systems Manager.
-     *)
+  (** Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a capability of Amazon Web Services Systems Manager.
+ *)
 
   
 end
@@ -7572,9 +7752,8 @@ module ListCommandInvocations : sig
             
         ]
       ) result
-  (** 
-    An invocation is copy of a command sent to a specific managed node. A command can apply to one or more managed nodes. A command invocation applies to one managed node. For example, if a user runs [SendCommand] against three managed nodes, then a command invocation is created for each requested managed node ID. [ListCommandInvocations] provide status about command execution.
-     *)
+  (** An invocation is copy of a command sent to a specific managed node. A command can apply to one or more managed nodes. A command invocation applies to one managed node. For example, if a user runs [SendCommand] against three managed nodes, then a command invocation is created for each requested managed node ID. [ListCommandInvocations] provide status about command execution.
+ *)
 
   
 end
@@ -7593,9 +7772,8 @@ module ListCommands : sig
             
         ]
       ) result
-  (** 
-    Lists the commands requested by users of the Amazon Web Services account.
-     *)
+  (** Lists the commands requested by users of the Amazon Web Services account.
+ *)
 
   
 end
@@ -7614,9 +7792,8 @@ module ListComplianceItems : sig
             
         ]
       ) result
-  (** 
-    For a specified resource ID, this API operation returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter.
-     *)
+  (** For a specified resource ID, this API operation returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter.
+ *)
 
   
 end
@@ -7633,9 +7810,8 @@ module ListComplianceSummaries : sig
             
         ]
       ) result
-  (** 
-    Returns a summary count of compliant and non-compliant resources for a compliance type. For example, this call can return State Manager associations, patches, or custom compliance types according to the filter criteria that you specify.
-     *)
+  (** Returns a summary count of compliant and non-compliant resources for a compliance type. For example, this call can return State Manager associations, patches, or custom compliance types according to the filter criteria that you specify.
+ *)
 
   
 end
@@ -7653,9 +7829,8 @@ module ListDocumentMetadataHistory : sig
             
         ]
       ) result
-  (** 
-    Information about approval reviews for a version of a change template in Change Manager.
-     *)
+  (** Information about approval reviews for a version of a change template in Change Manager.
+ *)
 
   
 end
@@ -7672,9 +7847,8 @@ module ListDocumentVersions : sig
             
         ]
       ) result
-  (** 
-    List all versions for a document.
-     *)
+  (** List all versions for a document.
+ *)
 
   
 end
@@ -7691,9 +7865,8 @@ module ListDocuments : sig
             
         ]
       ) result
-  (** 
-    Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results of this request by using a filter.
-     *)
+  (** Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results of this request by using a filter.
+ *)
 
   
 end
@@ -7712,9 +7885,8 @@ module ListInventoryEntries : sig
             
         ]
       ) result
-  (** 
-    A list of inventory items returned by the request.
-     *)
+  (** A list of inventory items returned by the request.
+ *)
 
   
 end
@@ -7732,9 +7904,8 @@ module ListOpsItemEvents : sig
             
         ]
       ) result
-  (** 
-    Returns a list of all OpsItem events in the current Amazon Web Services Region and Amazon Web Services account. You can limit the results to events associated with specific OpsItems by specifying a filter.
-     *)
+  (** Returns a list of all OpsItem events in the current Amazon Web Services Region and Amazon Web Services account. You can limit the results to events associated with specific OpsItems by specifying a filter.
+ *)
 
   
 end
@@ -7750,9 +7921,8 @@ module ListOpsItemRelatedItems : sig
             
         ]
       ) result
-  (** 
-    Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a capability of Amazon Web Services Systems Manager.
-     *)
+  (** Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a capability of Amazon Web Services Systems Manager.
+ *)
 
   
 end
@@ -7768,9 +7938,8 @@ module ListOpsMetadata : sig
             
         ]
       ) result
-  (** 
-    Amazon Web Services Systems Manager calls this API operation when displaying all Application Manager OpsMetadata objects or blobs.
-     *)
+  (** Amazon Web Services Systems Manager calls this API operation when displaying all Application Manager OpsMetadata objects or blobs.
+ *)
 
   
 end
@@ -7787,9 +7956,8 @@ module ListResourceComplianceSummaries : sig
             
         ]
       ) result
-  (** 
-    Returns a resource-level summary count. The summary includes information about compliant and non-compliant statuses and detailed compliance-item severity counts, according to the filter criteria you specify.
-     *)
+  (** Returns a resource-level summary count. The summary includes information about compliant and non-compliant statuses and detailed compliance-item severity counts, according to the filter criteria you specify.
+ *)
 
   
 end
@@ -7806,11 +7974,10 @@ module ListResourceDataSync : sig
             
         ]
       ) result
-  (** 
-    Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed.
-    
-     The number of sync configurations might be too large to return using a single call to [ListResourceDataSync]. You can limit the number of sync configurations returned by using the [MaxResults] parameter. To determine whether there are more sync configurations to list, check the value of [NextToken] in the output. If there are more sync configurations to list, you can request them by specifying the [NextToken] returned in the call to the parameter of a subsequent call.
-      *)
+  (** Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed.
+
+ The number of sync configurations might be too large to return using a single call to [ListResourceDataSync]. You can limit the number of sync configurations returned by using the [MaxResults] parameter. To determine whether there are more sync configurations to list, check the value of [NextToken] in the output. If there are more sync configurations to list, you can request them by specifying the [NextToken] returned in the call to the parameter of a subsequent call. 
+  *)
 
   
 end
@@ -7827,11 +7994,10 @@ module ListTagsForResource : sig
             
         ]
       ) result
-  (** 
-    Returns a list of the tags assigned to the specified resource.
-    
-     For information about the ID format for each supported resource type, see [AddTagsToResource].
-      *)
+  (** Returns a list of the tags assigned to the specified resource.
+
+ For information about the ID format for each supported resource type, see [AddTagsToResource].
+  *)
 
   
 end
@@ -7850,9 +8016,8 @@ module ModifyDocumentPermission : sig
             
         ]
       ) result
-  (** 
-    Shares a Amazon Web Services Systems Manager document (SSM document)publicly or privately. If you share a document privately, you must specify the Amazon Web Services user IDs for those people who can use the document. If you share a document publicly, you must specify {i All} as the account ID.
-     *)
+  (** Shares a Amazon Web Services Systems Manager document (SSM document)publicly or privately. If you share a document privately, you must specify the Amazon Web Services user IDs for those people who can use the document. If you share a document publicly, you must specify {i All} as the account ID.
+ *)
 
   
 end
@@ -7873,60 +8038,58 @@ module PutComplianceItems : sig
             
         ]
       ) result
-  (** 
-    Registers a compliance type and other compliance details on a designated resource. This operation lets you register custom compliance details with a resource. This call overwrites existing compliance information on the resource, so you must provide a full list of compliance items each time that you send the request.
-    
-     ComplianceType can be one of the following:
-     
-      {ul
-           {- ExecutionId: The execution ID when the patch, association, or custom compliance item was applied.
-              
-              }
-            {- ExecutionType: Specify patch, association, or Custom:[string].
-               
-               }
-            {- ExecutionTime. The time the patch, association, or custom compliance item was applied to the managed node.
-               
-               }
-            {- Id: The patch, association, or custom compliance ID.
-               
-               }
-            {- Title: A title.
-               
-               }
-            {- Status: The status of the compliance item. For example, [approved] for patches, or [Failed] for associations.
-               
-               }
-            {- Severity: A patch severity. For example, [Critical].
-               
-               }
-            {- DocumentName: An SSM document name. For example, [AWS-RunPatchBaseline].
-               
-               }
-            {- DocumentVersion: An SSM document version number. For example, 4.
-               
-               }
-            {- Classification: A patch classification. For example, [security updates].
-               
-               }
-            {- PatchBaselineId: A patch baseline ID.
-               
-               }
-            {- PatchSeverity: A patch severity. For example, [Critical].
-               
-               }
-            {- PatchState: A patch state. For example, [InstancesWithFailedPatches].
-               
-               }
-            {- PatchGroup: The name of a patch group.
-               
-               }
-            {- InstalledTime: The time the association, patch, or custom compliance item was applied to the resource. Specify the time by using the following format: [yyyy-MM-dd'T'HH:mm:ss'Z']
-               
-               }
-           
-      }
-       *)
+  (** Registers a compliance type and other compliance details on a designated resource. This operation lets you register custom compliance details with a resource. This call overwrites existing compliance information on the resource, so you must provide a full list of compliance items each time that you send the request.
+
+ ComplianceType can be one of the following:
+ 
+  {ul
+        {-  ExecutionId: The execution ID when the patch, association, or custom compliance item was applied.
+            
+             }
+        {-  ExecutionType: Specify patch, association, or Custom:[string].
+            
+             }
+        {-  ExecutionTime. The time the patch, association, or custom compliance item was applied to the managed node.
+            
+             }
+        {-  Id: The patch, association, or custom compliance ID.
+            
+             }
+        {-  Title: A title.
+            
+             }
+        {-  Status: The status of the compliance item. For example, [approved] for patches, or [Failed] for associations.
+            
+             }
+        {-  Severity: A patch severity. For example, [Critical].
+            
+             }
+        {-  DocumentName: An SSM document name. For example, [AWS-RunPatchBaseline].
+            
+             }
+        {-  DocumentVersion: An SSM document version number. For example, 4.
+            
+             }
+        {-  Classification: A patch classification. For example, [security updates].
+            
+             }
+        {-  PatchBaselineId: A patch baseline ID.
+            
+             }
+        {-  PatchSeverity: A patch severity. For example, [Critical].
+            
+             }
+        {-  PatchState: A patch state. For example, [InstancesWithFailedPatches].
+            
+             }
+        {-  PatchGroup: The name of a patch group.
+            
+             }
+        {-  InstalledTime: The time the association, patch, or custom compliance item was applied to the resource. Specify the time by using the following format: [yyyy-MM-dd'T'HH:mm:ss'Z'] 
+            
+             }
+        }
+   *)
 
   
 end
@@ -7952,9 +8115,8 @@ module PutInventory : sig
             
         ]
       ) result
-  (** 
-    Bulk update custom inventory items on one or more managed nodes. The request adds an inventory item, if it doesn't already exist, or updates an inventory item, if it does exist.
-     *)
+  (** Bulk update custom inventory items on one or more managed nodes. The request adds an inventory item, if it doesn't already exist, or updates an inventory item, if it does exist.
+ *)
 
   
 end
@@ -7983,9 +8145,8 @@ module PutParameter : sig
             
         ]
       ) result
-  (** 
-    Add a parameter to the system.
-     *)
+  (** Add a parameter to the system.
+ *)
 
   
 end
@@ -8006,27 +8167,25 @@ module PutResourcePolicy : sig
             
         ]
       ) result
-  (** 
-    Creates or updates a Systems Manager resource policy. A resource policy helps you to define the IAM entity (for example, an Amazon Web Services account) that can manage your Systems Manager resources. The following resources support Systems Manager resource policies.
-    
-     {ul
-          {- [OpsItemGroup] - The resource policy for [OpsItemGroup] enables Amazon Web Services accounts to view and interact with OpsCenter operational work items (OpsItems).
+  (** Creates or updates a Systems Manager resource policy. A resource policy helps you to define the IAM entity (for example, an Amazon Web Services account) that can manage your Systems Manager resources. The following resources support Systems Manager resource policies.
+
+ {ul
+       {-   [OpsItemGroup] - The resource policy for [OpsItemGroup] enables Amazon Web Services accounts to view and interact with OpsCenter operational work items (OpsItems).
+           
+            }
+       {-   [Parameter] - The resource policy is used to share a parameter with other accounts using Resource Access Manager (RAM). 
+           
+            To share a parameter, it must be in the advanced parameter tier. For information about parameter tiers, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html}Managing parameter tiers}. For information about changing an existing standard parameter to an advanced parameter, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#parameter-store-advanced-parameters-enabling}Changing a standard parameter to an advanced parameter}.
+            
+             To share a [SecureString] parameter, it must be encrypted with a customer managed key, and you must share the key separately through Key Management Service. Amazon Web Services managed keys cannot be shared. Parameters encrypted with the default Amazon Web Services managed key can be updated to use a customer managed key instead. For KMS key definitions, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html}KMS concepts} in the {i Key Management Service Developer Guide}.
              
-             }
-           {- [Parameter] - The resource policy is used to share a parameter with other accounts using Resource Access Manager (RAM).
-              
-               To share a parameter, it must be in the advanced parameter tier. For information about parameter tiers, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html}Managing parameter tiers}. For information about changing an existing standard parameter to an advanced parameter, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#parameter-store-advanced-parameters-enabling}Changing a standard parameter to an advanced parameter}.
+               While you can share a parameter using the Systems Manager [PutResourcePolicy] operation, we recommend using Resource Access Manager (RAM) instead. This is because using [PutResourcePolicy] requires the extra step of promoting the parameter to a standard RAM Resource Share using the RAM {{:https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html}PromoteResourceShareCreatedFromPolicy} API operation. Otherwise, the parameter won't be returned by the Systems Manager {{:https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeParameters.html}DescribeParameters} API operation using the [--shared] option.
                
-                To share a [SecureString] parameter, it must be encrypted with a customer managed key, and you must share the key separately through Key Management Service. Amazon Web Services managed keys cannot be shared. Parameters encrypted with the default Amazon Web Services managed key can be updated to use a customer managed key instead. For KMS key definitions, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html}KMS concepts} in the {i Key Management Service Developer Guide}.
+                For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html#share}Sharing a parameter} in the {i Amazon Web Services Systems Manager User Guide} 
                 
-                 While you can share a parameter using the Systems Manager [PutResourcePolicy] operation, we recommend using Resource Access Manager (RAM) instead. This is because using [PutResourcePolicy] requires the extra step of promoting the parameter to a standard RAM Resource Share using the RAM {{:https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html}PromoteResourceShareCreatedFromPolicy} API operation. Otherwise, the parameter won't be returned by the Systems Manager {{:https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeParameters.html}DescribeParameters} API operation using the [--shared] option.
-                 
-                  For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html#share}Sharing a parameter} in the {i Amazon Web Services Systems Manager User Guide}
-                  
                   }
-          
-      }
-       *)
+       }
+   *)
 
   
 end
@@ -8043,11 +8202,10 @@ module RegisterDefaultPatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Defines the default patch baseline for the relevant operating system.
-    
-     To reset the Amazon Web Services-predefined patch baseline as the default, specify the full patch baseline Amazon Resource Name (ARN) as the baseline ID value. For example, for CentOS, specify [arn:aws:ssm:us-east-2:733109147000:patchbaseline/pb-0574b43a65ea646ed] instead of [pb-0574b43a65ea646ed].
-      *)
+  (** Defines the default patch baseline for the relevant operating system.
+
+ To reset the Amazon Web Services-predefined patch baseline as the default, specify the full patch baseline Amazon Resource Name (ARN) as the baseline ID value. For example, for CentOS, specify [arn:aws:ssm:us-east-2:733109147000:patchbaseline/pb-0574b43a65ea646ed] instead of [pb-0574b43a65ea646ed].
+  *)
 
   
 end
@@ -8066,9 +8224,8 @@ module RegisterPatchBaselineForPatchGroup : sig
             
         ]
       ) result
-  (** 
-    Registers a patch baseline for a patch group.
-     *)
+  (** Registers a patch baseline for a patch group.
+ *)
 
   
 end
@@ -8086,9 +8243,8 @@ module RegisterTargetWithMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Registers a target with a maintenance window.
-     *)
+  (** Registers a target with a maintenance window.
+ *)
 
   
 end
@@ -8107,9 +8263,8 @@ module RegisterTaskWithMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Adds a new task to a maintenance window.
-     *)
+  (** Adds a new task to a maintenance window.
+ *)
 
   
 end
@@ -8127,9 +8282,8 @@ module RemoveTagsFromResource : sig
             
         ]
       ) result
-  (** 
-    Removes tag keys from the specified resource.
-     *)
+  (** Removes tag keys from the specified resource.
+ *)
 
   
 end
@@ -8146,13 +8300,12 @@ module ResetServiceSetting : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of "false". This means the user can't use this feature unless they change the setting to "true" and intentionally opt in for a paid feature.
-    
-     Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [GetServiceSetting] API operation to view the current value. Use the [UpdateServiceSetting] API operation to change the default setting.
-     
-      Reset the service setting for the account to the default value as provisioned by the Amazon Web Services service team.
-       |}]
+  [@@ocaml.doc {|  [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of "false". This means the user can't use this feature unless they change the setting to "true" and intentionally opt in for a paid feature.
+
+ Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [GetServiceSetting] API operation to view the current value. Use the [UpdateServiceSetting] API operation to change the default setting. 
+ 
+  Reset the service setting for the account to the default value as provisioned by the Amazon Web Services service team. 
+   |}]
 
   
 end
@@ -8168,12 +8321,11 @@ module ResumeSession : sig
             
         ]
       ) result
-  (** 
-    Reconnects a session to a managed node after it has been disconnected. Connections can be resumed for disconnected sessions, but not terminated sessions.
-    
-     This command is primarily for use by client machines to automatically reconnect during intermittent network issues. It isn't intended for any other use.
-     
-      *)
+  (** Reconnects a session to a managed node after it has been disconnected. Connections can be resumed for disconnected sessions, but not terminated sessions.
+
+  This command is primarily for use by client machines to automatically reconnect during intermittent network issues. It isn't intended for any other use.
+  
+    *)
 
   
 end
@@ -8191,9 +8343,8 @@ module SendAutomationSignal : sig
             
         ]
       ) result
-  (** 
-    Sends a signal to an Automation execution to change the current behavior or status of the execution.
-     *)
+  (** Sends a signal to an Automation execution to change the current behavior or status of the execution. 
+ *)
 
   
 end
@@ -8218,9 +8369,8 @@ module SendCommand : sig
             
         ]
       ) result
-  (** 
-    Runs commands on one or more managed nodes.
-     *)
+  (** Runs commands on one or more managed nodes.
+ *)
 
   
 end
@@ -8236,9 +8386,8 @@ module StartAssociationsOnce : sig
             
         ]
       ) result
-  (** 
-    Runs an association immediately and only one time. This operation can be helpful when troubleshooting associations.
-     *)
+  (** Runs an association immediately and only one time. This operation can be helpful when troubleshooting associations.
+ *)
 
   
 end
@@ -8259,9 +8408,8 @@ module StartAutomationExecution : sig
             
         ]
       ) result
-  (** 
-    Initiates execution of an Automation runbook.
-     *)
+  (** Initiates execution of an Automation runbook.
+ *)
 
   
 end
@@ -8282,9 +8430,8 @@ module StartChangeRequestExecution : sig
             
         ]
       ) result
-  (** 
-    Creates a change request for Change Manager. The Automation runbooks specified in the change request run only after all required approvals for the change request have been received.
-     *)
+  (** Creates a change request for Change Manager. The Automation runbooks specified in the change request run only after all required approvals for the change request have been received.
+ *)
 
   
 end
@@ -8301,14 +8448,13 @@ module StartSession : sig
             
         ]
       ) result
-  (** 
-    Initiates a connection to a target (for example, a managed node) for a Session Manager session. Returns a URL and token that can be used to open a WebSocket connection for sending input and receiving outputs.
-    
-     Amazon Web Services CLI usage: [start-session] is an interactive command that requires the Session Manager plugin to be installed on the client machine making the call. For information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html}Install the Session Manager plugin for the Amazon Web Services CLI} in the {i Amazon Web Services Systems Manager User Guide}.
-     
-      Amazon Web Services Tools for PowerShell usage: Start-SSMSession isn't currently supported by Amazon Web Services Tools for PowerShell on Windows local machines.
-      
-       *)
+  (** Initiates a connection to a target (for example, a managed node) for a Session Manager session. Returns a URL and token that can be used to open a WebSocket connection for sending input and receiving outputs.
+
+  Amazon Web Services CLI usage: [start-session] is an interactive command that requires the Session Manager plugin to be installed on the client machine making the call. For information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html}Install the Session Manager plugin for the Amazon Web Services CLI} in the {i Amazon Web Services Systems Manager User Guide}.
+  
+   Amazon Web Services Tools for PowerShell usage: Start-SSMSession isn't currently supported by Amazon Web Services Tools for PowerShell on Windows local machines.
+   
+     *)
 
   
 end
@@ -8325,9 +8471,8 @@ module StopAutomationExecution : sig
             
         ]
       ) result
-  (** 
-    Stop an Automation that is currently running.
-     *)
+  (** Stop an Automation that is currently running.
+ *)
 
   
 end
@@ -8342,9 +8487,8 @@ module TerminateSession : sig
             
         ]
       ) result
-  (** 
-    Permanently ends a session and closes the data connection between the Session Manager client and SSM Agent on the managed node. A terminated session can't be resumed.
-     *)
+  (** Permanently ends a session and closes the data connection between the Session Manager client and SSM Agent on the managed node. A terminated session can't be resumed.
+ *)
 
   
 end
@@ -8362,9 +8506,8 @@ module UnlabelParameterVersion : sig
             
         ]
       ) result
-  (** 
-    Remove a label or labels from a parameter.
-     *)
+  (** Remove a label or labels from a parameter.
+ *)
 
   
 end
@@ -8391,18 +8534,17 @@ module UpdateAssociation : sig
             
         ]
       ) result
-  (** 
-    Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon Simple Storage Service (Amazon S3) output. When you call [UpdateAssociation], the system removes all optional parameters from the request and overwrites the association with null values for those parameters. This is by design. You must specify all optional parameters in the call, even if you are not changing the parameters. This includes the [Name] parameter. Before calling this API action, we recommend that you call the [DescribeAssociation] API operation and make a note of all optional parameters required for your [UpdateAssociation] call.
-    
-     In order to call this API operation, a user, group, or role must be granted permission to call the [DescribeAssociation] API operation. If you don't have permission to call [DescribeAssociation], then you receive the following error: 
-     {[
-     An error occurred (AccessDeniedException) when calling the UpdateAssociation operation: User: isn't authorized to perform: ssm:DescribeAssociation on resource: 
-     ]}
-     
-     
-      When you update an association, the association immediately runs against the specified targets. You can add the [ApplyOnlyAtCronInterval] parameter to run the association during the next schedule run.
-      
-       *)
+  (** Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon Simple Storage Service (Amazon S3) output. When you call [UpdateAssociation], the system removes all optional parameters from the request and overwrites the association with null values for those parameters. This is by design. You must specify all optional parameters in the call, even if you are not changing the parameters. This includes the [Name] parameter. Before calling this API action, we recommend that you call the [DescribeAssociation] API operation and make a note of all optional parameters required for your [UpdateAssociation] call.
+
+ In order to call this API operation, a user, group, or role must be granted permission to call the [DescribeAssociation] API operation. If you don't have permission to call [DescribeAssociation], then you receive the following error: 
+ {[
+ An error occurred (AccessDeniedException) when calling the UpdateAssociation operation: User:  isn't authorized to perform: ssm:DescribeAssociation on resource: 
+ ]}
+  
+ 
+   When you update an association, the association immediately runs against the specified targets. You can add the [ApplyOnlyAtCronInterval] parameter to run the association during the next schedule run.
+   
+     *)
 
   
 end
@@ -8422,11 +8564,10 @@ module UpdateAssociationStatus : sig
             
         ]
       ) result
-  (** 
-    Updates the status of the Amazon Web Services Systems Manager document (SSM document) associated with the specified managed node.
-    
-     [UpdateAssociationStatus] is primarily used by the Amazon Web Services Systems Manager Agent (SSM Agent) to report status updates about your associations and is only used for associations created with the [InstanceId] legacy parameter.
-      *)
+  (** Updates the status of the Amazon Web Services Systems Manager document (SSM document) associated with the specified managed node.
+
+  [UpdateAssociationStatus] is primarily used by the Amazon Web Services Systems Manager Agent (SSM Agent) to report status updates about your associations and is only used for associations created with the [InstanceId] legacy parameter.
+  *)
 
   
 end
@@ -8450,9 +8591,8 @@ module UpdateDocument : sig
             
         ]
       ) result
-  (** 
-    Updates one or more values for an SSM document.
-     *)
+  (** Updates one or more values for an SSM document.
+ *)
 
   
 end
@@ -8470,12 +8610,11 @@ module UpdateDocumentDefaultVersion : sig
             
         ]
       ) result
-  (** 
-    Set the default version of a document.
-    
-     If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the [apply-only-at-cron-interval] parameter.
-     
-      *)
+  (** Set the default version of a document. 
+
+  If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the [apply-only-at-cron-interval] parameter.
+  
+    *)
 
   
 end
@@ -8493,9 +8632,8 @@ module UpdateDocumentMetadata : sig
             
         ]
       ) result
-  (** 
-    Updates information related to approval reviews for a specific version of a change template in Change Manager.
-     *)
+  (** Updates information related to approval reviews for a specific version of a change template in Change Manager.
+ *)
 
   
 end
@@ -8511,12 +8649,11 @@ module UpdateMaintenanceWindow : sig
             
         ]
       ) result
-  (** 
-    Updates an existing maintenance window. Only specified parameters are modified.
-    
-     The value you specify for [Duration] determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for [Cutoff]. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for [Cutoff] is one hour, no maintenance window tasks can start after 5 PM.
-     
-      *)
+  (** Updates an existing maintenance window. Only specified parameters are modified.
+
+  The value you specify for [Duration] determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for [Cutoff]. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for [Cutoff] is one hour, no maintenance window tasks can start after 5 PM.
+  
+    *)
 
   
 end
@@ -8532,33 +8669,31 @@ module UpdateMaintenanceWindowTarget : sig
             
         ]
       ) result
-  (** 
-    Modifies the target of an existing maintenance window. You can change the following:
+  (** Modifies the target of an existing maintenance window. You can change the following:
+
+ {ul
+       {-  Name
+           
+            }
+       {-  Description
+           
+            }
+       {-  Owner
+           
+            }
+       {-  IDs for an ID target
+           
+            }
+       {-  Tags for a Tag target
+           
+            }
+       {-  From any supported tag type to another. The three supported tag types are ID target, Tag target, and resource group. For more information, see [Target].
+           
+            }
+       }
+    If a parameter is null, then the corresponding field isn't modified.
     
-     {ul
-          {- Name
-             
-             }
-           {- Description
-              
-              }
-           {- Owner
-              
-              }
-           {- IDs for an ID target
-              
-              }
-           {- Tags for a Tag target
-              
-              }
-           {- From any supported tag type to another. The three supported tag types are ID target, Tag target, and resource group. For more information, see [Target].
-              
-              }
-          
-      }
-       If a parameter is null, then the corresponding field isn't modified.
-       
-        *)
+      *)
 
   
 end
@@ -8574,36 +8709,34 @@ module UpdateMaintenanceWindowTask : sig
             
         ]
       ) result
-  (** 
-    Modifies a task assigned to a maintenance window. You can't change the task type, but you can change the following values:
+  (** Modifies a task assigned to a maintenance window. You can't change the task type, but you can change the following values:
+
+ {ul
+       {-   [TaskARN]. For example, you can change a [RUN_COMMAND] task from [AWS-RunPowerShellScript] to [AWS-RunShellScript].
+           
+            }
+       {-   [ServiceRoleArn] 
+           
+            }
+       {-   [TaskInvocationParameters] 
+           
+            }
+       {-   [Priority] 
+           
+            }
+       {-   [MaxConcurrency] 
+           
+            }
+       {-   [MaxErrors] 
+           
+            }
+       }
+    One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}Registering maintenance window tasks without targets} in the {i Amazon Web Services Systems Manager User Guide}.
     
-     {ul
-          {- [TaskARN]. For example, you can change a [RUN_COMMAND] task from [AWS-RunPowerShellScript] to [AWS-RunShellScript].
-             
-             }
-           {- [ServiceRoleArn]
-              
-              }
-           {- [TaskInvocationParameters]
-              
-              }
-           {- [Priority]
-              
-              }
-           {- [MaxConcurrency]
-              
-              }
-           {- [MaxErrors]
-              
-              }
-          
-      }
-       One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}Registering maintenance window tasks without targets} in the {i Amazon Web Services Systems Manager User Guide}.
-       
-        If the value for a parameter in [UpdateMaintenanceWindowTask] is null, then the corresponding field isn't modified. If you set [Replace] to true, then all fields required by the [RegisterTaskWithMaintenanceWindow] operation are required for this request. Optional fields that aren't specified are set to null.
+      If the value for a parameter in [UpdateMaintenanceWindowTask] is null, then the corresponding field isn't modified. If you set [Replace] to true, then all fields required by the [RegisterTaskWithMaintenanceWindow] operation are required for this request. Optional fields that aren't specified are set to null.
+      
+        When you update a maintenance window task that has options specified in [TaskInvocationParameters], you must provide again all the [TaskInvocationParameters] values that you want to retain. The values you don't specify again are removed. For example, suppose that when you registered a Run Command task, you specified [TaskInvocationParameters] values for [Comment], [NotificationConfig], and [OutputS3BucketName]. If you update the maintenance window task and specify only a different [OutputS3BucketName] value, the values for [Comment] and [NotificationConfig] are removed.
         
-         When you update a maintenance window task that has options specified in [TaskInvocationParameters], you must provide again all the [TaskInvocationParameters] values that you want to retain. The values you don't specify again are removed. For example, suppose that when you registered a Run Command task, you specified [TaskInvocationParameters] values for [Comment], [NotificationConfig], and [OutputS3BucketName]. If you update the maintenance window task and specify only a different [OutputS3BucketName] value, the values for [Comment] and [NotificationConfig] are removed.
-         
           *)
 
   
@@ -8620,9 +8753,8 @@ module UpdateManagedInstanceRole : sig
             
         ]
       ) result
-  (** 
-    Changes the Identity and Access Management (IAM) role that is assigned to the on-premises server, edge device, or virtual machines (VM). IAM roles are first assigned to these hybrid nodes during the activation process. For more information, see [CreateActivation].
-     *)
+  (** Changes the Identity and Access Management (IAM) role that is assigned to the on-premises server, edge device, or virtual machines (VM). IAM roles are first assigned to these hybrid nodes during the activation process. For more information, see [CreateActivation].
+ *)
 
   
 end
@@ -8643,11 +8775,10 @@ module UpdateOpsItem : sig
             
         ]
       ) result
-  (** 
-    Edit or change an OpsItem. You must have permission in Identity and Access Management (IAM) to update an OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-    
-     Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
-      *)
+  (** Edit or change an OpsItem. You must have permission in Identity and Access Management (IAM) to update an OpsItem. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html}Set up OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}.
+
+ Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html}Amazon Web Services Systems Manager OpsCenter} in the {i Amazon Web Services Systems Manager User Guide}. 
+  *)
 
   
 end
@@ -8666,9 +8797,8 @@ module UpdateOpsMetadata : sig
             
         ]
       ) result
-  (** 
-    Amazon Web Services Systems Manager calls this API operation when you edit OpsMetadata in Application Manager.
-     *)
+  (** Amazon Web Services Systems Manager calls this API operation when you edit OpsMetadata in Application Manager.
+ *)
 
   
 end
@@ -8684,12 +8814,11 @@ module UpdatePatchBaseline : sig
             
         ]
       ) result
-  (** 
-    Modifies an existing patch baseline. Fields not specified in the request are left unchanged.
-    
-     For information about valid key-value pairs in [PatchFilters] for each supported operating system type, see [PatchFilter].
-     
-      *)
+  (** Modifies an existing patch baseline. Fields not specified in the request are left unchanged.
+
+  For information about valid key-value pairs in [PatchFilters] for each supported operating system type, see [PatchFilter].
+  
+    *)
 
   
 end
@@ -8707,13 +8836,12 @@ module UpdateResourceDataSync : sig
             
         ]
       ) result
-  (** 
-    Update a resource data sync. After you create a resource data sync for a Region, you can't change the account options for that sync. For example, if you create a sync in the us-east-2 (Ohio) Region and you choose the [Include only the current account] option, you can't edit that sync later and choose the [Include all accounts from my Organizations
+  (** Update a resource data sync. After you create a resource data sync for a Region, you can't change the account options for that sync. For example, if you create a sync in the us-east-2 (Ohio) Region and you choose the [Include only the current account] option, you can't edit that sync later and choose the [Include all accounts from my Organizations
     configuration] option. Instead, you must delete the first resource data sync, and create a new one.
-    
-     This API operation only supports a resource data sync that was created with a SyncFromSource [SyncType].
-     
-      *)
+
+  This API operation only supports a resource data sync that was created with a SyncFromSource [SyncType].
+  
+    *)
 
   
 end
@@ -8730,13 +8858,12 @@ module UpdateServiceSetting : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of "false". This means the user can't use this feature unless they change the setting to "true" and intentionally opt in for a paid feature.
-    
-     Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [GetServiceSetting] API operation to view the current value. Or, use the [ResetServiceSetting] to change the value back to the original value defined by the Amazon Web Services service team.
-     
-      Update the service setting for the account.
-       |}]
+  [@@ocaml.doc {|  [ServiceSetting] is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of "false". This means the user can't use this feature unless they change the setting to "true" and intentionally opt in for a paid feature.
+
+ Services map a [SettingId] object to a setting value. Amazon Web Services services teams define the default value for a [SettingId]. You can't create a new [SettingId], but you can overwrite the default value if you have the [ssm:UpdateServiceSetting] permission for the setting. Use the [GetServiceSetting] API operation to view the current value. Or, use the [ResetServiceSetting] to change the value back to the original value defined by the Amazon Web Services service team.
+ 
+  Update the service setting for the account. 
+   |}]
 
   
 end

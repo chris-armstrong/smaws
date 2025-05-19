@@ -9,44 +9,54 @@ open Smaws_Lib
 
 val service : Smaws_Lib.Service.descriptor
 type nonrec dead_letter_config = {
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).\n\n For more information, see {{:eventbridge/latest/userguide/eb-rule-dlq.html}Event retry policy and using dead-letter queues} in the {i EventBridge User Guide}.\n "]
 type nonrec update_event_bus_response =
   {
   dead_letter_config: dead_letter_config option ;
   description: string option ;
   kms_key_identifier: string option ;
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec update_event_bus_request =
   {
   dead_letter_config: dead_letter_config option ;
   description: string option ;
   kms_key_identifier: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec resource_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An entity that you specified does not exist.\n"]
 type nonrec operation_disabled_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The operation you are attempting is not available in this region.\n"]
 type nonrec internal_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "This exception occurs due to unexpected causes.\n"]
 type nonrec concurrent_modification_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "There is concurrent modification on a rule, target, archive, or replay.\n"]
 type nonrec primary = {
-  health_check: string }
+  health_check: string }[@@ocaml.doc "The primary Region of the endpoint.\n"]
 type nonrec secondary = {
-  route: string }
+  route: string }[@@ocaml.doc
+                   "The secondary Region that processes events when failover is triggered or replication is enabled.\n"]
 type nonrec failover_config = {
   secondary: secondary ;
-  primary: primary }
+  primary: primary }[@@ocaml.doc
+                      "The failover configuration for an endpoint. This includes what triggers failover and what happens when it's triggered.\n"]
 type nonrec routing_config = {
-  failover_config: failover_config }
+  failover_config: failover_config }[@@ocaml.doc
+                                      "The routing configuration of the endpoint.\n"]
 type nonrec replication_state =
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec replication_config = {
-  state: replication_state option }
+  state: replication_state option }[@@ocaml.doc
+                                     "Endpoints can replicate all events to the secondary Region.\n"]
 type nonrec endpoint_event_bus = {
-  event_bus_arn: string }
+  event_bus_arn: string }[@@ocaml.doc
+                           "The event buses the endpoint is associated with.\n"]
 type nonrec endpoint_state =
   | DELETE_FAILED 
   | UPDATE_FAILED 
@@ -54,7 +64,7 @@ type nonrec endpoint_state =
   | DELETING 
   | UPDATING 
   | CREATING 
-  | ACTIVE 
+  | ACTIVE [@@ocaml.doc ""]
 type nonrec update_endpoint_response =
   {
   state: endpoint_state option ;
@@ -65,7 +75,7 @@ type nonrec update_endpoint_response =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec update_endpoint_request =
   {
   role_arn: string option ;
@@ -73,7 +83,7 @@ type nonrec update_endpoint_request =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec connection_state =
   | DEAUTHORIZING 
   | AUTHORIZING 
@@ -81,61 +91,69 @@ type nonrec connection_state =
   | AUTHORIZED 
   | DELETING 
   | UPDATING 
-  | CREATING 
+  | CREATING [@@ocaml.doc ""]
 type nonrec update_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec connection_authorization_type =
   | API_KEY 
   | OAUTH_CLIENT_CREDENTIALS 
-  | BASIC 
+  | BASIC [@@ocaml.doc ""]
 type nonrec update_connection_basic_auth_request_parameters =
   {
   password: string option ;
-  username: string option }
+  username: string option }[@@ocaml.doc
+                             "Contains the Basic authorization parameters for the connection.\n"]
 type nonrec update_connection_o_auth_client_request_parameters =
   {
   client_secret: string option ;
-  client_i_d: string option }
+  client_i_d: string option }[@@ocaml.doc
+                               "Contains the OAuth authorization parameters to use for the connection.\n"]
 type nonrec connection_o_auth_http_method =
   | PUT 
   | POST 
-  | GET 
+  | GET [@@ocaml.doc ""]
 type nonrec connection_header_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional parameter included in the header. You can include up to 100 additional header parameters per request. An event payload cannot exceed 64 KB.\n"]
 type nonrec connection_query_string_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.\n"]
 type nonrec connection_body_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional parameter included in the body. You can include up to 100 additional body parameters per request. An event payload cannot exceed 64 KB.\n"]
 type nonrec connection_http_parameters =
   {
   body_parameters: connection_body_parameter list option ;
   query_string_parameters: connection_query_string_parameter list option ;
-  header_parameters: connection_header_parameter list option }
+  header_parameters: connection_header_parameter list option }[@@ocaml.doc
+                                                                "Contains additional parameters for the connection.\n"]
 type nonrec update_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method option ;
   authorization_endpoint: string option ;
   client_parameters:
-    update_connection_o_auth_client_request_parameters option }
+    update_connection_o_auth_client_request_parameters option }[@@ocaml.doc
+                                                                 "Contains the OAuth request parameters to use for the connection.\n"]
 type nonrec update_connection_api_key_auth_request_parameters =
   {
   api_key_value: string option ;
-  api_key_name: string option }
+  api_key_name: string option }[@@ocaml.doc
+                                 "Contains the API key authorization parameters to use to update the connection.\n"]
 type nonrec update_connection_auth_request_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
@@ -143,45 +161,47 @@ type nonrec update_connection_auth_request_parameters =
     update_connection_api_key_auth_request_parameters option ;
   o_auth_parameters: update_connection_o_auth_request_parameters option ;
   basic_auth_parameters:
-    update_connection_basic_auth_request_parameters option }
+    update_connection_basic_auth_request_parameters option }[@@ocaml.doc
+                                                              "Contains the additional parameters to use for the connection.\n"]
 type nonrec update_connection_request =
   {
   auth_parameters: update_connection_auth_request_parameters option ;
   authorization_type: connection_authorization_type option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The request failed because it attempted to create resource beyond the allowed service quota.\n"]
 type nonrec archive_state =
   | UPDATE_FAILED 
   | CREATE_FAILED 
   | UPDATING 
   | CREATING 
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec update_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec update_archive_request =
   {
   retention_days: int option ;
   event_pattern: string option ;
   description: string option ;
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec invalid_event_pattern_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The event pattern is not valid.\n"]
 type nonrec api_destination_state =
   | INACTIVE 
-  | ACTIVE 
+  | ACTIVE [@@ocaml.doc ""]
 type nonrec update_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec api_destination_http_method =
   | DELETE 
   | PATCH 
@@ -189,7 +209,7 @@ type nonrec api_destination_http_method =
   | OPTIONS 
   | HEAD 
   | GET 
-  | POST 
+  | POST [@@ocaml.doc ""]
 type nonrec update_api_destination_request =
   {
   invocation_rate_limit_per_second: int option ;
@@ -197,73 +217,84 @@ type nonrec update_api_destination_request =
   invocation_endpoint: string option ;
   connection_arn: string option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec untag_resource_response = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec managed_rule_exception = {
-  message: string option }
-type nonrec transformer_paths = (string * string) list
+  message: string option }[@@ocaml.doc
+                            "This rule was created by an Amazon Web Services service on behalf of your account. It is managed by that service. If you see this error in response to [DeleteRule] or [RemoveTargets], you can use the [Force] parameter in those calls to delete the rule or remove targets from the rule. You cannot modify these managed rules by using [DisableRule], [EnableRule], [PutTargets], [PutRule], [TagResource], or [UntagResource]. \n"]
+type nonrec transformer_paths = (string * string) list[@@ocaml.doc ""]
 type nonrec test_event_pattern_response = {
-  result: bool option }
+  result: bool option }[@@ocaml.doc ""]
 type nonrec test_event_pattern_request =
   {
   event: string ;
-  event_pattern: string }
+  event_pattern: string }[@@ocaml.doc ""]
 type nonrec input_transformer =
   {
   input_template: string ;
-  input_paths_map: transformer_paths option }
+  input_paths_map: transformer_paths option }[@@ocaml.doc
+                                               "Contains the parameters needed for you to provide custom input to a target based on one or more pieces of data extracted from the event.\n"]
 type nonrec kinesis_parameters = {
-  partition_key_path: string }
+  partition_key_path: string }[@@ocaml.doc
+                                "This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis data stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the [eventId] as the partition key.\n"]
 type nonrec run_command_target = {
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "Information about the EC2 instances that are to be sent the command, specified as key-value pairs. Each [RunCommandTarget] block can include only one key, but this key may specify multiple values.\n"]
 type nonrec run_command_parameters =
   {
-  run_command_targets: run_command_target list }
+  run_command_targets: run_command_target list }[@@ocaml.doc
+                                                  "This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 instances are to be sent the command. \n"]
 type nonrec launch_type =
   | EXTERNAL 
   | FARGATE 
-  | EC2 
+  | EC2 [@@ocaml.doc ""]
 type nonrec assign_public_ip =
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec aws_vpc_configuration =
   {
   assign_public_ip: assign_public_ip option ;
   security_groups: string list option ;
-  subnets: string list }
+  subnets: string list }[@@ocaml.doc
+                          "This structure specifies the VPC subnets and security groups for the task, and whether a public IP address is to be used. This structure is relevant only for ECS tasks that use the [awsvpc] network mode.\n"]
 type nonrec network_configuration =
   {
-  awsvpc_configuration: aws_vpc_configuration option }
+  awsvpc_configuration: aws_vpc_configuration option }[@@ocaml.doc
+                                                        "This structure specifies the network configuration for an ECS task.\n"]
 type nonrec capacity_provider_strategy_item =
   {
   base: int option ;
   weight: int option ;
-  capacity_provider: string }
+  capacity_provider: string }[@@ocaml.doc
+                               "The details of a capacity provider strategy. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CapacityProviderStrategyItem.html}CapacityProviderStrategyItem} in the Amazon ECS API Reference.\n"]
 type nonrec placement_constraint_type =
   | MEMBER_OF 
-  | DISTINCT_INSTANCE 
+  | DISTINCT_INSTANCE [@@ocaml.doc ""]
 type nonrec placement_constraint =
   {
   expression: string option ;
-  type_: placement_constraint_type option }
+  type_: placement_constraint_type option }[@@ocaml.doc
+                                             "An object representing a constraint on task placement. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html}Task Placement Constraints} in the Amazon Elastic Container Service Developer Guide.\n"]
 type nonrec placement_strategy_type =
   | BINPACK 
   | SPREAD 
-  | RANDOM 
+  | RANDOM [@@ocaml.doc ""]
 type nonrec placement_strategy =
   {
   field: string option ;
-  type_: placement_strategy_type option }
+  type_: placement_strategy_type option }[@@ocaml.doc
+                                           "The task placement strategy for a task or service. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html}Task Placement Strategies} in the Amazon Elastic Container Service Service Developer Guide.\n"]
 type nonrec propagate_tags =
-  | TASK_DEFINITION 
+  | TASK_DEFINITION [@@ocaml.doc ""]
 type nonrec tag = {
   value: string ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "A key-value pair associated with an Amazon Web Services resource. In EventBridge, rules and event buses support tagging.\n"]
 type nonrec ecs_parameters =
   {
   tags: tag list option ;
@@ -279,26 +310,33 @@ type nonrec ecs_parameters =
   network_configuration: network_configuration option ;
   launch_type: launch_type option ;
   task_count: int option ;
-  task_definition_arn: string }
+  task_definition_arn: string }[@@ocaml.doc
+                                 "The custom parameters to be used when the target is an Amazon ECS task.\n"]
 type nonrec batch_array_properties = {
-  size: int option }
+  size: int option }[@@ocaml.doc
+                      "The array properties for the submitted job, such as the size of the array. The array size can be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. This parameter is used only if the target is an Batch job.\n"]
 type nonrec batch_retry_strategy = {
-  attempts: int option }
+  attempts: int option }[@@ocaml.doc
+                          "The retry strategy to use for failed jobs, if the target is an Batch job. If you specify a retry strategy here, it overrides the retry strategy defined in the job definition.\n"]
 type nonrec batch_parameters =
   {
   retry_strategy: batch_retry_strategy option ;
   array_properties: batch_array_properties option ;
   job_name: string ;
-  job_definition: string }
+  job_definition: string }[@@ocaml.doc
+                            "The custom parameters to be used when the target is an Batch job.\n"]
 type nonrec sqs_parameters = {
-  message_group_id: string option }
-type nonrec header_parameters_map = (string * string) list
-type nonrec query_string_parameters_map = (string * string) list
+  message_group_id: string option }[@@ocaml.doc
+                                     "This structure includes the custom parameter to be used when the target is an SQS FIFO queue.\n"]
+type nonrec header_parameters_map = (string * string) list[@@ocaml.doc ""]
+type nonrec query_string_parameters_map = (string * string) list[@@ocaml.doc
+                                                                  ""]
 type nonrec http_parameters =
   {
   query_string_parameters: query_string_parameters_map option ;
   header_parameters: header_parameters_map option ;
-  path_parameter_values: string list option }
+  path_parameter_values: string list option }[@@ocaml.doc
+                                               "These are custom parameter to be used when the target is an API Gateway APIs or EventBridge ApiDestinations. In the latter case, these are merged with any InvocationParameters specified on the Connection, with any values from the Connection taking precedence.\n"]
 type nonrec redshift_data_parameters =
   {
   sqls: string list option ;
@@ -307,19 +345,25 @@ type nonrec redshift_data_parameters =
   sql: string option ;
   db_user: string option ;
   database: string ;
-  secret_manager_arn: string option }
+  secret_manager_arn: string option }[@@ocaml.doc
+                                       "These are custom parameters to be used when the target is a Amazon Redshift cluster to invoke the Amazon Redshift Data API ExecuteStatement based on EventBridge events.\n"]
 type nonrec sage_maker_pipeline_parameter = {
   value: string ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "Name/Value pair of a parameter to start execution of a SageMaker Model Building Pipeline.\n"]
 type nonrec sage_maker_pipeline_parameters =
   {
   pipeline_parameter_list: sage_maker_pipeline_parameter list option }
+[@@ocaml.doc
+  "These are custom parameters to use when the target is a SageMaker Model Building Pipeline that starts based on EventBridge events.\n"]
 type nonrec retry_policy =
   {
   maximum_event_age_in_seconds: int option ;
-  maximum_retry_attempts: int option }
+  maximum_retry_attempts: int option }[@@ocaml.doc
+                                        "A [RetryPolicy] object that includes information about the retry policy settings.\n"]
 type nonrec app_sync_parameters = {
-  graph_ql_operation: string option }
+  graph_ql_operation: string option }[@@ocaml.doc
+                                       "Contains the GraphQL operation to be parsed and executed, if the event target is an AppSync API.\n"]
 type nonrec target =
   {
   app_sync_parameters: app_sync_parameters option ;
@@ -338,28 +382,30 @@ type nonrec target =
   input: string option ;
   role_arn: string option ;
   arn: string ;
-  id: string }
+  id: string }[@@ocaml.doc
+                "Targets are the resources to be invoked when a rule is triggered. For a complete list of services and resources that can be set as a target, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutTargets.html}PutTargets}.\n\n If you are setting the event bus of another account as the target, and that account granted permission to your account through an organization instead of directly by the account ID, then you must specify a [RoleArn] with proper permissions in the [Target] structure. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.\n "]
 type nonrec tag_resource_response = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec replay_state =
   | FAILED 
   | CANCELLED 
   | COMPLETED 
   | CANCELLING 
   | RUNNING 
-  | STARTING 
+  | STARTING [@@ocaml.doc ""]
 type nonrec start_replay_response =
   {
   replay_start_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: replay_state option ;
-  replay_arn: string option }
+  replay_arn: string option }[@@ocaml.doc ""]
 type nonrec replay_destination =
   {
   filter_arns: string list option ;
-  arn: string }
+  arn: string }[@@ocaml.doc
+                 "A [ReplayDestination] object that contains details about a replay.\n"]
 type nonrec start_replay_request =
   {
   destination: replay_destination ;
@@ -367,13 +413,14 @@ type nonrec start_replay_request =
   event_start_time: CoreTypes.Timestamp.t ;
   event_source_arn: string ;
   description: string option ;
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec resource_already_exists_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The resource you are trying to create already exists.\n"]
 type nonrec rule_state =
   | ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS 
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec rule =
   {
   event_bus_name: string option ;
@@ -384,7 +431,8 @@ type nonrec rule =
   state: rule_state option ;
   event_pattern: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Contains information about a rule in Amazon EventBridge.\n"]
 type nonrec replay =
   {
   replay_end_time: CoreTypes.Timestamp.t option ;
@@ -395,43 +443,46 @@ type nonrec replay =
   state_reason: string option ;
   state: replay_state option ;
   event_source_arn: string option ;
-  replay_name: string option }
+  replay_name: string option }[@@ocaml.doc
+                                "A [Replay] object that contains details about a replay.\n"]
 type nonrec remove_targets_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  target_id: string option }
+  target_id: string option }[@@ocaml.doc
+                              "Represents a target that failed to be removed from a rule.\n"]
 type nonrec remove_targets_response =
   {
   failed_entries: remove_targets_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec remove_targets_request =
   {
   force: bool option ;
   ids: string list ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec remove_permission_request =
   {
   event_bus_name: string option ;
   remove_all_permissions: bool option ;
-  statement_id: string option }
+  statement_id: string option }[@@ocaml.doc ""]
 type nonrec put_targets_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  target_id: string option }
+  target_id: string option }[@@ocaml.doc
+                              "Represents a target that failed to be added to a rule.\n"]
 type nonrec put_targets_response =
   {
   failed_entries: put_targets_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_targets_request =
   {
   targets: target list ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec put_rule_response = {
-  rule_arn: string option }
+  rule_arn: string option }[@@ocaml.doc ""]
 type nonrec put_rule_request =
   {
   event_bus_name: string option ;
@@ -441,11 +492,12 @@ type nonrec put_rule_request =
   state: rule_state option ;
   event_pattern: string option ;
   schedule_expression: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec condition = {
   value: string ;
   key: string ;
-  type_: string }
+  type_: string }[@@ocaml.doc
+                   "A JSON string which you can use to limit the event bus permissions you are granting to only accounts that fulfill the condition. Currently, the only supported condition is membership in a certain Amazon Web Services organization. The string must contain [Type], [Key], and [Value] fields. The [Value] field specifies the ID of the Amazon Web Services organization. Following is an example value for [Condition]:\n\n  ['{\"Type\" : \"StringEquals\", \"Key\": \"aws:PrincipalOrgID\", \"Value\":\n        \"o-1234567890\"}'] \n "]
 type nonrec put_permission_request =
   {
   policy: string option ;
@@ -453,37 +505,41 @@ type nonrec put_permission_request =
   statement_id: string option ;
   principal: string option ;
   action: string option ;
-  event_bus_name: string option }
+  event_bus_name: string option }[@@ocaml.doc ""]
 type nonrec policy_length_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The event bus policy is too long. For more information, see the limits.\n"]
 type nonrec put_partner_events_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  event_id: string option }
+  event_id: string option }[@@ocaml.doc
+                             "The result of an event entry the partner submitted in this request. If the event was successfully submitted, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.\n"]
 type nonrec put_partner_events_response =
   {
   entries: put_partner_events_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_partner_events_request_entry =
   {
   detail: string option ;
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: CoreTypes.Timestamp.t option }
+  time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                        "The details about an event generated by an SaaS partner.\n"]
 type nonrec put_partner_events_request =
   {
-  entries: put_partner_events_request_entry list }
+  entries: put_partner_events_request_entry list }[@@ocaml.doc ""]
 type nonrec put_events_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  event_id: string option }
+  event_id: string option }[@@ocaml.doc
+                             "Represents the results of an event submitted to an event bus.\n\n If the submission was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.\n \n  For information about the errors that are common to all actions, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/CommonErrors.html}Common Errors}.\n  "]
 type nonrec put_events_response =
   {
   entries: put_events_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_events_request_entry =
   {
   trace_header: string option ;
@@ -492,87 +548,91 @@ type nonrec put_events_request_entry =
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: CoreTypes.Timestamp.t option }
+  time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                        "Represents an event to be submitted.\n"]
 type nonrec put_events_request =
   {
   endpoint_id: string option ;
-  entries: put_events_request_entry list }
+  entries: put_events_request_entry list }[@@ocaml.doc ""]
 type nonrec partner_event_source = {
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "A partner event source is created by an SaaS partner. If a customer creates a partner event bus that matches this event source, that Amazon Web Services account can receive events from the partner's applications or services.\n"]
 type nonrec event_source_state =
   | DELETED 
   | ACTIVE 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec partner_event_source_account =
   {
   state: event_source_state option ;
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
-  account: string option }
+  account: string option }[@@ocaml.doc
+                            "The Amazon Web Services account that a partner event source has been offered to.\n"]
 type nonrec list_targets_by_rule_response =
   {
   next_token: string option ;
-  targets: target list option }
+  targets: target list option }[@@ocaml.doc ""]
 type nonrec list_targets_by_rule_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_response = {
-  tags: tag list option }
+  tags: tag list option }[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_request = {
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec list_rules_response =
   {
   next_token: string option ;
-  rules: rule list option }
+  rules: rule list option }[@@ocaml.doc ""]
 type nonrec list_rules_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec list_rule_names_by_target_response =
   {
   next_token: string option ;
-  rule_names: string list option }
+  rule_names: string list option }[@@ocaml.doc ""]
 type nonrec list_rule_names_by_target_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  target_arn: string }
+  target_arn: string }[@@ocaml.doc ""]
 type nonrec list_replays_response =
   {
   next_token: string option ;
-  replays: replay list option }
+  replays: replay list option }[@@ocaml.doc ""]
 type nonrec list_replays_request =
   {
   limit: int option ;
   next_token: string option ;
   event_source_arn: string option ;
   state: replay_state option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec list_partner_event_sources_response =
   {
   next_token: string option ;
-  partner_event_sources: partner_event_source list option }
+  partner_event_sources: partner_event_source list option }[@@ocaml.doc ""]
 type nonrec list_partner_event_sources_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string }
+  name_prefix: string }[@@ocaml.doc ""]
 type nonrec list_partner_event_source_accounts_response =
   {
   next_token: string option ;
   partner_event_source_accounts: partner_event_source_account list option }
+[@@ocaml.doc ""]
 type nonrec list_partner_event_source_accounts_request =
   {
   limit: int option ;
   next_token: string option ;
-  event_source_name: string }
+  event_source_name: string }[@@ocaml.doc ""]
 type nonrec event_source =
   {
   state: event_source_state option ;
@@ -580,16 +640,17 @@ type nonrec event_source =
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "A partner event source is created by an SaaS partner. If a customer creates a partner event bus that matches this event source, that Amazon Web Services account can receive events from the partner's applications or services.\n"]
 type nonrec list_event_sources_response =
   {
   next_token: string option ;
-  event_sources: event_source list option }
+  event_sources: event_source list option }[@@ocaml.doc ""]
 type nonrec list_event_sources_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec event_bus =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -597,16 +658,17 @@ type nonrec event_bus =
   policy: string option ;
   description: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "An event bus receives events from a source, uses rules to evaluate them, applies any configured input transformation, and routes them to the appropriate target(s). Your account's default event bus receives events from Amazon Web Services services. A custom event bus can receive events from your custom applications and services. A partner event bus receives events from an event source created by an SaaS partner. These events come from the partners services or applications.\n"]
 type nonrec list_event_buses_response =
   {
   next_token: string option ;
-  event_buses: event_bus list option }
+  event_buses: event_bus list option }[@@ocaml.doc ""]
 type nonrec list_event_buses_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec endpoint =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -621,17 +683,18 @@ type nonrec endpoint =
   routing_config: routing_config option ;
   arn: string option ;
   description: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "A global endpoint used to improve your application's availability by making it regional-fault tolerant. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.\n"]
 type nonrec list_endpoints_response =
   {
   next_token: string option ;
-  endpoints: endpoint list option }
+  endpoints: endpoint list option }[@@ocaml.doc ""]
 type nonrec list_endpoints_request =
   {
   max_results: int option ;
   next_token: string option ;
   home_region: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec connection =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
@@ -641,17 +704,18 @@ type nonrec connection =
   state_reason: string option ;
   connection_state: connection_state option ;
   name: string option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc
+                                   "Contains information about a connection.\n"]
 type nonrec list_connections_response =
   {
   next_token: string option ;
-  connections: connection list option }
+  connections: connection list option }[@@ocaml.doc ""]
 type nonrec list_connections_request =
   {
   limit: int option ;
   next_token: string option ;
   connection_state: connection_state option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec archive =
   {
   creation_time: CoreTypes.Timestamp.t option ;
@@ -661,18 +725,19 @@ type nonrec archive =
   state_reason: string option ;
   state: archive_state option ;
   event_source_arn: string option ;
-  archive_name: string option }
+  archive_name: string option }[@@ocaml.doc
+                                 "An [Archive] object that contains details about an archive.\n"]
 type nonrec list_archives_response =
   {
   next_token: string option ;
-  archives: archive list option }
+  archives: archive list option }[@@ocaml.doc ""]
 type nonrec list_archives_request =
   {
   limit: int option ;
   next_token: string option ;
   state: archive_state option ;
   event_source_arn: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec api_destination =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -683,29 +748,32 @@ type nonrec api_destination =
   connection_arn: string option ;
   api_destination_state: api_destination_state option ;
   name: string option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc
+                                        "Contains details about an API destination.\n"]
 type nonrec list_api_destinations_response =
   {
   next_token: string option ;
-  api_destinations: api_destination list option }
+  api_destinations: api_destination list option }[@@ocaml.doc ""]
 type nonrec list_api_destinations_request =
   {
   limit: int option ;
   next_token: string option ;
   connection_arn: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec invalid_state_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified state is not a valid state for an event source.\n"]
 type nonrec illegal_status_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An error occurred because a replay can be canceled only when the state is Running or Starting.\n"]
 type nonrec enable_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec disable_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_rule_response =
   {
   created_by: string option ;
@@ -717,11 +785,11 @@ type nonrec describe_rule_response =
   schedule_expression: string option ;
   event_pattern: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_replay_response =
   {
   replay_end_time: CoreTypes.Timestamp.t option ;
@@ -735,15 +803,15 @@ type nonrec describe_replay_response =
   state: replay_state option ;
   description: string option ;
   replay_arn: string option ;
-  replay_name: string option }
+  replay_name: string option }[@@ocaml.doc ""]
 type nonrec describe_replay_request = {
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec describe_partner_event_source_response =
   {
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec describe_partner_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_event_source_response =
   {
   state: event_source_state option ;
@@ -751,9 +819,9 @@ type nonrec describe_event_source_response =
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec describe_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_event_bus_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -763,9 +831,9 @@ type nonrec describe_event_bus_response =
   kms_key_identifier: string option ;
   description: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_event_bus_request = {
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_endpoint_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -780,32 +848,39 @@ type nonrec describe_endpoint_response =
   routing_config: routing_config option ;
   arn: string option ;
   description: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_endpoint_request =
   {
   home_region: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec connection_basic_auth_response_parameters =
   {
-  username: string option }
+  username: string option }[@@ocaml.doc
+                             "Contains the authorization parameters for the connection if Basic is specified as the authorization type.\n"]
 type nonrec connection_o_auth_client_response_parameters =
   {
-  client_i_d: string option }
+  client_i_d: string option }[@@ocaml.doc
+                               "Contains the client response parameters for the connection when OAuth is specified as the authorization type.\n"]
 type nonrec connection_o_auth_response_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method option ;
   authorization_endpoint: string option ;
   client_parameters: connection_o_auth_client_response_parameters option }
+[@@ocaml.doc
+  "Contains the response parameters when OAuth is specified as the authorization type.\n"]
 type nonrec connection_api_key_auth_response_parameters =
   {
-  api_key_name: string option }
+  api_key_name: string option }[@@ocaml.doc
+                                 "Contains the authorization parameters for the connection if API Key is specified as the authorization type.\n"]
 type nonrec connection_auth_response_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
   api_key_auth_parameters: connection_api_key_auth_response_parameters option ;
   o_auth_parameters: connection_o_auth_response_parameters option ;
   basic_auth_parameters: connection_basic_auth_response_parameters option }
+[@@ocaml.doc
+  "Contains the authorization parameters to use for the connection.\n"]
 type nonrec describe_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
@@ -818,9 +893,9 @@ type nonrec describe_connection_response =
   connection_state: connection_state option ;
   description: string option ;
   name: string option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
@@ -833,9 +908,9 @@ type nonrec describe_archive_response =
   description: string option ;
   event_source_arn: string option ;
   archive_name: string option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_archive_request = {
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec describe_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -847,62 +922,62 @@ type nonrec describe_api_destination_response =
   api_destination_state: api_destination_state option ;
   description: string option ;
   name: string option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_api_destination_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_rule_request =
   {
   force: bool option ;
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_partner_event_source_request =
   {
   account: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_event_bus_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_endpoint_response = unit
 type nonrec delete_endpoint_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec delete_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_archive_response = unit
 type nonrec delete_archive_request = {
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec delete_api_destination_response = unit
 type nonrec delete_api_destination_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec deauthorize_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec deauthorize_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec deactivate_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_partner_event_source_response =
   {
-  event_source_arn: string option }
+  event_source_arn: string option }[@@ocaml.doc ""]
 type nonrec create_partner_event_source_request =
   {
   account: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_event_bus_response =
   {
   dead_letter_config: dead_letter_config option ;
   kms_key_identifier: string option ;
   description: string option ;
-  event_bus_arn: string option }
+  event_bus_arn: string option }[@@ocaml.doc ""]
 type nonrec create_event_bus_request =
   {
   tags: tag list option ;
@@ -910,7 +985,7 @@ type nonrec create_event_bus_request =
   kms_key_identifier: string option ;
   description: string option ;
   event_source_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_endpoint_response =
   {
   state: endpoint_state option ;
@@ -919,7 +994,7 @@ type nonrec create_endpoint_response =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec create_endpoint_request =
   {
   role_arn: string option ;
@@ -927,31 +1002,36 @@ type nonrec create_endpoint_request =
   replication_config: replication_config option ;
   routing_config: routing_config ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_connection_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec create_connection_basic_auth_request_parameters =
   {
   password: string ;
-  username: string }
+  username: string }[@@ocaml.doc
+                      "Contains the Basic authorization parameters to use for the connection.\n"]
 type nonrec create_connection_o_auth_client_request_parameters =
   {
   client_secret: string ;
-  client_i_d: string }
+  client_i_d: string }[@@ocaml.doc
+                        "Contains the Basic authorization parameters to use for the connection.\n"]
 type nonrec create_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method ;
   authorization_endpoint: string ;
   client_parameters: create_connection_o_auth_client_request_parameters }
+[@@ocaml.doc
+  "Contains the OAuth authorization parameters to use for the connection.\n"]
 type nonrec create_connection_api_key_auth_request_parameters =
   {
   api_key_value: string ;
-  api_key_name: string }
+  api_key_name: string }[@@ocaml.doc
+                          "Contains the API key authorization parameters for the connection.\n"]
 type nonrec create_connection_auth_request_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
@@ -959,32 +1039,33 @@ type nonrec create_connection_auth_request_parameters =
     create_connection_api_key_auth_request_parameters option ;
   o_auth_parameters: create_connection_o_auth_request_parameters option ;
   basic_auth_parameters:
-    create_connection_basic_auth_request_parameters option }
+    create_connection_basic_auth_request_parameters option }[@@ocaml.doc
+                                                              "Contains the authorization parameters for the connection.\n"]
 type nonrec create_connection_request =
   {
   auth_parameters: create_connection_auth_request_parameters ;
   authorization_type: connection_authorization_type ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec create_archive_request =
   {
   retention_days: int option ;
   event_pattern: string option ;
   description: string option ;
   event_source_arn: string ;
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec create_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec create_api_destination_request =
   {
   invocation_rate_limit_per_second: int option ;
@@ -992,16 +1073,16 @@ type nonrec create_api_destination_request =
   invocation_endpoint: string ;
   connection_arn: string ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec cancel_replay_response =
   {
   state_reason: string option ;
   state: replay_state option ;
-  replay_arn: string option }
+  replay_arn: string option }[@@ocaml.doc ""]
 type nonrec cancel_replay_request = {
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec activate_event_source_request = {
-  name: string }(** {1:builders Builders} *)
+  name: string }[@@ocaml.doc ""](** {1:builders Builders} *)
 
 val make_dead_letter_config : ?arn:string -> unit -> dead_letter_config
 val make_update_event_bus_response :
@@ -1771,9 +1852,8 @@ module ActivateEventSource : sig
             
         ]
       ) result
-  (** 
-    Activates a partner event source that has been deactivated. Once activated, your matching event bus will start receiving events from the event source.
-     *)
+  (** Activates a partner event source that has been deactivated. Once activated, your matching event bus will start receiving events from the event source.
+ *)
 
   
 end
@@ -1791,9 +1871,8 @@ module CancelReplay : sig
             
         ]
       ) result
-  (** 
-    Cancels the specified replay.
-     *)
+  (** Cancels the specified replay.
+ *)
 
   
 end
@@ -1811,13 +1890,12 @@ module CreateApiDestination : sig
             
         ]
       ) result
-  (** 
-    Creates an API destination, which is an HTTP invocation endpoint configured as a target for events.
-    
-     API destinations do not support private destinations, such as interface VPC endpoints.
-     
-      For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-api-destinations.html}API destinations} in the {i EventBridge User Guide}.
-       *)
+  (** Creates an API destination, which is an HTTP invocation endpoint configured as a target for events.
+
+ API destinations do not support private destinations, such as interface VPC endpoints.
+ 
+  For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-api-destinations.html}API destinations} in the {i EventBridge User Guide}.
+   *)
 
   
 end
@@ -1837,38 +1915,36 @@ module CreateArchive : sig
             
         ]
       ) result
-  (** 
-    Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.
-    
-     Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:
-     
-      {ul
-           {- You call 
-              {[
-              {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html}CreateArchive}
-              ]}
-               on an event bus set to use a customer managed key for encryption.
-              
+  (** Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.
+
+  Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:
+  
+   {ul
+         {-  You call 
+             {[
+              {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html}CreateArchive} 
+             ]}
+              on an event bus set to use a customer managed key for encryption.
+             
               }
-            {- You call 
-               {[
-               {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer}
-               ]}
-                on an event bus set to use a customer managed key for encryption.
-               
-               }
-            {- You call 
-               {[
-               {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus}
-               ]}
-                to set a customer managed key on an event bus with an archives or schema discovery enabled.
-               
-               }
-           
-      }
-       To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data encryption in EventBridge} in the {i Amazon EventBridge User Guide}.
-       
-        *)
+         {-  You call 
+             {[
+              {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} 
+             ]}
+              on an event bus set to use a customer managed key for encryption.
+             
+              }
+         {-  You call 
+             {[
+              {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} 
+             ]}
+              to set a customer managed key on an event bus with an archives or schema discovery enabled.
+             
+              }
+         }
+   To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data encryption in EventBridge} in the {i Amazon EventBridge User Guide}.
+   
+     *)
 
   
 end
@@ -1885,9 +1961,8 @@ module CreateConnection : sig
             
         ]
       ) result
-  (** 
-    Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.
-     *)
+  (** Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.
+ *)
 
   
 end
@@ -1904,9 +1979,8 @@ module CreateEndpoint : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    Creates a global endpoint. Global endpoints improve your application's availability by making it regional-fault tolerant. To do this, you define a primary and secondary Region with event buses in each Region. You also create a Amazon Route 53 health check that will tell EventBridge to route events to the secondary Region when an "unhealthy" state is encountered and events will be routed back to the primary Region when the health check reports a "healthy" state.
-     |}]
+  [@@ocaml.doc {| Creates a global endpoint. Global endpoints improve your application's availability by making it regional-fault tolerant. To do this, you define a primary and secondary Region with event buses in each Region. You also create a Amazon Route 53 health check that will tell EventBridge to route events to the secondary Region when an "unhealthy" state is encountered and events will be routed back to the primary Region when the health check reports a "healthy" state.
+ |}]
 
   
 end
@@ -1927,9 +2001,8 @@ module CreateEventBus : sig
             
         ]
       ) result
-  (** 
-    Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services, or it can be a partner event bus which can be matched to a partner event source.
-     *)
+  (** Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services, or it can be a partner event bus which can be matched to a partner event source.
+ *)
 
   
 end
@@ -1948,39 +2021,37 @@ module CreatePartnerEventSource : sig
             
         ]
       ) result
-  (** 
-    Called by an SaaS partner to create a partner event source. This operation is not used by Amazon Web Services customers.
+  (** Called by an SaaS partner to create a partner event source. This operation is not used by Amazon Web Services customers.
+
+ Each partner event source can be used by one Amazon Web Services account to create a matching partner event bus in that Amazon Web Services account. A SaaS partner must create one partner event source for each Amazon Web Services account that wants to receive those event types. 
+ 
+  A partner event source creates events based on resources within the SaaS partner's service or application.
+  
+   An Amazon Web Services account that creates a partner event bus that matches the partner event source can use that event bus to receive events from the partner, and then process them using Amazon Web Services Events rules and targets.
+   
+    Partner event source names follow this format:
     
-     Each partner event source can be used by one Amazon Web Services account to create a matching partner event bus in that Amazon Web Services account. A SaaS partner must create one partner event source for each Amazon Web Services account that wants to receive those event types.
-     
-      A partner event source creates events based on resources within the SaaS partner's service or application.
       
-       An Amazon Web Services account that creates a partner event bus that matches the partner event source can use that event bus to receive events from the partner, and then process them using Amazon Web Services Events rules and targets.
-       
-        Partner event source names follow this format:
-        
-         
-         {[
-         {i partner_name}/{i event_namespace}/{i event_name}
-         ]}
-         
-         
-          {ul
-               {- {i partner_name} is determined during partner registration, and identifies the partner to Amazon Web Services customers.
-                  
+     {[
+      {i partner_name}/{i event_namespace}/{i event_name} 
+     ]}
+      
+     
+      {ul
+            {-   {i partner_name} is determined during partner registration, and identifies the partner to Amazon Web Services customers. 
+                
+                 }
+            {-   {i event_namespace} is determined by the partner, and is a way for the partner to categorize their events.
+                
+                 }
+            {-   {i event_name} is determined by the partner, and should uniquely identify an event-generating resource within the partner system. 
+                
+                 The {i event_name} must be unique across all Amazon Web Services customers. This is because the event source is a shared resource between the partner and customer accounts, and each partner event source unique in the partner account.
+                 
                   }
-                {- {i event_namespace} is determined by the partner, and is a way for the partner to categorize their events.
-                   
-                   }
-                {- {i event_name} is determined by the partner, and should uniquely identify an event-generating resource within the partner system.
-                   
-                    The {i event_name} must be unique across all Amazon Web Services customers. This is because the event source is a shared resource between the partner and customer accounts, and each partner event source unique in the partner account.
-                    
-                    }
-               
-      }
-       The combination of {i event_namespace} and {i event_name} should help Amazon Web Services customers decide whether to create an event bus to receive these events.
-        *)
+            }
+   The combination of {i event_namespace} and {i event_name} should help Amazon Web Services customers decide whether to create an event bus to receive these events.
+    *)
 
   
 end
@@ -1999,13 +2070,12 @@ module DeactivateEventSource : sig
             
         ]
       ) result
-  (** 
-    You can use this operation to temporarily stop receiving events from the specified partner event source. The matching event bus is not deleted.
-    
-     When you deactivate a partner event source, the source goes into PENDING state. If it remains in PENDING state for more than two weeks, it is deleted.
-     
-      To activate a deactivated partner event source, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ActivateEventSource.html}ActivateEventSource}.
-       *)
+  (** You can use this operation to temporarily stop receiving events from the specified partner event source. The matching event bus is not deleted. 
+
+ When you deactivate a partner event source, the source goes into PENDING state. If it remains in PENDING state for more than two weeks, it is deleted.
+ 
+  To activate a deactivated partner event source, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ActivateEventSource.html}ActivateEventSource}.
+   *)
 
   
 end
@@ -2022,9 +2092,8 @@ module DeauthorizeConnection : sig
             
         ]
       ) result
-  (** 
-    Removes all authorization parameters from the connection. This lets you remove the secret from the connection so you can reuse it without having to create a new connection.
-     *)
+  (** Removes all authorization parameters from the connection. This lets you remove the secret from the connection so you can reuse it without having to create a new connection.
+ *)
 
   
 end
@@ -2041,9 +2110,8 @@ module DeleteApiDestination : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified API destination.
-     *)
+  (** Deletes the specified API destination.
+ *)
 
   
 end
@@ -2060,9 +2128,8 @@ module DeleteArchive : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified archive.
-     *)
+  (** Deletes the specified archive.
+ *)
 
   
 end
@@ -2079,9 +2146,8 @@ module DeleteConnection : sig
             
         ]
       ) result
-  (** 
-    Deletes a connection.
-     *)
+  (** Deletes a connection.
+ *)
 
   
 end
@@ -2098,9 +2164,8 @@ module DeleteEndpoint : sig
             
         ]
       ) result
-  (** 
-    Delete an existing global endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i {i Amazon EventBridge User Guide}}.
-     *)
+  (** Delete an existing global endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.
+ *)
 
   
 end
@@ -2116,9 +2181,8 @@ module DeleteEventBus : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified custom event bus or partner event bus. All rules associated with this event bus need to be deleted. You can't delete your account's default event bus.
-     *)
+  (** Deletes the specified custom event bus or partner event bus. All rules associated with this event bus need to be deleted. You can't delete your account's default event bus.
+ *)
 
   
 end
@@ -2135,13 +2199,12 @@ module DeletePartnerEventSource : sig
             
         ]
       ) result
-  (** 
-    This operation is used by SaaS partners to delete a partner event source. This operation is not used by Amazon Web Services customers.
-    
-     When you delete an event source, the status of the corresponding partner event bus in the Amazon Web Services customer account becomes DELETED.
-     
-      
-       *)
+  (** This operation is used by SaaS partners to delete a partner event source. This operation is not used by Amazon Web Services customers.
+
+ When you delete an event source, the status of the corresponding partner event bus in the Amazon Web Services customer account becomes DELETED.
+ 
+  
+   *)
 
   
 end
@@ -2159,17 +2222,16 @@ module DeleteRule : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified rule.
-    
-     Before you can delete the rule, you must remove all targets, using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_RemoveTargets.html}RemoveTargets}.
-     
-      When you delete a rule, incoming events might continue to match to the deleted rule. Allow a short period of time for changes to take effect.
-      
-       If you call delete rule multiple times for the same rule, all calls will succeed. When you call delete rule for a non-existent custom eventbus, [ResourceNotFoundException] is returned.
-       
-        Managed rules are rules created and managed by another Amazon Web Services service on your behalf. These rules are created by those other Amazon Web Services services to support functionality in those services. You can delete these rules using the [Force] option, but you should do so only if you are sure the other service is not still using that rule.
-         *)
+  (** Deletes the specified rule.
+
+ Before you can delete the rule, you must remove all targets, using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_RemoveTargets.html}RemoveTargets}.
+ 
+  When you delete a rule, incoming events might continue to match to the deleted rule. Allow a short period of time for changes to take effect.
+  
+   If you call delete rule multiple times for the same rule, all calls will succeed. When you call delete rule for a non-existent custom eventbus, [ResourceNotFoundException] is returned.
+   
+    Managed rules are rules created and managed by another Amazon Web Services service on your behalf. These rules are created by those other Amazon Web Services services to support functionality in those services. You can delete these rules using the [Force] option, but you should do so only if you are sure the other service is not still using that rule.
+     *)
 
   
 end
@@ -2185,9 +2247,8 @@ module DescribeApiDestination : sig
             
         ]
       ) result
-  (** 
-    Retrieves details about an API destination.
-     *)
+  (** Retrieves details about an API destination.
+ *)
 
   
 end
@@ -2204,9 +2265,8 @@ module DescribeArchive : sig
             
         ]
       ) result
-  (** 
-    Retrieves details about an archive.
-     *)
+  (** Retrieves details about an archive.
+ *)
 
   
 end
@@ -2222,9 +2282,8 @@ module DescribeConnection : sig
             
         ]
       ) result
-  (** 
-    Retrieves details about a connection.
-     *)
+  (** Retrieves details about a connection.
+ *)
 
   
 end
@@ -2240,9 +2299,8 @@ module DescribeEndpoint : sig
             
         ]
       ) result
-  (** 
-    Get the information about an existing global endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i {i Amazon EventBridge User Guide}}.
-     *)
+  (** Get the information about an existing global endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.
+ *)
 
   
 end
@@ -2258,13 +2316,12 @@ module DescribeEventBus : sig
             
         ]
       ) result
-  (** 
-    Displays details about an event bus in your account. This can include the external Amazon Web Services accounts that are permitted to write events to your default event bus, and the associated policy. For custom event buses and partner event buses, it displays the name, ARN, policy, state, and creation time.
-    
-     To enable your account to receive events from other accounts on its default event bus, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutPermission.html}PutPermission}.
-     
-      For more information about partner event buses, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
-       *)
+  (** Displays details about an event bus in your account. This can include the external Amazon Web Services accounts that are permitted to write events to your default event bus, and the associated policy. For custom event buses and partner event buses, it displays the name, ARN, policy, state, and creation time.
+
+  To enable your account to receive events from other accounts on its default event bus, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutPermission.html}PutPermission}.
+ 
+  For more information about partner event buses, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
+   *)
 
   
 end
@@ -2281,9 +2338,8 @@ module DescribeEventSource : sig
             
         ]
       ) result
-  (** 
-    This operation lists details about a partner event source that is shared with your account.
-     *)
+  (** This operation lists details about a partner event source that is shared with your account.
+ *)
 
   
 end
@@ -2300,9 +2356,8 @@ module DescribePartnerEventSource : sig
             
         ]
       ) result
-  (** 
-    An SaaS partner can use this operation to list details about a partner event source that they have created. Amazon Web Services customers do not use this operation. Instead, Amazon Web Services customers can use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventSource.html}DescribeEventSource} to see details about a partner event source that is shared with them.
-     *)
+  (** An SaaS partner can use this operation to list details about a partner event source that they have created. Amazon Web Services customers do not use this operation. Instead, Amazon Web Services customers can use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventSource.html}DescribeEventSource} to see details about a partner event source that is shared with them.
+ *)
 
   
 end
@@ -2318,9 +2373,8 @@ module DescribeReplay : sig
             
         ]
       ) result
-  (** 
-    Retrieves details about a replay. Use [DescribeReplay] to determine the progress of a running replay. A replay processes events to replay based on the time in the event, and replays them using 1 minute intervals. If you use [StartReplay] and specify an [EventStartTime] and an [EventEndTime] that covers a 20 minute time range, the events are replayed from the first minute of that 20 minute range first. Then the events from the second minute are replayed. You can use [DescribeReplay] to determine the progress of a replay. The value returned for [EventLastReplayedTime] indicates the time within the specified time range associated with the last event replayed.
-     *)
+  (** Retrieves details about a replay. Use [DescribeReplay] to determine the progress of a running replay. A replay processes events to replay based on the time in the event, and replays them using 1 minute intervals. If you use [StartReplay] and specify an [EventStartTime] and an [EventEndTime] that covers a 20 minute time range, the events are replayed from the first minute of that 20 minute range first. Then the events from the second minute are replayed. You can use [DescribeReplay] to determine the progress of a replay. The value returned for [EventLastReplayedTime] indicates the time within the specified time range associated with the last event replayed.
+ *)
 
   
 end
@@ -2336,11 +2390,10 @@ module DescribeRule : sig
             
         ]
       ) result
-  (** 
-    Describes the specified rule.
-    
-     DescribeRule does not list the targets of a rule. To see the targets associated with a rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html}ListTargetsByRule}.
-      *)
+  (** Describes the specified rule.
+
+ DescribeRule does not list the targets of a rule. To see the targets associated with a rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html}ListTargetsByRule}.
+  *)
 
   
 end
@@ -2358,11 +2411,10 @@ module DisableRule : sig
             
         ]
       ) result
-  (** 
-    Disables the specified rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.
-    
-     When you disable a rule, incoming events might continue to match to the disabled rule. Allow a short period of time for changes to take effect.
-      *)
+  (** Disables the specified rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.
+
+ When you disable a rule, incoming events might continue to match to the disabled rule. Allow a short period of time for changes to take effect.
+  *)
 
   
 end
@@ -2380,11 +2432,10 @@ module EnableRule : sig
             
         ]
       ) result
-  (** 
-    Enables the specified rule. If the rule does not exist, the operation fails.
-    
-     When you enable a rule, incoming events might not immediately start matching to a newly enabled rule. Allow a short period of time for changes to take effect.
-      *)
+  (** Enables the specified rule. If the rule does not exist, the operation fails.
+
+ When you enable a rule, incoming events might not immediately start matching to a newly enabled rule. Allow a short period of time for changes to take effect.
+  *)
 
   
 end
@@ -2399,9 +2450,8 @@ module ListApiDestinations : sig
             
         ]
       ) result
-  (** 
-    Retrieves a list of API destination in the account in the current Region.
-     *)
+  (** Retrieves a list of API destination in the account in the current Region.
+ *)
 
   
 end
@@ -2417,9 +2467,8 @@ module ListArchives : sig
             
         ]
       ) result
-  (** 
-    Lists your archives. You can either list all the archives or you can provide a prefix to match to the archive names. Filter parameters are exclusive.
-     *)
+  (** Lists your archives. You can either list all the archives or you can provide a prefix to match to the archive names. Filter parameters are exclusive.
+ *)
 
   
 end
@@ -2434,9 +2483,8 @@ module ListConnections : sig
             
         ]
       ) result
-  (** 
-    Retrieves a list of connections from the account.
-     *)
+  (** Retrieves a list of connections from the account.
+ *)
 
   
 end
@@ -2451,9 +2499,8 @@ module ListEndpoints : sig
             
         ]
       ) result
-  (** 
-    List the global endpoints associated with this account. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i {i Amazon EventBridge User Guide}}.
-     *)
+  (** List the global endpoints associated with this account. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.
+ *)
 
   
 end
@@ -2468,9 +2515,8 @@ module ListEventBuses : sig
             
         ]
       ) result
-  (** 
-    Lists all the event buses in your account, including the default event bus, custom event buses, and partner event buses.
-     *)
+  (** Lists all the event buses in your account, including the default event bus, custom event buses, and partner event buses.
+ *)
 
   
 end
@@ -2486,9 +2532,8 @@ module ListEventSources : sig
             
         ]
       ) result
-  (** 
-    You can use this to see all the partner event sources that have been shared with your Amazon Web Services account. For more information about partner event sources, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
-     *)
+  (** You can use this to see all the partner event sources that have been shared with your Amazon Web Services account. For more information about partner event sources, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
+ *)
 
   
 end
@@ -2505,9 +2550,8 @@ module ListPartnerEventSourceAccounts : sig
             
         ]
       ) result
-  (** 
-    An SaaS partner can use this operation to display the Amazon Web Services account ID that a particular partner event source name is associated with. This operation is not used by Amazon Web Services customers.
-     *)
+  (** An SaaS partner can use this operation to display the Amazon Web Services account ID that a particular partner event source name is associated with. This operation is not used by Amazon Web Services customers.
+ *)
 
   
 end
@@ -2523,9 +2567,8 @@ module ListPartnerEventSources : sig
             
         ]
       ) result
-  (** 
-    An SaaS partner can use this operation to list all the partner event source names that they have created. This operation is not used by Amazon Web Services customers.
-     *)
+  (** An SaaS partner can use this operation to list all the partner event source names that they have created. This operation is not used by Amazon Web Services customers.
+ *)
 
   
 end
@@ -2540,9 +2583,8 @@ module ListReplays : sig
             
         ]
       ) result
-  (** 
-    Lists your replays. You can either list all the replays or you can provide a prefix to match to the replay names. Filter parameters are exclusive.
-     *)
+  (** Lists your replays. You can either list all the replays or you can provide a prefix to match to the replay names. Filter parameters are exclusive.
+ *)
 
   
 end
@@ -2558,11 +2600,10 @@ module ListRuleNamesByTarget : sig
             
         ]
       ) result
-  (** 
-    Lists the rules for the specified target. You can see which of the rules in Amazon EventBridge can invoke a specific target in your account.
-    
-     The maximum number of results per page for requests is 100.
-      *)
+  (** Lists the rules for the specified target. You can see which of the rules in Amazon EventBridge can invoke a specific target in your account.
+
+ The maximum number of results per page for requests is 100.
+  *)
 
   
 end
@@ -2578,13 +2619,12 @@ module ListRules : sig
             
         ]
       ) result
-  (** 
-    Lists your Amazon EventBridge rules. You can either list all the rules or you can provide a prefix to match to the rule names.
-    
-     The maximum number of results per page for requests is 100.
-     
-      ListRules does not list the targets of a rule. To see the targets associated with a rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html}ListTargetsByRule}.
-       *)
+  (** Lists your Amazon EventBridge rules. You can either list all the rules or you can provide a prefix to match to the rule names.
+
+ The maximum number of results per page for requests is 100.
+ 
+  ListRules does not list the targets of a rule. To see the targets associated with a rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html}ListTargetsByRule}.
+   *)
 
   
 end
@@ -2600,9 +2640,8 @@ module ListTagsForResource : sig
             
         ]
       ) result
-  (** 
-    Displays the tags associated with an EventBridge resource. In EventBridge, rules and event buses can be tagged.
-     *)
+  (** Displays the tags associated with an EventBridge resource. In EventBridge, rules and event buses can be tagged.
+ *)
 
   
 end
@@ -2618,11 +2657,10 @@ module ListTargetsByRule : sig
             
         ]
       ) result
-  (** 
-    Lists the targets assigned to the specified rule.
-    
-     The maximum number of results per page for requests is 100.
-      *)
+  (** Lists the targets assigned to the specified rule.
+
+ The maximum number of results per page for requests is 100.
+  *)
 
   
 end
@@ -2637,16 +2675,15 @@ module PutEvents : sig
             
         ]
       ) result
-  (** 
-    Sends custom events to Amazon EventBridge so that they can be matched to rules.
+  (** Sends custom events to Amazon EventBridge so that they can be matched to rules.
+
+ The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html}Calculating PutEvents event entry size} in the {i  {i Amazon EventBridge User Guide} } 
+ 
+  PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.
+  
+    PutEvents will only process nested JSON up to 1100 levels deep.
     
-     The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html}Calculating PutEvents event entry size} in the {i {i Amazon EventBridge User Guide}}
-     
-      PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.
-      
-       PutEvents will only process nested JSON up to 1100 levels deep.
-       
-        *)
+      *)
 
   
 end
@@ -2662,11 +2699,10 @@ module PutPartnerEvents : sig
             
         ]
       ) result
-  (** 
-    This is used by SaaS partners to write events to a customer's partner event bus. Amazon Web Services customers do not use this operation.
-    
-     For information on calculating event batch size, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html}Calculating EventBridge PutEvents event entry size} in the {i EventBridge User Guide}.
-      *)
+  (** This is used by SaaS partners to write events to a customer's partner event bus. Amazon Web Services customers do not use this operation.
+
+ For information on calculating event batch size, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html}Calculating EventBridge PutEvents event entry size} in the {i EventBridge User Guide}.
+  *)
 
   
 end
@@ -2685,17 +2721,16 @@ module PutPermission : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    Running [PutPermission] permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified {i event bus}. Amazon EventBridge (CloudWatch Events) rules in your account are triggered by these events arriving to an event bus in your account.
-    
-     For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.
-     
-      To enable multiple Amazon Web Services accounts to put events to your event bus, run [PutPermission] once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run [PutPermission] once specifying [Principal] as "*" and specifying the Amazon Web Services organization ID in [Condition], to grant permissions to all accounts in that organization.
-      
-       If you grant permissions using an organization, then accounts in that organization must specify a [RoleArn] with proper permissions when they use [PutTarget] to add your account's event bus as a target. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.
-       
-        The permission policy on the event bus cannot exceed 10 KB in size.
-         |}]
+  [@@ocaml.doc {| Running [PutPermission] permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified {i event bus}. Amazon EventBridge (CloudWatch Events) rules in your account are triggered by these events arriving to an event bus in your account. 
+
+ For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.
+ 
+  To enable multiple Amazon Web Services accounts to put events to your event bus, run [PutPermission] once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run [PutPermission] once specifying [Principal] as "*" and specifying the Amazon Web Services organization ID in [Condition], to grant permissions to all accounts in that organization.
+  
+   If you grant permissions using an organization, then accounts in that organization must specify a [RoleArn] with proper permissions when they use [PutTarget] to add your account's event bus as a target. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.
+   
+    The permission policy on the event bus cannot exceed 10 KB in size.
+     |}]
 
   
 end
@@ -2715,29 +2750,28 @@ module PutRule : sig
             
         ]
       ) result
-  (** 
-    Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html}DisableRule}.
+  (** Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html}DisableRule}.
+
+ A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
+ 
+  If you are updating an existing rule, the rule is replaced with what you specify in this [PutRule] command. If you omit arguments in [PutRule], the old values for those arguments are not kept. Instead, they are replaced with null values.
+  
+   When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.
+   
+    A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.
     
-     A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.
+     When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the [PutRule] operation and assign tags, you must have both the [events:PutRule] and [events:TagResource] permissions.
      
-      If you are updating an existing rule, the rule is replaced with what you specify in this [PutRule] command. If you omit arguments in [PutRule], the old values for those arguments are not kept. Instead, they are replaced with null values.
+      If you are updating an existing rule, any tags you specify in the [PutRule] operation are ignored. To update the tags of an existing rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html}UntagResource}.
       
-       When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.
+       Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.
        
-        A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.
+        In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.
         
-         When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the [PutRule] operation and assign tags, you must have both the [events:PutRule] and [events:TagResource] permissions.
+         To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. 
          
-          If you are updating an existing rule, any tags you specify in the [PutRule] operation are ignored. To update the tags of an existing rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html}UntagResource}.
-          
-           Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.
-           
-            In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.
-            
-             To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change.
-             
-              An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html}Managing Your Costs with Budgets}.
-               *)
+          An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html}Managing Your Costs with Budgets}.
+           *)
 
   
 end
@@ -2756,82 +2790,78 @@ module PutTargets : sig
             
         ]
       ) result
-  (** 
-    Adds the specified targets to the specified rule, or updates the targets if they are already associated with the rule.
+  (** Adds the specified targets to the specified rule, or updates the targets if they are already associated with the rule.
+
+ Targets are the resources that are invoked when a rule is triggered.
+ 
+  The maximum number of entries per request is 10.
+  
+    Each rule can have up to five (5) targets associated with it at one time.
     
-     Targets are the resources that are invoked when a rule is triggered.
-     
-      The maximum number of entries per request is 10.
+      For a list of services you can configure as targets for events, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html}EventBridge targets} in the {i  {i Amazon EventBridge User Guide} }.
       
-       Each rule can have up to five (5) targets associated with it at one time.
+       Creating rules with built-in targets is supported only in the Amazon Web Services Management Console. The built-in targets are:
        
-        For a list of services you can configure as targets for events, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html}EventBridge targets} in the {i {i Amazon EventBridge User Guide}}.
-        
-         Creating rules with built-in targets is supported only in the Amazon Web Services Management Console. The built-in targets are:
-         
-          {ul
-               {- [Amazon EBS CreateSnapshot API call]
+        {ul
+              {-   [Amazon EBS CreateSnapshot API call] 
                   
-                  }
-                {- [Amazon EC2 RebootInstances API call]
-                   
                    }
-                {- [Amazon EC2 StopInstances API call]
-                   
+              {-   [Amazon EC2 RebootInstances API call] 
+                  
                    }
-                {- [Amazon EC2 TerminateInstances API call]
-                   
+              {-   [Amazon EC2 StopInstances API call] 
+                  
                    }
+              {-   [Amazon EC2 TerminateInstances API call] 
+                  
+                   }
+              }
+   For some target types, [PutTargets] provides target-specific parameters. If the target is a Kinesis data stream, you can optionally specify which shard the event goes to by using the [KinesisParameters] argument. To invoke a command on multiple EC2 instances with one rule, you can use the [RunCommandParameters] field.
+   
+    To be able to make API calls against the resources that you own, Amazon EventBridge needs the appropriate permissions: 
+    
+     {ul
+           {-  For Lambda and Amazon SNS resources, EventBridge relies on resource-based policies.
                
-      }
-       For some target types, [PutTargets] provides target-specific parameters. If the target is a Kinesis data stream, you can optionally specify which shard the event goes to by using the [KinesisParameters] argument. To invoke a command on multiple EC2 instances with one rule, you can use the [RunCommandParameters] field.
-       
-        To be able to make API calls against the resources that you own, Amazon EventBridge needs the appropriate permissions:
+                }
+           {-  For EC2 instances, Kinesis Data Streams, Step Functions state machines and API Gateway APIs, EventBridge relies on IAM roles that you specify in the [RoleARN] argument in [PutTargets].
+               
+                }
+           }
+   For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/auth-and-access-control-eventbridge.html}Authentication and Access Control} in the {i  {i Amazon EventBridge User Guide} }.
+   
+    If another Amazon Web Services account is in the same region and has granted you permission (using [PutPermission]), you can send events to that account. Set that account's event bus as a target of the rules in your account. To send the matched events to the other account, specify that account's event bus as the [Arn] value when you run [PutTargets]. If your account sends events to another account, your account is charged for each sent event. Each event sent to another account is charged as a custom event. The account receiving the event is not charged. For more information, see {{:http://aws.amazon.com/eventbridge/pricing/}Amazon EventBridge Pricing}.
+    
+       [Input], [InputPath], and [InputTransformer] are not available with [PutTarget] if the target is an event bus of a different Amazon Web Services account.
+      
+        If you are setting the event bus of another account as the target, and that account granted permission to your account through an organization instead of directly by the account ID, then you must specify a [RoleArn] with proper permissions in the [Target] structure. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.
         
-         {ul
-              {- For Lambda and Amazon SNS resources, EventBridge relies on resource-based policies.
-                 
-                 }
-               {- For EC2 instances, Kinesis Data Streams, Step Functions state machines and API Gateway APIs, EventBridge relies on IAM roles that you specify in the [RoleARN] argument in [PutTargets].
-                  
-                  }
-              
-      }
-       For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/auth-and-access-control-eventbridge.html}Authentication and Access Control} in the {i {i Amazon EventBridge User Guide}}.
-       
-        If another Amazon Web Services account is in the same region and has granted you permission (using [PutPermission]), you can send events to that account. Set that account's event bus as a target of the rules in your account. To send the matched events to the other account, specify that account's event bus as the [Arn] value when you run [PutTargets]. If your account sends events to another account, your account is charged for each sent event. Each event sent to another account is charged as a custom event. The account receiving the event is not charged. For more information, see {{:http://aws.amazon.com/eventbridge/pricing/}Amazon EventBridge Pricing}.
-        
-         [Input], [InputPath], and [InputTransformer] are not available with [PutTarget] if the target is an event bus of a different Amazon Web Services account.
-         
-          If you are setting the event bus of another account as the target, and that account granted permission to your account through an organization instead of directly by the account ID, then you must specify a [RoleArn] with proper permissions in the [Target] structure. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.
+          If you have an IAM role on a cross-account event bus target, a [PutTargets] call without a role on the same target (same [Id] and [Arn]) will not remove the role.
           
-           If you have an IAM role on a cross-account event bus target, a [PutTargets] call without a role on the same target (same [Id] and [Arn]) will not remove the role.
-           
             For more information about enabling cross-account events, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutPermission.html}PutPermission}.
             
-             {b Input}, {b InputPath}, and {b InputTransformer} are mutually exclusive and optional parameters of a target. When a rule is triggered due to a matched event:
+              {b Input}, {b InputPath}, and {b InputTransformer} are mutually exclusive and optional parameters of a target. When a rule is triggered due to a matched event:
              
               {ul
-                   {- If none of the following arguments are specified for a target, then the entire event is passed to the target in JSON format (unless the target is Amazon EC2 Run Command or Amazon ECS task, in which case nothing from the event is passed to the target).
-                      
-                      }
-                    {- If {b Input} is specified in the form of valid JSON, then the matched event is overridden with this constant.
-                       
-                       }
-                    {- If {b InputPath} is specified in the form of JSONPath (for example, [$.detail]), then only the part of the event specified in the path is passed to the target (for example, only the detail part of the event is passed).
-                       
-                       }
-                    {- If {b InputTransformer} is specified, then one or more specified JSONPaths are extracted from the event and used as values in a template that you specify as the input to the target.
-                       
-                       }
-                   
-      }
-       When you specify [InputPath] or [InputTransformer], you must use JSON dot notation, not bracket notation.
-       
-        When you add targets to a rule and the associated rule triggers soon after, new or updated targets might not be immediately invoked. Allow a short period of time for changes to take effect.
-        
-         This action can partially fail if too many requests are made at the same time. If that happens, [FailedEntryCount] is non-zero in the response and each entry in [FailedEntries] provides the ID of the failed target and the error code.
-          *)
+                    {-  If none of the following arguments are specified for a target, then the entire event is passed to the target in JSON format (unless the target is Amazon EC2 Run Command or Amazon ECS task, in which case nothing from the event is passed to the target).
+                        
+                         }
+                    {-  If {b Input} is specified in the form of valid JSON, then the matched event is overridden with this constant.
+                        
+                         }
+                    {-  If {b InputPath} is specified in the form of JSONPath (for example, [$.detail]), then only the part of the event specified in the path is passed to the target (for example, only the detail part of the event is passed).
+                        
+                         }
+                    {-  If {b InputTransformer} is specified, then one or more specified JSONPaths are extracted from the event and used as values in a template that you specify as the input to the target.
+                        
+                         }
+                    }
+   When you specify [InputPath] or [InputTransformer], you must use JSON dot notation, not bracket notation.
+   
+    When you add targets to a rule and the associated rule triggers soon after, new or updated targets might not be immediately invoked. Allow a short period of time for changes to take effect.
+    
+     This action can partially fail if too many requests are made at the same time. If that happens, [FailedEntryCount] is non-zero in the response and each entry in [FailedEntries] provides the ID of the failed target and the error code.
+      *)
 
   
 end
@@ -2849,9 +2879,8 @@ module RemovePermission : sig
             
         ]
       ) result
-  (** 
-    Revokes the permission of another Amazon Web Services account to be able to put events to the specified event bus. Specify the account to revoke by the [StatementId] value that you associated with the account when you granted it permission with [PutPermission]. You can find the [StatementId] by using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventBus.html}DescribeEventBus}.
-     *)
+  (** Revokes the permission of another Amazon Web Services account to be able to put events to the specified event bus. Specify the account to revoke by the [StatementId] value that you associated with the account when you granted it permission with [PutPermission]. You can find the [StatementId] by using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventBus.html}DescribeEventBus}.
+ *)
 
   
 end
@@ -2869,17 +2898,16 @@ module RemoveTargets : sig
             
         ]
       ) result
-  (** 
-    Removes the specified targets from the specified rule. When the rule is triggered, those targets are no longer be invoked.
+  (** Removes the specified targets from the specified rule. When the rule is triggered, those targets are no longer be invoked.
+
+  A successful execution of [RemoveTargets] doesn't guarantee all targets are removed from the rule, it means that the target(s) listed in the request are removed.
+  
+    When you remove a target, when the associated rule triggers, removed targets might continue to be invoked. Allow a short period of time for changes to take effect.
     
-     A successful execution of [RemoveTargets] doesn't guarantee all targets are removed from the rule, it means that the target(s) listed in the request are removed.
+     This action can partially fail if too many requests are made at the same time. If that happens, [FailedEntryCount] is non-zero in the response and each entry in [FailedEntries] provides the ID of the failed target and the error code.
      
-      When you remove a target, when the associated rule triggers, removed targets might continue to be invoked. Allow a short period of time for changes to take effect.
-      
-       This action can partially fail if too many requests are made at the same time. If that happens, [FailedEntryCount] is non-zero in the response and each entry in [FailedEntries] provides the ID of the failed target and the error code.
-       
-        The maximum number of entries per request is 10.
-         *)
+      The maximum number of entries per request is 10.
+       *)
 
   
 end
@@ -2898,9 +2926,8 @@ module StartReplay : sig
             
         ]
       ) result
-  (** 
-    Starts the specified replay. Events are not necessarily replayed in the exact same order that they were added to the archive. A replay processes events to replay based on the time in the event, and replays them using 1 minute intervals. If you specify an [EventStartTime] and an [EventEndTime] that covers a 20 minute time range, the events are replayed from the first minute of that 20 minute range first. Then the events from the second minute are replayed. You can use [DescribeReplay] to determine the progress of a replay. The value returned for [EventLastReplayedTime] indicates the time within the specified time range associated with the last event replayed.
-     *)
+  (** Starts the specified replay. Events are not necessarily replayed in the exact same order that they were added to the archive. A replay processes events to replay based on the time in the event, and replays them using 1 minute intervals. If you specify an [EventStartTime] and an [EventEndTime] that covers a 20 minute time range, the events are replayed from the first minute of that 20 minute range first. Then the events from the second minute are replayed. You can use [DescribeReplay] to determine the progress of a replay. The value returned for [EventLastReplayedTime] indicates the time within the specified time range associated with the last event replayed.
+ *)
 
   
 end
@@ -2918,15 +2945,14 @@ module TagResource : sig
             
         ]
       ) result
-  (** 
-    Assigns one or more tags (key-value pairs) to the specified EventBridge resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In EventBridge, rules and event buses can be tagged.
-    
-     Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.
-     
-      You can use the [TagResource] action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.
-      
-       You can associate as many as 50 tags with a resource.
-        *)
+  (** Assigns one or more tags (key-value pairs) to the specified EventBridge resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In EventBridge, rules and event buses can be tagged.
+
+ Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.
+ 
+  You can use the [TagResource] action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.
+  
+   You can associate as many as 50 tags with a resource.
+    *)
 
   
 end
@@ -2942,11 +2968,10 @@ module TestEventPattern : sig
             
         ]
       ) result
-  (** 
-    Tests whether the specified event pattern matches the provided event.
-    
-     Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.
-      *)
+  (** Tests whether the specified event pattern matches the provided event.
+
+ Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.
+  *)
 
   
 end
@@ -2964,9 +2989,8 @@ module UntagResource : sig
             
         ]
       ) result
-  (** 
-    Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge (CloudWatch Events), rules and event buses can be tagged.
-     *)
+  (** Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge (CloudWatch Events), rules and event buses can be tagged.
+ *)
 
   
 end
@@ -2984,9 +3008,8 @@ module UpdateApiDestination : sig
             
         ]
       ) result
-  (** 
-    Updates an API destination.
-     *)
+  (** Updates an API destination.
+ *)
 
   
 end
@@ -3005,9 +3028,8 @@ module UpdateArchive : sig
             
         ]
       ) result
-  (** 
-    Updates the specified archive.
-     *)
+  (** Updates the specified archive.
+ *)
 
   
 end
@@ -3025,9 +3047,8 @@ module UpdateConnection : sig
             
         ]
       ) result
-  (** 
-    Updates settings for a connection.
-     *)
+  (** Updates settings for a connection.
+ *)
 
   
 end
@@ -3044,9 +3065,8 @@ module UpdateEndpoint : sig
             
         ]
       ) result
-  (** 
-    Update an existing endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i {i Amazon EventBridge User Guide}}.
-     *)
+  (** Update an existing endpoint. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.
+ *)
 
   
 end
@@ -3064,9 +3084,8 @@ module UpdateEventBus : sig
             
         ]
       ) result
-  (** 
-    Updates the specified event bus.
-     *)
+  (** Updates the specified event bus.
+ *)
 
   
 end

@@ -8,44 +8,54 @@ let service =
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
 type nonrec dead_letter_config = {
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).\n\n For more information, see {{:eventbridge/latest/userguide/eb-rule-dlq.html}Event retry policy and using dead-letter queues} in the {i EventBridge User Guide}.\n "]
 type nonrec update_event_bus_response =
   {
   dead_letter_config: dead_letter_config option ;
   description: string option ;
   kms_key_identifier: string option ;
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec update_event_bus_request =
   {
   dead_letter_config: dead_letter_config option ;
   description: string option ;
   kms_key_identifier: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec resource_not_found_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An entity that you specified does not exist.\n"]
 type nonrec operation_disabled_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The operation you are attempting is not available in this region.\n"]
 type nonrec internal_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "This exception occurs due to unexpected causes.\n"]
 type nonrec concurrent_modification_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "There is concurrent modification on a rule, target, archive, or replay.\n"]
 type nonrec primary = {
-  health_check: string }
+  health_check: string }[@@ocaml.doc "The primary Region of the endpoint.\n"]
 type nonrec secondary = {
-  route: string }
+  route: string }[@@ocaml.doc
+                   "The secondary Region that processes events when failover is triggered or replication is enabled.\n"]
 type nonrec failover_config = {
   secondary: secondary ;
-  primary: primary }
+  primary: primary }[@@ocaml.doc
+                      "The failover configuration for an endpoint. This includes what triggers failover and what happens when it's triggered.\n"]
 type nonrec routing_config = {
-  failover_config: failover_config }
+  failover_config: failover_config }[@@ocaml.doc
+                                      "The routing configuration of the endpoint.\n"]
 type nonrec replication_state =
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec replication_config = {
-  state: replication_state option }
+  state: replication_state option }[@@ocaml.doc
+                                     "Endpoints can replicate all events to the secondary Region.\n"]
 type nonrec endpoint_event_bus = {
-  event_bus_arn: string }
+  event_bus_arn: string }[@@ocaml.doc
+                           "The event buses the endpoint is associated with.\n"]
 type nonrec endpoint_state =
   | DELETE_FAILED 
   | UPDATE_FAILED 
@@ -53,7 +63,7 @@ type nonrec endpoint_state =
   | DELETING 
   | UPDATING 
   | CREATING 
-  | ACTIVE 
+  | ACTIVE [@@ocaml.doc ""]
 type nonrec update_endpoint_response =
   {
   state: endpoint_state option ;
@@ -64,7 +74,7 @@ type nonrec update_endpoint_response =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec update_endpoint_request =
   {
   role_arn: string option ;
@@ -72,7 +82,7 @@ type nonrec update_endpoint_request =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec connection_state =
   | DEAUTHORIZING 
   | AUTHORIZING 
@@ -80,61 +90,69 @@ type nonrec connection_state =
   | AUTHORIZED 
   | DELETING 
   | UPDATING 
-  | CREATING 
+  | CREATING [@@ocaml.doc ""]
 type nonrec update_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec connection_authorization_type =
   | API_KEY 
   | OAUTH_CLIENT_CREDENTIALS 
-  | BASIC 
+  | BASIC [@@ocaml.doc ""]
 type nonrec update_connection_basic_auth_request_parameters =
   {
   password: string option ;
-  username: string option }
+  username: string option }[@@ocaml.doc
+                             "Contains the Basic authorization parameters for the connection.\n"]
 type nonrec update_connection_o_auth_client_request_parameters =
   {
   client_secret: string option ;
-  client_i_d: string option }
+  client_i_d: string option }[@@ocaml.doc
+                               "Contains the OAuth authorization parameters to use for the connection.\n"]
 type nonrec connection_o_auth_http_method =
   | PUT 
   | POST 
-  | GET 
+  | GET [@@ocaml.doc ""]
 type nonrec connection_header_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional parameter included in the header. You can include up to 100 additional header parameters per request. An event payload cannot exceed 64 KB.\n"]
 type nonrec connection_query_string_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.\n"]
 type nonrec connection_body_parameter =
   {
   is_value_secret: bool option ;
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Additional parameter included in the body. You can include up to 100 additional body parameters per request. An event payload cannot exceed 64 KB.\n"]
 type nonrec connection_http_parameters =
   {
   body_parameters: connection_body_parameter list option ;
   query_string_parameters: connection_query_string_parameter list option ;
-  header_parameters: connection_header_parameter list option }
+  header_parameters: connection_header_parameter list option }[@@ocaml.doc
+                                                                "Contains additional parameters for the connection.\n"]
 type nonrec update_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method option ;
   authorization_endpoint: string option ;
   client_parameters:
-    update_connection_o_auth_client_request_parameters option }
+    update_connection_o_auth_client_request_parameters option }[@@ocaml.doc
+                                                                 "Contains the OAuth request parameters to use for the connection.\n"]
 type nonrec update_connection_api_key_auth_request_parameters =
   {
   api_key_value: string option ;
-  api_key_name: string option }
+  api_key_name: string option }[@@ocaml.doc
+                                 "Contains the API key authorization parameters to use to update the connection.\n"]
 type nonrec update_connection_auth_request_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
@@ -142,45 +160,47 @@ type nonrec update_connection_auth_request_parameters =
     update_connection_api_key_auth_request_parameters option ;
   o_auth_parameters: update_connection_o_auth_request_parameters option ;
   basic_auth_parameters:
-    update_connection_basic_auth_request_parameters option }
+    update_connection_basic_auth_request_parameters option }[@@ocaml.doc
+                                                              "Contains the additional parameters to use for the connection.\n"]
 type nonrec update_connection_request =
   {
   auth_parameters: update_connection_auth_request_parameters option ;
   authorization_type: connection_authorization_type option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec limit_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The request failed because it attempted to create resource beyond the allowed service quota.\n"]
 type nonrec archive_state =
   | UPDATE_FAILED 
   | CREATE_FAILED 
   | UPDATING 
   | CREATING 
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec update_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec update_archive_request =
   {
   retention_days: int option ;
   event_pattern: string option ;
   description: string option ;
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec invalid_event_pattern_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc "The event pattern is not valid.\n"]
 type nonrec api_destination_state =
   | INACTIVE 
-  | ACTIVE 
+  | ACTIVE [@@ocaml.doc ""]
 type nonrec update_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec api_destination_http_method =
   | DELETE 
   | PATCH 
@@ -188,7 +208,7 @@ type nonrec api_destination_http_method =
   | OPTIONS 
   | HEAD 
   | GET 
-  | POST 
+  | POST [@@ocaml.doc ""]
 type nonrec update_api_destination_request =
   {
   invocation_rate_limit_per_second: int option ;
@@ -196,73 +216,84 @@ type nonrec update_api_destination_request =
   invocation_endpoint: string option ;
   connection_arn: string option ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec untag_resource_response = unit
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec managed_rule_exception = {
-  message: string option }
-type nonrec transformer_paths = (string * string) list
+  message: string option }[@@ocaml.doc
+                            "This rule was created by an Amazon Web Services service on behalf of your account. It is managed by that service. If you see this error in response to [DeleteRule] or [RemoveTargets], you can use the [Force] parameter in those calls to delete the rule or remove targets from the rule. You cannot modify these managed rules by using [DisableRule], [EnableRule], [PutTargets], [PutRule], [TagResource], or [UntagResource]. \n"]
+type nonrec transformer_paths = (string * string) list[@@ocaml.doc ""]
 type nonrec test_event_pattern_response = {
-  result: bool option }
+  result: bool option }[@@ocaml.doc ""]
 type nonrec test_event_pattern_request =
   {
   event: string ;
-  event_pattern: string }
+  event_pattern: string }[@@ocaml.doc ""]
 type nonrec input_transformer =
   {
   input_template: string ;
-  input_paths_map: transformer_paths option }
+  input_paths_map: transformer_paths option }[@@ocaml.doc
+                                               "Contains the parameters needed for you to provide custom input to a target based on one or more pieces of data extracted from the event.\n"]
 type nonrec kinesis_parameters = {
-  partition_key_path: string }
+  partition_key_path: string }[@@ocaml.doc
+                                "This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis data stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the [eventId] as the partition key.\n"]
 type nonrec run_command_target = {
   values: string list ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "Information about the EC2 instances that are to be sent the command, specified as key-value pairs. Each [RunCommandTarget] block can include only one key, but this key may specify multiple values.\n"]
 type nonrec run_command_parameters =
   {
-  run_command_targets: run_command_target list }
+  run_command_targets: run_command_target list }[@@ocaml.doc
+                                                  "This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 instances are to be sent the command. \n"]
 type nonrec launch_type =
   | EXTERNAL 
   | FARGATE 
-  | EC2 
+  | EC2 [@@ocaml.doc ""]
 type nonrec assign_public_ip =
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec aws_vpc_configuration =
   {
   assign_public_ip: assign_public_ip option ;
   security_groups: string list option ;
-  subnets: string list }
+  subnets: string list }[@@ocaml.doc
+                          "This structure specifies the VPC subnets and security groups for the task, and whether a public IP address is to be used. This structure is relevant only for ECS tasks that use the [awsvpc] network mode.\n"]
 type nonrec network_configuration =
   {
-  awsvpc_configuration: aws_vpc_configuration option }
+  awsvpc_configuration: aws_vpc_configuration option }[@@ocaml.doc
+                                                        "This structure specifies the network configuration for an ECS task.\n"]
 type nonrec capacity_provider_strategy_item =
   {
   base: int option ;
   weight: int option ;
-  capacity_provider: string }
+  capacity_provider: string }[@@ocaml.doc
+                               "The details of a capacity provider strategy. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CapacityProviderStrategyItem.html}CapacityProviderStrategyItem} in the Amazon ECS API Reference.\n"]
 type nonrec placement_constraint_type =
   | MEMBER_OF 
-  | DISTINCT_INSTANCE 
+  | DISTINCT_INSTANCE [@@ocaml.doc ""]
 type nonrec placement_constraint =
   {
   expression: string option ;
-  type_: placement_constraint_type option }
+  type_: placement_constraint_type option }[@@ocaml.doc
+                                             "An object representing a constraint on task placement. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html}Task Placement Constraints} in the Amazon Elastic Container Service Developer Guide.\n"]
 type nonrec placement_strategy_type =
   | BINPACK 
   | SPREAD 
-  | RANDOM 
+  | RANDOM [@@ocaml.doc ""]
 type nonrec placement_strategy =
   {
   field: string option ;
-  type_: placement_strategy_type option }
+  type_: placement_strategy_type option }[@@ocaml.doc
+                                           "The task placement strategy for a task or service. To learn more, see {{:https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html}Task Placement Strategies} in the Amazon Elastic Container Service Service Developer Guide.\n"]
 type nonrec propagate_tags =
-  | TASK_DEFINITION 
+  | TASK_DEFINITION [@@ocaml.doc ""]
 type nonrec tag = {
   value: string ;
-  key: string }
+  key: string }[@@ocaml.doc
+                 "A key-value pair associated with an Amazon Web Services resource. In EventBridge, rules and event buses support tagging.\n"]
 type nonrec ecs_parameters =
   {
   tags: tag list option ;
@@ -278,26 +309,33 @@ type nonrec ecs_parameters =
   network_configuration: network_configuration option ;
   launch_type: launch_type option ;
   task_count: int option ;
-  task_definition_arn: string }
+  task_definition_arn: string }[@@ocaml.doc
+                                 "The custom parameters to be used when the target is an Amazon ECS task.\n"]
 type nonrec batch_array_properties = {
-  size: int option }
+  size: int option }[@@ocaml.doc
+                      "The array properties for the submitted job, such as the size of the array. The array size can be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. This parameter is used only if the target is an Batch job.\n"]
 type nonrec batch_retry_strategy = {
-  attempts: int option }
+  attempts: int option }[@@ocaml.doc
+                          "The retry strategy to use for failed jobs, if the target is an Batch job. If you specify a retry strategy here, it overrides the retry strategy defined in the job definition.\n"]
 type nonrec batch_parameters =
   {
   retry_strategy: batch_retry_strategy option ;
   array_properties: batch_array_properties option ;
   job_name: string ;
-  job_definition: string }
+  job_definition: string }[@@ocaml.doc
+                            "The custom parameters to be used when the target is an Batch job.\n"]
 type nonrec sqs_parameters = {
-  message_group_id: string option }
-type nonrec header_parameters_map = (string * string) list
-type nonrec query_string_parameters_map = (string * string) list
+  message_group_id: string option }[@@ocaml.doc
+                                     "This structure includes the custom parameter to be used when the target is an SQS FIFO queue.\n"]
+type nonrec header_parameters_map = (string * string) list[@@ocaml.doc ""]
+type nonrec query_string_parameters_map = (string * string) list[@@ocaml.doc
+                                                                  ""]
 type nonrec http_parameters =
   {
   query_string_parameters: query_string_parameters_map option ;
   header_parameters: header_parameters_map option ;
-  path_parameter_values: string list option }
+  path_parameter_values: string list option }[@@ocaml.doc
+                                               "These are custom parameter to be used when the target is an API Gateway APIs or EventBridge ApiDestinations. In the latter case, these are merged with any InvocationParameters specified on the Connection, with any values from the Connection taking precedence.\n"]
 type nonrec redshift_data_parameters =
   {
   sqls: string list option ;
@@ -306,19 +344,25 @@ type nonrec redshift_data_parameters =
   sql: string option ;
   db_user: string option ;
   database: string ;
-  secret_manager_arn: string option }
+  secret_manager_arn: string option }[@@ocaml.doc
+                                       "These are custom parameters to be used when the target is a Amazon Redshift cluster to invoke the Amazon Redshift Data API ExecuteStatement based on EventBridge events.\n"]
 type nonrec sage_maker_pipeline_parameter = {
   value: string ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "Name/Value pair of a parameter to start execution of a SageMaker Model Building Pipeline.\n"]
 type nonrec sage_maker_pipeline_parameters =
   {
   pipeline_parameter_list: sage_maker_pipeline_parameter list option }
+[@@ocaml.doc
+  "These are custom parameters to use when the target is a SageMaker Model Building Pipeline that starts based on EventBridge events.\n"]
 type nonrec retry_policy =
   {
   maximum_event_age_in_seconds: int option ;
-  maximum_retry_attempts: int option }
+  maximum_retry_attempts: int option }[@@ocaml.doc
+                                        "A [RetryPolicy] object that includes information about the retry policy settings.\n"]
 type nonrec app_sync_parameters = {
-  graph_ql_operation: string option }
+  graph_ql_operation: string option }[@@ocaml.doc
+                                       "Contains the GraphQL operation to be parsed and executed, if the event target is an AppSync API.\n"]
 type nonrec target =
   {
   app_sync_parameters: app_sync_parameters option ;
@@ -337,28 +381,30 @@ type nonrec target =
   input: string option ;
   role_arn: string option ;
   arn: string ;
-  id: string }
+  id: string }[@@ocaml.doc
+                "Targets are the resources to be invoked when a rule is triggered. For a complete list of services and resources that can be set as a target, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutTargets.html}PutTargets}.\n\n If you are setting the event bus of another account as the target, and that account granted permission to your account through an organization instead of directly by the account ID, then you must specify a [RoleArn] with proper permissions in the [Target] structure. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.\n "]
 type nonrec tag_resource_response = unit
 type nonrec tag_resource_request = {
   tags: tag list ;
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec replay_state =
   | FAILED 
   | CANCELLED 
   | COMPLETED 
   | CANCELLING 
   | RUNNING 
-  | STARTING 
+  | STARTING [@@ocaml.doc ""]
 type nonrec start_replay_response =
   {
   replay_start_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: replay_state option ;
-  replay_arn: string option }
+  replay_arn: string option }[@@ocaml.doc ""]
 type nonrec replay_destination =
   {
   filter_arns: string list option ;
-  arn: string }
+  arn: string }[@@ocaml.doc
+                 "A [ReplayDestination] object that contains details about a replay.\n"]
 type nonrec start_replay_request =
   {
   destination: replay_destination ;
@@ -366,13 +412,14 @@ type nonrec start_replay_request =
   event_start_time: CoreTypes.Timestamp.t ;
   event_source_arn: string ;
   description: string option ;
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec resource_already_exists_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The resource you are trying to create already exists.\n"]
 type nonrec rule_state =
   | ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS 
   | DISABLED 
-  | ENABLED 
+  | ENABLED [@@ocaml.doc ""]
 type nonrec rule =
   {
   event_bus_name: string option ;
@@ -383,7 +430,8 @@ type nonrec rule =
   state: rule_state option ;
   event_pattern: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Contains information about a rule in Amazon EventBridge.\n"]
 type nonrec replay =
   {
   replay_end_time: CoreTypes.Timestamp.t option ;
@@ -394,43 +442,46 @@ type nonrec replay =
   state_reason: string option ;
   state: replay_state option ;
   event_source_arn: string option ;
-  replay_name: string option }
+  replay_name: string option }[@@ocaml.doc
+                                "A [Replay] object that contains details about a replay.\n"]
 type nonrec remove_targets_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  target_id: string option }
+  target_id: string option }[@@ocaml.doc
+                              "Represents a target that failed to be removed from a rule.\n"]
 type nonrec remove_targets_response =
   {
   failed_entries: remove_targets_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec remove_targets_request =
   {
   force: bool option ;
   ids: string list ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec remove_permission_request =
   {
   event_bus_name: string option ;
   remove_all_permissions: bool option ;
-  statement_id: string option }
+  statement_id: string option }[@@ocaml.doc ""]
 type nonrec put_targets_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  target_id: string option }
+  target_id: string option }[@@ocaml.doc
+                              "Represents a target that failed to be added to a rule.\n"]
 type nonrec put_targets_response =
   {
   failed_entries: put_targets_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_targets_request =
   {
   targets: target list ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec put_rule_response = {
-  rule_arn: string option }
+  rule_arn: string option }[@@ocaml.doc ""]
 type nonrec put_rule_request =
   {
   event_bus_name: string option ;
@@ -440,11 +491,12 @@ type nonrec put_rule_request =
   state: rule_state option ;
   event_pattern: string option ;
   schedule_expression: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec condition = {
   value: string ;
   key: string ;
-  type_: string }
+  type_: string }[@@ocaml.doc
+                   "A JSON string which you can use to limit the event bus permissions you are granting to only accounts that fulfill the condition. Currently, the only supported condition is membership in a certain Amazon Web Services organization. The string must contain [Type], [Key], and [Value] fields. The [Value] field specifies the ID of the Amazon Web Services organization. Following is an example value for [Condition]:\n\n  ['{\"Type\" : \"StringEquals\", \"Key\": \"aws:PrincipalOrgID\", \"Value\":\n        \"o-1234567890\"}'] \n "]
 type nonrec put_permission_request =
   {
   policy: string option ;
@@ -452,37 +504,41 @@ type nonrec put_permission_request =
   statement_id: string option ;
   principal: string option ;
   action: string option ;
-  event_bus_name: string option }
+  event_bus_name: string option }[@@ocaml.doc ""]
 type nonrec policy_length_exceeded_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The event bus policy is too long. For more information, see the limits.\n"]
 type nonrec put_partner_events_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  event_id: string option }
+  event_id: string option }[@@ocaml.doc
+                             "The result of an event entry the partner submitted in this request. If the event was successfully submitted, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.\n"]
 type nonrec put_partner_events_response =
   {
   entries: put_partner_events_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_partner_events_request_entry =
   {
   detail: string option ;
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: CoreTypes.Timestamp.t option }
+  time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                        "The details about an event generated by an SaaS partner.\n"]
 type nonrec put_partner_events_request =
   {
-  entries: put_partner_events_request_entry list }
+  entries: put_partner_events_request_entry list }[@@ocaml.doc ""]
 type nonrec put_events_result_entry =
   {
   error_message: string option ;
   error_code: string option ;
-  event_id: string option }
+  event_id: string option }[@@ocaml.doc
+                             "Represents the results of an event submitted to an event bus.\n\n If the submission was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.\n \n  For information about the errors that are common to all actions, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/CommonErrors.html}Common Errors}.\n  "]
 type nonrec put_events_response =
   {
   entries: put_events_result_entry list option ;
-  failed_entry_count: int option }
+  failed_entry_count: int option }[@@ocaml.doc ""]
 type nonrec put_events_request_entry =
   {
   trace_header: string option ;
@@ -491,87 +547,91 @@ type nonrec put_events_request_entry =
   detail_type: string option ;
   resources: string list option ;
   source: string option ;
-  time: CoreTypes.Timestamp.t option }
+  time: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                        "Represents an event to be submitted.\n"]
 type nonrec put_events_request =
   {
   endpoint_id: string option ;
-  entries: put_events_request_entry list }
+  entries: put_events_request_entry list }[@@ocaml.doc ""]
 type nonrec partner_event_source = {
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "A partner event source is created by an SaaS partner. If a customer creates a partner event bus that matches this event source, that Amazon Web Services account can receive events from the partner's applications or services.\n"]
 type nonrec event_source_state =
   | DELETED 
   | ACTIVE 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec partner_event_source_account =
   {
   state: event_source_state option ;
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
-  account: string option }
+  account: string option }[@@ocaml.doc
+                            "The Amazon Web Services account that a partner event source has been offered to.\n"]
 type nonrec list_targets_by_rule_response =
   {
   next_token: string option ;
-  targets: target list option }
+  targets: target list option }[@@ocaml.doc ""]
 type nonrec list_targets_by_rule_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  rule: string }
+  rule: string }[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_response = {
-  tags: tag list option }
+  tags: tag list option }[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_request = {
-  resource_ar_n: string }
+  resource_ar_n: string }[@@ocaml.doc ""]
 type nonrec list_rules_response =
   {
   next_token: string option ;
-  rules: rule list option }
+  rules: rule list option }[@@ocaml.doc ""]
 type nonrec list_rules_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec list_rule_names_by_target_response =
   {
   next_token: string option ;
-  rule_names: string list option }
+  rule_names: string list option }[@@ocaml.doc ""]
 type nonrec list_rule_names_by_target_request =
   {
   limit: int option ;
   next_token: string option ;
   event_bus_name: string option ;
-  target_arn: string }
+  target_arn: string }[@@ocaml.doc ""]
 type nonrec list_replays_response =
   {
   next_token: string option ;
-  replays: replay list option }
+  replays: replay list option }[@@ocaml.doc ""]
 type nonrec list_replays_request =
   {
   limit: int option ;
   next_token: string option ;
   event_source_arn: string option ;
   state: replay_state option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec list_partner_event_sources_response =
   {
   next_token: string option ;
-  partner_event_sources: partner_event_source list option }
+  partner_event_sources: partner_event_source list option }[@@ocaml.doc ""]
 type nonrec list_partner_event_sources_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string }
+  name_prefix: string }[@@ocaml.doc ""]
 type nonrec list_partner_event_source_accounts_response =
   {
   next_token: string option ;
   partner_event_source_accounts: partner_event_source_account list option }
+[@@ocaml.doc ""]
 type nonrec list_partner_event_source_accounts_request =
   {
   limit: int option ;
   next_token: string option ;
-  event_source_name: string }
+  event_source_name: string }[@@ocaml.doc ""]
 type nonrec event_source =
   {
   state: event_source_state option ;
@@ -579,16 +639,17 @@ type nonrec event_source =
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "A partner event source is created by an SaaS partner. If a customer creates a partner event bus that matches this event source, that Amazon Web Services account can receive events from the partner's applications or services.\n"]
 type nonrec list_event_sources_response =
   {
   next_token: string option ;
-  event_sources: event_source list option }
+  event_sources: event_source list option }[@@ocaml.doc ""]
 type nonrec list_event_sources_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec event_bus =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -596,16 +657,17 @@ type nonrec event_bus =
   policy: string option ;
   description: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "An event bus receives events from a source, uses rules to evaluate them, applies any configured input transformation, and routes them to the appropriate target(s). Your account's default event bus receives events from Amazon Web Services services. A custom event bus can receive events from your custom applications and services. A partner event bus receives events from an event source created by an SaaS partner. These events come from the partners services or applications.\n"]
 type nonrec list_event_buses_response =
   {
   next_token: string option ;
-  event_buses: event_bus list option }
+  event_buses: event_bus list option }[@@ocaml.doc ""]
 type nonrec list_event_buses_request =
   {
   limit: int option ;
   next_token: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec endpoint =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -620,17 +682,18 @@ type nonrec endpoint =
   routing_config: routing_config option ;
   arn: string option ;
   description: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "A global endpoint used to improve your application's availability by making it regional-fault tolerant. For more information about global endpoints, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html}Making applications Regional-fault tolerant with global endpoints and event replication} in the {i  {i Amazon EventBridge User Guide} }.\n"]
 type nonrec list_endpoints_response =
   {
   next_token: string option ;
-  endpoints: endpoint list option }
+  endpoints: endpoint list option }[@@ocaml.doc ""]
 type nonrec list_endpoints_request =
   {
   max_results: int option ;
   next_token: string option ;
   home_region: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec connection =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
@@ -640,17 +703,18 @@ type nonrec connection =
   state_reason: string option ;
   connection_state: connection_state option ;
   name: string option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc
+                                   "Contains information about a connection.\n"]
 type nonrec list_connections_response =
   {
   next_token: string option ;
-  connections: connection list option }
+  connections: connection list option }[@@ocaml.doc ""]
 type nonrec list_connections_request =
   {
   limit: int option ;
   next_token: string option ;
   connection_state: connection_state option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec archive =
   {
   creation_time: CoreTypes.Timestamp.t option ;
@@ -660,18 +724,19 @@ type nonrec archive =
   state_reason: string option ;
   state: archive_state option ;
   event_source_arn: string option ;
-  archive_name: string option }
+  archive_name: string option }[@@ocaml.doc
+                                 "An [Archive] object that contains details about an archive.\n"]
 type nonrec list_archives_response =
   {
   next_token: string option ;
-  archives: archive list option }
+  archives: archive list option }[@@ocaml.doc ""]
 type nonrec list_archives_request =
   {
   limit: int option ;
   next_token: string option ;
   state: archive_state option ;
   event_source_arn: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec api_destination =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -682,29 +747,32 @@ type nonrec api_destination =
   connection_arn: string option ;
   api_destination_state: api_destination_state option ;
   name: string option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc
+                                        "Contains details about an API destination.\n"]
 type nonrec list_api_destinations_response =
   {
   next_token: string option ;
-  api_destinations: api_destination list option }
+  api_destinations: api_destination list option }[@@ocaml.doc ""]
 type nonrec list_api_destinations_request =
   {
   limit: int option ;
   next_token: string option ;
   connection_arn: string option ;
-  name_prefix: string option }
+  name_prefix: string option }[@@ocaml.doc ""]
 type nonrec invalid_state_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "The specified state is not a valid state for an event source.\n"]
 type nonrec illegal_status_exception = {
-  message: string option }
+  message: string option }[@@ocaml.doc
+                            "An error occurred because a replay can be canceled only when the state is Running or Starting.\n"]
 type nonrec enable_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec disable_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_rule_response =
   {
   created_by: string option ;
@@ -716,11 +784,11 @@ type nonrec describe_rule_response =
   schedule_expression: string option ;
   event_pattern: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_rule_request =
   {
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_replay_response =
   {
   replay_end_time: CoreTypes.Timestamp.t option ;
@@ -734,15 +802,15 @@ type nonrec describe_replay_response =
   state: replay_state option ;
   description: string option ;
   replay_arn: string option ;
-  replay_name: string option }
+  replay_name: string option }[@@ocaml.doc ""]
 type nonrec describe_replay_request = {
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec describe_partner_event_source_response =
   {
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec describe_partner_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_event_source_response =
   {
   state: event_source_state option ;
@@ -750,9 +818,9 @@ type nonrec describe_event_source_response =
   expiration_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   created_by: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc ""]
 type nonrec describe_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_event_bus_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -762,9 +830,9 @@ type nonrec describe_event_bus_response =
   kms_key_identifier: string option ;
   description: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_event_bus_request = {
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_endpoint_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -779,32 +847,39 @@ type nonrec describe_endpoint_response =
   routing_config: routing_config option ;
   arn: string option ;
   description: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec describe_endpoint_request =
   {
   home_region: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec connection_basic_auth_response_parameters =
   {
-  username: string option }
+  username: string option }[@@ocaml.doc
+                             "Contains the authorization parameters for the connection if Basic is specified as the authorization type.\n"]
 type nonrec connection_o_auth_client_response_parameters =
   {
-  client_i_d: string option }
+  client_i_d: string option }[@@ocaml.doc
+                               "Contains the client response parameters for the connection when OAuth is specified as the authorization type.\n"]
 type nonrec connection_o_auth_response_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method option ;
   authorization_endpoint: string option ;
   client_parameters: connection_o_auth_client_response_parameters option }
+[@@ocaml.doc
+  "Contains the response parameters when OAuth is specified as the authorization type.\n"]
 type nonrec connection_api_key_auth_response_parameters =
   {
-  api_key_name: string option }
+  api_key_name: string option }[@@ocaml.doc
+                                 "Contains the authorization parameters for the connection if API Key is specified as the authorization type.\n"]
 type nonrec connection_auth_response_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
   api_key_auth_parameters: connection_api_key_auth_response_parameters option ;
   o_auth_parameters: connection_o_auth_response_parameters option ;
   basic_auth_parameters: connection_basic_auth_response_parameters option }
+[@@ocaml.doc
+  "Contains the authorization parameters to use for the connection.\n"]
 type nonrec describe_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
@@ -817,9 +892,9 @@ type nonrec describe_connection_response =
   connection_state: connection_state option ;
   description: string option ;
   name: string option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec describe_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
@@ -832,9 +907,9 @@ type nonrec describe_archive_response =
   description: string option ;
   event_source_arn: string option ;
   archive_name: string option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_archive_request = {
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec describe_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
@@ -846,62 +921,62 @@ type nonrec describe_api_destination_response =
   api_destination_state: api_destination_state option ;
   description: string option ;
   name: string option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec describe_api_destination_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_rule_request =
   {
   force: bool option ;
   event_bus_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_partner_event_source_request =
   {
   account: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_event_bus_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_endpoint_response = unit
 type nonrec delete_endpoint_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec delete_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec delete_archive_response = unit
 type nonrec delete_archive_request = {
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec delete_api_destination_response = unit
 type nonrec delete_api_destination_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec deauthorize_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option ;
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec deauthorize_connection_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec deactivate_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_partner_event_source_response =
   {
-  event_source_arn: string option }
+  event_source_arn: string option }[@@ocaml.doc ""]
 type nonrec create_partner_event_source_request =
   {
   account: string ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_event_bus_response =
   {
   dead_letter_config: dead_letter_config option ;
   kms_key_identifier: string option ;
   description: string option ;
-  event_bus_arn: string option }
+  event_bus_arn: string option }[@@ocaml.doc ""]
 type nonrec create_event_bus_request =
   {
   tags: tag list option ;
@@ -909,7 +984,7 @@ type nonrec create_event_bus_request =
   kms_key_identifier: string option ;
   description: string option ;
   event_source_name: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_endpoint_response =
   {
   state: endpoint_state option ;
@@ -918,7 +993,7 @@ type nonrec create_endpoint_response =
   replication_config: replication_config option ;
   routing_config: routing_config option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc ""]
 type nonrec create_endpoint_request =
   {
   role_arn: string option ;
@@ -926,31 +1001,36 @@ type nonrec create_endpoint_request =
   replication_config: replication_config option ;
   routing_config: routing_config ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_connection_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   connection_state: connection_state option ;
-  connection_arn: string option }
+  connection_arn: string option }[@@ocaml.doc ""]
 type nonrec create_connection_basic_auth_request_parameters =
   {
   password: string ;
-  username: string }
+  username: string }[@@ocaml.doc
+                      "Contains the Basic authorization parameters to use for the connection.\n"]
 type nonrec create_connection_o_auth_client_request_parameters =
   {
   client_secret: string ;
-  client_i_d: string }
+  client_i_d: string }[@@ocaml.doc
+                        "Contains the Basic authorization parameters to use for the connection.\n"]
 type nonrec create_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option ;
   http_method: connection_o_auth_http_method ;
   authorization_endpoint: string ;
   client_parameters: create_connection_o_auth_client_request_parameters }
+[@@ocaml.doc
+  "Contains the OAuth authorization parameters to use for the connection.\n"]
 type nonrec create_connection_api_key_auth_request_parameters =
   {
   api_key_value: string ;
-  api_key_name: string }
+  api_key_name: string }[@@ocaml.doc
+                          "Contains the API key authorization parameters for the connection.\n"]
 type nonrec create_connection_auth_request_parameters =
   {
   invocation_http_parameters: connection_http_parameters option ;
@@ -958,32 +1038,33 @@ type nonrec create_connection_auth_request_parameters =
     create_connection_api_key_auth_request_parameters option ;
   o_auth_parameters: create_connection_o_auth_request_parameters option ;
   basic_auth_parameters:
-    create_connection_basic_auth_request_parameters option }
+    create_connection_basic_auth_request_parameters option }[@@ocaml.doc
+                                                              "Contains the authorization parameters for the connection.\n"]
 type nonrec create_connection_request =
   {
   auth_parameters: create_connection_auth_request_parameters ;
   authorization_type: connection_authorization_type ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec create_archive_response =
   {
   creation_time: CoreTypes.Timestamp.t option ;
   state_reason: string option ;
   state: archive_state option ;
-  archive_arn: string option }
+  archive_arn: string option }[@@ocaml.doc ""]
 type nonrec create_archive_request =
   {
   retention_days: int option ;
   event_pattern: string option ;
   description: string option ;
   event_source_arn: string ;
-  archive_name: string }
+  archive_name: string }[@@ocaml.doc ""]
 type nonrec create_api_destination_response =
   {
   last_modified_time: CoreTypes.Timestamp.t option ;
   creation_time: CoreTypes.Timestamp.t option ;
   api_destination_state: api_destination_state option ;
-  api_destination_arn: string option }
+  api_destination_arn: string option }[@@ocaml.doc ""]
 type nonrec create_api_destination_request =
   {
   invocation_rate_limit_per_second: int option ;
@@ -991,13 +1072,13 @@ type nonrec create_api_destination_request =
   invocation_endpoint: string ;
   connection_arn: string ;
   description: string option ;
-  name: string }
+  name: string }[@@ocaml.doc ""]
 type nonrec cancel_replay_response =
   {
   state_reason: string option ;
   state: replay_state option ;
-  replay_arn: string option }
+  replay_arn: string option }[@@ocaml.doc ""]
 type nonrec cancel_replay_request = {
-  replay_name: string }
+  replay_name: string }[@@ocaml.doc ""]
 type nonrec activate_event_source_request = {
-  name: string }
+  name: string }[@@ocaml.doc ""]

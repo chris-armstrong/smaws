@@ -586,6 +586,7 @@ module Operations = struct
 
     let exception_type = generate_error_type alias_context operation_shape.errors in
 
+    let doc_string = Docs.convert_docs operation_shape.traits in
     B.psig_module
       (B.module_declaration
          ~name:(Location.mknoloc (Some module_name))
@@ -596,6 +597,7 @@ module Operations = struct
                   Smaws_Lib.Context.t ->
                   [%t input_type] ->
                   ([%t output_type], [%t exception_type]) result]))
+    |> Docs.attach_doc_to_signature_item ~loc ~doc_string
 
   let generate ~name ~operation_shapes ~alias_context =
     operation_shapes

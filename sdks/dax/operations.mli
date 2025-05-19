@@ -31,7 +31,8 @@ sig
           | `SubnetGroupNotFoundFault of subnet_group_not_found_fault 
           | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ])
           result
-end
+end[@@ocaml.doc
+     "Creates a DAX cluster. All nodes in the cluster run the same DAX caching software.\n"]
 module CreateParameterGroup :
 sig
   val request :
@@ -52,7 +53,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Creates a new parameter group. A parameter group is a collection of parameters that you apply to all of the nodes in a DAX cluster.\n"]
 module CreateSubnetGroup :
 sig
   val request :
@@ -69,7 +71,7 @@ sig
               subnet_group_quota_exceeded_fault 
           | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ])
           result
-end
+end[@@ocaml.doc "Creates a new subnet group.\n"]
 module DecreaseReplicationFactor :
 sig
   val request :
@@ -87,7 +89,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Removes one or more nodes from a DAX cluster.\n\n  You cannot use [DecreaseReplicationFactor] to remove the last node in a DAX cluster. If you need to do this, use [DeleteCluster] instead.\n  \n   "]
 module DeleteCluster :
 sig
   val request :
@@ -104,7 +107,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Deletes a previously provisioned DAX cluster. {i DeleteCluster} deletes all associated nodes, node endpoints and the DAX cluster itself. When you receive a successful response from this action, DAX immediately begins deleting the cluster; you cannot cancel or revert this action.\n"]
 module DeleteParameterGroup :
 sig
   val request :
@@ -122,7 +126,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Deletes the specified parameter group. You cannot delete a parameter group if it is associated with any DAX clusters.\n"]
 module DeleteSubnetGroup :
 sig
   val request :
@@ -135,7 +140,8 @@ sig
           | `SubnetGroupInUseFault of subnet_group_in_use_fault 
           | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Deletes a subnet group.\n\n  You cannot delete a subnet group if it is associated with any DAX clusters.\n  \n   "]
 module DescribeClusters :
 sig
   val request :
@@ -151,7 +157,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns information about all provisioned DAX clusters if no cluster identifier is specified, or about a specific DAX cluster if a cluster identifier is supplied.\n\n If the cluster is in the CREATING state, only cluster level information will be displayed until all of the nodes are successfully provisioned.\n \n  If the cluster is in the DELETING state, only cluster level information will be displayed.\n  \n   If nodes are currently being added to the DAX cluster, node endpoint information and creation time for the additional nodes will not be displayed until they are completely provisioned. When the DAX cluster state is {i available}, the cluster is ready for use.\n   \n    If nodes are currently being removed from the DAX cluster, no endpoint information for the removed nodes is displayed.\n    "]
 module DescribeDefaultParameters :
 sig
   val request :
@@ -166,7 +173,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns the default system parameter information for the DAX caching software.\n"]
 module DescribeEvents :
 sig
   val request :
@@ -181,7 +189,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns events related to DAX clusters and parameter groups. You can obtain events specific to a particular DAX cluster or parameter group by providing the name as a parameter.\n\n By default, only the events occurring within the last 24 hours are returned; however, you can retrieve up to 14 days' worth of events if necessary.\n "]
 module DescribeParameterGroups :
 sig
   val request :
@@ -197,7 +206,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns a list of parameter group descriptions. If a parameter group name is specified, the list will contain only the descriptions for that group.\n"]
 module DescribeParameters :
 sig
   val request :
@@ -213,7 +223,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns the detailed parameter list for a particular parameter group.\n"]
 module DescribeSubnetGroups :
 sig
   val request :
@@ -225,7 +236,8 @@ sig
               service_linked_role_not_found_fault 
           | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Returns a list of subnet group descriptions. If a subnet group name is specified, the list will contain only the description of that group.\n"]
 module IncreaseReplicationFactor :
 sig
   val request :
@@ -249,7 +261,7 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc "Adds one or more nodes to a DAX cluster.\n"]
 module ListTags :
 sig
   val request :
@@ -267,7 +279,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "List all of the tags for a DAX cluster. You can call [ListTags] up to 10 times per second, per account.\n"]
 module RebootNode :
 sig
   val request :
@@ -285,7 +298,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Reboots a single node of a DAX cluster. The reboot action takes place as soon as possible. During the reboot, the node status is set to REBOOTING.\n\n   [RebootNode] restarts the DAX engine process and does not remove the contents of the cache. \n  \n   "]
 module TagResource :
 sig
   val request :
@@ -304,7 +318,8 @@ sig
               service_linked_role_not_found_fault 
           | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ])
           result
-end
+end[@@ocaml.doc
+     "Associates a set of tags with a DAX resource. You can call [TagResource] up to 5 times per second, per account. \n"]
 module UntagResource :
 sig
   val request :
@@ -322,7 +337,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault 
           | `TagNotFoundFault of tag_not_found_fault ]) result
-end
+end[@@ocaml.doc
+     "Removes the association of tags from a DAX resource. You can call [UntagResource] up to 5 times per second, per account. \n"]
 module UpdateCluster :
 sig
   val request :
@@ -342,7 +358,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Modifies the settings for a DAX cluster. You can use this action to change one or more cluster configuration parameters by specifying the parameters and the new values.\n"]
 module UpdateParameterGroup :
 sig
   val request :
@@ -360,7 +377,8 @@ sig
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault ])
           result
-end
+end[@@ocaml.doc
+     "Modifies the parameters of a parameter group. You can modify up to 20 parameters in a single request by submitting a list parameter name and value pairs.\n"]
 module UpdateSubnetGroup :
 sig
   val request :
@@ -375,4 +393,4 @@ sig
           | `SubnetInUse of subnet_in_use 
           | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ])
           result
-end
+end[@@ocaml.doc "Modifies an existing subnet group.\n"]

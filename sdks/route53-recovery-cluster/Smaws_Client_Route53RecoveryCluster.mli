@@ -12,63 +12,73 @@ type nonrec validation_exception_reason =
   | OTHER 
   | FIELD_VALIDATION_FAILED 
   | CANNOT_PARSE 
-  | UNKNOWN_OPERATION 
+  | UNKNOWN_OPERATION [@@ocaml.doc "Reason the request failed validation"]
 type nonrec validation_exception_field = {
   message: string ;
-  name: string }
+  name: string }[@@ocaml.doc
+                  "There was a validation error on the request.\n"]
 type nonrec validation_exception =
   {
   fields: validation_exception_field list option ;
   reason: validation_exception_reason option ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "There was a validation error on the request.\n"]
 type nonrec update_routing_control_states_response = unit
 type nonrec routing_control_state =
   | Off 
-  | On 
+  | On [@@ocaml.doc ""]
 type nonrec update_routing_control_state_entry =
   {
   routing_control_state: routing_control_state ;
-  routing_control_arn: string }
+  routing_control_arn: string }[@@ocaml.doc
+                                 "A routing control state entry.\n"]
 type nonrec update_routing_control_states_request =
   {
   safety_rules_to_override: string list option ;
   update_routing_control_state_entries:
-    update_routing_control_state_entry list }
+    update_routing_control_state_entry list }[@@ocaml.doc ""]
 type nonrec throttling_exception =
   {
   retry_after_seconds: int option ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "The request was denied because of request throttling.\n"]
 type nonrec service_limit_exceeded_exception =
   {
   service_code: string ;
   limit_code: string ;
   resource_type: string option ;
   resource_id: string option ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "The request can't update that many routing control states at the same time. Try again with fewer routing control states.\n"]
 type nonrec resource_not_found_exception =
   {
   resource_type: string ;
   resource_id: string ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "The request references a routing control or control panel that was not found.\n"]
 type nonrec internal_server_exception =
   {
   retry_after_seconds: int option ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "There was an unexpected error during processing of the request.\n"]
 type nonrec endpoint_temporarily_unavailable_exception = {
-  message: string }
+  message: string }[@@ocaml.doc
+                     "The cluster endpoint isn't available. Try another cluster endpoint.\n"]
 type nonrec conflict_exception =
   {
   resource_type: string ;
   resource_id: string ;
-  message: string }
+  message: string }[@@ocaml.doc
+                     "There was a conflict with this request. Try again.\n"]
 type nonrec access_denied_exception = {
-  message: string }
+  message: string }[@@ocaml.doc
+                     "You don't have sufficient permissions to perform this action.\n"]
 type nonrec update_routing_control_state_response = unit
 type nonrec update_routing_control_state_request =
   {
   safety_rules_to_override: string list option ;
   routing_control_state: routing_control_state ;
-  routing_control_arn: string }
+  routing_control_arn: string }[@@ocaml.doc ""]
 type nonrec routing_control =
   {
   owner: string option ;
@@ -76,24 +86,25 @@ type nonrec routing_control =
   routing_control_name: string option ;
   routing_control_arn: string option ;
   control_panel_name: string option ;
-  control_panel_arn: string option }
+  control_panel_arn: string option }[@@ocaml.doc
+                                      "A routing control, which is a simple on/off switch that you can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is set to OFF, traffic does not flow. \n"]
 type nonrec list_routing_controls_response =
   {
   next_token: string option ;
-  routing_controls: routing_control list }
+  routing_controls: routing_control list }[@@ocaml.doc ""]
 type nonrec list_routing_controls_request =
   {
   max_results: int option ;
   next_token: string option ;
-  control_panel_arn: string option }
+  control_panel_arn: string option }[@@ocaml.doc ""]
 type nonrec get_routing_control_state_response =
   {
   routing_control_name: string option ;
   routing_control_state: routing_control_state ;
-  routing_control_arn: string }
+  routing_control_arn: string }[@@ocaml.doc ""]
 type nonrec get_routing_control_state_request =
   {
-  routing_control_arn: string }(** {1:builders Builders} *)
+  routing_control_arn: string }[@@ocaml.doc ""](** {1:builders Builders} *)
 
 val make_validation_exception_field :
   message:string -> name:string -> unit -> validation_exception_field
@@ -151,27 +162,25 @@ module GetRoutingControlState : sig
             
         ]
       ) result
-  (** 
-    Get the state for a routing control. A routing control is a simple on/off switch that you can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is set to OFF, traffic does not flow.
+  (** Get the state for a routing control. A routing control is a simple on/off switch that you can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is set to OFF, traffic does not flow. 
+
+ Before you can create a routing control, you must first create a cluster, and then host the control in a control panel on the cluster. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create routing control structures} in the Amazon Route 53 Application Recovery Controller Developer Guide. You access one of the endpoints for the cluster to get or update the routing control state to redirect traffic for your application. 
+ 
+   {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.} 
+  
+   To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
+   
+    Learn more about working with routing controls in the following topics in the Amazon Route 53 Application Recovery Controller Developer Guide:
     
-     Before you can create a routing control, you must first create a cluster, and then host the control in a control panel on the cluster. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html}Create routing control structures} in the Amazon Route 53 Application Recovery Controller Developer Guide. You access one of the endpoints for the cluster to get or update the routing control state to redirect traffic for your application.
-     
-      {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.}
-      
-       To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
-       
-        Learn more about working with routing controls in the following topics in the Amazon Route 53 Application Recovery Controller Developer Guide:
-        
-         {ul
-              {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html}Viewing and updating routing control states}
-                 
-                 }
-               {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls in Route 53 ARC}
-                  
-                  }
-              
-      }
-       *)
+     {ul
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and updating routing control states} 
+               
+                }
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls in Route 53 ARC} 
+               
+                }
+           }
+   *)
 
   
 end
@@ -191,27 +200,25 @@ module ListRoutingControls : sig
             
         ]
       ) result
-  (** 
-    List routing control names and Amazon Resource Names (ARNs), as well as the routing control state for each routing control, along with the control panel name and control panel ARN for the routing controls. If you specify a control panel ARN, this call lists the routing controls in the control panel. Otherwise, it lists all the routing controls in the cluster.
+  (** List routing control names and Amazon Resource Names (ARNs), as well as the routing control state for each routing control, along with the control panel name and control panel ARN for the routing controls. If you specify a control panel ARN, this call lists the routing controls in the control panel. Otherwise, it lists all the routing controls in the cluster.
+
+ A routing control is a simple on/off switch in Route 53 ARC that you can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is set to OFF, traffic does not flow.
+ 
+  Before you can create a routing control, you must first create a cluster, and then host the control in a control panel on the cluster. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html} Create routing control structures} in the Amazon Route 53 Application Recovery Controller Developer Guide. You access one of the endpoints for the cluster to get or update the routing control state to redirect traffic for your application. 
+  
+    {i You must specify Regional endpoints when you work with API cluster operations to use this API operation to list routing controls in Route 53 ARC.} 
+   
+    Learn more about working with routing controls in the following topics in the Amazon Route 53 Application Recovery Controller Developer Guide:
     
-     A routing control is a simple on/off switch in Route 53 ARC that you can use to route traffic to cells. When a routing control state is set to ON, traffic flows to a cell. When the state is set to OFF, traffic does not flow.
-     
-      Before you can create a routing control, you must first create a cluster, and then host the control in a control panel on the cluster. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html}Create routing control structures} in the Amazon Route 53 Application Recovery Controller Developer Guide. You access one of the endpoints for the cluster to get or update the routing control state to redirect traffic for your application.
-      
-       {i You must specify Regional endpoints when you work with API cluster operations to use this API operation to list routing controls in Route 53 ARC.}
-       
-        Learn more about working with routing controls in the following topics in the Amazon Route 53 Application Recovery Controller Developer Guide:
-        
-         {ul
-              {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html}Viewing and updating routing control states}
-                 
-                 }
-               {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls in Route 53 ARC}
-                  
-                  }
-              
-      }
-       *)
+     {ul
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and updating routing control states} 
+               
+                }
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls in Route 53 ARC} 
+               
+                }
+           }
+   *)
 
   
 end
@@ -232,27 +239,25 @@ module UpdateRoutingControlState : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    Set the state of the routing control to reroute traffic. You can set the value to ON or OFF. When the state is ON, traffic flows to a cell. When the state is OFF, traffic does not flow.
+  [@@ocaml.doc {| Set the state of the routing control to reroute traffic. You can set the value to ON or OFF. When the state is ON, traffic flows to a cell. When the state is OFF, traffic does not flow.
+
+ With Route 53 ARC, you can add safety rules for routing controls, which are safeguards for routing control state updates that help prevent unexpected outcomes, like fail open traffic routing. However, there are scenarios when you might want to bypass the routing control safeguards that are enforced with safety rules that you've configured. For example, you might want to fail over quickly for disaster recovery, and one or more safety rules might be unexpectedly preventing you from updating a routing control state to reroute traffic. In a "break glass" scenario like this, you can override one or more safety rules to change a routing control state and fail over your application.
+ 
+  The [SafetyRulesToOverride] property enables you override one or more safety rules and update routing control states. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html} Override safety rules to reroute traffic} in the Amazon Route 53 Application Recovery Controller Developer Guide.
+  
+    {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.} 
+   
+    To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
     
-     With Route 53 ARC, you can add safety rules for routing controls, which are safeguards for routing control state updates that help prevent unexpected outcomes, like fail open traffic routing. However, there are scenarios when you might want to bypass the routing control safeguards that are enforced with safety rules that you've configured. For example, you might want to fail over quickly for disaster recovery, and one or more safety rules might be unexpectedly preventing you from updating a routing control state to reroute traffic. In a "break glass" scenario like this, you can override one or more safety rules to change a routing control state and fail over your application.
-     
-      The [SafetyRulesToOverride] property enables you override one or more safety rules and update routing control states. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html}Override safety rules to reroute traffic} in the Amazon Route 53 Application Recovery Controller Developer Guide.
-      
-       {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.}
-       
-        To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
-        
-         {ul
-              {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html}Viewing and updating routing control states}
-                 
-                 }
-               {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls overall}
-                  
-                  }
-              
-      }
-       |}]
+     {ul
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and updating routing control states} 
+               
+                }
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls overall} 
+               
+                }
+           }
+   |}]
 
   
 end
@@ -274,27 +279,25 @@ module UpdateRoutingControlStates : sig
             
         ]
       ) result
-  [@@ocaml.doc {| 
-    Set multiple routing control states. You can set the value for each state to be ON or OFF. When the state is ON, traffic flows to a cell. When it's OFF, traffic does not flow.
+  [@@ocaml.doc {| Set multiple routing control states. You can set the value for each state to be ON or OFF. When the state is ON, traffic flows to a cell. When it's OFF, traffic does not flow.
+
+ With Route 53 ARC, you can add safety rules for routing controls, which are safeguards for routing control state updates that help prevent unexpected outcomes, like fail open traffic routing. However, there are scenarios when you might want to bypass the routing control safeguards that are enforced with safety rules that you've configured. For example, you might want to fail over quickly for disaster recovery, and one or more safety rules might be unexpectedly preventing you from updating a routing control state to reroute traffic. In a "break glass" scenario like this, you can override one or more safety rules to change a routing control state and fail over your application.
+ 
+  The [SafetyRulesToOverride] property enables you override one or more safety rules and update routing control states. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html} Override safety rules to reroute traffic} in the Amazon Route 53 Application Recovery Controller Developer Guide.
+  
+    {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.} 
+   
+    To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
     
-     With Route 53 ARC, you can add safety rules for routing controls, which are safeguards for routing control state updates that help prevent unexpected outcomes, like fail open traffic routing. However, there are scenarios when you might want to bypass the routing control safeguards that are enforced with safety rules that you've configured. For example, you might want to fail over quickly for disaster recovery, and one or more safety rules might be unexpectedly preventing you from updating a routing control state to reroute traffic. In a "break glass" scenario like this, you can override one or more safety rules to change a routing control state and fail over your application.
-     
-      The [SafetyRulesToOverride] property enables you override one or more safety rules and update routing control states. For more information, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html}Override safety rules to reroute traffic} in the Amazon Route 53 Application Recovery Controller Developer Guide.
-      
-       {i You must specify Regional endpoints when you work with API cluster operations to get or update routing control states in Route 53 ARC.}
-       
-        To see a code example for getting a routing control state, including accessing Regional cluster endpoints in sequence, see {{:https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html}API examples} in the Amazon Route 53 Application Recovery Controller Developer Guide.
-        
-         {ul
-              {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html}Viewing and updating routing control states}
-                 
-                 }
-               {- {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls overall}
-                  
-                  }
-              
-      }
-       |}]
+     {ul
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html} Viewing and updating routing control states} 
+               
+                }
+           {-   {{:https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html}Working with routing controls overall} 
+               
+                }
+           }
+   |}]
 
   
 end

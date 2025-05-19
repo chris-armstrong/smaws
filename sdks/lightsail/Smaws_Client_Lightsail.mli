@@ -9,12 +9,13 @@ open Smaws_Lib
 
 val service : Smaws_Lib.Service.descriptor
 type nonrec certificate_provider =
-  | LetsEncrypt 
+  | LetsEncrypt [@@ocaml.doc ""]
 type nonrec setup_request =
   {
   certificate_provider: certificate_provider option ;
   domain_names: string list option ;
-  instance_name: string option }
+  instance_name: string option }[@@ocaml.doc
+                                  "Returns information that was submitted during the [SetupInstanceHttps] request. Email information is redacted for privacy.\n"]
 type nonrec region_name =
   | EU_NORTH_1 
   | AP_NORTHEAST_2 
@@ -30,11 +31,12 @@ type nonrec region_name =
   | US_WEST_2 
   | US_WEST_1 
   | US_EAST_2 
-  | US_EAST_1 
+  | US_EAST_1 [@@ocaml.doc ""]
 type nonrec resource_location =
   {
   region_name: region_name option ;
-  availability_zone: string option }
+  availability_zone: string option }[@@ocaml.doc
+                                      "Describes the resource location.\n"]
 type nonrec resource_type =
   | Bucket 
   | Certificate 
@@ -55,18 +57,19 @@ type nonrec resource_type =
   | KeyPair 
   | StaticIp 
   | Instance 
-  | ContainerService 
+  | ContainerService [@@ocaml.doc ""]
 type nonrec setup_history_resource =
   {
   resource_type: resource_type option ;
   location: resource_location option ;
   created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "The Lightsail resource that [SetupHistory] was ran on. \n"]
 type nonrec setup_status =
   | InProgress 
   | Failed 
-  | Succeeded 
+  | Succeeded [@@ocaml.doc ""]
 type nonrec setup_execution_details =
   {
   version: string option ;
@@ -75,19 +78,21 @@ type nonrec setup_execution_details =
   status: setup_status option ;
   name: string option ;
   date_time: CoreTypes.Timestamp.t option ;
-  command: string option }
+  command: string option }[@@ocaml.doc
+                            "Returns details about the commands that were run.\n"]
 type nonrec setup_history =
   {
   status: setup_status option ;
   execution_details: setup_execution_details list option ;
   resource: setup_history_resource option ;
   request: setup_request option ;
-  operation_id: string option }
+  operation_id: string option }[@@ocaml.doc
+                                 "Returns a list of the commands that were ran on the target resource.\n\n The status of each command is also returned.\n "]
 type nonrec viewer_minimum_tls_protocol_version_enum =
   | TLSv12_2021 
   | TLSv12_2019 
   | TLSv12_2018 
-  | TLSv11_2016 
+  | TLSv11_2016 [@@ocaml.doc ""]
 type nonrec operation_type =
   | SetupInstanceHttps 
   | StopGUISession 
@@ -171,13 +176,13 @@ type nonrec operation_type =
   | StopInstance 
   | CreateInstance 
   | DeleteInstance 
-  | DeleteKnownHostKeys 
+  | DeleteKnownHostKeys [@@ocaml.doc ""]
 type nonrec operation_status =
   | Succeeded 
   | Completed 
   | Failed 
   | Started 
-  | NotStarted 
+  | NotStarted [@@ocaml.doc ""]
 type nonrec operation =
   {
   error_details: string option ;
@@ -191,10 +196,10 @@ type nonrec operation =
   created_at: CoreTypes.Timestamp.t option ;
   resource_type: resource_type option ;
   resource_name: string option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Describes the API operation.\n"]
 type nonrec update_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec update_relational_database_request =
   {
   relational_database_blueprint_id: string option ;
@@ -207,10 +212,10 @@ type nonrec update_relational_database_request =
   preferred_backup_window: string option ;
   rotate_master_user_password: bool option ;
   master_user_password: string option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec update_relational_database_parameters_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec relational_database_parameter =
   {
   parameter_value: string option ;
@@ -220,89 +225,96 @@ type nonrec relational_database_parameter =
   data_type: string option ;
   apply_type: string option ;
   apply_method: string option ;
-  allowed_values: string option }
+  allowed_values: string option }[@@ocaml.doc
+                                   "Describes the parameters of a database.\n"]
 type nonrec update_relational_database_parameters_request =
   {
   parameters: relational_database_parameter list ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec unauthenticated_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when the user has not been authenticated.\n"]
 type nonrec service_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc "A general service exception.\n"]
 type nonrec operation_failure_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when an operation fails to execute.\n"]
 type nonrec not_found_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when it cannot find a resource.\n"]
 type nonrec invalid_input_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when user input does not conform to the validation rules of an input field.\n\n  Domain and distribution APIs are only available in the N. Virginia ([us-east-1]) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to [us-east-1] to create, view, or edit these resources.\n  \n   "]
 type nonrec account_setup_in_progress_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when an account is still in the setup in progress state.\n"]
 type nonrec access_denied_exception =
   {
   tip: string option ;
   message: string option ;
   docs: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.\n"]
 type nonrec update_load_balancer_attribute_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec load_balancer_attribute_name =
   | TlsPolicyName 
   | HttpsRedirectionEnabled 
   | SessionStickiness_LB_CookieDurationSeconds 
   | SessionStickinessEnabled 
-  | HealthCheckPath 
+  | HealthCheckPath [@@ocaml.doc ""]
 type nonrec update_load_balancer_attribute_request =
   {
   attribute_value: string ;
   attribute_name: load_balancer_attribute_name ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec update_instance_metadata_options_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec http_tokens =
   | Required 
-  | Optional 
+  | Optional [@@ocaml.doc ""]
 type nonrec http_endpoint =
   | Enabled 
-  | Disabled 
+  | Disabled [@@ocaml.doc ""]
 type nonrec http_protocol_ipv6 =
   | Enabled 
-  | Disabled 
+  | Disabled [@@ocaml.doc ""]
 type nonrec update_instance_metadata_options_request =
   {
   http_protocol_ipv6: http_protocol_ipv6 option ;
   http_put_response_hop_limit: int option ;
   http_endpoint: http_endpoint option ;
   http_tokens: http_tokens option ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec update_domain_entry_result = {
-  operations: operation list option }
-type nonrec domain_entry_options = (string * string) list
+  operations: operation list option }[@@ocaml.doc ""]
+type nonrec domain_entry_options = (string * string) list[@@ocaml.doc ""]
 type nonrec domain_entry =
   {
   options: domain_entry_options option ;
@@ -310,35 +322,38 @@ type nonrec domain_entry =
   is_alias: bool option ;
   target: string option ;
   name: string option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Describes a domain recordset entry.\n"]
 type nonrec update_domain_entry_request =
   {
   domain_entry: domain_entry ;
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec update_distribution_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec origin_protocol_policy_enum =
   | HTTPSOnly 
-  | HTTPOnly 
+  | HTTPOnly [@@ocaml.doc ""]
 type nonrec input_origin =
   {
   response_timeout: int option ;
   protocol_policy: origin_protocol_policy_enum option ;
   region_name: region_name option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution.\n\n An origin can be a Lightsail instance, bucket, container service, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.\n "]
 type nonrec behavior_enum =
   | CacheSetting 
-  | DontCacheSetting 
+  | DontCacheSetting [@@ocaml.doc ""]
 type nonrec cache_behavior = {
-  behavior: behavior_enum option }
+  behavior: behavior_enum option }[@@ocaml.doc
+                                    "Describes the default cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.\n"]
 type nonrec forward_values =
   | All 
   | AllowList 
-  | None 
+  | None [@@ocaml.doc ""]
 type nonrec cookie_object =
   {
   cookies_allow_list: string list option ;
-  option_: forward_values option }
+  option_: forward_values option }[@@ocaml.doc
+                                    "Describes whether an Amazon Lightsail content delivery network (CDN) distribution forwards cookies to the origin and, if so, which ones.\n\n For the cookies that you specify, your distribution caches separate versions of the specified content based on the cookie values in viewer requests.\n "]
 type nonrec header_enum =
   | Referer 
   | Origin 
@@ -354,15 +369,17 @@ type nonrec header_enum =
   | AcceptEncoding 
   | AcceptDatetime 
   | AcceptCharset 
-  | Accept 
+  | Accept [@@ocaml.doc ""]
 type nonrec header_object =
   {
   headers_allow_list: header_enum list option ;
-  option_: forward_values option }
+  option_: forward_values option }[@@ocaml.doc
+                                    "Describes the request headers that a Lightsail distribution bases caching on.\n\n For the headers that you specify, your distribution caches separate versions of the specified content based on the header values in viewer requests. For example, suppose viewer requests for [logo.jpg] contain a custom [product] header that has a value of either [acme] or [apex], and you configure your distribution to cache your content based on values in the [product] header. Your distribution forwards the [product] header to the origin and caches the response from the origin once for each header value. \n "]
 type nonrec query_string_object =
   {
   query_strings_allow_list: string list option ;
-  option_: bool option }
+  option_: bool option }[@@ocaml.doc
+                          "Describes the query string parameters that an Amazon Lightsail content delivery network (CDN) distribution to bases caching on.\n\n For the query strings that you specify, your distribution caches separate versions of the specified content based on the query string values in viewer requests.\n "]
 type nonrec cache_settings =
   {
   forwarded_query_strings: query_string_object option ;
@@ -372,11 +389,13 @@ type nonrec cache_settings =
   allowed_http_methods: string option ;
   maximum_tt_l: int option ;
   minimum_tt_l: int option ;
-  default_tt_l: int option }
+  default_tt_l: int option }[@@ocaml.doc
+                              "Describes the cache settings of an Amazon Lightsail content delivery network (CDN) distribution.\n\n These settings apply only to your distribution's [cacheBehaviors] (including the [defaultCacheBehavior]) that have a [behavior] of [cache].\n "]
 type nonrec cache_behavior_per_path =
   {
   behavior: behavior_enum option ;
-  path: string option }
+  path: string option }[@@ocaml.doc
+                         "Describes the per-path cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.\n\n A per-path cache behavior is used to override, or add an exception to, the default cache behavior of a distribution. For example, if the [cacheBehavior] is set to [cache], then a per-path cache behavior can be used to specify a directory, file, or file type that your distribution will cache. Alternately, if the distribution's [cacheBehavior] is [dont-cache], then a per-path cache behavior can be used to specify a directory, file, or file type that your distribution will not cache.\n "]
 type nonrec update_distribution_request =
   {
   use_default_certificate: bool option ;
@@ -388,24 +407,25 @@ type nonrec update_distribution_request =
   cache_behavior_settings: cache_settings option ;
   default_cache_behavior: cache_behavior option ;
   origin: input_origin option ;
-  distribution_name: string }
+  distribution_name: string }[@@ocaml.doc ""]
 type nonrec update_distribution_bundle_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec update_distribution_bundle_request =
   {
   bundle_id: string option ;
-  distribution_name: string option }
+  distribution_name: string option }[@@ocaml.doc ""]
 type nonrec tag = {
   value: string option ;
-  key: string option }
+  key: string option }[@@ocaml.doc
+                        "Describes a tag key and optional value assigned to an Amazon Lightsail resource.\n\n For more information about tags in Lightsail, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags}Amazon Lightsail Developer Guide}.\n "]
 type nonrec container_service_power_name =
   | Xlarge 
   | Large 
   | Medium 
   | Small 
   | Micro 
-  | Nano 
+  | Nano [@@ocaml.doc ""]
 type nonrec container_service_state =
   | DEPLOYING 
   | DISABLED 
@@ -413,7 +433,7 @@ type nonrec container_service_state =
   | UPDATING 
   | RUNNING 
   | READY 
-  | PENDING 
+  | PENDING [@@ocaml.doc ""]
 type nonrec container_service_state_detail_code =
   | UNKNOWN_ERROR 
   | CERTIFICATE_LIMIT_EXCEEDED 
@@ -423,30 +443,33 @@ type nonrec container_service_state_detail_code =
   | PROVISIONING_SERVICE 
   | PROVISIONING_CERTIFICATE 
   | CREATING_NETWORK_INFRASTRUCTURE 
-  | CREATING_SYSTEM_RESOURCES 
+  | CREATING_SYSTEM_RESOURCES [@@ocaml.doc ""]
 type nonrec container_service_state_detail =
   {
   message: string option ;
-  code: container_service_state_detail_code option }
+  code: container_service_state_detail_code option }[@@ocaml.doc
+                                                      "Describes the current state of a container service.\n"]
 type nonrec container_service_deployment_state =
   | FAILED 
   | INACTIVE 
   | ACTIVE 
-  | ACTIVATING 
-type nonrec environment = (string * string) list
+  | ACTIVATING [@@ocaml.doc ""]
+type nonrec environment = (string * string) list[@@ocaml.doc ""]
 type nonrec container_service_protocol =
   | UDP 
   | TCP 
   | HTTPS 
-  | HTTP 
-type nonrec port_map = (string * container_service_protocol) list
+  | HTTP [@@ocaml.doc ""]
+type nonrec port_map = (string * container_service_protocol) list[@@ocaml.doc
+                                                                   ""]
 type nonrec container =
   {
   ports: port_map option ;
   environment: environment option ;
   command: string list option ;
-  image: string option }
-type nonrec container_map = (string * container) list
+  image: string option }[@@ocaml.doc
+                          "Describes the settings of a container that will be launched, or that is launched, to an Amazon Lightsail container service.\n"]
+type nonrec container_map = (string * container) list[@@ocaml.doc ""]
 type nonrec container_service_health_check_config =
   {
   success_codes: string option ;
@@ -454,27 +477,34 @@ type nonrec container_service_health_check_config =
   interval_seconds: int option ;
   timeout_seconds: int option ;
   unhealthy_threshold: int option ;
-  healthy_threshold: int option }
+  healthy_threshold: int option }[@@ocaml.doc
+                                   "Describes the health check configuration of an Amazon Lightsail container service.\n"]
 type nonrec container_service_endpoint =
   {
   health_check: container_service_health_check_config option ;
   container_port: int option ;
-  container_name: string option }
+  container_name: string option }[@@ocaml.doc
+                                   "Describes the public endpoint configuration of a deployment of an Amazon Lightsail container service.\n"]
 type nonrec container_service_deployment =
   {
   created_at: CoreTypes.Timestamp.t option ;
   public_endpoint: container_service_endpoint option ;
   containers: container_map option ;
   state: container_service_deployment_state option ;
-  version: int option }
+  version: int option }[@@ocaml.doc
+                         "Describes a container deployment configuration of an Amazon Lightsail container service.\n\n A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.\n "]
 type nonrec container_service_public_domains = (string * string list) list
+[@@ocaml.doc ""]
 type nonrec container_service_ecr_image_puller_role =
   {
   principal_arn: string option ;
-  is_active: bool option }
+  is_active: bool option }[@@ocaml.doc
+                            "Describes the activation status of the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.\n\n When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access}Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec private_registry_access =
   {
   ecr_image_puller_role: container_service_ecr_image_puller_role option }
+[@@ocaml.doc
+  "Describes the configuration for an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.\n\n For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access}Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec container_service =
   {
   private_registry_access: private_registry_access option ;
@@ -495,17 +525,20 @@ type nonrec container_service =
   location: resource_location option ;
   created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
-  container_service_name: string option }
+  container_service_name: string option }[@@ocaml.doc
+                                           "Describes an Amazon Lightsail container service.\n"]
 type nonrec update_container_service_result =
   {
-  container_service: container_service option }
+  container_service: container_service option }[@@ocaml.doc ""]
 type nonrec container_service_ecr_image_puller_role_request =
   {
-  is_active: bool option }
+  is_active: bool option }[@@ocaml.doc
+                            "Describes a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.\n\n When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access}Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec private_registry_access_request =
   {
   ecr_image_puller_role:
-    container_service_ecr_image_puller_role_request option }
+    container_service_ecr_image_puller_role_request option }[@@ocaml.doc
+                                                              "Describes a request to configure an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.\n\n For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-service-ecr-private-repo-access}Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec update_container_service_request =
   {
   private_registry_access: private_registry_access_request option ;
@@ -513,26 +546,30 @@ type nonrec update_container_service_request =
   is_disabled: bool option ;
   scale: int option ;
   power: container_service_power_name option ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec access_type =
   | Private 
-  | Public 
+  | Public [@@ocaml.doc ""]
 type nonrec access_rules =
   {
   allow_public_overrides: bool option ;
-  get_object: access_type option }
+  get_object: access_type option }[@@ocaml.doc
+                                    "Describes the anonymous access permissions for an Amazon Lightsail bucket and its objects.\n\n For more information about bucket access permissions, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-understanding-bucket-permissions}Understanding bucket permissions in Amazon Lightsail} in the \n \n   {i Amazon Lightsail Developer Guide}.\n  "]
 type nonrec resource_receiving_access =
   {
   resource_type: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an Amazon Lightsail instance that has access to a Lightsail bucket.\n"]
 type nonrec bucket_state = {
   message: string option ;
-  code: string option }
+  code: string option }[@@ocaml.doc
+                         "Describes the state of an Amazon Lightsail bucket.\n"]
 type nonrec bucket_access_log_config =
   {
   prefix: string option ;
   destination: string option ;
-  enabled: bool }
+  enabled: bool }[@@ocaml.doc
+                   "Describes the access log configuration for a bucket in the Amazon Lightsail object storage service.\n\n For more information about bucket access logs, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-bucket-access-logs}Logging bucket requests using access logging in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec bucket =
   {
   access_log_config: bucket_access_log_config option ;
@@ -550,84 +587,87 @@ type nonrec bucket =
   bundle_id: string option ;
   arn: string option ;
   access_rules: access_rules option ;
-  resource_type: string option }
+  resource_type: string option }[@@ocaml.doc
+                                  "Describes an Amazon Lightsail bucket.\n"]
 type nonrec update_bucket_result =
   {
   operations: operation list option ;
-  bucket: bucket option }
+  bucket: bucket option }[@@ocaml.doc ""]
 type nonrec update_bucket_request =
   {
   access_log_config: bucket_access_log_config option ;
   readonly_access_accounts: string list option ;
   versioning: string option ;
   access_rules: access_rules option ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec update_bucket_bundle_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec update_bucket_bundle_request =
   {
   bundle_id: string ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec untag_resource_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec untag_resource_request =
   {
   tag_keys: string list ;
   resource_arn: string option ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec unpeer_vpc_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec unpeer_vpc_request = unit
 type nonrec treat_missing_data =
   | Missing 
   | Ignore 
   | NotBreaching 
-  | Breaching 
+  | Breaching [@@ocaml.doc ""]
 type nonrec time_period =
   {
   end_: CoreTypes.Timestamp.t option ;
-  start: CoreTypes.Timestamp.t option }
+  start: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                         "Sets the start date and end date for retrieving a cost estimate. The start date is inclusive, but the end date is exclusive. For example, if [start] is [2017-01-01] and [end] is [2017-05-01], then the cost and usage data is retrieved from [2017-01-01] up to and including [2017-04-30] but not including [2017-05-01].\n"]
 type nonrec test_alarm_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec alarm_state =
   | INSUFFICIENT_DATA 
   | ALARM 
-  | OK 
+  | OK [@@ocaml.doc ""]
 type nonrec test_alarm_request = {
   state: alarm_state ;
-  alarm_name: string }
+  alarm_name: string }[@@ocaml.doc ""]
 type nonrec tag_resource_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec tag_resource_request =
   {
   tags: tag list ;
   resource_arn: string option ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec stop_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec stop_relational_database_request =
   {
   relational_database_snapshot_name: string option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec stop_instance_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec stop_instance_request =
   {
   force: bool option ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec stop_instance_on_idle_request =
   {
   duration: string option ;
-  threshold: string option }
+  threshold: string option }[@@ocaml.doc
+                              "Describes a request to create or edit the [StopInstanceOnIdle] add-on.\n\n  This add-on only applies to Lightsail for Research resources.\n  \n   "]
 type nonrec stop_gui_session_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec stop_gui_session_request = {
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec status_type =
   | Inactive 
-  | Active 
+  | Active [@@ocaml.doc ""]
 type nonrec status =
   | FailedStoppingGUISession 
   | FailedStartingGUISession 
@@ -638,7 +678,7 @@ type nonrec status =
   | Starting 
   | Started 
   | NotStarted 
-  | StartExpired 
+  | StartExpired [@@ocaml.doc ""]
 type nonrec static_ip =
   {
   is_attached: bool option ;
@@ -649,138 +689,146 @@ type nonrec static_ip =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a static IP.\n"]
 type nonrec start_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec start_relational_database_request =
   {
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec start_instance_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec start_instance_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec start_gui_session_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec start_gui_session_request = {
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec setup_instance_https_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec setup_instance_https_request =
   {
   certificate_provider: certificate_provider ;
   domain_names: string list ;
   email_address: string ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec set_resource_access_for_bucket_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec resource_bucket_access =
   | Deny 
-  | Allow 
+  | Allow [@@ocaml.doc ""]
 type nonrec set_resource_access_for_bucket_request =
   {
   access: resource_bucket_access ;
   bucket_name: string ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec set_ip_address_type_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec ip_address_type =
   | IPV6 
   | IPV4 
-  | DUALSTACK 
+  | DUALSTACK [@@ocaml.doc ""]
 type nonrec set_ip_address_type_request =
   {
   accept_bundle_update: bool option ;
   ip_address_type: ip_address_type ;
   resource_name: string ;
-  resource_type: resource_type }
+  resource_type: resource_type }[@@ocaml.doc ""]
 type nonrec session =
   {
   is_primary: bool option ;
   url: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes a web-based, remote graphical user interface (GUI), NICE DCV session. The session is used to access a virtual computer\226\128\153s operating system or application.\n"]
 type nonrec send_contact_method_verification_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec contact_method_verification_protocol =
-  | Email 
+  | Email [@@ocaml.doc ""]
 type nonrec send_contact_method_verification_request =
   {
-  protocol: contact_method_verification_protocol }
+  protocol: contact_method_verification_protocol }[@@ocaml.doc ""]
 type nonrec pricing_unit =
   | Queries 
   | Bundles 
   | GBMo 
   | Hrs 
-  | GB 
+  | GB [@@ocaml.doc ""]
 type nonrec currency =
-  | USD 
+  | USD [@@ocaml.doc ""]
 type nonrec estimate_by_time =
   {
   time_period: time_period option ;
   currency: currency option ;
   unit_: float option ;
   pricing_unit: pricing_unit option ;
-  usage_cost: float option }
+  usage_cost: float option }[@@ocaml.doc
+                              "An estimate that's associated with a time period. \n"]
 type nonrec cost_estimate =
   {
   results_by_time: estimate_by_time list option ;
-  usage_type: string option }
+  usage_type: string option }[@@ocaml.doc
+                               "Describes the estimated cost for resources in your Lightsail for Research account.\n"]
 type nonrec resource_budget_estimate =
   {
   end_time: CoreTypes.Timestamp.t option ;
   start_time: CoreTypes.Timestamp.t option ;
   cost_estimates: cost_estimate list option ;
   resource_type: resource_type option ;
-  resource_name: string option }
+  resource_name: string option }[@@ocaml.doc
+                                  "Describes the estimated cost or usage that a budget tracks.\n"]
 type nonrec resource_record =
   {
   value: string option ;
   type_: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the domain name system (DNS) records to add to your domain's DNS to validate it for an Amazon Lightsail certificate.\n"]
 type nonrec reset_distribution_cache_result =
   {
   operation: operation option ;
   create_time: CoreTypes.Timestamp.t option ;
-  status: string option }
+  status: string option }[@@ocaml.doc ""]
 type nonrec reset_distribution_cache_request =
   {
-  distribution_name: string option }
+  distribution_name: string option }[@@ocaml.doc ""]
 type nonrec dns_record_creation_state_code =
   | Failed 
   | Started 
-  | Succeeded 
+  | Succeeded [@@ocaml.doc ""]
 type nonrec dns_record_creation_state =
   {
   message: string option ;
-  code: dns_record_creation_state_code option }
+  code: dns_record_creation_state_code option }[@@ocaml.doc
+                                                 "Describes the creation state of the canonical name (CNAME) records that are automatically added by Amazon Lightsail to the DNS of a domain to validate domain ownership for an SSL/TLS certificate.\n\n When you create an SSL/TLS certificate for a Lightsail resource, you must add a set of CNAME records to the DNS of the domains for the certificate to validate that you own the domains. Lightsail can automatically add the CNAME records to the DNS of the domain if the DNS zone for the domain exists within your Lightsail account. If automatic record addition fails, or if you manage the DNS of your domain using a third-party service, then you must manually add the CNAME records to the DNS of your domain. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/verify-tls-ssl-certificate-using-dns-cname-https}Verify an SSL/TLS certificate in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec certificate_domain_validation_status =
   | Success 
   | Failed 
-  | PendingValidation 
+  | PendingValidation [@@ocaml.doc ""]
 type nonrec domain_validation_record =
   {
   validation_status: certificate_domain_validation_status option ;
   dns_record_creation_state: dns_record_creation_state option ;
   resource_record: resource_record option ;
-  domain_name: string option }
+  domain_name: string option }[@@ocaml.doc
+                                "Describes the domain name system (DNS) records that you must add to the DNS of your registered domain to validate ownership for an Amazon Lightsail SSL/TLS certificate.\n"]
 type nonrec renewal_status =
   | Failed 
   | Success 
   | PendingValidation 
-  | PendingAutoRenewal 
+  | PendingAutoRenewal [@@ocaml.doc ""]
 type nonrec renewal_summary =
   {
   updated_at: CoreTypes.Timestamp.t option ;
   renewal_status_reason: string option ;
   renewal_status: renewal_status option ;
-  domain_validation_records: domain_validation_record list option }
+  domain_validation_records: domain_validation_record list option }[@@ocaml.doc
+                                                                    "Describes the status of a SSL/TLS certificate renewal managed by Amazon Lightsail.\n"]
 type nonrec release_static_ip_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec release_static_ip_request = {
-  static_ip_name: string }
+  static_ip_name: string }[@@ocaml.doc ""]
 type nonrec relational_database_snapshot =
   {
   from_relational_database_blueprint_id: string option ;
@@ -797,37 +845,40 @@ type nonrec relational_database_snapshot =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a database snapshot.\n"]
 type nonrec relational_database_password_version =
   | PENDING 
   | PREVIOUS 
-  | CURRENT 
+  | CURRENT [@@ocaml.doc ""]
 type nonrec relational_database_metric_name =
   | NetworkTransmitThroughput 
   | NetworkReceiveThroughput 
   | FreeStorageSpace 
   | DiskQueueDepth 
   | DatabaseConnections 
-  | CPUUtilization 
+  | CPUUtilization [@@ocaml.doc ""]
 type nonrec relational_database_hardware =
   {
   ram_size_in_gb: float option ;
   disk_size_in_gb: int option ;
-  cpu_count: int option }
+  cpu_count: int option }[@@ocaml.doc
+                           "Describes the hardware of a database.\n"]
 type nonrec pending_modified_relational_database_values =
   {
   backup_retention_enabled: bool option ;
   engine_version: string option ;
-  master_user_password: string option }
+  master_user_password: string option }[@@ocaml.doc
+                                         "Describes a pending database value modification.\n"]
 type nonrec relational_database_endpoint =
   {
   address: string option ;
-  port: int option }
+  port: int option }[@@ocaml.doc "Describes an endpoint for a database.\n"]
 type nonrec pending_maintenance_action =
   {
   current_apply_date: CoreTypes.Timestamp.t option ;
   description: string option ;
-  action: string option }
+  action: string option }[@@ocaml.doc
+                           "Describes a pending database maintenance action.\n"]
 type nonrec relational_database =
   {
   ca_certificate_identifier: string option ;
@@ -855,15 +906,16 @@ type nonrec relational_database =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a database.\n"]
 type nonrec relational_database_event =
   {
   event_categories: string list option ;
   message: string option ;
   created_at: CoreTypes.Timestamp.t option ;
-  resource: string option }
+  resource: string option }[@@ocaml.doc
+                             "Describes an event for a database.\n"]
 type nonrec relational_database_engine =
-  | MYSQL 
+  | MYSQL [@@ocaml.doc ""]
 type nonrec relational_database_bundle =
   {
   is_active: bool option ;
@@ -874,7 +926,8 @@ type nonrec relational_database_bundle =
   ram_size_in_gb: float option ;
   price: float option ;
   name: string option ;
-  bundle_id: string option }
+  bundle_id: string option }[@@ocaml.doc
+                              "Describes a database bundle. A bundle describes the performance specifications of the database.\n"]
 type nonrec relational_database_blueprint =
   {
   is_engine_default: bool option ;
@@ -882,46 +935,52 @@ type nonrec relational_database_blueprint =
   engine_description: string option ;
   engine_version: string option ;
   engine: relational_database_engine option ;
-  blueprint_id: string option }
+  blueprint_id: string option }[@@ocaml.doc
+                                 "Describes a database image, or blueprint. A blueprint describes the major engine version of a database.\n"]
 type nonrec name_servers_update_state_code =
   | Started 
   | Failed 
   | Pending 
-  | Succeeded 
+  | Succeeded [@@ocaml.doc ""]
 type nonrec name_servers_update_state =
   {
   message: string option ;
-  code: name_servers_update_state_code option }
+  code: name_servers_update_state_code option }[@@ocaml.doc
+                                                 "Describes the state of the name server records update made by Amazon Lightsail to an Amazon Route\194\16053 registered domain.\n\n For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-dns-in-amazon-lightsail}DNS in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec r53_hosted_zone_deletion_state_code =
   | Started 
   | Failed 
   | Pending 
-  | Succeeded 
+  | Succeeded [@@ocaml.doc ""]
 type nonrec r53_hosted_zone_deletion_state =
   {
   message: string option ;
-  code: r53_hosted_zone_deletion_state_code option }
+  code: r53_hosted_zone_deletion_state_code option }[@@ocaml.doc
+                                                      "Describes the deletion state of an Amazon Route\194\16053 hosted zone for a domain that is being automatically delegated to an Amazon Lightsail DNS zone.\n"]
 type nonrec registered_domain_delegation_info =
   {
   r53_hosted_zone_deletion_state: r53_hosted_zone_deletion_state option ;
-  name_servers_update_state: name_servers_update_state option }
+  name_servers_update_state: name_servers_update_state option }[@@ocaml.doc
+                                                                 "Describes the delegation state of an Amazon Route\194\16053 registered domain to Amazon Lightsail.\n\n When you delegate an Amazon Route\194\16053 registered domain to Lightsail, you can manage the DNS of the domain using a Lightsail DNS zone. You no longer use the Route\194\16053 hosted zone to manage the DNS of the domain. To delegate the domain, Lightsail automatically updates the domain's name servers in Route\194\16053 to the name servers of the Lightsail DNS zone. Then, Lightsail automatically deletes the Route\194\16053 hosted zone for the domain.\n \n  All of the following conditions must be true for automatic domain delegation to be successful:\n  \n   {ul\n         {-  The registered domain must be in the same Amazon Web Services account as the Lightsail account making the request.\n             \n              }\n         {-  The user or entity making the request must have permission to manage domains in Route\194\16053.\n             \n              }\n         {-  The Route\194\16053 hosted zone for the domain must be empty. It cannot contain DNS records other than start of authority (SOA) and name server records.\n             \n              }\n         }\n   If automatic domain delegation fails, or if you manage the DNS of your domain using a service other than Route\194\16053, then you must manually add the Lightsail DNS zone name servers to your domain in order to delegate management of its DNS to Lightsail. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-how-to-create-dns-entry}Creating a DNS zone to manage your domain\226\128\153s records in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n   "]
 type nonrec container_image =
   {
   created_at: CoreTypes.Timestamp.t option ;
   digest: string option ;
-  image: string option }
+  image: string option }[@@ocaml.doc
+                          "Describes a container image that is registered to an Amazon Lightsail container service.\n"]
 type nonrec register_container_image_result =
   {
-  container_image: container_image option }
+  container_image: container_image option }[@@ocaml.doc ""]
 type nonrec register_container_image_request =
   {
   digest: string ;
   label: string ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec availability_zone =
   {
   state: string option ;
-  zone_name: string option }
+  zone_name: string option }[@@ocaml.doc
+                              "Describes an Availability Zone. This is returned only as part of a [GetRegions] request.\n"]
 type nonrec region =
   {
   relational_database_availability_zones: availability_zone list option ;
@@ -929,29 +988,30 @@ type nonrec region =
   name: region_name option ;
   display_name: string option ;
   description: string option ;
-  continent_code: string option }
+  continent_code: string option }[@@ocaml.doc
+                                   "Describes the Amazon Web Services Region.\n"]
 type nonrec record_state =
   | Failed 
   | Succeeded 
-  | Started 
+  | Started [@@ocaml.doc ""]
 type nonrec reboot_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec reboot_relational_database_request =
   {
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec reboot_instance_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec reboot_instance_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec put_instance_public_ports_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec network_protocol =
   | ICMPV6 
   | ICMP 
   | UDP 
   | ALL 
-  | TCP 
+  | TCP [@@ocaml.doc ""]
 type nonrec port_info =
   {
   cidr_list_aliases: string list option ;
@@ -959,13 +1019,14 @@ type nonrec port_info =
   cidrs: string list option ;
   protocol: network_protocol option ;
   to_port: int option ;
-  from_port: int option }
+  from_port: int option }[@@ocaml.doc
+                           "Describes ports to open on an instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.\n"]
 type nonrec put_instance_public_ports_request =
   {
   instance_name: string ;
-  port_infos: port_info list }
+  port_infos: port_info list }[@@ocaml.doc ""]
 type nonrec put_alarm_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec metric_name =
   | BurstCapacityPercentage 
   | BurstCapacityTime 
@@ -991,15 +1052,15 @@ type nonrec metric_name =
   | StatusCheckFailed 
   | NetworkOut 
   | NetworkIn 
-  | CPUUtilization 
+  | CPUUtilization [@@ocaml.doc ""]
 type nonrec comparison_operator =
   | LessThanOrEqualToThreshold 
   | LessThanThreshold 
   | GreaterThanThreshold 
-  | GreaterThanOrEqualToThreshold 
+  | GreaterThanOrEqualToThreshold [@@ocaml.doc ""]
 type nonrec contact_protocol =
   | SMS 
-  | Email 
+  | Email [@@ocaml.doc ""]
 type nonrec put_alarm_request =
   {
   notification_enabled: bool option ;
@@ -1012,46 +1073,50 @@ type nonrec put_alarm_request =
   comparison_operator: comparison_operator ;
   monitored_resource_name: string ;
   metric_name: metric_name ;
-  alarm_name: string }
+  alarm_name: string }[@@ocaml.doc ""]
 type nonrec port_state =
   | Closed 
-  | Open 
+  | Open [@@ocaml.doc ""]
 type nonrec port_info_source_type =
   | Closed 
   | None 
   | Instance 
-  | Default 
+  | Default [@@ocaml.doc ""]
 type nonrec port_access_type =
   | Private 
-  | Public 
+  | Public [@@ocaml.doc ""]
 type nonrec peer_vpc_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec peer_vpc_request = unit
 type nonrec password_data =
   {
   key_pair_name: string option ;
-  ciphertext: string option }
+  ciphertext: string option }[@@ocaml.doc
+                               "The password data for the Windows Server-based instance, including the ciphertext and the key pair name.\n"]
 type nonrec origin =
   {
   response_timeout: int option ;
   protocol_policy: origin_protocol_policy_enum option ;
   region_name: region_name option ;
   resource_type: resource_type option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution.\n\n An origin can be a Lightsail instance, bucket, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.\n "]
 type nonrec open_instance_public_ports_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec open_instance_public_ports_request =
   {
   instance_name: string ;
-  port_info: port_info }
+  port_info: port_info }[@@ocaml.doc ""]
 type nonrec monthly_transfer = {
-  gb_per_month_allocated: int option }
+  gb_per_month_allocated: int option }[@@ocaml.doc
+                                        "Describes the monthly data transfer in and out of your virtual private server (or {i instance}).\n"]
 type nonrec monitored_resource_info =
   {
   resource_type: resource_type option ;
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "Describes resource being monitored by an alarm.\n\n An alarm is a way to monitor your Amazon Lightsail resource metrics. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
 type nonrec metric_unit =
   | None 
   | CountSecond 
@@ -1079,13 +1144,13 @@ type nonrec metric_unit =
   | Bytes 
   | Milliseconds 
   | Microseconds 
-  | Seconds 
+  | Seconds [@@ocaml.doc ""]
 type nonrec metric_statistic =
   | SampleCount 
   | Average 
   | Sum 
   | Maximum 
-  | Minimum 
+  | Minimum [@@ocaml.doc ""]
 type nonrec metric_datapoint =
   {
   unit_: metric_unit option ;
@@ -1094,22 +1159,25 @@ type nonrec metric_datapoint =
   sample_count: float option ;
   minimum: float option ;
   maximum: float option ;
-  average: float option }
+  average: float option }[@@ocaml.doc "Describes the metric data point.\n"]
 type nonrec log_event =
   {
   message: string option ;
-  created_at: CoreTypes.Timestamp.t option }
+  created_at: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                              "Describes a database log event.\n"]
 type nonrec load_balancer_tls_policy =
   {
   ciphers: string list option ;
   protocols: string list option ;
   description: string option ;
   is_default: bool option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the TLS security policies that are available for Lightsail load balancers.\n\n For more information about load balancer TLS security policies, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy}Configuring TLS security policies on your Amazon Lightsail load balancers} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec load_balancer_tls_certificate_summary =
   {
   is_attached: bool option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Provides a summary of SSL/TLS certificate metadata.\n"]
 type nonrec load_balancer_tls_certificate_status =
   | Unknown 
   | Failed 
@@ -1118,7 +1186,7 @@ type nonrec load_balancer_tls_certificate_status =
   | Expired 
   | Inactive 
   | Issued 
-  | PendingValidation 
+  | PendingValidation [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate_revocation_reason =
   | AACompromise 
   | PrivilegeWithdrawn 
@@ -1129,33 +1197,38 @@ type nonrec load_balancer_tls_certificate_revocation_reason =
   | AffiliationChanged 
   | CaCompromise 
   | KeyCompromise 
-  | Unspecified 
+  | Unspecified [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate_renewal_status =
   | Failed 
   | Success 
   | PendingValidation 
-  | PendingAutoRenewal 
+  | PendingAutoRenewal [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate_domain_status =
   | Success 
   | Failed 
-  | PendingValidation 
+  | PendingValidation [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate_domain_validation_option =
   {
   validation_status: load_balancer_tls_certificate_domain_status option ;
-  domain_name: string option }
+  domain_name: string option }[@@ocaml.doc
+                                "Contains information about the domain names on an SSL/TLS certificate that you will use to validate domain ownership.\n"]
 type nonrec load_balancer_tls_certificate_renewal_summary =
   {
   domain_validation_options:
     load_balancer_tls_certificate_domain_validation_option list option ;
   renewal_status: load_balancer_tls_certificate_renewal_status option }
+[@@ocaml.doc
+  "Contains information about the status of Lightsail's managed renewal for the certificate.\n\n The renewal status of the certificate.\n \n  The following renewal status are possible:\n  \n   {ul\n         {-   {b  [PendingAutoRenewal] } - Lightsail is attempting to automatically validate the domain names in the certificate. No further action is required. \n             \n              }\n         {-   {b  [PendingValidation] } - Lightsail couldn't automatically validate one or more domain names in the certificate. You must take action to validate these domain names or the certificate won't be renewed. If you used DNS validation, check to make sure your certificate's domain validation records exist in your domain's DNS, and that your certificate remains in use.\n             \n              }\n         {-   {b  [Success] } - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. \n             \n              }\n         {-   {b  [Failed] } - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the [CreateCertificate] action.\n             \n              }\n         }\n  "]
 type nonrec load_balancer_tls_certificate_dns_record_creation_state_code =
   | Failed 
   | Started 
-  | Succeeded 
+  | Succeeded [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate_dns_record_creation_state =
   {
   message: string option ;
   code: load_balancer_tls_certificate_dns_record_creation_state_code option }
+[@@ocaml.doc
+  "An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of the domain to validate domain ownership.\n"]
 type nonrec load_balancer_tls_certificate_domain_validation_record =
   {
   dns_record_creation_state:
@@ -1164,13 +1237,14 @@ type nonrec load_balancer_tls_certificate_domain_validation_record =
   validation_status: load_balancer_tls_certificate_domain_status option ;
   value: string option ;
   type_: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes the validation record of each domain name in the SSL/TLS certificate.\n"]
 type nonrec load_balancer_tls_certificate_failure_reason =
   | Other 
   | InvalidPublicDomain 
   | DomainNotAllowed 
   | AdditionalVerificationRequired 
-  | NoAvailableContacts 
+  | NoAvailableContacts [@@ocaml.doc ""]
 type nonrec load_balancer_tls_certificate =
   {
   subject_alternative_names: string list option ;
@@ -1198,16 +1272,17 @@ type nonrec load_balancer_tls_certificate =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes a load balancer SSL/TLS certificate.\n\n TLS is just an updated, more secure version of Secure Socket Layer (SSL).\n "]
 type nonrec load_balancer_state =
   | Unknown 
   | Failed 
   | ActiveImpaired 
   | Provisioning 
-  | Active 
+  | Active [@@ocaml.doc ""]
 type nonrec load_balancer_protocol =
   | HTTP 
-  | HTTP_HTTPS 
+  | HTTP_HTTPS [@@ocaml.doc ""]
 type nonrec load_balancer_metric_name =
   | RequestCount 
   | RejectedConnectionCount 
@@ -1220,14 +1295,14 @@ type nonrec load_balancer_metric_name =
   | HTTPCode_LB_4XX_Count 
   | UnhealthyHostCount 
   | HealthyHostCount 
-  | ClientTLSNegotiationErrorCount 
+  | ClientTLSNegotiationErrorCount [@@ocaml.doc ""]
 type nonrec instance_health_state =
   | Unavailable 
   | Draining 
   | Unused 
   | Unhealthy 
   | Healthy 
-  | Initial 
+  | Initial [@@ocaml.doc ""]
 type nonrec instance_health_reason =
   | InstanceIpUnusable 
   | InstanceInvalidState 
@@ -1239,14 +1314,15 @@ type nonrec instance_health_reason =
   | InstanceResponseCodeMismatch 
   | LbInternalError 
   | LbInitialHealthChecking 
-  | LbRegistrationInProgress 
+  | LbRegistrationInProgress [@@ocaml.doc ""]
 type nonrec instance_health_summary =
   {
   instance_health_reason: instance_health_reason option ;
   instance_health: instance_health_state option ;
-  instance_name: string option }
+  instance_name: string option }[@@ocaml.doc
+                                  "Describes information about the health of the instance.\n"]
 type nonrec load_balancer_configuration_options =
-  (load_balancer_attribute_name * string) list
+  (load_balancer_attribute_name * string) list[@@ocaml.doc ""]
 type nonrec load_balancer =
   {
   tls_policy_name: string option ;
@@ -1268,65 +1344,67 @@ type nonrec load_balancer =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a load balancer.\n"]
 type nonrec is_vpc_peered_result = {
-  is_peered: bool option }
+  is_peered: bool option }[@@ocaml.doc ""]
 type nonrec is_vpc_peered_request = unit
 type nonrec import_key_pair_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec import_key_pair_request =
   {
   public_key_base64: string ;
-  key_pair_name: string }
+  key_pair_name: string }[@@ocaml.doc ""]
 type nonrec get_static_ips_result =
   {
   next_page_token: string option ;
-  static_ips: static_ip list option }
+  static_ips: static_ip list option }[@@ocaml.doc ""]
 type nonrec get_static_ips_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_static_ip_result = {
-  static_ip: static_ip option }
+  static_ip: static_ip option }[@@ocaml.doc ""]
 type nonrec get_static_ip_request = {
-  static_ip_name: string }
+  static_ip_name: string }[@@ocaml.doc ""]
 type nonrec get_setup_history_result =
   {
   next_page_token: string option ;
-  setup_history: setup_history list option }
+  setup_history: setup_history list option }[@@ocaml.doc ""]
 type nonrec get_setup_history_request =
   {
   page_token: string option ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_snapshots_result =
   {
   next_page_token: string option ;
   relational_database_snapshots: relational_database_snapshot list option }
+[@@ocaml.doc ""]
 type nonrec get_relational_database_snapshots_request =
   {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_relational_database_snapshot_result =
   {
   relational_database_snapshot: relational_database_snapshot option }
+[@@ocaml.doc ""]
 type nonrec get_relational_database_snapshot_request =
   {
-  relational_database_snapshot_name: string }
+  relational_database_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_databases_result =
   {
   next_page_token: string option ;
-  relational_databases: relational_database list option }
+  relational_databases: relational_database list option }[@@ocaml.doc ""]
 type nonrec get_relational_databases_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_relational_database_parameters_result =
   {
   next_page_token: string option ;
-  parameters: relational_database_parameter list option }
+  parameters: relational_database_parameter list option }[@@ocaml.doc ""]
 type nonrec get_relational_database_parameters_request =
   {
   page_token: string option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: relational_database_metric_name option }
+  metric_name: relational_database_metric_name option }[@@ocaml.doc ""]
 type nonrec get_relational_database_metric_data_request =
   {
   statistics: metric_statistic list ;
@@ -1335,26 +1413,26 @@ type nonrec get_relational_database_metric_data_request =
   start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: relational_database_metric_name ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_master_user_password_result =
   {
   created_at: CoreTypes.Timestamp.t option ;
-  master_user_password: string option }
+  master_user_password: string option }[@@ocaml.doc ""]
 type nonrec get_relational_database_master_user_password_request =
   {
   password_version: relational_database_password_version option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_log_streams_result =
   {
-  log_streams: string list option }
+  log_streams: string list option }[@@ocaml.doc ""]
 type nonrec get_relational_database_log_streams_request =
   {
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_log_events_result =
   {
   next_forward_token: string option ;
   next_backward_token: string option ;
-  resource_log_events: log_event list option }
+  resource_log_events: log_event list option }[@@ocaml.doc ""]
 type nonrec get_relational_database_log_events_request =
   {
   page_token: string option ;
@@ -1362,85 +1440,87 @@ type nonrec get_relational_database_log_events_request =
   end_time: CoreTypes.Timestamp.t option ;
   start_time: CoreTypes.Timestamp.t option ;
   log_stream_name: string ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_events_result =
   {
   next_page_token: string option ;
   relational_database_events: relational_database_event list option }
+[@@ocaml.doc ""]
 type nonrec get_relational_database_events_request =
   {
   page_token: string option ;
   duration_in_minutes: int option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_relational_database_bundles_result =
   {
   next_page_token: string option ;
-  bundles: relational_database_bundle list option }
+  bundles: relational_database_bundle list option }[@@ocaml.doc ""]
 type nonrec get_relational_database_bundles_request =
   {
   include_inactive: bool option ;
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_relational_database_blueprints_result =
   {
   next_page_token: string option ;
-  blueprints: relational_database_blueprint list option }
+  blueprints: relational_database_blueprint list option }[@@ocaml.doc ""]
 type nonrec get_relational_database_blueprints_request =
   {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_relational_database_result =
   {
-  relational_database: relational_database option }
+  relational_database: relational_database option }[@@ocaml.doc ""]
 type nonrec get_relational_database_request =
   {
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec get_regions_result = {
-  regions: region list option }
+  regions: region list option }[@@ocaml.doc ""]
 type nonrec get_regions_request =
   {
   include_relational_database_availability_zones: bool option ;
-  include_availability_zones: bool option }
+  include_availability_zones: bool option }[@@ocaml.doc ""]
 type nonrec get_operations_for_resource_result =
   {
   next_page_token: string option ;
   next_page_count: string option ;
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec get_operations_for_resource_request =
   {
   page_token: string option ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec get_operations_result =
   {
   next_page_token: string option ;
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec get_operations_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_operation_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec get_operation_request = {
-  operation_id: string }
+  operation_id: string }[@@ocaml.doc ""]
 type nonrec get_load_balancer_tls_policies_result =
   {
   next_page_token: string option ;
-  tls_policies: load_balancer_tls_policy list option }
+  tls_policies: load_balancer_tls_policy list option }[@@ocaml.doc ""]
 type nonrec get_load_balancer_tls_policies_request =
   {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_load_balancer_tls_certificates_result =
   {
-  tls_certificates: load_balancer_tls_certificate list option }
+  tls_certificates: load_balancer_tls_certificate list option }[@@ocaml.doc
+                                                                 ""]
 type nonrec get_load_balancer_tls_certificates_request =
   {
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec get_load_balancers_result =
   {
   next_page_token: string option ;
-  load_balancers: load_balancer list option }
+  load_balancers: load_balancer list option }[@@ocaml.doc ""]
 type nonrec get_load_balancers_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_load_balancer_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: load_balancer_metric_name option }
+  metric_name: load_balancer_metric_name option }[@@ocaml.doc ""]
 type nonrec get_load_balancer_metric_data_request =
   {
   statistics: metric_statistic list ;
@@ -1449,11 +1529,11 @@ type nonrec get_load_balancer_metric_data_request =
   start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: load_balancer_metric_name ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec get_load_balancer_result = {
-  load_balancer: load_balancer option }
+  load_balancer: load_balancer option }[@@ocaml.doc ""]
 type nonrec get_load_balancer_request = {
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec key_pair =
   {
   fingerprint: string option ;
@@ -1463,30 +1543,31 @@ type nonrec key_pair =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes an SSH key pair.\n"]
 type nonrec get_key_pairs_result =
   {
   next_page_token: string option ;
-  key_pairs: key_pair list option }
+  key_pairs: key_pair list option }[@@ocaml.doc ""]
 type nonrec get_key_pairs_request =
   {
   include_default_key_pair: bool option ;
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_key_pair_result = {
-  key_pair: key_pair option }
+  key_pair: key_pair option }[@@ocaml.doc ""]
 type nonrec get_key_pair_request = {
-  key_pair_name: string }
+  key_pair_name: string }[@@ocaml.doc ""]
 type nonrec instance_state = {
   name: string option ;
-  code: int option }
+  code: int option }[@@ocaml.doc
+                      "Describes the virtual private server (or {i instance}) status.\n"]
 type nonrec get_instance_state_result = {
-  state: instance_state option }
+  state: instance_state option }[@@ocaml.doc ""]
 type nonrec get_instance_state_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec instance_snapshot_state =
   | Available 
   | Error 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec add_on =
   {
   duration: string option ;
@@ -1494,18 +1575,19 @@ type nonrec add_on =
   next_snapshot_time_of_day: string option ;
   snapshot_time_of_day: string option ;
   status: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an add-on that is enabled for an Amazon Lightsail resource.\n"]
 type nonrec disk_state =
   | Unknown 
   | InUse 
   | Available 
   | Error 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec auto_mount_status =
   | NotMounted 
   | Mounted 
   | Pending 
-  | Failed 
+  | Failed [@@ocaml.doc ""]
 type nonrec disk =
   {
   auto_mount_status: auto_mount_status option ;
@@ -1525,7 +1607,7 @@ type nonrec disk =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a block storage disk.\n"]
 type nonrec instance_snapshot =
   {
   size_in_gb: int option ;
@@ -1543,26 +1625,27 @@ type nonrec instance_snapshot =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes an instance snapshot.\n"]
 type nonrec get_instance_snapshots_result =
   {
   next_page_token: string option ;
-  instance_snapshots: instance_snapshot list option }
+  instance_snapshots: instance_snapshot list option }[@@ocaml.doc ""]
 type nonrec get_instance_snapshots_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_instance_snapshot_result =
   {
-  instance_snapshot: instance_snapshot option }
+  instance_snapshot: instance_snapshot option }[@@ocaml.doc ""]
 type nonrec get_instance_snapshot_request = {
-  instance_snapshot_name: string }
+  instance_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec instance_hardware =
   {
   ram_size_in_gb: float option ;
   disks: disk list option ;
-  cpu_count: int option }
+  cpu_count: int option }[@@ocaml.doc
+                           "Describes the hardware for the instance.\n"]
 type nonrec access_direction =
   | Outbound 
-  | Inbound 
+  | Inbound [@@ocaml.doc ""]
 type nonrec instance_port_info =
   {
   cidr_list_aliases: string list option ;
@@ -1574,21 +1657,24 @@ type nonrec instance_port_info =
   access_from: string option ;
   protocol: network_protocol option ;
   to_port: int option ;
-  from_port: int option }
+  from_port: int option }[@@ocaml.doc
+                           "Describes information about ports for an Amazon Lightsail instance.\n"]
 type nonrec instance_networking =
   {
   ports: instance_port_info list option ;
-  monthly_transfer: monthly_transfer option }
+  monthly_transfer: monthly_transfer option }[@@ocaml.doc
+                                               "Describes monthly data transfer rates and port information for an instance.\n"]
 type nonrec instance_metadata_state =
   | Applied 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec instance_metadata_options =
   {
   http_protocol_ipv6: http_protocol_ipv6 option ;
   http_put_response_hop_limit: int option ;
   http_endpoint: http_endpoint option ;
   http_tokens: http_tokens option ;
-  state: instance_metadata_state option }
+  state: instance_metadata_state option }[@@ocaml.doc
+                                           "The metadata options for the instance.\n"]
 type nonrec instance =
   {
   metadata_options: instance_metadata_options option ;
@@ -1612,13 +1698,14 @@ type nonrec instance =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an instance (a virtual private server).\n"]
 type nonrec get_instances_result =
   {
   next_page_token: string option ;
-  instances: instance list option }
+  instances: instance list option }[@@ocaml.doc ""]
 type nonrec get_instances_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec instance_port_state =
   {
   cidr_list_aliases: string list option ;
@@ -1627,12 +1714,13 @@ type nonrec instance_port_state =
   state: port_state option ;
   protocol: network_protocol option ;
   to_port: int option ;
-  from_port: int option }
+  from_port: int option }[@@ocaml.doc
+                           "Describes open ports on an instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.\n"]
 type nonrec get_instance_port_states_result =
   {
-  port_states: instance_port_state list option }
+  port_states: instance_port_state list option }[@@ocaml.doc ""]
 type nonrec get_instance_port_states_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec instance_metric_name =
   | MetadataNoToken 
   | BurstCapacityPercentage 
@@ -1642,11 +1730,11 @@ type nonrec instance_metric_name =
   | StatusCheckFailed 
   | NetworkOut 
   | NetworkIn 
-  | CPUUtilization 
+  | CPUUtilization [@@ocaml.doc ""]
 type nonrec get_instance_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: instance_metric_name option }
+  metric_name: instance_metric_name option }[@@ocaml.doc ""]
 type nonrec get_instance_metric_data_request =
   {
   statistics: metric_statistic list ;
@@ -1655,10 +1743,10 @@ type nonrec get_instance_metric_data_request =
   start_time: CoreTypes.Timestamp.t ;
   period: int ;
   metric_name: instance_metric_name ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec instance_access_protocol =
   | Rdp 
-  | Ssh 
+  | Ssh [@@ocaml.doc ""]
 type nonrec host_key_attributes =
   {
   not_valid_after: CoreTypes.Timestamp.t option ;
@@ -1667,7 +1755,8 @@ type nonrec host_key_attributes =
   fingerprint_sh_a1: string option ;
   witnessed_at: CoreTypes.Timestamp.t option ;
   public_key: string option ;
-  algorithm: string option }
+  algorithm: string option }[@@ocaml.doc
+                              "Describes the public SSH host keys or the RDP certificate.\n"]
 type nonrec instance_access_details =
   {
   host_keys: host_key_attributes list option ;
@@ -1680,34 +1769,36 @@ type nonrec instance_access_details =
   ipv6_addresses: string list option ;
   ip_address: string option ;
   expires_at: CoreTypes.Timestamp.t option ;
-  cert_key: string option }
+  cert_key: string option }[@@ocaml.doc
+                             "The parameters for gaining temporary access to one of your Amazon Lightsail instances.\n"]
 type nonrec get_instance_access_details_result =
   {
-  access_details: instance_access_details option }
+  access_details: instance_access_details option }[@@ocaml.doc ""]
 type nonrec get_instance_access_details_request =
   {
   protocol: instance_access_protocol option ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec get_instance_result = {
-  instance: instance option }
+  instance: instance option }[@@ocaml.doc ""]
 type nonrec get_instance_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec export_snapshot_record_source_type =
   | DiskSnapshot 
-  | InstanceSnapshot 
+  | InstanceSnapshot [@@ocaml.doc ""]
 type nonrec disk_info =
   {
   is_system_disk: bool option ;
   size_in_gb: int option ;
   path: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes a disk.\n"]
 type nonrec instance_snapshot_info =
   {
   from_disk_info: disk_info list option ;
   from_blueprint_id: string option ;
-  from_bundle_id: string option }
+  from_bundle_id: string option }[@@ocaml.doc
+                                   "Describes an instance snapshot.\n"]
 type nonrec disk_snapshot_info = {
-  size_in_gb: int option }
+  size_in_gb: int option }[@@ocaml.doc "Describes a disk snapshot.\n"]
 type nonrec export_snapshot_record_source_info =
   {
   disk_snapshot_info: disk_snapshot_info option ;
@@ -1717,10 +1808,11 @@ type nonrec export_snapshot_record_source_info =
   arn: string option ;
   name: string option ;
   created_at: CoreTypes.Timestamp.t option ;
-  resource_type: export_snapshot_record_source_type option }
+  resource_type: export_snapshot_record_source_type option }[@@ocaml.doc
+                                                              "Describes the source of an export snapshot record.\n"]
 type nonrec destination_info = {
   service: string option ;
-  id: string option }
+  id: string option }[@@ocaml.doc "Describes the destination of a record.\n"]
 type nonrec export_snapshot_record =
   {
   destination_info: destination_info option ;
@@ -1730,14 +1822,15 @@ type nonrec export_snapshot_record =
   location: resource_location option ;
   created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc "Describes an export snapshot record.\n"]
 type nonrec get_export_snapshot_records_result =
   {
   next_page_token: string option ;
-  export_snapshot_records: export_snapshot_record list option }
+  export_snapshot_records: export_snapshot_record list option }[@@ocaml.doc
+                                                                 ""]
 type nonrec get_export_snapshot_records_request =
   {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec domain =
   {
   registered_domain_delegation_info: registered_domain_delegation_info option ;
@@ -1748,17 +1841,18 @@ type nonrec domain =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes a domain where you are storing recordsets.\n"]
 type nonrec get_domains_result =
   {
   next_page_token: string option ;
-  domains: domain list option }
+  domains: domain list option }[@@ocaml.doc ""]
 type nonrec get_domains_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_domain_result = {
-  domain: domain option }
+  domain: domain option }[@@ocaml.doc ""]
 type nonrec get_domain_request = {
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec lightsail_distribution =
   {
   viewer_minimum_tls_protocol_version: string option ;
@@ -1781,26 +1875,27 @@ type nonrec lightsail_distribution =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an Amazon Lightsail content delivery network (CDN) distribution.\n"]
 type nonrec get_distributions_result =
   {
   next_page_token: string option ;
-  distributions: lightsail_distribution list option }
+  distributions: lightsail_distribution list option }[@@ocaml.doc ""]
 type nonrec get_distributions_request =
   {
   page_token: string option ;
-  distribution_name: string option }
+  distribution_name: string option }[@@ocaml.doc ""]
 type nonrec distribution_metric_name =
   | Http5xxErrorRate 
   | Http4xxErrorRate 
   | TotalErrorRate 
   | BytesUploaded 
   | BytesDownloaded 
-  | Requests 
+  | Requests [@@ocaml.doc ""]
 type nonrec get_distribution_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: distribution_metric_name option }
+  metric_name: distribution_metric_name option }[@@ocaml.doc ""]
 type nonrec get_distribution_metric_data_request =
   {
   statistics: metric_statistic list ;
@@ -1809,30 +1904,31 @@ type nonrec get_distribution_metric_data_request =
   end_time: CoreTypes.Timestamp.t ;
   start_time: CoreTypes.Timestamp.t ;
   metric_name: distribution_metric_name ;
-  distribution_name: string }
+  distribution_name: string }[@@ocaml.doc ""]
 type nonrec get_distribution_latest_cache_reset_result =
   {
   create_time: CoreTypes.Timestamp.t option ;
-  status: string option }
+  status: string option }[@@ocaml.doc ""]
 type nonrec get_distribution_latest_cache_reset_request =
   {
-  distribution_name: string option }
+  distribution_name: string option }[@@ocaml.doc ""]
 type nonrec distribution_bundle =
   {
   is_active: bool option ;
   transfer_per_month_in_gb: int option ;
   price: float option ;
   name: string option ;
-  bundle_id: string option }
+  bundle_id: string option }[@@ocaml.doc
+                              "Describes the specifications of a distribution bundle.\n"]
 type nonrec get_distribution_bundles_result =
   {
-  bundles: distribution_bundle list option }
+  bundles: distribution_bundle list option }[@@ocaml.doc ""]
 type nonrec get_distribution_bundles_request = unit
 type nonrec disk_snapshot_state =
   | Unknown 
   | Error 
   | Completed 
-  | Pending 
+  | Pending [@@ocaml.doc ""]
 type nonrec disk_snapshot =
   {
   is_from_auto_snapshot: bool option ;
@@ -1849,40 +1945,42 @@ type nonrec disk_snapshot =
   created_at: CoreTypes.Timestamp.t option ;
   support_code: string option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes a block storage disk snapshot.\n"]
 type nonrec get_disk_snapshots_result =
   {
   next_page_token: string option ;
-  disk_snapshots: disk_snapshot list option }
+  disk_snapshots: disk_snapshot list option }[@@ocaml.doc ""]
 type nonrec get_disk_snapshots_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_disk_snapshot_result = {
-  disk_snapshot: disk_snapshot option }
+  disk_snapshot: disk_snapshot option }[@@ocaml.doc ""]
 type nonrec get_disk_snapshot_request = {
-  disk_snapshot_name: string }
+  disk_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec get_disks_result =
   {
   next_page_token: string option ;
-  disks: disk list option }
+  disks: disk list option }[@@ocaml.doc ""]
 type nonrec get_disks_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec get_disk_result = {
-  disk: disk option }
+  disk: disk option }[@@ocaml.doc ""]
 type nonrec get_disk_request = {
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec get_cost_estimate_result =
   {
-  resources_budget_estimate: resource_budget_estimate list option }
+  resources_budget_estimate: resource_budget_estimate list option }[@@ocaml.doc
+                                                                    ""]
 type nonrec get_cost_estimate_request =
   {
   end_time: CoreTypes.Timestamp.t ;
   start_time: CoreTypes.Timestamp.t ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec container_services_list_result =
   {
-  container_services: container_service list option }
+  container_services: container_service list option }[@@ocaml.doc ""]
 type nonrec get_container_services_request = {
-  service_name: string option }
+  service_name: string option }[@@ocaml.doc ""]
 type nonrec container_service_power =
   {
   is_active: bool option ;
@@ -1890,18 +1988,19 @@ type nonrec container_service_power =
   ram_size_in_gb: float option ;
   cpu_count: float option ;
   price: float option ;
-  power_id: string option }
+  power_id: string option }[@@ocaml.doc
+                             "Describes the powers that can be specified for an Amazon Lightsail container service.\n\n The power specifies the amount of RAM, the number of vCPUs, and the base price of the container service.\n "]
 type nonrec get_container_service_powers_result =
   {
-  powers: container_service_power list option }
+  powers: container_service_power list option }[@@ocaml.doc ""]
 type nonrec get_container_service_powers_request = unit
 type nonrec container_service_metric_name =
   | MemoryUtilization 
-  | CPUUtilization 
+  | CPUUtilization [@@ocaml.doc ""]
 type nonrec get_container_service_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: container_service_metric_name option }
+  metric_name: container_service_metric_name option }[@@ocaml.doc ""]
 type nonrec get_container_service_metric_data_request =
   {
   statistics: metric_statistic list ;
@@ -1909,21 +2008,22 @@ type nonrec get_container_service_metric_data_request =
   end_time: CoreTypes.Timestamp.t ;
   start_time: CoreTypes.Timestamp.t ;
   metric_name: container_service_metric_name ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec get_container_service_deployments_result =
   {
-  deployments: container_service_deployment list option }
+  deployments: container_service_deployment list option }[@@ocaml.doc ""]
 type nonrec get_container_service_deployments_request =
   {
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec container_service_log_event =
   {
   message: string option ;
-  created_at: CoreTypes.Timestamp.t option }
+  created_at: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                              "Describes the log events of a container of an Amazon Lightsail container service.\n"]
 type nonrec get_container_log_result =
   {
   next_page_token: string option ;
-  log_events: container_service_log_event list option }
+  log_events: container_service_log_event list option }[@@ocaml.doc ""]
 type nonrec get_container_log_request =
   {
   page_token: string option ;
@@ -1931,21 +2031,22 @@ type nonrec get_container_log_request =
   end_time: CoreTypes.Timestamp.t option ;
   start_time: CoreTypes.Timestamp.t option ;
   container_name: string ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec get_container_images_result =
   {
-  container_images: container_image list option }
+  container_images: container_image list option }[@@ocaml.doc ""]
 type nonrec get_container_images_request = {
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec container_service_metadata_entry = (string * string) list
+[@@ocaml.doc ""]
 type nonrec get_container_api_metadata_result =
   {
-  metadata: container_service_metadata_entry list option }
+  metadata: container_service_metadata_entry list option }[@@ocaml.doc ""]
 type nonrec get_container_api_metadata_request = unit
 type nonrec contact_method_status =
   | Invalid 
   | Valid 
-  | PendingVerification 
+  | PendingVerification [@@ocaml.doc ""]
 type nonrec contact_method =
   {
   support_code: string option ;
@@ -1956,20 +2057,22 @@ type nonrec contact_method =
   name: string option ;
   protocol: contact_protocol option ;
   status: contact_method_status option ;
-  contact_endpoint: string option }
+  contact_endpoint: string option }[@@ocaml.doc
+                                     "Describes a contact method.\n\n A contact method is a way to send you notifications. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
 type nonrec get_contact_methods_result =
   {
-  contact_methods: contact_method list option }
+  contact_methods: contact_method list option }[@@ocaml.doc ""]
 type nonrec get_contact_methods_request =
   {
-  protocols: contact_protocol list option }
+  protocols: contact_protocol list option }[@@ocaml.doc ""]
 type nonrec cloud_formation_stack_record_source_type =
-  | ExportSnapshotRecord 
+  | ExportSnapshotRecord [@@ocaml.doc ""]
 type nonrec cloud_formation_stack_record_source_info =
   {
   arn: string option ;
   name: string option ;
-  resource_type: cloud_formation_stack_record_source_type option }
+  resource_type: cloud_formation_stack_record_source_type option }[@@ocaml.doc
+                                                                    "Describes the source of a CloudFormation stack record (i.e., the export snapshot record).\n"]
 type nonrec cloud_formation_stack_record =
   {
   destination_info: destination_info option ;
@@ -1979,14 +2082,16 @@ type nonrec cloud_formation_stack_record =
   location: resource_location option ;
   created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes a CloudFormation stack record created as a result of the [create cloud\n        formation stack] action.\n\n A CloudFormation stack record provides information about the AWS CloudFormation stack used to create a new Amazon Elastic Compute Cloud instance from an exported Lightsail instance snapshot.\n "]
 type nonrec get_cloud_formation_stack_records_result =
   {
   next_page_token: string option ;
   cloud_formation_stack_records: cloud_formation_stack_record list option }
+[@@ocaml.doc ""]
 type nonrec get_cloud_formation_stack_records_request =
   {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec certificate_status =
   | Failed 
   | Revoked 
@@ -1994,7 +2099,7 @@ type nonrec certificate_status =
   | Expired 
   | Inactive 
   | Issued 
-  | PendingValidation 
+  | PendingValidation [@@ocaml.doc ""]
 type nonrec certificate =
   {
   support_code: string option ;
@@ -2017,29 +2122,31 @@ type nonrec certificate =
   status: certificate_status option ;
   domain_name: string option ;
   name: string option ;
-  arn: string option }
+  arn: string option }[@@ocaml.doc
+                        "Describes the full details of an Amazon Lightsail SSL/TLS certificate.\n\n  To get a summary of a certificate, use the [GetCertificates] action and omit [includeCertificateDetails] from your request. The response will include only the certificate Amazon Resource Name (ARN), certificate name, domain name, and tags.\n  \n   "]
 type nonrec certificate_summary =
   {
   tags: tag list option ;
   certificate_detail: certificate option ;
   domain_name: string option ;
   certificate_name: string option ;
-  certificate_arn: string option }
+  certificate_arn: string option }[@@ocaml.doc
+                                    "Describes an Amazon Lightsail SSL/TLS certificate.\n"]
 type nonrec get_certificates_result =
   {
   next_page_token: string option ;
-  certificates: certificate_summary list option }
+  certificates: certificate_summary list option }[@@ocaml.doc ""]
 type nonrec get_certificates_request =
   {
   page_token: string option ;
   certificate_name: string option ;
   include_certificate_details: bool option ;
-  certificate_statuses: certificate_status list option }
+  certificate_statuses: certificate_status list option }[@@ocaml.doc ""]
 type nonrec instance_platform =
   | Windows 
-  | LinuxUnix 
+  | LinuxUnix [@@ocaml.doc ""]
 type nonrec app_category =
-  | LfR 
+  | LfR [@@ocaml.doc ""]
 type nonrec bundle =
   {
   public_ipv4_address_count: int option ;
@@ -2054,49 +2161,51 @@ type nonrec bundle =
   bundle_id: string option ;
   disk_size_in_gb: int option ;
   cpu_count: int option ;
-  price: float option }
+  price: float option }[@@ocaml.doc
+                         "Describes a bundle, which is a set of specs describing your virtual private server (or {i instance}).\n"]
 type nonrec get_bundles_result =
   {
   next_page_token: string option ;
-  bundles: bundle list option }
+  bundles: bundle list option }[@@ocaml.doc ""]
 type nonrec get_bundles_request =
   {
   app_category: app_category option ;
   page_token: string option ;
-  include_inactive: bool option }
+  include_inactive: bool option }[@@ocaml.doc ""]
 type nonrec account_level_bpa_sync_status =
   | Defaulted 
   | NeverSynced 
   | Failed 
-  | InSync 
+  | InSync [@@ocaml.doc ""]
 type nonrec bpa_status_message =
   | Unknown 
   | DEFAULTED_FOR_SLR_MISSING_ON_HOLD 
   | SYNC_ON_HOLD 
-  | DEFAULTED_FOR_SLR_MISSING 
+  | DEFAULTED_FOR_SLR_MISSING [@@ocaml.doc ""]
 type nonrec account_level_bpa_sync =
   {
   bpa_impacts_lightsail: bool option ;
   message: bpa_status_message option ;
   last_synced_at: CoreTypes.Timestamp.t option ;
-  status: account_level_bpa_sync_status option }
+  status: account_level_bpa_sync_status option }[@@ocaml.doc
+                                                  "Describes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access (BPA) feature for your Lightsail buckets.\n\n The account-level BPA feature of Amazon S3 provides centralized controls to limit public access to all Amazon S3 buckets in an account. BPA can make all Amazon S3 buckets in an Amazon Web Services account private regardless of the individual bucket and object permissions that are configured. Lightsail buckets take into account the Amazon S3 account-level BPA configuration when allowing or denying public access. To do this, Lightsail periodically fetches the account-level BPA configuration from Amazon S3. When the account-level BPA status is [InSync], the Amazon S3 account-level BPA configuration is synchronized and it applies to your Lightsail buckets. For more information about Amazon Simple Storage Service account-level BPA and how it affects Lightsail buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-block-public-access-for-buckets}Block public access for buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 type nonrec get_buckets_result =
   {
   account_level_bpa_sync: account_level_bpa_sync option ;
   next_page_token: string option ;
-  buckets: bucket list option }
+  buckets: bucket list option }[@@ocaml.doc ""]
 type nonrec get_buckets_request =
   {
   include_connected_resources: bool option ;
   page_token: string option ;
-  bucket_name: string option }
+  bucket_name: string option }[@@ocaml.doc ""]
 type nonrec bucket_metric_name =
   | NumberOfObjects 
-  | BucketSizeBytes 
+  | BucketSizeBytes [@@ocaml.doc ""]
 type nonrec get_bucket_metric_data_result =
   {
   metric_data: metric_datapoint list option ;
-  metric_name: bucket_metric_name option }
+  metric_name: bucket_metric_name option }[@@ocaml.doc ""]
 type nonrec get_bucket_metric_data_request =
   {
   unit_: metric_unit ;
@@ -2105,7 +2214,7 @@ type nonrec get_bucket_metric_data_request =
   end_time: CoreTypes.Timestamp.t ;
   start_time: CoreTypes.Timestamp.t ;
   metric_name: bucket_metric_name ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec bucket_bundle =
   {
   is_active: bool option ;
@@ -2113,31 +2222,34 @@ type nonrec bucket_bundle =
   storage_per_month_in_gb: int option ;
   price: float option ;
   name: string option ;
-  bundle_id: string option }
+  bundle_id: string option }[@@ocaml.doc
+                              "Describes the specifications of a bundle that can be applied to an Amazon Lightsail bucket.\n\n A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket.\n "]
 type nonrec get_bucket_bundles_result = {
-  bundles: bucket_bundle list option }
+  bundles: bucket_bundle list option }[@@ocaml.doc ""]
 type nonrec get_bucket_bundles_request = {
-  include_inactive: bool option }
+  include_inactive: bool option }[@@ocaml.doc ""]
 type nonrec access_key_last_used =
   {
   service_name: string option ;
   region: string option ;
-  last_used_date: CoreTypes.Timestamp.t option }
+  last_used_date: CoreTypes.Timestamp.t option }[@@ocaml.doc
+                                                  "Describes the last time an access key was used.\n\n  This object does not include data in the response of a {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.html}CreateBucketAccessKey} action.\n  \n   "]
 type nonrec access_key =
   {
   last_used: access_key_last_used option ;
   created_at: CoreTypes.Timestamp.t option ;
   status: status_type option ;
   secret_access_key: string option ;
-  access_key_id: string option }
+  access_key_id: string option }[@@ocaml.doc
+                                  "Describes an access key for an Amazon Lightsail bucket.\n\n Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.html}CreateBucketAccessKey} action to create an access key for a specific bucket. For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n \n   The [secretAccessKey] value is returned only in response to the [CreateBucketAccessKey] action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.\n   \n    "]
 type nonrec get_bucket_access_keys_result =
   {
-  access_keys: access_key list option }
+  access_keys: access_key list option }[@@ocaml.doc ""]
 type nonrec get_bucket_access_keys_request = {
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec blueprint_type =
   | App 
-  | Os 
+  | Os [@@ocaml.doc ""]
 type nonrec blueprint =
   {
   app_category: app_category option ;
@@ -2152,37 +2264,39 @@ type nonrec blueprint =
   type_: blueprint_type option ;
   group: string option ;
   name: string option ;
-  blueprint_id: string option }
+  blueprint_id: string option }[@@ocaml.doc
+                                 "Describes a blueprint (a virtual private server image).\n"]
 type nonrec get_blueprints_result =
   {
   next_page_token: string option ;
-  blueprints: blueprint list option }
+  blueprints: blueprint list option }[@@ocaml.doc ""]
 type nonrec get_blueprints_request =
   {
   app_category: app_category option ;
   page_token: string option ;
-  include_inactive: bool option }
+  include_inactive: bool option }[@@ocaml.doc ""]
 type nonrec auto_snapshot_status =
   | NOT_FOUND 
   | IN_PROGRESS 
   | FAILED 
-  | SUCCESS 
+  | SUCCESS [@@ocaml.doc ""]
 type nonrec attached_disk = {
   size_in_gb: int option ;
-  path: string option }
+  path: string option }[@@ocaml.doc
+                         "Describes a block storage disk that is attached to an instance, and is included in an automatic snapshot.\n"]
 type nonrec auto_snapshot_details =
   {
   from_attached_disks: attached_disk list option ;
   status: auto_snapshot_status option ;
   created_at: CoreTypes.Timestamp.t option ;
-  date: string option }
+  date: string option }[@@ocaml.doc "Describes an automatic snapshot.\n"]
 type nonrec get_auto_snapshots_result =
   {
   auto_snapshots: auto_snapshot_details list option ;
   resource_type: resource_type option ;
-  resource_name: string option }
+  resource_name: string option }[@@ocaml.doc ""]
 type nonrec get_auto_snapshots_request = {
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec alarm =
   {
   notification_enabled: bool option ;
@@ -2204,203 +2318,206 @@ type nonrec alarm =
   location: resource_location option ;
   created_at: CoreTypes.Timestamp.t option ;
   arn: string option ;
-  name: string option }
+  name: string option }[@@ocaml.doc
+                         "Describes an alarm.\n\n An alarm is a way to monitor your Lightsail resource metrics. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
 type nonrec get_alarms_result =
   {
   next_page_token: string option ;
-  alarms: alarm list option }
+  alarms: alarm list option }[@@ocaml.doc ""]
 type nonrec get_alarms_request =
   {
   monitored_resource_name: string option ;
   page_token: string option ;
-  alarm_name: string option }
+  alarm_name: string option }[@@ocaml.doc ""]
 type nonrec get_active_names_result =
   {
   next_page_token: string option ;
-  active_names: string list option }
+  active_names: string list option }[@@ocaml.doc ""]
 type nonrec get_active_names_request = {
-  page_token: string option }
+  page_token: string option }[@@ocaml.doc ""]
 type nonrec export_snapshot_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec export_snapshot_request = {
-  source_snapshot_name: string }
+  source_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec enable_add_on_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec add_on_type =
   | StopInstanceOnIdle 
-  | AutoSnapshot 
+  | AutoSnapshot [@@ocaml.doc ""]
 type nonrec auto_snapshot_add_on_request =
   {
-  snapshot_time_of_day: string option }
+  snapshot_time_of_day: string option }[@@ocaml.doc
+                                         "Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk.\n\n When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions:\n \n  {ul\n        {-  If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day.\n            \n             }\n        {-  If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day.\n            \n             }\n        {-  If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.\n            \n             }\n        {-  If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.\n            \n             }\n        }\n  "]
 type nonrec add_on_request =
   {
   stop_instance_on_idle_request: stop_instance_on_idle_request option ;
   auto_snapshot_add_on_request: auto_snapshot_add_on_request option ;
-  add_on_type: add_on_type }
+  add_on_type: add_on_type }[@@ocaml.doc
+                              "Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource.\n\n  An additional cost may be associated with enabling add-ons. For more information, see the {{:https://aws.amazon.com/lightsail/pricing/}Lightsail pricing page}.\n  \n   "]
 type nonrec enable_add_on_request =
   {
   add_on_request: add_on_request ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec download_default_key_pair_result =
   {
   created_at: CoreTypes.Timestamp.t option ;
   private_key_base64: string option ;
-  public_key_base64: string option }
+  public_key_base64: string option }[@@ocaml.doc ""]
 type nonrec download_default_key_pair_request = unit
 type nonrec disable_add_on_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec disable_add_on_request =
   {
   resource_name: string ;
-  add_on_type: add_on_type }
+  add_on_type: add_on_type }[@@ocaml.doc ""]
 type nonrec detach_static_ip_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec detach_static_ip_request = {
-  static_ip_name: string }
+  static_ip_name: string }[@@ocaml.doc ""]
 type nonrec detach_instances_from_load_balancer_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec detach_instances_from_load_balancer_request =
   {
   instance_names: string list ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec detach_disk_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec detach_disk_request = {
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec detach_certificate_from_distribution_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec detach_certificate_from_distribution_request =
   {
-  distribution_name: string }
+  distribution_name: string }[@@ocaml.doc ""]
 type nonrec delete_relational_database_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_relational_database_snapshot_request =
   {
-  relational_database_snapshot_name: string }
+  relational_database_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec delete_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_relational_database_request =
   {
   final_relational_database_snapshot_name: string option ;
   skip_final_snapshot: bool option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec delete_load_balancer_tls_certificate_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_load_balancer_tls_certificate_request =
   {
   force: bool option ;
   certificate_name: string ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec delete_load_balancer_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_load_balancer_request = {
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec delete_known_host_keys_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_known_host_keys_request = {
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec delete_key_pair_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec delete_key_pair_request =
   {
   expected_fingerprint: string option ;
-  key_pair_name: string }
+  key_pair_name: string }[@@ocaml.doc ""]
 type nonrec delete_instance_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_instance_snapshot_request =
   {
-  instance_snapshot_name: string }
+  instance_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec delete_instance_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_instance_request =
   {
   force_delete_add_ons: bool option ;
-  instance_name: string }
+  instance_name: string }[@@ocaml.doc ""]
 type nonrec delete_domain_entry_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec delete_domain_entry_request =
   {
   domain_entry: domain_entry ;
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec delete_domain_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec delete_domain_request = {
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec delete_distribution_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec delete_distribution_request = {
-  distribution_name: string option }
+  distribution_name: string option }[@@ocaml.doc ""]
 type nonrec delete_disk_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_disk_snapshot_request = {
-  disk_snapshot_name: string }
+  disk_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec delete_disk_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_disk_request =
   {
   force_delete_add_ons: bool option ;
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec delete_container_service_result = unit
 type nonrec delete_container_service_request = {
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec delete_container_image_result = unit
 type nonrec delete_container_image_request =
   {
   image: string ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec delete_contact_method_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_contact_method_request = {
-  protocol: contact_protocol }
+  protocol: contact_protocol }[@@ocaml.doc ""]
 type nonrec delete_certificate_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_certificate_request = {
-  certificate_name: string }
+  certificate_name: string }[@@ocaml.doc ""]
 type nonrec delete_bucket_access_key_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_bucket_access_key_request =
   {
   access_key_id: string ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec delete_bucket_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_bucket_request =
   {
   force_delete: bool option ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec delete_auto_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_auto_snapshot_request =
   {
   date: string ;
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec delete_alarm_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec delete_alarm_request = {
-  alarm_name: string }
+  alarm_name: string }[@@ocaml.doc ""]
 type nonrec create_relational_database_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_relational_database_snapshot_request =
   {
   tags: tag list option ;
   relational_database_snapshot_name: string ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec create_relational_database_from_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_relational_database_from_snapshot_request =
   {
   tags: tag list option ;
@@ -2411,10 +2528,10 @@ type nonrec create_relational_database_from_snapshot_request =
   relational_database_snapshot_name: string option ;
   publicly_accessible: bool option ;
   availability_zone: string option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec create_relational_database_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_relational_database_request =
   {
   tags: tag list option ;
@@ -2427,20 +2544,20 @@ type nonrec create_relational_database_request =
   relational_database_bundle_id: string ;
   relational_database_blueprint_id: string ;
   availability_zone: string option ;
-  relational_database_name: string }
+  relational_database_name: string }[@@ocaml.doc ""]
 type nonrec create_load_balancer_tls_certificate_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_load_balancer_tls_certificate_request =
   {
   tags: tag list option ;
   certificate_alternative_names: string list option ;
   certificate_domain_name: string ;
   certificate_name: string ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec create_load_balancer_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_load_balancer_request =
   {
   tls_policy_name: string option ;
@@ -2451,33 +2568,34 @@ type nonrec create_load_balancer_request =
   certificate_name: string option ;
   health_check_path: string option ;
   instance_port: int ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec create_key_pair_result =
   {
   operation: operation option ;
   private_key_base64: string option ;
   public_key_base64: string option ;
-  key_pair: key_pair option }
+  key_pair: key_pair option }[@@ocaml.doc ""]
 type nonrec create_key_pair_request =
   {
   tags: tag list option ;
-  key_pair_name: string }
+  key_pair_name: string }[@@ocaml.doc ""]
 type nonrec create_instance_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_instance_snapshot_request =
   {
   tags: tag list option ;
   instance_name: string ;
-  instance_snapshot_name: string }
+  instance_snapshot_name: string }[@@ocaml.doc ""]
 type nonrec create_instances_from_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec disk_map =
   {
   new_disk_name: string option ;
-  original_disk_path: string option }
-type nonrec attached_disk_map = (string * disk_map list) list
+  original_disk_path: string option }[@@ocaml.doc
+                                       "Describes a block storage disk mapping.\n"]
+type nonrec attached_disk_map = (string * disk_map list) list[@@ocaml.doc ""]
 type nonrec create_instances_from_snapshot_request =
   {
   use_latest_restorable_auto_snapshot: bool option ;
@@ -2492,9 +2610,9 @@ type nonrec create_instances_from_snapshot_request =
   instance_snapshot_name: string option ;
   availability_zone: string ;
   attached_disk_mapping: attached_disk_map option ;
-  instance_names: string list }
+  instance_names: string list }[@@ocaml.doc ""]
 type nonrec create_instances_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_instances_request =
   {
   ip_address_type: ip_address_type option ;
@@ -2506,33 +2624,33 @@ type nonrec create_instances_request =
   blueprint_id: string ;
   custom_image_name: string option ;
   availability_zone: string ;
-  instance_names: string list }
+  instance_names: string list }[@@ocaml.doc ""]
 type nonrec create_gui_session_access_details_result =
   {
   sessions: session list option ;
   failure_reason: string option ;
   percentage_complete: int option ;
   status: status option ;
-  resource_name: string option }
+  resource_name: string option }[@@ocaml.doc ""]
 type nonrec create_gui_session_access_details_request =
   {
-  resource_name: string }
+  resource_name: string }[@@ocaml.doc ""]
 type nonrec create_domain_entry_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec create_domain_entry_request =
   {
   domain_entry: domain_entry ;
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec create_domain_result = {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec create_domain_request =
   {
   tags: tag list option ;
-  domain_name: string }
+  domain_name: string }[@@ocaml.doc ""]
 type nonrec create_distribution_result =
   {
   operation: operation option ;
-  distribution: lightsail_distribution option }
+  distribution: lightsail_distribution option }[@@ocaml.doc ""]
 type nonrec create_distribution_request =
   {
   viewer_minimum_tls_protocol_version:
@@ -2545,19 +2663,19 @@ type nonrec create_distribution_request =
   cache_behavior_settings: cache_settings option ;
   default_cache_behavior: cache_behavior ;
   origin: input_origin ;
-  distribution_name: string }
+  distribution_name: string }[@@ocaml.doc ""]
 type nonrec create_disk_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_disk_snapshot_request =
   {
   tags: tag list option ;
   instance_name: string option ;
   disk_snapshot_name: string ;
-  disk_name: string option }
+  disk_name: string option }[@@ocaml.doc ""]
 type nonrec create_disk_from_snapshot_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_disk_from_snapshot_request =
   {
   use_latest_restorable_auto_snapshot: bool option ;
@@ -2568,46 +2686,49 @@ type nonrec create_disk_from_snapshot_request =
   size_in_gb: int ;
   availability_zone: string ;
   disk_snapshot_name: string option ;
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec create_disk_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_disk_request =
   {
   add_ons: add_on_request list option ;
   tags: tag list option ;
   size_in_gb: int ;
   availability_zone: string ;
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec container_service_registry_login =
   {
   registry: string option ;
   expires_at: CoreTypes.Timestamp.t option ;
   password: string option ;
-  username: string option }
+  username: string option }[@@ocaml.doc
+                             "Describes the sign-in credentials for the container image registry of an Amazon Lightsail account.\n"]
 type nonrec create_container_service_registry_login_result =
   {
-  registry_login: container_service_registry_login option }
+  registry_login: container_service_registry_login option }[@@ocaml.doc ""]
 type nonrec create_container_service_registry_login_request = unit
 type nonrec create_container_service_deployment_result =
   {
-  container_service: container_service option }
+  container_service: container_service option }[@@ocaml.doc ""]
 type nonrec endpoint_request =
   {
   health_check: container_service_health_check_config option ;
   container_port: int ;
-  container_name: string }
+  container_name: string }[@@ocaml.doc
+                            "Describes the settings of a public endpoint for an Amazon Lightsail container service.\n"]
 type nonrec create_container_service_deployment_request =
   {
   public_endpoint: endpoint_request option ;
   containers: container_map option ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec create_container_service_result =
   {
-  container_service: container_service option }
+  container_service: container_service option }[@@ocaml.doc ""]
 type nonrec container_service_deployment_request =
   {
   public_endpoint: endpoint_request option ;
-  containers: container_map option }
+  containers: container_map option }[@@ocaml.doc
+                                      "Describes a container deployment configuration of an Amazon Lightsail container service.\n\n A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.\n "]
 type nonrec create_container_service_request =
   {
   private_registry_access: private_registry_access_request option ;
@@ -2616,55 +2737,56 @@ type nonrec create_container_service_request =
   tags: tag list option ;
   scale: int ;
   power: container_service_power_name ;
-  service_name: string }
+  service_name: string }[@@ocaml.doc ""]
 type nonrec create_contact_method_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec create_contact_method_request =
   {
   contact_endpoint: string ;
-  protocol: contact_protocol }
+  protocol: contact_protocol }[@@ocaml.doc ""]
 type nonrec create_cloud_formation_stack_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec instance_entry =
   {
   availability_zone: string ;
   user_data: string option ;
   port_info_source: port_info_source_type ;
   instance_type: string ;
-  source_name: string }
+  source_name: string }[@@ocaml.doc
+                         "Describes the Amazon Elastic Compute Cloud instance and related resources to be created using the [create cloud formation stack] operation.\n"]
 type nonrec create_cloud_formation_stack_request =
   {
-  instances: instance_entry list }
+  instances: instance_entry list }[@@ocaml.doc ""]
 type nonrec create_certificate_result =
   {
   operations: operation list option ;
-  certificate: certificate_summary option }
+  certificate: certificate_summary option }[@@ocaml.doc ""]
 type nonrec create_certificate_request =
   {
   tags: tag list option ;
   subject_alternative_names: string list option ;
   domain_name: string ;
-  certificate_name: string }
+  certificate_name: string }[@@ocaml.doc ""]
 type nonrec create_bucket_access_key_result =
   {
   operations: operation list option ;
-  access_key: access_key option }
+  access_key: access_key option }[@@ocaml.doc ""]
 type nonrec create_bucket_access_key_request = {
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec create_bucket_result =
   {
   operations: operation list option ;
-  bucket: bucket option }
+  bucket: bucket option }[@@ocaml.doc ""]
 type nonrec create_bucket_request =
   {
   enable_object_versioning: bool option ;
   tags: tag list option ;
   bundle_id: string ;
-  bucket_name: string }
+  bucket_name: string }[@@ocaml.doc ""]
 type nonrec copy_snapshot_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec copy_snapshot_request =
   {
   source_region: region_name ;
@@ -2672,53 +2794,53 @@ type nonrec copy_snapshot_request =
   use_latest_restorable_auto_snapshot: bool option ;
   restore_date: string option ;
   source_resource_name: string option ;
-  source_snapshot_name: string option }
+  source_snapshot_name: string option }[@@ocaml.doc ""]
 type nonrec close_instance_public_ports_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec close_instance_public_ports_request =
   {
   instance_name: string ;
-  port_info: port_info }
+  port_info: port_info }[@@ocaml.doc ""]
 type nonrec attach_static_ip_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec attach_static_ip_request =
   {
   instance_name: string ;
-  static_ip_name: string }
+  static_ip_name: string }[@@ocaml.doc ""]
 type nonrec attach_load_balancer_tls_certificate_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec attach_load_balancer_tls_certificate_request =
   {
   certificate_name: string ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec attach_instances_to_load_balancer_result =
   {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec attach_instances_to_load_balancer_request =
   {
   instance_names: string list ;
-  load_balancer_name: string }
+  load_balancer_name: string }[@@ocaml.doc ""]
 type nonrec attach_disk_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec attach_disk_request =
   {
   auto_mounting: bool option ;
   disk_path: string ;
   instance_name: string ;
-  disk_name: string }
+  disk_name: string }[@@ocaml.doc ""]
 type nonrec attach_certificate_to_distribution_result =
   {
-  operation: operation option }
+  operation: operation option }[@@ocaml.doc ""]
 type nonrec attach_certificate_to_distribution_request =
   {
   certificate_name: string ;
-  distribution_name: string }
+  distribution_name: string }[@@ocaml.doc ""]
 type nonrec allocate_static_ip_result = {
-  operations: operation list option }
+  operations: operation list option }[@@ocaml.doc ""]
 type nonrec allocate_static_ip_request = {
-  static_ip_name: string }(** {1:builders Builders} *)
+  static_ip_name: string }[@@ocaml.doc ""](** {1:builders Builders} *)
 
 val make_setup_request :
   ?certificate_provider:certificate_provider ->
@@ -4154,9 +4276,8 @@ module AllocateStaticIp : sig
             
         ]
       ) result
-  (** 
-    Allocates a static IP address.
-     *)
+  (** Allocates a static IP address.
+ *)
 
   
 end
@@ -4176,16 +4297,15 @@ module AttachCertificateToDistribution : sig
             
         ]
       ) result
-  (** 
-    Attaches an SSL/TLS certificate to your Amazon Lightsail content delivery network (CDN) distribution.
+  (** Attaches an SSL/TLS certificate to your Amazon Lightsail content delivery network (CDN) distribution.
+
+ After the certificate is attached, your distribution accepts HTTPS traffic for all of the domains that are associated with the certificate.
+ 
+  Use the [CreateCertificate] action to create a certificate that you can attach to your distribution.
+  
+    Only certificates created in the [us-east-1] Amazon Web Services Region can be attached to Lightsail distributions. Lightsail distributions are global resources that can reference an origin in any Amazon Web Services Region, and distribute its content globally. However, all distributions are located in the [us-east-1] Region.
     
-     After the certificate is attached, your distribution accepts HTTPS traffic for all of the domains that are associated with the certificate.
-     
-      Use the [CreateCertificate] action to create a certificate that you can attach to your distribution.
-      
-       Only certificates created in the [us-east-1] Amazon Web Services Region can be attached to Lightsail distributions. Lightsail distributions are global resources that can reference an origin in any Amazon Web Services Region, and distribute its content globally. However, all distributions are located in the [us-east-1] Region.
-       
-        *)
+      *)
 
   
 end
@@ -4206,11 +4326,10 @@ module AttachDisk : sig
             
         ]
       ) result
-  (** 
-    Attaches a block storage disk to a running or stopped Lightsail instance and exposes it to the instance with the specified disk name.
-    
-     The [attach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Attaches a block storage disk to a running or stopped Lightsail instance and exposes it to the instance with the specified disk name.
+
+ The [attach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4231,14 +4350,13 @@ module AttachInstancesToLoadBalancer : sig
             
         ]
       ) result
-  (** 
-    Attaches one or more Lightsail instances to a load balancer.
-    
-     After some time, the instances are attached to the load balancer and the health check status is available.
-     
-      The [attach instances to load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Attaches one or more Lightsail instances to a load balancer.
+
+ After some time, the instances are attached to the load balancer and the health check status is available.
+ 
+  The [attach instances to load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.
-       *)
+   *)
 
   
 end
@@ -4259,14 +4377,13 @@ module AttachLoadBalancerTlsCertificate : sig
             
         ]
       ) result
-  (** 
-    Attaches a Transport Layer Security (TLS) certificate to your load balancer. TLS is just an updated, more secure version of Secure Socket Layer (SSL).
-    
-     Once you create and validate your certificate, you can attach it to your load balancer. You can also use this API to rotate the certificates on your account. Use the [AttachLoadBalancerTlsCertificate] action with the non-attached certificate, and it will replace the existing one and become the attached certificate.
-     
-      The [AttachLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Attaches a Transport Layer Security (TLS) certificate to your load balancer. TLS is just an updated, more secure version of Secure Socket Layer (SSL).
+
+ Once you create and validate your certificate, you can attach it to your load balancer. You can also use this API to rotate the certificates on your account. Use the [AttachLoadBalancerTlsCertificate] action with the non-attached certificate, and it will replace the existing one and become the attached certificate.
+ 
+  The [AttachLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+   *)
 
   
 end
@@ -4287,9 +4404,8 @@ module AttachStaticIp : sig
             
         ]
       ) result
-  (** 
-    Attaches a static IP address to a specific Amazon Lightsail instance.
-     *)
+  (** Attaches a static IP address to a specific Amazon Lightsail instance.
+ *)
 
   
 end
@@ -4310,11 +4426,10 @@ module CloseInstancePublicPorts : sig
             
         ]
       ) result
-  (** 
-    Closes ports for a specific Amazon Lightsail instance.
-    
-     The [CloseInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Closes ports for a specific Amazon Lightsail instance.
+
+ The [CloseInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4335,16 +4450,15 @@ module CopySnapshot : sig
             
         ]
       ) result
-  (** 
-    Copies a manual snapshot of an instance or disk as another manual snapshot, or copies an automatic snapshot of an instance or disk as a manual snapshot. This operation can also be used to copy a manual or automatic snapshot of an instance or a disk from one Amazon Web Services Region to another in Amazon Lightsail.
-    
-     When copying a {i manual snapshot}, be sure to define the [source
+  (** Copies a manual snapshot of an instance or disk as another manual snapshot, or copies an automatic snapshot of an instance or disk as a manual snapshot. This operation can also be used to copy a manual or automatic snapshot of an instance or a disk from one Amazon Web Services Region to another in Amazon Lightsail.
+
+ When copying a {i manual snapshot}, be sure to define the [source
         region], [source snapshot name], and [target snapshot name] parameters.
-     
-      When copying an {i automatic snapshot}, be sure to define the [source region], [source resource name], [target snapshot
+ 
+  When copying an {i automatic snapshot}, be sure to define the [source region], [source resource name], [target snapshot
         name], and either the [restore date] or the [use latest restorable
         auto snapshot] parameters.
-       *)
+   *)
 
   
 end
@@ -4362,11 +4476,10 @@ module CreateBucket : sig
             
         ]
       ) result
-  (** 
-    Creates an Amazon Lightsail bucket.
-    
-     A bucket is a cloud storage resource available in the Lightsail object storage service. Use buckets to store objects such as data and its descriptive metadata. For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates an Amazon Lightsail bucket.
+
+ A bucket is a cloud storage resource available in the Lightsail object storage service. Use buckets to store objects such as data and its descriptive metadata. For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4385,14 +4498,13 @@ module CreateBucketAccessKey : sig
             
         ]
       ) result
-  (** 
-    Creates a new access key for the specified Amazon Lightsail bucket. Access keys consist of an access key ID and corresponding secret access key.
-    
-     Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.html}GetBucketAccessKeys} action to get a list of current access keys for a specific bucket. For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
-     
-      The [secretAccessKey] value is returned only in response to the [CreateBucketAccessKey] action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.
-      
-       *)
+  (** Creates a new access key for the specified Amazon Lightsail bucket. Access keys consist of an access key ID and corresponding secret access key.
+
+ Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.html}GetBucketAccessKeys} action to get a list of current access keys for a specific bucket. For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
+ 
+   The [secretAccessKey] value is returned only in response to the [CreateBucketAccessKey] action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.
+   
+     *)
 
   
 end
@@ -4411,14 +4523,13 @@ module CreateCertificate : sig
             
         ]
       ) result
-  (** 
-    Creates an SSL/TLS certificate for an Amazon Lightsail content delivery network (CDN) distribution and a container service.
-    
-     After the certificate is valid, use the [AttachCertificateToDistribution] action to use the certificate and its domains with your distribution. Or use the [UpdateContainerService] action to use the certificate and its domains with your container service.
-     
-      Only certificates created in the [us-east-1] Amazon Web Services Region can be attached to Lightsail distributions. Lightsail distributions are global resources that can reference an origin in any Amazon Web Services Region, and distribute its content globally. However, all distributions are located in the [us-east-1] Region.
-      
-       *)
+  (** Creates an SSL/TLS certificate for an Amazon Lightsail content delivery network (CDN) distribution and a container service.
+
+ After the certificate is valid, use the [AttachCertificateToDistribution] action to use the certificate and its domains with your distribution. Or use the [UpdateContainerService] action to use the certificate and its domains with your container service.
+ 
+   Only certificates created in the [us-east-1] Amazon Web Services Region can be attached to Lightsail distributions. Lightsail distributions are global resources that can reference an origin in any Amazon Web Services Region, and distribute its content globally. However, all distributions are located in the [us-east-1] Region.
+   
+     *)
 
   
 end
@@ -4439,14 +4550,13 @@ module CreateCloudFormationStack : sig
             
         ]
       ) result
-  (** 
-    Creates an AWS CloudFormation stack, which creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot. This operation results in a CloudFormation stack record that can be used to track the AWS CloudFormation stack created. Use the [get cloud formation stack
+  (** Creates an AWS CloudFormation stack, which creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot. This operation results in a CloudFormation stack record that can be used to track the AWS CloudFormation stack created. Use the [get cloud formation stack
         records] operation to get a list of the CloudFormation stacks created.
-    
-     Wait until after your new Amazon EC2 instance is created before running the [create
+
+  Wait until after your new Amazon EC2 instance is created before running the [create
           cloud formation stack] operation again with the same export snapshot record.
-     
-      *)
+  
+    *)
 
   
 end
@@ -4466,11 +4576,10 @@ module CreateContactMethod : sig
             
         ]
       ) result
-  (** 
-    Creates an email or SMS text message contact method.
-    
-     A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
-      *)
+  (** Creates an email or SMS text message contact method.
+
+ A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
+  *)
 
   
 end
@@ -4489,11 +4598,10 @@ module CreateContainerService : sig
             
         ]
       ) result
-  (** 
-    Creates an Amazon Lightsail container service.
-    
-     A Lightsail container service is a compute resource to which you can deploy containers. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-services}Container services in Amazon Lightsail} in the {i Lightsail Dev Guide}.
-      *)
+  (** Creates an Amazon Lightsail container service.
+
+ A Lightsail container service is a compute resource to which you can deploy containers. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-services}Container services in Amazon Lightsail} in the {i Lightsail Dev Guide}.
+  *)
 
   
 end
@@ -4512,13 +4620,12 @@ module CreateContainerServiceDeployment : sig
             
         ]
       ) result
-  (** 
-    Creates a deployment for your Amazon Lightsail container service.
-    
-     A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.
-     
-      You can deploy containers to your container service using container images from a public registry such as Amazon ECR Public, or from your local machine. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-container-images}Creating container images for your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
-       *)
+  (** Creates a deployment for your Amazon Lightsail container service.
+
+ A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.
+ 
+  You can deploy containers to your container service using container images from a public registry such as Amazon ECR Public, or from your local machine. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-container-images}Creating container images for your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -4537,15 +4644,14 @@ module CreateContainerServiceRegistryLogin : sig
             
         ]
       ) result
-  (** 
-    Creates a temporary set of log in credentials that you can use to log in to the Docker process on your local machine. After you're logged in, you can use the native Docker commands to push your local container images to the container image registry of your Amazon Lightsail account so that you can use them with your Lightsail container service. The log in credentials expire 12 hours after they are created, at which point you will need to create a new set of log in credentials.
+  (** Creates a temporary set of log in credentials that you can use to log in to the Docker process on your local machine. After you're logged in, you can use the native Docker commands to push your local container images to the container image registry of your Amazon Lightsail account so that you can use them with your Lightsail container service. The log in credentials expire 12 hours after they are created, at which point you will need to create a new set of log in credentials.
+
+  You can only push container images to the container service registry of your Lightsail account. You cannot pull container images or perform any other container image management actions on the container service registry.
+  
+    After you push your container images to the container image registry of your Lightsail account, use the [RegisterContainerImage] action to register the pushed images to a specific Lightsail container service.
     
-     You can only push container images to the container service registry of your Lightsail account. You cannot pull container images or perform any other container image management actions on the container service registry.
-     
-      After you push your container images to the container image registry of your Lightsail account, use the [RegisterContainerImage] action to register the pushed images to a specific Lightsail container service.
+      This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
       
-       This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
-       
         *)
 
   
@@ -4567,11 +4673,10 @@ module CreateDisk : sig
             
         ]
       ) result
-  (** 
-    Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).
-    
-     The [create disk] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).
+
+ The [create disk] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4592,12 +4697,11 @@ module CreateDiskFromSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates a block storage disk from a manual or automatic snapshot of a disk. The resulting disk can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).
-    
-     The [create disk from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [disk snapshot
+  (** Creates a block storage disk from a manual or automatic snapshot of a disk. The resulting disk can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).
+
+ The [create disk from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [disk snapshot
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  *)
 
   
 end
@@ -4618,15 +4722,14 @@ module CreateDiskSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates a snapshot of a block storage disk. You can use snapshots for backups, to make copies of disks, and to save data before shutting down a Lightsail instance.
-    
-     You can take a snapshot of an attached disk that is in use; however, snapshots only capture data that has been written to your disk at the time the snapshot command is issued. This may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the disk long enough to take a snapshot, your snapshot should be complete. Nevertheless, if you cannot pause all file writes to the disk, you should unmount the disk from within the Lightsail instance, issue the create disk snapshot command, and then remount the disk to ensure a consistent and complete snapshot. You may remount and use your disk while the snapshot status is pending.
-     
-      You can also use this operation to create a snapshot of an instance's system volume. You might want to do this, for example, to recover data from the system volume of a botched instance or to create a backup of the system volume like you would for a block storage disk. To create a snapshot of a system volume, just define the [instance name] parameter when issuing the snapshot command, and a snapshot of the defined instance's system volume will be created. After the snapshot is available, you can create a block storage disk from the snapshot and attach it to a running instance to access the data on the disk.
-      
-       The [create disk snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-        *)
+  (** Creates a snapshot of a block storage disk. You can use snapshots for backups, to make copies of disks, and to save data before shutting down a Lightsail instance.
+
+ You can take a snapshot of an attached disk that is in use; however, snapshots only capture data that has been written to your disk at the time the snapshot command is issued. This may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the disk long enough to take a snapshot, your snapshot should be complete. Nevertheless, if you cannot pause all file writes to the disk, you should unmount the disk from within the Lightsail instance, issue the create disk snapshot command, and then remount the disk to ensure a consistent and complete snapshot. You may remount and use your disk while the snapshot status is pending.
+ 
+  You can also use this operation to create a snapshot of an instance's system volume. You might want to do this, for example, to recover data from the system volume of a botched instance or to create a backup of the system volume like you would for a block storage disk. To create a snapshot of a system volume, just define the [instance name] parameter when issuing the snapshot command, and a snapshot of the defined instance's system volume will be created. After the snapshot is available, you can create a block storage disk from the snapshot and attach it to a running instance to access the data on the disk.
+  
+   The [create disk snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+    *)
 
   
 end
@@ -4646,11 +4749,10 @@ module CreateDistribution : sig
             
         ]
       ) result
-  (** 
-    Creates an Amazon Lightsail content delivery network (CDN) distribution.
-    
-     A distribution is a globally distributed network of caching servers that improve the performance of your website or web application hosted on a Lightsail instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-content-delivery-network-distributions}Content delivery networks in Amazon Lightsail}.
-      *)
+  (** Creates an Amazon Lightsail content delivery network (CDN) distribution.
+
+ A distribution is a globally distributed network of caching servers that improve the performance of your website or web application hosted on a Lightsail instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-content-delivery-network-distributions}Content delivery networks in Amazon Lightsail}.
+  *)
 
   
 end
@@ -4671,11 +4773,10 @@ module CreateDomain : sig
             
         ]
       ) result
-  (** 
-    Creates a domain resource for the specified domain (example.com).
-    
-     The [create domain] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates a domain resource for the specified domain (example.com).
+
+ The [create domain] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4696,11 +4797,10 @@ module CreateDomainEntry : sig
             
         ]
       ) result
-  (** 
-    Creates one of the following domain name system (DNS) records in a domain DNS zone: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).
-    
-     The [create domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates one of the following domain name system (DNS) records in a domain DNS zone: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).
+
+ The [create domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4719,11 +4819,10 @@ module CreateGUISessionAccessDetails : sig
             
         ]
       ) result
-  (** 
-    Creates two URLs that are used to access a virtual computer’s graphical user interface (GUI) session. The primary URL initiates a web-based NICE DCV session to the virtual computer's application. The secondary URL initiates a web-based NICE DCV session to the virtual computer's operating session.
-    
-     Use [StartGUISession] to open the session.
-      *)
+  (** Creates two URLs that are used to access a virtual computer’s graphical user interface (GUI) session. The primary URL initiates a web-based NICE DCV session to the virtual computer's application. The secondary URL initiates a web-based NICE DCV session to the virtual computer's operating session. 
+
+ Use [StartGUISession] to open the session.
+  *)
 
   
 end
@@ -4744,11 +4843,10 @@ module CreateInstances : sig
             
         ]
       ) result
-  (** 
-    Creates one or more Amazon Lightsail instances.
-    
-     The [create instances] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.
-      *)
+  (** Creates one or more Amazon Lightsail instances.
+
+ The [create instances] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4769,11 +4867,10 @@ module CreateInstancesFromSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates one or more new instances from a manual or automatic snapshot of an instance.
-    
-     The [create instances from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates one or more new instances from a manual or automatic snapshot of an instance.
+
+ The [create instances from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4794,11 +4891,10 @@ module CreateInstanceSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates a snapshot of a specific virtual private server, or {i instance}. You can use a snapshot to create a new instance that is based on that snapshot.
-    
-     The [create instance snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates a snapshot of a specific virtual private server, or {i instance}. You can use a snapshot to create a new instance that is based on that snapshot.
+
+ The [create instance snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4819,13 +4915,12 @@ module CreateKeyPair : sig
             
         ]
       ) result
-  (** 
-    Creates a custom SSH key pair that you can use with an Amazon Lightsail instance.
-    
-     Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} action to create a Lightsail default key pair in an Amazon Web Services Region where a default key pair does not currently exist.
-     
-      The [create key pair] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Creates a custom SSH key pair that you can use with an Amazon Lightsail instance.
+
+  Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} action to create a Lightsail default key pair in an Amazon Web Services Region where a default key pair does not currently exist.
+  
+    The [create key pair] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+     *)
 
   
 end
@@ -4846,13 +4941,12 @@ module CreateLoadBalancer : sig
             
         ]
       ) result
-  (** 
-    Creates a Lightsail load balancer. To learn more about deciding whether to load balance your application, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/configure-lightsail-instances-for-load-balancing}Configure your Lightsail instances for load balancing}. You can create up to 5 load balancers per AWS Region in your account.
-    
-     When you create a load balancer, you can specify a unique name and port settings. To change additional load balancer settings, use the [UpdateLoadBalancerAttribute] operation.
-     
-      The [create load balancer] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Creates a Lightsail load balancer. To learn more about deciding whether to load balance your application, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/configure-lightsail-instances-for-load-balancing}Configure your Lightsail instances for load balancing}. You can create up to 5 load balancers per AWS Region in your account.
+
+ When you create a load balancer, you can specify a unique name and port settings. To change additional load balancer settings, use the [UpdateLoadBalancerAttribute] operation.
+ 
+  The [create load balancer] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -4873,14 +4967,13 @@ module CreateLoadBalancerTlsCertificate : sig
             
         ]
       ) result
-  (** 
-    Creates an SSL/TLS certificate for an Amazon Lightsail load balancer.
-    
-     TLS is just an updated, more secure version of Secure Socket Layer (SSL).
-     
-      The [CreateLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Creates an SSL/TLS certificate for an Amazon Lightsail load balancer.
+
+ TLS is just an updated, more secure version of Secure Socket Layer (SSL).
+ 
+  The [CreateLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+   *)
 
   
 end
@@ -4901,11 +4994,10 @@ module CreateRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Creates a new database in Amazon Lightsail.
-    
-     The [create relational database] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates a new database in Amazon Lightsail.
+
+ The [create relational database] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4926,13 +5018,12 @@ module CreateRelationalDatabaseFromSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates a new database from an existing database snapshot in Amazon Lightsail.
-    
-     You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan.
-     
-      The [create relational database from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Creates a new database from an existing database snapshot in Amazon Lightsail.
+
+ You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan.
+ 
+  The [create relational database from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -4953,11 +5044,10 @@ module CreateRelationalDatabaseSnapshot : sig
             
         ]
       ) result
-  (** 
-    Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database.
-    
-     The [create relational database snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database.
+
+ The [create relational database snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -4977,11 +5067,10 @@ module DeleteAlarm : sig
             
         ]
       ) result
-  (** 
-    Deletes an alarm.
-    
-     An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
-      *)
+  (** Deletes an alarm.
+
+ An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
+  *)
 
   
 end
@@ -5001,9 +5090,8 @@ module DeleteAutoSnapshot : sig
             
         ]
       ) result
-  (** 
-    Deletes an automatic snapshot of an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
-     *)
+  (** Deletes an automatic snapshot of an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
+ *)
 
   
 end
@@ -5022,12 +5110,11 @@ module DeleteBucket : sig
             
         ]
       ) result
-  (** 
-    Deletes a Amazon Lightsail bucket.
-    
-     When you delete your bucket, the bucket name is released and can be reused for a new bucket in your account or another Amazon Web Services account.
-     
-      *)
+  (** Deletes a Amazon Lightsail bucket.
+
+  When you delete your bucket, the bucket name is released and can be reused for a new bucket in your account or another Amazon Web Services account.
+  
+    *)
 
   
 end
@@ -5046,13 +5133,12 @@ module DeleteBucketAccessKey : sig
             
         ]
       ) result
-  (** 
-    Deletes an access key for the specified Amazon Lightsail bucket.
-    
-     We recommend that you delete an access key if the secret access key is compromised.
-     
-      For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
-       *)
+  (** Deletes an access key for the specified Amazon Lightsail bucket.
+
+ We recommend that you delete an access key if the secret access key is compromised.
+ 
+  For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -5071,11 +5157,10 @@ module DeleteCertificate : sig
             
         ]
       ) result
-  (** 
-    Deletes an SSL/TLS certificate for your Amazon Lightsail content delivery network (CDN) distribution.
-    
-     Certificates that are currently attached to a distribution cannot be deleted. Use the [DetachCertificateFromDistribution] action to detach a certificate from a distribution.
-      *)
+  (** Deletes an SSL/TLS certificate for your Amazon Lightsail content delivery network (CDN) distribution.
+
+ Certificates that are currently attached to a distribution cannot be deleted. Use the [DetachCertificateFromDistribution] action to detach a certificate from a distribution.
+  *)
 
   
 end
@@ -5095,11 +5180,10 @@ module DeleteContactMethod : sig
             
         ]
       ) result
-  (** 
-    Deletes a contact method.
-    
-     A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
-      *)
+  (** Deletes a contact method.
+
+ A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
+  *)
 
   
 end
@@ -5118,9 +5202,8 @@ module DeleteContainerImage : sig
             
         ]
       ) result
-  (** 
-    Deletes a container image that is registered to your Amazon Lightsail container service.
-     *)
+  (** Deletes a container image that is registered to your Amazon Lightsail container service.
+ *)
 
   
 end
@@ -5139,9 +5222,8 @@ module DeleteContainerService : sig
             
         ]
       ) result
-  (** 
-    Deletes your Amazon Lightsail container service.
-     *)
+  (** Deletes your Amazon Lightsail container service.
+ *)
 
   
 end
@@ -5162,13 +5244,12 @@ module DeleteDisk : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified block storage disk. The disk must be in the [available] state (not attached to a Lightsail instance).
-    
-     The disk may remain in the [deleting] state for several minutes.
-     
-      The [delete disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Deletes the specified block storage disk. The disk must be in the [available] state (not attached to a Lightsail instance).
+
+  The disk may remain in the [deleting] state for several minutes.
+  
+    The [delete disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+     *)
 
   
 end
@@ -5189,13 +5270,12 @@ module DeleteDiskSnapshot : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified disk snapshot.
-    
-     When you make periodic snapshots of a disk, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the disk.
-     
-      The [delete disk snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [disk snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Deletes the specified disk snapshot.
+
+ When you make periodic snapshots of a disk, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the disk.
+ 
+  The [delete disk snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [disk snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -5215,9 +5295,8 @@ module DeleteDistribution : sig
             
         ]
       ) result
-  (** 
-    Deletes your Amazon Lightsail content delivery network (CDN) distribution.
-     *)
+  (** Deletes your Amazon Lightsail content delivery network (CDN) distribution.
+ *)
 
   
 end
@@ -5238,11 +5317,10 @@ module DeleteDomain : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified domain recordset and all of its domain records.
-    
-     The [delete domain] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes the specified domain recordset and all of its domain records.
+
+ The [delete domain] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5263,11 +5341,10 @@ module DeleteDomainEntry : sig
             
         ]
       ) result
-  (** 
-    Deletes a specific domain entry.
-    
-     The [delete domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes a specific domain entry.
+
+ The [delete domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5288,11 +5365,10 @@ module DeleteInstance : sig
             
         ]
       ) result
-  (** 
-    Deletes an Amazon Lightsail instance.
-    
-     The [delete instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes an Amazon Lightsail instance.
+
+ The [delete instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5313,11 +5389,10 @@ module DeleteInstanceSnapshot : sig
             
         ]
       ) result
-  (** 
-    Deletes a specific snapshot of a virtual private server (or {i instance}).
-    
-     The [delete instance snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes a specific snapshot of a virtual private server (or {i instance}).
+
+ The [delete instance snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5338,13 +5413,12 @@ module DeleteKeyPair : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified key pair by removing the public key from Amazon Lightsail.
-    
-     You can delete key pairs that were created using the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.html}ImportKeyPair} and {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.html}CreateKeyPair} actions, as well as the Lightsail default key pair. A new default key pair will not be created unless you launch an instance without specifying a custom key pair, or you call the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} API.
-     
-      The [delete key pair] operation supports tag-based access control via resource tags applied to the resource identified by [key pair name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Deletes the specified key pair by removing the public key from Amazon Lightsail.
+
+ You can delete key pairs that were created using the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.html}ImportKeyPair} and {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.html}CreateKeyPair} actions, as well as the Lightsail default key pair. A new default key pair will not be created unless you launch an instance without specifying a custom key pair, or you call the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} API. 
+ 
+  The [delete key pair] operation supports tag-based access control via resource tags applied to the resource identified by [key pair name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -5365,12 +5439,11 @@ module DeleteKnownHostKeys : sig
             
         ]
       ) result
-  (** 
-    Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance. This operation enables the Lightsail browser-based SSH or RDP clients to connect to the instance after a host key mismatch.
-    
-     Perform this operation only if you were expecting the host key or certificate mismatch or if you are familiar with the new host key or certificate on the instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection}Troubleshooting connection issues when using the Amazon Lightsail browser-based SSH or RDP client}.
-     
-      *)
+  (** Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance. This operation enables the Lightsail browser-based SSH or RDP clients to connect to the instance after a host key mismatch.
+
+  Perform this operation only if you were expecting the host key or certificate mismatch or if you are familiar with the new host key or certificate on the instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection}Troubleshooting connection issues when using the Amazon Lightsail browser-based SSH or RDP client}.
+  
+    *)
 
   
 end
@@ -5391,11 +5464,10 @@ module DeleteLoadBalancer : sig
             
         ]
       ) result
-  (** 
-    Deletes a Lightsail load balancer and all its associated SSL/TLS certificates. Once the load balancer is deleted, you will need to create a new load balancer, create a new certificate, and verify domain ownership again.
-    
-     The [delete load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes a Lightsail load balancer and all its associated SSL/TLS certificates. Once the load balancer is deleted, you will need to create a new load balancer, create a new certificate, and verify domain ownership again.
+
+ The [delete load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5416,12 +5488,11 @@ module DeleteLoadBalancerTlsCertificate : sig
             
         ]
       ) result
-  (** 
-    Deletes an SSL/TLS certificate associated with a Lightsail load balancer.
-    
-     The [DeleteLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Deletes an SSL/TLS certificate associated with a Lightsail load balancer.
+
+ The [DeleteLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  *)
 
   
 end
@@ -5442,11 +5513,10 @@ module DeleteRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Deletes a database in Amazon Lightsail.
-    
-     The [delete relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes a database in Amazon Lightsail.
+
+ The [delete relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5467,11 +5537,10 @@ module DeleteRelationalDatabaseSnapshot : sig
             
         ]
       ) result
-  (** 
-    Deletes a database snapshot in Amazon Lightsail.
-    
-     The [delete relational database snapshot] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes a database snapshot in Amazon Lightsail.
+
+ The [delete relational database snapshot] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5491,11 +5560,10 @@ module DetachCertificateFromDistribution : sig
             
         ]
       ) result
-  (** 
-    Detaches an SSL/TLS certificate from your Amazon Lightsail content delivery network (CDN) distribution.
-    
-     After the certificate is detached, your distribution stops accepting traffic for all of the domains that are associated with the certificate.
-      *)
+  (** Detaches an SSL/TLS certificate from your Amazon Lightsail content delivery network (CDN) distribution.
+
+ After the certificate is detached, your distribution stops accepting traffic for all of the domains that are associated with the certificate.
+  *)
 
   
 end
@@ -5516,11 +5584,10 @@ module DetachDisk : sig
             
         ]
       ) result
-  (** 
-    Detaches a stopped block storage disk from a Lightsail instance. Make sure to unmount any file systems on the device within your operating system before stopping the instance and detaching the disk.
-    
-     The [detach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Detaches a stopped block storage disk from a Lightsail instance. Make sure to unmount any file systems on the device within your operating system before stopping the instance and detaching the disk.
+
+ The [detach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5541,14 +5608,13 @@ module DetachInstancesFromLoadBalancer : sig
             
         ]
       ) result
-  (** 
-    Detaches the specified instances from a Lightsail load balancer.
-    
-     This operation waits until the instances are no longer needed before they are detached from the load balancer.
-     
-      The [detach instances from load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Detaches the specified instances from a Lightsail load balancer.
+
+ This operation waits until the instances are no longer needed before they are detached from the load balancer.
+ 
+  The [detach instances from load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+   *)
 
   
 end
@@ -5569,9 +5635,8 @@ module DetachStaticIp : sig
             
         ]
       ) result
-  (** 
-    Detaches a static IP from the Amazon Lightsail instance to which it is attached.
-     *)
+  (** Detaches a static IP from the Amazon Lightsail instance to which it is attached.
+ *)
 
   
 end
@@ -5591,9 +5656,8 @@ module DisableAddOn : sig
             
         ]
       ) result
-  (** 
-    Disables an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
-     *)
+  (** Disables an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
+ *)
 
   
 end
@@ -5614,11 +5678,10 @@ module DownloadDefaultKeyPair : sig
             
         ]
       ) result
-  (** 
-    Downloads the regional Amazon Lightsail default key pair.
-    
-     This action also creates a Lightsail default key pair if a default key pair does not currently exist in the Amazon Web Services Region.
-      *)
+  (** Downloads the regional Amazon Lightsail default key pair.
+
+ This action also creates a Lightsail default key pair if a default key pair does not currently exist in the Amazon Web Services Region.
+  *)
 
   
 end
@@ -5638,9 +5701,8 @@ module EnableAddOn : sig
             
         ]
       ) result
-  (** 
-    Enables or modifies an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
-     *)
+  (** Enables or modifies an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
+ *)
 
   
 end
@@ -5661,19 +5723,18 @@ module ExportSnapshot : sig
             
         ]
       ) result
-  (** 
-    Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2). This operation results in an export snapshot record that can be used with the [create
+  (** Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2). This operation results in an export snapshot record that can be used with the [create
         cloud formation stack] operation to create new Amazon EC2 instances.
-    
-     Exported instance snapshots appear in Amazon EC2 as Amazon Machine Images (AMIs), and the instance system disk appears as an Amazon Elastic Block Store (Amazon EBS) volume. Exported disk snapshots appear in Amazon EC2 as Amazon EBS volumes. Snapshots are exported to the same Amazon Web Services Region in Amazon EC2 as the source Lightsail snapshot.
+
+ Exported instance snapshots appear in Amazon EC2 as Amazon Machine Images (AMIs), and the instance system disk appears as an Amazon Elastic Block Store (Amazon EBS) volume. Exported disk snapshots appear in Amazon EC2 as Amazon EBS volumes. Snapshots are exported to the same Amazon Web Services Region in Amazon EC2 as the source Lightsail snapshot.
+ 
+  
+  
+   The [export snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [source snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   
+     Use the [get instance snapshots] or [get disk snapshots] operations to get a list of snapshots that you can export to Amazon EC2.
      
-      
-      
-       The [export snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [source snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       
-        Use the [get instance snapshots] or [get disk snapshots] operations to get a list of snapshots that you can export to Amazon EC2.
-        
-         *)
+       *)
 
   
 end
@@ -5694,9 +5755,8 @@ module GetActiveNames : sig
             
         ]
       ) result
-  (** 
-    Returns the names of all active (not deleted) resources.
-     *)
+  (** Returns the names of all active (not deleted) resources.
+ *)
 
   
 end
@@ -5716,11 +5776,10 @@ module GetAlarms : sig
             
         ]
       ) result
-  (** 
-    Returns information about the configured alarms. Specify an alarm name in your request to return information about a specific alarm, or specify a monitored resource name to return information about all alarms for a specific resource.
-    
-     An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
-      *)
+  (** Returns information about the configured alarms. Specify an alarm name in your request to return information about a specific alarm, or specify a monitored resource name to return information about all alarms for a specific resource.
+
+ An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
+  *)
 
   
 end
@@ -5740,9 +5799,8 @@ module GetAutoSnapshots : sig
             
         ]
       ) result
-  (** 
-    Returns the available automatic snapshots for an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
-     *)
+  (** Returns the available automatic snapshots for an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.
+ *)
 
   
 end
@@ -5763,12 +5821,11 @@ module GetBlueprints : sig
             
         ]
       ) result
-  (** 
-    Returns the list of available instance images, or {i blueprints}. You can use a blueprint to create a new instance already running a specific operating system, as well as a preinstalled app or development stack. The software each instance is running depends on the blueprint image you choose.
-    
-     Use active blueprints when creating new instances. Inactive blueprints are listed to support customers with existing instances and are not necessarily available to create new instances. Blueprints are marked inactive when they become outdated due to operating system updates or new application releases.
-     
-      *)
+  (** Returns the list of available instance images, or {i blueprints}. You can use a blueprint to create a new instance already running a specific operating system, as well as a preinstalled app or development stack. The software each instance is running depends on the blueprint image you choose.
+
+  Use active blueprints when creating new instances. Inactive blueprints are listed to support customers with existing instances and are not necessarily available to create new instances. Blueprints are marked inactive when they become outdated due to operating system updates or new application releases.
+  
+    *)
 
   
 end
@@ -5787,12 +5844,11 @@ module GetBucketAccessKeys : sig
             
         ]
       ) result
-  (** 
-    Returns the existing access key IDs for the specified Amazon Lightsail bucket.
-    
-     This action does not return the secret access key value of an access key. You can get a secret access key only when you create it from the response of the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.html}CreateBucketAccessKey} action. If you lose the secret access key, you must create a new access key.
-     
-      *)
+  (** Returns the existing access key IDs for the specified Amazon Lightsail bucket.
+
+  This action does not return the secret access key value of an access key. You can get a secret access key only when you create it from the response of the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.html}CreateBucketAccessKey} action. If you lose the secret access key, you must create a new access key.
+  
+    *)
 
   
 end
@@ -5810,13 +5866,12 @@ module GetBucketBundles : sig
             
         ]
       ) result
-  (** 
-    Returns the bundles that you can apply to a Amazon Lightsail bucket.
-    
-     The bucket bundle specifies the monthly cost, storage quota, and data transfer quota for a bucket.
-     
-      Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateBucketBundle.html}UpdateBucketBundle} action to update the bundle for a bucket.
-       *)
+  (** Returns the bundles that you can apply to a Amazon Lightsail bucket.
+
+ The bucket bundle specifies the monthly cost, storage quota, and data transfer quota for a bucket.
+ 
+  Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateBucketBundle.html}UpdateBucketBundle} action to update the bundle for a bucket.
+   *)
 
   
 end
@@ -5835,11 +5890,10 @@ module GetBucketMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns the data points of a specific metric for an Amazon Lightsail bucket.
-    
-     Metrics report the utilization of a bucket. View and collect metric data regularly to monitor the number of objects stored in a bucket (including object versions) and the storage space used by those objects.
-      *)
+  (** Returns the data points of a specific metric for an Amazon Lightsail bucket.
+
+ Metrics report the utilization of a bucket. View and collect metric data regularly to monitor the number of objects stored in a bucket (including object versions) and the storage space used by those objects.
+  *)
 
   
 end
@@ -5858,11 +5912,10 @@ module GetBuckets : sig
             
         ]
       ) result
-  (** 
-    Returns information about one or more Amazon Lightsail buckets. The information returned includes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access feature for your Lightsail buckets.
-    
-     For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
-      *)
+  (** Returns information about one or more Amazon Lightsail buckets. The information returned includes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access feature for your Lightsail buckets.
+
+ For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -5883,14 +5936,13 @@ module GetBundles : sig
             
         ]
       ) result
-  (** 
-    Returns the bundles that you can apply to an Amazon Lightsail instance when you create it.
-    
-     A bundle describes the specifications of an instance, such as the monthly cost, amount of memory, the number of vCPUs, amount of storage space, and monthly network data transfer quota.
-     
-      Bundles are referred to as {i instance plans} in the Lightsail console.
-      
-       *)
+  (** Returns the bundles that you can apply to an Amazon Lightsail instance when you create it.
+
+ A bundle describes the specifications of an instance, such as the monthly cost, amount of memory, the number of vCPUs, amount of storage space, and monthly network data transfer quota.
+ 
+   Bundles are referred to as {i instance plans} in the Lightsail console.
+   
+     *)
 
   
 end
@@ -5909,12 +5961,11 @@ module GetCertificates : sig
             
         ]
       ) result
-  (** 
-    Returns information about one or more Amazon Lightsail SSL/TLS certificates.
-    
-     To get a summary of a certificate, omit [includeCertificateDetails] from your request. The response will include only the certificate Amazon Resource Name (ARN), certificate name, domain name, and tags.
-     
-      *)
+  (** Returns information about one or more Amazon Lightsail SSL/TLS certificates.
+
+  To get a summary of a certificate, omit [includeCertificateDetails] from your request. The response will include only the certificate Amazon Resource Name (ARN), certificate name, domain name, and tags.
+  
+    *)
 
   
 end
@@ -5935,12 +5986,11 @@ module GetCloudFormationStackRecords : sig
             
         ]
       ) result
-  (** 
-    Returns the CloudFormation stack record created as a result of the [create cloud
+  (** Returns the CloudFormation stack record created as a result of the [create cloud
         formation stack] operation.
-    
-     An AWS CloudFormation stack is used to create a new Amazon EC2 instance from an exported Lightsail snapshot.
-      *)
+
+ An AWS CloudFormation stack is used to create a new Amazon EC2 instance from an exported Lightsail snapshot.
+  *)
 
   
 end
@@ -5960,11 +6010,10 @@ module GetContactMethods : sig
             
         ]
       ) result
-  (** 
-    Returns information about the configured contact methods. Specify a protocol in your request to return information about a specific contact method.
-    
-     A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
-      *)
+  (** Returns information about the configured contact methods. Specify a protocol in your request to return information about a specific contact method.
+
+ A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
+  *)
 
   
 end
@@ -5981,9 +6030,8 @@ module GetContainerAPIMetadata : sig
             
         ]
       ) result
-  (** 
-    Returns information about Amazon Lightsail containers, such as the current version of the Lightsail Control (lightsailctl) plugin.
-     *)
+  (** Returns information about Amazon Lightsail containers, such as the current version of the Lightsail Control (lightsailctl) plugin.
+ *)
 
   
 end
@@ -6002,12 +6050,11 @@ module GetContainerImages : sig
             
         ]
       ) result
-  (** 
-    Returns the container images that are registered to your Amazon Lightsail container service.
-    
-     If you created a deployment on your Lightsail container service that uses container images from a public registry like Docker Hub, those images are not returned as part of this action. Those images are not registered to your Lightsail container service.
-     
-      *)
+  (** Returns the container images that are registered to your Amazon Lightsail container service.
+
+  If you created a deployment on your Lightsail container service that uses container images from a public registry like Docker Hub, those images are not returned as part of this action. Those images are not registered to your Lightsail container service.
+  
+    *)
 
   
 end
@@ -6026,14 +6073,13 @@ module GetContainerLog : sig
             
         ]
       ) result
-  (** 
-    Returns the log events of a container of your Amazon Lightsail container service.
-    
-     If your container service has more than one node (i.e., a scale greater than 1), then the log events that are returned for the specified container are merged from all nodes on your container service.
-     
-      Container logs are retained for a certain amount of time. For more information, see {{:https://docs.aws.amazon.com/general/latest/gr/lightsail.html}Amazon Lightsail endpoints and quotas} in the {i Amazon Web Services General Reference}.
-      
-       *)
+  (** Returns the log events of a container of your Amazon Lightsail container service.
+
+ If your container service has more than one node (i.e., a scale greater than 1), then the log events that are returned for the specified container are merged from all nodes on your container service.
+ 
+   Container logs are retained for a certain amount of time. For more information, see {{:https://docs.aws.amazon.com/general/latest/gr/lightsail.html}Amazon Lightsail endpoints and quotas} in the {i Amazon Web Services General Reference}.
+   
+     *)
 
   
 end
@@ -6052,16 +6098,15 @@ module GetContainerServiceDeployments : sig
             
         ]
       ) result
-  (** 
-    Returns the deployments for your Amazon Lightsail container service
+  (** Returns the deployments for your Amazon Lightsail container service
+
+ A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
+ 
+  The deployments are ordered by version in ascending order. The newest version is listed at the top of the response.
+  
+    A set number of deployments are kept before the oldest one is replaced with the newest one. For more information, see {{:https://docs.aws.amazon.com/general/latest/gr/lightsail.html}Amazon Lightsail endpoints and quotas} in the {i Amazon Web Services General Reference}.
     
-     A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
-     
-      The deployments are ordered by version in ascending order. The newest version is listed at the top of the response.
-      
-       A set number of deployments are kept before the oldest one is replaced with the newest one. For more information, see {{:https://docs.aws.amazon.com/general/latest/gr/lightsail.html}Amazon Lightsail endpoints and quotas} in the {i Amazon Web Services General Reference}.
-       
-        *)
+      *)
 
   
 end
@@ -6080,11 +6125,10 @@ module GetContainerServiceMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns the data points of a specific metric of your Amazon Lightsail container service.
-    
-     Metrics report the utilization of your resources. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
-      *)
+  (** Returns the data points of a specific metric of your Amazon Lightsail container service.
+
+ Metrics report the utilization of your resources. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+  *)
 
   
 end
@@ -6103,11 +6147,10 @@ module GetContainerServicePowers : sig
             
         ]
       ) result
-  (** 
-    Returns the list of powers that can be specified for your Amazon Lightsail container services.
-    
-     The power specifies the amount of memory, the number of vCPUs, and the base price of the container service.
-      *)
+  (** Returns the list of powers that can be specified for your Amazon Lightsail container services.
+
+ The power specifies the amount of memory, the number of vCPUs, and the base price of the container service.
+  *)
 
   
 end
@@ -6126,9 +6169,8 @@ module GetContainerServices : sig
             
         ]
       ) result
-  (** 
-    Returns information about one or more of your Amazon Lightsail container services.
-     *)
+  (** Returns information about one or more of your Amazon Lightsail container services.
+ *)
 
   
 end
@@ -6147,9 +6189,8 @@ module GetCostEstimate : sig
             
         ]
       ) result
-  (** 
-    Retrieves information about the cost estimate for a specified resource. A cost estimate will not generate for a resource that has been deleted.
-     *)
+  (** Retrieves information about the cost estimate for a specified resource. A cost estimate will not generate for a resource that has been deleted.
+ *)
 
   
 end
@@ -6170,9 +6211,8 @@ module GetDisk : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific block storage disk.
-     *)
+  (** Returns information about a specific block storage disk.
+ *)
 
   
 end
@@ -6193,9 +6233,8 @@ module GetDisks : sig
             
         ]
       ) result
-  (** 
-    Returns information about all block storage disks in your AWS account and region.
-     *)
+  (** Returns information about all block storage disks in your AWS account and region.
+ *)
 
   
 end
@@ -6216,9 +6255,8 @@ module GetDiskSnapshot : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific block storage disk snapshot.
-     *)
+  (** Returns information about a specific block storage disk snapshot.
+ *)
 
   
 end
@@ -6239,9 +6277,8 @@ module GetDiskSnapshots : sig
             
         ]
       ) result
-  (** 
-    Returns information about all block storage disk snapshots in your AWS account and region.
-     *)
+  (** Returns information about all block storage disk snapshots in your AWS account and region.
+ *)
 
   
 end
@@ -6261,11 +6298,10 @@ module GetDistributionBundles : sig
             
         ]
       ) result
-  (** 
-    Returns the bundles that can be applied to your Amazon Lightsail content delivery network (CDN) distributions.
-    
-     A distribution bundle specifies the monthly network transfer quota and monthly cost of your distribution.
-      *)
+  (** Returns the bundles that can be applied to your Amazon Lightsail content delivery network (CDN) distributions.
+
+ A distribution bundle specifies the monthly network transfer quota and monthly cost of your distribution.
+  *)
 
   
 end
@@ -6285,9 +6321,8 @@ module GetDistributionLatestCacheReset : sig
             
         ]
       ) result
-  (** 
-    Returns the timestamp and status of the last cache reset of a specific Amazon Lightsail content delivery network (CDN) distribution.
-     *)
+  (** Returns the timestamp and status of the last cache reset of a specific Amazon Lightsail content delivery network (CDN) distribution.
+ *)
 
   
 end
@@ -6307,11 +6342,10 @@ module GetDistributionMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns the data points of a specific metric for an Amazon Lightsail content delivery network (CDN) distribution.
-    
-     Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
-      *)
+  (** Returns the data points of a specific metric for an Amazon Lightsail content delivery network (CDN) distribution.
+
+ Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+  *)
 
   
 end
@@ -6331,9 +6365,8 @@ module GetDistributions : sig
             
         ]
       ) result
-  (** 
-    Returns information about one or more of your Amazon Lightsail content delivery network (CDN) distributions.
-     *)
+  (** Returns information about one or more of your Amazon Lightsail content delivery network (CDN) distributions.
+ *)
 
   
 end
@@ -6354,9 +6387,8 @@ module GetDomain : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific domain recordset.
-     *)
+  (** Returns information about a specific domain recordset.
+ *)
 
   
 end
@@ -6377,9 +6409,8 @@ module GetDomains : sig
             
         ]
       ) result
-  (** 
-    Returns a list of all domains in the user's account.
-     *)
+  (** Returns a list of all domains in the user's account.
+ *)
 
   
 end
@@ -6400,12 +6431,11 @@ module GetExportSnapshotRecords : sig
             
         ]
       ) result
-  (** 
-    Returns all export snapshot records created as a result of the [export
+  (** Returns all export snapshot records created as a result of the [export
         snapshot] operation.
-    
-     An export snapshot record can be used to create a new Amazon EC2 instance and its related resources with the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateCloudFormationStack.html}CreateCloudFormationStack} action.
-      *)
+
+ An export snapshot record can be used to create a new Amazon EC2 instance and its related resources with the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateCloudFormationStack.html}CreateCloudFormationStack} action.
+  *)
 
   
 end
@@ -6426,9 +6456,8 @@ module GetInstance : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific Amazon Lightsail instance, which is a virtual private server.
-     *)
+  (** Returns information about a specific Amazon Lightsail instance, which is a virtual private server.
+ *)
 
   
 end
@@ -6449,11 +6478,10 @@ module GetInstanceAccessDetails : sig
             
         ]
       ) result
-  (** 
-    Returns temporary SSH keys you can use to connect to a specific virtual private server, or {i instance}.
-    
-     The [get instance access details] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Returns temporary SSH keys you can use to connect to a specific virtual private server, or {i instance}.
+
+ The [get instance access details] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -6474,11 +6502,10 @@ module GetInstanceMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns the data points for the specified Amazon Lightsail instance metric, given an instance name.
-    
-     Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
-      *)
+  (** Returns the data points for the specified Amazon Lightsail instance metric, given an instance name.
+
+ Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+  *)
 
   
 end
@@ -6499,9 +6526,8 @@ module GetInstancePortStates : sig
             
         ]
       ) result
-  (** 
-    Returns the firewall port states for a specific Amazon Lightsail instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.
-     *)
+  (** Returns the firewall port states for a specific Amazon Lightsail instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.
+ *)
 
   
 end
@@ -6522,9 +6548,8 @@ module GetInstances : sig
             
         ]
       ) result
-  (** 
-    Returns information about all Amazon Lightsail virtual private servers, or {i instances}.
-     *)
+  (** Returns information about all Amazon Lightsail virtual private servers, or {i instances}.
+ *)
 
   
 end
@@ -6545,9 +6570,8 @@ module GetInstanceSnapshot : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific instance snapshot.
-     *)
+  (** Returns information about a specific instance snapshot.
+ *)
 
   
 end
@@ -6568,9 +6592,8 @@ module GetInstanceSnapshots : sig
             
         ]
       ) result
-  (** 
-    Returns all instance snapshots for the user's account.
-     *)
+  (** Returns all instance snapshots for the user's account.
+ *)
 
   
 end
@@ -6591,9 +6614,8 @@ module GetInstanceState : sig
             
         ]
       ) result
-  (** 
-    Returns the state of a specific instance. Works on one instance at a time.
-     *)
+  (** Returns the state of a specific instance. Works on one instance at a time.
+ *)
 
   
 end
@@ -6614,9 +6636,8 @@ module GetKeyPair : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific key pair.
-     *)
+  (** Returns information about a specific key pair.
+ *)
 
   
 end
@@ -6637,9 +6658,8 @@ module GetKeyPairs : sig
             
         ]
       ) result
-  (** 
-    Returns information about all key pairs in the user's account.
-     *)
+  (** Returns information about all key pairs in the user's account.
+ *)
 
   
 end
@@ -6660,9 +6680,8 @@ module GetLoadBalancer : sig
             
         ]
       ) result
-  (** 
-    Returns information about the specified Lightsail load balancer.
-     *)
+  (** Returns information about the specified Lightsail load balancer.
+ *)
 
   
 end
@@ -6683,11 +6702,10 @@ module GetLoadBalancerMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns information about health metrics for your Lightsail load balancer.
-    
-     Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
-      *)
+  (** Returns information about health metrics for your Lightsail load balancer.
+
+ Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+  *)
 
   
 end
@@ -6708,9 +6726,8 @@ module GetLoadBalancers : sig
             
         ]
       ) result
-  (** 
-    Returns information about all load balancers in an account.
-     *)
+  (** Returns information about all load balancers in an account.
+ *)
 
   
 end
@@ -6731,13 +6748,12 @@ module GetLoadBalancerTlsCertificates : sig
             
         ]
       ) result
-  (** 
-    Returns information about the TLS certificates that are associated with the specified Lightsail load balancer.
-    
-     TLS is just an updated, more secure version of Secure Socket Layer (SSL).
-     
-      You can have a maximum of 2 certificates associated with a Lightsail load balancer. One is active and the other is inactive.
-       *)
+  (** Returns information about the TLS certificates that are associated with the specified Lightsail load balancer.
+
+ TLS is just an updated, more secure version of Secure Socket Layer (SSL).
+ 
+  You can have a maximum of 2 certificates associated with a Lightsail load balancer. One is active and the other is inactive.
+   *)
 
   
 end
@@ -6756,11 +6772,10 @@ module GetLoadBalancerTlsPolicies : sig
             
         ]
       ) result
-  (** 
-    Returns a list of TLS security policies that you can apply to Lightsail load balancers.
-    
-     For more information about load balancer TLS security policies, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy}Configuring TLS security policies on your Amazon Lightsail load balancers} in the {i Amazon Lightsail Developer Guide}.
-      *)
+  (** Returns a list of TLS security policies that you can apply to Lightsail load balancers.
+
+ For more information about load balancer TLS security policies, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy}Configuring TLS security policies on your Amazon Lightsail load balancers} in the {i Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -6781,9 +6796,8 @@ module GetOperation : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific operation. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.
-     *)
+  (** Returns information about a specific operation. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.
+ *)
 
   
 end
@@ -6804,11 +6818,10 @@ module GetOperations : sig
             
         ]
       ) result
-  (** 
-    Returns information about all operations.
-    
-     Results are returned from oldest to newest, up to a maximum of 200. Results can be paged by making each subsequent call to [GetOperations] use the maximum (last) [statusChangedAt] value from the previous request.
-      *)
+  (** Returns information about all operations.
+
+ Results are returned from oldest to newest, up to a maximum of 200. Results can be paged by making each subsequent call to [GetOperations] use the maximum (last) [statusChangedAt] value from the previous request.
+  *)
 
   
 end
@@ -6829,9 +6842,8 @@ module GetOperationsForResource : sig
             
         ]
       ) result
-  (** 
-    Gets operations for a specific resource (an instance or a static IP).
-     *)
+  (** Gets operations for a specific resource (an instance or a static IP).
+ *)
 
   
 end
@@ -6852,10 +6864,9 @@ module GetRegions : sig
             
         ]
       ) result
-  (** 
-    Returns a list of all valid regions for Amazon Lightsail. Use the [include
+  (** Returns a list of all valid regions for Amazon Lightsail. Use the [include
         availability zones] parameter to also return the Availability Zones in a region.
-     *)
+ *)
 
   
 end
@@ -6876,9 +6887,8 @@ module GetRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific database in Amazon Lightsail.
-     *)
+  (** Returns information about a specific database in Amazon Lightsail.
+ *)
 
   
 end
@@ -6899,11 +6909,10 @@ module GetRelationalDatabaseBlueprints : sig
             
         ]
       ) result
-  (** 
-    Returns a list of available database blueprints in Amazon Lightsail. A blueprint describes the major engine version of a database.
-    
-     You can use a blueprint ID to create a new database that runs a specific database engine.
-      *)
+  (** Returns a list of available database blueprints in Amazon Lightsail. A blueprint describes the major engine version of a database.
+
+ You can use a blueprint ID to create a new database that runs a specific database engine.
+  *)
 
   
 end
@@ -6924,11 +6933,10 @@ module GetRelationalDatabaseBundles : sig
             
         ]
       ) result
-  (** 
-    Returns the list of bundles that are available in Amazon Lightsail. A bundle describes the performance specifications for a database.
-    
-     You can use a bundle ID to create a new database with explicit performance specifications.
-      *)
+  (** Returns the list of bundles that are available in Amazon Lightsail. A bundle describes the performance specifications for a database.
+
+ You can use a bundle ID to create a new database with explicit performance specifications.
+  *)
 
   
 end
@@ -6949,9 +6957,8 @@ module GetRelationalDatabaseEvents : sig
             
         ]
       ) result
-  (** 
-    Returns a list of events for a specific database in Amazon Lightsail.
-     *)
+  (** Returns a list of events for a specific database in Amazon Lightsail.
+ *)
 
   
 end
@@ -6972,9 +6979,8 @@ module GetRelationalDatabaseLogEvents : sig
             
         ]
       ) result
-  (** 
-    Returns a list of log events for a database in Amazon Lightsail.
-     *)
+  (** Returns a list of log events for a database in Amazon Lightsail.
+ *)
 
   
 end
@@ -6995,9 +7001,8 @@ module GetRelationalDatabaseLogStreams : sig
             
         ]
       ) result
-  (** 
-    Returns a list of available log streams for a specific database in Amazon Lightsail.
-     *)
+  (** Returns a list of available log streams for a specific database in Amazon Lightsail.
+ *)
 
   
 end
@@ -7018,11 +7023,10 @@ module GetRelationalDatabaseMasterUserPassword : sig
             
         ]
       ) result
-  (** 
-    Returns the current, previous, or pending versions of the master user password for a Lightsail database.
-    
-     The [GetRelationalDatabaseMasterUserPassword] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName.
-      *)
+  (** Returns the current, previous, or pending versions of the master user password for a Lightsail database.
+
+ The [GetRelationalDatabaseMasterUserPassword] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName.
+  *)
 
   
 end
@@ -7043,11 +7047,10 @@ module GetRelationalDatabaseMetricData : sig
             
         ]
       ) result
-  (** 
-    Returns the data points of the specified metric for a database in Amazon Lightsail.
-    
-     Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
-      *)
+  (** Returns the data points of the specified metric for a database in Amazon Lightsail.
+
+ Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+  *)
 
   
 end
@@ -7068,11 +7071,10 @@ module GetRelationalDatabaseParameters : sig
             
         ]
       ) result
-  (** 
-    Returns all of the runtime parameters offered by the underlying database software, or engine, for a specific database in Amazon Lightsail.
-    
-     In addition to the parameter names and values, this operation returns other information about each parameter. This information includes whether changes require a reboot, whether the parameter is modifiable, the allowed values, and the data types.
-      *)
+  (** Returns all of the runtime parameters offered by the underlying database software, or engine, for a specific database in Amazon Lightsail.
+
+ In addition to the parameter names and values, this operation returns other information about each parameter. This information includes whether changes require a reboot, whether the parameter is modifiable, the allowed values, and the data types.
+  *)
 
   
 end
@@ -7093,9 +7095,8 @@ module GetRelationalDatabases : sig
             
         ]
       ) result
-  (** 
-    Returns information about all of your databases in Amazon Lightsail.
-     *)
+  (** Returns information about all of your databases in Amazon Lightsail.
+ *)
 
   
 end
@@ -7116,9 +7117,8 @@ module GetRelationalDatabaseSnapshot : sig
             
         ]
       ) result
-  (** 
-    Returns information about a specific database snapshot in Amazon Lightsail.
-     *)
+  (** Returns information about a specific database snapshot in Amazon Lightsail.
+ *)
 
   
 end
@@ -7139,9 +7139,8 @@ module GetRelationalDatabaseSnapshots : sig
             
         ]
       ) result
-  (** 
-    Returns information about all of your database snapshots in Amazon Lightsail.
-     *)
+  (** Returns information about all of your database snapshots in Amazon Lightsail.
+ *)
 
   
 end
@@ -7160,9 +7159,8 @@ module GetSetupHistory : sig
             
         ]
       ) result
-  (** 
-    Returns detailed information for five of the most recent [SetupInstanceHttps] requests that were ran on the target instance.
-     *)
+  (** Returns detailed information for five of the most recent [SetupInstanceHttps] requests that were ran on the target instance.
+ *)
 
   
 end
@@ -7183,9 +7181,8 @@ module GetStaticIp : sig
             
         ]
       ) result
-  (** 
-    Returns information about an Amazon Lightsail static IP.
-     *)
+  (** Returns information about an Amazon Lightsail static IP.
+ *)
 
   
 end
@@ -7206,9 +7203,8 @@ module GetStaticIps : sig
             
         ]
       ) result
-  (** 
-    Returns information about all static IPs in the user's account.
-     *)
+  (** Returns information about all static IPs in the user's account.
+ *)
 
   
 end
@@ -7229,9 +7225,8 @@ module ImportKeyPair : sig
             
         ]
       ) result
-  (** 
-    Imports a public SSH key from a specific key pair.
-     *)
+  (** Imports a public SSH key from a specific key pair.
+ *)
 
   
 end
@@ -7252,9 +7247,8 @@ module IsVpcPeered : sig
             
         ]
       ) result
-  (** 
-    Returns a Boolean value indicating whether your Lightsail VPC is peered.
-     *)
+  (** Returns a Boolean value indicating whether your Lightsail VPC is peered.
+ *)
 
   
 end
@@ -7275,11 +7269,10 @@ module OpenInstancePublicPorts : sig
             
         ]
       ) result
-  (** 
-    Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.
-    
-     The [OpenInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.
+
+ The [OpenInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7300,9 +7293,8 @@ module PeerVpc : sig
             
         ]
       ) result
-  (** 
-    Peers the Lightsail VPC with the user's default VPC.
-     *)
+  (** Peers the Lightsail VPC with the user's default VPC.
+ *)
 
   
 end
@@ -7322,15 +7314,14 @@ module PutAlarm : sig
             
         ]
       ) result
-  (** 
-    Creates or updates an alarm, and associates it with the specified metric.
-    
-     An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
-     
-      When this action creates an alarm, the alarm state is immediately set to [INSUFFICIENT_DATA]. The alarm is then evaluated and its state is set appropriately. Any actions associated with the new state are then executed.
-      
-       When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. The alarm is then evaluated with the updated configuration.
-        *)
+  (** Creates or updates an alarm, and associates it with the specified metric.
+
+ An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
+ 
+  When this action creates an alarm, the alarm state is immediately set to [INSUFFICIENT_DATA]. The alarm is then evaluated and its state is set appropriately. Any actions associated with the new state are then executed.
+  
+   When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. The alarm is then evaluated with the updated configuration.
+    *)
 
   
 end
@@ -7351,11 +7342,10 @@ module PutInstancePublicPorts : sig
             
         ]
       ) result
-  (** 
-    Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol. This action also closes all currently open ports that are not included in the request. Include all of the ports and the protocols you want to open in your [PutInstancePublicPorts]request. Or use the [OpenInstancePublicPorts] action to open ports without closing currently open ports.
-    
-     The [PutInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol. This action also closes all currently open ports that are not included in the request. Include all of the ports and the protocols you want to open in your [PutInstancePublicPorts]request. Or use the [OpenInstancePublicPorts] action to open ports without closing currently open ports.
+
+ The [PutInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7376,11 +7366,10 @@ module RebootInstance : sig
             
         ]
       ) result
-  (** 
-    Restarts a specific instance.
-    
-     The [reboot instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Restarts a specific instance.
+
+ The [reboot instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7401,11 +7390,10 @@ module RebootRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Restarts a specific database in Amazon Lightsail.
-    
-     The [reboot relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Restarts a specific database in Amazon Lightsail.
+
+ The [reboot relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7424,12 +7412,11 @@ module RegisterContainerImage : sig
             
         ]
       ) result
-  (** 
-    Registers a container image to your Amazon Lightsail container service.
-    
-     This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
-     
-      *)
+  (** Registers a container image to your Amazon Lightsail container service.
+
+  This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.
+  
+    *)
 
   
 end
@@ -7450,9 +7437,8 @@ module ReleaseStaticIp : sig
             
         ]
       ) result
-  (** 
-    Deletes a specific static IP from your account.
-     *)
+  (** Deletes a specific static IP from your account.
+ *)
 
   
 end
@@ -7472,11 +7458,10 @@ module ResetDistributionCache : sig
             
         ]
       ) result
-  (** 
-    Deletes currently cached content from your Amazon Lightsail content delivery network (CDN) distribution.
-    
-     After resetting the cache, the next time a content request is made, your distribution pulls, serves, and caches it from the origin.
-      *)
+  (** Deletes currently cached content from your Amazon Lightsail content delivery network (CDN) distribution.
+
+ After resetting the cache, the next time a content request is made, your distribution pulls, serves, and caches it from the origin.
+  *)
 
   
 end
@@ -7496,16 +7481,15 @@ module SendContactMethodVerification : sig
             
         ]
       ) result
-  (** 
-    Sends a verification request to an email contact method to ensure it's owned by the requester. SMS contact methods don't need to be verified.
+  (** Sends a verification request to an email contact method to ensure it's owned by the requester. SMS contact methods don't need to be verified.
+
+ A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
+ 
+  A verification request is sent to the contact method when you initially create it. Use this action to send another verification request if a previous verification request was deleted, or has expired.
+  
+    Notifications are not sent to an email contact method until after it is verified, and confirmed as valid.
     
-     A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.
-     
-      A verification request is sent to the contact method when you initially create it. Use this action to send another verification request if a previous verification request was deleted, or has expired.
-      
-       Notifications are not sent to an email contact method until after it is verified, and confirmed as valid.
-       
-        *)
+      *)
 
   
 end
@@ -7526,11 +7510,10 @@ module SetIpAddressType : sig
             
         ]
       ) result
-  (** 
-    Sets the IP address type for an Amazon Lightsail resource.
-    
-     Use this action to enable dual-stack for a resource, which enables IPv4 and IPv6 for the specified resource. Alternately, you can use this action to disable dual-stack, and enable IPv4 only.
-      *)
+  (** Sets the IP address type for an Amazon Lightsail resource.
+
+ Use this action to enable dual-stack for a resource, which enables IPv4 and IPv6 for the specified resource. Alternately, you can use this action to disable dual-stack, and enable IPv4 only.
+  *)
 
   
 end
@@ -7549,11 +7532,10 @@ module SetResourceAccessForBucket : sig
             
         ]
       ) result
-  (** 
-    Sets the Amazon Lightsail resources that can access the specified Lightsail bucket.
-    
-     Lightsail buckets currently support setting access for Lightsail instances in the same Amazon Web Services Region.
-      *)
+  (** Sets the Amazon Lightsail resources that can access the specified Lightsail bucket.
+
+ Lightsail buckets currently support setting access for Lightsail instances in the same Amazon Web Services Region.
+  *)
 
   
 end
@@ -7572,11 +7554,10 @@ module SetupInstanceHttps : sig
             
         ]
       ) result
-  (** 
-    Creates an SSL/TLS certificate that secures traffic for your website. After the certificate is created, it is installed on the specified Lightsail instance.
-    
-     If you provide more than one domain name in the request, at least one name must be less than or equal to 63 characters in length.
-      *)
+  (** Creates an SSL/TLS certificate that secures traffic for your website. After the certificate is created, it is installed on the specified Lightsail instance.
+
+ If you provide more than one domain name in the request, at least one name must be less than or equal to 63 characters in length.
+  *)
 
   
 end
@@ -7595,9 +7576,8 @@ module StartGUISession : sig
             
         ]
       ) result
-  (** 
-    Initiates a graphical user interface (GUI) session that’s used to access a virtual computer’s operating system and application. The session will be active for 1 hour. Use this action to resume the session after it expires.
-     *)
+  (** Initiates a graphical user interface (GUI) session that’s used to access a virtual computer’s operating system and application. The session will be active for 1 hour. Use this action to resume the session after it expires. 
+ *)
 
   
 end
@@ -7618,13 +7598,12 @@ module StartInstance : sig
             
         ]
       ) result
-  (** 
-    Starts a specific Amazon Lightsail instance from a stopped state. To restart an instance, use the [reboot instance] operation.
-    
-     When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.
-     
-      The [start instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Starts a specific Amazon Lightsail instance from a stopped state. To restart an instance, use the [reboot instance] operation.
+
+  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.
+  
+    The [start instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+     *)
 
   
 end
@@ -7645,11 +7624,10 @@ module StartRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Starts a specific database from a stopped state in Amazon Lightsail. To restart a database, use the [reboot relational database] operation.
-    
-     The [start relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Starts a specific database from a stopped state in Amazon Lightsail. To restart a database, use the [reboot relational database] operation.
+
+ The [start relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7668,9 +7646,8 @@ module StopGUISession : sig
             
         ]
       ) result
-  (** 
-    Terminates a web-based NICE DCV session that’s used to access a virtual computer’s operating system or application. The session will close and any unsaved data will be lost.
-     *)
+  (** Terminates a web-based NICE DCV session that’s used to access a virtual computer’s operating system or application. The session will close and any unsaved data will be lost.
+ *)
 
   
 end
@@ -7691,13 +7668,12 @@ module StopInstance : sig
             
         ]
       ) result
-  (** 
-    Stops a specific Amazon Lightsail instance that is currently running.
-    
-     When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.
-     
-      The [stop instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Stops a specific Amazon Lightsail instance that is currently running.
+
+  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.
+  
+    The [stop instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+     *)
 
   
 end
@@ -7718,11 +7694,10 @@ module StopRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Stops a specific database that is currently running in Amazon Lightsail.
-    
-     The [stop relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Stops a specific database that is currently running in Amazon Lightsail.
+
+ The [stop relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7743,11 +7718,10 @@ module TagResource : sig
             
         ]
       ) result
-  (** 
-    Adds one or more tags to the specified Amazon Lightsail resource. Each resource can have a maximum of 50 tags. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags}Amazon Lightsail Developer Guide}.
-    
-     The [tag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Adds one or more tags to the specified Amazon Lightsail resource. Each resource can have a maximum of 50 tags. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags}Amazon Lightsail Developer Guide}.
+
+ The [tag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7767,11 +7741,10 @@ module TestAlarm : sig
             
         ]
       ) result
-  (** 
-    Tests an alarm by displaying a banner on the Amazon Lightsail console. If a notification trigger is configured for the specified alarm, the test also sends a notification to the notification protocol ([Email] and/or [SMS]) configured for the alarm.
-    
-     An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
-      *)
+  (** Tests an alarm by displaying a banner on the Amazon Lightsail console. If a notification trigger is configured for the specified alarm, the test also sends a notification to the notification protocol ([Email] and/or [SMS]) configured for the alarm.
+
+ An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.
+  *)
 
   
 end
@@ -7792,9 +7765,8 @@ module UnpeerVpc : sig
             
         ]
       ) result
-  (** 
-    Unpeers the Lightsail VPC from the user's default VPC.
-     *)
+  (** Unpeers the Lightsail VPC from the user's default VPC.
+ *)
 
   
 end
@@ -7815,11 +7787,10 @@ module UntagResource : sig
             
         ]
       ) result
-  (** 
-    Deletes the specified set of tag keys and their values from the specified Amazon Lightsail resource.
-    
-     The [untag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Deletes the specified set of tag keys and their values from the specified Amazon Lightsail resource.
+
+ The [untag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7838,11 +7809,10 @@ module UpdateBucket : sig
             
         ]
       ) result
-  (** 
-    Updates an existing Amazon Lightsail bucket.
-    
-     Use this action to update the configuration of an existing bucket, such as versioning, public accessibility, and the Amazon Web Services accounts that can access the bucket.
-      *)
+  (** Updates an existing Amazon Lightsail bucket.
+
+ Use this action to update the configuration of an existing bucket, such as versioning, public accessibility, and the Amazon Web Services accounts that can access the bucket.
+  *)
 
   
 end
@@ -7861,13 +7831,12 @@ module UpdateBucketBundle : sig
             
         ]
       ) result
-  (** 
-    Updates the bundle, or storage plan, of an existing Amazon Lightsail bucket.
-    
-     A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket. You can update a bucket's bundle only one time within a monthly Amazon Web Services billing cycle. To determine if you can update a bucket's bundle, use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBuckets.html}GetBuckets} action. The [ableToUpdateBundle] parameter in the response will indicate whether you can currently update a bucket's bundle.
-     
-      Update a bucket's bundle if it's consistently going over its storage space or data transfer quota, or if a bucket's usage is consistently in the lower range of its storage space or data transfer quota. Due to the unpredictable usage fluctuations that a bucket might experience, we strongly recommend that you update a bucket's bundle only as a long-term strategy, instead of as a short-term, monthly cost-cutting measure. Choose a bucket bundle that will provide the bucket with ample storage space and data transfer for a long time to come.
-       *)
+  (** Updates the bundle, or storage plan, of an existing Amazon Lightsail bucket.
+
+ A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket. You can update a bucket's bundle only one time within a monthly Amazon Web Services billing cycle. To determine if you can update a bucket's bundle, use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBuckets.html}GetBuckets} action. The [ableToUpdateBundle] parameter in the response will indicate whether you can currently update a bucket's bundle.
+ 
+  Update a bucket's bundle if it's consistently going over its storage space or data transfer quota, or if a bucket's usage is consistently in the lower range of its storage space or data transfer quota. Due to the unpredictable usage fluctuations that a bucket might experience, we strongly recommend that you update a bucket's bundle only as a long-term strategy, instead of as a short-term, monthly cost-cutting measure. Choose a bucket bundle that will provide the bucket with ample storage space and data transfer for a long time to come.
+   *)
 
   
 end
@@ -7886,9 +7855,8 @@ module UpdateContainerService : sig
             
         ]
       ) result
-  (** 
-    Updates the configuration of your Amazon Lightsail container service, such as its power, scale, and public domain names.
-     *)
+  (** Updates the configuration of your Amazon Lightsail container service, such as its power, scale, and public domain names.
+ *)
 
   
 end
@@ -7908,11 +7876,10 @@ module UpdateDistribution : sig
             
         ]
       ) result
-  (** 
-    Updates an existing Amazon Lightsail content delivery network (CDN) distribution.
-    
-     Use this action to update the configuration of your existing distribution.
-      *)
+  (** Updates an existing Amazon Lightsail content delivery network (CDN) distribution.
+
+ Use this action to update the configuration of your existing distribution.
+  *)
 
   
 end
@@ -7932,15 +7899,14 @@ module UpdateDistributionBundle : sig
             
         ]
       ) result
-  (** 
-    Updates the bundle of your Amazon Lightsail content delivery network (CDN) distribution.
-    
-     A distribution bundle specifies the monthly network transfer quota and monthly cost of your distribution.
-     
-      Update your distribution's bundle if your distribution is going over its monthly network transfer quota and is incurring an overage fee.
-      
-       You can update your distribution's bundle only one time within your monthly Amazon Web Services billing cycle. To determine if you can update your distribution's bundle, use the [GetDistributions] action. The [ableToUpdateBundle] parameter in the result will indicate whether you can currently update your distribution's bundle.
-        *)
+  (** Updates the bundle of your Amazon Lightsail content delivery network (CDN) distribution.
+
+ A distribution bundle specifies the monthly network transfer quota and monthly cost of your distribution.
+ 
+  Update your distribution's bundle if your distribution is going over its monthly network transfer quota and is incurring an overage fee.
+  
+   You can update your distribution's bundle only one time within your monthly Amazon Web Services billing cycle. To determine if you can update your distribution's bundle, use the [GetDistributions] action. The [ableToUpdateBundle] parameter in the result will indicate whether you can currently update your distribution's bundle.
+    *)
 
   
 end
@@ -7961,11 +7927,10 @@ module UpdateDomainEntry : sig
             
         ]
       ) result
-  (** 
-    Updates a domain recordset after it is created.
-    
-     The [update domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  (** Updates a domain recordset after it is created.
+
+ The [update domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+  *)
 
   
 end
@@ -7986,9 +7951,8 @@ module UpdateInstanceMetadataOptions : sig
             
         ]
       ) result
-  (** 
-    Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance. When you modify the parameters on a running instance, the [GetInstance] or [GetInstances] API operation initially responds with a state of [pending]. After the parameter modifications are successfully applied, the state changes to [applied] in subsequent [GetInstance] or [GetInstances] API calls. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-instance-metadata-service}Use IMDSv2 with an Amazon Lightsail instance} in the {i Amazon Lightsail Developer Guide}.
-     *)
+  (** Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance. When you modify the parameters on a running instance, the [GetInstance] or [GetInstances] API operation initially responds with a state of [pending]. After the parameter modifications are successfully applied, the state changes to [applied] in subsequent [GetInstance] or [GetInstances] API calls. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-instance-metadata-service}Use IMDSv2 with an Amazon Lightsail instance} in the {i Amazon Lightsail Developer Guide}.
+ *)
 
   
 end
@@ -8009,12 +7973,11 @@ module UpdateLoadBalancerAttribute : sig
             
         ]
       ) result
-  (** 
-    Updates the specified attribute for a load balancer. You can only update one attribute at a time.
-    
-     The [update load balancer attribute] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
+  (** Updates the specified attribute for a load balancer. You can only update one attribute at a time.
+
+ The [update load balancer attribute] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer
         name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-      *)
+  *)
 
   
 end
@@ -8035,13 +7998,12 @@ module UpdateRelationalDatabase : sig
             
         ]
       ) result
-  (** 
-    Allows the update of one or more attributes of a database in Amazon Lightsail.
-    
-     Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window.
-     
-      The [update relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Allows the update of one or more attributes of a database in Amazon Lightsail.
+
+ Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window.
+ 
+  The [update relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
@@ -8062,13 +8024,12 @@ module UpdateRelationalDatabaseParameters : sig
             
         ]
       ) result
-  (** 
-    Allows the update of one or more parameters of a database in Amazon Lightsail.
-    
-     Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: [dynamic] or [pending-reboot]. Parameters marked with a [dynamic] apply type are applied immediately. Parameters marked with a [pending-reboot] apply type are applied only after the database is rebooted using the [reboot relational database] operation.
-     
-      The [update relational database parameters] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
-       *)
+  (** Allows the update of one or more parameters of a database in Amazon Lightsail.
+
+ Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: [dynamic] or [pending-reboot]. Parameters marked with a [dynamic] apply type are applied immediately. Parameters marked with a [pending-reboot] apply type are applied only after the database is rebooted using the [reboot relational database] operation.
+ 
+  The [update relational database parameters] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.
+   *)
 
   
 end
