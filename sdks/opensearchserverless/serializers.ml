@@ -309,8 +309,7 @@ let update_access_policy_request_to_yojson (x : update_access_policy_request)
     ("policyVersion", (Some (policy_version_to_yojson x.policy_version)));
     ("name", (Some (policy_name_to_yojson x.name)));
     ("type", (Some (access_policy_type_to_yojson x.type_)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let arn_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_keys_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -324,8 +323,7 @@ let tag_to_yojson (x : tag) =
     [("value", (Some (tag_value_to_yojson x.value)));
     ("key", (Some (tag_key_to_yojson x.key)))]
 let tags_to_yojson tree = list_to_yojson tag_to_yojson tree
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("tags", (Some (tags_to_yojson x.tags)));
@@ -404,16 +402,14 @@ let get_policies_stats_response_to_yojson (x : get_policies_stats_response) =
          x.security_policy_stats));
     ("AccessPolicyStats",
       (option_to_yojson access_policy_stats_to_yojson x.access_policy_stats))]
-let get_policies_stats_request_to_yojson (x : get_policies_stats_request) =
-  assoc_to_yojson []
+let get_policies_stats_request_to_yojson = unit_to_yojson
 let get_account_settings_response_to_yojson
   (x : get_account_settings_response) =
   assoc_to_yojson
     [("accountSettingsDetail",
        (option_to_yojson account_settings_detail_to_yojson
           x.account_settings_detail))]
-let get_account_settings_request_to_yojson (x : get_account_settings_request)
-  = assoc_to_yojson []
+let get_account_settings_request_to_yojson = unit_to_yojson
 let create_security_policy_response_to_yojson
   (x : create_security_policy_response) =
   assoc_to_yojson
@@ -748,8 +744,7 @@ let delete_vpc_endpoint_request_to_yojson (x : delete_vpc_endpoint_request) =
     [("clientToken",
        (option_to_yojson client_token_to_yojson x.client_token));
     ("id", (Some (vpc_endpoint_id_to_yojson x.id)))]
-let delete_security_policy_response_to_yojson
-  (x : delete_security_policy_response) = assoc_to_yojson []
+let delete_security_policy_response_to_yojson = unit_to_yojson
 let delete_security_policy_request_to_yojson
   (x : delete_security_policy_request) =
   assoc_to_yojson
@@ -757,16 +752,14 @@ let delete_security_policy_request_to_yojson
        (option_to_yojson client_token_to_yojson x.client_token));
     ("name", (Some (policy_name_to_yojson x.name)));
     ("type", (Some (security_policy_type_to_yojson x.type_)))]
-let delete_security_config_response_to_yojson
-  (x : delete_security_config_response) = assoc_to_yojson []
+let delete_security_config_response_to_yojson = unit_to_yojson
 let delete_security_config_request_to_yojson
   (x : delete_security_config_request) =
   assoc_to_yojson
     [("clientToken",
        (option_to_yojson client_token_to_yojson x.client_token));
     ("id", (Some (security_config_id_to_yojson x.id)))]
-let delete_lifecycle_policy_response_to_yojson
-  (x : delete_lifecycle_policy_response) = assoc_to_yojson []
+let delete_lifecycle_policy_response_to_yojson = unit_to_yojson
 let delete_lifecycle_policy_request_to_yojson
   (x : delete_lifecycle_policy_request) =
   assoc_to_yojson
@@ -789,8 +782,7 @@ let delete_collection_request_to_yojson (x : delete_collection_request) =
     [("clientToken",
        (option_to_yojson client_token_to_yojson x.client_token));
     ("id", (Some (collection_id_to_yojson x.id)))]
-let delete_access_policy_response_to_yojson
-  (x : delete_access_policy_response) = assoc_to_yojson []
+let delete_access_policy_response_to_yojson = unit_to_yojson
 let delete_access_policy_request_to_yojson (x : delete_access_policy_request)
   =
   assoc_to_yojson

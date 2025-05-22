@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_drt_log_bucket_request ->
-        (associate_drt_log_bucket_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedForDependencyException of
               access_denied_for_dependency_exception 
@@ -23,7 +23,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_drt_role_request ->
-        (associate_drt_role_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedForDependencyException of
               access_denied_for_dependency_exception 
@@ -40,7 +40,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_health_check_request ->
-        (associate_health_check_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -56,7 +56,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_proactive_engagement_details_request ->
-        (associate_proactive_engagement_details_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -90,7 +90,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_protection_group_request ->
-        (create_protection_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -106,8 +106,8 @@ module CreateSubscription :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      create_subscription_request ->
-        (create_subscription_response,
+      unit ->
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `ResourceAlreadyExistsException of
@@ -120,7 +120,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_protection_request ->
-        (delete_protection_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `OptimisticLockException of optimistic_lock_exception 
@@ -132,7 +132,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_protection_group_request ->
-        (delete_protection_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `OptimisticLockException of optimistic_lock_exception 
@@ -143,8 +143,8 @@ module DeleteSubscription :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      delete_subscription_request ->
-        (delete_subscription_response,
+      unit ->
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `LockedSubscriptionException of locked_subscription_exception 
@@ -166,7 +166,7 @@ module DescribeAttackStatistics :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_attack_statistics_request ->
+      unit ->
         (describe_attack_statistics_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception ]) result
@@ -176,7 +176,7 @@ module DescribeDRTAccess :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_drt_access_request ->
+      unit ->
         (describe_drt_access_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -188,7 +188,7 @@ module DescribeEmergencyContactSettings :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_emergency_contact_settings_request ->
+      unit ->
         (describe_emergency_contact_settings_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -224,7 +224,7 @@ module DescribeSubscription :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_subscription_request ->
+      unit ->
         (describe_subscription_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -237,7 +237,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_application_layer_automatic_response_request ->
-        (disable_application_layer_automatic_response_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -251,8 +251,8 @@ module DisableProactiveEngagement :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      disable_proactive_engagement_request ->
-        (disable_proactive_engagement_response,
+      unit ->
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -267,7 +267,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_drt_log_bucket_request ->
-        (disassociate_drt_log_bucket_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedForDependencyException of
               access_denied_for_dependency_exception 
@@ -283,8 +283,8 @@ module DisassociateDRTRole :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      disassociate_drt_role_request ->
-        (disassociate_drt_role_response,
+      unit ->
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -298,7 +298,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_health_check_request ->
-        (disassociate_health_check_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -313,7 +313,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_application_layer_automatic_response_request ->
-        (enable_application_layer_automatic_response_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -328,8 +328,8 @@ module EnableProactiveEngagement :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      enable_proactive_engagement_request ->
-        (enable_proactive_engagement_response,
+      unit ->
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -343,7 +343,7 @@ module GetSubscriptionState :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_subscription_state_request ->
+      unit ->
         (get_subscription_state_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception ]) result
@@ -422,7 +422,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -435,7 +435,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -448,7 +448,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_application_layer_automatic_response_request ->
-        (update_application_layer_automatic_response_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -463,7 +463,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_emergency_contact_settings_request ->
-        (update_emergency_contact_settings_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -477,7 +477,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_protection_group_request ->
-        (update_protection_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -491,7 +491,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_subscription_request ->
-        (update_subscription_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 

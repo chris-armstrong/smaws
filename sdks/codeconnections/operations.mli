@@ -63,7 +63,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_connection_input ->
-        (delete_connection_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
@@ -73,7 +73,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_host_input ->
-        (delete_host_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ResourceUnavailableException of resource_unavailable_exception ])
@@ -85,7 +85,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_repository_link_input ->
-        (delete_repository_link_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConcurrentModificationException of
@@ -106,7 +106,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_sync_configuration_input ->
-        (delete_sync_configuration_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConcurrentModificationException of
@@ -289,7 +289,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (tag_resource_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededException of limit_exceeded_exception 
           | `ResourceNotFoundException of resource_not_found_exception ])
@@ -301,7 +301,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (untag_resource_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
@@ -311,7 +311,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_host_input ->
-        (update_host_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `ResourceNotFoundException of resource_not_found_exception 

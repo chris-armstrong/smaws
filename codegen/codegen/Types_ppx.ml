@@ -62,6 +62,7 @@ let make_basic_type_manifest ctx descriptor =
   | TimestampShape { traits; _ } -> [%type: CoreTypes.Timestamp.t]
   | UnitShape -> [%type: unit]
   | ResourceShape -> [%type: CoreTypes.Resource.t]
+  | StructureShape { members = []; _ } -> [%type: unit]
   | _ ->
       failwith
         (Fmt.str "non-basic target not supported: %a" Ast.Shape.pp_shapeDescriptor descriptor)
@@ -70,11 +71,6 @@ let manifest_type ~name ~manifest ~is_exception_type =
   B.type_declaration
     ~name:(Location.mknoloc (Types.type_name ~is_exception_type name))
     ~params:[] ~cstrs:[] ~kind:Ptype_abstract ~private_:Public ~manifest:(Some manifest)
-
-let empty_type_constructor ~name =
-  B.constructor_declaration
-    ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
-    ~args:(Pcstr_tuple []) ~res:None
 
 let type_declaration ~name ~is_exception_type ~kind
     ?(manifest : Ppxlib.Parsetree.core_type option = None) ~doc_string () =
@@ -90,6 +86,33 @@ let type_declaration ~name ~is_exception_type ~kind
     ptype_attributes = [ Docs.create_doc_attr ~loc doc_string ];
   }
 
+let label_declaration ~name ~type_ ~doc_string =
+  Ppxlib.
+    {
+      pld_name = name;
+      pld_mutable = Immutable;
+      pld_type = type_;
+      pld_loc = loc;
+      pld_attributes = [ Docs.create_doc_attr ~loc doc_string ];
+    }
+
+let constructor_declaration ~name ~args ~res ~doc_string =
+  Ppxlib.
+    {
+      pcd_name = name;
+      pcd_vars = [];
+      pcd_args = args;
+      pcd_res = res;
+      pcd_loc = loc;
+      pcd_attributes = [ Docs.create_doc_attr ~loc doc_string ];
+    }
+
+let empty_type_constructor ~name ~traits =
+  let doc_string = Docs.convert_docs traits in
+  constructor_declaration
+    ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
+    ~args:(Pcstr_tuple []) ~res:None ~doc_string
+
 let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor) =
   let open Ast.Shape in
   let is_exception_type =
@@ -104,10 +127,11 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       let structure_members =
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->
-               B.label_declaration
+               let doc_string = Docs.convert_docs traits in
+               label_declaration
                  ~name:(Location.mknoloc (SafeNames.safeMemberName name))
-                 ~mutable_:Immutable
-                 ~type_:(resolve_for_target ctx ~name:target ~traits))
+                 ~type_:(resolve_for_target ctx ~name:target ~traits)
+                 ~doc_string)
       in
       let doc_string = Docs.convert_docs traits in
 
@@ -115,7 +139,8 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
         ()
   | EnumShape { traits; members } ->
       let enum_members =
-        members |> List.map ~f:(fun ({ name; _ } : member) -> empty_type_constructor ~name)
+        members
+        |> List.map ~f:(fun ({ name; traits; _ } : member) -> empty_type_constructor ~name ~traits)
       in
 
       let doc_string = Docs.convert_docs traits in
@@ -135,10 +160,11 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       let union_members =
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->
-               B.constructor_declaration
+               let doc_string = Docs.convert_docs traits in
+               constructor_declaration
                  ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
                  ~args:(Pcstr_tuple [ resolve ctx ~name:target ])
-                 ~res:None)
+                 ~res:None ~doc_string)
       in
 
       let doc_string = Docs.convert_docs traits in
@@ -152,7 +178,8 @@ let create_alias_context shapes : t =
       match descriptor with
       | UnitShape | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _ | StringShape _
       | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _ | LongShape _
-      | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape ->
+      | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
+      | StructureShape { members = []; _ } ->
           let alias = make_basic_type_manifest tbl descriptor in
           (* Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias; *)
           ignore (Hashtbl.add ~key:name ~data:alias tbl)
@@ -209,6 +236,7 @@ let generate_type_target ctx name descriptor =
       None
   (* service shapes and operation shapes are not of interest to type generation (yet) *)
   | ServiceShape _ | OperationShape _ -> None
+  | StructureShape { members = []; _ } -> None
   | _ -> Some (make_complex_type_declaration ctx ~name ~descriptor)
 
 let stri_structure_shapes ctx structure_shapes fmt =

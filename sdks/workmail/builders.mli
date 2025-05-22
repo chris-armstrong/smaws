@@ -1,6 +1,6 @@
 open Smaws_Lib
 open Types
-val make_update_user_response : unit -> update_user_response
+val make_update_user_response : unit -> unit
 val make_update_user_request :
   ?office:string ->
     ?country:string ->
@@ -20,7 +20,7 @@ val make_update_user_request :
                                 user_id:string ->
                                   organization_id:string ->
                                     unit -> update_user_request
-val make_update_resource_response : unit -> update_resource_response
+val make_update_resource_response : unit -> unit
 val make_booking_options :
   ?auto_decline_conflicting_requests:bool ->
     ?auto_decline_recurring_requests:bool ->
@@ -33,14 +33,12 @@ val make_update_resource_request :
           ?name:string ->
             resource_id:string ->
               organization_id:string -> unit -> update_resource_request
-val make_update_primary_email_address_response :
-  unit -> update_primary_email_address_response
+val make_update_primary_email_address_response : unit -> unit
 val make_update_primary_email_address_request :
   email:string ->
     entity_id:string ->
       organization_id:string -> unit -> update_primary_email_address_request
-val make_update_mobile_device_access_rule_response :
-  unit -> update_mobile_device_access_rule_response
+val make_update_mobile_device_access_rule_response : unit -> unit
 val make_update_mobile_device_access_rule_request :
   ?not_device_user_agents:string list ->
     ?device_user_agents:string list ->
@@ -56,14 +54,12 @@ val make_update_mobile_device_access_rule_request :
                         mobile_device_access_rule_id:string ->
                           organization_id:string ->
                             unit -> update_mobile_device_access_rule_request
-val make_update_mailbox_quota_response :
-  unit -> update_mailbox_quota_response
+val make_update_mailbox_quota_response : unit -> unit
 val make_update_mailbox_quota_request :
   mailbox_quota:int ->
     user_id:string ->
       organization_id:string -> unit -> update_mailbox_quota_request
-val make_update_impersonation_role_response :
-  unit -> update_impersonation_role_response
+val make_update_impersonation_role_response : unit -> unit
 val make_impersonation_rule :
   ?not_target_users:string list ->
     ?target_users:string list ->
@@ -79,17 +75,15 @@ val make_update_impersonation_role_request :
           impersonation_role_id:string ->
             organization_id:string ->
               unit -> update_impersonation_role_request
-val make_update_group_response : unit -> update_group_response
+val make_update_group_response : unit -> unit
 val make_update_group_request :
   ?hidden_from_global_address_list:bool ->
     group_id:string -> organization_id:string -> unit -> update_group_request
-val make_update_default_mail_domain_response :
-  unit -> update_default_mail_domain_response
+val make_update_default_mail_domain_response : unit -> unit
 val make_update_default_mail_domain_request :
   domain_name:string ->
     organization_id:string -> unit -> update_default_mail_domain_request
-val make_update_availability_configuration_response :
-  unit -> update_availability_configuration_response
+val make_update_availability_configuration_response : unit -> unit
 val make_ews_availability_provider :
   ews_password:string ->
     ews_username:string ->
@@ -102,7 +96,7 @@ val make_update_availability_configuration_request :
       domain_name:string ->
         organization_id:string ->
           unit -> update_availability_configuration_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
@@ -115,7 +109,7 @@ val make_test_availability_configuration_request :
       ?domain_name:string ->
         organization_id:string ->
           unit -> test_availability_configuration_request
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
@@ -131,25 +125,22 @@ val make_start_mailbox_export_job_request :
               organization_id:string ->
                 client_token:string ->
                   unit -> start_mailbox_export_job_request
-val make_reset_password_response : unit -> reset_password_response
+val make_reset_password_response : unit -> unit
 val make_reset_password_request :
   password:string ->
     user_id:string ->
       organization_id:string -> unit -> reset_password_request
-val make_register_to_work_mail_response :
-  unit -> register_to_work_mail_response
+val make_register_to_work_mail_response : unit -> unit
 val make_register_to_work_mail_request :
   email:string ->
     entity_id:string ->
       organization_id:string -> unit -> register_to_work_mail_request
-val make_register_mail_domain_response :
-  unit -> register_mail_domain_response
+val make_register_mail_domain_response : unit -> unit
 val make_register_mail_domain_request :
   ?client_token:string ->
     domain_name:string ->
       organization_id:string -> unit -> register_mail_domain_request
-val make_put_retention_policy_response :
-  unit -> put_retention_policy_response
+val make_put_retention_policy_response : unit -> unit
 val make_folder_configuration :
   ?period:int ->
     action:retention_action ->
@@ -160,8 +151,7 @@ val make_put_retention_policy_request :
       folder_configurations:folder_configuration list ->
         name:string ->
           organization_id:string -> unit -> put_retention_policy_request
-val make_put_mobile_device_access_override_response :
-  unit -> put_mobile_device_access_override_response
+val make_put_mobile_device_access_override_response : unit -> unit
 val make_put_mobile_device_access_override_request :
   ?description:string ->
     effect_:mobile_device_access_rule_effect ->
@@ -169,27 +159,23 @@ val make_put_mobile_device_access_override_request :
         user_id:string ->
           organization_id:string ->
             unit -> put_mobile_device_access_override_request
-val make_put_mailbox_permissions_response :
-  unit -> put_mailbox_permissions_response
+val make_put_mailbox_permissions_response : unit -> unit
 val make_put_mailbox_permissions_request :
   permission_values:permission_type list ->
     grantee_id:string ->
       entity_id:string ->
         organization_id:string -> unit -> put_mailbox_permissions_request
-val make_put_inbound_dmarc_settings_response :
-  unit -> put_inbound_dmarc_settings_response
+val make_put_inbound_dmarc_settings_response : unit -> unit
 val make_put_inbound_dmarc_settings_request :
   enforced:bool ->
     organization_id:string -> unit -> put_inbound_dmarc_settings_request
-val make_put_email_monitoring_configuration_response :
-  unit -> put_email_monitoring_configuration_response
+val make_put_email_monitoring_configuration_response : unit -> unit
 val make_put_email_monitoring_configuration_request :
   log_group_arn:string ->
     role_arn:string ->
       organization_id:string ->
         unit -> put_email_monitoring_configuration_request
-val make_put_access_control_rule_response :
-  unit -> put_access_control_rule_response
+val make_put_access_control_rule_response : unit -> unit
 val make_put_access_control_rule_request :
   ?not_impersonation_role_ids:string list ->
     ?impersonation_role_ids:string list ->
@@ -533,15 +519,13 @@ val make_get_access_control_effect_request :
       action:string ->
         ip_address:string ->
           organization_id:string -> unit -> get_access_control_effect_request
-val make_disassociate_member_from_group_response :
-  unit -> disassociate_member_from_group_response
+val make_disassociate_member_from_group_response : unit -> unit
 val make_disassociate_member_from_group_request :
   member_id:string ->
     group_id:string ->
       organization_id:string ->
         unit -> disassociate_member_from_group_request
-val make_disassociate_delegate_from_resource_response :
-  unit -> disassociate_delegate_from_resource_response
+val make_disassociate_delegate_from_resource_response : unit -> unit
 val make_disassociate_delegate_from_resource_request :
   entity_id:string ->
     resource_id:string ->
@@ -649,25 +633,22 @@ val make_describe_email_monitoring_configuration_response :
 val make_describe_email_monitoring_configuration_request :
   organization_id:string ->
     unit -> describe_email_monitoring_configuration_request
-val make_deregister_mail_domain_response :
-  unit -> deregister_mail_domain_response
+val make_deregister_mail_domain_response : unit -> unit
 val make_deregister_mail_domain_request :
   domain_name:string ->
     organization_id:string -> unit -> deregister_mail_domain_request
-val make_deregister_from_work_mail_response :
-  unit -> deregister_from_work_mail_response
+val make_deregister_from_work_mail_response : unit -> unit
 val make_deregister_from_work_mail_request :
   entity_id:string ->
     organization_id:string -> unit -> deregister_from_work_mail_request
-val make_delete_user_response : unit -> delete_user_response
+val make_delete_user_response : unit -> unit
 val make_delete_user_request :
   user_id:string -> organization_id:string -> unit -> delete_user_request
-val make_delete_retention_policy_response :
-  unit -> delete_retention_policy_response
+val make_delete_retention_policy_response : unit -> unit
 val make_delete_retention_policy_request :
   id:string ->
     organization_id:string -> unit -> delete_retention_policy_request
-val make_delete_resource_response : unit -> delete_resource_response
+val make_delete_resource_response : unit -> unit
 val make_delete_resource_request :
   resource_id:string ->
     organization_id:string -> unit -> delete_resource_request
@@ -679,51 +660,44 @@ val make_delete_organization_request :
     ?client_token:string ->
       delete_directory:bool ->
         organization_id:string -> unit -> delete_organization_request
-val make_delete_mobile_device_access_rule_response :
-  unit -> delete_mobile_device_access_rule_response
+val make_delete_mobile_device_access_rule_response : unit -> unit
 val make_delete_mobile_device_access_rule_request :
   mobile_device_access_rule_id:string ->
     organization_id:string ->
       unit -> delete_mobile_device_access_rule_request
-val make_delete_mobile_device_access_override_response :
-  unit -> delete_mobile_device_access_override_response
+val make_delete_mobile_device_access_override_response : unit -> unit
 val make_delete_mobile_device_access_override_request :
   device_id:string ->
     user_id:string ->
       organization_id:string ->
         unit -> delete_mobile_device_access_override_request
-val make_delete_mailbox_permissions_response :
-  unit -> delete_mailbox_permissions_response
+val make_delete_mailbox_permissions_response : unit -> unit
 val make_delete_mailbox_permissions_request :
   grantee_id:string ->
     entity_id:string ->
       organization_id:string -> unit -> delete_mailbox_permissions_request
-val make_delete_impersonation_role_response :
-  unit -> delete_impersonation_role_response
+val make_delete_impersonation_role_response : unit -> unit
 val make_delete_impersonation_role_request :
   impersonation_role_id:string ->
     organization_id:string -> unit -> delete_impersonation_role_request
-val make_delete_group_response : unit -> delete_group_response
+val make_delete_group_response : unit -> unit
 val make_delete_group_request :
   group_id:string -> organization_id:string -> unit -> delete_group_request
-val make_delete_email_monitoring_configuration_response :
-  unit -> delete_email_monitoring_configuration_response
+val make_delete_email_monitoring_configuration_response : unit -> unit
 val make_delete_email_monitoring_configuration_request :
   organization_id:string ->
     unit -> delete_email_monitoring_configuration_request
-val make_delete_availability_configuration_response :
-  unit -> delete_availability_configuration_response
+val make_delete_availability_configuration_response : unit -> unit
 val make_delete_availability_configuration_request :
   domain_name:string ->
     organization_id:string ->
       unit -> delete_availability_configuration_request
-val make_delete_alias_response : unit -> delete_alias_response
+val make_delete_alias_response : unit -> unit
 val make_delete_alias_request :
   alias:string ->
     entity_id:string ->
       organization_id:string -> unit -> delete_alias_request
-val make_delete_access_control_rule_response :
-  unit -> delete_access_control_rule_response
+val make_delete_access_control_rule_response : unit -> unit
 val make_delete_access_control_rule_request :
   name:string ->
     organization_id:string -> unit -> delete_access_control_rule_request
@@ -790,8 +764,7 @@ val make_create_group_response :
 val make_create_group_request :
   ?hidden_from_global_address_list:bool ->
     name:string -> organization_id:string -> unit -> create_group_request
-val make_create_availability_configuration_response :
-  unit -> create_availability_configuration_response
+val make_create_availability_configuration_response : unit -> unit
 val make_create_availability_configuration_request :
   ?lambda_provider:lambda_availability_provider ->
     ?ews_provider:ews_availability_provider ->
@@ -799,13 +772,12 @@ val make_create_availability_configuration_request :
         domain_name:string ->
           organization_id:string ->
             unit -> create_availability_configuration_request
-val make_create_alias_response : unit -> create_alias_response
+val make_create_alias_response : unit -> unit
 val make_create_alias_request :
   alias:string ->
     entity_id:string ->
       organization_id:string -> unit -> create_alias_request
-val make_cancel_mailbox_export_job_response :
-  unit -> cancel_mailbox_export_job_response
+val make_cancel_mailbox_export_job_response : unit -> unit
 val make_cancel_mailbox_export_job_request :
   organization_id:string ->
     job_id:string ->
@@ -816,14 +788,12 @@ val make_assume_impersonation_role_response :
 val make_assume_impersonation_role_request :
   impersonation_role_id:string ->
     organization_id:string -> unit -> assume_impersonation_role_request
-val make_associate_member_to_group_response :
-  unit -> associate_member_to_group_response
+val make_associate_member_to_group_response : unit -> unit
 val make_associate_member_to_group_request :
   member_id:string ->
     group_id:string ->
       organization_id:string -> unit -> associate_member_to_group_request
-val make_associate_delegate_to_resource_response :
-  unit -> associate_delegate_to_resource_response
+val make_associate_delegate_to_resource_response : unit -> unit
 val make_associate_delegate_to_resource_request :
   entity_id:string ->
     resource_id:string ->

@@ -352,8 +352,7 @@ let invalid_definition_of_yojson tree path =
     } in
   _res
 let update_map_run_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_map_run_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let long_arn_of_yojson = string_of_yojson
 let max_concurrency_of_yojson = int_of_yojson
 let tolerated_failure_percentage_of_yojson = float_of_yojson
@@ -378,8 +377,7 @@ let update_map_run_input_of_yojson tree path =
     } in
   _res
 let untag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
@@ -740,8 +738,7 @@ let task_does_not_exist_of_yojson tree path =
   _res
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -1043,8 +1040,7 @@ let execution_already_exists_of_yojson tree path =
   _res
 let sensitive_data_job_input_of_yojson = string_of_yojson
 let send_task_success_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : send_task_success_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let send_task_success_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : send_task_success_input =
@@ -1073,8 +1069,7 @@ let invalid_output_of_yojson tree path =
     } in
   _res
 let send_task_heartbeat_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : send_task_heartbeat_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let send_task_heartbeat_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : send_task_heartbeat_input =
@@ -1084,8 +1079,7 @@ let send_task_heartbeat_input_of_yojson tree path =
     } in
   _res
 let send_task_failure_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : send_task_failure_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let send_task_failure_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : send_task_failure_input =
@@ -2330,8 +2324,7 @@ let describe_activity_input_of_yojson tree path =
     { activity_arn = (value_for_key arn_of_yojson "activityArn" _list path) } in
   _res
 let delete_state_machine_version_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_state_machine_version_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_state_machine_version_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_state_machine_version_input =
@@ -2341,8 +2334,7 @@ let delete_state_machine_version_input_of_yojson tree path =
     } in
   _res
 let delete_state_machine_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_state_machine_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_state_machine_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_state_machine_input =
@@ -2352,8 +2344,7 @@ let delete_state_machine_input_of_yojson tree path =
     } in
   _res
 let delete_state_machine_alias_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_state_machine_alias_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_state_machine_alias_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_state_machine_alias_input =
@@ -2363,8 +2354,7 @@ let delete_state_machine_alias_input_of_yojson tree path =
     } in
   _res
 let delete_activity_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_activity_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_activity_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_activity_input =

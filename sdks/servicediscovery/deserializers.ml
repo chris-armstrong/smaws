@@ -321,8 +321,7 @@ let update_http_namespace_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let amazon_resource_name_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -362,8 +361,7 @@ let too_many_tags_exception_of_yojson tree path =
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -1264,8 +1262,7 @@ let deregister_instance_request_of_yojson tree path =
     } in
   _res
 let delete_service_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_service_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_service_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_service_request =

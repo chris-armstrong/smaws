@@ -449,8 +449,7 @@ let make_directory_limits
        cloud_only_directories_current_count_;
      cloud_only_directories_limit = cloud_only_directories_limit_
    } : directory_limits)
-let make_get_directory_limits_request () =
-  (() : get_directory_limits_request)
+let make_get_directory_limits_request () = (() : unit)
 let make_event_topic ?status:(status_ : topic_status option) 
   ?created_date_time:(created_date_time_ : CoreTypes.Timestamp.t option) 
   ?topic_arn:(topic_arn_ : string option) 

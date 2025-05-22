@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_cluster_request ->
-        (cancel_cluster_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidJobStateException of invalid_job_state_exception 
           | `InvalidResourceException of invalid_resource_exception 
@@ -17,7 +17,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_job_request ->
-        (cancel_job_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidJobStateException of invalid_job_state_exception 
           | `InvalidResourceException of invalid_resource_exception 
@@ -175,7 +175,7 @@ module GetSnowballUsage :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_snowball_usage_request ->
+      unit ->
         (get_snowball_usage_result, [> Smaws_Lib.Protocols.AwsJson.error])
           result
 end[@@ocaml.doc
@@ -272,7 +272,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_cluster_request ->
-        (update_cluster_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `Ec2RequestFailedException of ec2_request_failed_exception 
           | `InvalidInputCombinationException of
@@ -288,7 +288,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_job_request ->
-        (update_job_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClusterLimitExceededException of
               cluster_limit_exceeded_exception 
@@ -306,7 +306,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_job_shipment_state_request ->
-        (update_job_shipment_state_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidJobStateException of invalid_job_state_exception 
           | `InvalidResourceException of invalid_resource_exception ]) result
@@ -317,7 +317,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_long_term_pricing_request ->
-        (update_long_term_pricing_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidResourceException of invalid_resource_exception ]) result
 end[@@ocaml.doc "Updates the long-term pricing type.\n"]

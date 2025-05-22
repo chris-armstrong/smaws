@@ -53,7 +53,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_activity_input ->
-        (delete_activity_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn ])
           result
 end[@@ocaml.doc "Deletes an activity.\n"]
@@ -62,7 +62,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_input ->
-        (delete_state_machine_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
@@ -72,7 +72,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_alias_input ->
-        (delete_state_machine_alias_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
@@ -85,7 +85,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_version_input ->
-        (delete_state_machine_version_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
@@ -297,7 +297,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_failure_input ->
-        (send_task_failure_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidToken of invalid_token 
           | `TaskDoesNotExist of task_does_not_exist 
@@ -309,7 +309,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_heartbeat_input ->
-        (send_task_heartbeat_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidToken of invalid_token 
           | `TaskDoesNotExist of task_does_not_exist 
@@ -321,7 +321,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_success_input ->
-        (send_task_success_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidOutput of invalid_output 
           | `InvalidToken of invalid_token 
@@ -378,7 +378,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (tag_resource_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found 
           | `TooManyTags of too_many_tags ]) result
@@ -401,7 +401,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (untag_resource_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found ]) result
 end[@@ocaml.doc "Remove a tag from a Step Functions resource\n"]
@@ -410,7 +410,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_map_run_input ->
-        (update_map_run_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found 
           | `ValidationException of validation_exception ]) result

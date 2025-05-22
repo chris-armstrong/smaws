@@ -69,7 +69,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_call_analytics_category_request ->
-        (delete_call_analytics_category_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -82,7 +82,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_call_analytics_job_request ->
-        (delete_call_analytics_job_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -471,7 +471,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `ConflictException of conflict_exception 
@@ -485,7 +485,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `ConflictException of conflict_exception 

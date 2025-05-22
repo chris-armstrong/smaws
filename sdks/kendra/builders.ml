@@ -1242,8 +1242,7 @@ let make_update_data_source_request
      name = name_;
      id = id_
    } : update_data_source_request)
-let make_update_access_control_configuration_response () =
-  (() : update_access_control_configuration_response)
+let make_update_access_control_configuration_response () = (() : unit)
 let make_principal ?data_source_id:(data_source_id_ : string option) 
   ~access:(access_ : read_access_type)  ~type_:(type__ : principal_type) 
   ~name:(name_ : string)  () =
@@ -1270,7 +1269,7 @@ let make_update_access_control_configuration_request
      id = id_;
      index_id = index_id_
    } : update_access_control_configuration_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
@@ -1309,7 +1308,7 @@ let make_text_document_statistics
      indexed_text_bytes = indexed_text_bytes_;
      indexed_text_documents_count = indexed_text_documents_count_
    } : text_document_statistics)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -2490,15 +2489,14 @@ let make_delete_index_request ~id:(id_ : string)  () =
 let make_delete_faq_request ~index_id:(index_id_ : string) 
   ~id:(id_ : string)  () =
   ({ index_id = index_id_; id = id_ } : delete_faq_request)
-let make_delete_experience_response () = (() : delete_experience_response)
+let make_delete_experience_response () = (() : unit)
 let make_delete_experience_request ~index_id:(index_id_ : string) 
   ~id:(id_ : string)  () =
   ({ index_id = index_id_; id = id_ } : delete_experience_request)
 let make_delete_data_source_request ~index_id:(index_id_ : string) 
   ~id:(id_ : string)  () =
   ({ index_id = index_id_; id = id_ } : delete_data_source_request)
-let make_delete_access_control_configuration_response () =
-  (() : delete_access_control_configuration_response)
+let make_delete_access_control_configuration_response () = (() : unit)
 let make_delete_access_control_configuration_request ~id:(id_ : string) 
   ~index_id:(index_id_ : string)  () =
   ({ id = id_; index_id = index_id_ } : delete_access_control_configuration_request)

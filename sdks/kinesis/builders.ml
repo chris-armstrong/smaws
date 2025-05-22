@@ -516,7 +516,7 @@ let make_describe_limits_output
      open_shard_count = open_shard_count_;
      shard_limit = shard_limit_
    } : describe_limits_output)
-let make_describe_limits_input () = (() : describe_limits_input)
+let make_describe_limits_input () = (() : unit)
 let make_deregister_stream_consumer_input
   ?consumer_ar_n:(consumer_ar_n_ : string option) 
   ?consumer_name:(consumer_name_ : string option) 

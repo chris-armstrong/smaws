@@ -258,13 +258,13 @@ let make_update_access_policy_request
      name = name_;
      type_ = type__
    } : update_access_policy_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_request)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_request)
@@ -336,14 +336,13 @@ let make_get_policies_stats_response
      security_policy_stats = security_policy_stats_;
      access_policy_stats = access_policy_stats_
    } : get_policies_stats_response)
-let make_get_policies_stats_request () = (() : get_policies_stats_request)
+let make_get_policies_stats_request () = (() : unit)
 let make_get_account_settings_response
   ?account_settings_detail:(account_settings_detail_ :
                              account_settings_detail option)
    () =
   ({ account_settings_detail = account_settings_detail_ } : get_account_settings_response)
-let make_get_account_settings_request () =
-  (() : get_account_settings_request)
+let make_get_account_settings_request () = (() : unit)
 let make_create_security_policy_response
   ?security_policy_detail:(security_policy_detail_ :
                             security_policy_detail option)
@@ -687,19 +686,16 @@ let make_delete_vpc_endpoint_response
 let make_delete_vpc_endpoint_request
   ?client_token:(client_token_ : string option)  ~id:(id_ : string)  () =
   ({ client_token = client_token_; id = id_ } : delete_vpc_endpoint_request)
-let make_delete_security_policy_response () =
-  (() : delete_security_policy_response)
+let make_delete_security_policy_response () = (() : unit)
 let make_delete_security_policy_request
   ?client_token:(client_token_ : string option)  ~name:(name_ : string) 
   ~type_:(type__ : security_policy_type)  () =
   ({ client_token = client_token_; name = name_; type_ = type__ } : delete_security_policy_request)
-let make_delete_security_config_response () =
-  (() : delete_security_config_response)
+let make_delete_security_config_response () = (() : unit)
 let make_delete_security_config_request
   ?client_token:(client_token_ : string option)  ~id:(id_ : string)  () =
   ({ client_token = client_token_; id = id_ } : delete_security_config_request)
-let make_delete_lifecycle_policy_response () =
-  (() : delete_lifecycle_policy_response)
+let make_delete_lifecycle_policy_response () = (() : unit)
 let make_delete_lifecycle_policy_request
   ?client_token:(client_token_ : string option)  ~name:(name_ : string) 
   ~type_:(type__ : lifecycle_policy_type)  () =
@@ -716,8 +712,7 @@ let make_delete_collection_response
 let make_delete_collection_request
   ?client_token:(client_token_ : string option)  ~id:(id_ : string)  () =
   ({ client_token = client_token_; id = id_ } : delete_collection_request)
-let make_delete_access_policy_response () =
-  (() : delete_access_policy_response)
+let make_delete_access_policy_response () = (() : unit)
 let make_delete_access_policy_request
   ?client_token:(client_token_ : string option)  ~name:(name_ : string) 
   ~type_:(type__ : access_policy_type)  () =

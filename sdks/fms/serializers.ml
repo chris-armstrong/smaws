@@ -912,8 +912,7 @@ let violation_detail_to_yojson (x : violation_detail) =
     ("MemberAccount", (Some (aws_account_id_to_yojson x.member_account)));
     ("PolicyId", (Some (policy_id_to_yojson x.policy_id)))]
 let update_token_to_yojson = string_to_yojson
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let resource_arn_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
@@ -969,8 +968,7 @@ let third_party_firewall_to_yojson (x : third_party_firewall) =
   | FORTIGATE_CLOUD_NATIVE_FIREWALL ->
       `String "FORTIGATE_CLOUD_NATIVE_FIREWALL"
   | PALO_ALTO_NETWORKS_CLOUD_NGFW -> `String "PALO_ALTO_NETWORKS_CLOUD_NGFW"
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("TagList", (Some (tag_list_to_yojson x.tag_list)));
@@ -1629,8 +1627,7 @@ let get_notification_channel_response_to_yojson
        (option_to_yojson resource_arn_to_yojson x.sns_role_name));
     ("SnsTopicArn",
       (option_to_yojson resource_arn_to_yojson x.sns_topic_arn))]
-let get_notification_channel_request_to_yojson
-  (x : get_notification_channel_request) = assoc_to_yojson []
+let get_notification_channel_request_to_yojson = unit_to_yojson
 let get_compliance_detail_response_to_yojson
   (x : get_compliance_detail_response) =
   assoc_to_yojson
@@ -1671,8 +1668,7 @@ let get_admin_account_response_to_yojson (x : get_admin_account_response) =
        (option_to_yojson account_role_status_to_yojson x.role_status));
     ("AdminAccount",
       (option_to_yojson aws_account_id_to_yojson x.admin_account))]
-let get_admin_account_request_to_yojson (x : get_admin_account_request) =
-  assoc_to_yojson []
+let get_admin_account_request_to_yojson = unit_to_yojson
 let failed_item_reason_to_yojson (x : failed_item_reason) =
   match x with
   | NotValidAccountId -> `String "NOT_VALID_ACCOUNT_ID"
@@ -1698,8 +1694,7 @@ let disassociate_third_party_firewall_request_to_yojson
   assoc_to_yojson
     [("ThirdPartyFirewall",
        (Some (third_party_firewall_to_yojson x.third_party_firewall)))]
-let disassociate_admin_account_request_to_yojson
-  (x : disassociate_admin_account_request) = assoc_to_yojson []
+let disassociate_admin_account_request_to_yojson = unit_to_yojson
 let delete_resource_set_request_to_yojson (x : delete_resource_set_request) =
   assoc_to_yojson [("Identifier", (Some (base62_id_to_yojson x.identifier)))]
 let delete_protocols_list_request_to_yojson
@@ -1710,8 +1705,7 @@ let delete_policy_request_to_yojson (x : delete_policy_request) =
     [("DeleteAllPolicyResources",
        (option_to_yojson boolean__to_yojson x.delete_all_policy_resources));
     ("PolicyId", (Some (policy_id_to_yojson x.policy_id)))]
-let delete_notification_channel_request_to_yojson
-  (x : delete_notification_channel_request) = assoc_to_yojson []
+let delete_notification_channel_request_to_yojson = unit_to_yojson
 let delete_apps_list_request_to_yojson (x : delete_apps_list_request) =
   assoc_to_yojson [("ListId", (Some (list_id_to_yojson x.list_id)))]
 let batch_disassociate_resource_response_to_yojson

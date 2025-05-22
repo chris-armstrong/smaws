@@ -1698,8 +1698,7 @@ let code_validation_exception_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let kinesis_analytics_ar_n_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_keys_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
@@ -1758,8 +1757,7 @@ let tag_of_yojson tree path =
   _res
 let tags_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -1771,8 +1769,7 @@ let tag_resource_request_of_yojson tree path =
     } in
   _res
 let stop_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : stop_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let stop_application_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : stop_application_request =
@@ -1786,8 +1783,7 @@ let stop_application_request_of_yojson tree path =
     } in
   _res
 let start_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let sql_run_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : sql_run_configuration =
@@ -2390,8 +2386,7 @@ let delete_application_vpc_configuration_request_of_yojson tree path =
     } in
   _res
 let delete_application_snapshot_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_snapshot_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_snapshot_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_application_snapshot_request =
@@ -2529,8 +2524,7 @@ let delete_application_cloud_watch_logging_option_request_of_yojson tree path
     } in
   _res
 let delete_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_application_request =
@@ -2543,8 +2537,7 @@ let delete_application_request_of_yojson tree path =
     } in
   _res
 let create_application_snapshot_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_application_snapshot_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_application_snapshot_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_application_snapshot_request =

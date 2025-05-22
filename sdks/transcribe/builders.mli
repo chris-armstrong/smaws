@@ -87,7 +87,7 @@ val make_update_call_analytics_category_request :
   ?input_type:input_type ->
     rules:rule list ->
       category_name:string -> unit -> update_call_analytics_category_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_arn:string -> unit -> untag_resource_request
@@ -174,7 +174,7 @@ val make_transcription_job :
                                                 ?transcription_job_name:string
                                                   ->
                                                   unit -> transcription_job
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_request
 val make_start_transcription_job_response :
@@ -558,12 +558,10 @@ val make_delete_medical_scribe_job_request :
   medical_scribe_job_name:string -> unit -> delete_medical_scribe_job_request
 val make_delete_language_model_request :
   model_name:string -> unit -> delete_language_model_request
-val make_delete_call_analytics_job_response :
-  unit -> delete_call_analytics_job_response
+val make_delete_call_analytics_job_response : unit -> unit
 val make_delete_call_analytics_job_request :
   call_analytics_job_name:string -> unit -> delete_call_analytics_job_request
-val make_delete_call_analytics_category_response :
-  unit -> delete_call_analytics_category_response
+val make_delete_call_analytics_category_response : unit -> unit
 val make_delete_call_analytics_category_request :
   category_name:string -> unit -> delete_call_analytics_category_request
 val make_create_vocabulary_filter_response :

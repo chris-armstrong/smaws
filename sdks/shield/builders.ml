@@ -3,13 +3,11 @@ open Types
 let make_validation_exception_field ~message:(message_ : string) 
   ~name:(name_ : string)  () =
   ({ message = message_; name = name_ } : validation_exception_field)
-let make_update_subscription_response () =
-  (() : update_subscription_response)
+let make_update_subscription_response () = (() : unit)
 let make_update_subscription_request
   ?auto_renew:(auto_renew_ : auto_renew option)  () =
   ({ auto_renew = auto_renew_ } : update_subscription_request)
-let make_update_protection_group_response () =
-  (() : update_protection_group_response)
+let make_update_protection_group_response () = (() : unit)
 let make_update_protection_group_request
   ?members:(members_ : string list option) 
   ?resource_type:(resource_type_ : protected_resource_type option) 
@@ -23,8 +21,7 @@ let make_update_protection_group_request
      aggregation = aggregation_;
      protection_group_id = protection_group_id_
    } : update_protection_group_request)
-let make_update_emergency_contact_settings_response () =
-  (() : update_emergency_contact_settings_response)
+let make_update_emergency_contact_settings_response () = (() : unit)
 let make_emergency_contact ?contact_notes:(contact_notes_ : string option) 
   ?phone_number:(phone_number_ : string option) 
   ~email_address:(email_address_ : string)  () =
@@ -39,17 +36,17 @@ let make_update_emergency_contact_settings_request
    () =
   ({ emergency_contact_list = emergency_contact_list_ } : update_emergency_contact_settings_request)
 let make_update_application_layer_automatic_response_response () =
-  (() : update_application_layer_automatic_response_response)
-let make_block_action () = (() : block_action)
-let make_count_action () = (() : count_action)
-let make_response_action ?count:(count_ : count_action option) 
-  ?block:(block_ : block_action option)  () =
+  (() : unit)
+let make_block_action () = (() : unit)
+let make_count_action () = (() : unit)
+let make_response_action ?count:(count_ : unit option) 
+  ?block:(block_ : unit option)  () =
   ({ count = count_; block = block_ } : response_action)
 let make_update_application_layer_automatic_response_request
   ~action:(action_ : response_action)  ~resource_arn:(resource_arn_ : string)
    () =
   ({ action = action_; resource_arn = resource_arn_ } : update_application_layer_automatic_response_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
@@ -61,7 +58,7 @@ let make_time_range
   ?from_inclusive:(from_inclusive_ : CoreTypes.Timestamp.t option)  () =
   ({ to_exclusive = to_exclusive_; from_inclusive = from_inclusive_ } : 
   time_range)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ?value:(value_ : string option)  ?key:(key_ : string option)  ()
   = ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -284,48 +281,38 @@ let make_list_attacks_request ?max_results:(max_results_ : int option)
 let make_get_subscription_state_response
   ~subscription_state:(subscription_state_ : subscription_state)  () =
   ({ subscription_state = subscription_state_ } : get_subscription_state_response)
-let make_get_subscription_state_request () =
-  (() : get_subscription_state_request)
-let make_enable_proactive_engagement_response () =
-  (() : enable_proactive_engagement_response)
-let make_enable_proactive_engagement_request () =
-  (() : enable_proactive_engagement_request)
+let make_get_subscription_state_request () = (() : unit)
+let make_enable_proactive_engagement_response () = (() : unit)
+let make_enable_proactive_engagement_request () = (() : unit)
 let make_enable_application_layer_automatic_response_response () =
-  (() : enable_application_layer_automatic_response_response)
+  (() : unit)
 let make_enable_application_layer_automatic_response_request
   ~action:(action_ : response_action)  ~resource_arn:(resource_arn_ : string)
    () =
   ({ action = action_; resource_arn = resource_arn_ } : enable_application_layer_automatic_response_request)
-let make_disassociate_health_check_response () =
-  (() : disassociate_health_check_response)
+let make_disassociate_health_check_response () = (() : unit)
 let make_disassociate_health_check_request
   ~health_check_arn:(health_check_arn_ : string) 
   ~protection_id:(protection_id_ : string)  () =
   ({ health_check_arn = health_check_arn_; protection_id = protection_id_ } : 
   disassociate_health_check_request)
-let make_disassociate_drt_role_response () =
-  (() : disassociate_drt_role_response)
-let make_disassociate_drt_role_request () =
-  (() : disassociate_drt_role_request)
-let make_disassociate_drt_log_bucket_response () =
-  (() : disassociate_drt_log_bucket_response)
+let make_disassociate_drt_role_response () = (() : unit)
+let make_disassociate_drt_role_request () = (() : unit)
+let make_disassociate_drt_log_bucket_response () = (() : unit)
 let make_disassociate_drt_log_bucket_request
   ~log_bucket:(log_bucket_ : string)  () =
   ({ log_bucket = log_bucket_ } : disassociate_drt_log_bucket_request)
-let make_disable_proactive_engagement_response () =
-  (() : disable_proactive_engagement_response)
-let make_disable_proactive_engagement_request () =
-  (() : disable_proactive_engagement_request)
+let make_disable_proactive_engagement_response () = (() : unit)
+let make_disable_proactive_engagement_request () = (() : unit)
 let make_disable_application_layer_automatic_response_response () =
-  (() : disable_application_layer_automatic_response_response)
+  (() : unit)
 let make_disable_application_layer_automatic_response_request
   ~resource_arn:(resource_arn_ : string)  () =
   ({ resource_arn = resource_arn_ } : disable_application_layer_automatic_response_request)
 let make_describe_subscription_response
   ?subscription:(subscription_ : subscription option)  () =
   ({ subscription = subscription_ } : describe_subscription_response)
-let make_describe_subscription_request () =
-  (() : describe_subscription_request)
+let make_describe_subscription_request () = (() : unit)
 let make_describe_protection_response
   ?protection:(protection_ : protection option)  () =
   ({ protection = protection_ } : describe_protection_response)
@@ -345,13 +332,12 @@ let make_describe_emergency_contact_settings_response
                             emergency_contact list option)
    () =
   ({ emergency_contact_list = emergency_contact_list_ } : describe_emergency_contact_settings_response)
-let make_describe_emergency_contact_settings_request () =
-  (() : describe_emergency_contact_settings_request)
+let make_describe_emergency_contact_settings_request () = (() : unit)
 let make_describe_drt_access_response
   ?log_bucket_list:(log_bucket_list_ : string list option) 
   ?role_arn:(role_arn_ : string option)  () =
   ({ log_bucket_list = log_bucket_list_; role_arn = role_arn_ } : describe_drt_access_response)
-let make_describe_drt_access_request () = (() : describe_drt_access_request)
+let make_describe_drt_access_request () = (() : unit)
 let make_attack_volume_statistics ~max:(max_ : float)  () =
   ({ max = max_ } : attack_volume_statistics)
 let make_attack_volume
@@ -375,8 +361,7 @@ let make_describe_attack_statistics_response
   ~data_items:(data_items_ : attack_statistics_data_item list) 
   ~time_range:(time_range_ : time_range)  () =
   ({ data_items = data_items_; time_range = time_range_ } : describe_attack_statistics_response)
-let make_describe_attack_statistics_request () =
-  (() : describe_attack_statistics_request)
+let make_describe_attack_statistics_request () = (() : unit)
 let make_attack_property ?total:(total_ : int option) 
   ?unit_:(unit__ : unit_ option) 
   ?top_contributors:(top_contributors_ : contributor list option) 
@@ -412,28 +397,24 @@ let make_describe_attack_response ?attack:(attack_ : attack_detail option)
   () = ({ attack = attack_ } : describe_attack_response)
 let make_describe_attack_request ~attack_id:(attack_id_ : string)  () =
   ({ attack_id = attack_id_ } : describe_attack_request)
-let make_delete_subscription_response () =
-  (() : delete_subscription_response)
-let make_delete_subscription_request () = (() : delete_subscription_request)
-let make_delete_protection_response () = (() : delete_protection_response)
+let make_delete_subscription_response () = (() : unit)
+let make_delete_subscription_request () = (() : unit)
+let make_delete_protection_response () = (() : unit)
 let make_delete_protection_request ~protection_id:(protection_id_ : string) 
   () = ({ protection_id = protection_id_ } : delete_protection_request)
-let make_delete_protection_group_response () =
-  (() : delete_protection_group_response)
+let make_delete_protection_group_response () = (() : unit)
 let make_delete_protection_group_request
   ~protection_group_id:(protection_group_id_ : string)  () =
   ({ protection_group_id = protection_group_id_ } : delete_protection_group_request)
-let make_create_subscription_response () =
-  (() : create_subscription_response)
-let make_create_subscription_request () = (() : create_subscription_request)
+let make_create_subscription_response () = (() : unit)
+let make_create_subscription_request () = (() : unit)
 let make_create_protection_response
   ?protection_id:(protection_id_ : string option)  () =
   ({ protection_id = protection_id_ } : create_protection_response)
 let make_create_protection_request ?tags:(tags_ : tag list option) 
   ~resource_arn:(resource_arn_ : string)  ~name:(name_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_; name = name_ } : create_protection_request)
-let make_create_protection_group_response () =
-  (() : create_protection_group_response)
+let make_create_protection_group_response () = (() : unit)
 let make_create_protection_group_request ?tags:(tags_ : tag list option) 
   ?members:(members_ : string list option) 
   ?resource_type:(resource_type_ : protected_resource_type option) 
@@ -448,23 +429,20 @@ let make_create_protection_group_request ?tags:(tags_ : tag list option)
      aggregation = aggregation_;
      protection_group_id = protection_group_id_
    } : create_protection_group_request)
-let make_associate_proactive_engagement_details_response () =
-  (() : associate_proactive_engagement_details_response)
+let make_associate_proactive_engagement_details_response () = (() : unit)
 let make_associate_proactive_engagement_details_request
   ~emergency_contact_list:(emergency_contact_list_ : emergency_contact list) 
   () =
   ({ emergency_contact_list = emergency_contact_list_ } : associate_proactive_engagement_details_request)
-let make_associate_health_check_response () =
-  (() : associate_health_check_response)
+let make_associate_health_check_response () = (() : unit)
 let make_associate_health_check_request
   ~health_check_arn:(health_check_arn_ : string) 
   ~protection_id:(protection_id_ : string)  () =
   ({ health_check_arn = health_check_arn_; protection_id = protection_id_ } : 
   associate_health_check_request)
-let make_associate_drt_role_response () = (() : associate_drt_role_response)
+let make_associate_drt_role_response () = (() : unit)
 let make_associate_drt_role_request ~role_arn:(role_arn_ : string)  () =
   ({ role_arn = role_arn_ } : associate_drt_role_request)
-let make_associate_drt_log_bucket_response () =
-  (() : associate_drt_log_bucket_response)
+let make_associate_drt_log_bucket_response () = (() : unit)
 let make_associate_drt_log_bucket_request ~log_bucket:(log_bucket_ : string) 
   () = ({ log_bucket = log_bucket_ } : associate_drt_log_bucket_request)

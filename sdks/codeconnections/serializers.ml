@@ -188,8 +188,7 @@ let conditional_check_failed_exception_to_yojson
   (x : conditional_check_failed_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let update_host_output_to_yojson (x : update_host_output) =
-  assoc_to_yojson []
+let update_host_output_to_yojson = unit_to_yojson
 let host_arn_to_yojson = string_to_yojson
 let update_host_input_to_yojson (x : update_host_input) =
   assoc_to_yojson
@@ -209,8 +208,7 @@ let resource_unavailable_exception_to_yojson
 let conflict_exception_to_yojson (x : conflict_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let untag_resource_output_to_yojson (x : untag_resource_output) =
-  assoc_to_yojson []
+let untag_resource_output_to_yojson = unit_to_yojson
 let amazon_resource_name_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -225,8 +223,7 @@ let unsupported_provider_type_exception_to_yojson
 let type__to_yojson = string_to_yojson
 let target_to_yojson = string_to_yojson
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_output_to_yojson (x : tag_resource_output) =
-  assoc_to_yojson []
+let tag_resource_output_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -504,26 +501,22 @@ let get_connection_output_to_yojson (x : get_connection_output) =
 let get_connection_input_to_yojson (x : get_connection_input) =
   assoc_to_yojson
     [("ConnectionArn", (Some (connection_arn_to_yojson x.connection_arn)))]
-let delete_sync_configuration_output_to_yojson
-  (x : delete_sync_configuration_output) = assoc_to_yojson []
+let delete_sync_configuration_output_to_yojson = unit_to_yojson
 let delete_sync_configuration_input_to_yojson
   (x : delete_sync_configuration_input) =
   assoc_to_yojson
     [("ResourceName", (Some (resource_name_to_yojson x.resource_name)));
     ("SyncType", (Some (sync_configuration_type_to_yojson x.sync_type)))]
-let delete_repository_link_output_to_yojson
-  (x : delete_repository_link_output) = assoc_to_yojson []
+let delete_repository_link_output_to_yojson = unit_to_yojson
 let delete_repository_link_input_to_yojson (x : delete_repository_link_input)
   =
   assoc_to_yojson
     [("RepositoryLinkId",
        (Some (repository_link_id_to_yojson x.repository_link_id)))]
-let delete_host_output_to_yojson (x : delete_host_output) =
-  assoc_to_yojson []
+let delete_host_output_to_yojson = unit_to_yojson
 let delete_host_input_to_yojson (x : delete_host_input) =
   assoc_to_yojson [("HostArn", (Some (host_arn_to_yojson x.host_arn)))]
-let delete_connection_output_to_yojson (x : delete_connection_output) =
-  assoc_to_yojson []
+let delete_connection_output_to_yojson = unit_to_yojson
 let delete_connection_input_to_yojson (x : delete_connection_input) =
   assoc_to_yojson
     [("ConnectionArn", (Some (connection_arn_to_yojson x.connection_arn)))]

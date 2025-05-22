@@ -210,8 +210,7 @@ let update_key_description_request_to_yojson
   assoc_to_yojson
     [("Description", (Some (description_type_to_yojson x.description)));
     ("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
-let update_custom_key_store_response_to_yojson
-  (x : update_custom_key_store_response) = assoc_to_yojson []
+let update_custom_key_store_response_to_yojson = unit_to_yojson
 let custom_key_store_id_type_to_yojson = string_to_yojson
 let custom_key_store_name_type_to_yojson = string_to_yojson
 let key_store_password_type_to_yojson = string_to_yojson
@@ -751,8 +750,7 @@ let expired_import_token_exception_to_yojson
   (x : expired_import_token_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_type_to_yojson x.message))]
-let import_key_material_response_to_yojson (x : import_key_material_response)
-  = assoc_to_yojson []
+let import_key_material_response_to_yojson = unit_to_yojson
 let import_key_material_request_to_yojson (x : import_key_material_request) =
   assoc_to_yojson
     [("ExpirationModel",
@@ -1005,8 +1003,7 @@ let enable_key_rotation_request_to_yojson (x : enable_key_rotation_request) =
     ("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
 let enable_key_request_to_yojson (x : enable_key_request) =
   assoc_to_yojson [("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
-let disconnect_custom_key_store_response_to_yojson
-  (x : disconnect_custom_key_store_response) = assoc_to_yojson []
+let disconnect_custom_key_store_response_to_yojson = unit_to_yojson
 let disconnect_custom_key_store_request_to_yojson
   (x : disconnect_custom_key_store_request) =
   assoc_to_yojson
@@ -1139,8 +1136,7 @@ let custom_key_store_has_cm_ks_exception_to_yojson
   (x : custom_key_store_has_cm_ks_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_type_to_yojson x.message))]
-let delete_custom_key_store_response_to_yojson
-  (x : delete_custom_key_store_response) = assoc_to_yojson []
+let delete_custom_key_store_response_to_yojson = unit_to_yojson
 let delete_custom_key_store_request_to_yojson
   (x : delete_custom_key_store_request) =
   assoc_to_yojson
@@ -1270,8 +1266,7 @@ let create_alias_request_to_yojson (x : create_alias_request) =
   assoc_to_yojson
     [("TargetKeyId", (Some (key_id_type_to_yojson x.target_key_id)));
     ("AliasName", (Some (alias_name_type_to_yojson x.alias_name)))]
-let connect_custom_key_store_response_to_yojson
-  (x : connect_custom_key_store_response) = assoc_to_yojson []
+let connect_custom_key_store_response_to_yojson = unit_to_yojson
 let connect_custom_key_store_request_to_yojson
   (x : connect_custom_key_store_request) =
   assoc_to_yojson

@@ -1,8 +1,7 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let base_unit_of_yojson = unit_of_yojson
 let service_type_of_yojson (tree : t) path =
   (match tree with
@@ -64,8 +63,7 @@ let text_format_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "TextFormat") : text_format)
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -834,8 +832,7 @@ let describe_dimension_keys_request_of_yojson tree path =
     } in
   _res
 let delete_performance_analysis_report_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_performance_analysis_report_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_performance_analysis_report_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_performance_analysis_report_request =

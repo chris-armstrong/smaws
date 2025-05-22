@@ -397,8 +397,7 @@ let waf_invalid_operation_exception_of_yojson tree path =
     } in
   _res
 let waf_invalid_account_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : waf_invalid_account_exception = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let waf_internal_error_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : waf_internal_error_exception =
@@ -1229,8 +1228,7 @@ let update_byte_match_set_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
@@ -1256,8 +1254,7 @@ let time_window_of_yojson tree path =
   _res
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -1560,8 +1557,7 @@ let rate_based_rule_of_yojson tree path =
     } in
   _res
 let put_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_permission_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let policy_string_of_yojson = string_of_yojson
 let put_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2390,8 +2386,7 @@ let get_change_token_response_of_yojson tree path =
     } in
   _res
 let get_change_token_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_change_token_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let byte_match_tuples_of_yojson tree path =
   list_of_yojson byte_match_tuple_of_yojson tree path
 let byte_match_set_of_yojson tree path =
@@ -2596,8 +2591,7 @@ let delete_rate_based_rule_request_of_yojson tree path =
     } in
   _res
 let delete_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_permission_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_permission_policy_request =
@@ -2607,8 +2601,7 @@ let delete_permission_policy_request_of_yojson tree path =
     } in
   _res
 let delete_logging_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_logging_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_logging_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_logging_configuration_request =

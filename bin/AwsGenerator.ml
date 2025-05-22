@@ -146,8 +146,8 @@ let _ =
                   Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes
                     ~alias_context:alias_context_ppx ~no_open:true output_fmt;
                   Fmt.pf output_fmt "(** {1:operations Operations} *)@\n@\n";
-                  Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context ~no_open:true output_fmt))
+                  Gen_operations_ppx.generate_mli ~name ~service ~operation_shapes ~structure_shapes
+                    ~alias_context:alias_context_ppx ~no_open:true output_fmt))
         targets
     end
   | Error error ->

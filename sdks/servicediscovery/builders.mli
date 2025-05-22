@@ -57,11 +57,11 @@ val make_update_http_namespace_request :
   ?updater_request_id:string ->
     namespace:http_namespace_change ->
       id:string -> unit -> update_http_namespace_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
@@ -226,7 +226,7 @@ val make_deregister_instance_response :
 val make_deregister_instance_request :
   instance_id:string ->
     service_id:string -> unit -> deregister_instance_request
-val make_delete_service_response : unit -> delete_service_response
+val make_delete_service_response : unit -> unit
 val make_delete_service_request : id:string -> unit -> delete_service_request
 val make_delete_namespace_response :
   ?operation_id:string -> unit -> delete_namespace_response

@@ -611,8 +611,7 @@ let describe_limits_output_to_yojson (x : describe_limits_output) =
     ("OpenShardCount",
       (Some (shard_count_object_to_yojson x.open_shard_count)));
     ("ShardLimit", (Some (shard_count_object_to_yojson x.shard_limit)))]
-let describe_limits_input_to_yojson (x : describe_limits_input) =
-  assoc_to_yojson []
+let describe_limits_input_to_yojson = unit_to_yojson
 let deregister_stream_consumer_input_to_yojson
   (x : deregister_stream_consumer_input) =
   assoc_to_yojson

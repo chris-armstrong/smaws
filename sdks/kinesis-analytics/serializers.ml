@@ -1,7 +1,6 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
-let update_application_response_to_yojson (x : update_application_response) =
-  assoc_to_yojson []
+let update_application_response_to_yojson = unit_to_yojson
 let application_name_to_yojson = string_to_yojson
 let application_version_id_to_yojson = long_to_yojson
 let id_to_yojson = string_to_yojson
@@ -240,8 +239,7 @@ let concurrent_modification_exception_to_yojson
 let code_validation_exception_to_yojson (x : code_validation_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let kinesis_analytics_ar_n_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_keys_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -275,21 +273,18 @@ let tag_to_yojson (x : tag) =
     [("Value", (option_to_yojson tag_value_to_yojson x.value));
     ("Key", (Some (tag_key_to_yojson x.key)))]
 let tags_to_yojson tree = list_to_yojson tag_to_yojson tree
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("Tags", (Some (tags_to_yojson x.tags)));
     ("ResourceARN",
       (Some (kinesis_analytics_ar_n_to_yojson x.resource_ar_n)))]
-let stop_application_response_to_yojson (x : stop_application_response) =
-  assoc_to_yojson []
+let stop_application_response_to_yojson = unit_to_yojson
 let stop_application_request_to_yojson (x : stop_application_request) =
   assoc_to_yojson
     [("ApplicationName",
        (Some (application_name_to_yojson x.application_name)))]
-let start_application_response_to_yojson (x : start_application_response) =
-  assoc_to_yojson []
+let start_application_response_to_yojson = unit_to_yojson
 let input_starting_position_to_yojson (x : input_starting_position) =
   match x with
   | LAST_STOPPED_POINT -> `String "LAST_STOPPED_POINT"
@@ -617,9 +612,8 @@ let describe_application_request_to_yojson (x : describe_application_request)
   assoc_to_yojson
     [("ApplicationName",
        (Some (application_name_to_yojson x.application_name)))]
-let delete_application_reference_data_source_response_to_yojson
-  (x : delete_application_reference_data_source_response) =
-  assoc_to_yojson []
+let delete_application_reference_data_source_response_to_yojson =
+  unit_to_yojson
 let delete_application_reference_data_source_request_to_yojson
   (x : delete_application_reference_data_source_request) =
   assoc_to_yojson
@@ -629,8 +623,7 @@ let delete_application_reference_data_source_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let delete_application_output_response_to_yojson
-  (x : delete_application_output_response) = assoc_to_yojson []
+let delete_application_output_response_to_yojson = unit_to_yojson
 let delete_application_output_request_to_yojson
   (x : delete_application_output_request) =
   assoc_to_yojson
@@ -640,9 +633,8 @@ let delete_application_output_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let delete_application_input_processing_configuration_response_to_yojson
-  (x : delete_application_input_processing_configuration_response) =
-  assoc_to_yojson []
+let delete_application_input_processing_configuration_response_to_yojson =
+  unit_to_yojson
 let delete_application_input_processing_configuration_request_to_yojson
   (x : delete_application_input_processing_configuration_request) =
   assoc_to_yojson
@@ -652,9 +644,8 @@ let delete_application_input_processing_configuration_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let delete_application_cloud_watch_logging_option_response_to_yojson
-  (x : delete_application_cloud_watch_logging_option_response) =
-  assoc_to_yojson []
+let delete_application_cloud_watch_logging_option_response_to_yojson =
+  unit_to_yojson
 let delete_application_cloud_watch_logging_option_request_to_yojson
   (x : delete_application_cloud_watch_logging_option_request) =
   assoc_to_yojson
@@ -665,8 +656,7 @@ let delete_application_cloud_watch_logging_option_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let delete_application_response_to_yojson (x : delete_application_response) =
-  assoc_to_yojson []
+let delete_application_response_to_yojson = unit_to_yojson
 let delete_application_request_to_yojson (x : delete_application_request) =
   assoc_to_yojson
     [("CreateTimestamp", (Some (timestamp__to_yojson x.create_timestamp)));
@@ -713,8 +703,7 @@ let create_application_request_to_yojson (x : create_application_request) =
          x.application_description));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let add_application_reference_data_source_response_to_yojson
-  (x : add_application_reference_data_source_response) = assoc_to_yojson []
+let add_application_reference_data_source_response_to_yojson = unit_to_yojson
 let add_application_reference_data_source_request_to_yojson
   (x : add_application_reference_data_source_request) =
   assoc_to_yojson
@@ -725,8 +714,7 @@ let add_application_reference_data_source_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let add_application_output_response_to_yojson
-  (x : add_application_output_response) = assoc_to_yojson []
+let add_application_output_response_to_yojson = unit_to_yojson
 let add_application_output_request_to_yojson
   (x : add_application_output_request) =
   assoc_to_yojson
@@ -736,9 +724,8 @@ let add_application_output_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let add_application_input_processing_configuration_response_to_yojson
-  (x : add_application_input_processing_configuration_response) =
-  assoc_to_yojson []
+let add_application_input_processing_configuration_response_to_yojson =
+  unit_to_yojson
 let add_application_input_processing_configuration_request_to_yojson
   (x : add_application_input_processing_configuration_request) =
   assoc_to_yojson
@@ -752,8 +739,7 @@ let add_application_input_processing_configuration_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let add_application_input_response_to_yojson
-  (x : add_application_input_response) = assoc_to_yojson []
+let add_application_input_response_to_yojson = unit_to_yojson
 let add_application_input_request_to_yojson
   (x : add_application_input_request) =
   assoc_to_yojson
@@ -763,9 +749,8 @@ let add_application_input_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let add_application_cloud_watch_logging_option_response_to_yojson
-  (x : add_application_cloud_watch_logging_option_response) =
-  assoc_to_yojson []
+let add_application_cloud_watch_logging_option_response_to_yojson =
+  unit_to_yojson
 let add_application_cloud_watch_logging_option_request_to_yojson
   (x : add_application_cloud_watch_logging_option_request) =
   assoc_to_yojson

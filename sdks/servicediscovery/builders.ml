@@ -92,11 +92,11 @@ let make_update_http_namespace_request
      updater_request_id = updater_request_id_;
      id = id_
    } : update_http_namespace_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -384,7 +384,7 @@ let make_deregister_instance_response
 let make_deregister_instance_request ~instance_id:(instance_id_ : string) 
   ~service_id:(service_id_ : string)  () =
   ({ instance_id = instance_id_; service_id = service_id_ } : deregister_instance_request)
-let make_delete_service_response () = (() : delete_service_response)
+let make_delete_service_response () = (() : unit)
 let make_delete_service_request ~id:(id_ : string)  () =
   ({ id = id_ } : delete_service_request)
 let make_delete_namespace_response

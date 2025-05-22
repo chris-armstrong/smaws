@@ -1,11 +1,11 @@
 open Smaws_Lib
 open Types
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string ->
       service_type:service_type -> unit -> untag_resource_request
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list ->
@@ -189,8 +189,7 @@ val make_describe_dimension_keys_request :
                       identifier:string ->
                         service_type:service_type ->
                           unit -> describe_dimension_keys_request
-val make_delete_performance_analysis_report_response :
-  unit -> delete_performance_analysis_report_response
+val make_delete_performance_analysis_report_response : unit -> unit
 val make_delete_performance_analysis_report_request :
   analysis_report_id:string ->
     identifier:string ->

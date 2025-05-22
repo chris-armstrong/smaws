@@ -35,7 +35,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_keyspace_request ->
-        (delete_keyspace_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -51,7 +51,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_table_request ->
-        (delete_table_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -171,7 +171,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InternalServerException of internal_server_exception 
@@ -186,7 +186,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 

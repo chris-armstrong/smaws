@@ -97,8 +97,7 @@ let summary_to_yojson (x : summary) =
     ("LastUpdated", (option_to_yojson last_updated_to_yojson x.last_updated))]
 let summary_list_to_yojson tree = list_to_yojson summary_to_yojson tree
 let status_to_yojson = string_to_yojson
-let start_report_creation_output_to_yojson (x : start_report_creation_output)
-  = assoc_to_yojson []
+let start_report_creation_output_to_yojson = unit_to_yojson
 let s3_bucket_to_yojson = string_to_yojson
 let start_report_creation_input_to_yojson (x : start_report_creation_input) =
   assoc_to_yojson [("S3Bucket", (Some (s3_bucket_to_yojson x.s3_bucket)))]
@@ -233,8 +232,7 @@ let describe_report_creation_output_to_yojson
     ("StartDate", (option_to_yojson start_date_to_yojson x.start_date));
     ("S3Location", (option_to_yojson s3_location_to_yojson x.s3_location));
     ("Status", (option_to_yojson status_to_yojson x.status))]
-let describe_report_creation_input_to_yojson
-  (x : describe_report_creation_input) = assoc_to_yojson []
+let describe_report_creation_input_to_yojson = unit_to_yojson
 let base_string_to_yojson = string_to_yojson
 let base_boolean_to_yojson = bool_to_yojson
 let base_integer_to_yojson = int_to_yojson

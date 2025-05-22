@@ -1,7 +1,6 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let base_unit_to_yojson = unit_to_yojson
 let service_type_to_yojson (x : service_type) =
   match x with | DOCDB -> `String "DOCDB" | RDS -> `String "RDS"
@@ -28,8 +27,7 @@ let text_format_to_yojson (x : text_format) =
   | MARKDOWN -> `String "MARKDOWN"
   | PLAIN_TEXT -> `String "PLAIN_TEXT"
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -414,8 +412,7 @@ let describe_dimension_keys_request_to_yojson
     ("StartTime", (Some (iso_timestamp_to_yojson x.start_time)));
     ("Identifier", (Some (identifier_string_to_yojson x.identifier)));
     ("ServiceType", (Some (service_type_to_yojson x.service_type)))]
-let delete_performance_analysis_report_response_to_yojson
-  (x : delete_performance_analysis_report_response) = assoc_to_yojson []
+let delete_performance_analysis_report_response_to_yojson = unit_to_yojson
 let delete_performance_analysis_report_request_to_yojson
   (x : delete_performance_analysis_report_request) =
   assoc_to_yojson

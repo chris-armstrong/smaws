@@ -74,8 +74,7 @@ let directory_service_authentication_failed_exception_of_yojson tree path =
     } in
   _res
 let update_user_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_user_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let organization_id_of_yojson = string_of_yojson
 let entity_identifier_of_yojson = string_of_yojson
 let base_unit_of_yojson = unit_of_yojson
@@ -192,8 +191,7 @@ let email_address_in_use_exception_of_yojson tree path =
     } in
   _res
 let update_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let resource_name_of_yojson = string_of_yojson
 let boolean__of_yojson = bool_of_yojson
 let booking_options_of_yojson tree path =
@@ -251,8 +249,7 @@ let update_resource_request_of_yojson tree path =
     } in
   _res
 let update_primary_email_address_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_primary_email_address_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let email_address_of_yojson = string_of_yojson
 let update_primary_email_address_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -266,8 +263,7 @@ let update_primary_email_address_request_of_yojson tree path =
     } in
   _res
 let update_mobile_device_access_rule_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_mobile_device_access_rule_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let mobile_device_access_rule_id_of_yojson = string_of_yojson
 let mobile_device_access_rule_name_of_yojson = string_of_yojson
 let mobile_device_access_rule_description_of_yojson = string_of_yojson
@@ -349,8 +345,7 @@ let update_mobile_device_access_rule_request_of_yojson tree path =
     } in
   _res
 let update_mailbox_quota_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_mailbox_quota_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let mailbox_quota_of_yojson = int_of_yojson
 let update_mailbox_quota_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -383,8 +378,7 @@ let limit_exceeded_exception_of_yojson tree path =
     } in
   _res
 let update_impersonation_role_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_impersonation_role_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let impersonation_role_id_of_yojson = string_of_yojson
 let impersonation_role_name_of_yojson = string_of_yojson
 let impersonation_role_type_of_yojson (tree : t) path =
@@ -459,8 +453,7 @@ let update_impersonation_role_request_of_yojson tree path =
     } in
   _res
 let update_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_group_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let update_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : update_group_request =
@@ -476,8 +469,7 @@ let update_group_request_of_yojson tree path =
     } in
   _res
 let update_default_mail_domain_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_default_mail_domain_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let work_mail_domain_name_of_yojson = string_of_yojson
 let update_default_mail_domain_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -491,8 +483,7 @@ let update_default_mail_domain_request_of_yojson tree path =
     } in
   _res
 let update_availability_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_availability_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let domain_name_of_yojson = string_of_yojson
 let url_of_yojson = string_of_yojson
 let external_user_name_of_yojson = string_of_yojson
@@ -536,8 +527,7 @@ let update_availability_configuration_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let amazon_resource_name_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -593,8 +583,7 @@ let too_many_tags_exception_of_yojson tree path =
     } in
   _res
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_value_of_yojson = string_of_yojson
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -664,8 +653,7 @@ let invalid_password_exception_of_yojson tree path =
     } in
   _res
 let reset_password_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : reset_password_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let work_mail_identifier_of_yojson = string_of_yojson
 let reset_password_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -688,8 +676,7 @@ let entity_already_registered_exception_of_yojson tree path =
     } in
   _res
 let register_to_work_mail_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : register_to_work_mail_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let register_to_work_mail_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : register_to_work_mail_request =
@@ -711,8 +698,7 @@ let mail_domain_in_use_exception_of_yojson tree path =
     } in
   _res
 let register_mail_domain_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : register_mail_domain_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let register_mail_domain_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : register_mail_domain_request =
@@ -729,8 +715,7 @@ let register_mail_domain_request_of_yojson tree path =
     } in
   _res
 let put_retention_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_retention_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let short_string_of_yojson = string_of_yojson
 let policy_description_of_yojson = string_of_yojson
 let folder_name_of_yojson (tree : t) path =
@@ -787,8 +772,7 @@ let put_retention_policy_request_of_yojson tree path =
     } in
   _res
 let put_mobile_device_access_override_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_mobile_device_access_override_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let device_id_of_yojson = string_of_yojson
 let put_mobile_device_access_override_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -809,8 +793,7 @@ let put_mobile_device_access_override_request_of_yojson tree path =
     } in
   _res
 let put_mailbox_permissions_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_mailbox_permissions_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let permission_type_of_yojson (tree : t) path =
   (match tree with
    | `String "SEND_ON_BEHALF" -> SEND_ON_BEHALF
@@ -839,8 +822,7 @@ let put_mailbox_permissions_request_of_yojson tree path =
     } in
   _res
 let put_inbound_dmarc_settings_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_inbound_dmarc_settings_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let put_inbound_dmarc_settings_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : put_inbound_dmarc_settings_request =
@@ -852,8 +834,7 @@ let put_inbound_dmarc_settings_request_of_yojson tree path =
     } in
   _res
 let put_email_monitoring_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_email_monitoring_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let log_group_arn_of_yojson = string_of_yojson
 let put_email_monitoring_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -867,8 +848,7 @@ let put_email_monitoring_configuration_request_of_yojson tree path =
     } in
   _res
 let put_access_control_rule_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_access_control_rule_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let access_control_rule_name_of_yojson = string_of_yojson
 let access_control_rule_effect_of_yojson (tree : t) path =
   (match tree with
@@ -2256,8 +2236,7 @@ let get_access_control_effect_request_of_yojson tree path =
     } in
   _res
 let disassociate_member_from_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_member_from_group_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_member_from_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_member_from_group_request =
@@ -2271,8 +2250,7 @@ let disassociate_member_from_group_request_of_yojson tree path =
     } in
   _res
 let disassociate_delegate_from_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_delegate_from_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_delegate_from_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_delegate_from_resource_request =
@@ -2648,8 +2626,7 @@ let invalid_custom_ses_configuration_exception_of_yojson tree path =
     } in
   _res
 let deregister_mail_domain_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_mail_domain_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_mail_domain_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_mail_domain_request =
@@ -2662,8 +2639,7 @@ let deregister_mail_domain_request_of_yojson tree path =
     } in
   _res
 let deregister_from_work_mail_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_from_work_mail_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_from_work_mail_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_from_work_mail_request =
@@ -2675,8 +2651,7 @@ let deregister_from_work_mail_request_of_yojson tree path =
     } in
   _res
 let delete_user_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_user_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_user_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_user_request =
@@ -2688,8 +2663,7 @@ let delete_user_request_of_yojson tree path =
     } in
   _res
 let delete_retention_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_retention_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_retention_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_retention_policy_request =
@@ -2700,8 +2674,7 @@ let delete_retention_policy_request_of_yojson tree path =
     } in
   _res
 let delete_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_resource_request =
@@ -2743,8 +2716,7 @@ let delete_organization_request_of_yojson tree path =
     } in
   _res
 let delete_mobile_device_access_rule_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_mobile_device_access_rule_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_mobile_device_access_rule_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_mobile_device_access_rule_request =
@@ -2757,8 +2729,7 @@ let delete_mobile_device_access_rule_request_of_yojson tree path =
     } in
   _res
 let delete_mobile_device_access_override_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_mobile_device_access_override_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_mobile_device_access_override_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_mobile_device_access_override_request =
@@ -2771,8 +2742,7 @@ let delete_mobile_device_access_override_request_of_yojson tree path =
     } in
   _res
 let delete_mailbox_permissions_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_mailbox_permissions_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_mailbox_permissions_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_mailbox_permissions_request =
@@ -2786,8 +2756,7 @@ let delete_mailbox_permissions_request_of_yojson tree path =
     } in
   _res
 let delete_impersonation_role_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_impersonation_role_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_impersonation_role_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_impersonation_role_request =
@@ -2800,8 +2769,7 @@ let delete_impersonation_role_request_of_yojson tree path =
     } in
   _res
 let delete_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_group_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_group_request =
@@ -2813,8 +2781,7 @@ let delete_group_request_of_yojson tree path =
     } in
   _res
 let delete_email_monitoring_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_email_monitoring_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_email_monitoring_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_email_monitoring_configuration_request =
@@ -2824,8 +2791,7 @@ let delete_email_monitoring_configuration_request_of_yojson tree path =
     } in
   _res
 let delete_availability_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_availability_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_availability_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_availability_configuration_request =
@@ -2837,8 +2803,7 @@ let delete_availability_configuration_request_of_yojson tree path =
     } in
   _res
 let delete_alias_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_alias_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_alias_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_alias_request =
@@ -2851,8 +2816,7 @@ let delete_alias_request_of_yojson tree path =
     } in
   _res
 let delete_access_control_rule_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_access_control_rule_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_access_control_rule_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_access_control_rule_request =
@@ -3112,8 +3076,7 @@ let create_group_request_of_yojson tree path =
     } in
   _res
 let create_availability_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_availability_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_availability_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_availability_configuration_request =
@@ -3137,8 +3100,7 @@ let create_availability_configuration_request_of_yojson tree path =
     } in
   _res
 let create_alias_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_alias_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_alias_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_alias_request =
@@ -3151,8 +3113,7 @@ let create_alias_request_of_yojson tree path =
     } in
   _res
 let cancel_mailbox_export_job_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : cancel_mailbox_export_job_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cancel_mailbox_export_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : cancel_mailbox_export_job_request =
@@ -3192,8 +3153,7 @@ let assume_impersonation_role_request_of_yojson tree path =
     } in
   _res
 let associate_member_to_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associate_member_to_group_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let associate_member_to_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : associate_member_to_group_request =
@@ -3207,8 +3167,7 @@ let associate_member_to_group_request_of_yojson tree path =
     } in
   _res
 let associate_delegate_to_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associate_delegate_to_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let associate_delegate_to_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : associate_delegate_to_resource_request =

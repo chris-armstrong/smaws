@@ -37,8 +37,7 @@ val make_update_primary_region_request :
 val make_update_key_description_request :
   description:string ->
     key_id:string -> unit -> update_key_description_request
-val make_update_custom_key_store_response :
-  unit -> update_custom_key_store_response
+val make_update_custom_key_store_response : unit -> unit
 val make_update_custom_key_store_request :
   ?xks_proxy_connectivity:xks_proxy_connectivity_type ->
     ?xks_proxy_authentication_credential:xks_proxy_authentication_credential_type
@@ -225,7 +224,7 @@ val make_list_aliases_response :
 val make_list_aliases_request :
   ?marker:string ->
     ?limit:int -> ?key_id:string -> unit -> list_aliases_request
-val make_import_key_material_response : unit -> import_key_material_response
+val make_import_key_material_response : unit -> unit
 val make_import_key_material_request :
   ?expiration_model:expiration_model_type ->
     ?valid_to:CoreTypes.Timestamp.t ->
@@ -352,8 +351,7 @@ val make_enable_key_rotation_request :
   ?rotation_period_in_days:int ->
     key_id:string -> unit -> enable_key_rotation_request
 val make_enable_key_request : key_id:string -> unit -> enable_key_request
-val make_disconnect_custom_key_store_response :
-  unit -> disconnect_custom_key_store_response
+val make_disconnect_custom_key_store_response : unit -> unit
 val make_disconnect_custom_key_store_request :
   custom_key_store_id:string -> unit -> disconnect_custom_key_store_request
 val make_disable_key_rotation_request :
@@ -400,8 +398,7 @@ val make_derive_shared_secret_request :
             key_id:string -> unit -> derive_shared_secret_request
 val make_delete_imported_key_material_request :
   key_id:string -> unit -> delete_imported_key_material_request
-val make_delete_custom_key_store_response :
-  unit -> delete_custom_key_store_response
+val make_delete_custom_key_store_response : unit -> unit
 val make_delete_custom_key_store_request :
   custom_key_store_id:string -> unit -> delete_custom_key_store_request
 val make_delete_alias_request :
@@ -460,8 +457,7 @@ val make_create_custom_key_store_request :
                       unit -> create_custom_key_store_request
 val make_create_alias_request :
   target_key_id:string -> alias_name:string -> unit -> create_alias_request
-val make_connect_custom_key_store_response :
-  unit -> connect_custom_key_store_response
+val make_connect_custom_key_store_response : unit -> unit
 val make_connect_custom_key_store_request :
   custom_key_store_id:string -> unit -> connect_custom_key_store_request
 val make_cancel_key_deletion_response :

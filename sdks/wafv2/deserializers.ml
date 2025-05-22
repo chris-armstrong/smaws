@@ -14,13 +14,11 @@ let single_query_argument_of_yojson tree path =
     } in
   _res
 let all_query_arguments_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : all_query_arguments = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let uri_path_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : uri_path = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let query_string_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : query_string = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let base_unit_of_yojson = unit_of_yojson
 let oversize_handling_of_yojson (tree : t) path =
   (match tree with
@@ -43,9 +41,9 @@ let body_of_yojson tree path =
     } in
   _res
 let method__of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : method_ = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let all_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : all = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let json_pointer_path_of_yojson = string_of_yojson
 let json_pointer_paths_of_yojson tree path =
   list_of_yojson json_pointer_path_of_yojson tree path
@@ -956,14 +954,11 @@ let rate_limit_query_string_of_yojson tree path =
     } in
   _res
 let rate_limit_http_method_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_http_method = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let rate_limit_forwarded_i_p_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_forwarded_i_p = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let rate_limit_i_p_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_i_p = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let label_namespace_of_yojson = string_of_yojson
 let rate_limit_label_namespace_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1492,8 +1487,7 @@ and statement_of_yojson tree path =
 and statements_of_yojson tree path =
   list_of_yojson statement_of_yojson tree path
 let none_action_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : none_action = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let override_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : override_action =
@@ -2237,8 +2231,7 @@ let update_ip_set_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
@@ -2263,8 +2256,7 @@ let time_window_of_yojson tree path =
   _res
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -2614,8 +2606,7 @@ let rate_based_statement_managed_keys_ip_set_of_yojson tree path =
     } in
   _res
 let put_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_permission_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let policy_string_of_yojson = string_of_yojson
 let put_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -3671,8 +3662,7 @@ let generate_mobile_sdk_release_url_request_of_yojson tree path =
     } in
   _res
 let disassociate_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_web_acl_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_web_acl_request =
@@ -3760,8 +3750,7 @@ let describe_all_managed_products_request_of_yojson tree path =
     { scope = (value_for_key scope_of_yojson "Scope" _list path) } in
   _res
 let delete_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_web_acl_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_web_acl_request =
@@ -3774,8 +3763,7 @@ let delete_web_acl_request_of_yojson tree path =
     } in
   _res
 let delete_rule_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_rule_group_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_rule_group_request =
@@ -3788,8 +3776,7 @@ let delete_rule_group_request_of_yojson tree path =
     } in
   _res
 let delete_regex_pattern_set_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_regex_pattern_set_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_regex_pattern_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_regex_pattern_set_request =
@@ -3802,8 +3789,7 @@ let delete_regex_pattern_set_request_of_yojson tree path =
     } in
   _res
 let delete_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_permission_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_permission_policy_request =
@@ -3813,8 +3799,7 @@ let delete_permission_policy_request_of_yojson tree path =
     } in
   _res
 let delete_logging_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_logging_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_logging_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_logging_configuration_request =
@@ -3830,8 +3815,7 @@ let delete_logging_configuration_request_of_yojson tree path =
     } in
   _res
 let delete_ip_set_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_ip_set_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_ip_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_ip_set_request =
@@ -3864,8 +3848,7 @@ let delete_firewall_manager_rule_groups_request_of_yojson tree path =
     } in
   _res
 let delete_api_key_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_api_key_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_api_key_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_api_key_request =
@@ -4055,8 +4038,7 @@ let check_capacity_request_of_yojson tree path =
     } in
   _res
 let associate_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associate_web_acl_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let associate_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : associate_web_acl_request =

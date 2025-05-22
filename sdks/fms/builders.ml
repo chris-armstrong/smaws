@@ -872,7 +872,7 @@ let make_violation_detail
      member_account = member_account_;
      policy_id = policy_id_
    } : violation_detail)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_request)
@@ -888,7 +888,7 @@ let make_third_party_firewall_firewall_policy
      firewall_policy_name = firewall_policy_name_;
      firewall_policy_id = firewall_policy_id_
    } : third_party_firewall_firewall_policy)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tag_list:(tag_list_ : tag list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_list = tag_list_; resource_arn = resource_arn_ } : tag_resource_request)
@@ -1447,8 +1447,7 @@ let make_get_notification_channel_response
   ?sns_topic_arn:(sns_topic_arn_ : string option)  () =
   ({ sns_role_name = sns_role_name_; sns_topic_arn = sns_topic_arn_ } : 
   get_notification_channel_response)
-let make_get_notification_channel_request () =
-  (() : get_notification_channel_request)
+let make_get_notification_channel_request () = (() : unit)
 let make_get_compliance_detail_response
   ?policy_compliance_detail:(policy_compliance_detail_ :
                               policy_compliance_detail option)
@@ -1475,7 +1474,7 @@ let make_get_admin_account_response
   ?role_status:(role_status_ : account_role_status option) 
   ?admin_account:(admin_account_ : string option)  () =
   ({ role_status = role_status_; admin_account = admin_account_ } : get_admin_account_response)
-let make_get_admin_account_request () = (() : get_admin_account_request)
+let make_get_admin_account_request () = (() : unit)
 let make_failed_item ?reason:(reason_ : failed_item_reason option) 
   ?ur_i:(ur_i_ : string option)  () =
   ({ reason = reason_; ur_i = ur_i_ } : failed_item)
@@ -1488,8 +1487,7 @@ let make_disassociate_third_party_firewall_response
 let make_disassociate_third_party_firewall_request
   ~third_party_firewall:(third_party_firewall_ : third_party_firewall)  () =
   ({ third_party_firewall = third_party_firewall_ } : disassociate_third_party_firewall_request)
-let make_disassociate_admin_account_request () =
-  (() : disassociate_admin_account_request)
+let make_disassociate_admin_account_request () = (() : unit)
 let make_delete_resource_set_request ~identifier:(identifier_ : string)  () =
   ({ identifier = identifier_ } : delete_resource_set_request)
 let make_delete_protocols_list_request ~list_id:(list_id_ : string)  () =
@@ -1501,8 +1499,7 @@ let make_delete_policy_request
      delete_all_policy_resources = delete_all_policy_resources_;
      policy_id = policy_id_
    } : delete_policy_request)
-let make_delete_notification_channel_request () =
-  (() : delete_notification_channel_request)
+let make_delete_notification_channel_request () = (() : unit)
 let make_delete_apps_list_request ~list_id:(list_id_ : string)  () =
   ({ list_id = list_id_ } : delete_apps_list_request)
 let make_batch_disassociate_resource_response

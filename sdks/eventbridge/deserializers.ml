@@ -648,8 +648,7 @@ let update_api_destination_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let arn_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -1168,8 +1167,7 @@ let target_list_of_yojson tree path =
 let target_id_list_of_yojson tree path =
   list_of_yojson target_id_of_yojson tree path
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -2865,8 +2863,7 @@ let delete_event_bus_request_of_yojson tree path =
     { name = (value_for_key event_bus_name_of_yojson "Name" _list path) } in
   _res
 let delete_endpoint_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_endpoint_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_endpoint_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_endpoint_request =
@@ -2902,8 +2899,7 @@ let delete_connection_request_of_yojson tree path =
     { name = (value_for_key connection_name_of_yojson "Name" _list path) } in
   _res
 let delete_archive_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_archive_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_archive_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_archive_request =
@@ -2913,8 +2909,7 @@ let delete_archive_request_of_yojson tree path =
     } in
   _res
 let delete_api_destination_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_api_destination_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_api_destination_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_api_destination_request =

@@ -195,7 +195,7 @@ module DescribeEndpoints :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_endpoints_request ->
+      unit ->
         (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error])
           result
 end[@@ocaml.doc
@@ -261,7 +261,7 @@ module DescribeLimits :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_limits_input ->
+      unit ->
         (describe_limits_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 

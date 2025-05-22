@@ -673,8 +673,7 @@ let update_account_settings_input_to_yojson
     ("pipelineServiceRoleArn",
       (option_to_yojson role_arn_or_empty_string_to_yojson
          x.pipeline_service_role_arn))]
-let untag_resource_output_to_yojson (x : untag_resource_output) =
-  assoc_to_yojson []
+let untag_resource_output_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_input_to_yojson (x : untag_resource_input) =
@@ -694,8 +693,7 @@ let template_version_source_input_to_yojson
       assoc_to_yojson [("s3", (Some (s3_object_source_to_yojson arg)))]
 let template_manifest_contents_to_yojson = string_to_yojson
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_output_to_yojson (x : tag_resource_output) =
-  assoc_to_yojson []
+let tag_resource_output_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("value", (Some (tag_value_to_yojson x.value)));
@@ -950,8 +948,8 @@ let output_to_yojson (x : output) =
        (option_to_yojson output_value_string_to_yojson x.value_string));
     ("key", (option_to_yojson output_key_to_yojson x.key))]
 let outputs_list_to_yojson tree = list_to_yojson output_to_yojson tree
-let notify_resource_deployment_status_change_output_to_yojson
-  (x : notify_resource_deployment_status_change_output) = assoc_to_yojson []
+let notify_resource_deployment_status_change_output_to_yojson =
+  unit_to_yojson
 let notify_resource_deployment_status_change_input_to_yojson
   (x : notify_resource_deployment_status_change_input) =
   assoc_to_yojson
@@ -1585,8 +1583,7 @@ let counts_summary_to_yojson (x : counts_summary) =
       (option_to_yojson resource_counts_summary_to_yojson x.components))]
 let get_resources_summary_output_to_yojson (x : get_resources_summary_output)
   = assoc_to_yojson [("counts", (Some (counts_summary_to_yojson x.counts)))]
-let get_resources_summary_input_to_yojson (x : get_resources_summary_input) =
-  assoc_to_yojson []
+let get_resources_summary_input_to_yojson = unit_to_yojson
 let get_repository_sync_status_output_to_yojson
   (x : get_repository_sync_status_output) =
   assoc_to_yojson
@@ -1736,8 +1733,7 @@ let get_account_settings_output_to_yojson (x : get_account_settings_output) =
   assoc_to_yojson
     [("accountSettings",
        (option_to_yojson account_settings_to_yojson x.account_settings))]
-let get_account_settings_input_to_yojson (x : get_account_settings_input) =
-  assoc_to_yojson []
+let get_account_settings_input_to_yojson = unit_to_yojson
 let delete_template_sync_config_output_to_yojson
   (x : delete_template_sync_config_output) =
   assoc_to_yojson

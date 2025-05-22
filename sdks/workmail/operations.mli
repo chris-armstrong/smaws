@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_delegate_to_resource_request ->
-        (associate_delegate_to_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -21,7 +21,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_member_to_group_request ->
-        (associate_member_to_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -55,7 +55,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_mailbox_export_job_request ->
-        (cancel_mailbox_export_job_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -70,7 +70,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_alias_request ->
-        (create_alias_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EmailAddressInUseException of email_address_in_use_exception 
           | `EntityNotFoundException of entity_not_found_exception 
@@ -90,7 +90,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_availability_configuration_request ->
-        (create_availability_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -213,7 +213,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_access_control_rule_request ->
-        (delete_access_control_rule_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -226,7 +226,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_alias_request ->
-        (delete_alias_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -242,7 +242,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_availability_configuration_request ->
-        (delete_availability_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -255,7 +255,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_email_monitoring_configuration_request ->
-        (delete_email_monitoring_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -269,7 +269,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_group_request ->
-        (delete_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -287,7 +287,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_impersonation_role_request ->
-        (delete_impersonation_role_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -301,7 +301,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mailbox_permissions_request ->
-        (delete_mailbox_permissions_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -316,7 +316,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mobile_device_access_override_request ->
-        (delete_mobile_device_access_override_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -331,7 +331,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mobile_device_access_rule_request ->
-        (delete_mobile_device_access_rule_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -359,7 +359,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_request ->
-        (delete_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityStateException of entity_state_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -374,7 +374,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_retention_policy_request ->
-        (delete_retention_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -388,7 +388,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_user_request ->
-        (delete_user_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -407,7 +407,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_from_work_mail_request ->
-        (deregister_from_work_mail_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -423,7 +423,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_mail_domain_request ->
-        (deregister_mail_domain_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidCustomSesConfigurationException of
               invalid_custom_ses_configuration_exception 
@@ -552,7 +552,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_delegate_from_resource_request ->
-        (disassociate_delegate_from_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -568,7 +568,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_member_from_group_request ->
-        (disassociate_member_from_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -947,7 +947,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_access_control_rule_request ->
-        (put_access_control_rule_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -964,7 +964,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_email_monitoring_configuration_request ->
-        (put_email_monitoring_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -979,7 +979,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_inbound_dmarc_settings_request ->
-        (put_inbound_dmarc_settings_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -992,7 +992,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_mailbox_permissions_request ->
-        (put_mailbox_permissions_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1008,7 +1008,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_mobile_device_access_override_request ->
-        (put_mobile_device_access_override_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1024,7 +1024,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_retention_policy_request ->
-        (put_retention_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -1038,7 +1038,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_mail_domain_request ->
-        (register_mail_domain_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -1054,7 +1054,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_to_work_mail_request ->
-        (register_to_work_mail_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1078,7 +1078,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       reset_password_request ->
-        (reset_password_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1115,7 +1115,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationStateException of organization_state_exception 
@@ -1143,7 +1143,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
@@ -1154,7 +1154,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_availability_configuration_request ->
-        (update_availability_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -1169,7 +1169,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_default_mail_domain_request ->
-        (update_default_mail_domain_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `MailDomainNotFoundException of mail_domain_not_found_exception 
@@ -1185,7 +1185,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_group_request ->
-        (update_group_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1201,7 +1201,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_impersonation_role_request ->
-        (update_impersonation_role_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1219,7 +1219,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_mailbox_quota_request ->
-        (update_mailbox_quota_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1235,7 +1235,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_mobile_device_access_rule_request ->
-        (update_mobile_device_access_rule_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -1250,7 +1250,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_primary_email_address_request ->
-        (update_primary_email_address_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1273,7 +1273,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_resource_request ->
-        (update_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryUnavailableException of directory_unavailable_exception 
           | `EmailAddressInUseException of email_address_in_use_exception 
@@ -1296,7 +1296,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_user_request ->
-        (update_user_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 

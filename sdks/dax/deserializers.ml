@@ -556,8 +556,7 @@ let source_type_of_yojson (tree : t) path =
        raise (deserialize_unknown_enum_value_error path "SourceType" value)
    | _ -> raise (deserialize_wrong_type_error path "SourceType") : source_type)
 let service_quota_exceeded_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : service_quota_exceeded_exception = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let sse_enabled_of_yojson = bool_of_yojson
 let sse_specification_of_yojson tree path =
   let _list = assoc_of_yojson tree path in

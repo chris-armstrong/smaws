@@ -133,12 +133,12 @@ val make_update_access_policy_request :
         policy_version:string ->
           name:string ->
             type_:access_policy_type -> unit -> update_access_policy_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_arn:string -> unit -> untag_resource_request
 val make_tag : value:string -> key:string -> unit -> tag
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_request
 val make_security_policy_summary :
@@ -175,11 +175,11 @@ val make_get_policies_stats_response :
         ?security_policy_stats:security_policy_stats ->
           ?access_policy_stats:access_policy_stats ->
             unit -> get_policies_stats_response
-val make_get_policies_stats_request : unit -> get_policies_stats_request
+val make_get_policies_stats_request : unit -> unit
 val make_get_account_settings_response :
   ?account_settings_detail:account_settings_detail ->
     unit -> get_account_settings_response
-val make_get_account_settings_request : unit -> get_account_settings_request
+val make_get_account_settings_request : unit -> unit
 val make_create_security_policy_response :
   ?security_policy_detail:security_policy_detail ->
     unit -> create_security_policy_response
@@ -369,18 +369,15 @@ val make_delete_vpc_endpoint_response :
     unit -> delete_vpc_endpoint_response
 val make_delete_vpc_endpoint_request :
   ?client_token:string -> id:string -> unit -> delete_vpc_endpoint_request
-val make_delete_security_policy_response :
-  unit -> delete_security_policy_response
+val make_delete_security_policy_response : unit -> unit
 val make_delete_security_policy_request :
   ?client_token:string ->
     name:string ->
       type_:security_policy_type -> unit -> delete_security_policy_request
-val make_delete_security_config_response :
-  unit -> delete_security_config_response
+val make_delete_security_config_response : unit -> unit
 val make_delete_security_config_request :
   ?client_token:string -> id:string -> unit -> delete_security_config_request
-val make_delete_lifecycle_policy_response :
-  unit -> delete_lifecycle_policy_response
+val make_delete_lifecycle_policy_response : unit -> unit
 val make_delete_lifecycle_policy_request :
   ?client_token:string ->
     name:string ->
@@ -393,8 +390,7 @@ val make_delete_collection_response :
     unit -> delete_collection_response
 val make_delete_collection_request :
   ?client_token:string -> id:string -> unit -> delete_collection_request
-val make_delete_access_policy_response :
-  unit -> delete_access_policy_response
+val make_delete_access_policy_response : unit -> unit
 val make_delete_access_policy_request :
   ?client_token:string ->
     name:string ->

@@ -2,14 +2,14 @@ open Smaws_Lib
 open Types
 val make_single_header : name:string -> unit -> single_header
 val make_single_query_argument : name:string -> unit -> single_query_argument
-val make_all_query_arguments : unit -> all_query_arguments
-val make_uri_path : unit -> uri_path
-val make_query_string : unit -> query_string
+val make_all_query_arguments : unit -> unit
+val make_uri_path : unit -> unit
+val make_query_string : unit -> unit
 val make_body : ?oversize_handling:oversize_handling -> unit -> body
-val make_method_ : unit -> method_
-val make_all : unit -> all
+val make_method_ : unit -> unit
+val make_all : unit -> unit
 val make_json_match_pattern :
-  ?included_paths:string list -> ?all:all -> unit -> json_match_pattern
+  ?included_paths:string list -> ?all:unit -> unit -> json_match_pattern
 val make_json_body :
   ?oversize_handling:oversize_handling ->
     ?invalid_fallback_behavior:body_parsing_fallback_behavior ->
@@ -17,14 +17,16 @@ val make_json_body :
         match_pattern:json_match_pattern -> unit -> json_body
 val make_header_match_pattern :
   ?excluded_headers:string list ->
-    ?included_headers:string list -> ?all:all -> unit -> header_match_pattern
+    ?included_headers:string list ->
+      ?all:unit -> unit -> header_match_pattern
 val make_headers :
   oversize_handling:oversize_handling ->
     match_scope:map_match_scope ->
       match_pattern:header_match_pattern -> unit -> headers
 val make_cookie_match_pattern :
   ?excluded_cookies:string list ->
-    ?included_cookies:string list -> ?all:all -> unit -> cookie_match_pattern
+    ?included_cookies:string list ->
+      ?all:unit -> unit -> cookie_match_pattern
 val make_cookies :
   oversize_handling:oversize_handling ->
     match_scope:map_match_scope ->
@@ -39,11 +41,11 @@ val make_field_to_match :
       ?cookies:cookies ->
         ?headers:headers ->
           ?json_body:json_body ->
-            ?method_:method_ ->
+            ?method_:unit ->
               ?body:body ->
-                ?query_string:query_string ->
-                  ?uri_path:uri_path ->
-                    ?all_query_arguments:all_query_arguments ->
+                ?query_string:unit ->
+                  ?uri_path:unit ->
+                    ?all_query_arguments:unit ->
                       ?single_query_argument:single_query_argument ->
                         ?single_header:single_header ->
                           unit -> field_to_match
@@ -134,9 +136,9 @@ val make_rate_limit_query_argument :
 val make_rate_limit_query_string :
   text_transformations:text_transformation list ->
     unit -> rate_limit_query_string
-val make_rate_limit_http_method : unit -> rate_limit_http_method
-val make_rate_limit_forwarded_i_p : unit -> rate_limit_forwarded_i_p
-val make_rate_limit_i_p : unit -> rate_limit_i_p
+val make_rate_limit_http_method : unit -> unit
+val make_rate_limit_forwarded_i_p : unit -> unit
+val make_rate_limit_i_p : unit -> unit
 val make_rate_limit_label_namespace :
   namespace:string -> unit -> rate_limit_label_namespace
 val make_rate_limit_uri_path :
@@ -145,9 +147,9 @@ val make_rate_limit_uri_path :
 val make_rate_based_statement_custom_key :
   ?uri_path:rate_limit_uri_path ->
     ?label_namespace:rate_limit_label_namespace ->
-      ?i_p:rate_limit_i_p ->
-        ?forwarded_i_p:rate_limit_forwarded_i_p ->
-          ?http_method:rate_limit_http_method ->
+      ?i_p:unit ->
+        ?forwarded_i_p:unit ->
+          ?http_method:unit ->
             ?query_string:rate_limit_query_string ->
               ?query_argument:rate_limit_query_argument ->
                 ?cookie:rate_limit_cookie ->
@@ -257,9 +259,9 @@ val make_statement :
                             ?sqli_match_statement:sqli_match_statement ->
                               ?byte_match_statement:byte_match_statement ->
                                 unit -> statement
-val make_none_action : unit -> none_action
+val make_none_action : unit -> unit
 val make_override_action :
-  ?none:none_action -> ?count:count_action -> unit -> override_action
+  ?none:unit -> ?count:count_action -> unit -> override_action
 val make_label : name:string -> unit -> label
 val make_visibility_config :
   metric_name:string ->
@@ -376,14 +378,14 @@ val make_update_ip_set_request :
       addresses:string list ->
         id:string ->
           scope:scope -> name:string -> unit -> update_ip_set_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
 val make_time_window :
   end_time:CoreTypes.Timestamp.t ->
     start_time:CoreTypes.Timestamp.t -> unit -> time_window
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
@@ -450,8 +452,7 @@ val make_rate_based_statement_managed_keys_ip_set :
   ?addresses:string list ->
     ?ip_address_version:ip_address_version ->
       unit -> rate_based_statement_managed_keys_ip_set
-val make_put_permission_policy_response :
-  unit -> put_permission_policy_response
+val make_put_permission_policy_response : unit -> unit
 val make_put_permission_policy_request :
   policy:string ->
     resource_arn:string -> unit -> put_permission_policy_request
@@ -720,8 +721,7 @@ val make_generate_mobile_sdk_release_url_response :
 val make_generate_mobile_sdk_release_url_request :
   release_version:string ->
     platform:platform -> unit -> generate_mobile_sdk_release_url_request
-val make_disassociate_web_acl_response :
-  unit -> disassociate_web_acl_response
+val make_disassociate_web_acl_response : unit -> unit
 val make_disassociate_web_acl_request :
   resource_arn:string -> unit -> disassociate_web_acl_request
 val make_describe_managed_rule_group_response :
@@ -749,32 +749,29 @@ val make_describe_all_managed_products_response :
     unit -> describe_all_managed_products_response
 val make_describe_all_managed_products_request :
   scope:scope -> unit -> describe_all_managed_products_request
-val make_delete_web_acl_response : unit -> delete_web_acl_response
+val make_delete_web_acl_response : unit -> unit
 val make_delete_web_acl_request :
   lock_token:string ->
     id:string -> scope:scope -> name:string -> unit -> delete_web_acl_request
-val make_delete_rule_group_response : unit -> delete_rule_group_response
+val make_delete_rule_group_response : unit -> unit
 val make_delete_rule_group_request :
   lock_token:string ->
     id:string ->
       scope:scope -> name:string -> unit -> delete_rule_group_request
-val make_delete_regex_pattern_set_response :
-  unit -> delete_regex_pattern_set_response
+val make_delete_regex_pattern_set_response : unit -> unit
 val make_delete_regex_pattern_set_request :
   lock_token:string ->
     id:string ->
       scope:scope -> name:string -> unit -> delete_regex_pattern_set_request
-val make_delete_permission_policy_response :
-  unit -> delete_permission_policy_response
+val make_delete_permission_policy_response : unit -> unit
 val make_delete_permission_policy_request :
   resource_arn:string -> unit -> delete_permission_policy_request
-val make_delete_logging_configuration_response :
-  unit -> delete_logging_configuration_response
+val make_delete_logging_configuration_response : unit -> unit
 val make_delete_logging_configuration_request :
   ?log_scope:log_scope ->
     ?log_type:log_type ->
       resource_arn:string -> unit -> delete_logging_configuration_request
-val make_delete_ip_set_response : unit -> delete_ip_set_response
+val make_delete_ip_set_response : unit -> unit
 val make_delete_ip_set_request :
   lock_token:string ->
     id:string -> scope:scope -> name:string -> unit -> delete_ip_set_request
@@ -784,7 +781,7 @@ val make_delete_firewall_manager_rule_groups_response :
 val make_delete_firewall_manager_rule_groups_request :
   web_acl_lock_token:string ->
     web_acl_arn:string -> unit -> delete_firewall_manager_rule_groups_request
-val make_delete_api_key_response : unit -> delete_api_key_response
+val make_delete_api_key_response : unit -> unit
 val make_delete_api_key_request :
   api_key:string -> scope:scope -> unit -> delete_api_key_request
 val make_create_web_acl_response :
@@ -837,7 +834,7 @@ val make_check_capacity_response :
   ?capacity:int -> unit -> check_capacity_response
 val make_check_capacity_request :
   rules:rule list -> scope:scope -> unit -> check_capacity_request
-val make_associate_web_acl_response : unit -> associate_web_acl_response
+val make_associate_web_acl_response : unit -> unit
 val make_associate_web_acl_request :
   resource_arn:string ->
     web_acl_arn:string -> unit -> associate_web_acl_request

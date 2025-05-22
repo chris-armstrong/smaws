@@ -114,8 +114,7 @@ let make_start_remediation_execution_request
 let make_start_configuration_recorder_request
   ~configuration_recorder_name:(configuration_recorder_name_ : string)  () =
   ({ configuration_recorder_name = configuration_recorder_name_ } : start_configuration_recorder_request)
-let make_start_config_rules_evaluation_response () =
-  (() : start_config_rules_evaluation_response)
+let make_start_config_rules_evaluation_response () = (() : unit)
 let make_start_config_rules_evaluation_request
   ?config_rule_names:(config_rule_names_ : string list option)  () =
   ({ config_rule_names = config_rule_names_ } : start_config_rules_evaluation_request)
@@ -418,8 +417,7 @@ let make_put_organization_config_rule_request
      organization_managed_rule_metadata = organization_managed_rule_metadata_;
      organization_config_rule_name = organization_config_rule_name_
    } : put_organization_config_rule_request)
-let make_put_external_evaluation_response () =
-  (() : put_external_evaluation_response)
+let make_put_external_evaluation_response () = (() : unit)
 let make_external_evaluation ?annotation:(annotation_ : string option) 
   ~ordering_timestamp:(ordering_timestamp_ : CoreTypes.Timestamp.t) 
   ~compliance_type:(compliance_type_ : compliance_type) 
@@ -2258,8 +2256,7 @@ let make_deliver_config_snapshot_response
 let make_deliver_config_snapshot_request
   ~delivery_channel_name:(delivery_channel_name_ : string)  () =
   ({ delivery_channel_name = delivery_channel_name_ } : deliver_config_snapshot_request)
-let make_delete_stored_query_response () =
-  (() : delete_stored_query_response)
+let make_delete_stored_query_response () = (() : unit)
 let make_delete_stored_query_request ~query_name:(query_name_ : string)  () =
   ({ query_name = query_name_ } : delete_stored_query_request)
 let make_delete_retention_configuration_request
@@ -2286,8 +2283,7 @@ let make_delete_remediation_exceptions_request
   ~config_rule_name:(config_rule_name_ : string)  () =
   ({ resource_keys = resource_keys_; config_rule_name = config_rule_name_ } : 
   delete_remediation_exceptions_request)
-let make_delete_remediation_configuration_response () =
-  (() : delete_remediation_configuration_response)
+let make_delete_remediation_configuration_response () = (() : unit)
 let make_delete_remediation_configuration_request
   ?resource_type:(resource_type_ : string option) 
   ~config_rule_name:(config_rule_name_ : string)  () =
@@ -2311,8 +2307,7 @@ let make_delete_organization_config_rule_request
   () =
   ({ organization_config_rule_name = organization_config_rule_name_ } : 
   delete_organization_config_rule_request)
-let make_delete_evaluation_results_response () =
-  (() : delete_evaluation_results_response)
+let make_delete_evaluation_results_response () = (() : unit)
 let make_delete_evaluation_results_request
   ~config_rule_name:(config_rule_name_ : string)  () =
   ({ config_rule_name = config_rule_name_ } : delete_evaluation_results_request)

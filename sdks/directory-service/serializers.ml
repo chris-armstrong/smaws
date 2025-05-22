@@ -111,8 +111,7 @@ let directory_does_not_exist_exception_to_yojson
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
 let update_security_group_for_directory_controllers_to_yojson =
   bool_to_yojson
-let update_radius_result_to_yojson (x : update_radius_result) =
-  assoc_to_yojson []
+let update_radius_result_to_yojson = unit_to_yojson
 let server_to_yojson = string_to_yojson
 let servers_to_yojson tree = list_to_yojson server_to_yojson tree
 let port_number_to_yojson = int_to_yojson
@@ -148,8 +147,7 @@ let update_radius_request_to_yojson (x : update_radius_request) =
   assoc_to_yojson
     [("RadiusSettings", (Some (radius_settings_to_yojson x.radius_settings)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let update_number_of_domain_controllers_result_to_yojson
-  (x : update_number_of_domain_controllers_result) = assoc_to_yojson []
+let update_number_of_domain_controllers_result_to_yojson = unit_to_yojson
 let desired_number_of_domain_controllers_to_yojson = int_to_yojson
 let update_number_of_domain_controllers_request_to_yojson
   (x : update_number_of_domain_controllers_request) =
@@ -181,8 +179,7 @@ let update_info_entry_to_yojson (x : update_info_entry) =
       (option_to_yojson update_status_reason_to_yojson x.status_reason));
     ("Status", (option_to_yojson update_status_to_yojson x.status));
     ("Region", (option_to_yojson region_name_to_yojson x.region))]
-let update_directory_setup_result_to_yojson
-  (x : update_directory_setup_result) = assoc_to_yojson []
+let update_directory_setup_result_to_yojson = unit_to_yojson
 let create_snapshot_before_update_to_yojson = bool_to_yojson
 let update_directory_setup_request_to_yojson
   (x : update_directory_setup_request) =
@@ -208,8 +205,7 @@ let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson
     [("RequestId", (option_to_yojson request_id_to_yojson x.request_id));
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
-let update_conditional_forwarder_result_to_yojson
-  (x : update_conditional_forwarder_result) = assoc_to_yojson []
+let update_conditional_forwarder_result_to_yojson = unit_to_yojson
 let remote_domain_name_to_yojson = string_to_yojson
 let ip_addr_to_yojson = string_to_yojson
 let dns_ip_addrs_to_yojson tree = list_to_yojson ip_addr_to_yojson tree
@@ -531,15 +527,13 @@ let schema_extension_info_to_yojson (x : schema_extension_info) =
 let schema_extensions_info_to_yojson tree =
   list_to_yojson schema_extension_info_to_yojson tree
 let si_d_to_yojson = string_to_yojson
-let restore_from_snapshot_result_to_yojson (x : restore_from_snapshot_result)
-  = assoc_to_yojson []
+let restore_from_snapshot_result_to_yojson = unit_to_yojson
 let restore_from_snapshot_request_to_yojson
   (x : restore_from_snapshot_request) =
   assoc_to_yojson
     [("SnapshotId", (Some (snapshot_id_to_yojson x.snapshot_id)))]
 let resource_id_to_yojson = string_to_yojson
-let reset_user_password_result_to_yojson (x : reset_user_password_result) =
-  assoc_to_yojson []
+let reset_user_password_result_to_yojson = unit_to_yojson
 let customer_user_name_to_yojson = string_to_yojson
 let reset_user_password_request_to_yojson (x : reset_user_password_request) =
   assoc_to_yojson
@@ -552,20 +546,17 @@ let invalid_password_exception_to_yojson (x : invalid_password_exception) =
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
 let replication_scope_to_yojson (x : replication_scope) =
   match x with | Domain -> `String "Domain"
-let remove_tags_from_resource_result_to_yojson
-  (x : remove_tags_from_resource_result) = assoc_to_yojson []
+let remove_tags_from_resource_result_to_yojson = unit_to_yojson
 let remove_tags_from_resource_request_to_yojson
   (x : remove_tags_from_resource_request) =
   assoc_to_yojson
     [("TagKeys", (Some (tag_keys_to_yojson x.tag_keys)));
     ("ResourceId", (Some (resource_id_to_yojson x.resource_id)))]
-let remove_region_result_to_yojson (x : remove_region_result) =
-  assoc_to_yojson []
+let remove_region_result_to_yojson = unit_to_yojson
 let remove_region_request_to_yojson (x : remove_region_request) =
   assoc_to_yojson
     [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let remove_ip_routes_result_to_yojson (x : remove_ip_routes_result) =
-  assoc_to_yojson []
+let remove_ip_routes_result_to_yojson = unit_to_yojson
 let cidr_ip_to_yojson = string_to_yojson
 let cidr_ips_to_yojson tree = list_to_yojson cidr_ip_to_yojson tree
 let remove_ip_routes_request_to_yojson (x : remove_ip_routes_request) =
@@ -584,8 +575,7 @@ let reject_shared_directory_request_to_yojson
   assoc_to_yojson
     [("SharedDirectoryId",
        (Some (directory_id_to_yojson x.shared_directory_id)))]
-let register_event_topic_result_to_yojson (x : register_event_topic_result) =
-  assoc_to_yojson []
+let register_event_topic_result_to_yojson = unit_to_yojson
 let register_event_topic_request_to_yojson (x : register_event_topic_request)
   =
   assoc_to_yojson
@@ -925,8 +915,7 @@ let get_directory_limits_result_to_yojson (x : get_directory_limits_result) =
   assoc_to_yojson
     [("DirectoryLimits",
        (option_to_yojson directory_limits_to_yojson x.directory_limits))]
-let get_directory_limits_request_to_yojson (x : get_directory_limits_request)
-  = assoc_to_yojson []
+let get_directory_limits_request_to_yojson = unit_to_yojson
 let event_topic_to_yojson (x : event_topic) =
   assoc_to_yojson
     [("Status", (option_to_yojson topic_status_to_yojson x.status));
@@ -941,7 +930,7 @@ let entity_already_exists_exception_to_yojson
   assoc_to_yojson
     [("RequestId", (option_to_yojson request_id_to_yojson x.request_id));
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
-let enable_sso_result_to_yojson (x : enable_sso_result) = assoc_to_yojson []
+let enable_sso_result_to_yojson = unit_to_yojson
 let connect_password_to_yojson = string_to_yojson
 let enable_sso_request_to_yojson (x : enable_sso_request) =
   assoc_to_yojson
@@ -953,20 +942,17 @@ let authentication_failed_exception_to_yojson
   assoc_to_yojson
     [("RequestId", (option_to_yojson request_id_to_yojson x.request_id));
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
-let enable_radius_result_to_yojson (x : enable_radius_result) =
-  assoc_to_yojson []
+let enable_radius_result_to_yojson = unit_to_yojson
 let enable_radius_request_to_yojson (x : enable_radius_request) =
   assoc_to_yojson
     [("RadiusSettings", (Some (radius_settings_to_yojson x.radius_settings)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let enable_ldaps_result_to_yojson (x : enable_ldaps_result) =
-  assoc_to_yojson []
+let enable_ldaps_result_to_yojson = unit_to_yojson
 let enable_ldaps_request_to_yojson (x : enable_ldaps_request) =
   assoc_to_yojson
     [("Type", (Some (ldaps_type_to_yojson x.type_)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let enable_client_authentication_result_to_yojson
-  (x : enable_client_authentication_result) = assoc_to_yojson []
+let enable_client_authentication_result_to_yojson = unit_to_yojson
 let client_authentication_type_to_yojson (x : client_authentication_type) =
   match x with
   | SMART_CARD_OR_PASSWORD -> `String "SmartCardOrPassword"
@@ -1010,26 +996,22 @@ let domain_controllers_to_yojson tree =
   list_to_yojson domain_controller_to_yojson tree
 let domain_controller_ids_to_yojson tree =
   list_to_yojson domain_controller_id_to_yojson tree
-let disable_sso_result_to_yojson (x : disable_sso_result) =
-  assoc_to_yojson []
+let disable_sso_result_to_yojson = unit_to_yojson
 let disable_sso_request_to_yojson (x : disable_sso_request) =
   assoc_to_yojson
     [("Password", (option_to_yojson connect_password_to_yojson x.password));
     ("UserName", (option_to_yojson user_name_to_yojson x.user_name));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let disable_radius_result_to_yojson (x : disable_radius_result) =
-  assoc_to_yojson []
+let disable_radius_result_to_yojson = unit_to_yojson
 let disable_radius_request_to_yojson (x : disable_radius_request) =
   assoc_to_yojson
     [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let disable_ldaps_result_to_yojson (x : disable_ldaps_result) =
-  assoc_to_yojson []
+let disable_ldaps_result_to_yojson = unit_to_yojson
 let disable_ldaps_request_to_yojson (x : disable_ldaps_request) =
   assoc_to_yojson
     [("Type", (Some (ldaps_type_to_yojson x.type_)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let disable_client_authentication_result_to_yojson
-  (x : disable_client_authentication_result) = assoc_to_yojson []
+let disable_client_authentication_result_to_yojson = unit_to_yojson
 let disable_client_authentication_request_to_yojson
   (x : disable_client_authentication_request) =
   assoc_to_yojson
@@ -1313,8 +1295,7 @@ let describe_certificate_request_to_yojson (x : describe_certificate_request)
   assoc_to_yojson
     [("CertificateId", (Some (certificate_id_to_yojson x.certificate_id)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let deregister_event_topic_result_to_yojson
-  (x : deregister_event_topic_result) = assoc_to_yojson []
+let deregister_event_topic_result_to_yojson = unit_to_yojson
 let deregister_event_topic_request_to_yojson
   (x : deregister_event_topic_request) =
   assoc_to_yojson
@@ -1325,8 +1306,7 @@ let certificate_in_use_exception_to_yojson (x : certificate_in_use_exception)
   assoc_to_yojson
     [("RequestId", (option_to_yojson request_id_to_yojson x.request_id));
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
-let deregister_certificate_result_to_yojson
-  (x : deregister_certificate_result) = assoc_to_yojson []
+let deregister_certificate_result_to_yojson = unit_to_yojson
 let deregister_certificate_request_to_yojson
   (x : deregister_certificate_request) =
   assoc_to_yojson
@@ -1348,8 +1328,7 @@ let delete_snapshot_result_to_yojson (x : delete_snapshot_result) =
 let delete_snapshot_request_to_yojson (x : delete_snapshot_request) =
   assoc_to_yojson
     [("SnapshotId", (Some (snapshot_id_to_yojson x.snapshot_id)))]
-let delete_log_subscription_result_to_yojson
-  (x : delete_log_subscription_result) = assoc_to_yojson []
+let delete_log_subscription_result_to_yojson = unit_to_yojson
 let delete_log_subscription_request_to_yojson
   (x : delete_log_subscription_request) =
   assoc_to_yojson
@@ -1361,8 +1340,7 @@ let delete_directory_result_to_yojson (x : delete_directory_result) =
 let delete_directory_request_to_yojson (x : delete_directory_request) =
   assoc_to_yojson
     [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let delete_conditional_forwarder_result_to_yojson
-  (x : delete_conditional_forwarder_result) = assoc_to_yojson []
+let delete_conditional_forwarder_result_to_yojson = unit_to_yojson
 let delete_conditional_forwarder_request_to_yojson
   (x : delete_conditional_forwarder_request) =
   assoc_to_yojson
@@ -1411,8 +1389,7 @@ let create_microsoft_ad_request_to_yojson (x : create_microsoft_ad_request) =
     ("ShortName",
       (option_to_yojson directory_short_name_to_yojson x.short_name));
     ("Name", (Some (directory_name_to_yojson x.name)))]
-let create_log_subscription_result_to_yojson
-  (x : create_log_subscription_result) = assoc_to_yojson []
+let create_log_subscription_result_to_yojson = unit_to_yojson
 let create_log_subscription_request_to_yojson
   (x : create_log_subscription_request) =
   assoc_to_yojson
@@ -1433,8 +1410,7 @@ let create_directory_request_to_yojson (x : create_directory_request) =
     ("ShortName",
       (option_to_yojson directory_short_name_to_yojson x.short_name));
     ("Name", (Some (directory_name_to_yojson x.name)))]
-let create_conditional_forwarder_result_to_yojson
-  (x : create_conditional_forwarder_result) = assoc_to_yojson []
+let create_conditional_forwarder_result_to_yojson = unit_to_yojson
 let create_conditional_forwarder_request_to_yojson
   (x : create_conditional_forwarder_request) =
   assoc_to_yojson
@@ -1500,16 +1476,14 @@ let connect_directory_request_to_yojson (x : connect_directory_request) =
     ("ShortName",
       (option_to_yojson directory_short_name_to_yojson x.short_name));
     ("Name", (Some (directory_name_to_yojson x.name)))]
-let cancel_schema_extension_result_to_yojson
-  (x : cancel_schema_extension_result) = assoc_to_yojson []
+let cancel_schema_extension_result_to_yojson = unit_to_yojson
 let cancel_schema_extension_request_to_yojson
   (x : cancel_schema_extension_request) =
   assoc_to_yojson
     [("SchemaExtensionId",
        (Some (schema_extension_id_to_yojson x.schema_extension_id)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let add_tags_to_resource_result_to_yojson (x : add_tags_to_resource_result) =
-  assoc_to_yojson []
+let add_tags_to_resource_result_to_yojson = unit_to_yojson
 let add_tags_to_resource_request_to_yojson (x : add_tags_to_resource_request)
   =
   assoc_to_yojson
@@ -1520,15 +1494,14 @@ let directory_already_in_region_exception_to_yojson
   assoc_to_yojson
     [("RequestId", (option_to_yojson request_id_to_yojson x.request_id));
     ("Message", (option_to_yojson exception_message_to_yojson x.message))]
-let add_region_result_to_yojson (x : add_region_result) = assoc_to_yojson []
+let add_region_result_to_yojson = unit_to_yojson
 let add_region_request_to_yojson (x : add_region_request) =
   assoc_to_yojson
     [("VPCSettings",
        (Some (directory_vpc_settings_to_yojson x.vpc_settings)));
     ("RegionName", (Some (region_name_to_yojson x.region_name)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
-let add_ip_routes_result_to_yojson (x : add_ip_routes_result) =
-  assoc_to_yojson []
+let add_ip_routes_result_to_yojson = unit_to_yojson
 let add_ip_routes_request_to_yojson (x : add_ip_routes_request) =
   assoc_to_yojson
     [("UpdateSecurityGroupForDirectoryControllers",

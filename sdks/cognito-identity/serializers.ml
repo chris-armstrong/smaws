@@ -92,8 +92,7 @@ let identity_pool_to_yojson (x : identity_pool) =
       (Some (identity_pool_name_to_yojson x.identity_pool_name)));
     ("IdentityPoolId",
       (Some (identity_pool_id_to_yojson x.identity_pool_id)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let identity_pool_tags_list_type_to_yojson tree =
   list_to_yojson tag_keys_type_to_yojson tree
 let untag_resource_input_to_yojson (x : untag_resource_input) =
@@ -139,8 +138,7 @@ let unlink_developer_identity_input_to_yojson
       (Some (identity_pool_id_to_yojson x.identity_pool_id)));
     ("IdentityId", (Some (identity_id_to_yojson x.identity_id)))]
 let token_duration_to_yojson = long_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_input_to_yojson (x : tag_resource_input) =
   assoc_to_yojson
     [("Tags", (Some (identity_pool_tags_type_to_yojson x.tags)));

@@ -173,7 +173,7 @@ let make_update_call_analytics_category_request
   ~category_name:(category_name_ : string)  () =
   ({ input_type = input_type_; rules = rules_; category_name = category_name_
    } : update_call_analytics_category_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_request)
@@ -351,7 +351,7 @@ let make_transcription_job
      transcription_job_status = transcription_job_status_;
      transcription_job_name = transcription_job_name_
    } : transcription_job)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_request)
@@ -1058,13 +1058,11 @@ let make_delete_medical_scribe_job_request
   ({ medical_scribe_job_name = medical_scribe_job_name_ } : delete_medical_scribe_job_request)
 let make_delete_language_model_request ~model_name:(model_name_ : string)  ()
   = ({ model_name = model_name_ } : delete_language_model_request)
-let make_delete_call_analytics_job_response () =
-  (() : delete_call_analytics_job_response)
+let make_delete_call_analytics_job_response () = (() : unit)
 let make_delete_call_analytics_job_request
   ~call_analytics_job_name:(call_analytics_job_name_ : string)  () =
   ({ call_analytics_job_name = call_analytics_job_name_ } : delete_call_analytics_job_request)
-let make_delete_call_analytics_category_response () =
-  (() : delete_call_analytics_category_response)
+let make_delete_call_analytics_category_response () = (() : unit)
 let make_delete_call_analytics_category_request
   ~category_name:(category_name_ : string)  () =
   ({ category_name = category_name_ } : delete_call_analytics_category_request)

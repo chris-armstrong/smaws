@@ -6,8 +6,7 @@ let valid_next_step_list_of_yojson tree path =
   list_of_yojson valid_next_step_of_yojson tree path
 let url_of_yojson = string_of_yojson
 let update_service_setting_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_service_setting_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let service_setting_id_of_yojson = string_of_yojson
 let service_setting_value_of_yojson = string_of_yojson
 let update_service_setting_request_of_yojson tree path =
@@ -50,8 +49,7 @@ let internal_server_error_of_yojson tree path =
     } in
   _res
 let update_resource_data_sync_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_resource_data_sync_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let resource_data_sync_name_of_yojson = string_of_yojson
 let resource_data_sync_type_of_yojson = string_of_yojson
 let resource_data_sync_source_type_of_yojson = string_of_yojson
@@ -514,8 +512,7 @@ let ops_metadata_invalid_argument_exception_of_yojson tree path =
     } in
   _res
 let update_ops_item_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_ops_item_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let ops_item_description_of_yojson = string_of_yojson
 let ops_item_data_value_string_of_yojson = string_of_yojson
 let ops_item_data_type_of_yojson (tree : t) path =
@@ -732,8 +729,7 @@ let ops_item_access_denied_exception_of_yojson tree path =
     } in
   _res
 let update_managed_instance_role_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_managed_instance_role_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let managed_instance_id_of_yojson = string_of_yojson
 let iam_role_of_yojson = string_of_yojson
 let update_managed_instance_role_request_of_yojson tree path =
@@ -1723,8 +1719,7 @@ let update_document_request_of_yojson tree path =
     } in
   _res
 let update_document_metadata_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_document_metadata_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let document_review_action_of_yojson (tree : t) path =
   (match tree with
    | `String "Reject" -> Reject
@@ -2221,8 +2216,7 @@ let update_association_status_request_of_yojson tree path =
     } in
   _res
 let status_unchanged_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : status_unchanged = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let association_does_not_exist_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : association_does_not_exist =
@@ -2370,8 +2364,7 @@ let invalid_parameters_of_yojson tree path =
     } in
   _res
 let invalid_output_location_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_output_location = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let invalid_association_version_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : invalid_association_version =
@@ -2519,8 +2512,7 @@ let total_size_limit_exceeded_exception_of_yojson tree path =
   _res
 let total_count_of_yojson = int_of_yojson
 let too_many_tags_error_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : too_many_tags_error = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let token_value_of_yojson = string_of_yojson
 let session_id_of_yojson = string_of_yojson
 let terminate_session_response_of_yojson tree path =
@@ -2582,8 +2574,7 @@ let stop_type_of_yojson (tree : t) path =
        raise (deserialize_unknown_enum_value_error path "StopType" value)
    | _ -> raise (deserialize_wrong_type_error path "StopType") : stop_type)
 let stop_automation_execution_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : stop_automation_execution_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let automation_execution_id_of_yojson = string_of_yojson
 let stop_automation_execution_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -3070,8 +3061,7 @@ let start_automation_execution_request_of_yojson tree path =
     } in
   _res
 let start_associations_once_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_associations_once_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let association_id_list_of_yojson tree path =
   list_of_yojson association_id_of_yojson tree path
 let start_associations_once_request_of_yojson tree path =
@@ -3486,8 +3476,7 @@ let invalid_role_of_yojson tree path =
     } in
   _res
 let invalid_output_folder_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_output_folder = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let invalid_notification_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : invalid_notification_config =
@@ -3498,11 +3487,9 @@ let invalid_notification_config_of_yojson tree path =
     } in
   _res
 let duplicate_instance_id_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : duplicate_instance_id = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let send_automation_signal_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : send_automation_signal_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let send_automation_signal_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : send_automation_signal_request =
@@ -4024,8 +4011,7 @@ let reset_service_setting_request_of_yojson tree path =
     } in
   _res
 let remove_tags_from_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : remove_tags_from_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let key_list_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
 let remove_tags_from_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -4040,11 +4026,9 @@ let remove_tags_from_resource_request_of_yojson tree path =
     } in
   _res
 let invalid_resource_type_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_resource_type = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let invalid_resource_id_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_resource_id = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let remaining_count_of_yojson = int_of_yojson
 let registrations_count_of_yojson = int_of_yojson
 let registration_metadata_value_of_yojson = string_of_yojson
@@ -4616,8 +4600,7 @@ let custom_schema_count_limit_exceeded_exception_of_yojson tree path =
     } in
   _res
 let put_compliance_items_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_compliance_items_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let compliance_item_id_of_yojson = string_of_yojson
 let compliance_item_title_of_yojson = string_of_yojson
 let compliance_item_details_of_yojson tree path =
@@ -5829,8 +5812,7 @@ and ops_aggregator_list_of_yojson tree path =
   list_of_yojson ops_aggregator_of_yojson tree path
 let next_token_of_yojson = string_of_yojson
 let modify_document_permission_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : modify_document_permission_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let document_permission_type_of_yojson (tree : t) path =
   (match tree with
    | `String "SHARE" -> SHARE
@@ -6709,8 +6691,7 @@ let list_documents_request_of_yojson tree path =
     } in
   _res
 let invalid_filter_key_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_filter_key = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let document_version_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : document_version_info =
@@ -7058,8 +7039,7 @@ let list_commands_request_of_yojson tree path =
     } in
   _res
 let invalid_command_id_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_command_id = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let instance_tag_name_of_yojson = string_of_yojson
 let command_invocation_status_of_yojson (tree : t) path =
   (match tree with
@@ -7496,8 +7476,7 @@ let label_parameter_version_request_of_yojson tree path =
 let key_name_of_yojson = string_of_yojson
 let is_sub_type_schema_of_yojson = bool_of_yojson
 let invocation_does_not_exist_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invocation_does_not_exist = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let inventory_type_display_name_of_yojson = string_of_yojson
 let inventory_schema_delete_option_of_yojson (tree : t) path =
   (match tree with
@@ -7742,8 +7721,7 @@ let invalid_result_attribute_exception_of_yojson tree path =
     } in
   _res
 let invalid_plugin_name_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_plugin_name = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let invalid_option_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : invalid_option_exception =
@@ -9781,8 +9759,7 @@ let document_already_exists_of_yojson tree path =
     } in
   _res
 let disassociate_ops_item_related_item_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_ops_item_related_item_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_ops_item_related_item_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_ops_item_related_item_request =
@@ -11358,8 +11335,7 @@ let deregister_patch_baseline_for_patch_group_request_of_yojson tree path =
     } in
   _res
 let deregister_managed_instance_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_managed_instance_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_managed_instance_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_managed_instance_request =
@@ -11369,8 +11345,7 @@ let deregister_managed_instance_request_of_yojson tree path =
     } in
   _res
 let delete_resource_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_resource_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_resource_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_resource_policy_request =
@@ -11383,8 +11358,7 @@ let delete_resource_policy_request_of_yojson tree path =
     } in
   _res
 let delete_resource_data_sync_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_resource_data_sync_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_resource_data_sync_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_resource_data_sync_request =
@@ -11438,16 +11412,14 @@ let delete_parameters_request_of_yojson tree path =
     } in
   _res
 let delete_parameter_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_parameter_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_parameter_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_parameter_request =
     { name = (value_for_key ps_parameter_name_of_yojson "Name" _list path) } in
   _res
 let delete_ops_metadata_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_ops_metadata_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_ops_metadata_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_ops_metadata_request =
@@ -11457,8 +11429,7 @@ let delete_ops_metadata_request_of_yojson tree path =
     } in
   _res
 let delete_ops_item_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_ops_item_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_ops_item_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_ops_item_request =
@@ -11522,8 +11493,7 @@ let delete_inventory_request_of_yojson tree path =
     } in
   _res
 let delete_document_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_document_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_document_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_document_request =
@@ -11543,11 +11513,9 @@ let delete_document_request_of_yojson tree path =
     } in
   _res
 let associated_instances_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associated_instances = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_association_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_association_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_association_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_association_request =
@@ -11565,8 +11533,7 @@ let delete_association_request_of_yojson tree path =
     } in
   _res
 let delete_activation_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_activation_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_activation_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_activation_request =
@@ -11576,8 +11543,7 @@ let delete_activation_request_of_yojson tree path =
     } in
   _res
 let create_resource_data_sync_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_resource_data_sync_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_resource_data_sync_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_resource_data_sync_request =
@@ -11974,11 +11940,9 @@ let create_association_batch_request_of_yojson tree path =
     } in
   _res
 let association_limit_exceeded_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : association_limit_exceeded = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let association_already_exists_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : association_already_exists = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let activation_code_of_yojson = string_of_yojson
 let create_activation_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -12043,8 +12007,7 @@ let cancel_maintenance_window_execution_request_of_yojson tree path =
     } in
   _res
 let cancel_command_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : cancel_command_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cancel_command_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : cancel_command_request =
@@ -12087,8 +12050,7 @@ let associate_ops_item_related_item_request_of_yojson tree path =
     } in
   _res
 let add_tags_to_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_tags_to_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_tags_to_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_tags_to_resource_request =

@@ -21,14 +21,14 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
       raise (Generate_failure (name, a)))
 
 let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
-    ~alias_context oc =
+    ~alias_context ?(no_open = false) oc =
   if
     Trait.hasTrait service.traits (function
       | Trait.AwsProtocolAwsJson1_1Trait -> true
       | Trait.AwsProtocolAwsJson1_0Trait -> true
       | _ -> false)
   then (
-    let opens = [ Codegen.Ppx_util.sigi_open [ "Types" ] ] in
+    let opens = if no_open then [] else [ Codegen.Ppx_util.sigi_open [ "Types" ] ] in
     try
       let sign =
         Codegen.AwsProtocolJson_ppx.Operations.generate_mli ~name ~operation_shapes ~alias_context

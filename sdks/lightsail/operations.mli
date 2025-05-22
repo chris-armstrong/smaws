@@ -237,7 +237,7 @@ module CreateContainerServiceRegistryLogin :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      create_container_service_registry_login_request ->
+      unit ->
         (create_container_service_registry_login_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -606,7 +606,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_container_image_request ->
-        (delete_container_image_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -620,7 +620,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_container_service_request ->
-        (delete_container_service_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -932,7 +932,7 @@ module DownloadDefaultKeyPair :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      download_default_key_pair_request ->
+      unit ->
         (download_default_key_pair_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -1162,7 +1162,7 @@ module GetContainerAPIMetadata :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_container_api_metadata_request ->
+      unit ->
         (get_container_api_metadata_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -1230,7 +1230,7 @@ module GetContainerServicePowers :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_container_service_powers_request ->
+      unit ->
         (get_container_service_powers_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -1339,7 +1339,7 @@ module GetDistributionBundles :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_distribution_bundles_request ->
+      unit ->
         (get_distribution_bundles_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -2033,7 +2033,7 @@ module IsVpcPeered :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      is_vpc_peered_request ->
+      unit ->
         (is_vpc_peered_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -2067,7 +2067,7 @@ module PeerVpc :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      peer_vpc_request ->
+      unit ->
         (peer_vpc_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -2382,7 +2382,7 @@ module UnpeerVpc :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unpeer_vpc_request ->
+      unit ->
         (unpeer_vpc_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 

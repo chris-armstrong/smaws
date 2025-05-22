@@ -49,13 +49,13 @@ val make_update_state_machine_alias_input :
     ?description:string ->
       state_machine_alias_arn:string ->
         unit -> update_state_machine_alias_input
-val make_update_map_run_output : unit -> update_map_run_output
+val make_update_map_run_output : unit -> unit
 val make_update_map_run_input :
   ?tolerated_failure_count:int ->
     ?tolerated_failure_percentage:float ->
       ?max_concurrency:int ->
         map_run_arn:string -> unit -> update_map_run_input
-val make_untag_resource_output : unit -> untag_resource_output
+val make_untag_resource_output : unit -> unit
 val make_untag_resource_input :
   tag_keys:string list -> resource_arn:string -> unit -> untag_resource_input
 val make_inspection_data_request :
@@ -134,7 +134,7 @@ val make_task_failed_event_details :
     ?error:string ->
       resource:string ->
         resource_type:string -> unit -> task_failed_event_details
-val make_tag_resource_output : unit -> tag_resource_output
+val make_tag_resource_output : unit -> unit
 val make_tag : ?value:string -> ?key:string -> unit -> tag
 val make_tag_resource_input :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_input
@@ -195,13 +195,13 @@ val make_start_execution_input :
     ?input:string ->
       ?name:string ->
         state_machine_arn:string -> unit -> start_execution_input
-val make_send_task_success_output : unit -> send_task_success_output
+val make_send_task_success_output : unit -> unit
 val make_send_task_success_input :
   output:string -> task_token:string -> unit -> send_task_success_input
-val make_send_task_heartbeat_output : unit -> send_task_heartbeat_output
+val make_send_task_heartbeat_output : unit -> unit
 val make_send_task_heartbeat_input :
   task_token:string -> unit -> send_task_heartbeat_input
-val make_send_task_failure_output : unit -> send_task_failure_output
+val make_send_task_failure_output : unit -> unit
 val make_send_task_failure_input :
   ?cause:string ->
     ?error:string -> task_token:string -> unit -> send_task_failure_input
@@ -553,19 +553,17 @@ val make_describe_activity_output :
     name:string -> activity_arn:string -> unit -> describe_activity_output
 val make_describe_activity_input :
   activity_arn:string -> unit -> describe_activity_input
-val make_delete_state_machine_version_output :
-  unit -> delete_state_machine_version_output
+val make_delete_state_machine_version_output : unit -> unit
 val make_delete_state_machine_version_input :
   state_machine_version_arn:string ->
     unit -> delete_state_machine_version_input
-val make_delete_state_machine_output : unit -> delete_state_machine_output
+val make_delete_state_machine_output : unit -> unit
 val make_delete_state_machine_input :
   state_machine_arn:string -> unit -> delete_state_machine_input
-val make_delete_state_machine_alias_output :
-  unit -> delete_state_machine_alias_output
+val make_delete_state_machine_alias_output : unit -> unit
 val make_delete_state_machine_alias_input :
   state_machine_alias_arn:string -> unit -> delete_state_machine_alias_input
-val make_delete_activity_output : unit -> delete_activity_output
+val make_delete_activity_output : unit -> unit
 val make_delete_activity_input :
   activity_arn:string -> unit -> delete_activity_input
 val make_create_state_machine_output :

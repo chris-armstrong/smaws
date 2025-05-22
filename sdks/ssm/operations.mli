@@ -4,12 +4,11 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_resource_request ->
-        (add_tags_to_resource_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id 
-          | `InvalidResourceType of invalid_resource_type 
-          | `TooManyTagsError of too_many_tags_error 
+          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
+          | `TooManyTagsError of unit 
           | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
      "Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:\n\n {ul\n       {-   [Key=Owner,Value=DbAdmin] \n           \n            }\n       {-   [Key=Owner,Value=SysAdmin] \n           \n            }\n       {-   [Key=Owner,Value=Dev] \n           \n            }\n       {-   [Key=Stack,Value=Production] \n           \n            }\n       {-   [Key=Stack,Value=Pre-Production] \n           \n            }\n       {-   [Key=Stack,Value=Test] \n           \n            }\n       }\n   Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.\n   \n    We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.\n    \n     For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your Amazon EC2 resources} in the {i Amazon EC2 User Guide}.\n     "]
@@ -37,11 +36,11 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_command_request ->
-        (cancel_command_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `DuplicateInstanceId of duplicate_instance_id 
+          | `DuplicateInstanceId of unit 
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of invalid_command_id 
+          | `InvalidCommandId of unit 
           | `InvalidInstanceId of invalid_instance_id ]) result
 end[@@ocaml.doc
      "Attempts to cancel the command specified by the Command ID. There is no guarantee that the command will be terminated and the underlying process stopped.\n"]
@@ -74,13 +73,13 @@ sig
       create_association_request ->
         (create_association_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociationAlreadyExists of association_already_exists 
-          | `AssociationLimitExceeded of association_limit_exceeded 
+          | `AssociationAlreadyExists of unit 
+          | `AssociationLimitExceeded of unit 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidOutputLocation of invalid_output_location 
+          | `InvalidOutputLocation of unit 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTag of invalid_tag  | `InvalidTarget of invalid_target 
@@ -95,13 +94,13 @@ sig
       create_association_batch_request ->
         (create_association_batch_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociationLimitExceeded of association_limit_exceeded 
-          | `DuplicateInstanceId of duplicate_instance_id 
+          | `AssociationLimitExceeded of unit 
+          | `DuplicateInstanceId of unit 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidOutputLocation of invalid_output_location 
+          | `InvalidOutputLocation of unit 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTarget of invalid_target 
@@ -194,7 +193,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_resource_data_sync_request ->
-        (create_resource_data_sync_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncAlreadyExistsException of
@@ -211,7 +210,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_activation_request ->
-        (delete_activation_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidActivation of invalid_activation 
@@ -224,7 +223,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_association_request ->
-        (delete_association_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AssociationDoesNotExist of association_does_not_exist 
           | `InternalServerError of internal_server_error 
@@ -238,9 +237,9 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_document_request ->
-        (delete_document_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociatedInstances of associated_instances 
+          | `AssociatedInstances of unit 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentOperation of invalid_document_operation ]) result
@@ -277,7 +276,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_ops_item_request ->
-        (delete_ops_item_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemInvalidParameterException of
@@ -290,7 +289,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_ops_metadata_request ->
-        (delete_ops_metadata_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsMetadataInvalidArgumentException of
@@ -303,7 +302,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_parameter_request ->
-        (delete_parameter_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ParameterNotFound of parameter_not_found ]) result
@@ -334,7 +333,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_data_sync_request ->
-        (delete_resource_data_sync_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncInvalidConfigurationException of
@@ -349,7 +348,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_policy_request ->
-        (delete_resource_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `MalformedResourcePolicyDocumentException of
@@ -369,7 +368,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_managed_instance_request ->
-        (deregister_managed_instance_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidInstanceId of invalid_instance_id ]) result
@@ -383,7 +382,7 @@ sig
         (deregister_patch_baseline_for_patch_group_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id ]) result
+          | `InvalidResourceId of unit ]) result
 end[@@ocaml.doc "Removes a patch group from a patch baseline.\n"]
 module DeregisterTargetFromMaintenanceWindow :
 sig
@@ -465,7 +464,7 @@ sig
         (describe_automation_executions_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -480,7 +479,7 @@ sig
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -541,7 +540,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceId of unit 
           | `UnsupportedOperatingSystem of unsupported_operating_system ])
           result
 end[@@ocaml.doc
@@ -565,7 +564,7 @@ sig
         (describe_instance_information_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidInstanceInformationFilterValue of
               invalid_instance_information_filter_value 
@@ -618,7 +617,7 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidActivationId of invalid_activation_id 
           | `InvalidDocument of invalid_document 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidInstancePropertyFilterValue of
               invalid_instance_property_filter_value 
@@ -739,7 +738,7 @@ sig
         (describe_parameters_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidFilterOption of invalid_filter_option 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
@@ -794,7 +793,7 @@ sig
         (describe_sessions_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
      "Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.\n"]
@@ -803,7 +802,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_ops_item_related_item_request ->
-        (disassociate_ops_item_related_item_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemConflictException of ops_item_conflict_exception 
@@ -849,10 +848,10 @@ sig
         (get_command_invocation_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of invalid_command_id 
+          | `InvalidCommandId of unit 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidPluginName of invalid_plugin_name 
-          | `InvocationDoesNotExist of invocation_does_not_exist ]) result
+          | `InvalidPluginName of unit  | `InvocationDoesNotExist of unit ])
+          result
 end[@@ocaml.doc
      "Returns detailed information about command execution for an invocation or plugin.\n\n  [GetCommandInvocation] only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use [ListCommandInvocations]. To get the command execution status across managed nodes, use [ListCommands].\n "]
 module GetConnectionStatus :
@@ -1077,7 +1076,7 @@ sig
         (get_parameters_by_path_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidFilterOption of invalid_filter_option 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidKeyId of invalid_key_id 
@@ -1093,7 +1092,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id ]) result
+          | `InvalidResourceId of unit ]) result
 end[@@ocaml.doc "Retrieves information about a patch baseline.\n"]
 module GetPatchBaselineForPatchGroup :
 sig
@@ -1175,8 +1174,7 @@ sig
         (list_command_invocations_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of invalid_command_id 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidCommandId of unit  | `InvalidFilterKey of unit 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -1189,8 +1187,7 @@ sig
         (list_commands_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of invalid_command_id 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidCommandId of unit  | `InvalidFilterKey of unit 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -1205,8 +1202,8 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidFilter of invalid_filter 
           | `InvalidNextToken of invalid_next_token 
-          | `InvalidResourceId of invalid_resource_id 
-          | `InvalidResourceType of invalid_resource_type ]) result
+          | `InvalidResourceId of unit  | `InvalidResourceType of unit ])
+          result
 end[@@ocaml.doc
      "For a specified resource ID, this API operation returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter.\n"]
 module ListComplianceSummaries :
@@ -1253,7 +1250,7 @@ sig
         (list_documents_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of invalid_filter_key 
+          | `InvalidFilterKey of unit 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
      "Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results of this request by using a filter.\n"]
@@ -1347,8 +1344,8 @@ sig
         (list_tags_for_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id 
-          | `InvalidResourceType of invalid_resource_type ]) result
+          | `InvalidResourceId of unit  | `InvalidResourceType of unit ])
+          result
 end[@@ocaml.doc
      "Returns a list of the tags assigned to the specified resource.\n\n For information about the ID format for each supported resource type, see [AddTagsToResource].\n "]
 module ModifyDocumentPermission :
@@ -1356,7 +1353,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       modify_document_permission_request ->
-        (modify_document_permission_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DocumentLimitExceeded of document_limit_exceeded 
           | `DocumentPermissionLimit of document_permission_limit 
@@ -1370,14 +1367,13 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_compliance_items_request ->
-        (put_compliance_items_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ComplianceTypeCountLimitExceededException of
               compliance_type_count_limit_exceeded_exception 
           | `InternalServerError of internal_server_error 
           | `InvalidItemContentException of invalid_item_content_exception 
-          | `InvalidResourceId of invalid_resource_id 
-          | `InvalidResourceType of invalid_resource_type 
+          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
           | `ItemSizeLimitExceededException of
               item_size_limit_exceeded_exception 
           | `TotalSizeLimitExceededException of
@@ -1475,7 +1471,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id ]) result
+          | `InvalidResourceId of unit ]) result
 end[@@ocaml.doc
      "Defines the default patch baseline for the relevant operating system.\n\n To reset the Amazon Web Services-predefined patch baseline as the default, specify the full patch baseline Amazon Resource Name (ARN) as the baseline ID value. For example, for CentOS, specify [arn:aws:ssm:us-east-2:733109147000:patchbaseline/pb-0574b43a65ea646ed] instead of [pb-0574b43a65ea646ed].\n "]
 module RegisterPatchBaselineForPatchGroup :
@@ -1488,7 +1484,7 @@ sig
           | `AlreadyExistsException of already_exists_exception 
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceId of unit 
           | `ResourceLimitExceededException of
               resource_limit_exceeded_exception ])
           result
@@ -1527,11 +1523,10 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_resource_request ->
-        (remove_tags_from_resource_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of invalid_resource_id 
-          | `InvalidResourceType of invalid_resource_type 
+          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
           | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc "Removes tag keys from the specified resource.\n"]
 module ResetServiceSetting :
@@ -1562,7 +1557,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_automation_signal_request ->
-        (send_automation_signal_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
@@ -1581,13 +1576,13 @@ sig
       send_command_request ->
         (send_command_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `DuplicateInstanceId of duplicate_instance_id 
+          | `DuplicateInstanceId of unit 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNotificationConfig of invalid_notification_config 
-          | `InvalidOutputFolder of invalid_output_folder 
+          | `InvalidOutputFolder of unit 
           | `InvalidParameters of invalid_parameters 
           | `InvalidRole of invalid_role 
           | `MaxDocumentSizeExceeded of max_document_size_exceeded 
@@ -1598,7 +1593,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_associations_once_request ->
-        (start_associations_once_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AssociationDoesNotExist of association_does_not_exist 
           | `InvalidAssociation of invalid_association ]) result
@@ -1662,7 +1657,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_automation_execution_request ->
-        (stop_automation_execution_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
@@ -1707,7 +1702,7 @@ sig
           | `InvalidAssociationVersion of invalid_association_version 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
-          | `InvalidOutputLocation of invalid_output_location 
+          | `InvalidOutputLocation of unit 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTarget of invalid_target 
@@ -1727,8 +1722,8 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidInstanceId of invalid_instance_id 
-          | `StatusUnchanged of status_unchanged 
-          | `TooManyUpdates of too_many_updates ]) result
+          | `StatusUnchanged of unit  | `TooManyUpdates of too_many_updates ])
+          result
 end[@@ocaml.doc
      "Updates the status of the Amazon Web Services Systems Manager document (SSM document) associated with the specified managed node.\n\n  [UpdateAssociationStatus] is primarily used by the Amazon Web Services Systems Manager Agent (SSM Agent) to report status updates about your associations and is only used for associations created with the [InstanceId] legacy parameter.\n "]
 module UpdateDocument :
@@ -1767,7 +1762,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_document_metadata_request ->
-        (update_document_metadata_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
@@ -1813,7 +1808,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_managed_instance_role_request ->
-        (update_managed_instance_role_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidInstanceId of invalid_instance_id ]) result
@@ -1824,7 +1819,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_ops_item_request ->
-        (update_ops_item_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemAccessDeniedException of ops_item_access_denied_exception 
@@ -1873,7 +1868,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_resource_data_sync_request ->
-        (update_resource_data_sync_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncConflictException of
@@ -1890,7 +1885,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_service_setting_request ->
-        (update_service_setting_result,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ServiceSettingNotFound of service_setting_not_found 

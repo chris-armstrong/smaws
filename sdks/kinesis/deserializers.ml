@@ -1229,8 +1229,7 @@ let describe_limits_output_of_yojson tree path =
     } in
   _res
 let describe_limits_input_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : describe_limits_input = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_stream_consumer_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_stream_consumer_input =

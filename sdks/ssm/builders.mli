@@ -55,7 +55,7 @@ val make_update_ops_metadata_request :
   ?keys_to_delete:string list ->
     ?metadata_to_update:metadata_map ->
       ops_metadata_arn:string -> unit -> update_ops_metadata_request
-val make_update_ops_item_response : unit -> update_ops_item_response
+val make_update_ops_item_response : unit -> unit
 val make_ops_item_data_value :
   ?type_:ops_item_data_type -> ?value:string -> unit -> ops_item_data_value
 val make_ops_item_notification : ?arn:string -> unit -> ops_item_notification
@@ -237,8 +237,7 @@ val make_update_document_request :
             ?attachments:attachments_source list ->
               name:string ->
                 content:string -> unit -> update_document_request
-val make_update_document_metadata_response :
-  unit -> update_document_metadata_response
+val make_update_document_metadata_response : unit -> unit
 val make_document_review_comment_source :
   ?content:string ->
     ?type_:document_review_comment_type ->
@@ -889,8 +888,7 @@ val make_ops_aggregator :
         ?attribute_name:string ->
           ?type_name:string ->
             ?aggregator_type:string -> unit -> ops_aggregator
-val make_modify_document_permission_response :
-  unit -> modify_document_permission_response
+val make_modify_document_permission_response : unit -> unit
 val make_modify_document_permission_request :
   ?shared_document_version:string ->
     ?account_ids_to_remove:string list ->
@@ -1569,8 +1567,7 @@ val make_failed_create_association :
         unit -> failed_create_association
 val make_effective_patch :
   ?patch_status:patch_status -> ?patch:patch -> unit -> effective_patch
-val make_disassociate_ops_item_related_item_response :
-  unit -> disassociate_ops_item_related_item_response
+val make_disassociate_ops_item_related_item_response : unit -> unit
 val make_disassociate_ops_item_related_item_request :
   association_id:string ->
     ops_item_id:string -> unit -> disassociate_ops_item_related_item_request
@@ -1875,8 +1872,7 @@ val make_deregister_patch_baseline_for_patch_group_request :
       unit -> deregister_patch_baseline_for_patch_group_request
 val make_deregister_managed_instance_request :
   instance_id:string -> unit -> deregister_managed_instance_request
-val make_delete_resource_policy_response :
-  unit -> delete_resource_policy_response
+val make_delete_resource_policy_response : unit -> unit
 val make_delete_resource_policy_request :
   policy_hash:string ->
     policy_id:string ->
@@ -1892,7 +1888,7 @@ val make_delete_parameter_request :
   name:string -> unit -> delete_parameter_request
 val make_delete_ops_metadata_request :
   ops_metadata_arn:string -> unit -> delete_ops_metadata_request
-val make_delete_ops_item_response : unit -> delete_ops_item_response
+val make_delete_ops_item_response : unit -> unit
 val make_delete_ops_item_request :
   ops_item_id:string -> unit -> delete_ops_item_request
 val make_delete_maintenance_window_request :

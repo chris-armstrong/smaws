@@ -322,8 +322,7 @@ let purge_queue_in_progress_to_yojson (x : purge_queue_in_progress) =
   assoc_to_yojson
     [("message", (option_to_yojson exception_message_to_yojson x.message))]
 let nullable_long_to_yojson = long_to_yojson
-let message_not_inflight_to_yojson (x : message_not_inflight) =
-  assoc_to_yojson []
+let message_not_inflight_to_yojson = unit_to_yojson
 let long_to_yojson = long_to_yojson
 let list_queues_result_to_yojson (x : list_queues_result) =
   assoc_to_yojson
@@ -384,7 +383,7 @@ let list_dead_letter_source_queues_request_to_yojson
     [("MaxResults", (option_to_yojson boxed_integer_to_yojson x.max_results));
     ("NextToken", (option_to_yojson token_to_yojson x.next_token));
     ("QueueUrl", (Some (string__to_yojson x.queue_url)))]
-let invalid_id_format_to_yojson (x : invalid_id_format) = assoc_to_yojson []
+let invalid_id_format_to_yojson = unit_to_yojson
 let get_queue_url_result_to_yojson (x : get_queue_url_result) =
   assoc_to_yojson
     [("QueueUrl", (option_to_yojson string__to_yojson x.queue_url))]

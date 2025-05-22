@@ -156,8 +156,7 @@ let conflict_exception_to_yojson (x : conflict_exception) =
 let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson base_string_to_yojson x.message))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_value_to_yojson = string_to_yojson
 let tag_to_yojson (x : tag) =
@@ -170,8 +169,7 @@ let untag_resource_request_to_yojson (x : untag_resource_request) =
     [("tags", (Some (tag_list_to_yojson x.tags)));
     ("resourceArn", (Some (ar_n_to_yojson x.resource_arn)))]
 let timestamp__to_yojson = timestamp_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("tags", (Some (tag_list_to_yojson x.tags)));
@@ -388,14 +386,12 @@ let get_keyspace_response_to_yojson (x : get_keyspace_response) =
 let get_keyspace_request_to_yojson (x : get_keyspace_request) =
   assoc_to_yojson
     [("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
-let delete_table_response_to_yojson (x : delete_table_response) =
-  assoc_to_yojson []
+let delete_table_response_to_yojson = unit_to_yojson
 let delete_table_request_to_yojson (x : delete_table_request) =
   assoc_to_yojson
     [("tableName", (Some (table_name_to_yojson x.table_name)));
     ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
-let delete_keyspace_response_to_yojson (x : delete_keyspace_response) =
-  assoc_to_yojson []
+let delete_keyspace_response_to_yojson = unit_to_yojson
 let delete_keyspace_request_to_yojson (x : delete_keyspace_request) =
   assoc_to_yojson
     [("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]

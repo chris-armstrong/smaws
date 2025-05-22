@@ -232,7 +232,7 @@ val make_untag_resource_request :
   ?resource_arn:string ->
     tag_keys:string list ->
       resource_name:string -> unit -> untag_resource_request
-val make_unpeer_vpc_request : unit -> unpeer_vpc_request
+val make_unpeer_vpc_request : unit -> unit
 val make_time_period :
   ?end_:CoreTypes.Timestamp.t ->
     ?start:CoreTypes.Timestamp.t -> unit -> time_period
@@ -460,7 +460,7 @@ val make_put_alarm_request :
                   monitored_resource_name:string ->
                     metric_name:metric_name ->
                       alarm_name:string -> unit -> put_alarm_request
-val make_peer_vpc_request : unit -> peer_vpc_request
+val make_peer_vpc_request : unit -> unit
 val make_password_data :
   ?key_pair_name:string -> ?ciphertext:string -> unit -> password_data
 val make_origin :
@@ -574,7 +574,7 @@ val make_load_balancer :
                                   ?support_code:string ->
                                     ?arn:string ->
                                       ?name:string -> unit -> load_balancer
-val make_is_vpc_peered_request : unit -> is_vpc_peered_request
+val make_is_vpc_peered_request : unit -> unit
 val make_import_key_pair_request :
   public_key_base64:string ->
     key_pair_name:string -> unit -> import_key_pair_request
@@ -898,8 +898,7 @@ val make_distribution_bundle :
     ?transfer_per_month_in_gb:int ->
       ?price:float ->
         ?name:string -> ?bundle_id:string -> unit -> distribution_bundle
-val make_get_distribution_bundles_request :
-  unit -> get_distribution_bundles_request
+val make_get_distribution_bundles_request : unit -> unit
 val make_disk_snapshot :
   ?is_from_auto_snapshot:bool ->
     ?from_instance_arn:string ->
@@ -934,8 +933,7 @@ val make_container_service_power :
       ?ram_size_in_gb:float ->
         ?cpu_count:float ->
           ?price:float -> ?power_id:string -> unit -> container_service_power
-val make_get_container_service_powers_request :
-  unit -> get_container_service_powers_request
+val make_get_container_service_powers_request : unit -> unit
 val make_get_container_service_metric_data_request :
   statistics:metric_statistic list ->
     period:int ->
@@ -958,8 +956,7 @@ val make_get_container_log_request :
             service_name:string -> unit -> get_container_log_request
 val make_get_container_images_request :
   service_name:string -> unit -> get_container_images_request
-val make_get_container_api_metadata_request :
-  unit -> get_container_api_metadata_request
+val make_get_container_api_metadata_request : unit -> unit
 val make_contact_method :
   ?support_code:string ->
     ?resource_type:resource_type ->
@@ -1142,8 +1139,7 @@ val make_add_on_request :
 val make_enable_add_on_request :
   add_on_request:add_on_request ->
     resource_name:string -> unit -> enable_add_on_request
-val make_download_default_key_pair_request :
-  unit -> download_default_key_pair_request
+val make_download_default_key_pair_request : unit -> unit
 val make_disable_add_on_request :
   resource_name:string ->
     add_on_type:add_on_type -> unit -> disable_add_on_request
@@ -1343,8 +1339,7 @@ val make_container_service_registry_login :
     ?expires_at:CoreTypes.Timestamp.t ->
       ?password:string ->
         ?username:string -> unit -> container_service_registry_login
-val make_create_container_service_registry_login_request :
-  unit -> create_container_service_registry_login_request
+val make_create_container_service_registry_login_request : unit -> unit
 val make_endpoint_request :
   ?health_check:container_service_health_check_config ->
     container_port:int -> container_name:string -> unit -> endpoint_request

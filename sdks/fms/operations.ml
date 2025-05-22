@@ -190,7 +190,7 @@ module DeleteNotificationChannel =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : delete_notification_channel_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -318,7 +318,7 @@ module DisassociateAdminAccount =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : disassociate_admin_account_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -384,7 +384,7 @@ module GetAdminAccount =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_admin_account_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_admin_account_request_to_yojson request in
@@ -514,7 +514,7 @@ module GetNotificationChannel =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_notification_channel_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =

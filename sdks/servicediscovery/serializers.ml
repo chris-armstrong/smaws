@@ -159,8 +159,7 @@ let update_http_namespace_request_to_yojson
     ("UpdaterRequestId",
       (option_to_yojson resource_id_to_yojson x.updater_request_id));
     ("Id", (Some (resource_id_to_yojson x.id)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let amazon_resource_name_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -179,8 +178,7 @@ let too_many_tags_exception_to_yojson (x : too_many_tags_exception) =
     ("Message", (option_to_yojson error_message_to_yojson x.message))]
 let timestamp__to_yojson = timestamp_to_yojson
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -582,8 +580,7 @@ let deregister_instance_request_to_yojson (x : deregister_instance_request) =
   assoc_to_yojson
     [("InstanceId", (Some (resource_id_to_yojson x.instance_id)));
     ("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
-let delete_service_response_to_yojson (x : delete_service_response) =
-  assoc_to_yojson []
+let delete_service_response_to_yojson = unit_to_yojson
 let delete_service_request_to_yojson (x : delete_service_request) =
   assoc_to_yojson [("Id", (Some (resource_id_to_yojson x.id)))]
 let delete_namespace_response_to_yojson (x : delete_namespace_response) =

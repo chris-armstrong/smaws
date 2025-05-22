@@ -218,7 +218,7 @@ let make_update_api_destination_request
      description = description_;
      name = name_
    } : update_api_destination_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
@@ -399,7 +399,7 @@ let make_target
      arn = arn_;
      id = id_
    } : target)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tags = tags_; resource_ar_n = resource_ar_n_ } : tag_resource_request)
@@ -1188,7 +1188,7 @@ let make_delete_partner_event_source_request ~account:(account_ : string)
   ({ account = account_; name = name_ } : delete_partner_event_source_request)
 let make_delete_event_bus_request ~name:(name_ : string)  () =
   ({ name = name_ } : delete_event_bus_request)
-let make_delete_endpoint_response () = (() : delete_endpoint_response)
+let make_delete_endpoint_response () = (() : unit)
 let make_delete_endpoint_request ~name:(name_ : string)  () =
   ({ name = name_ } : delete_endpoint_request)
 let make_delete_connection_response
@@ -1207,11 +1207,10 @@ let make_delete_connection_response
    } : delete_connection_response)
 let make_delete_connection_request ~name:(name_ : string)  () =
   ({ name = name_ } : delete_connection_request)
-let make_delete_archive_response () = (() : delete_archive_response)
+let make_delete_archive_response () = (() : unit)
 let make_delete_archive_request ~archive_name:(archive_name_ : string)  () =
   ({ archive_name = archive_name_ } : delete_archive_request)
-let make_delete_api_destination_response () =
-  (() : delete_api_destination_response)
+let make_delete_api_destination_response () = (() : unit)
 let make_delete_api_destination_request ~name:(name_ : string)  () =
   ({ name = name_ } : delete_api_destination_request)
 let make_deauthorize_connection_response

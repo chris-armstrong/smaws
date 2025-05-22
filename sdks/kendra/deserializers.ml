@@ -2599,8 +2599,7 @@ let update_data_source_request_of_yojson tree path =
     } in
   _res
 let update_access_control_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_access_control_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let access_control_configuration_id_of_yojson = string_of_yojson
 let access_control_configuration_name_of_yojson = string_of_yojson
 let principal_type_of_yojson (tree : t) path =
@@ -2671,8 +2670,7 @@ let update_access_control_configuration_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let amazon_resource_name_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -2799,8 +2797,7 @@ let text_document_statistics_of_yojson tree path =
   _res
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -5542,8 +5539,7 @@ let delete_faq_request_of_yojson tree path =
     } in
   _res
 let delete_experience_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_experience_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_experience_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_experience_request =
@@ -5561,8 +5557,7 @@ let delete_data_source_request_of_yojson tree path =
     } in
   _res
 let delete_access_control_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_access_control_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_access_control_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_access_control_configuration_request =

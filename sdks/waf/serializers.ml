@@ -198,8 +198,7 @@ let waf_invalid_operation_exception_to_yojson
   (x : waf_invalid_operation_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let waf_invalid_account_exception_to_yojson
-  (x : waf_invalid_account_exception) = assoc_to_yojson []
+let waf_invalid_account_exception_to_yojson = unit_to_yojson
 let waf_internal_error_exception_to_yojson (x : waf_internal_error_exception)
   =
   assoc_to_yojson
@@ -749,8 +748,7 @@ let update_byte_match_set_request_to_yojson
     [("Updates", (Some (byte_match_set_updates_to_yojson x.updates)));
     ("ChangeToken", (Some (change_token_to_yojson x.change_token)));
     ("ByteMatchSetId", (Some (resource_id_to_yojson x.byte_match_set_id)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
@@ -764,8 +762,7 @@ let time_window_to_yojson (x : time_window) =
     [("EndTime", (Some (timestamp__to_yojson x.end_time)));
     ("StartTime", (Some (timestamp__to_yojson x.start_time)))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -921,8 +918,7 @@ let rate_based_rule_to_yojson (x : rate_based_rule) =
     ("MetricName", (option_to_yojson metric_name_to_yojson x.metric_name));
     ("Name", (option_to_yojson resource_name_to_yojson x.name));
     ("RuleId", (Some (resource_id_to_yojson x.rule_id)))]
-let put_permission_policy_response_to_yojson
-  (x : put_permission_policy_response) = assoc_to_yojson []
+let put_permission_policy_response_to_yojson = unit_to_yojson
 let policy_string_to_yojson = string_to_yojson
 let put_permission_policy_request_to_yojson
   (x : put_permission_policy_request) =
@@ -1303,8 +1299,7 @@ let get_change_token_response_to_yojson (x : get_change_token_response) =
   assoc_to_yojson
     [("ChangeToken",
        (option_to_yojson change_token_to_yojson x.change_token))]
-let get_change_token_request_to_yojson (x : get_change_token_request) =
-  assoc_to_yojson []
+let get_change_token_request_to_yojson = unit_to_yojson
 let byte_match_tuples_to_yojson tree =
   list_to_yojson byte_match_tuple_to_yojson tree
 let byte_match_set_to_yojson (x : byte_match_set) =
@@ -1407,14 +1402,12 @@ let delete_rate_based_rule_request_to_yojson
   assoc_to_yojson
     [("ChangeToken", (Some (change_token_to_yojson x.change_token)));
     ("RuleId", (Some (resource_id_to_yojson x.rule_id)))]
-let delete_permission_policy_response_to_yojson
-  (x : delete_permission_policy_response) = assoc_to_yojson []
+let delete_permission_policy_response_to_yojson = unit_to_yojson
 let delete_permission_policy_request_to_yojson
   (x : delete_permission_policy_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)))]
-let delete_logging_configuration_response_to_yojson
-  (x : delete_logging_configuration_response) = assoc_to_yojson []
+let delete_logging_configuration_response_to_yojson = unit_to_yojson
 let delete_logging_configuration_request_to_yojson
   (x : delete_logging_configuration_request) =
   assoc_to_yojson

@@ -241,8 +241,7 @@ let throttling_exception_of_yojson tree path =
     } in
   _res
 let test_hypervisor_configuration_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : test_hypervisor_configuration_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let test_hypervisor_configuration_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : test_hypervisor_configuration_input =

@@ -15,7 +15,7 @@ val make_identity_pool :
                 allow_unauthenticated_identities:bool ->
                   identity_pool_name:string ->
                     identity_pool_id:string -> unit -> identity_pool
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_input :
   tag_keys:string list -> resource_arn:string -> unit -> untag_resource_input
 val make_unprocessed_identity_id :
@@ -29,7 +29,7 @@ val make_unlink_developer_identity_input :
     developer_provider_name:string ->
       identity_pool_id:string ->
         identity_id:string -> unit -> unlink_developer_identity_input
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_input :
   tags:identity_pool_tags_type ->
     resource_arn:string -> unit -> tag_resource_input

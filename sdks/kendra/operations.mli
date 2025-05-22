@@ -251,7 +251,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_access_control_configuration_request ->
-        (delete_access_control_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -281,7 +281,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_experience_request ->
-        (delete_experience_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -840,7 +840,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InternalServerException of internal_server_exception 
@@ -854,7 +854,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InternalServerException of internal_server_exception 
@@ -867,7 +867,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_access_control_configuration_request ->
-        (update_access_control_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 

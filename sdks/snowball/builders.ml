@@ -405,7 +405,7 @@ let make_job_metadata ?snowball_id:(snowball_id_ : string option)
    } : job_metadata)
 let make_get_software_updates_request ~job_id:(job_id_ : string)  () =
   ({ job_id = job_id_ } : get_software_updates_request)
-let make_get_snowball_usage_request () = (() : get_snowball_usage_request)
+let make_get_snowball_usage_request () = (() : unit)
 let make_get_job_unlock_code_request ~job_id:(job_id_ : string)  () =
   ({ job_id = job_id_ } : get_job_unlock_code_request)
 let make_get_job_manifest_request ~job_id:(job_id_ : string)  () =

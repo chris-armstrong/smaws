@@ -205,7 +205,7 @@ val make_job_metadata :
                                                     unit -> job_metadata
 val make_get_software_updates_request :
   job_id:string -> unit -> get_software_updates_request
-val make_get_snowball_usage_request : unit -> get_snowball_usage_request
+val make_get_snowball_usage_request : unit -> unit
 val make_get_job_unlock_code_request :
   job_id:string -> unit -> get_job_unlock_code_request
 val make_get_job_manifest_request :

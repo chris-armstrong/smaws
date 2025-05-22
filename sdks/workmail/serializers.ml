@@ -30,8 +30,7 @@ let directory_service_authentication_failed_exception_to_yojson
   (x : directory_service_authentication_failed_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_user_response_to_yojson (x : update_user_response) =
-  assoc_to_yojson []
+let update_user_response_to_yojson = unit_to_yojson
 let organization_id_to_yojson = string_to_yojson
 let entity_identifier_to_yojson = string_to_yojson
 let base_unit_to_yojson = unit_to_yojson
@@ -83,8 +82,7 @@ let email_address_in_use_exception_to_yojson
   (x : email_address_in_use_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_resource_response_to_yojson (x : update_resource_response) =
-  assoc_to_yojson []
+let update_resource_response_to_yojson = unit_to_yojson
 let resource_name_to_yojson = string_to_yojson
 let boolean__to_yojson = bool_to_yojson
 let booking_options_to_yojson (x : booking_options) =
@@ -112,8 +110,7 @@ let update_resource_request_to_yojson (x : update_resource_request) =
     ("Name", (option_to_yojson resource_name_to_yojson x.name));
     ("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_primary_email_address_response_to_yojson
-  (x : update_primary_email_address_response) = assoc_to_yojson []
+let update_primary_email_address_response_to_yojson = unit_to_yojson
 let email_address_to_yojson = string_to_yojson
 let update_primary_email_address_request_to_yojson
   (x : update_primary_email_address_request) =
@@ -121,8 +118,7 @@ let update_primary_email_address_request_to_yojson
     [("Email", (Some (email_address_to_yojson x.email)));
     ("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_mobile_device_access_rule_response_to_yojson
-  (x : update_mobile_device_access_rule_response) = assoc_to_yojson []
+let update_mobile_device_access_rule_response_to_yojson = unit_to_yojson
 let mobile_device_access_rule_id_to_yojson = string_to_yojson
 let mobile_device_access_rule_name_to_yojson = string_to_yojson
 let mobile_device_access_rule_description_to_yojson = string_to_yojson
@@ -173,8 +169,7 @@ let update_mobile_device_access_rule_request_to_yojson
          (mobile_device_access_rule_id_to_yojson
             x.mobile_device_access_rule_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_mailbox_quota_response_to_yojson
-  (x : update_mailbox_quota_response) = assoc_to_yojson []
+let update_mailbox_quota_response_to_yojson = unit_to_yojson
 let mailbox_quota_to_yojson = int_to_yojson
 let update_mailbox_quota_request_to_yojson (x : update_mailbox_quota_request)
   =
@@ -189,8 +184,7 @@ let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
 let limit_exceeded_exception_to_yojson (x : limit_exceeded_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_impersonation_role_response_to_yojson
-  (x : update_impersonation_role_response) = assoc_to_yojson []
+let update_impersonation_role_response_to_yojson = unit_to_yojson
 let impersonation_role_id_to_yojson = string_to_yojson
 let impersonation_role_name_to_yojson = string_to_yojson
 let impersonation_role_type_to_yojson (x : impersonation_role_type) =
@@ -231,8 +225,7 @@ let update_impersonation_role_request_to_yojson
     ("ImpersonationRoleId",
       (Some (impersonation_role_id_to_yojson x.impersonation_role_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_group_response_to_yojson (x : update_group_response) =
-  assoc_to_yojson []
+let update_group_response_to_yojson = unit_to_yojson
 let update_group_request_to_yojson (x : update_group_request) =
   assoc_to_yojson
     [("HiddenFromGlobalAddressList",
@@ -240,16 +233,14 @@ let update_group_request_to_yojson (x : update_group_request) =
           x.hidden_from_global_address_list));
     ("GroupId", (Some (entity_identifier_to_yojson x.group_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_default_mail_domain_response_to_yojson
-  (x : update_default_mail_domain_response) = assoc_to_yojson []
+let update_default_mail_domain_response_to_yojson = unit_to_yojson
 let work_mail_domain_name_to_yojson = string_to_yojson
 let update_default_mail_domain_request_to_yojson
   (x : update_default_mail_domain_request) =
   assoc_to_yojson
     [("DomainName", (Some (work_mail_domain_name_to_yojson x.domain_name)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let update_availability_configuration_response_to_yojson
-  (x : update_availability_configuration_response) = assoc_to_yojson []
+let update_availability_configuration_response_to_yojson = unit_to_yojson
 let domain_name_to_yojson = string_to_yojson
 let url_to_yojson = string_to_yojson
 let external_user_name_to_yojson = string_to_yojson
@@ -273,8 +264,7 @@ let update_availability_configuration_request_to_yojson
       (option_to_yojson ews_availability_provider_to_yojson x.ews_provider));
     ("DomainName", (Some (domain_name_to_yojson x.domain_name)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let amazon_resource_name_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -300,8 +290,7 @@ let test_availability_configuration_request_to_yojson
 let too_many_tags_exception_to_yojson (x : too_many_tags_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_value_to_yojson = string_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
@@ -338,8 +327,7 @@ let start_mailbox_export_job_request_to_yojson
 let invalid_password_exception_to_yojson (x : invalid_password_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let reset_password_response_to_yojson (x : reset_password_response) =
-  assoc_to_yojson []
+let reset_password_response_to_yojson = unit_to_yojson
 let work_mail_identifier_to_yojson = string_to_yojson
 let reset_password_request_to_yojson (x : reset_password_request) =
   assoc_to_yojson
@@ -350,8 +338,7 @@ let entity_already_registered_exception_to_yojson
   (x : entity_already_registered_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let register_to_work_mail_response_to_yojson
-  (x : register_to_work_mail_response) = assoc_to_yojson []
+let register_to_work_mail_response_to_yojson = unit_to_yojson
 let register_to_work_mail_request_to_yojson
   (x : register_to_work_mail_request) =
   assoc_to_yojson
@@ -362,8 +349,7 @@ let mail_domain_in_use_exception_to_yojson (x : mail_domain_in_use_exception)
   =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let register_mail_domain_response_to_yojson
-  (x : register_mail_domain_response) = assoc_to_yojson []
+let register_mail_domain_response_to_yojson = unit_to_yojson
 let register_mail_domain_request_to_yojson (x : register_mail_domain_request)
   =
   assoc_to_yojson
@@ -371,8 +357,7 @@ let register_mail_domain_request_to_yojson (x : register_mail_domain_request)
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)));
     ("ClientToken",
       (option_to_yojson idempotency_client_token_to_yojson x.client_token))]
-let put_retention_policy_response_to_yojson
-  (x : put_retention_policy_response) = assoc_to_yojson []
+let put_retention_policy_response_to_yojson = unit_to_yojson
 let short_string_to_yojson = string_to_yojson
 let policy_description_to_yojson = string_to_yojson
 let folder_name_to_yojson (x : folder_name) =
@@ -405,8 +390,7 @@ let put_retention_policy_request_to_yojson (x : put_retention_policy_request)
     ("Name", (Some (short_string_to_yojson x.name)));
     ("Id", (option_to_yojson short_string_to_yojson x.id));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let put_mobile_device_access_override_response_to_yojson
-  (x : put_mobile_device_access_override_response) = assoc_to_yojson []
+let put_mobile_device_access_override_response_to_yojson = unit_to_yojson
 let device_id_to_yojson = string_to_yojson
 let put_mobile_device_access_override_request_to_yojson
   (x : put_mobile_device_access_override_request) =
@@ -418,8 +402,7 @@ let put_mobile_device_access_override_request_to_yojson
     ("DeviceId", (Some (device_id_to_yojson x.device_id)));
     ("UserId", (Some (entity_identifier_to_yojson x.user_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let put_mailbox_permissions_response_to_yojson
-  (x : put_mailbox_permissions_response) = assoc_to_yojson []
+let put_mailbox_permissions_response_to_yojson = unit_to_yojson
 let permission_type_to_yojson (x : permission_type) =
   match x with
   | SEND_ON_BEHALF -> `String "SEND_ON_BEHALF"
@@ -435,15 +418,13 @@ let put_mailbox_permissions_request_to_yojson
     ("GranteeId", (Some (entity_identifier_to_yojson x.grantee_id)));
     ("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let put_inbound_dmarc_settings_response_to_yojson
-  (x : put_inbound_dmarc_settings_response) = assoc_to_yojson []
+let put_inbound_dmarc_settings_response_to_yojson = unit_to_yojson
 let put_inbound_dmarc_settings_request_to_yojson
   (x : put_inbound_dmarc_settings_request) =
   assoc_to_yojson
     [("Enforced", (Some (boolean_object_to_yojson x.enforced)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let put_email_monitoring_configuration_response_to_yojson
-  (x : put_email_monitoring_configuration_response) = assoc_to_yojson []
+let put_email_monitoring_configuration_response_to_yojson = unit_to_yojson
 let log_group_arn_to_yojson = string_to_yojson
 let put_email_monitoring_configuration_request_to_yojson
   (x : put_email_monitoring_configuration_request) =
@@ -451,8 +432,7 @@ let put_email_monitoring_configuration_request_to_yojson
     [("LogGroupArn", (Some (log_group_arn_to_yojson x.log_group_arn)));
     ("RoleArn", (Some (role_arn_to_yojson x.role_arn)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let put_access_control_rule_response_to_yojson
-  (x : put_access_control_rule_response) = assoc_to_yojson []
+let put_access_control_rule_response_to_yojson = unit_to_yojson
 let access_control_rule_name_to_yojson = string_to_yojson
 let access_control_rule_effect_to_yojson (x : access_control_rule_effect) =
   match x with | DENY -> `String "DENY" | ALLOW -> `String "ALLOW"
@@ -1092,16 +1072,14 @@ let get_access_control_effect_request_to_yojson
     ("Action", (Some (access_control_rule_action_to_yojson x.action)));
     ("IpAddress", (Some (ip_address_to_yojson x.ip_address)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let disassociate_member_from_group_response_to_yojson
-  (x : disassociate_member_from_group_response) = assoc_to_yojson []
+let disassociate_member_from_group_response_to_yojson = unit_to_yojson
 let disassociate_member_from_group_request_to_yojson
   (x : disassociate_member_from_group_request) =
   assoc_to_yojson
     [("MemberId", (Some (entity_identifier_to_yojson x.member_id)));
     ("GroupId", (Some (entity_identifier_to_yojson x.group_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let disassociate_delegate_from_resource_response_to_yojson
-  (x : disassociate_delegate_from_resource_response) = assoc_to_yojson []
+let disassociate_delegate_from_resource_response_to_yojson = unit_to_yojson
 let disassociate_delegate_from_resource_request_to_yojson
   (x : disassociate_delegate_from_resource_request) =
   assoc_to_yojson
@@ -1260,35 +1238,30 @@ let invalid_custom_ses_configuration_exception_to_yojson
   (x : invalid_custom_ses_configuration_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let deregister_mail_domain_response_to_yojson
-  (x : deregister_mail_domain_response) = assoc_to_yojson []
+let deregister_mail_domain_response_to_yojson = unit_to_yojson
 let deregister_mail_domain_request_to_yojson
   (x : deregister_mail_domain_request) =
   assoc_to_yojson
     [("DomainName", (Some (work_mail_domain_name_to_yojson x.domain_name)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let deregister_from_work_mail_response_to_yojson
-  (x : deregister_from_work_mail_response) = assoc_to_yojson []
+let deregister_from_work_mail_response_to_yojson = unit_to_yojson
 let deregister_from_work_mail_request_to_yojson
   (x : deregister_from_work_mail_request) =
   assoc_to_yojson
     [("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_user_response_to_yojson (x : delete_user_response) =
-  assoc_to_yojson []
+let delete_user_response_to_yojson = unit_to_yojson
 let delete_user_request_to_yojson (x : delete_user_request) =
   assoc_to_yojson
     [("UserId", (Some (entity_identifier_to_yojson x.user_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_retention_policy_response_to_yojson
-  (x : delete_retention_policy_response) = assoc_to_yojson []
+let delete_retention_policy_response_to_yojson = unit_to_yojson
 let delete_retention_policy_request_to_yojson
   (x : delete_retention_policy_request) =
   assoc_to_yojson
     [("Id", (Some (short_string_to_yojson x.id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_resource_response_to_yojson (x : delete_resource_response) =
-  assoc_to_yojson []
+let delete_resource_response_to_yojson = unit_to_yojson
 let delete_resource_request_to_yojson (x : delete_resource_request) =
   assoc_to_yojson
     [("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
@@ -1306,8 +1279,7 @@ let delete_organization_request_to_yojson (x : delete_organization_request) =
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)));
     ("ClientToken",
       (option_to_yojson idempotency_client_token_to_yojson x.client_token))]
-let delete_mobile_device_access_rule_response_to_yojson
-  (x : delete_mobile_device_access_rule_response) = assoc_to_yojson []
+let delete_mobile_device_access_rule_response_to_yojson = unit_to_yojson
 let delete_mobile_device_access_rule_request_to_yojson
   (x : delete_mobile_device_access_rule_request) =
   assoc_to_yojson
@@ -1316,58 +1288,50 @@ let delete_mobile_device_access_rule_request_to_yojson
           (mobile_device_access_rule_id_to_yojson
              x.mobile_device_access_rule_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_mobile_device_access_override_response_to_yojson
-  (x : delete_mobile_device_access_override_response) = assoc_to_yojson []
+let delete_mobile_device_access_override_response_to_yojson = unit_to_yojson
 let delete_mobile_device_access_override_request_to_yojson
   (x : delete_mobile_device_access_override_request) =
   assoc_to_yojson
     [("DeviceId", (Some (device_id_to_yojson x.device_id)));
     ("UserId", (Some (entity_identifier_to_yojson x.user_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_mailbox_permissions_response_to_yojson
-  (x : delete_mailbox_permissions_response) = assoc_to_yojson []
+let delete_mailbox_permissions_response_to_yojson = unit_to_yojson
 let delete_mailbox_permissions_request_to_yojson
   (x : delete_mailbox_permissions_request) =
   assoc_to_yojson
     [("GranteeId", (Some (entity_identifier_to_yojson x.grantee_id)));
     ("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_impersonation_role_response_to_yojson
-  (x : delete_impersonation_role_response) = assoc_to_yojson []
+let delete_impersonation_role_response_to_yojson = unit_to_yojson
 let delete_impersonation_role_request_to_yojson
   (x : delete_impersonation_role_request) =
   assoc_to_yojson
     [("ImpersonationRoleId",
        (Some (impersonation_role_id_to_yojson x.impersonation_role_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_group_response_to_yojson (x : delete_group_response) =
-  assoc_to_yojson []
+let delete_group_response_to_yojson = unit_to_yojson
 let delete_group_request_to_yojson (x : delete_group_request) =
   assoc_to_yojson
     [("GroupId", (Some (entity_identifier_to_yojson x.group_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_email_monitoring_configuration_response_to_yojson
-  (x : delete_email_monitoring_configuration_response) = assoc_to_yojson []
+let delete_email_monitoring_configuration_response_to_yojson = unit_to_yojson
 let delete_email_monitoring_configuration_request_to_yojson
   (x : delete_email_monitoring_configuration_request) =
   assoc_to_yojson
     [("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_availability_configuration_response_to_yojson
-  (x : delete_availability_configuration_response) = assoc_to_yojson []
+let delete_availability_configuration_response_to_yojson = unit_to_yojson
 let delete_availability_configuration_request_to_yojson
   (x : delete_availability_configuration_request) =
   assoc_to_yojson
     [("DomainName", (Some (domain_name_to_yojson x.domain_name)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_alias_response_to_yojson (x : delete_alias_response) =
-  assoc_to_yojson []
+let delete_alias_response_to_yojson = unit_to_yojson
 let delete_alias_request_to_yojson (x : delete_alias_request) =
   assoc_to_yojson
     [("Alias", (Some (email_address_to_yojson x.alias)));
     ("EntityId", (Some (work_mail_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let delete_access_control_rule_response_to_yojson
-  (x : delete_access_control_rule_response) = assoc_to_yojson []
+let delete_access_control_rule_response_to_yojson = unit_to_yojson
 let delete_access_control_rule_request_to_yojson
   (x : delete_access_control_rule_request) =
   assoc_to_yojson
@@ -1492,8 +1456,7 @@ let create_group_request_to_yojson (x : create_group_request) =
        (option_to_yojson boolean__to_yojson x.hidden_from_global_address_list));
     ("Name", (Some (group_name_to_yojson x.name)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let create_availability_configuration_response_to_yojson
-  (x : create_availability_configuration_response) = assoc_to_yojson []
+let create_availability_configuration_response_to_yojson = unit_to_yojson
 let create_availability_configuration_request_to_yojson
   (x : create_availability_configuration_request) =
   assoc_to_yojson
@@ -1506,15 +1469,13 @@ let create_availability_configuration_request_to_yojson
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)));
     ("ClientToken",
       (option_to_yojson idempotency_client_token_to_yojson x.client_token))]
-let create_alias_response_to_yojson (x : create_alias_response) =
-  assoc_to_yojson []
+let create_alias_response_to_yojson = unit_to_yojson
 let create_alias_request_to_yojson (x : create_alias_request) =
   assoc_to_yojson
     [("Alias", (Some (email_address_to_yojson x.alias)));
     ("EntityId", (Some (work_mail_identifier_to_yojson x.entity_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let cancel_mailbox_export_job_response_to_yojson
-  (x : cancel_mailbox_export_job_response) = assoc_to_yojson []
+let cancel_mailbox_export_job_response_to_yojson = unit_to_yojson
 let cancel_mailbox_export_job_request_to_yojson
   (x : cancel_mailbox_export_job_request) =
   assoc_to_yojson
@@ -1535,16 +1496,14 @@ let assume_impersonation_role_request_to_yojson
     [("ImpersonationRoleId",
        (Some (impersonation_role_id_to_yojson x.impersonation_role_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let associate_member_to_group_response_to_yojson
-  (x : associate_member_to_group_response) = assoc_to_yojson []
+let associate_member_to_group_response_to_yojson = unit_to_yojson
 let associate_member_to_group_request_to_yojson
   (x : associate_member_to_group_request) =
   assoc_to_yojson
     [("MemberId", (Some (entity_identifier_to_yojson x.member_id)));
     ("GroupId", (Some (entity_identifier_to_yojson x.group_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let associate_delegate_to_resource_response_to_yojson
-  (x : associate_delegate_to_resource_response) = assoc_to_yojson []
+let associate_delegate_to_resource_response_to_yojson = unit_to_yojson
 let associate_delegate_to_resource_request_to_yojson
   (x : associate_delegate_to_resource_request) =
   assoc_to_yojson

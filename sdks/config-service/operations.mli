@@ -101,7 +101,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_evaluation_results_request ->
-        (delete_evaluation_results_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigRuleException of no_such_config_rule_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
@@ -152,7 +152,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_remediation_configuration_request ->
-        (delete_remediation_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -206,7 +206,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_stored_query_request ->
-        (delete_stored_query_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ValidationException of validation_exception ]) result
@@ -1041,7 +1041,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_external_evaluation_request ->
-        (put_external_evaluation_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 
@@ -1199,7 +1199,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_config_rules_evaluation_request ->
-        (start_config_rules_evaluation_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 

@@ -2019,7 +2019,7 @@ let make_describe_limits_output
      account_max_write_capacity_units = account_max_write_capacity_units_;
      account_max_read_capacity_units = account_max_read_capacity_units_
    } : describe_limits_output)
-let make_describe_limits_input () = (() : describe_limits_input)
+let make_describe_limits_input () = (() : unit)
 let make_describe_kinesis_streaming_destination_output
   ?kinesis_data_stream_destinations:(kinesis_data_stream_destinations_ :
                                       kinesis_data_stream_destination list
@@ -2065,7 +2065,7 @@ let make_describe_export_input ~export_arn:(export_arn_ : string)  () =
   ({ export_arn = export_arn_ } : describe_export_input)
 let make_describe_endpoints_response ~endpoints:(endpoints_ : endpoint list) 
   () = ({ endpoints = endpoints_ } : describe_endpoints_response)
-let make_describe_endpoints_request () = (() : describe_endpoints_request)
+let make_describe_endpoints_request () = (() : unit)
 let make_describe_contributor_insights_output
   ?failure_exception:(failure_exception_ : failure_exception option) 
   ?last_update_date_time:(last_update_date_time_ :

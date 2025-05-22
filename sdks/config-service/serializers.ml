@@ -691,8 +691,7 @@ let no_available_delivery_channel_exception_to_yojson
   (x : no_available_delivery_channel_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let start_config_rules_evaluation_response_to_yojson
-  (x : start_config_rules_evaluation_response) = assoc_to_yojson []
+let start_config_rules_evaluation_response_to_yojson = unit_to_yojson
 let reevaluate_config_rule_names_to_yojson tree =
   list_to_yojson config_rule_name_to_yojson tree
 let start_config_rules_evaluation_request_to_yojson
@@ -1148,8 +1147,7 @@ let put_organization_config_rule_request_to_yojson
       (Some
          (organization_config_rule_name_to_yojson
             x.organization_config_rule_name)))]
-let put_external_evaluation_response_to_yojson
-  (x : put_external_evaluation_response) = assoc_to_yojson []
+let put_external_evaluation_response_to_yojson = unit_to_yojson
 let compliance_type_to_yojson (x : compliance_type) =
   match x with
   | Insufficient_Data -> `String "INSUFFICIENT_DATA"
@@ -3286,8 +3284,7 @@ let deliver_config_snapshot_request_to_yojson
   assoc_to_yojson
     [("deliveryChannelName",
        (Some (channel_name_to_yojson x.delivery_channel_name)))]
-let delete_stored_query_response_to_yojson (x : delete_stored_query_response)
-  = assoc_to_yojson []
+let delete_stored_query_response_to_yojson = unit_to_yojson
 let delete_stored_query_request_to_yojson (x : delete_stored_query_request) =
   assoc_to_yojson [("QueryName", (Some (query_name_to_yojson x.query_name)))]
 let delete_retention_configuration_request_to_yojson
@@ -3334,8 +3331,7 @@ let remediation_in_progress_exception_to_yojson
   (x : remediation_in_progress_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let delete_remediation_configuration_response_to_yojson
-  (x : delete_remediation_configuration_response) = assoc_to_yojson []
+let delete_remediation_configuration_response_to_yojson = unit_to_yojson
 let delete_remediation_configuration_request_to_yojson
   (x : delete_remediation_configuration_request) =
   assoc_to_yojson
@@ -3363,8 +3359,7 @@ let delete_organization_config_rule_request_to_yojson
        (Some
           (organization_config_rule_name_to_yojson
              x.organization_config_rule_name)))]
-let delete_evaluation_results_response_to_yojson
-  (x : delete_evaluation_results_response) = assoc_to_yojson []
+let delete_evaluation_results_response_to_yojson = unit_to_yojson
 let delete_evaluation_results_request_to_yojson
   (x : delete_evaluation_results_request) =
   assoc_to_yojson

@@ -312,12 +312,12 @@ val make_update_account_settings_input :
       ?pipeline_provisioning_repository:repository_branch_input ->
         ?pipeline_service_role_arn:string ->
           unit -> update_account_settings_input
-val make_untag_resource_output : unit -> untag_resource_output
+val make_untag_resource_output : unit -> unit
 val make_untag_resource_input :
   tag_keys:string list -> resource_arn:string -> unit -> untag_resource_input
 val make_s3_object_source :
   key:string -> bucket:string -> unit -> s3_object_source
-val make_tag_resource_output : unit -> tag_resource_output
+val make_tag_resource_output : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_input :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_input
@@ -436,8 +436,7 @@ val make_provisioned_resource :
   ?provisioning_engine:provisioned_resource_engine ->
     ?identifier:string -> ?name:string -> unit -> provisioned_resource
 val make_output : ?value_string:string -> ?key:string -> unit -> output
-val make_notify_resource_deployment_status_change_output :
-  unit -> notify_resource_deployment_status_change_output
+val make_notify_resource_deployment_status_change_output : unit -> unit
 val make_notify_resource_deployment_status_change_input :
   ?status_message:string ->
     ?deployment_id:string ->
@@ -768,7 +767,7 @@ val make_counts_summary :
               ?components:resource_counts_summary -> unit -> counts_summary
 val make_get_resources_summary_output :
   counts:counts_summary -> unit -> get_resources_summary_output
-val make_get_resources_summary_input : unit -> get_resources_summary_input
+val make_get_resources_summary_input : unit -> unit
 val make_get_repository_sync_status_output :
   ?latest_sync:repository_sync_attempt ->
     unit -> get_repository_sync_status_output
@@ -844,7 +843,7 @@ val make_get_component_output :
 val make_get_component_input : name:string -> unit -> get_component_input
 val make_get_account_settings_output :
   ?account_settings:account_settings -> unit -> get_account_settings_output
-val make_get_account_settings_input : unit -> get_account_settings_input
+val make_get_account_settings_input : unit -> unit
 val make_delete_template_sync_config_output :
   ?template_sync_config:template_sync_config ->
     unit -> delete_template_sync_config_output

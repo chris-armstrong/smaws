@@ -1526,8 +1526,7 @@ let update_data_source_request_to_yojson (x : update_data_source_request) =
     ("IndexId", (Some (index_id_to_yojson x.index_id)));
     ("Name", (option_to_yojson data_source_name_to_yojson x.name));
     ("Id", (Some (data_source_id_to_yojson x.id)))]
-let update_access_control_configuration_response_to_yojson
-  (x : update_access_control_configuration_response) = assoc_to_yojson []
+let update_access_control_configuration_response_to_yojson = unit_to_yojson
 let access_control_configuration_id_to_yojson = string_to_yojson
 let access_control_configuration_name_to_yojson = string_to_yojson
 let principal_type_to_yojson (x : principal_type) =
@@ -1560,8 +1559,7 @@ let update_access_control_configuration_request_to_yojson
       (option_to_yojson access_control_configuration_name_to_yojson x.name));
     ("Id", (Some (access_control_configuration_id_to_yojson x.id)));
     ("IndexId", (Some (index_id_to_yojson x.index_id)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let amazon_resource_name_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -1622,8 +1620,7 @@ let text_document_statistics_to_yojson (x : text_document_statistics) =
          (indexed_text_documents_count_to_yojson
             x.indexed_text_documents_count)))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -3045,8 +3042,7 @@ let delete_faq_request_to_yojson (x : delete_faq_request) =
   assoc_to_yojson
     [("IndexId", (Some (index_id_to_yojson x.index_id)));
     ("Id", (Some (faq_id_to_yojson x.id)))]
-let delete_experience_response_to_yojson (x : delete_experience_response) =
-  assoc_to_yojson []
+let delete_experience_response_to_yojson = unit_to_yojson
 let delete_experience_request_to_yojson (x : delete_experience_request) =
   assoc_to_yojson
     [("IndexId", (Some (index_id_to_yojson x.index_id)));
@@ -3055,8 +3051,7 @@ let delete_data_source_request_to_yojson (x : delete_data_source_request) =
   assoc_to_yojson
     [("IndexId", (Some (index_id_to_yojson x.index_id)));
     ("Id", (Some (data_source_id_to_yojson x.id)))]
-let delete_access_control_configuration_response_to_yojson
-  (x : delete_access_control_configuration_response) = assoc_to_yojson []
+let delete_access_control_configuration_response_to_yojson = unit_to_yojson
 let delete_access_control_configuration_request_to_yojson
   (x : delete_access_control_configuration_request) =
   assoc_to_yojson

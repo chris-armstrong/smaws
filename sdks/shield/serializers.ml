@@ -13,8 +13,7 @@ let validation_exception_field_to_yojson (x : validation_exception_field) =
     ("name", (Some (string__to_yojson x.name)))]
 let validation_exception_field_list_to_yojson tree =
   list_to_yojson validation_exception_field_to_yojson tree
-let update_subscription_response_to_yojson (x : update_subscription_response)
-  = assoc_to_yojson []
+let update_subscription_response_to_yojson = unit_to_yojson
 let auto_renew_to_yojson (x : auto_renew) =
   match x with
   | DISABLED -> `String "DISABLED"
@@ -44,8 +43,7 @@ let invalid_parameter_exception_to_yojson (x : invalid_parameter_exception) =
 let internal_error_exception_to_yojson (x : internal_error_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let update_protection_group_response_to_yojson
-  (x : update_protection_group_response) = assoc_to_yojson []
+let update_protection_group_response_to_yojson = unit_to_yojson
 let protection_group_id_to_yojson = string_to_yojson
 let protection_group_aggregation_to_yojson (x : protection_group_aggregation)
   =
@@ -81,8 +79,7 @@ let update_protection_group_request_to_yojson
       (Some (protection_group_aggregation_to_yojson x.aggregation)));
     ("ProtectionGroupId",
       (Some (protection_group_id_to_yojson x.protection_group_id)))]
-let update_emergency_contact_settings_response_to_yojson
-  (x : update_emergency_contact_settings_response) = assoc_to_yojson []
+let update_emergency_contact_settings_response_to_yojson = unit_to_yojson
 let email_address_to_yojson = string_to_yojson
 let phone_number_to_yojson = string_to_yojson
 let contact_notes_to_yojson = string_to_yojson
@@ -100,11 +97,10 @@ let update_emergency_contact_settings_request_to_yojson
     [("EmergencyContactList",
        (option_to_yojson emergency_contact_list_to_yojson
           x.emergency_contact_list))]
-let update_application_layer_automatic_response_response_to_yojson
-  (x : update_application_layer_automatic_response_response) =
-  assoc_to_yojson []
-let block_action_to_yojson (x : block_action) = assoc_to_yojson []
-let count_action_to_yojson (x : count_action) = assoc_to_yojson []
+let update_application_layer_automatic_response_response_to_yojson =
+  unit_to_yojson
+let block_action_to_yojson = unit_to_yojson
+let count_action_to_yojson = unit_to_yojson
 let response_action_to_yojson (x : response_action) =
   assoc_to_yojson
     [("Count", (option_to_yojson count_action_to_yojson x.count));
@@ -117,8 +113,7 @@ let update_application_layer_automatic_response_request_to_yojson
 let invalid_operation_exception_to_yojson (x : invalid_operation_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
@@ -149,8 +144,7 @@ let time_range_to_yojson (x : time_range) =
     ("FromInclusive",
       (option_to_yojson timestamp__to_yojson x.from_inclusive))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (option_to_yojson tag_value_to_yojson x.value));
@@ -440,34 +434,26 @@ let get_subscription_state_response_to_yojson
   assoc_to_yojson
     [("SubscriptionState",
        (Some (subscription_state_to_yojson x.subscription_state)))]
-let get_subscription_state_request_to_yojson
-  (x : get_subscription_state_request) = assoc_to_yojson []
-let enable_proactive_engagement_response_to_yojson
-  (x : enable_proactive_engagement_response) = assoc_to_yojson []
-let enable_proactive_engagement_request_to_yojson
-  (x : enable_proactive_engagement_request) = assoc_to_yojson []
-let enable_application_layer_automatic_response_response_to_yojson
-  (x : enable_application_layer_automatic_response_response) =
-  assoc_to_yojson []
+let get_subscription_state_request_to_yojson = unit_to_yojson
+let enable_proactive_engagement_response_to_yojson = unit_to_yojson
+let enable_proactive_engagement_request_to_yojson = unit_to_yojson
+let enable_application_layer_automatic_response_response_to_yojson =
+  unit_to_yojson
 let enable_application_layer_automatic_response_request_to_yojson
   (x : enable_application_layer_automatic_response_request) =
   assoc_to_yojson
     [("Action", (Some (response_action_to_yojson x.action)));
     ("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)))]
-let disassociate_health_check_response_to_yojson
-  (x : disassociate_health_check_response) = assoc_to_yojson []
+let disassociate_health_check_response_to_yojson = unit_to_yojson
 let disassociate_health_check_request_to_yojson
   (x : disassociate_health_check_request) =
   assoc_to_yojson
     [("HealthCheckArn",
        (Some (health_check_arn_to_yojson x.health_check_arn)));
     ("ProtectionId", (Some (protection_id_to_yojson x.protection_id)))]
-let disassociate_drt_role_response_to_yojson
-  (x : disassociate_drt_role_response) = assoc_to_yojson []
-let disassociate_drt_role_request_to_yojson
-  (x : disassociate_drt_role_request) = assoc_to_yojson []
-let disassociate_drt_log_bucket_response_to_yojson
-  (x : disassociate_drt_log_bucket_response) = assoc_to_yojson []
+let disassociate_drt_role_response_to_yojson = unit_to_yojson
+let disassociate_drt_role_request_to_yojson = unit_to_yojson
+let disassociate_drt_log_bucket_response_to_yojson = unit_to_yojson
 let disassociate_drt_log_bucket_request_to_yojson
   (x : disassociate_drt_log_bucket_request) =
   assoc_to_yojson [("LogBucket", (Some (log_bucket_to_yojson x.log_bucket)))]
@@ -475,13 +461,10 @@ let access_denied_for_dependency_exception_to_yojson
   (x : access_denied_for_dependency_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let disable_proactive_engagement_response_to_yojson
-  (x : disable_proactive_engagement_response) = assoc_to_yojson []
-let disable_proactive_engagement_request_to_yojson
-  (x : disable_proactive_engagement_request) = assoc_to_yojson []
-let disable_application_layer_automatic_response_response_to_yojson
-  (x : disable_application_layer_automatic_response_response) =
-  assoc_to_yojson []
+let disable_proactive_engagement_response_to_yojson = unit_to_yojson
+let disable_proactive_engagement_request_to_yojson = unit_to_yojson
+let disable_application_layer_automatic_response_response_to_yojson =
+  unit_to_yojson
 let disable_application_layer_automatic_response_request_to_yojson
   (x : disable_application_layer_automatic_response_request) =
   assoc_to_yojson
@@ -491,8 +474,7 @@ let describe_subscription_response_to_yojson
   assoc_to_yojson
     [("Subscription",
        (option_to_yojson subscription_to_yojson x.subscription))]
-let describe_subscription_request_to_yojson
-  (x : describe_subscription_request) = assoc_to_yojson []
+let describe_subscription_request_to_yojson = unit_to_yojson
 let describe_protection_response_to_yojson (x : describe_protection_response)
   =
   assoc_to_yojson
@@ -519,16 +501,14 @@ let describe_emergency_contact_settings_response_to_yojson
     [("EmergencyContactList",
        (option_to_yojson emergency_contact_list_to_yojson
           x.emergency_contact_list))]
-let describe_emergency_contact_settings_request_to_yojson
-  (x : describe_emergency_contact_settings_request) = assoc_to_yojson []
+let describe_emergency_contact_settings_request_to_yojson = unit_to_yojson
 let describe_drt_access_response_to_yojson (x : describe_drt_access_response)
   =
   assoc_to_yojson
     [("LogBucketList",
        (option_to_yojson log_bucket_list_to_yojson x.log_bucket_list));
     ("RoleArn", (option_to_yojson role_arn_to_yojson x.role_arn))]
-let describe_drt_access_request_to_yojson (x : describe_drt_access_request) =
-  assoc_to_yojson []
+let describe_drt_access_request_to_yojson = unit_to_yojson
 let attack_volume_statistics_to_yojson (x : attack_volume_statistics) =
   assoc_to_yojson [("Max", (Some (double_to_yojson x.max)))]
 let attack_volume_to_yojson (x : attack_volume) =
@@ -554,8 +534,7 @@ let describe_attack_statistics_response_to_yojson
     [("DataItems",
        (Some (attack_statistics_data_list_to_yojson x.data_items)));
     ("TimeRange", (Some (time_range_to_yojson x.time_range)))]
-let describe_attack_statistics_request_to_yojson
-  (x : describe_attack_statistics_request) = assoc_to_yojson []
+let describe_attack_statistics_request_to_yojson = unit_to_yojson
 let attack_id_to_yojson = string_to_yojson
 let attack_layer_to_yojson (x : attack_layer) =
   match x with
@@ -605,26 +584,20 @@ let describe_attack_request_to_yojson (x : describe_attack_request) =
 let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let delete_subscription_response_to_yojson (x : delete_subscription_response)
-  = assoc_to_yojson []
-let delete_subscription_request_to_yojson (x : delete_subscription_request) =
-  assoc_to_yojson []
-let delete_protection_response_to_yojson (x : delete_protection_response) =
-  assoc_to_yojson []
+let delete_subscription_response_to_yojson = unit_to_yojson
+let delete_subscription_request_to_yojson = unit_to_yojson
+let delete_protection_response_to_yojson = unit_to_yojson
 let delete_protection_request_to_yojson (x : delete_protection_request) =
   assoc_to_yojson
     [("ProtectionId", (Some (protection_id_to_yojson x.protection_id)))]
-let delete_protection_group_response_to_yojson
-  (x : delete_protection_group_response) = assoc_to_yojson []
+let delete_protection_group_response_to_yojson = unit_to_yojson
 let delete_protection_group_request_to_yojson
   (x : delete_protection_group_request) =
   assoc_to_yojson
     [("ProtectionGroupId",
        (Some (protection_group_id_to_yojson x.protection_group_id)))]
-let create_subscription_response_to_yojson (x : create_subscription_response)
-  = assoc_to_yojson []
-let create_subscription_request_to_yojson (x : create_subscription_request) =
-  assoc_to_yojson []
+let create_subscription_response_to_yojson = unit_to_yojson
+let create_subscription_request_to_yojson = unit_to_yojson
 let create_protection_response_to_yojson (x : create_protection_response) =
   assoc_to_yojson
     [("ProtectionId",
@@ -634,8 +607,7 @@ let create_protection_request_to_yojson (x : create_protection_request) =
     [("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)));
     ("Name", (Some (protection_name_to_yojson x.name)))]
-let create_protection_group_response_to_yojson
-  (x : create_protection_group_response) = assoc_to_yojson []
+let create_protection_group_response_to_yojson = unit_to_yojson
 let create_protection_group_request_to_yojson
   (x : create_protection_group_request) =
   assoc_to_yojson
@@ -649,27 +621,24 @@ let create_protection_group_request_to_yojson
       (Some (protection_group_aggregation_to_yojson x.aggregation)));
     ("ProtectionGroupId",
       (Some (protection_group_id_to_yojson x.protection_group_id)))]
-let associate_proactive_engagement_details_response_to_yojson
-  (x : associate_proactive_engagement_details_response) = assoc_to_yojson []
+let associate_proactive_engagement_details_response_to_yojson =
+  unit_to_yojson
 let associate_proactive_engagement_details_request_to_yojson
   (x : associate_proactive_engagement_details_request) =
   assoc_to_yojson
     [("EmergencyContactList",
        (Some (emergency_contact_list_to_yojson x.emergency_contact_list)))]
-let associate_health_check_response_to_yojson
-  (x : associate_health_check_response) = assoc_to_yojson []
+let associate_health_check_response_to_yojson = unit_to_yojson
 let associate_health_check_request_to_yojson
   (x : associate_health_check_request) =
   assoc_to_yojson
     [("HealthCheckArn",
        (Some (health_check_arn_to_yojson x.health_check_arn)));
     ("ProtectionId", (Some (protection_id_to_yojson x.protection_id)))]
-let associate_drt_role_response_to_yojson (x : associate_drt_role_response) =
-  assoc_to_yojson []
+let associate_drt_role_response_to_yojson = unit_to_yojson
 let associate_drt_role_request_to_yojson (x : associate_drt_role_request) =
   assoc_to_yojson [("RoleArn", (Some (role_arn_to_yojson x.role_arn)))]
-let associate_drt_log_bucket_response_to_yojson
-  (x : associate_drt_log_bucket_response) = assoc_to_yojson []
+let associate_drt_log_bucket_response_to_yojson = unit_to_yojson
 let associate_drt_log_bucket_request_to_yojson
   (x : associate_drt_log_bucket_request) =
   assoc_to_yojson [("LogBucket", (Some (log_bucket_to_yojson x.log_bucket)))]

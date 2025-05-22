@@ -101,7 +101,7 @@ let make_update_ops_metadata_request
      metadata_to_update = metadata_to_update_;
      ops_metadata_arn = ops_metadata_arn_
    } : update_ops_metadata_request)
-let make_update_ops_item_response () = (() : update_ops_item_response)
+let make_update_ops_item_response () = (() : unit)
 let make_ops_item_data_value ?type_:(type__ : ops_item_data_type option) 
   ?value:(value_ : string option)  () =
   ({ type_ = type__; value = value_ } : ops_item_data_value)
@@ -434,8 +434,7 @@ let make_update_document_request ?target_type:(target_type_ : string option)
      attachments = attachments_;
      content = content_
    } : update_document_request)
-let make_update_document_metadata_response () =
-  (() : update_document_metadata_response)
+let make_update_document_metadata_response () = (() : unit)
 let make_document_review_comment_source ?content:(content_ : string option) 
   ?type_:(type__ : document_review_comment_type option)  () =
   ({ content = content_; type_ = type__ } : document_review_comment_source)
@@ -1647,8 +1646,7 @@ let make_ops_aggregator
      type_name = type_name_;
      aggregator_type = aggregator_type_
    } : ops_aggregator)
-let make_modify_document_permission_response () =
-  (() : modify_document_permission_response)
+let make_modify_document_permission_response () = (() : unit)
 let make_modify_document_permission_request
   ?shared_document_version:(shared_document_version_ : string option) 
   ?account_ids_to_remove:(account_ids_to_remove_ : string list option) 
@@ -2885,8 +2883,7 @@ let make_failed_create_association ?fault:(fault_ : fault option)
 let make_effective_patch ?patch_status:(patch_status_ : patch_status option) 
   ?patch:(patch_ : patch option)  () =
   ({ patch_status = patch_status_; patch = patch_ } : effective_patch)
-let make_disassociate_ops_item_related_item_response () =
-  (() : disassociate_ops_item_related_item_response)
+let make_disassociate_ops_item_related_item_response () = (() : unit)
 let make_disassociate_ops_item_related_item_request
   ~association_id:(association_id_ : string) 
   ~ops_item_id:(ops_item_id_ : string)  () =
@@ -3412,8 +3409,7 @@ let make_deregister_patch_baseline_for_patch_group_request
 let make_deregister_managed_instance_request
   ~instance_id:(instance_id_ : string)  () =
   ({ instance_id = instance_id_ } : deregister_managed_instance_request)
-let make_delete_resource_policy_response () =
-  (() : delete_resource_policy_response)
+let make_delete_resource_policy_response () = (() : unit)
 let make_delete_resource_policy_request ~policy_hash:(policy_hash_ : string) 
   ~policy_id:(policy_id_ : string)  ~resource_arn:(resource_arn_ : string) 
   () =
@@ -3435,7 +3431,7 @@ let make_delete_parameter_request ~name:(name_ : string)  () =
 let make_delete_ops_metadata_request
   ~ops_metadata_arn:(ops_metadata_arn_ : string)  () =
   ({ ops_metadata_arn = ops_metadata_arn_ } : delete_ops_metadata_request)
-let make_delete_ops_item_response () = (() : delete_ops_item_response)
+let make_delete_ops_item_response () = (() : unit)
 let make_delete_ops_item_request ~ops_item_id:(ops_item_id_ : string)  () =
   ({ ops_item_id = ops_item_id_ } : delete_ops_item_request)
 let make_delete_maintenance_window_request ~window_id:(window_id_ : string) 

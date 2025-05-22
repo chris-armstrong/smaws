@@ -830,8 +830,7 @@ let tags_limit_exceeded_exception_of_yojson tree path =
     } in
   _res
 let stop_logging_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : stop_logging_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let stop_logging_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : stop_logging_request =
@@ -939,8 +938,7 @@ let import_not_found_exception_of_yojson tree path =
     } in
   _res
 let stop_event_data_store_ingestion_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : stop_event_data_store_ingestion_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let stop_event_data_store_ingestion_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : stop_event_data_store_ingestion_request =
@@ -1014,8 +1012,7 @@ let invalid_query_statement_exception_of_yojson tree path =
     } in
   _res
 let start_logging_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_logging_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let start_logging_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : start_logging_request =
@@ -1093,8 +1090,7 @@ let account_has_ongoing_import_exception_of_yojson tree path =
     } in
   _res
 let start_event_data_store_ingestion_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_event_data_store_ingestion_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let start_event_data_store_ingestion_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : start_event_data_store_ingestion_request =
@@ -1262,8 +1258,7 @@ let resource_arn_not_valid_exception_of_yojson tree path =
     } in
   _res
 let remove_tags_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : remove_tags_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let remove_tags_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : remove_tags_request =
@@ -1282,8 +1277,7 @@ let invalid_tag_parameter_exception_of_yojson tree path =
     } in
   _res
 let register_organization_delegated_admin_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : register_organization_delegated_admin_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let account_id_of_yojson = string_of_yojson
 let register_organization_delegated_admin_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2808,8 +2802,7 @@ let describe_query_request_of_yojson tree path =
     } in
   _res
 let deregister_organization_delegated_admin_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_organization_delegated_admin_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_organization_delegated_admin_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_organization_delegated_admin_request =
@@ -2829,16 +2822,14 @@ let account_not_registered_exception_of_yojson tree path =
     } in
   _res
 let delete_trail_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_trail_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_trail_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_trail_request =
     { name = (value_for_key string__of_yojson "Name" _list path) } in
   _res
 let delete_resource_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_resource_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_resource_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_resource_policy_request =
@@ -2848,8 +2839,7 @@ let delete_resource_policy_request_of_yojson tree path =
     } in
   _res
 let delete_event_data_store_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_event_data_store_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_event_data_store_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_event_data_store_request =
@@ -2869,8 +2859,7 @@ let channel_exists_for_eds_exception_of_yojson tree path =
     } in
   _res
 let delete_channel_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_channel_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_channel_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_channel_request =
@@ -3125,8 +3114,7 @@ let cancel_query_request_of_yojson tree path =
     } in
   _res
 let add_tags_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_tags_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_tags_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_tags_request =

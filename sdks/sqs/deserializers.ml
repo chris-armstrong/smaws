@@ -654,8 +654,7 @@ let purge_queue_in_progress_of_yojson tree path =
   _res
 let nullable_long_of_yojson = long_of_yojson
 let message_not_inflight_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : message_not_inflight = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let long_of_yojson = long_of_yojson
 let list_queues_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -781,8 +780,7 @@ let list_dead_letter_source_queues_request_of_yojson tree path =
     } in
   _res
 let invalid_id_format_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : invalid_id_format = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let get_queue_url_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : get_queue_url_result =

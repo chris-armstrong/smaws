@@ -97,7 +97,7 @@ val make_trail :
                               ?s3_bucket_name:string ->
                                 ?name:string -> unit -> trail
 val make_tag : ?value:string -> key:string -> unit -> tag
-val make_stop_logging_response : unit -> stop_logging_response
+val make_stop_logging_response : unit -> unit
 val make_stop_logging_request : name:string -> unit -> stop_logging_request
 val make_s3_import_source :
   s3_bucket_access_role_arn:string ->
@@ -122,8 +122,7 @@ val make_stop_import_response :
                   ?import_id:string -> unit -> stop_import_response
 val make_stop_import_request :
   import_id:string -> unit -> stop_import_request
-val make_stop_event_data_store_ingestion_response :
-  unit -> stop_event_data_store_ingestion_response
+val make_stop_event_data_store_ingestion_response : unit -> unit
 val make_stop_event_data_store_ingestion_request :
   event_data_store:string -> unit -> stop_event_data_store_ingestion_request
 val make_start_query_response :
@@ -133,7 +132,7 @@ val make_start_query_request :
     ?query_alias:string ->
       ?delivery_s3_uri:string ->
         ?query_statement:string -> unit -> start_query_request
-val make_start_logging_response : unit -> start_logging_response
+val make_start_logging_response : unit -> unit
 val make_start_logging_request : name:string -> unit -> start_logging_request
 val make_start_import_response :
   ?updated_timestamp:CoreTypes.Timestamp.t ->
@@ -150,8 +149,7 @@ val make_start_import_request :
       ?start_event_time:CoreTypes.Timestamp.t ->
         ?import_source:import_source ->
           ?destinations:string list -> unit -> start_import_request
-val make_start_event_data_store_ingestion_response :
-  unit -> start_event_data_store_ingestion_response
+val make_start_event_data_store_ingestion_response : unit -> unit
 val make_start_event_data_store_ingestion_request :
   event_data_store:string -> unit -> start_event_data_store_ingestion_request
 val make_source_config :
@@ -177,11 +175,10 @@ val make_resource_tag :
   ?tags_list:tag list -> ?resource_id:string -> unit -> resource_tag
 val make_resource :
   ?resource_name:string -> ?resource_type:string -> unit -> resource
-val make_remove_tags_response : unit -> remove_tags_response
+val make_remove_tags_response : unit -> unit
 val make_remove_tags_request :
   tags_list:tag list -> resource_id:string -> unit -> remove_tags_request
-val make_register_organization_delegated_admin_response :
-  unit -> register_organization_delegated_admin_response
+val make_register_organization_delegated_admin_response : unit -> unit
 val make_register_organization_delegated_admin_request :
   member_account_id:string ->
     unit -> register_organization_delegated_admin_request
@@ -487,22 +484,19 @@ val make_describe_query_request :
   ?query_alias:string ->
     ?query_id:string ->
       ?event_data_store:string -> unit -> describe_query_request
-val make_deregister_organization_delegated_admin_response :
-  unit -> deregister_organization_delegated_admin_response
+val make_deregister_organization_delegated_admin_response : unit -> unit
 val make_deregister_organization_delegated_admin_request :
   delegated_admin_account_id:string ->
     unit -> deregister_organization_delegated_admin_request
-val make_delete_trail_response : unit -> delete_trail_response
+val make_delete_trail_response : unit -> unit
 val make_delete_trail_request : name:string -> unit -> delete_trail_request
-val make_delete_resource_policy_response :
-  unit -> delete_resource_policy_response
+val make_delete_resource_policy_response : unit -> unit
 val make_delete_resource_policy_request :
   resource_arn:string -> unit -> delete_resource_policy_request
-val make_delete_event_data_store_response :
-  unit -> delete_event_data_store_response
+val make_delete_event_data_store_response : unit -> unit
 val make_delete_event_data_store_request :
   event_data_store:string -> unit -> delete_event_data_store_request
-val make_delete_channel_response : unit -> delete_channel_response
+val make_delete_channel_response : unit -> unit
 val make_delete_channel_request :
   channel:string -> unit -> delete_channel_request
 val make_create_trail_response :
@@ -573,6 +567,6 @@ val make_cancel_query_response :
     query_id:string -> unit -> cancel_query_response
 val make_cancel_query_request :
   ?event_data_store:string -> query_id:string -> unit -> cancel_query_request
-val make_add_tags_response : unit -> add_tags_response
+val make_add_tags_response : unit -> unit
 val make_add_tags_request :
   tags_list:tag list -> resource_id:string -> unit -> add_tags_request

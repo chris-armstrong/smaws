@@ -459,7 +459,7 @@ let make_untag_resource_request ?resource_arn:(resource_arn_ : string option)
      resource_arn = resource_arn_;
      resource_name = resource_name_
    } : untag_resource_request)
-let make_unpeer_vpc_request () = (() : unpeer_vpc_request)
+let make_unpeer_vpc_request () = (() : unit)
 let make_time_period ?end_:(end__ : CoreTypes.Timestamp.t option) 
   ?start:(start_ : CoreTypes.Timestamp.t option)  () =
   ({ end_ = end__; start = start_ } : time_period)
@@ -882,7 +882,7 @@ let make_put_alarm_request
      metric_name = metric_name_;
      alarm_name = alarm_name_
    } : put_alarm_request)
-let make_peer_vpc_request () = (() : peer_vpc_request)
+let make_peer_vpc_request () = (() : unit)
 let make_password_data ?key_pair_name:(key_pair_name_ : string option) 
   ?ciphertext:(ciphertext_ : string option)  () =
   ({ key_pair_name = key_pair_name_; ciphertext = ciphertext_ } : password_data)
@@ -1092,7 +1092,7 @@ let make_load_balancer ?tls_policy_name:(tls_policy_name_ : string option)
      arn = arn_;
      name = name_
    } : load_balancer)
-let make_is_vpc_peered_request () = (() : is_vpc_peered_request)
+let make_is_vpc_peered_request () = (() : unit)
 let make_import_key_pair_request
   ~public_key_base64:(public_key_base64_ : string) 
   ~key_pair_name:(key_pair_name_ : string)  () =
@@ -1693,8 +1693,7 @@ let make_distribution_bundle ?is_active:(is_active_ : bool option)
      name = name_;
      bundle_id = bundle_id_
    } : distribution_bundle)
-let make_get_distribution_bundles_request () =
-  (() : get_distribution_bundles_request)
+let make_get_distribution_bundles_request () = (() : unit)
 let make_disk_snapshot
   ?is_from_auto_snapshot:(is_from_auto_snapshot_ : bool option) 
   ?from_instance_arn:(from_instance_arn_ : string option) 
@@ -1760,8 +1759,7 @@ let make_container_service_power ?is_active:(is_active_ : bool option)
      price = price_;
      power_id = power_id_
    } : container_service_power)
-let make_get_container_service_powers_request () =
-  (() : get_container_service_powers_request)
+let make_get_container_service_powers_request () = (() : unit)
 let make_get_container_service_metric_data_request
   ~statistics:(statistics_ : metric_statistic list)  ~period:(period_ : int) 
   ~end_time:(end_time_ : CoreTypes.Timestamp.t) 
@@ -1798,8 +1796,7 @@ let make_get_container_log_request ?page_token:(page_token_ : string option)
    } : get_container_log_request)
 let make_get_container_images_request ~service_name:(service_name_ : string) 
   () = ({ service_name = service_name_ } : get_container_images_request)
-let make_get_container_api_metadata_request () =
-  (() : get_container_api_metadata_request)
+let make_get_container_api_metadata_request () = (() : unit)
 let make_contact_method ?support_code:(support_code_ : string option) 
   ?resource_type:(resource_type_ : resource_type option) 
   ?location:(location_ : resource_location option) 
@@ -2154,8 +2151,7 @@ let make_enable_add_on_request
   ~resource_name:(resource_name_ : string)  () =
   ({ add_on_request = add_on_request_; resource_name = resource_name_ } : 
   enable_add_on_request)
-let make_download_default_key_pair_request () =
-  (() : download_default_key_pair_request)
+let make_download_default_key_pair_request () = (() : unit)
 let make_disable_add_on_request ~resource_name:(resource_name_ : string) 
   ~add_on_type:(add_on_type_ : add_on_type)  () =
   ({ resource_name = resource_name_; add_on_type = add_on_type_ } : disable_add_on_request)
@@ -2519,8 +2515,7 @@ let make_container_service_registry_login
      password = password_;
      username = username_
    } : container_service_registry_login)
-let make_create_container_service_registry_login_request () =
-  (() : create_container_service_registry_login_request)
+let make_create_container_service_registry_login_request () = (() : unit)
 let make_endpoint_request
   ?health_check:(health_check_ :
                   container_service_health_check_config option)

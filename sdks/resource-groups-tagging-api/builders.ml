@@ -43,8 +43,7 @@ let make_summary
      target_id = target_id_;
      last_updated = last_updated_
    } : summary)
-let make_start_report_creation_output () =
-  (() : start_report_creation_output)
+let make_start_report_creation_output () = (() : unit)
 let make_start_report_creation_input ~s3_bucket:(s3_bucket_ : string)  () =
   ({ s3_bucket = s3_bucket_ } : start_report_creation_input)
 let make_compliance_details
@@ -140,5 +139,4 @@ let make_describe_report_creation_output
      s3_location = s3_location_;
      status = status_
    } : describe_report_creation_output)
-let make_describe_report_creation_input () =
-  (() : describe_report_creation_input)
+let make_describe_report_creation_input () = (() : unit)

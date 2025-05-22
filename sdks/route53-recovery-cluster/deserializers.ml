@@ -41,8 +41,7 @@ let validation_exception_of_yojson tree path =
     } in
   _res
 let update_routing_control_states_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_routing_control_states_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let arn_of_yojson = string_of_yojson
 let routing_control_state_of_yojson (tree : t) path =
   (match tree with
@@ -150,8 +149,7 @@ let access_denied_exception_of_yojson tree path =
     { message = (value_for_key string__of_yojson "message" _list path) } in
   _res
 let update_routing_control_state_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_routing_control_state_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let update_routing_control_state_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : update_routing_control_state_request =

@@ -8,7 +8,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -23,7 +23,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -38,7 +38,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -135,7 +135,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -150,7 +150,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -166,7 +166,7 @@ sig
           | `WAFBadRequestException of waf_bad_request_exception 
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception 
@@ -200,7 +200,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFStaleDataException of waf_stale_data_exception ]) result
@@ -214,7 +214,7 @@ sig
         (delete_byte_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -229,7 +229,7 @@ sig
         (delete_geo_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -244,7 +244,7 @@ sig
         (delete_ip_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -256,7 +256,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_logging_configuration_request ->
-        (delete_logging_configuration_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
@@ -268,7 +268,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_permission_policy_request ->
-        (delete_permission_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
@@ -283,7 +283,7 @@ sig
         (delete_rate_based_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -302,7 +302,7 @@ sig
         (delete_regex_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -317,7 +317,7 @@ sig
         (delete_regex_pattern_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -332,7 +332,7 @@ sig
         (delete_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -370,7 +370,7 @@ sig
         (delete_size_constraint_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -385,7 +385,7 @@ sig
         (delete_sql_injection_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -400,7 +400,7 @@ sig
         (delete_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -419,7 +419,7 @@ sig
         (delete_xss_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonEmptyEntityException of waf_non_empty_entity_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception 
           | `WAFReferencedItemException of waf_referenced_item_exception 
@@ -434,7 +434,7 @@ sig
         (get_byte_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -443,7 +443,7 @@ module GetChangeToken :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_change_token_request ->
+      unit ->
         (get_change_token_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception ])
@@ -470,7 +470,7 @@ sig
         (get_geo_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -483,7 +483,7 @@ sig
         (get_ip_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -520,7 +520,7 @@ sig
         (get_rate_based_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -533,7 +533,7 @@ sig
         (get_rate_based_rule_managed_keys_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
@@ -547,7 +547,7 @@ sig
         (get_regex_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -560,7 +560,7 @@ sig
         (get_regex_pattern_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -573,7 +573,7 @@ sig
         (get_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -610,7 +610,7 @@ sig
         (get_size_constraint_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -623,7 +623,7 @@ sig
         (get_sql_injection_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -636,7 +636,7 @@ sig
         (get_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -649,7 +649,7 @@ sig
         (get_xss_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFNonexistentItemException of waf_nonexistent_item_exception ])
           result
 end[@@ocaml.doc
@@ -675,8 +675,7 @@ sig
         (list_byte_match_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [ByteMatchSetSummary] objects.\n    "]
 module ListGeoMatchSets :
@@ -687,8 +686,7 @@ sig
         (list_geo_match_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [GeoMatchSetSummary] objects in the response.\n    "]
 module ListIPSets :
@@ -699,8 +697,7 @@ sig
         (list_ip_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [IPSetSummary] objects in the response.\n    "]
 module ListLoggingConfigurations :
@@ -724,8 +721,7 @@ sig
         (list_rate_based_rules_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [RuleSummary] objects.\n    "]
 module ListRegexMatchSets :
@@ -736,8 +732,7 @@ sig
         (list_regex_match_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [RegexMatchSetSummary] objects.\n    "]
 module ListRegexPatternSets :
@@ -748,8 +743,7 @@ sig
         (list_regex_pattern_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [RegexPatternSetSummary] objects.\n    "]
 module ListRuleGroups :
@@ -771,8 +765,7 @@ sig
         (list_rules_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [RuleSummary] objects.\n    "]
 module ListSizeConstraintSets :
@@ -783,8 +776,7 @@ sig
         (list_size_constraint_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [SizeConstraintSetSummary] objects.\n    "]
 module ListSqlInjectionMatchSets :
@@ -795,8 +787,7 @@ sig
         (list_sql_injection_match_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [SqlInjectionMatchSet] objects.\n    "]
 module ListSubscribedRuleGroups :
@@ -836,8 +827,7 @@ sig
         (list_web_ac_ls_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [WebACLSummary] objects in the response.\n    "]
 module ListXssMatchSets :
@@ -848,8 +838,7 @@ sig
         (list_xss_match_sets_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception ])
-          result
+          | `WAFInvalidAccountException of unit ]) result
 end[@@ocaml.doc
      " This is {b AWS WAF Classic} documentation. For more information, see {{:https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html}AWS WAF Classic} in the developer guide.\n \n   {b For the latest version of AWS WAF}, use the AWS WAFV2 API and see the {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html}AWS WAF Developer Guide}. With the latest version, AWS WAF has a single set of endpoints for regional and global use. \n  \n    Returns an array of [XssMatchSet] objects.\n    "]
 module PutLoggingConfiguration :
@@ -871,7 +860,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_permission_policy_request ->
-        (put_permission_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidPermissionPolicyException of
@@ -885,7 +874,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFBadRequestException of waf_bad_request_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -903,7 +892,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFBadRequestException of waf_bad_request_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -923,7 +912,7 @@ sig
         (update_byte_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -941,7 +930,7 @@ sig
         (update_geo_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -960,7 +949,7 @@ sig
         (update_ip_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -979,7 +968,7 @@ sig
         (update_rate_based_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -999,7 +988,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFDisallowedNameException of waf_disallowed_name_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
           | `WAFNonexistentContainerException of
@@ -1016,7 +1005,7 @@ sig
         (update_regex_pattern_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidRegexPatternException of
               waf_invalid_regex_pattern_exception 
@@ -1035,7 +1024,7 @@ sig
         (update_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -1071,7 +1060,7 @@ sig
         (update_size_constraint_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -1090,7 +1079,7 @@ sig
         (update_sql_injection_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -1108,7 +1097,7 @@ sig
         (update_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 
@@ -1130,7 +1119,7 @@ sig
         (update_xss_match_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
-          | `WAFInvalidAccountException of waf_invalid_account_exception 
+          | `WAFInvalidAccountException of unit 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
           | `WAFLimitsExceededException of waf_limits_exceeded_exception 

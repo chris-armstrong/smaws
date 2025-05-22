@@ -574,8 +574,7 @@ let update_call_analytics_category_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let transcribe_arn_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -1030,8 +1029,7 @@ let transcription_job_of_yojson tree path =
     } in
   _res
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -2521,8 +2519,7 @@ let delete_language_model_request_of_yojson tree path =
     } in
   _res
 let delete_call_analytics_job_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_call_analytics_job_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_call_analytics_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_call_analytics_job_request =
@@ -2533,8 +2530,7 @@ let delete_call_analytics_job_request_of_yojson tree path =
     } in
   _res
 let delete_call_analytics_category_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_call_analytics_category_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_call_analytics_category_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_call_analytics_category_request =

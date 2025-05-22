@@ -11,8 +11,7 @@ let wireless_connection_of_yojson tree path =
     } in
   _res
 let update_long_term_pricing_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_long_term_pricing_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let long_term_pricing_id_of_yojson = string_of_yojson
 let job_id_of_yojson = string_of_yojson
 let java_boolean_of_yojson = bool_of_yojson
@@ -46,8 +45,7 @@ let invalid_resource_exception_of_yojson tree path =
     } in
   _res
 let update_job_shipment_state_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_job_shipment_state_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let base_unit_of_yojson = unit_of_yojson
 let shipment_state_of_yojson (tree : t) path =
   (match tree with
@@ -77,8 +75,7 @@ let invalid_job_state_exception_of_yojson tree path =
     } in
   _res
 let update_job_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_job_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let role_ar_n_of_yojson = string_of_yojson
 let sns_topic_ar_n_of_yojson = string_of_yojson
 let job_state_of_yojson (tree : t) path =
@@ -475,8 +472,7 @@ let cluster_limit_exceeded_exception_of_yojson tree path =
     } in
   _res
 let update_cluster_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_cluster_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cluster_id_of_yojson = string_of_yojson
 let update_cluster_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1241,8 +1237,7 @@ let get_snowball_usage_result_of_yojson tree path =
     } in
   _res
 let get_snowball_usage_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_snowball_usage_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let get_job_unlock_code_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : get_job_unlock_code_result =
@@ -1647,16 +1642,14 @@ let create_address_request_of_yojson tree path =
     { address = (value_for_key address_of_yojson "Address" _list path) } in
   _res
 let cancel_job_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : cancel_job_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cancel_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : cancel_job_request =
     { job_id = (value_for_key job_id_of_yojson "JobId" _list path) } in
   _res
 let cancel_cluster_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : cancel_cluster_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cancel_cluster_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : cancel_cluster_request =

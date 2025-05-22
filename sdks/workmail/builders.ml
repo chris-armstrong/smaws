@@ -1,6 +1,6 @@
 open Smaws_Lib
 open Types
-let make_update_user_response () = (() : update_user_response)
+let make_update_user_response () = (() : unit)
 let make_update_user_request ?office:(office_ : string option) 
   ?country:(country_ : string option) 
   ?department:(department_ : string option) 
@@ -34,7 +34,7 @@ let make_update_user_request ?office:(office_ : string option)
      user_id = user_id_;
      organization_id = organization_id_
    } : update_user_request)
-let make_update_resource_response () = (() : update_resource_response)
+let make_update_resource_response () = (() : unit)
 let make_booking_options
   ?auto_decline_conflicting_requests:(auto_decline_conflicting_requests_ :
                                        bool option)
@@ -63,8 +63,7 @@ let make_update_resource_request
      resource_id = resource_id_;
      organization_id = organization_id_
    } : update_resource_request)
-let make_update_primary_email_address_response () =
-  (() : update_primary_email_address_response)
+let make_update_primary_email_address_response () = (() : unit)
 let make_update_primary_email_address_request ~email:(email_ : string) 
   ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -73,8 +72,7 @@ let make_update_primary_email_address_request ~email:(email_ : string)
      entity_id = entity_id_;
      organization_id = organization_id_
    } : update_primary_email_address_request)
-let make_update_mobile_device_access_rule_response () =
-  (() : update_mobile_device_access_rule_response)
+let make_update_mobile_device_access_rule_response () = (() : unit)
 let make_update_mobile_device_access_rule_request
   ?not_device_user_agents:(not_device_user_agents_ : string list option) 
   ?device_user_agents:(device_user_agents_ : string list option) 
@@ -105,8 +103,7 @@ let make_update_mobile_device_access_rule_request
      mobile_device_access_rule_id = mobile_device_access_rule_id_;
      organization_id = organization_id_
    } : update_mobile_device_access_rule_request)
-let make_update_mailbox_quota_response () =
-  (() : update_mailbox_quota_response)
+let make_update_mailbox_quota_response () = (() : unit)
 let make_update_mailbox_quota_request ~mailbox_quota:(mailbox_quota_ : int) 
   ~user_id:(user_id_ : string)  ~organization_id:(organization_id_ : string) 
   () =
@@ -115,8 +112,7 @@ let make_update_mailbox_quota_request ~mailbox_quota:(mailbox_quota_ : int)
      user_id = user_id_;
      organization_id = organization_id_
    } : update_mailbox_quota_request)
-let make_update_impersonation_role_response () =
-  (() : update_impersonation_role_response)
+let make_update_impersonation_role_response () = (() : unit)
 let make_impersonation_rule
   ?not_target_users:(not_target_users_ : string list option) 
   ?target_users:(target_users_ : string list option) 
@@ -145,7 +141,7 @@ let make_update_impersonation_role_request
      impersonation_role_id = impersonation_role_id_;
      organization_id = organization_id_
    } : update_impersonation_role_request)
-let make_update_group_response () = (() : update_group_response)
+let make_update_group_response () = (() : unit)
 let make_update_group_request
   ?hidden_from_global_address_list:(hidden_from_global_address_list_ :
                                      bool option)
@@ -156,15 +152,13 @@ let make_update_group_request
      group_id = group_id_;
      organization_id = organization_id_
    } : update_group_request)
-let make_update_default_mail_domain_response () =
-  (() : update_default_mail_domain_response)
+let make_update_default_mail_domain_response () = (() : unit)
 let make_update_default_mail_domain_request
   ~domain_name:(domain_name_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ domain_name = domain_name_; organization_id = organization_id_ } : 
   update_default_mail_domain_request)
-let make_update_availability_configuration_response () =
-  (() : update_availability_configuration_response)
+let make_update_availability_configuration_response () = (() : unit)
 let make_ews_availability_provider ~ews_password:(ews_password_ : string) 
   ~ews_username:(ews_username_ : string) 
   ~ews_endpoint:(ews_endpoint_ : string)  () =
@@ -186,7 +180,7 @@ let make_update_availability_configuration_request
      domain_name = domain_name_;
      organization_id = organization_id_
    } : update_availability_configuration_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
@@ -206,7 +200,7 @@ let make_test_availability_configuration_request
      domain_name = domain_name_;
      organization_id = organization_id_
    } : test_availability_configuration_request)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -232,7 +226,7 @@ let make_start_mailbox_export_job_request
      organization_id = organization_id_;
      client_token = client_token_
    } : start_mailbox_export_job_request)
-let make_reset_password_response () = (() : reset_password_response)
+let make_reset_password_response () = (() : unit)
 let make_reset_password_request ~password:(password_ : string) 
   ~user_id:(user_id_ : string)  ~organization_id:(organization_id_ : string) 
   () =
@@ -241,8 +235,7 @@ let make_reset_password_request ~password:(password_ : string)
      user_id = user_id_;
      organization_id = organization_id_
    } : reset_password_request)
-let make_register_to_work_mail_response () =
-  (() : register_to_work_mail_response)
+let make_register_to_work_mail_response () = (() : unit)
 let make_register_to_work_mail_request ~email:(email_ : string) 
   ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -251,8 +244,7 @@ let make_register_to_work_mail_request ~email:(email_ : string)
      entity_id = entity_id_;
      organization_id = organization_id_
    } : register_to_work_mail_request)
-let make_register_mail_domain_response () =
-  (() : register_mail_domain_response)
+let make_register_mail_domain_response () = (() : unit)
 let make_register_mail_domain_request
   ?client_token:(client_token_ : string option) 
   ~domain_name:(domain_name_ : string) 
@@ -262,8 +254,7 @@ let make_register_mail_domain_request
      organization_id = organization_id_;
      client_token = client_token_
    } : register_mail_domain_request)
-let make_put_retention_policy_response () =
-  (() : put_retention_policy_response)
+let make_put_retention_policy_response () = (() : unit)
 let make_folder_configuration ?period:(period_ : int option) 
   ~action:(action_ : retention_action)  ~name:(name_ : folder_name)  () =
   ({ period = period_; action = action_; name = name_ } : folder_configuration)
@@ -278,8 +269,7 @@ let make_put_retention_policy_request
      id = id_;
      organization_id = organization_id_
    } : put_retention_policy_request)
-let make_put_mobile_device_access_override_response () =
-  (() : put_mobile_device_access_override_response)
+let make_put_mobile_device_access_override_response () = (() : unit)
 let make_put_mobile_device_access_override_request
   ?description:(description_ : string option) 
   ~effect_:(effect__ : mobile_device_access_rule_effect) 
@@ -292,8 +282,7 @@ let make_put_mobile_device_access_override_request
      user_id = user_id_;
      organization_id = organization_id_
    } : put_mobile_device_access_override_request)
-let make_put_mailbox_permissions_response () =
-  (() : put_mailbox_permissions_response)
+let make_put_mailbox_permissions_response () = (() : unit)
 let make_put_mailbox_permissions_request
   ~permission_values:(permission_values_ : permission_type list) 
   ~grantee_id:(grantee_id_ : string)  ~entity_id:(entity_id_ : string) 
@@ -304,13 +293,11 @@ let make_put_mailbox_permissions_request
      entity_id = entity_id_;
      organization_id = organization_id_
    } : put_mailbox_permissions_request)
-let make_put_inbound_dmarc_settings_response () =
-  (() : put_inbound_dmarc_settings_response)
+let make_put_inbound_dmarc_settings_response () = (() : unit)
 let make_put_inbound_dmarc_settings_request ~enforced:(enforced_ : bool) 
   ~organization_id:(organization_id_ : string)  () =
   ({ enforced = enforced_; organization_id = organization_id_ } : put_inbound_dmarc_settings_request)
-let make_put_email_monitoring_configuration_response () =
-  (() : put_email_monitoring_configuration_response)
+let make_put_email_monitoring_configuration_response () = (() : unit)
 let make_put_email_monitoring_configuration_request
   ~log_group_arn:(log_group_arn_ : string)  ~role_arn:(role_arn_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -319,8 +306,7 @@ let make_put_email_monitoring_configuration_request
      role_arn = role_arn_;
      organization_id = organization_id_
    } : put_email_monitoring_configuration_request)
-let make_put_access_control_rule_response () =
-  (() : put_access_control_rule_response)
+let make_put_access_control_rule_response () = (() : unit)
 let make_put_access_control_rule_request
   ?not_impersonation_role_ids:(not_impersonation_role_ids_ :
                                 string list option)
@@ -961,8 +947,7 @@ let make_get_access_control_effect_request
      ip_address = ip_address_;
      organization_id = organization_id_
    } : get_access_control_effect_request)
-let make_disassociate_member_from_group_response () =
-  (() : disassociate_member_from_group_response)
+let make_disassociate_member_from_group_response () = (() : unit)
 let make_disassociate_member_from_group_request
   ~member_id:(member_id_ : string)  ~group_id:(group_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -971,8 +956,7 @@ let make_disassociate_member_from_group_request
      group_id = group_id_;
      organization_id = organization_id_
    } : disassociate_member_from_group_request)
-let make_disassociate_delegate_from_resource_response () =
-  (() : disassociate_delegate_from_resource_response)
+let make_disassociate_delegate_from_resource_response () = (() : unit)
 let make_disassociate_delegate_from_resource_request
   ~entity_id:(entity_id_ : string)  ~resource_id:(resource_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1155,27 +1139,24 @@ let make_describe_email_monitoring_configuration_response
 let make_describe_email_monitoring_configuration_request
   ~organization_id:(organization_id_ : string)  () =
   ({ organization_id = organization_id_ } : describe_email_monitoring_configuration_request)
-let make_deregister_mail_domain_response () =
-  (() : deregister_mail_domain_response)
+let make_deregister_mail_domain_response () = (() : unit)
 let make_deregister_mail_domain_request ~domain_name:(domain_name_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ domain_name = domain_name_; organization_id = organization_id_ } : 
   deregister_mail_domain_request)
-let make_deregister_from_work_mail_response () =
-  (() : deregister_from_work_mail_response)
+let make_deregister_from_work_mail_response () = (() : unit)
 let make_deregister_from_work_mail_request ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ entity_id = entity_id_; organization_id = organization_id_ } : deregister_from_work_mail_request)
-let make_delete_user_response () = (() : delete_user_response)
+let make_delete_user_response () = (() : unit)
 let make_delete_user_request ~user_id:(user_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ user_id = user_id_; organization_id = organization_id_ } : delete_user_request)
-let make_delete_retention_policy_response () =
-  (() : delete_retention_policy_response)
+let make_delete_retention_policy_response () = (() : unit)
 let make_delete_retention_policy_request ~id:(id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ id = id_; organization_id = organization_id_ } : delete_retention_policy_request)
-let make_delete_resource_response () = (() : delete_resource_response)
+let make_delete_resource_response () = (() : unit)
 let make_delete_resource_request ~resource_id:(resource_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ resource_id = resource_id_; organization_id = organization_id_ } : 
@@ -1194,8 +1175,7 @@ let make_delete_organization_request
      organization_id = organization_id_;
      client_token = client_token_
    } : delete_organization_request)
-let make_delete_mobile_device_access_rule_response () =
-  (() : delete_mobile_device_access_rule_response)
+let make_delete_mobile_device_access_rule_response () = (() : unit)
 let make_delete_mobile_device_access_rule_request
   ~mobile_device_access_rule_id:(mobile_device_access_rule_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1203,8 +1183,7 @@ let make_delete_mobile_device_access_rule_request
      mobile_device_access_rule_id = mobile_device_access_rule_id_;
      organization_id = organization_id_
    } : delete_mobile_device_access_rule_request)
-let make_delete_mobile_device_access_override_response () =
-  (() : delete_mobile_device_access_override_response)
+let make_delete_mobile_device_access_override_response () = (() : unit)
 let make_delete_mobile_device_access_override_request
   ~device_id:(device_id_ : string)  ~user_id:(user_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1213,8 +1192,7 @@ let make_delete_mobile_device_access_override_request
      user_id = user_id_;
      organization_id = organization_id_
    } : delete_mobile_device_access_override_request)
-let make_delete_mailbox_permissions_response () =
-  (() : delete_mailbox_permissions_response)
+let make_delete_mailbox_permissions_response () = (() : unit)
 let make_delete_mailbox_permissions_request
   ~grantee_id:(grantee_id_ : string)  ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1223,8 +1201,7 @@ let make_delete_mailbox_permissions_request
      entity_id = entity_id_;
      organization_id = organization_id_
    } : delete_mailbox_permissions_request)
-let make_delete_impersonation_role_response () =
-  (() : delete_impersonation_role_response)
+let make_delete_impersonation_role_response () = (() : unit)
 let make_delete_impersonation_role_request
   ~impersonation_role_id:(impersonation_role_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1232,23 +1209,21 @@ let make_delete_impersonation_role_request
      impersonation_role_id = impersonation_role_id_;
      organization_id = organization_id_
    } : delete_impersonation_role_request)
-let make_delete_group_response () = (() : delete_group_response)
+let make_delete_group_response () = (() : unit)
 let make_delete_group_request ~group_id:(group_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ group_id = group_id_; organization_id = organization_id_ } : delete_group_request)
-let make_delete_email_monitoring_configuration_response () =
-  (() : delete_email_monitoring_configuration_response)
+let make_delete_email_monitoring_configuration_response () = (() : unit)
 let make_delete_email_monitoring_configuration_request
   ~organization_id:(organization_id_ : string)  () =
   ({ organization_id = organization_id_ } : delete_email_monitoring_configuration_request)
-let make_delete_availability_configuration_response () =
-  (() : delete_availability_configuration_response)
+let make_delete_availability_configuration_response () = (() : unit)
 let make_delete_availability_configuration_request
   ~domain_name:(domain_name_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ domain_name = domain_name_; organization_id = organization_id_ } : 
   delete_availability_configuration_request)
-let make_delete_alias_response () = (() : delete_alias_response)
+let make_delete_alias_response () = (() : unit)
 let make_delete_alias_request ~alias:(alias_ : string) 
   ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1257,8 +1232,7 @@ let make_delete_alias_request ~alias:(alias_ : string)
      entity_id = entity_id_;
      organization_id = organization_id_
    } : delete_alias_request)
-let make_delete_access_control_rule_response () =
-  (() : delete_access_control_rule_response)
+let make_delete_access_control_rule_response () = (() : unit)
 let make_delete_access_control_rule_request ~name:(name_ : string) 
   ~organization_id:(organization_id_ : string)  () =
   ({ name = name_; organization_id = organization_id_ } : delete_access_control_rule_request)
@@ -1382,8 +1356,7 @@ let make_create_group_request
      name = name_;
      organization_id = organization_id_
    } : create_group_request)
-let make_create_availability_configuration_response () =
-  (() : create_availability_configuration_response)
+let make_create_availability_configuration_response () = (() : unit)
 let make_create_availability_configuration_request
   ?lambda_provider:(lambda_provider_ : lambda_availability_provider option) 
   ?ews_provider:(ews_provider_ : ews_availability_provider option) 
@@ -1397,7 +1370,7 @@ let make_create_availability_configuration_request
      organization_id = organization_id_;
      client_token = client_token_
    } : create_availability_configuration_request)
-let make_create_alias_response () = (() : create_alias_response)
+let make_create_alias_response () = (() : unit)
 let make_create_alias_request ~alias:(alias_ : string) 
   ~entity_id:(entity_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1406,8 +1379,7 @@ let make_create_alias_request ~alias:(alias_ : string)
      entity_id = entity_id_;
      organization_id = organization_id_
    } : create_alias_request)
-let make_cancel_mailbox_export_job_response () =
-  (() : cancel_mailbox_export_job_response)
+let make_cancel_mailbox_export_job_response () = (() : unit)
 let make_cancel_mailbox_export_job_request
   ~organization_id:(organization_id_ : string)  ~job_id:(job_id_ : string) 
   ~client_token:(client_token_ : string)  () =
@@ -1427,8 +1399,7 @@ let make_assume_impersonation_role_request
      impersonation_role_id = impersonation_role_id_;
      organization_id = organization_id_
    } : assume_impersonation_role_request)
-let make_associate_member_to_group_response () =
-  (() : associate_member_to_group_response)
+let make_associate_member_to_group_response () = (() : unit)
 let make_associate_member_to_group_request ~member_id:(member_id_ : string) 
   ~group_id:(group_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =
@@ -1437,8 +1408,7 @@ let make_associate_member_to_group_request ~member_id:(member_id_ : string)
      group_id = group_id_;
      organization_id = organization_id_
    } : associate_member_to_group_request)
-let make_associate_delegate_to_resource_response () =
-  (() : associate_delegate_to_resource_response)
+let make_associate_delegate_to_resource_response () = (() : unit)
 let make_associate_delegate_to_resource_request
   ~entity_id:(entity_id_ : string)  ~resource_id:(resource_id_ : string) 
   ~organization_id:(organization_id_ : string)  () =

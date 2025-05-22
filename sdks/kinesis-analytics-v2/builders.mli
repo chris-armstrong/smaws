@@ -414,18 +414,18 @@ val make_update_application_maintenance_configuration_request :
     ->
     application_name:string ->
       unit -> update_application_maintenance_configuration_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
 val make_tag : ?value:string -> key:string -> unit -> tag
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
-val make_stop_application_response : unit -> stop_application_response
+val make_stop_application_response : unit -> unit
 val make_stop_application_request :
   ?force:bool -> application_name:string -> unit -> stop_application_request
-val make_start_application_response : unit -> start_application_response
+val make_start_application_response : unit -> unit
 val make_sql_run_configuration :
   input_starting_position_configuration:input_starting_position_configuration
     -> input_id:string -> unit -> sql_run_configuration
@@ -575,8 +575,7 @@ val make_delete_application_vpc_configuration_request :
       vpc_configuration_id:string ->
         application_name:string ->
           unit -> delete_application_vpc_configuration_request
-val make_delete_application_snapshot_response :
-  unit -> delete_application_snapshot_response
+val make_delete_application_snapshot_response : unit -> unit
 val make_delete_application_snapshot_request :
   snapshot_creation_timestamp:CoreTypes.Timestamp.t ->
     snapshot_name:string ->
@@ -618,12 +617,11 @@ val make_delete_application_cloud_watch_logging_option_request :
       cloud_watch_logging_option_id:string ->
         application_name:string ->
           unit -> delete_application_cloud_watch_logging_option_request
-val make_delete_application_response : unit -> delete_application_response
+val make_delete_application_response : unit -> unit
 val make_delete_application_request :
   create_timestamp:CoreTypes.Timestamp.t ->
     application_name:string -> unit -> delete_application_request
-val make_create_application_snapshot_response :
-  unit -> create_application_snapshot_response
+val make_create_application_snapshot_response : unit -> unit
 val make_create_application_snapshot_request :
   snapshot_name:string ->
     application_name:string -> unit -> create_application_snapshot_request

@@ -71,8 +71,7 @@ let make_update_primary_region_request
 let make_update_key_description_request ~description:(description_ : string) 
   ~key_id:(key_id_ : string)  () =
   ({ description = description_; key_id = key_id_ } : update_key_description_request)
-let make_update_custom_key_store_response () =
-  (() : update_custom_key_store_response)
+let make_update_custom_key_store_response () = (() : unit)
 let make_update_custom_key_store_request
   ?xks_proxy_connectivity:(xks_proxy_connectivity_ :
                             xks_proxy_connectivity_type option)
@@ -439,8 +438,7 @@ let make_list_aliases_response ?truncated:(truncated_ : bool option)
 let make_list_aliases_request ?marker:(marker_ : string option) 
   ?limit:(limit_ : int option)  ?key_id:(key_id_ : string option)  () =
   ({ marker = marker_; limit = limit_; key_id = key_id_ } : list_aliases_request)
-let make_import_key_material_response () =
-  (() : import_key_material_response)
+let make_import_key_material_response () = (() : unit)
 let make_import_key_material_request
   ?expiration_model:(expiration_model_ : expiration_model_type option) 
   ?valid_to:(valid_to_ : CoreTypes.Timestamp.t option) 
@@ -692,8 +690,7 @@ let make_enable_key_rotation_request
   enable_key_rotation_request)
 let make_enable_key_request ~key_id:(key_id_ : string)  () =
   ({ key_id = key_id_ } : enable_key_request)
-let make_disconnect_custom_key_store_response () =
-  (() : disconnect_custom_key_store_response)
+let make_disconnect_custom_key_store_response () = (() : unit)
 let make_disconnect_custom_key_store_request
   ~custom_key_store_id:(custom_key_store_id_ : string)  () =
   ({ custom_key_store_id = custom_key_store_id_ } : disconnect_custom_key_store_request)
@@ -785,8 +782,7 @@ let make_derive_shared_secret_request
    } : derive_shared_secret_request)
 let make_delete_imported_key_material_request ~key_id:(key_id_ : string)  ()
   = ({ key_id = key_id_ } : delete_imported_key_material_request)
-let make_delete_custom_key_store_response () =
-  (() : delete_custom_key_store_response)
+let make_delete_custom_key_store_response () = (() : unit)
 let make_delete_custom_key_store_request
   ~custom_key_store_id:(custom_key_store_id_ : string)  () =
   ({ custom_key_store_id = custom_key_store_id_ } : delete_custom_key_store_request)
@@ -908,8 +904,7 @@ let make_create_custom_key_store_request
 let make_create_alias_request ~target_key_id:(target_key_id_ : string) 
   ~alias_name:(alias_name_ : string)  () =
   ({ target_key_id = target_key_id_; alias_name = alias_name_ } : create_alias_request)
-let make_connect_custom_key_store_response () =
-  (() : connect_custom_key_store_response)
+let make_connect_custom_key_store_response () = (() : unit)
 let make_connect_custom_key_store_request
   ~custom_key_store_id:(custom_key_store_id_ : string)  () =
   ({ custom_key_store_id = custom_key_store_id_ } : connect_custom_key_store_request)

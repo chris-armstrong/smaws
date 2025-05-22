@@ -182,8 +182,7 @@ let summary_list_of_yojson tree path =
   list_of_yojson summary_of_yojson tree path
 let status_of_yojson = string_of_yojson
 let start_report_creation_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_report_creation_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let s3_bucket_of_yojson = string_of_yojson
 let start_report_creation_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -442,8 +441,7 @@ let describe_report_creation_output_of_yojson tree path =
     } in
   _res
 let describe_report_creation_input_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : describe_report_creation_input = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson

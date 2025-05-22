@@ -249,8 +249,7 @@ let source_type_to_yojson (x : source_type) =
   | SUBNET_GROUP -> `String "SUBNET_GROUP"
   | PARAMETER_GROUP -> `String "PARAMETER_GROUP"
   | CLUSTER -> `String "CLUSTER"
-let service_quota_exceeded_exception_to_yojson
-  (x : service_quota_exceeded_exception) = assoc_to_yojson []
+let service_quota_exceeded_exception_to_yojson = unit_to_yojson
 let sse_enabled_to_yojson = bool_to_yojson
 let sse_specification_to_yojson (x : sse_specification) =
   assoc_to_yojson [("Enabled", (Some (sse_enabled_to_yojson x.enabled)))]

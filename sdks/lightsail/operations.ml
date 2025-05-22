@@ -605,8 +605,7 @@ module CreateContainerServiceRegistryLogin =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context
-      (request : create_container_service_registry_login_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -2317,7 +2316,7 @@ module DownloadDefaultKeyPair =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : download_default_key_pair_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -2871,7 +2870,7 @@ module GetContainerAPIMetadata =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_container_api_metadata_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -3049,7 +3048,7 @@ module GetContainerServicePowers =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_container_service_powers_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -3318,7 +3317,7 @@ module GetDistributionBundles =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_distribution_bundles_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -5030,7 +5029,7 @@ module IsVpcPeered =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : is_vpc_peered_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.is_vpc_peered_request_to_yojson request in
@@ -5111,7 +5110,7 @@ module PeerVpc =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : peer_vpc_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.peer_vpc_request_to_yojson request in
@@ -5882,7 +5881,7 @@ module UnpeerVpc =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : unpeer_vpc_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.unpeer_vpc_request_to_yojson request in

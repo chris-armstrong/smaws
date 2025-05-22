@@ -1512,8 +1512,7 @@ let unpeer_vpc_result_of_yojson tree path =
     } in
   _res
 let unpeer_vpc_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : unpeer_vpc_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let treat_missing_data_of_yojson (tree : t) path =
   (match tree with
    | `String "Missing" -> Missing
@@ -2867,8 +2866,7 @@ let peer_vpc_result_of_yojson tree path =
     } in
   _res
 let peer_vpc_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : peer_vpc_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let password_data_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : password_data =
@@ -3532,8 +3530,7 @@ let is_vpc_peered_result_of_yojson tree path =
     } in
   _res
 let is_vpc_peered_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : is_vpc_peered_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let import_key_pair_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : import_key_pair_result =
@@ -5309,8 +5306,7 @@ let get_distribution_bundles_result_of_yojson tree path =
     } in
   _res
 let get_distribution_bundles_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_distribution_bundles_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disk_snapshot_state_of_yojson (tree : t) path =
   (match tree with
    | `String "Unknown" -> Unknown
@@ -5531,8 +5527,7 @@ let get_container_service_powers_result_of_yojson tree path =
     } in
   _res
 let get_container_service_powers_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_container_service_powers_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let container_service_metric_name_of_yojson (tree : t) path =
   (match tree with
    | `String "MemoryUtilization" -> MemoryUtilization
@@ -5683,8 +5678,7 @@ let get_container_api_metadata_result_of_yojson tree path =
     } in
   _res
 let get_container_api_metadata_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_container_api_metadata_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let contact_method_status_of_yojson (tree : t) path =
   (match tree with
    | `String "Invalid" -> Invalid
@@ -6677,8 +6671,7 @@ let download_default_key_pair_result_of_yojson tree path =
     } in
   _res
 let download_default_key_pair_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : download_default_key_pair_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disable_add_on_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disable_add_on_result =
@@ -7019,8 +7012,7 @@ let delete_disk_request_of_yojson tree path =
     } in
   _res
 let delete_container_service_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_container_service_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_container_service_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_container_service_request =
@@ -7031,8 +7023,7 @@ let delete_container_service_request_of_yojson tree path =
     } in
   _res
 let delete_container_image_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_container_image_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_container_image_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_container_image_request =
@@ -7756,8 +7747,7 @@ let create_container_service_registry_login_result_of_yojson tree path =
     } in
   _res
 let create_container_service_registry_login_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_container_service_registry_login_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_container_service_deployment_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_container_service_deployment_result =

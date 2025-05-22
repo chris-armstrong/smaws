@@ -2346,8 +2346,7 @@ let describe_limits_output_to_yojson (x : describe_limits_output) =
     ("AccountMaxReadCapacityUnits",
       (option_to_yojson positive_long_object_to_yojson
          x.account_max_read_capacity_units))]
-let describe_limits_input_to_yojson (x : describe_limits_input) =
-  assoc_to_yojson []
+let describe_limits_input_to_yojson = unit_to_yojson
 let describe_kinesis_streaming_destination_output_to_yojson
   (x : describe_kinesis_streaming_destination_output) =
   assoc_to_yojson
@@ -2393,8 +2392,7 @@ let describe_export_input_to_yojson (x : describe_export_input) =
   assoc_to_yojson [("ExportArn", (Some (export_arn_to_yojson x.export_arn)))]
 let describe_endpoints_response_to_yojson (x : describe_endpoints_response) =
   assoc_to_yojson [("Endpoints", (Some (endpoints_to_yojson x.endpoints)))]
-let describe_endpoints_request_to_yojson (x : describe_endpoints_request) =
-  assoc_to_yojson []
+let describe_endpoints_request_to_yojson = unit_to_yojson
 let contributor_insights_rule_to_yojson = string_to_yojson
 let contributor_insights_rule_list_to_yojson tree =
   list_to_yojson contributor_insights_rule_to_yojson tree

@@ -564,8 +564,7 @@ val make_update_data_source_request :
                 ?name:string ->
                   index_id:string ->
                     id:string -> unit -> update_data_source_request
-val make_update_access_control_configuration_response :
-  unit -> update_access_control_configuration_response
+val make_update_access_control_configuration_response : unit -> unit
 val make_principal :
   ?data_source_id:string ->
     access:read_access_type ->
@@ -580,7 +579,7 @@ val make_update_access_control_configuration_request :
           id:string ->
             index_id:string ->
               unit -> update_access_control_configuration_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
@@ -601,7 +600,7 @@ val make_text_with_highlights :
 val make_text_document_statistics :
   indexed_text_bytes:int ->
     indexed_text_documents_count:int -> unit -> text_document_statistics
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
@@ -1204,13 +1203,12 @@ val make_delete_principal_mapping_request :
 val make_delete_index_request : id:string -> unit -> delete_index_request
 val make_delete_faq_request :
   index_id:string -> id:string -> unit -> delete_faq_request
-val make_delete_experience_response : unit -> delete_experience_response
+val make_delete_experience_response : unit -> unit
 val make_delete_experience_request :
   index_id:string -> id:string -> unit -> delete_experience_request
 val make_delete_data_source_request :
   index_id:string -> id:string -> unit -> delete_data_source_request
-val make_delete_access_control_configuration_response :
-  unit -> delete_access_control_configuration_response
+val make_delete_access_control_configuration_response : unit -> unit
 val make_delete_access_control_configuration_request :
   id:string ->
     index_id:string -> unit -> delete_access_control_configuration_request

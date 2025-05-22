@@ -378,8 +378,7 @@ let conditional_check_failed_exception_of_yojson tree path =
     } in
   _res
 let update_host_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_host_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let host_arn_of_yojson = string_of_yojson
 let update_host_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -423,8 +422,7 @@ let conflict_exception_of_yojson tree path =
     } in
   _res
 let untag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let amazon_resource_name_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -452,8 +450,7 @@ let type__of_yojson = string_of_yojson
 let target_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -1016,8 +1013,7 @@ let get_connection_input_of_yojson tree path =
     } in
   _res
 let delete_sync_configuration_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_sync_configuration_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_sync_configuration_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_sync_configuration_input =
@@ -1030,8 +1026,7 @@ let delete_sync_configuration_input_of_yojson tree path =
     } in
   _res
 let delete_repository_link_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_repository_link_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_repository_link_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_repository_link_input =
@@ -1042,16 +1037,14 @@ let delete_repository_link_input_of_yojson tree path =
     } in
   _res
 let delete_host_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_host_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_host_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_host_input =
     { host_arn = (value_for_key host_arn_of_yojson "HostArn" _list path) } in
   _res
 let delete_connection_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_connection_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_connection_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_connection_input =

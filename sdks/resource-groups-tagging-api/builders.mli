@@ -23,7 +23,7 @@ val make_summary :
       ?region:string ->
         ?target_id_type:target_id_type ->
           ?target_id:string -> ?last_updated:string -> unit -> summary
-val make_start_report_creation_output : unit -> start_report_creation_output
+val make_start_report_creation_output : unit -> unit
 val make_start_report_creation_input :
   s3_bucket:string -> unit -> start_report_creation_input
 val make_compliance_details :
@@ -72,5 +72,4 @@ val make_describe_report_creation_output :
     ?start_date:string ->
       ?s3_location:string ->
         ?status:string -> unit -> describe_report_creation_output
-val make_describe_report_creation_input :
-  unit -> describe_report_creation_input
+val make_describe_report_creation_input : unit -> unit

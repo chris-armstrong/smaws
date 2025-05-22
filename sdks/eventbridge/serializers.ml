@@ -341,8 +341,7 @@ let update_api_destination_request_to_yojson
     ("Description",
       (option_to_yojson api_destination_description_to_yojson x.description));
     ("Name", (Some (api_destination_name_to_yojson x.name)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let arn_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -617,8 +616,7 @@ let target_to_yojson (x : target) =
     ("Id", (Some (target_id_to_yojson x.id)))]
 let target_list_to_yojson tree = list_to_yojson target_to_yojson tree
 let target_id_list_to_yojson tree = list_to_yojson target_id_to_yojson tree
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("Tags", (Some (tag_list_to_yojson x.tags)));
@@ -1415,8 +1413,7 @@ let delete_partner_event_source_request_to_yojson
     ("Name", (Some (event_source_name_to_yojson x.name)))]
 let delete_event_bus_request_to_yojson (x : delete_event_bus_request) =
   assoc_to_yojson [("Name", (Some (event_bus_name_to_yojson x.name)))]
-let delete_endpoint_response_to_yojson (x : delete_endpoint_response) =
-  assoc_to_yojson []
+let delete_endpoint_response_to_yojson = unit_to_yojson
 let delete_endpoint_request_to_yojson (x : delete_endpoint_request) =
   assoc_to_yojson [("Name", (Some (endpoint_name_to_yojson x.name)))]
 let delete_connection_response_to_yojson (x : delete_connection_response) =
@@ -1432,13 +1429,11 @@ let delete_connection_response_to_yojson (x : delete_connection_response) =
       (option_to_yojson connection_arn_to_yojson x.connection_arn))]
 let delete_connection_request_to_yojson (x : delete_connection_request) =
   assoc_to_yojson [("Name", (Some (connection_name_to_yojson x.name)))]
-let delete_archive_response_to_yojson (x : delete_archive_response) =
-  assoc_to_yojson []
+let delete_archive_response_to_yojson = unit_to_yojson
 let delete_archive_request_to_yojson (x : delete_archive_request) =
   assoc_to_yojson
     [("ArchiveName", (Some (archive_name_to_yojson x.archive_name)))]
-let delete_api_destination_response_to_yojson
-  (x : delete_api_destination_response) = assoc_to_yojson []
+let delete_api_destination_response_to_yojson = unit_to_yojson
 let delete_api_destination_request_to_yojson
   (x : delete_api_destination_request) =
   assoc_to_yojson [("Name", (Some (api_destination_name_to_yojson x.name)))]

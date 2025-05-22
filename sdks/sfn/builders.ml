@@ -83,7 +83,7 @@ let make_update_state_machine_alias_input
      description = description_;
      state_machine_alias_arn = state_machine_alias_arn_
    } : update_state_machine_alias_input)
-let make_update_map_run_output () = (() : update_map_run_output)
+let make_update_map_run_output () = (() : unit)
 let make_update_map_run_input
   ?tolerated_failure_count:(tolerated_failure_count_ : int option) 
   ?tolerated_failure_percentage:(tolerated_failure_percentage_ :
@@ -96,7 +96,7 @@ let make_update_map_run_input
      max_concurrency = max_concurrency_;
      map_run_arn = map_run_arn_
    } : update_map_run_input)
-let make_untag_resource_output () = (() : untag_resource_output)
+let make_untag_resource_output () = (() : unit)
 let make_untag_resource_input ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_input)
@@ -248,7 +248,7 @@ let make_task_failed_event_details ?cause:(cause_ : string option)
      resource = resource_;
      resource_type = resource_type_
    } : task_failed_event_details)
-let make_tag_resource_output () = (() : tag_resource_output)
+let make_tag_resource_output () = (() : unit)
 let make_tag ?value:(value_ : string option)  ?key:(key_ : string option)  ()
   = ({ value = value_; key = key_ } : tag)
 let make_tag_resource_input ~tags:(tags_ : tag list) 
@@ -363,14 +363,14 @@ let make_start_execution_input ?trace_header:(trace_header_ : string option)
      name = name_;
      state_machine_arn = state_machine_arn_
    } : start_execution_input)
-let make_send_task_success_output () = (() : send_task_success_output)
+let make_send_task_success_output () = (() : unit)
 let make_send_task_success_input ~output:(output_ : string) 
   ~task_token:(task_token_ : string)  () =
   ({ output = output_; task_token = task_token_ } : send_task_success_input)
-let make_send_task_heartbeat_output () = (() : send_task_heartbeat_output)
+let make_send_task_heartbeat_output () = (() : unit)
 let make_send_task_heartbeat_input ~task_token:(task_token_ : string)  () =
   ({ task_token = task_token_ } : send_task_heartbeat_input)
-let make_send_task_failure_output () = (() : send_task_failure_output)
+let make_send_task_failure_output () = (() : unit)
 let make_send_task_failure_input ?cause:(cause_ : string option) 
   ?error:(error_ : string option)  ~task_token:(task_token_ : string)  () =
   ({ cause = cause_; error = error_; task_token = task_token_ } : send_task_failure_input)
@@ -1003,21 +1003,19 @@ let make_describe_activity_output
    } : describe_activity_output)
 let make_describe_activity_input ~activity_arn:(activity_arn_ : string)  () =
   ({ activity_arn = activity_arn_ } : describe_activity_input)
-let make_delete_state_machine_version_output () =
-  (() : delete_state_machine_version_output)
+let make_delete_state_machine_version_output () = (() : unit)
 let make_delete_state_machine_version_input
   ~state_machine_version_arn:(state_machine_version_arn_ : string)  () =
   ({ state_machine_version_arn = state_machine_version_arn_ } : delete_state_machine_version_input)
-let make_delete_state_machine_output () = (() : delete_state_machine_output)
+let make_delete_state_machine_output () = (() : unit)
 let make_delete_state_machine_input
   ~state_machine_arn:(state_machine_arn_ : string)  () =
   ({ state_machine_arn = state_machine_arn_ } : delete_state_machine_input)
-let make_delete_state_machine_alias_output () =
-  (() : delete_state_machine_alias_output)
+let make_delete_state_machine_alias_output () = (() : unit)
 let make_delete_state_machine_alias_input
   ~state_machine_alias_arn:(state_machine_alias_arn_ : string)  () =
   ({ state_machine_alias_arn = state_machine_alias_arn_ } : delete_state_machine_alias_input)
-let make_delete_activity_output () = (() : delete_activity_output)
+let make_delete_activity_output () = (() : unit)
 let make_delete_activity_input ~activity_arn:(activity_arn_ : string)  () =
   ({ activity_arn = activity_arn_ } : delete_activity_input)
 let make_create_state_machine_output

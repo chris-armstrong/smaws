@@ -85,8 +85,7 @@ let make_untag_resource_output
 let make_untag_resource_input ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_input)
-let make_test_hypervisor_configuration_output () =
-  (() : test_hypervisor_configuration_output)
+let make_test_hypervisor_configuration_output () = (() : unit)
 let make_test_hypervisor_configuration_input
   ?password:(password_ : string option) 
   ?username:(username_ : string option)  ~host:(host_ : string) 

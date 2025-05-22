@@ -1200,8 +1200,7 @@ let update_account_settings_input_of_yojson tree path =
     } in
   _res
 let untag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
@@ -1238,8 +1237,7 @@ let template_version_source_input_of_yojson (tree : t) path =
 let template_manifest_contents_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag =
@@ -1709,8 +1707,7 @@ let output_of_yojson tree path =
 let outputs_list_of_yojson tree path =
   list_of_yojson output_of_yojson tree path
 let notify_resource_deployment_status_change_output_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : notify_resource_deployment_status_change_output = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let notify_resource_deployment_status_change_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : notify_resource_deployment_status_change_input =
@@ -2887,8 +2884,7 @@ let get_resources_summary_output_of_yojson tree path =
     { counts = (value_for_key counts_summary_of_yojson "counts" _list path) } in
   _res
 let get_resources_summary_input_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_resources_summary_input = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let get_repository_sync_status_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : get_repository_sync_status_output =
@@ -3163,8 +3159,7 @@ let get_account_settings_output_of_yojson tree path =
     } in
   _res
 let get_account_settings_input_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_account_settings_input = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_template_sync_config_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_template_sync_config_output =

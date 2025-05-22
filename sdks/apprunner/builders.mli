@@ -156,13 +156,13 @@ val make_update_default_auto_scaling_configuration_response :
 val make_update_default_auto_scaling_configuration_request :
   auto_scaling_configuration_arn:string ->
     unit -> update_default_auto_scaling_configuration_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_arn:string -> unit -> untag_resource_request
 val make_trace_configuration :
   vendor:tracing_vendor -> unit -> trace_configuration
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : ?value:string -> ?key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_request

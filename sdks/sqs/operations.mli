@@ -36,7 +36,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
-          | `MessageNotInflight of message_not_inflight 
+          | `MessageNotInflight of unit 
           | `QueueDoesNotExist of queue_does_not_exist 
           | `ReceiptHandleIsInvalid of receipt_handle_is_invalid 
           | `RequestThrottled of request_throttled 
@@ -86,8 +86,7 @@ sig
       delete_message_request ->
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `InvalidAddress of invalid_address 
-          | `InvalidIdFormat of invalid_id_format 
+          | `InvalidAddress of invalid_address  | `InvalidIdFormat of unit 
           | `InvalidSecurity of invalid_security 
           | `QueueDoesNotExist of queue_does_not_exist 
           | `ReceiptHandleIsInvalid of receipt_handle_is_invalid 

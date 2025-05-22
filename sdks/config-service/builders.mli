@@ -61,8 +61,7 @@ val make_start_remediation_execution_request :
 val make_start_configuration_recorder_request :
   configuration_recorder_name:string ->
     unit -> start_configuration_recorder_request
-val make_start_config_rules_evaluation_response :
-  unit -> start_config_rules_evaluation_response
+val make_start_config_rules_evaluation_response : unit -> unit
 val make_start_config_rules_evaluation_request :
   ?config_rule_names:string list ->
     unit -> start_config_rules_evaluation_request
@@ -223,8 +222,7 @@ val make_put_organization_config_rule_request :
           ->
           organization_config_rule_name:string ->
             unit -> put_organization_config_rule_request
-val make_put_external_evaluation_response :
-  unit -> put_external_evaluation_response
+val make_put_external_evaluation_response : unit -> unit
 val make_external_evaluation :
   ?annotation:string ->
     ordering_timestamp:CoreTypes.Timestamp.t ->
@@ -1144,7 +1142,7 @@ val make_deliver_config_snapshot_response :
   ?config_snapshot_id:string -> unit -> deliver_config_snapshot_response
 val make_deliver_config_snapshot_request :
   delivery_channel_name:string -> unit -> deliver_config_snapshot_request
-val make_delete_stored_query_response : unit -> delete_stored_query_response
+val make_delete_stored_query_response : unit -> unit
 val make_delete_stored_query_request :
   query_name:string -> unit -> delete_stored_query_request
 val make_delete_retention_configuration_request :
@@ -1163,8 +1161,7 @@ val make_delete_remediation_exceptions_response :
 val make_delete_remediation_exceptions_request :
   resource_keys:remediation_exception_resource_key list ->
     config_rule_name:string -> unit -> delete_remediation_exceptions_request
-val make_delete_remediation_configuration_response :
-  unit -> delete_remediation_configuration_response
+val make_delete_remediation_configuration_response : unit -> unit
 val make_delete_remediation_configuration_request :
   ?resource_type:string ->
     config_rule_name:string ->
@@ -1179,8 +1176,7 @@ val make_delete_organization_conformance_pack_request :
 val make_delete_organization_config_rule_request :
   organization_config_rule_name:string ->
     unit -> delete_organization_config_rule_request
-val make_delete_evaluation_results_response :
-  unit -> delete_evaluation_results_response
+val make_delete_evaluation_results_response : unit -> unit
 val make_delete_evaluation_results_request :
   config_rule_name:string -> unit -> delete_evaluation_results_request
 val make_delete_delivery_channel_request :

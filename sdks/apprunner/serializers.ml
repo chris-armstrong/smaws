@@ -412,8 +412,7 @@ let update_default_auto_scaling_configuration_request_to_yojson
     [("AutoScalingConfigurationArn",
        (Some
           (app_runner_resource_arn_to_yojson x.auto_scaling_configuration_arn)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
@@ -426,8 +425,7 @@ let tracing_vendor_to_yojson (x : tracing_vendor) =
 let trace_configuration_to_yojson (x : trace_configuration) =
   assoc_to_yojson [("Vendor", (Some (tracing_vendor_to_yojson x.vendor)))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (option_to_yojson tag_value_to_yojson x.value));

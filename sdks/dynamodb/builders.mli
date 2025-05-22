@@ -918,7 +918,7 @@ val make_describe_limits_output :
       ?account_max_write_capacity_units:int ->
         ?account_max_read_capacity_units:int ->
           unit -> describe_limits_output
-val make_describe_limits_input : unit -> describe_limits_input
+val make_describe_limits_input : unit -> unit
 val make_describe_kinesis_streaming_destination_output :
   ?kinesis_data_stream_destinations:kinesis_data_stream_destination list ->
     ?table_name:string ->
@@ -947,7 +947,7 @@ val make_describe_export_input :
   export_arn:string -> unit -> describe_export_input
 val make_describe_endpoints_response :
   endpoints:endpoint list -> unit -> describe_endpoints_response
-val make_describe_endpoints_request : unit -> describe_endpoints_request
+val make_describe_endpoints_request : unit -> unit
 val make_describe_contributor_insights_output :
   ?failure_exception:failure_exception ->
     ?last_update_date_time:CoreTypes.Timestamp.t ->

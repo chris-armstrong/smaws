@@ -224,7 +224,7 @@ val make_directory_limits :
                 ?cloud_only_directories_current_count:int ->
                   ?cloud_only_directories_limit:int ->
                     unit -> directory_limits
-val make_get_directory_limits_request : unit -> get_directory_limits_request
+val make_get_directory_limits_request : unit -> unit
 val make_event_topic :
   ?status:topic_status ->
     ?created_date_time:CoreTypes.Timestamp.t ->

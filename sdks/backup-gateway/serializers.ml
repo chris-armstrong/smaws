@@ -113,8 +113,7 @@ let throttling_exception_to_yojson (x : throttling_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message));
     ("ErrorCode", (Some (string__to_yojson x.error_code)))]
-let test_hypervisor_configuration_output_to_yojson
-  (x : test_hypervisor_configuration_output) = assoc_to_yojson []
+let test_hypervisor_configuration_output_to_yojson = unit_to_yojson
 let test_hypervisor_configuration_input_to_yojson
   (x : test_hypervisor_configuration_input) =
   assoc_to_yojson

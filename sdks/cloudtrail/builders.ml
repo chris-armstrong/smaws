@@ -194,7 +194,7 @@ let make_trail ?is_organization_trail:(is_organization_trail_ : bool option)
    } : trail)
 let make_tag ?value:(value_ : string option)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
-let make_stop_logging_response () = (() : stop_logging_response)
+let make_stop_logging_response () = (() : unit)
 let make_stop_logging_request ~name:(name_ : string)  () =
   ({ name = name_ } : stop_logging_request)
 let make_s3_import_source
@@ -243,8 +243,7 @@ let make_stop_import_response
    } : stop_import_response)
 let make_stop_import_request ~import_id:(import_id_ : string)  () =
   ({ import_id = import_id_ } : stop_import_request)
-let make_stop_event_data_store_ingestion_response () =
-  (() : stop_event_data_store_ingestion_response)
+let make_stop_event_data_store_ingestion_response () = (() : unit)
 let make_stop_event_data_store_ingestion_request
   ~event_data_store:(event_data_store_ : string)  () =
   ({ event_data_store = event_data_store_ } : stop_event_data_store_ingestion_request)
@@ -261,7 +260,7 @@ let make_start_query_request
      delivery_s3_uri = delivery_s3_uri_;
      query_statement = query_statement_
    } : start_query_request)
-let make_start_logging_response () = (() : start_logging_response)
+let make_start_logging_response () = (() : unit)
 let make_start_logging_request ~name:(name_ : string)  () =
   ({ name = name_ } : start_logging_request)
 let make_start_import_response
@@ -295,8 +294,7 @@ let make_start_import_request ?import_id:(import_id_ : string option)
      import_source = import_source_;
      destinations = destinations_
    } : start_import_request)
-let make_start_event_data_store_ingestion_response () =
-  (() : start_event_data_store_ingestion_response)
+let make_start_event_data_store_ingestion_response () = (() : unit)
 let make_start_event_data_store_ingestion_request
   ~event_data_store:(event_data_store_ : string)  () =
   ({ event_data_store = event_data_store_ } : start_event_data_store_ingestion_request)
@@ -347,12 +345,11 @@ let make_resource ?resource_name:(resource_name_ : string option)
   ?resource_type:(resource_type_ : string option)  () =
   ({ resource_name = resource_name_; resource_type = resource_type_ } : 
   resource)
-let make_remove_tags_response () = (() : remove_tags_response)
+let make_remove_tags_response () = (() : unit)
 let make_remove_tags_request ~tags_list:(tags_list_ : tag list) 
   ~resource_id:(resource_id_ : string)  () =
   ({ tags_list = tags_list_; resource_id = resource_id_ } : remove_tags_request)
-let make_register_organization_delegated_admin_response () =
-  (() : register_organization_delegated_admin_response)
+let make_register_organization_delegated_admin_response () = (() : unit)
 let make_register_organization_delegated_admin_request
   ~member_account_id:(member_account_id_ : string)  () =
   ({ member_account_id = member_account_id_ } : register_organization_delegated_admin_request)
@@ -958,25 +955,22 @@ let make_describe_query_request ?query_alias:(query_alias_ : string option)
      query_id = query_id_;
      event_data_store = event_data_store_
    } : describe_query_request)
-let make_deregister_organization_delegated_admin_response () =
-  (() : deregister_organization_delegated_admin_response)
+let make_deregister_organization_delegated_admin_response () = (() : unit)
 let make_deregister_organization_delegated_admin_request
   ~delegated_admin_account_id:(delegated_admin_account_id_ : string)  () =
   ({ delegated_admin_account_id = delegated_admin_account_id_ } : deregister_organization_delegated_admin_request)
-let make_delete_trail_response () = (() : delete_trail_response)
+let make_delete_trail_response () = (() : unit)
 let make_delete_trail_request ~name:(name_ : string)  () =
   ({ name = name_ } : delete_trail_request)
-let make_delete_resource_policy_response () =
-  (() : delete_resource_policy_response)
+let make_delete_resource_policy_response () = (() : unit)
 let make_delete_resource_policy_request
   ~resource_arn:(resource_arn_ : string)  () =
   ({ resource_arn = resource_arn_ } : delete_resource_policy_request)
-let make_delete_event_data_store_response () =
-  (() : delete_event_data_store_response)
+let make_delete_event_data_store_response () = (() : unit)
 let make_delete_event_data_store_request
   ~event_data_store:(event_data_store_ : string)  () =
   ({ event_data_store = event_data_store_ } : delete_event_data_store_request)
-let make_delete_channel_response () = (() : delete_channel_response)
+let make_delete_channel_response () = (() : unit)
 let make_delete_channel_request ~channel:(channel_ : string)  () =
   ({ channel = channel_ } : delete_channel_request)
 let make_create_trail_response
@@ -1120,7 +1114,7 @@ let make_cancel_query_request
   ?event_data_store:(event_data_store_ : string option) 
   ~query_id:(query_id_ : string)  () =
   ({ query_id = query_id_; event_data_store = event_data_store_ } : cancel_query_request)
-let make_add_tags_response () = (() : add_tags_response)
+let make_add_tags_response () = (() : unit)
 let make_add_tags_request ~tags_list:(tags_list_ : tag list) 
   ~resource_id:(resource_id_ : string)  () =
   ({ tags_list = tags_list_; resource_id = resource_id_ } : add_tags_request)

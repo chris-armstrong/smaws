@@ -1,6 +1,6 @@
 open Smaws_Lib
 open Types
-val make_update_application_response : unit -> update_application_response
+val make_update_application_response : unit -> unit
 val make_input_lambda_processor_update :
   ?role_arn_update:string ->
     ?resource_arn_update:string -> unit -> input_lambda_processor_update
@@ -88,18 +88,18 @@ val make_update_application_request :
   application_update:application_update ->
     current_application_version_id:int ->
       application_name:string -> unit -> update_application_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
 val make_tag : ?value:string -> key:string -> unit -> tag
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
-val make_stop_application_response : unit -> stop_application_response
+val make_stop_application_response : unit -> unit
 val make_stop_application_request :
   application_name:string -> unit -> stop_application_request
-val make_start_application_response : unit -> start_application_response
+val make_start_application_response : unit -> unit
 val make_input_starting_position_configuration :
   ?input_starting_position:input_starting_position ->
     unit -> input_starting_position_configuration
@@ -245,34 +245,32 @@ val make_describe_application_response :
     unit -> describe_application_response
 val make_describe_application_request :
   application_name:string -> unit -> describe_application_request
-val make_delete_application_reference_data_source_response :
-  unit -> delete_application_reference_data_source_response
+val make_delete_application_reference_data_source_response : unit -> unit
 val make_delete_application_reference_data_source_request :
   reference_id:string ->
     current_application_version_id:int ->
       application_name:string ->
         unit -> delete_application_reference_data_source_request
-val make_delete_application_output_response :
-  unit -> delete_application_output_response
+val make_delete_application_output_response : unit -> unit
 val make_delete_application_output_request :
   output_id:string ->
     current_application_version_id:int ->
       application_name:string -> unit -> delete_application_output_request
 val make_delete_application_input_processing_configuration_response :
-  unit -> delete_application_input_processing_configuration_response
+  unit -> unit
 val make_delete_application_input_processing_configuration_request :
   input_id:string ->
     current_application_version_id:int ->
       application_name:string ->
         unit -> delete_application_input_processing_configuration_request
 val make_delete_application_cloud_watch_logging_option_response :
-  unit -> delete_application_cloud_watch_logging_option_response
+  unit -> unit
 val make_delete_application_cloud_watch_logging_option_request :
   cloud_watch_logging_option_id:string ->
     current_application_version_id:int ->
       application_name:string ->
         unit -> delete_application_cloud_watch_logging_option_request
-val make_delete_application_response : unit -> delete_application_response
+val make_delete_application_response : unit -> unit
 val make_delete_application_request :
   create_timestamp:CoreTypes.Timestamp.t ->
     application_name:string -> unit -> delete_application_request
@@ -296,35 +294,31 @@ val make_create_application_request :
           ?inputs:input list ->
             ?application_description:string ->
               application_name:string -> unit -> create_application_request
-val make_add_application_reference_data_source_response :
-  unit -> add_application_reference_data_source_response
+val make_add_application_reference_data_source_response : unit -> unit
 val make_add_application_reference_data_source_request :
   reference_data_source:reference_data_source ->
     current_application_version_id:int ->
       application_name:string ->
         unit -> add_application_reference_data_source_request
-val make_add_application_output_response :
-  unit -> add_application_output_response
+val make_add_application_output_response : unit -> unit
 val make_add_application_output_request :
   output:output ->
     current_application_version_id:int ->
       application_name:string -> unit -> add_application_output_request
 val make_add_application_input_processing_configuration_response :
-  unit -> add_application_input_processing_configuration_response
+  unit -> unit
 val make_add_application_input_processing_configuration_request :
   input_processing_configuration:input_processing_configuration ->
     input_id:string ->
       current_application_version_id:int ->
         application_name:string ->
           unit -> add_application_input_processing_configuration_request
-val make_add_application_input_response :
-  unit -> add_application_input_response
+val make_add_application_input_response : unit -> unit
 val make_add_application_input_request :
   input:input ->
     current_application_version_id:int ->
       application_name:string -> unit -> add_application_input_request
-val make_add_application_cloud_watch_logging_option_response :
-  unit -> add_application_cloud_watch_logging_option_response
+val make_add_application_cloud_watch_logging_option_response : unit -> unit
 val make_add_application_cloud_watch_logging_option_request :
   cloud_watch_logging_option:cloud_watch_logging_option ->
     current_application_version_id:int ->

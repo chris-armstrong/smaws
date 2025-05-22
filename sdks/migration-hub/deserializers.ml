@@ -101,8 +101,7 @@ let resource_attribute_of_yojson tree path =
 let resource_attribute_list_of_yojson tree path =
   list_of_yojson resource_attribute_of_yojson tree path
 let put_resource_attributes_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_resource_attributes_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let progress_update_stream_of_yojson = string_of_yojson
 let migration_task_name_of_yojson = string_of_yojson
 let dry_run_of_yojson = bool_of_yojson
@@ -191,8 +190,7 @@ let policy_error_exception_of_yojson tree path =
     } in
   _res
 let notify_migration_task_state_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : notify_migration_task_state_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let next_update_seconds_of_yojson = int_of_yojson
 let notify_migration_task_state_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -216,8 +214,7 @@ let notify_migration_task_state_request_of_yojson tree path =
     } in
   _res
 let notify_application_state_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : notify_application_state_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let application_id_of_yojson = string_of_yojson
 let application_status_of_yojson (tree : t) path =
   (match tree with
@@ -507,8 +504,7 @@ let list_application_states_request_of_yojson tree path =
     } in
   _res
 let import_migration_task_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : import_migration_task_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let import_migration_task_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : import_migration_task_request =
@@ -525,8 +521,7 @@ let import_migration_task_request_of_yojson tree path =
     } in
   _res
 let disassociate_discovered_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_discovered_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_discovered_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_discovered_resource_request =
@@ -546,8 +541,7 @@ let disassociate_discovered_resource_request_of_yojson tree path =
     } in
   _res
 let disassociate_created_artifact_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_created_artifact_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disassociate_created_artifact_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disassociate_created_artifact_request =
@@ -611,8 +605,7 @@ let describe_application_state_request_of_yojson tree path =
     } in
   _res
 let delete_progress_update_stream_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_progress_update_stream_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_progress_update_stream_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_progress_update_stream_request =
@@ -626,8 +619,7 @@ let delete_progress_update_stream_request_of_yojson tree path =
     } in
   _res
 let create_progress_update_stream_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_progress_update_stream_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_progress_update_stream_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_progress_update_stream_request =
@@ -641,8 +633,7 @@ let create_progress_update_stream_request_of_yojson tree path =
     } in
   _res
 let associate_discovered_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associate_discovered_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let associate_discovered_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : associate_discovered_resource_request =
@@ -662,8 +653,7 @@ let associate_discovered_resource_request_of_yojson tree path =
     } in
   _res
 let associate_created_artifact_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : associate_created_artifact_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let associate_created_artifact_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : associate_created_artifact_request =

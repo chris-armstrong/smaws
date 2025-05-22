@@ -253,8 +253,7 @@ let directory_does_not_exist_exception_of_yojson tree path =
 let update_security_group_for_directory_controllers_of_yojson =
   bool_of_yojson
 let update_radius_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_radius_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let server_of_yojson = string_of_yojson
 let servers_of_yojson tree path = list_of_yojson server_of_yojson tree path
 let port_number_of_yojson = int_of_yojson
@@ -323,8 +322,7 @@ let update_radius_request_of_yojson tree path =
     } in
   _res
 let update_number_of_domain_controllers_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_number_of_domain_controllers_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let desired_number_of_domain_controllers_of_yojson = int_of_yojson
 let update_number_of_domain_controllers_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -386,8 +384,7 @@ let update_info_entry_of_yojson tree path =
     } in
   _res
 let update_directory_setup_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_directory_setup_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_snapshot_before_update_of_yojson = bool_of_yojson
 let update_directory_setup_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -444,8 +441,7 @@ let access_denied_exception_of_yojson tree path =
     } in
   _res
 let update_conditional_forwarder_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_conditional_forwarder_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let remote_domain_name_of_yojson = string_of_yojson
 let ip_addr_of_yojson = string_of_yojson
 let dns_ip_addrs_of_yojson tree path =
@@ -1024,8 +1020,7 @@ let schema_extensions_info_of_yojson tree path =
   list_of_yojson schema_extension_info_of_yojson tree path
 let si_d_of_yojson = string_of_yojson
 let restore_from_snapshot_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : restore_from_snapshot_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let restore_from_snapshot_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : restore_from_snapshot_request =
@@ -1036,8 +1031,7 @@ let restore_from_snapshot_request_of_yojson tree path =
   _res
 let resource_id_of_yojson = string_of_yojson
 let reset_user_password_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : reset_user_password_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let customer_user_name_of_yojson = string_of_yojson
 let reset_user_password_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1072,8 +1066,7 @@ let replication_scope_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "ReplicationScope") : 
   replication_scope)
 let remove_tags_from_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : remove_tags_from_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let remove_tags_from_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : remove_tags_from_resource_request =
@@ -1084,8 +1077,7 @@ let remove_tags_from_resource_request_of_yojson tree path =
     } in
   _res
 let remove_region_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : remove_region_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let remove_region_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : remove_region_request =
@@ -1095,8 +1087,7 @@ let remove_region_request_of_yojson tree path =
     } in
   _res
 let remove_ip_routes_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : remove_ip_routes_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cidr_ip_of_yojson = string_of_yojson
 let cidr_ips_of_yojson tree path = list_of_yojson cidr_ip_of_yojson tree path
 let remove_ip_routes_request_of_yojson tree path =
@@ -1129,8 +1120,7 @@ let reject_shared_directory_request_of_yojson tree path =
     } in
   _res
 let register_event_topic_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : register_event_topic_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let register_event_topic_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : register_event_topic_request =
@@ -1816,8 +1806,7 @@ let get_directory_limits_result_of_yojson tree path =
     } in
   _res
 let get_directory_limits_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_directory_limits_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let event_topic_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : event_topic =
@@ -1855,8 +1844,7 @@ let entity_already_exists_exception_of_yojson tree path =
     } in
   _res
 let enable_sso_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : enable_sso_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let connect_password_of_yojson = string_of_yojson
 let enable_sso_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1885,8 +1873,7 @@ let authentication_failed_exception_of_yojson tree path =
     } in
   _res
 let enable_radius_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : enable_radius_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let enable_radius_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : enable_radius_request =
@@ -1898,8 +1885,7 @@ let enable_radius_request_of_yojson tree path =
     } in
   _res
 let enable_ldaps_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : enable_ldaps_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let enable_ldaps_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : enable_ldaps_request =
@@ -1910,8 +1896,7 @@ let enable_ldaps_request_of_yojson tree path =
     } in
   _res
 let enable_client_authentication_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : enable_client_authentication_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let client_authentication_type_of_yojson (tree : t) path =
   (match tree with
    | `String "SMART_CARD_OR_PASSWORD" -> SMART_CARD_OR_PASSWORD
@@ -1995,8 +1980,7 @@ let domain_controllers_of_yojson tree path =
 let domain_controller_ids_of_yojson tree path =
   list_of_yojson domain_controller_id_of_yojson tree path
 let disable_sso_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disable_sso_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disable_sso_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disable_sso_request =
@@ -2012,8 +1996,7 @@ let disable_sso_request_of_yojson tree path =
     } in
   _res
 let disable_radius_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disable_radius_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disable_radius_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disable_radius_request =
@@ -2023,8 +2006,7 @@ let disable_radius_request_of_yojson tree path =
     } in
   _res
 let disable_ldaps_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disable_ldaps_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disable_ldaps_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disable_ldaps_request =
@@ -2035,8 +2017,7 @@ let disable_ldaps_request_of_yojson tree path =
     } in
   _res
 let disable_client_authentication_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disable_client_authentication_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disable_client_authentication_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disable_client_authentication_request =
@@ -2656,8 +2637,7 @@ let describe_certificate_request_of_yojson tree path =
     } in
   _res
 let deregister_event_topic_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_event_topic_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_event_topic_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_event_topic_request =
@@ -2681,8 +2661,7 @@ let certificate_in_use_exception_of_yojson tree path =
     } in
   _res
 let deregister_certificate_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : deregister_certificate_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let deregister_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : deregister_certificate_request =
@@ -2732,8 +2711,7 @@ let delete_snapshot_request_of_yojson tree path =
     } in
   _res
 let delete_log_subscription_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_log_subscription_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_log_subscription_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_log_subscription_request =
@@ -2760,8 +2738,7 @@ let delete_directory_request_of_yojson tree path =
     } in
   _res
 let delete_conditional_forwarder_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_conditional_forwarder_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_conditional_forwarder_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_conditional_forwarder_request =
@@ -2873,8 +2850,7 @@ let create_microsoft_ad_request_of_yojson tree path =
     } in
   _res
 let create_log_subscription_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_log_subscription_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_log_subscription_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_log_subscription_request =
@@ -2917,8 +2893,7 @@ let create_directory_request_of_yojson tree path =
     } in
   _res
 let create_conditional_forwarder_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : create_conditional_forwarder_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_conditional_forwarder_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_conditional_forwarder_request =
@@ -3061,8 +3036,7 @@ let connect_directory_request_of_yojson tree path =
     } in
   _res
 let cancel_schema_extension_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : cancel_schema_extension_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let cancel_schema_extension_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : cancel_schema_extension_request =
@@ -3075,8 +3049,7 @@ let cancel_schema_extension_request_of_yojson tree path =
     } in
   _res
 let add_tags_to_resource_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_tags_to_resource_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_tags_to_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_tags_to_resource_request =
@@ -3099,8 +3072,7 @@ let directory_already_in_region_exception_of_yojson tree path =
     } in
   _res
 let add_region_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_region_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_region_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_region_request =
@@ -3115,8 +3087,7 @@ let add_region_request_of_yojson tree path =
     } in
   _res
 let add_ip_routes_result_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_ip_routes_result = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_ip_routes_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_ip_routes_request =

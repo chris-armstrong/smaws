@@ -127,7 +127,7 @@ let make_update_repository_link_input
      encryption_key_arn = encryption_key_arn_;
      connection_arn = connection_arn_
    } : update_repository_link_input)
-let make_update_host_output () = (() : update_host_output)
+let make_update_host_output () = (() : unit)
 let make_update_host_input
   ?vpc_configuration:(vpc_configuration_ : vpc_configuration option) 
   ?provider_endpoint:(provider_endpoint_ : string option) 
@@ -137,11 +137,11 @@ let make_update_host_input
      provider_endpoint = provider_endpoint_;
      host_arn = host_arn_
    } : update_host_input)
-let make_untag_resource_output () = (() : untag_resource_output)
+let make_untag_resource_output () = (() : unit)
 let make_untag_resource_input ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_input)
-let make_tag_resource_output () = (() : tag_resource_output)
+let make_tag_resource_output () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_input ~tags:(tags_ : tag list) 
@@ -363,21 +363,19 @@ let make_get_connection_output ?connection:(connection_ : connection option)
   () = ({ connection = connection_ } : get_connection_output)
 let make_get_connection_input ~connection_arn:(connection_arn_ : string)  ()
   = ({ connection_arn = connection_arn_ } : get_connection_input)
-let make_delete_sync_configuration_output () =
-  (() : delete_sync_configuration_output)
+let make_delete_sync_configuration_output () = (() : unit)
 let make_delete_sync_configuration_input
   ~resource_name:(resource_name_ : string) 
   ~sync_type:(sync_type_ : sync_configuration_type)  () =
   ({ resource_name = resource_name_; sync_type = sync_type_ } : delete_sync_configuration_input)
-let make_delete_repository_link_output () =
-  (() : delete_repository_link_output)
+let make_delete_repository_link_output () = (() : unit)
 let make_delete_repository_link_input
   ~repository_link_id:(repository_link_id_ : string)  () =
   ({ repository_link_id = repository_link_id_ } : delete_repository_link_input)
-let make_delete_host_output () = (() : delete_host_output)
+let make_delete_host_output () = (() : unit)
 let make_delete_host_input ~host_arn:(host_arn_ : string)  () =
   ({ host_arn = host_arn_ } : delete_host_input)
-let make_delete_connection_output () = (() : delete_connection_output)
+let make_delete_connection_output () = (() : unit)
 let make_delete_connection_input ~connection_arn:(connection_arn_ : string) 
   () = ({ connection_arn = connection_arn_ } : delete_connection_input)
 let make_create_sync_configuration_output

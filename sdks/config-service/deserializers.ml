@@ -860,8 +860,7 @@ let no_available_delivery_channel_exception_of_yojson tree path =
     } in
   _res
 let start_config_rules_evaluation_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_config_rules_evaluation_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let reevaluate_config_rule_names_of_yojson tree path =
   list_of_yojson config_rule_name_of_yojson tree path
 let start_config_rules_evaluation_request_of_yojson tree path =
@@ -1706,8 +1705,7 @@ let put_organization_config_rule_request_of_yojson tree path =
     } in
   _res
 let put_external_evaluation_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : put_external_evaluation_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let compliance_type_of_yojson (tree : t) path =
   (match tree with
    | `String "Insufficient_Data" -> Insufficient_Data
@@ -5645,8 +5643,7 @@ let deliver_config_snapshot_request_of_yojson tree path =
     } in
   _res
 let delete_stored_query_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_stored_query_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_stored_query_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_stored_query_request =
@@ -5732,8 +5729,7 @@ let remediation_in_progress_exception_of_yojson tree path =
     } in
   _res
 let delete_remediation_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_remediation_configuration_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_remediation_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_remediation_configuration_request =
@@ -5774,8 +5770,7 @@ let delete_organization_config_rule_request_of_yojson tree path =
     } in
   _res
 let delete_evaluation_results_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_evaluation_results_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_evaluation_results_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_evaluation_results_request =

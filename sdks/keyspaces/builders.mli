@@ -50,11 +50,11 @@ val make_update_table_request :
                   ?add_columns:column_definition list ->
                     table_name:string ->
                       keyspace_name:string -> unit -> update_table_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_untag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> untag_resource_request
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_request
 val make_table_summary :
@@ -162,10 +162,10 @@ val make_get_keyspace_response :
         keyspace_name:string -> unit -> get_keyspace_response
 val make_get_keyspace_request :
   keyspace_name:string -> unit -> get_keyspace_request
-val make_delete_table_response : unit -> delete_table_response
+val make_delete_table_response : unit -> unit
 val make_delete_table_request :
   table_name:string -> keyspace_name:string -> unit -> delete_table_request
-val make_delete_keyspace_response : unit -> delete_keyspace_response
+val make_delete_keyspace_response : unit -> unit
 val make_delete_keyspace_request :
   keyspace_name:string -> unit -> delete_keyspace_request
 val make_create_table_response :

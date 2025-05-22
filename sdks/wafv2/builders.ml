@@ -4,17 +4,17 @@ let make_single_header ~name:(name_ : string)  () =
   ({ name = name_ } : single_header)
 let make_single_query_argument ~name:(name_ : string)  () =
   ({ name = name_ } : single_query_argument)
-let make_all_query_arguments () = (() : all_query_arguments)
-let make_uri_path () = (() : uri_path)
-let make_query_string () = (() : query_string)
+let make_all_query_arguments () = (() : unit)
+let make_uri_path () = (() : unit)
+let make_query_string () = (() : unit)
 let make_body
   ?oversize_handling:(oversize_handling_ : oversize_handling option)  () =
   ({ oversize_handling = oversize_handling_ } : body)
-let make_method_ () = (() : method_)
-let make_all () = (() : all)
+let make_method_ () = (() : unit)
+let make_all () = (() : unit)
 let make_json_match_pattern
   ?included_paths:(included_paths_ : string list option) 
-  ?all:(all_ : all option)  () =
+  ?all:(all_ : unit option)  () =
   ({ included_paths = included_paths_; all = all_ } : json_match_pattern)
 let make_json_body
   ?oversize_handling:(oversize_handling_ : oversize_handling option) 
@@ -31,7 +31,7 @@ let make_json_body
 let make_header_match_pattern
   ?excluded_headers:(excluded_headers_ : string list option) 
   ?included_headers:(included_headers_ : string list option) 
-  ?all:(all_ : all option)  () =
+  ?all:(all_ : unit option)  () =
   ({
      excluded_headers = excluded_headers_;
      included_headers = included_headers_;
@@ -48,7 +48,7 @@ let make_headers ~oversize_handling:(oversize_handling_ : oversize_handling)
 let make_cookie_match_pattern
   ?excluded_cookies:(excluded_cookies_ : string list option) 
   ?included_cookies:(included_cookies_ : string list option) 
-  ?all:(all_ : all option)  () =
+  ?all:(all_ : unit option)  () =
   ({
      excluded_cookies = excluded_cookies_;
      included_cookies = included_cookies_;
@@ -73,10 +73,10 @@ let make_field_to_match
   ?header_order:(header_order_ : header_order option) 
   ?cookies:(cookies_ : cookies option)  ?headers:(headers_ : headers option) 
   ?json_body:(json_body_ : json_body option) 
-  ?method_:(method__ : method_ option)  ?body:(body_ : body option) 
-  ?query_string:(query_string_ : query_string option) 
-  ?uri_path:(uri_path_ : uri_path option) 
-  ?all_query_arguments:(all_query_arguments_ : all_query_arguments option) 
+  ?method_:(method__ : unit option)  ?body:(body_ : body option) 
+  ?query_string:(query_string_ : unit option) 
+  ?uri_path:(uri_path_ : unit option) 
+  ?all_query_arguments:(all_query_arguments_ : unit option) 
   ?single_query_argument:(single_query_argument_ :
                            single_query_argument option)
    ?single_header:(single_header_ : single_header option)  () =
@@ -265,9 +265,9 @@ let make_rate_limit_query_string
   ~text_transformations:(text_transformations_ : text_transformation list) 
   () =
   ({ text_transformations = text_transformations_ } : rate_limit_query_string)
-let make_rate_limit_http_method () = (() : rate_limit_http_method)
-let make_rate_limit_forwarded_i_p () = (() : rate_limit_forwarded_i_p)
-let make_rate_limit_i_p () = (() : rate_limit_i_p)
+let make_rate_limit_http_method () = (() : unit)
+let make_rate_limit_forwarded_i_p () = (() : unit)
+let make_rate_limit_i_p () = (() : unit)
 let make_rate_limit_label_namespace ~namespace:(namespace_ : string)  () =
   ({ namespace = namespace_ } : rate_limit_label_namespace)
 let make_rate_limit_uri_path
@@ -277,9 +277,8 @@ let make_rate_limit_uri_path
 let make_rate_based_statement_custom_key
   ?uri_path:(uri_path_ : rate_limit_uri_path option) 
   ?label_namespace:(label_namespace_ : rate_limit_label_namespace option) 
-  ?i_p:(i_p_ : rate_limit_i_p option) 
-  ?forwarded_i_p:(forwarded_i_p_ : rate_limit_forwarded_i_p option) 
-  ?http_method:(http_method_ : rate_limit_http_method option) 
+  ?i_p:(i_p_ : unit option)  ?forwarded_i_p:(forwarded_i_p_ : unit option) 
+  ?http_method:(http_method_ : unit option) 
   ?query_string:(query_string_ : rate_limit_query_string option) 
   ?query_argument:(query_argument_ : rate_limit_query_argument option) 
   ?cookie:(cookie_ : rate_limit_cookie option) 
@@ -519,8 +518,8 @@ let make_statement
      sqli_match_statement = sqli_match_statement_;
      byte_match_statement = byte_match_statement_
    } : statement)
-let make_none_action () = (() : none_action)
-let make_override_action ?none:(none_ : none_action option) 
+let make_none_action () = (() : unit)
+let make_override_action ?none:(none_ : unit option) 
   ?count:(count_ : count_action option)  () =
   ({ none = none_; count = count_ } : override_action)
 let make_label ~name:(name_ : string)  () = ({ name = name_ } : label)
@@ -755,14 +754,14 @@ let make_update_ip_set_request ?description:(description_ : string option)
      scope = scope_;
      name = name_
    } : update_ip_set_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
 let make_time_window ~end_time:(end_time_ : CoreTypes.Timestamp.t) 
   ~start_time:(start_time_ : CoreTypes.Timestamp.t)  () =
   ({ end_time = end_time_; start_time = start_time_ } : time_window)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -903,8 +902,7 @@ let make_rate_based_statement_managed_keys_ip_set
   ?ip_address_version:(ip_address_version_ : ip_address_version option)  () =
   ({ addresses = addresses_; ip_address_version = ip_address_version_ } : 
   rate_based_statement_managed_keys_ip_set)
-let make_put_permission_policy_response () =
-  (() : put_permission_policy_response)
+let make_put_permission_policy_response () = (() : unit)
 let make_put_permission_policy_request ~policy:(policy_ : string) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ policy = policy_; resource_arn = resource_arn_ } : put_permission_policy_request)
@@ -1359,8 +1357,7 @@ let make_generate_mobile_sdk_release_url_request
   ~release_version:(release_version_ : string) 
   ~platform:(platform_ : platform)  () =
   ({ release_version = release_version_; platform = platform_ } : generate_mobile_sdk_release_url_request)
-let make_disassociate_web_acl_response () =
-  (() : disassociate_web_acl_response)
+let make_disassociate_web_acl_response () = (() : unit)
 let make_disassociate_web_acl_request ~resource_arn:(resource_arn_ : string) 
   () = ({ resource_arn = resource_arn_ } : disassociate_web_acl_request)
 let make_describe_managed_rule_group_response
@@ -1404,29 +1401,26 @@ let make_describe_all_managed_products_response
   ({ managed_products = managed_products_ } : describe_all_managed_products_response)
 let make_describe_all_managed_products_request ~scope:(scope_ : scope)  () =
   ({ scope = scope_ } : describe_all_managed_products_request)
-let make_delete_web_acl_response () = (() : delete_web_acl_response)
+let make_delete_web_acl_response () = (() : unit)
 let make_delete_web_acl_request ~lock_token:(lock_token_ : string) 
   ~id:(id_ : string)  ~scope:(scope_ : scope)  ~name:(name_ : string)  () =
   ({ lock_token = lock_token_; id = id_; scope = scope_; name = name_ } : 
   delete_web_acl_request)
-let make_delete_rule_group_response () = (() : delete_rule_group_response)
+let make_delete_rule_group_response () = (() : unit)
 let make_delete_rule_group_request ~lock_token:(lock_token_ : string) 
   ~id:(id_ : string)  ~scope:(scope_ : scope)  ~name:(name_ : string)  () =
   ({ lock_token = lock_token_; id = id_; scope = scope_; name = name_ } : 
   delete_rule_group_request)
-let make_delete_regex_pattern_set_response () =
-  (() : delete_regex_pattern_set_response)
+let make_delete_regex_pattern_set_response () = (() : unit)
 let make_delete_regex_pattern_set_request ~lock_token:(lock_token_ : string) 
   ~id:(id_ : string)  ~scope:(scope_ : scope)  ~name:(name_ : string)  () =
   ({ lock_token = lock_token_; id = id_; scope = scope_; name = name_ } : 
   delete_regex_pattern_set_request)
-let make_delete_permission_policy_response () =
-  (() : delete_permission_policy_response)
+let make_delete_permission_policy_response () = (() : unit)
 let make_delete_permission_policy_request
   ~resource_arn:(resource_arn_ : string)  () =
   ({ resource_arn = resource_arn_ } : delete_permission_policy_request)
-let make_delete_logging_configuration_response () =
-  (() : delete_logging_configuration_response)
+let make_delete_logging_configuration_response () = (() : unit)
 let make_delete_logging_configuration_request
   ?log_scope:(log_scope_ : log_scope option) 
   ?log_type:(log_type_ : log_type option) 
@@ -1436,7 +1430,7 @@ let make_delete_logging_configuration_request
      log_type = log_type_;
      resource_arn = resource_arn_
    } : delete_logging_configuration_request)
-let make_delete_ip_set_response () = (() : delete_ip_set_response)
+let make_delete_ip_set_response () = (() : unit)
 let make_delete_ip_set_request ~lock_token:(lock_token_ : string) 
   ~id:(id_ : string)  ~scope:(scope_ : scope)  ~name:(name_ : string)  () =
   ({ lock_token = lock_token_; id = id_; scope = scope_; name = name_ } : 
@@ -1449,7 +1443,7 @@ let make_delete_firewall_manager_rule_groups_request
   ~web_acl_arn:(web_acl_arn_ : string)  () =
   ({ web_acl_lock_token = web_acl_lock_token_; web_acl_arn = web_acl_arn_ } : 
   delete_firewall_manager_rule_groups_request)
-let make_delete_api_key_response () = (() : delete_api_key_response)
+let make_delete_api_key_response () = (() : unit)
 let make_delete_api_key_request ~api_key:(api_key_ : string) 
   ~scope:(scope_ : scope)  () =
   ({ api_key = api_key_; scope = scope_ } : delete_api_key_request)
@@ -1541,7 +1535,7 @@ let make_check_capacity_response ?capacity:(capacity_ : int option)  () =
 let make_check_capacity_request ~rules:(rules_ : rule list) 
   ~scope:(scope_ : scope)  () =
   ({ rules = rules_; scope = scope_ } : check_capacity_request)
-let make_associate_web_acl_response () = (() : associate_web_acl_response)
+let make_associate_web_acl_response () = (() : unit)
 let make_associate_web_acl_request ~resource_arn:(resource_arn_ : string) 
   ~web_acl_arn:(web_acl_arn_ : string)  () =
   ({ resource_arn = resource_arn_; web_acl_arn = web_acl_arn_ } : associate_web_acl_request)

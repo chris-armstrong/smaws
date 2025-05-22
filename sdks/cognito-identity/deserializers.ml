@@ -159,8 +159,7 @@ let identity_pool_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let identity_pool_tags_list_type_of_yojson tree path =
   list_of_yojson tag_keys_type_of_yojson tree path
 let untag_resource_input_of_yojson tree path =
@@ -242,8 +241,7 @@ let unlink_developer_identity_input_of_yojson tree path =
   _res
 let token_duration_of_yojson = long_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_input =

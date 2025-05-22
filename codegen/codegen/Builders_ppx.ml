@@ -36,7 +36,10 @@ let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureSh
   let unit_param =
     B.pexp_fun Nolabel None
       (B.ppat_var (Location.mknoloc "()"))
-      (B.pexp_constraint record_expr (Types_ppx.type_ident alias_context ~name))
+      (B.pexp_constraint record_expr
+         (match members with
+         | [] -> B.ptyp_constr (lident_noloc "unit") []
+         | _ -> Types_ppx.type_ident alias_context ~name))
   in
   let required, optional =
     List.partition (fun (mem : member) -> Trait.(hasTrait mem.traits isRequiredTrait)) members
@@ -64,10 +67,11 @@ let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureSh
 
 let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails) =
   let open Ast.Shape in
+  let type_name =
+    match members with [] -> lident_noloc "unit" | _ -> lident_noloc (SafeNames.safeTypeName name)
+  in
   let unit_param =
-    B.ptyp_arrow Nolabel
-      (B.ptyp_constr (lident_noloc "unit") [])
-      (B.ptyp_constr (lident_noloc (SafeNames.safeTypeName name)) [])
+    B.ptyp_arrow Nolabel (B.ptyp_constr (lident_noloc "unit") []) (B.ptyp_constr type_name [])
   in
 
   let required, optional =

@@ -21,8 +21,7 @@ let validation_exception_to_yojson (x : validation_exception) =
     ("reason",
       (option_to_yojson validation_exception_reason_to_yojson x.reason));
     ("message", (Some (string__to_yojson x.message)))]
-let update_routing_control_states_response_to_yojson
-  (x : update_routing_control_states_response) = assoc_to_yojson []
+let update_routing_control_states_response_to_yojson = unit_to_yojson
 let arn_to_yojson = string_to_yojson
 let routing_control_state_to_yojson (x : routing_control_state) =
   match x with | Off -> `String "Off" | On -> `String "On"
@@ -79,8 +78,7 @@ let conflict_exception_to_yojson (x : conflict_exception) =
     ("message", (Some (string__to_yojson x.message)))]
 let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson [("message", (Some (string__to_yojson x.message)))]
-let update_routing_control_state_response_to_yojson
-  (x : update_routing_control_state_response) = assoc_to_yojson []
+let update_routing_control_state_response_to_yojson = unit_to_yojson
 let update_routing_control_state_request_to_yojson
   (x : update_routing_control_state_request) =
   assoc_to_yojson

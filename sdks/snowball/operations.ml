@@ -412,7 +412,7 @@ module GetSnowballUsage =
                                      (handler
                                         Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                      tree path)
-    let request context (request : get_snowball_usage_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =

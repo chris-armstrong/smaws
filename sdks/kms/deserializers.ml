@@ -447,8 +447,7 @@ let update_key_description_request_of_yojson tree path =
     } in
   _res
 let update_custom_key_store_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_custom_key_store_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let custom_key_store_id_type_of_yojson = string_of_yojson
 let custom_key_store_name_type_of_yojson = string_of_yojson
 let key_store_password_type_of_yojson = string_of_yojson
@@ -1542,8 +1541,7 @@ let expired_import_token_exception_of_yojson tree path =
     } in
   _res
 let import_key_material_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : import_key_material_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let import_key_material_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : import_key_material_request =
@@ -2056,8 +2054,7 @@ let enable_key_request_of_yojson tree path =
     { key_id = (value_for_key key_id_type_of_yojson "KeyId" _list path) } in
   _res
 let disconnect_custom_key_store_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disconnect_custom_key_store_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let disconnect_custom_key_store_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : disconnect_custom_key_store_request =
@@ -2291,8 +2288,7 @@ let custom_key_store_has_cm_ks_exception_of_yojson tree path =
     } in
   _res
 let delete_custom_key_store_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_custom_key_store_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_custom_key_store_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_custom_key_store_request =
@@ -2549,8 +2545,7 @@ let create_alias_request_of_yojson tree path =
     } in
   _res
 let connect_custom_key_store_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : connect_custom_key_store_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let connect_custom_key_store_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : connect_custom_key_store_request =

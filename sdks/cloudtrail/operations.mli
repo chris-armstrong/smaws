@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_request ->
-        (add_tags_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ChannelARNInvalidException of channel_arn_invalid_exception 
           | `ChannelNotFoundException of channel_not_found_exception 
@@ -190,7 +190,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_channel_request ->
-        (delete_channel_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ChannelARNInvalidException of channel_arn_invalid_exception 
           | `ChannelNotFoundException of channel_not_found_exception 
@@ -204,7 +204,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_event_data_store_request ->
-        (delete_event_data_store_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ChannelExistsForEDSException of channel_exists_for_eds_exception 
           | `ConflictException of conflict_exception 
@@ -238,7 +238,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_policy_request ->
-        (delete_resource_policy_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedException of
               operation_not_permitted_exception 
@@ -257,7 +257,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_trail_request ->
-        (delete_trail_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudTrailARNInvalidException of
               cloud_trail_arn_invalid_exception 
@@ -283,7 +283,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_organization_delegated_admin_request ->
-        (deregister_organization_delegated_admin_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccountNotFoundException of account_not_found_exception 
           | `AccountNotRegisteredException of
@@ -854,7 +854,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_organization_delegated_admin_request ->
-        (register_organization_delegated_admin_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccountNotFoundException of account_not_found_exception 
           | `AccountRegisteredException of account_registered_exception 
@@ -885,7 +885,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_request ->
-        (remove_tags_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ChannelARNInvalidException of channel_arn_invalid_exception 
           | `ChannelNotFoundException of channel_not_found_exception 
@@ -951,7 +951,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_event_data_store_ingestion_request ->
-        (start_event_data_store_ingestion_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EventDataStoreARNInvalidException of
               event_data_store_arn_invalid_exception 
@@ -1009,7 +1009,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_logging_request ->
-        (start_logging_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudTrailARNInvalidException of
               cloud_trail_arn_invalid_exception 
@@ -1069,7 +1069,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_event_data_store_ingestion_request ->
-        (stop_event_data_store_ingestion_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EventDataStoreARNInvalidException of
               event_data_store_arn_invalid_exception 
@@ -1111,7 +1111,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_logging_request ->
-        (stop_logging_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudTrailARNInvalidException of
               cloud_trail_arn_invalid_exception 

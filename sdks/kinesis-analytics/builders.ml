@@ -1,6 +1,6 @@
 open Smaws_Lib
 open Types
-let make_update_application_response () = (() : update_application_response)
+let make_update_application_response () = (() : unit)
 let make_input_lambda_processor_update
   ?role_arn_update:(role_arn_update_ : string option) 
   ?resource_arn_update:(resource_arn_update_ : string option)  () =
@@ -199,21 +199,21 @@ let make_update_application_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : update_application_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
 let make_tag ?value:(value_ : string option)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tags = tags_; resource_ar_n = resource_ar_n_ } : tag_resource_request)
-let make_stop_application_response () = (() : stop_application_response)
+let make_stop_application_response () = (() : unit)
 let make_stop_application_request
   ~application_name:(application_name_ : string)  () =
   ({ application_name = application_name_ } : stop_application_request)
-let make_start_application_response () = (() : start_application_response)
+let make_start_application_response () = (() : unit)
 let make_input_starting_position_configuration
   ?input_starting_position:(input_starting_position_ :
                              input_starting_position option)
@@ -514,8 +514,7 @@ let make_describe_application_response
 let make_describe_application_request
   ~application_name:(application_name_ : string)  () =
   ({ application_name = application_name_ } : describe_application_request)
-let make_delete_application_reference_data_source_response () =
-  (() : delete_application_reference_data_source_response)
+let make_delete_application_reference_data_source_response () = (() : unit)
 let make_delete_application_reference_data_source_request
   ~reference_id:(reference_id_ : string) 
   ~current_application_version_id:(current_application_version_id_ : int) 
@@ -525,8 +524,7 @@ let make_delete_application_reference_data_source_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : delete_application_reference_data_source_request)
-let make_delete_application_output_response () =
-  (() : delete_application_output_response)
+let make_delete_application_output_response () = (() : unit)
 let make_delete_application_output_request ~output_id:(output_id_ : string) 
   ~current_application_version_id:(current_application_version_id_ : int) 
   ~application_name:(application_name_ : string)  () =
@@ -536,7 +534,7 @@ let make_delete_application_output_request ~output_id:(output_id_ : string)
      application_name = application_name_
    } : delete_application_output_request)
 let make_delete_application_input_processing_configuration_response () =
-  (() : delete_application_input_processing_configuration_response)
+  (() : unit)
 let make_delete_application_input_processing_configuration_request
   ~input_id:(input_id_ : string) 
   ~current_application_version_id:(current_application_version_id_ : int) 
@@ -547,7 +545,7 @@ let make_delete_application_input_processing_configuration_request
      application_name = application_name_
    } : delete_application_input_processing_configuration_request)
 let make_delete_application_cloud_watch_logging_option_response () =
-  (() : delete_application_cloud_watch_logging_option_response)
+  (() : unit)
 let make_delete_application_cloud_watch_logging_option_request
   ~cloud_watch_logging_option_id:(cloud_watch_logging_option_id_ : string) 
   ~current_application_version_id:(current_application_version_id_ : int) 
@@ -557,7 +555,7 @@ let make_delete_application_cloud_watch_logging_option_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : delete_application_cloud_watch_logging_option_request)
-let make_delete_application_response () = (() : delete_application_response)
+let make_delete_application_response () = (() : unit)
 let make_delete_application_request
   ~create_timestamp:(create_timestamp_ : CoreTypes.Timestamp.t) 
   ~application_name:(application_name_ : string)  () =
@@ -606,8 +604,7 @@ let make_create_application_request ?tags:(tags_ : tag list option)
      application_description = application_description_;
      application_name = application_name_
    } : create_application_request)
-let make_add_application_reference_data_source_response () =
-  (() : add_application_reference_data_source_response)
+let make_add_application_reference_data_source_response () = (() : unit)
 let make_add_application_reference_data_source_request
   ~reference_data_source:(reference_data_source_ : reference_data_source) 
   ~current_application_version_id:(current_application_version_id_ : int) 
@@ -617,8 +614,7 @@ let make_add_application_reference_data_source_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : add_application_reference_data_source_request)
-let make_add_application_output_response () =
-  (() : add_application_output_response)
+let make_add_application_output_response () = (() : unit)
 let make_add_application_output_request ~output:(output_ : output) 
   ~current_application_version_id:(current_application_version_id_ : int) 
   ~application_name:(application_name_ : string)  () =
@@ -628,7 +624,7 @@ let make_add_application_output_request ~output:(output_ : output)
      application_name = application_name_
    } : add_application_output_request)
 let make_add_application_input_processing_configuration_response () =
-  (() : add_application_input_processing_configuration_response)
+  (() : unit)
 let make_add_application_input_processing_configuration_request
   ~input_processing_configuration:(input_processing_configuration_ :
                                     input_processing_configuration)
@@ -641,8 +637,7 @@ let make_add_application_input_processing_configuration_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : add_application_input_processing_configuration_request)
-let make_add_application_input_response () =
-  (() : add_application_input_response)
+let make_add_application_input_response () = (() : unit)
 let make_add_application_input_request ~input:(input_ : input) 
   ~current_application_version_id:(current_application_version_id_ : int) 
   ~application_name:(application_name_ : string)  () =
@@ -651,8 +646,7 @@ let make_add_application_input_request ~input:(input_ : input)
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : add_application_input_request)
-let make_add_application_cloud_watch_logging_option_response () =
-  (() : add_application_cloud_watch_logging_option_response)
+let make_add_application_cloud_watch_logging_option_response () = (() : unit)
 let make_add_application_cloud_watch_logging_option_request
   ~cloud_watch_logging_option:(cloud_watch_logging_option_ :
                                 cloud_watch_logging_option)

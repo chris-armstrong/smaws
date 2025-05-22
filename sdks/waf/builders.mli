@@ -159,14 +159,14 @@ val make_update_byte_match_set_request :
   updates:byte_match_set_update list ->
     change_token:string ->
       byte_match_set_id:string -> unit -> update_byte_match_set_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
 val make_time_window :
   end_time:CoreTypes.Timestamp.t ->
     start_time:CoreTypes.Timestamp.t -> unit -> time_window
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
@@ -233,8 +233,7 @@ val make_rate_based_rule :
         rate_key:rate_key ->
           match_predicates:predicate list ->
             rule_id:string -> unit -> rate_based_rule
-val make_put_permission_policy_response :
-  unit -> put_permission_policy_response
+val make_put_permission_policy_response : unit -> unit
 val make_put_permission_policy_request :
   policy:string ->
     resource_arn:string -> unit -> put_permission_policy_request
@@ -431,7 +430,7 @@ val make_get_change_token_status_request :
   change_token:string -> unit -> get_change_token_status_request
 val make_get_change_token_response :
   ?change_token:string -> unit -> get_change_token_response
-val make_get_change_token_request : unit -> get_change_token_request
+val make_get_change_token_request : unit -> unit
 val make_byte_match_set :
   ?name:string ->
     byte_match_tuples:byte_match_tuple list ->
@@ -485,12 +484,10 @@ val make_delete_rate_based_rule_response :
 val make_delete_rate_based_rule_request :
   change_token:string ->
     rule_id:string -> unit -> delete_rate_based_rule_request
-val make_delete_permission_policy_response :
-  unit -> delete_permission_policy_response
+val make_delete_permission_policy_response : unit -> unit
 val make_delete_permission_policy_request :
   resource_arn:string -> unit -> delete_permission_policy_request
-val make_delete_logging_configuration_response :
-  unit -> delete_logging_configuration_response
+val make_delete_logging_configuration_response : unit -> unit
 val make_delete_logging_configuration_request :
   resource_arn:string -> unit -> delete_logging_configuration_request
 val make_delete_ip_set_response :

@@ -215,7 +215,7 @@ module DescribeLimits =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : describe_limits_input) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_limits_input_to_yojson request in

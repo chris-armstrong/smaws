@@ -36,7 +36,7 @@ let make_identity_pool
      identity_pool_name = identity_pool_name_;
      identity_pool_id = identity_pool_id_
    } : identity_pool)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_input ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_input)
@@ -63,7 +63,7 @@ let make_unlink_developer_identity_input
      identity_pool_id = identity_pool_id_;
      identity_id = identity_id_
    } : unlink_developer_identity_input)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_input ~tags:(tags_ : identity_pool_tags_type) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_input)

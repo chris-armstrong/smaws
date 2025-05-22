@@ -291,7 +291,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -339,7 +339,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 

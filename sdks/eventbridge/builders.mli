@@ -110,7 +110,7 @@ val make_update_api_destination_request :
         ?connection_arn:string ->
           ?description:string ->
             name:string -> unit -> update_api_destination_request
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_request
@@ -209,7 +209,7 @@ val make_target :
                             ?input:string ->
                               ?role_arn:string ->
                                 arn:string -> id:string -> unit -> target
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
 val make_start_replay_response :
@@ -627,7 +627,7 @@ val make_delete_partner_event_source_request :
     name:string -> unit -> delete_partner_event_source_request
 val make_delete_event_bus_request :
   name:string -> unit -> delete_event_bus_request
-val make_delete_endpoint_response : unit -> delete_endpoint_response
+val make_delete_endpoint_response : unit -> unit
 val make_delete_endpoint_request :
   name:string -> unit -> delete_endpoint_request
 val make_delete_connection_response :
@@ -638,11 +638,10 @@ val make_delete_connection_response :
           ?connection_arn:string -> unit -> delete_connection_response
 val make_delete_connection_request :
   name:string -> unit -> delete_connection_request
-val make_delete_archive_response : unit -> delete_archive_response
+val make_delete_archive_response : unit -> unit
 val make_delete_archive_request :
   archive_name:string -> unit -> delete_archive_request
-val make_delete_api_destination_response :
-  unit -> delete_api_destination_response
+val make_delete_api_destination_response : unit -> unit
 val make_delete_api_destination_request :
   name:string -> unit -> delete_api_destination_request
 val make_deauthorize_connection_response :

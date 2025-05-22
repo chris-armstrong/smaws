@@ -639,8 +639,7 @@ let update_access_policy_request_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let arn_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_keys_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
@@ -663,8 +662,7 @@ let tag_of_yojson tree path =
   _res
 let tags_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -830,8 +828,7 @@ let get_policies_stats_response_of_yojson tree path =
     } in
   _res
 let get_policies_stats_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_policies_stats_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let get_account_settings_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : get_account_settings_response =
@@ -843,8 +840,7 @@ let get_account_settings_response_of_yojson tree path =
     } in
   _res
 let get_account_settings_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_account_settings_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let create_security_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : create_security_policy_response =
@@ -1513,8 +1509,7 @@ let delete_vpc_endpoint_request_of_yojson tree path =
     } in
   _res
 let delete_security_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_security_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_security_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_security_policy_request =
@@ -1528,8 +1523,7 @@ let delete_security_policy_request_of_yojson tree path =
     } in
   _res
 let delete_security_config_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_security_config_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_security_config_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_security_config_request =
@@ -1541,8 +1535,7 @@ let delete_security_config_request_of_yojson tree path =
     } in
   _res
 let delete_lifecycle_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_lifecycle_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_lifecycle_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_lifecycle_policy_request =
@@ -1591,8 +1584,7 @@ let delete_collection_request_of_yojson tree path =
     } in
   _res
 let delete_access_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_access_policy_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_access_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_access_policy_request =

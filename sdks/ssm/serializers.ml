@@ -5,8 +5,7 @@ let valid_next_step_to_yojson = string_to_yojson
 let valid_next_step_list_to_yojson tree =
   list_to_yojson valid_next_step_to_yojson tree
 let url_to_yojson = string_to_yojson
-let update_service_setting_result_to_yojson
-  (x : update_service_setting_result) = assoc_to_yojson []
+let update_service_setting_result_to_yojson = unit_to_yojson
 let service_setting_id_to_yojson = string_to_yojson
 let service_setting_value_to_yojson = string_to_yojson
 let update_service_setting_request_to_yojson
@@ -25,8 +24,7 @@ let service_setting_not_found_to_yojson (x : service_setting_not_found) =
 let internal_server_error_to_yojson (x : internal_server_error) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_resource_data_sync_result_to_yojson
-  (x : update_resource_data_sync_result) = assoc_to_yojson []
+let update_resource_data_sync_result_to_yojson = unit_to_yojson
 let resource_data_sync_name_to_yojson = string_to_yojson
 let resource_data_sync_type_to_yojson = string_to_yojson
 let resource_data_sync_source_type_to_yojson = string_to_yojson
@@ -292,8 +290,7 @@ let ops_metadata_invalid_argument_exception_to_yojson
   (x : ops_metadata_invalid_argument_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson string__to_yojson x.message))]
-let update_ops_item_response_to_yojson (x : update_ops_item_response) =
-  assoc_to_yojson []
+let update_ops_item_response_to_yojson = unit_to_yojson
 let ops_item_description_to_yojson = string_to_yojson
 let ops_item_data_value_string_to_yojson = string_to_yojson
 let ops_item_data_type_to_yojson (x : ops_item_data_type) =
@@ -413,8 +410,7 @@ let ops_item_access_denied_exception_to_yojson
   (x : ops_item_access_denied_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_managed_instance_role_result_to_yojson
-  (x : update_managed_instance_role_result) = assoc_to_yojson []
+let update_managed_instance_role_result_to_yojson = unit_to_yojson
 let managed_instance_id_to_yojson = string_to_yojson
 let iam_role_to_yojson = string_to_yojson
 let update_managed_instance_role_request_to_yojson
@@ -976,8 +972,7 @@ let update_document_request_to_yojson (x : update_document_request) =
     ("Attachments",
       (option_to_yojson attachments_source_list_to_yojson x.attachments));
     ("Content", (Some (document_content_to_yojson x.content)))]
-let update_document_metadata_response_to_yojson
-  (x : update_document_metadata_response) = assoc_to_yojson []
+let update_document_metadata_response_to_yojson = unit_to_yojson
 let document_review_action_to_yojson (x : document_review_action) =
   match x with
   | Reject -> `String "Reject"
@@ -1228,7 +1223,7 @@ let update_association_status_request_to_yojson
        (Some (association_status_to_yojson x.association_status)));
     ("InstanceId", (Some (instance_id_to_yojson x.instance_id)));
     ("Name", (Some (document_ar_n_to_yojson x.name)))]
-let status_unchanged_to_yojson (x : status_unchanged) = assoc_to_yojson []
+let status_unchanged_to_yojson = unit_to_yojson
 let association_does_not_exist_to_yojson (x : association_does_not_exist) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -1294,8 +1289,7 @@ let invalid_schedule_to_yojson (x : invalid_schedule) =
 let invalid_parameters_to_yojson (x : invalid_parameters) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let invalid_output_location_to_yojson (x : invalid_output_location) =
-  assoc_to_yojson []
+let invalid_output_location_to_yojson = unit_to_yojson
 let invalid_association_version_to_yojson (x : invalid_association_version) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -1363,8 +1357,7 @@ let total_size_limit_exceeded_exception_to_yojson
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
 let total_count_to_yojson = int_to_yojson
-let too_many_tags_error_to_yojson (x : too_many_tags_error) =
-  assoc_to_yojson []
+let too_many_tags_error_to_yojson = unit_to_yojson
 let token_value_to_yojson = string_to_yojson
 let session_id_to_yojson = string_to_yojson
 let terminate_session_response_to_yojson (x : terminate_session_response) =
@@ -1390,8 +1383,7 @@ let string_date_time_to_yojson = string_to_yojson
 let stream_url_to_yojson = string_to_yojson
 let stop_type_to_yojson (x : stop_type) =
   match x with | CANCEL -> `String "Cancel" | COMPLETE -> `String "Complete"
-let stop_automation_execution_result_to_yojson
-  (x : stop_automation_execution_result) = assoc_to_yojson []
+let stop_automation_execution_result_to_yojson = unit_to_yojson
 let automation_execution_id_to_yojson = string_to_yojson
 let stop_automation_execution_request_to_yojson
   (x : stop_automation_execution_request) =
@@ -1640,8 +1632,7 @@ let start_automation_execution_request_to_yojson
     ("DocumentVersion",
       (option_to_yojson document_version_to_yojson x.document_version));
     ("DocumentName", (Some (document_ar_n_to_yojson x.document_name)))]
-let start_associations_once_result_to_yojson
-  (x : start_associations_once_result) = assoc_to_yojson []
+let start_associations_once_result_to_yojson = unit_to_yojson
 let association_id_list_to_yojson tree =
   list_to_yojson association_id_to_yojson tree
 let start_associations_once_request_to_yojson
@@ -1858,15 +1849,12 @@ let send_command_request_to_yojson (x : send_command_request) =
 let invalid_role_to_yojson (x : invalid_role) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let invalid_output_folder_to_yojson (x : invalid_output_folder) =
-  assoc_to_yojson []
+let invalid_output_folder_to_yojson = unit_to_yojson
 let invalid_notification_config_to_yojson (x : invalid_notification_config) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let duplicate_instance_id_to_yojson (x : duplicate_instance_id) =
-  assoc_to_yojson []
-let send_automation_signal_result_to_yojson
-  (x : send_automation_signal_result) = assoc_to_yojson []
+let duplicate_instance_id_to_yojson = unit_to_yojson
+let send_automation_signal_result_to_yojson = unit_to_yojson
 let send_automation_signal_request_to_yojson
   (x : send_automation_signal_request) =
   assoc_to_yojson
@@ -2142,8 +2130,7 @@ let reset_service_setting_request_to_yojson
   (x : reset_service_setting_request) =
   assoc_to_yojson
     [("SettingId", (Some (service_setting_id_to_yojson x.setting_id)))]
-let remove_tags_from_resource_result_to_yojson
-  (x : remove_tags_from_resource_result) = assoc_to_yojson []
+let remove_tags_from_resource_result_to_yojson = unit_to_yojson
 let key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let remove_tags_from_resource_request_to_yojson
   (x : remove_tags_from_resource_request) =
@@ -2152,10 +2139,8 @@ let remove_tags_from_resource_request_to_yojson
     ("ResourceId", (Some (resource_id_to_yojson x.resource_id)));
     ("ResourceType",
       (Some (resource_type_for_tagging_to_yojson x.resource_type)))]
-let invalid_resource_type_to_yojson (x : invalid_resource_type) =
-  assoc_to_yojson []
-let invalid_resource_id_to_yojson (x : invalid_resource_id) =
-  assoc_to_yojson []
+let invalid_resource_type_to_yojson = unit_to_yojson
+let invalid_resource_id_to_yojson = unit_to_yojson
 let remaining_count_to_yojson = int_to_yojson
 let registrations_count_to_yojson = int_to_yojson
 let registration_metadata_value_to_yojson = string_to_yojson
@@ -2432,8 +2417,7 @@ let custom_schema_count_limit_exceeded_exception_to_yojson
   (x : custom_schema_count_limit_exceeded_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let put_compliance_items_result_to_yojson (x : put_compliance_items_result) =
-  assoc_to_yojson []
+let put_compliance_items_result_to_yojson = unit_to_yojson
 let compliance_item_id_to_yojson = string_to_yojson
 let compliance_item_title_to_yojson = string_to_yojson
 let compliance_item_details_to_yojson tree =
@@ -3078,8 +3062,7 @@ let rec ops_aggregator_to_yojson (x : ops_aggregator) =
 and ops_aggregator_list_to_yojson tree =
   list_to_yojson ops_aggregator_to_yojson tree
 let next_token_to_yojson = string_to_yojson
-let modify_document_permission_response_to_yojson
-  (x : modify_document_permission_response) = assoc_to_yojson []
+let modify_document_permission_response_to_yojson = unit_to_yojson
 let document_permission_type_to_yojson (x : document_permission_type) =
   match x with | SHARE -> `String "Share"
 let account_id_to_yojson = string_to_yojson
@@ -3545,8 +3528,7 @@ let list_documents_request_to_yojson (x : list_documents_request) =
       (option_to_yojson document_key_values_filter_list_to_yojson x.filters));
     ("DocumentFilterList",
       (option_to_yojson document_filter_list_to_yojson x.document_filter_list))]
-let invalid_filter_key_to_yojson (x : invalid_filter_key) =
-  assoc_to_yojson []
+let invalid_filter_key_to_yojson = unit_to_yojson
 let document_version_info_to_yojson (x : document_version_info) =
   assoc_to_yojson
     [("ReviewStatus",
@@ -3714,8 +3696,7 @@ let list_commands_request_to_yojson (x : list_commands_request) =
       (option_to_yojson command_max_results_to_yojson x.max_results));
     ("InstanceId", (option_to_yojson instance_id_to_yojson x.instance_id));
     ("CommandId", (option_to_yojson command_id_to_yojson x.command_id))]
-let invalid_command_id_to_yojson (x : invalid_command_id) =
-  assoc_to_yojson []
+let invalid_command_id_to_yojson = unit_to_yojson
 let instance_tag_name_to_yojson = string_to_yojson
 let command_invocation_status_to_yojson (x : command_invocation_status) =
   match x with
@@ -3937,8 +3918,7 @@ let label_parameter_version_request_to_yojson
     ("Name", (Some (ps_parameter_name_to_yojson x.name)))]
 let key_name_to_yojson = string_to_yojson
 let is_sub_type_schema_to_yojson = bool_to_yojson
-let invocation_does_not_exist_to_yojson (x : invocation_does_not_exist) =
-  assoc_to_yojson []
+let invocation_does_not_exist_to_yojson = unit_to_yojson
 let inventory_type_display_name_to_yojson = string_to_yojson
 let inventory_schema_delete_option_to_yojson
   (x : inventory_schema_delete_option) =
@@ -4062,8 +4042,7 @@ let invalid_result_attribute_exception_to_yojson
   (x : invalid_result_attribute_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let invalid_plugin_name_to_yojson (x : invalid_plugin_name) =
-  assoc_to_yojson []
+let invalid_plugin_name_to_yojson = unit_to_yojson
 let invalid_option_exception_to_yojson (x : invalid_option_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -5115,8 +5094,7 @@ let document_permission_max_results_to_yojson = int_to_yojson
 let document_already_exists_to_yojson (x : document_already_exists) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let disassociate_ops_item_related_item_response_to_yojson
-  (x : disassociate_ops_item_related_item_response) = assoc_to_yojson []
+let disassociate_ops_item_related_item_response_to_yojson = unit_to_yojson
 let disassociate_ops_item_related_item_request_to_yojson
   (x : disassociate_ops_item_related_item_request) =
   assoc_to_yojson
@@ -5921,22 +5899,19 @@ let deregister_patch_baseline_for_patch_group_request_to_yojson
   assoc_to_yojson
     [("PatchGroup", (Some (patch_group_to_yojson x.patch_group)));
     ("BaselineId", (Some (baseline_id_to_yojson x.baseline_id)))]
-let deregister_managed_instance_result_to_yojson
-  (x : deregister_managed_instance_result) = assoc_to_yojson []
+let deregister_managed_instance_result_to_yojson = unit_to_yojson
 let deregister_managed_instance_request_to_yojson
   (x : deregister_managed_instance_request) =
   assoc_to_yojson
     [("InstanceId", (Some (managed_instance_id_to_yojson x.instance_id)))]
-let delete_resource_policy_response_to_yojson
-  (x : delete_resource_policy_response) = assoc_to_yojson []
+let delete_resource_policy_response_to_yojson = unit_to_yojson
 let delete_resource_policy_request_to_yojson
   (x : delete_resource_policy_request) =
   assoc_to_yojson
     [("PolicyHash", (Some (policy_hash_to_yojson x.policy_hash)));
     ("PolicyId", (Some (policy_id_to_yojson x.policy_id)));
     ("ResourceArn", (Some (resource_arn_string_to_yojson x.resource_arn)))]
-let delete_resource_data_sync_result_to_yojson
-  (x : delete_resource_data_sync_result) = assoc_to_yojson []
+let delete_resource_data_sync_result_to_yojson = unit_to_yojson
 let delete_resource_data_sync_request_to_yojson
   (x : delete_resource_data_sync_request) =
   assoc_to_yojson
@@ -5959,18 +5934,15 @@ let delete_parameters_result_to_yojson (x : delete_parameters_result) =
       (option_to_yojson parameter_name_list_to_yojson x.deleted_parameters))]
 let delete_parameters_request_to_yojson (x : delete_parameters_request) =
   assoc_to_yojson [("Names", (Some (parameter_name_list_to_yojson x.names)))]
-let delete_parameter_result_to_yojson (x : delete_parameter_result) =
-  assoc_to_yojson []
+let delete_parameter_result_to_yojson = unit_to_yojson
 let delete_parameter_request_to_yojson (x : delete_parameter_request) =
   assoc_to_yojson [("Name", (Some (ps_parameter_name_to_yojson x.name)))]
-let delete_ops_metadata_result_to_yojson (x : delete_ops_metadata_result) =
-  assoc_to_yojson []
+let delete_ops_metadata_result_to_yojson = unit_to_yojson
 let delete_ops_metadata_request_to_yojson (x : delete_ops_metadata_request) =
   assoc_to_yojson
     [("OpsMetadataArn",
        (Some (ops_metadata_arn_to_yojson x.ops_metadata_arn)))]
-let delete_ops_item_response_to_yojson (x : delete_ops_item_response) =
-  assoc_to_yojson []
+let delete_ops_item_response_to_yojson = unit_to_yojson
 let delete_ops_item_request_to_yojson (x : delete_ops_item_request) =
   assoc_to_yojson
     [("OpsItemId", (Some (ops_item_id_to_yojson x.ops_item_id)))]
@@ -5999,8 +5971,7 @@ let delete_inventory_request_to_yojson (x : delete_inventory_request) =
       (option_to_yojson inventory_schema_delete_option_to_yojson
          x.schema_delete_option));
     ("TypeName", (Some (inventory_item_type_name_to_yojson x.type_name)))]
-let delete_document_result_to_yojson (x : delete_document_result) =
-  assoc_to_yojson []
+let delete_document_result_to_yojson = unit_to_yojson
 let delete_document_request_to_yojson (x : delete_document_request) =
   assoc_to_yojson
     [("Force", (option_to_yojson boolean__to_yojson x.force));
@@ -6009,23 +5980,19 @@ let delete_document_request_to_yojson (x : delete_document_request) =
     ("DocumentVersion",
       (option_to_yojson document_version_to_yojson x.document_version));
     ("Name", (Some (document_name_to_yojson x.name)))]
-let associated_instances_to_yojson (x : associated_instances) =
-  assoc_to_yojson []
-let delete_association_result_to_yojson (x : delete_association_result) =
-  assoc_to_yojson []
+let associated_instances_to_yojson = unit_to_yojson
+let delete_association_result_to_yojson = unit_to_yojson
 let delete_association_request_to_yojson (x : delete_association_request) =
   assoc_to_yojson
     [("AssociationId",
        (option_to_yojson association_id_to_yojson x.association_id));
     ("InstanceId", (option_to_yojson instance_id_to_yojson x.instance_id));
     ("Name", (option_to_yojson document_ar_n_to_yojson x.name))]
-let delete_activation_result_to_yojson (x : delete_activation_result) =
-  assoc_to_yojson []
+let delete_activation_result_to_yojson = unit_to_yojson
 let delete_activation_request_to_yojson (x : delete_activation_request) =
   assoc_to_yojson
     [("ActivationId", (Some (activation_id_to_yojson x.activation_id)))]
-let create_resource_data_sync_result_to_yojson
-  (x : create_resource_data_sync_result) = assoc_to_yojson []
+let create_resource_data_sync_result_to_yojson = unit_to_yojson
 let create_resource_data_sync_request_to_yojson
   (x : create_resource_data_sync_request) =
   assoc_to_yojson
@@ -6227,10 +6194,8 @@ let create_association_batch_request_to_yojson
   assoc_to_yojson
     [("Entries",
        (Some (create_association_batch_request_entries_to_yojson x.entries)))]
-let association_limit_exceeded_to_yojson (x : association_limit_exceeded) =
-  assoc_to_yojson []
-let association_already_exists_to_yojson (x : association_already_exists) =
-  assoc_to_yojson []
+let association_limit_exceeded_to_yojson = unit_to_yojson
+let association_already_exists_to_yojson = unit_to_yojson
 let activation_code_to_yojson = string_to_yojson
 let create_activation_result_to_yojson (x : create_activation_result) =
   assoc_to_yojson
@@ -6266,8 +6231,7 @@ let cancel_maintenance_window_execution_request_to_yojson
     [("WindowExecutionId",
        (Some
           (maintenance_window_execution_id_to_yojson x.window_execution_id)))]
-let cancel_command_result_to_yojson (x : cancel_command_result) =
-  assoc_to_yojson []
+let cancel_command_result_to_yojson = unit_to_yojson
 let cancel_command_request_to_yojson (x : cancel_command_request) =
   assoc_to_yojson
     [("InstanceIds",
@@ -6294,8 +6258,7 @@ let associate_ops_item_related_item_request_to_yojson
       (Some
          (ops_item_related_item_association_type_to_yojson x.association_type)));
     ("OpsItemId", (Some (ops_item_id_to_yojson x.ops_item_id)))]
-let add_tags_to_resource_result_to_yojson (x : add_tags_to_resource_result) =
-  assoc_to_yojson []
+let add_tags_to_resource_result_to_yojson = unit_to_yojson
 let add_tags_to_resource_request_to_yojson (x : add_tags_to_resource_request)
   =
   assoc_to_yojson

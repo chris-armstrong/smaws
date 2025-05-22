@@ -18,7 +18,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       connect_custom_key_store_request ->
-        (connect_custom_key_store_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudHsmClusterInvalidConfigurationException of
               cloud_hsm_cluster_invalid_configuration_exception 
@@ -171,7 +171,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_custom_key_store_request ->
-        (delete_custom_key_store_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomKeyStoreHasCMKsException of
               custom_key_store_has_cm_ks_exception 
@@ -278,7 +278,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disconnect_custom_key_store_request ->
-        (disconnect_custom_key_store_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomKeyStoreInvalidStateException of
               custom_key_store_invalid_state_exception 
@@ -518,7 +518,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       import_key_material_request ->
-        (import_key_material_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `ExpiredImportTokenException of expired_import_token_exception 
@@ -825,7 +825,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_custom_key_store_request ->
-        (update_custom_key_store_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudHsmClusterInvalidConfigurationException of
               cloud_hsm_cluster_invalid_configuration_exception 

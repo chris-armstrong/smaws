@@ -73,7 +73,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_service_request ->
-        (delete_service_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceInUse of resource_in_use 
@@ -245,7 +245,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceNotFoundException of resource_not_found_exception 
@@ -256,7 +256,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceNotFoundException of resource_not_found_exception ])

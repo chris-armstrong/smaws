@@ -46,8 +46,7 @@ val make_untag_resource_output :
 val make_untag_resource_input :
   tag_keys:string list ->
     resource_ar_n:string -> unit -> untag_resource_input
-val make_test_hypervisor_configuration_output :
-  unit -> test_hypervisor_configuration_output
+val make_test_hypervisor_configuration_output : unit -> unit
 val make_test_hypervisor_configuration_input :
   ?password:string ->
     ?username:string ->

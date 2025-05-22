@@ -600,13 +600,13 @@ let make_update_account_settings_input
      pipeline_provisioning_repository = pipeline_provisioning_repository_;
      pipeline_service_role_arn = pipeline_service_role_arn_
    } : update_account_settings_input)
-let make_untag_resource_output () = (() : untag_resource_output)
+let make_untag_resource_output () = (() : unit)
 let make_untag_resource_input ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_input)
 let make_s3_object_source ~key:(key_ : string)  ~bucket:(bucket_ : string) 
   () = ({ key = key_; bucket = bucket_ } : s3_object_source)
-let make_tag_resource_output () = (() : tag_resource_output)
+let make_tag_resource_output () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_input ~tags:(tags_ : tag list) 
@@ -844,8 +844,7 @@ let make_provisioned_resource
 let make_output ?value_string:(value_string_ : string option) 
   ?key:(key_ : string option)  () =
   ({ value_string = value_string_; key = key_ } : output)
-let make_notify_resource_deployment_status_change_output () =
-  (() : notify_resource_deployment_status_change_output)
+let make_notify_resource_deployment_status_change_output () = (() : unit)
 let make_notify_resource_deployment_status_change_input
   ?status_message:(status_message_ : string option) 
   ?deployment_id:(deployment_id_ : string option) 
@@ -1436,7 +1435,7 @@ let make_counts_summary
    } : counts_summary)
 let make_get_resources_summary_output ~counts:(counts_ : counts_summary)  ()
   = ({ counts = counts_ } : get_resources_summary_output)
-let make_get_resources_summary_input () = (() : get_resources_summary_input)
+let make_get_resources_summary_input () = (() : unit)
 let make_get_repository_sync_status_output
   ?latest_sync:(latest_sync_ : repository_sync_attempt option)  () =
   ({ latest_sync = latest_sync_ } : get_repository_sync_status_output)
@@ -1570,7 +1569,7 @@ let make_get_component_input ~name:(name_ : string)  () =
 let make_get_account_settings_output
   ?account_settings:(account_settings_ : account_settings option)  () =
   ({ account_settings = account_settings_ } : get_account_settings_output)
-let make_get_account_settings_input () = (() : get_account_settings_input)
+let make_get_account_settings_input () = (() : unit)
 let make_delete_template_sync_config_output
   ?template_sync_config:(template_sync_config_ : template_sync_config option)
    () =

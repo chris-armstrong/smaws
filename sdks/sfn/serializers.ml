@@ -173,8 +173,7 @@ let invalid_logging_configuration_to_yojson
 let invalid_definition_to_yojson (x : invalid_definition) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let update_map_run_output_to_yojson (x : update_map_run_output) =
-  assoc_to_yojson []
+let update_map_run_output_to_yojson = unit_to_yojson
 let long_arn_to_yojson = string_to_yojson
 let max_concurrency_to_yojson = int_to_yojson
 let tolerated_failure_percentage_to_yojson = float_to_yojson
@@ -190,8 +189,7 @@ let update_map_run_input_to_yojson (x : update_map_run_input) =
     ("maxConcurrency",
       (option_to_yojson max_concurrency_to_yojson x.max_concurrency));
     ("mapRunArn", (Some (long_arn_to_yojson x.map_run_arn)))]
-let untag_resource_output_to_yojson (x : untag_resource_output) =
-  assoc_to_yojson []
+let untag_resource_output_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_input_to_yojson (x : untag_resource_input) =
@@ -361,8 +359,7 @@ let task_does_not_exist_to_yojson (x : task_does_not_exist) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_output_to_yojson (x : tag_resource_output) =
-  assoc_to_yojson []
+let tag_resource_output_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("value", (option_to_yojson tag_value_to_yojson x.value));
@@ -502,8 +499,7 @@ let execution_already_exists_to_yojson (x : execution_already_exists) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let sensitive_data_job_input_to_yojson = string_to_yojson
-let send_task_success_output_to_yojson (x : send_task_success_output) =
-  assoc_to_yojson []
+let send_task_success_output_to_yojson = unit_to_yojson
 let send_task_success_input_to_yojson (x : send_task_success_input) =
   assoc_to_yojson
     [("output", (Some (sensitive_data_to_yojson x.output)));
@@ -514,12 +510,10 @@ let invalid_token_to_yojson (x : invalid_token) =
 let invalid_output_to_yojson (x : invalid_output) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
-let send_task_heartbeat_output_to_yojson (x : send_task_heartbeat_output) =
-  assoc_to_yojson []
+let send_task_heartbeat_output_to_yojson = unit_to_yojson
 let send_task_heartbeat_input_to_yojson (x : send_task_heartbeat_input) =
   assoc_to_yojson [("taskToken", (Some (task_token_to_yojson x.task_token)))]
-let send_task_failure_output_to_yojson (x : send_task_failure_output) =
-  assoc_to_yojson []
+let send_task_failure_output_to_yojson = unit_to_yojson
 let send_task_failure_input_to_yojson (x : send_task_failure_input) =
   assoc_to_yojson
     [("cause", (option_to_yojson sensitive_cause_to_yojson x.cause));
@@ -1191,27 +1185,23 @@ let describe_activity_output_to_yojson (x : describe_activity_output) =
     ("activityArn", (Some (arn_to_yojson x.activity_arn)))]
 let describe_activity_input_to_yojson (x : describe_activity_input) =
   assoc_to_yojson [("activityArn", (Some (arn_to_yojson x.activity_arn)))]
-let delete_state_machine_version_output_to_yojson
-  (x : delete_state_machine_version_output) = assoc_to_yojson []
+let delete_state_machine_version_output_to_yojson = unit_to_yojson
 let delete_state_machine_version_input_to_yojson
   (x : delete_state_machine_version_input) =
   assoc_to_yojson
     [("stateMachineVersionArn",
        (Some (long_arn_to_yojson x.state_machine_version_arn)))]
-let delete_state_machine_output_to_yojson (x : delete_state_machine_output) =
-  assoc_to_yojson []
+let delete_state_machine_output_to_yojson = unit_to_yojson
 let delete_state_machine_input_to_yojson (x : delete_state_machine_input) =
   assoc_to_yojson
     [("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
-let delete_state_machine_alias_output_to_yojson
-  (x : delete_state_machine_alias_output) = assoc_to_yojson []
+let delete_state_machine_alias_output_to_yojson = unit_to_yojson
 let delete_state_machine_alias_input_to_yojson
   (x : delete_state_machine_alias_input) =
   assoc_to_yojson
     [("stateMachineAliasArn",
        (Some (arn_to_yojson x.state_machine_alias_arn)))]
-let delete_activity_output_to_yojson (x : delete_activity_output) =
-  assoc_to_yojson []
+let delete_activity_output_to_yojson = unit_to_yojson
 let delete_activity_input_to_yojson (x : delete_activity_input) =
   assoc_to_yojson [("activityArn", (Some (arn_to_yojson x.activity_arn)))]
 let create_state_machine_output_to_yojson (x : create_state_machine_output) =

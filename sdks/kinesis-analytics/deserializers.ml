@@ -1,8 +1,7 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
 let update_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : update_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let application_name_of_yojson = string_of_yojson
 let application_version_id_of_yojson = long_of_yojson
 let id_of_yojson = string_of_yojson
@@ -444,8 +443,7 @@ let code_validation_exception_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let kinesis_analytics_ar_n_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_keys_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
@@ -505,8 +503,7 @@ let tag_of_yojson tree path =
   _res
 let tags_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -518,8 +515,7 @@ let tag_resource_request_of_yojson tree path =
     } in
   _res
 let stop_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : stop_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let stop_application_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : stop_application_request =
@@ -530,8 +526,7 @@ let stop_application_request_of_yojson tree path =
     } in
   _res
 let start_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : start_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let input_starting_position_of_yojson (tree : t) path =
   (match tree with
    | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
@@ -1134,8 +1129,7 @@ let describe_application_request_of_yojson tree path =
     } in
   _res
 let delete_application_reference_data_source_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_reference_data_source_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_reference_data_source_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_application_reference_data_source_request =
@@ -1150,8 +1144,7 @@ let delete_application_reference_data_source_request_of_yojson tree path =
     } in
   _res
 let delete_application_output_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_output_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_output_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_application_output_request =
@@ -1167,9 +1160,7 @@ let delete_application_output_request_of_yojson tree path =
   _res
 let delete_application_input_processing_configuration_response_of_yojson tree
   path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_input_processing_configuration_response = () in
-  _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_input_processing_configuration_request_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -1186,9 +1177,7 @@ let delete_application_input_processing_configuration_request_of_yojson tree
   _res
 let delete_application_cloud_watch_logging_option_response_of_yojson tree
   path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_cloud_watch_logging_option_response = () in
-  _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_cloud_watch_logging_option_request_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
@@ -1205,8 +1194,7 @@ let delete_application_cloud_watch_logging_option_request_of_yojson tree path
     } in
   _res
 let delete_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_application_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_application_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_application_request =
@@ -1295,8 +1283,7 @@ let create_application_request_of_yojson tree path =
     } in
   _res
 let add_application_reference_data_source_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_application_reference_data_source_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_application_reference_data_source_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_application_reference_data_source_request =
@@ -1313,8 +1300,7 @@ let add_application_reference_data_source_request_of_yojson tree path =
     } in
   _res
 let add_application_output_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_application_output_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_application_output_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_application_output_request =
@@ -1330,9 +1316,7 @@ let add_application_output_request_of_yojson tree path =
   _res
 let add_application_input_processing_configuration_response_of_yojson tree
   path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_application_input_processing_configuration_response = () in
-  _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_application_input_processing_configuration_request_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -1351,8 +1335,7 @@ let add_application_input_processing_configuration_request_of_yojson tree
     } in
   _res
 let add_application_input_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_application_input_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_application_input_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_application_input_request =
@@ -1367,8 +1350,7 @@ let add_application_input_request_of_yojson tree path =
     } in
   _res
 let add_application_cloud_watch_logging_option_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : add_application_cloud_watch_logging_option_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let add_application_cloud_watch_logging_option_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : add_application_cloud_watch_logging_option_request =

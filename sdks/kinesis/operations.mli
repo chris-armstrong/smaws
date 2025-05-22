@@ -88,7 +88,7 @@ module DescribeLimits :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      describe_limits_input ->
+      unit ->
         (describe_limits_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededException of limit_exceeded_exception ]) result

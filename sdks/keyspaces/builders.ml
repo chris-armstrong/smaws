@@ -108,13 +108,13 @@ let make_update_table_request
      table_name = table_name_;
      keyspace_name = keyspace_name_
    } : update_table_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_untag_resource_request ~tags:(tags_ : tag list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_ } : untag_resource_request)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_request)
@@ -332,11 +332,11 @@ let make_get_keyspace_response
    } : get_keyspace_response)
 let make_get_keyspace_request ~keyspace_name:(keyspace_name_ : string)  () =
   ({ keyspace_name = keyspace_name_ } : get_keyspace_request)
-let make_delete_table_response () = (() : delete_table_response)
+let make_delete_table_response () = (() : unit)
 let make_delete_table_request ~table_name:(table_name_ : string) 
   ~keyspace_name:(keyspace_name_ : string)  () =
   ({ table_name = table_name_; keyspace_name = keyspace_name_ } : delete_table_request)
-let make_delete_keyspace_response () = (() : delete_keyspace_response)
+let make_delete_keyspace_response () = (() : unit)
 let make_delete_keyspace_request ~keyspace_name:(keyspace_name_ : string)  ()
   = ({ keyspace_name = keyspace_name_ } : delete_keyspace_request)
 let make_create_table_response ~resource_arn:(resource_arn_ : string)  () =

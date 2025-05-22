@@ -5,8 +5,7 @@ let wireless_connection_to_yojson (x : wireless_connection) =
   assoc_to_yojson
     [("IsWifiEnabled",
        (option_to_yojson boolean__to_yojson x.is_wifi_enabled))]
-let update_long_term_pricing_result_to_yojson
-  (x : update_long_term_pricing_result) = assoc_to_yojson []
+let update_long_term_pricing_result_to_yojson = unit_to_yojson
 let long_term_pricing_id_to_yojson = string_to_yojson
 let job_id_to_yojson = string_to_yojson
 let java_boolean_to_yojson = bool_to_yojson
@@ -24,8 +23,7 @@ let invalid_resource_exception_to_yojson (x : invalid_resource_exception) =
   assoc_to_yojson
     [("ResourceType", (option_to_yojson string__to_yojson x.resource_type));
     ("Message", (option_to_yojson string__to_yojson x.message))]
-let update_job_shipment_state_result_to_yojson
-  (x : update_job_shipment_state_result) = assoc_to_yojson []
+let update_job_shipment_state_result_to_yojson = unit_to_yojson
 let base_unit_to_yojson = unit_to_yojson
 let shipment_state_to_yojson (x : shipment_state) =
   match x with
@@ -39,7 +37,7 @@ let update_job_shipment_state_request_to_yojson
 let invalid_job_state_exception_to_yojson (x : invalid_job_state_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_job_result_to_yojson (x : update_job_result) = assoc_to_yojson []
+let update_job_result_to_yojson = unit_to_yojson
 let role_ar_n_to_yojson = string_to_yojson
 let sns_topic_ar_n_to_yojson = string_to_yojson
 let job_state_to_yojson (x : job_state) =
@@ -254,8 +252,7 @@ let cluster_limit_exceeded_exception_to_yojson
   (x : cluster_limit_exceeded_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let update_cluster_result_to_yojson (x : update_cluster_result) =
-  assoc_to_yojson []
+let update_cluster_result_to_yojson = unit_to_yojson
 let cluster_id_to_yojson = string_to_yojson
 let update_cluster_request_to_yojson (x : update_cluster_request) =
   assoc_to_yojson
@@ -615,8 +612,7 @@ let get_snowball_usage_result_to_yojson (x : get_snowball_usage_result) =
     [("SnowballsInUse",
        (option_to_yojson integer__to_yojson x.snowballs_in_use));
     ("SnowballLimit", (option_to_yojson integer__to_yojson x.snowball_limit))]
-let get_snowball_usage_request_to_yojson (x : get_snowball_usage_request) =
-  assoc_to_yojson []
+let get_snowball_usage_request_to_yojson = unit_to_yojson
 let get_job_unlock_code_result_to_yojson (x : get_job_unlock_code_result) =
   assoc_to_yojson
     [("UnlockCode", (option_to_yojson string__to_yojson x.unlock_code))]
@@ -796,11 +792,10 @@ let create_address_result_to_yojson (x : create_address_result) =
     [("AddressId", (option_to_yojson string__to_yojson x.address_id))]
 let create_address_request_to_yojson (x : create_address_request) =
   assoc_to_yojson [("Address", (Some (address_to_yojson x.address)))]
-let cancel_job_result_to_yojson (x : cancel_job_result) = assoc_to_yojson []
+let cancel_job_result_to_yojson = unit_to_yojson
 let cancel_job_request_to_yojson (x : cancel_job_request) =
   assoc_to_yojson [("JobId", (Some (job_id_to_yojson x.job_id)))]
-let cancel_cluster_result_to_yojson (x : cancel_cluster_result) =
-  assoc_to_yojson []
+let cancel_cluster_result_to_yojson = unit_to_yojson
 let cancel_cluster_request_to_yojson (x : cancel_cluster_request) =
   assoc_to_yojson [("ClusterId", (Some (cluster_id_to_yojson x.cluster_id)))]
 let base_string_to_yojson = string_to_yojson

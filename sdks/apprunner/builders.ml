@@ -327,13 +327,13 @@ let make_update_default_auto_scaling_configuration_request
   () =
   ({ auto_scaling_configuration_arn = auto_scaling_configuration_arn_ } : 
   update_default_auto_scaling_configuration_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_request)
 let make_trace_configuration ~vendor:(vendor_ : tracing_vendor)  () =
   ({ vendor = vendor_ } : trace_configuration)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ?value:(value_ : string option)  ?key:(key_ : string option)  ()
   = ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 

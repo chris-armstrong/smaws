@@ -794,8 +794,7 @@ let untag_resource_request_to_yojson (x : untag_resource_request) =
 let unpeer_vpc_result_to_yojson (x : unpeer_vpc_result) =
   assoc_to_yojson
     [("operation", (option_to_yojson operation_to_yojson x.operation))]
-let unpeer_vpc_request_to_yojson (x : unpeer_vpc_request) =
-  assoc_to_yojson []
+let unpeer_vpc_request_to_yojson = unit_to_yojson
 let treat_missing_data_to_yojson (x : treat_missing_data) =
   match x with
   | Missing -> `String "missing"
@@ -1439,7 +1438,7 @@ let port_access_type_to_yojson (x : port_access_type) =
 let peer_vpc_result_to_yojson (x : peer_vpc_result) =
   assoc_to_yojson
     [("operation", (option_to_yojson operation_to_yojson x.operation))]
-let peer_vpc_request_to_yojson (x : peer_vpc_request) = assoc_to_yojson []
+let peer_vpc_request_to_yojson = unit_to_yojson
 let password_data_to_yojson (x : password_data) =
   assoc_to_yojson
     [("keyPairName",
@@ -1793,8 +1792,7 @@ let load_balancer_list_to_yojson tree =
 let is_vpc_peered_result_to_yojson (x : is_vpc_peered_result) =
   assoc_to_yojson
     [("isPeered", (option_to_yojson boolean__to_yojson x.is_peered))]
-let is_vpc_peered_request_to_yojson (x : is_vpc_peered_request) =
-  assoc_to_yojson []
+let is_vpc_peered_request_to_yojson = unit_to_yojson
 let import_key_pair_result_to_yojson (x : import_key_pair_result) =
   assoc_to_yojson
     [("operation", (option_to_yojson operation_to_yojson x.operation))]
@@ -2615,8 +2613,7 @@ let get_distribution_bundles_result_to_yojson
   assoc_to_yojson
     [("bundles",
        (option_to_yojson distribution_bundle_list_to_yojson x.bundles))]
-let get_distribution_bundles_request_to_yojson
-  (x : get_distribution_bundles_request) = assoc_to_yojson []
+let get_distribution_bundles_request_to_yojson = unit_to_yojson
 let disk_snapshot_state_to_yojson (x : disk_snapshot_state) =
   match x with
   | Unknown -> `String "unknown"
@@ -2716,8 +2713,7 @@ let get_container_service_powers_result_to_yojson
   assoc_to_yojson
     [("powers",
        (option_to_yojson container_service_power_list_to_yojson x.powers))]
-let get_container_service_powers_request_to_yojson
-  (x : get_container_service_powers_request) = assoc_to_yojson []
+let get_container_service_powers_request_to_yojson = unit_to_yojson
 let container_service_metric_name_to_yojson
   (x : container_service_metric_name) =
   match x with
@@ -2795,8 +2791,7 @@ let get_container_api_metadata_result_to_yojson
     [("metadata",
        (option_to_yojson container_service_metadata_entry_list_to_yojson
           x.metadata))]
-let get_container_api_metadata_request_to_yojson
-  (x : get_container_api_metadata_request) = assoc_to_yojson []
+let get_container_api_metadata_request_to_yojson = unit_to_yojson
 let contact_method_status_to_yojson (x : contact_method_status) =
   match x with
   | Invalid -> `String "Invalid"
@@ -3254,8 +3249,7 @@ let download_default_key_pair_result_to_yojson
       (option_to_yojson base64_to_yojson x.private_key_base64));
     ("publicKeyBase64",
       (option_to_yojson base64_to_yojson x.public_key_base64))]
-let download_default_key_pair_request_to_yojson
-  (x : download_default_key_pair_request) = assoc_to_yojson []
+let download_default_key_pair_request_to_yojson = unit_to_yojson
 let disable_add_on_result_to_yojson (x : disable_add_on_result) =
   assoc_to_yojson
     [("operations", (option_to_yojson operation_list_to_yojson x.operations))]
@@ -3406,15 +3400,13 @@ let delete_disk_request_to_yojson (x : delete_disk_request) =
     [("forceDeleteAddOns",
        (option_to_yojson boolean__to_yojson x.force_delete_add_ons));
     ("diskName", (Some (resource_name_to_yojson x.disk_name)))]
-let delete_container_service_result_to_yojson
-  (x : delete_container_service_result) = assoc_to_yojson []
+let delete_container_service_result_to_yojson = unit_to_yojson
 let delete_container_service_request_to_yojson
   (x : delete_container_service_request) =
   assoc_to_yojson
     [("serviceName",
        (Some (container_service_name_to_yojson x.service_name)))]
-let delete_container_image_result_to_yojson
-  (x : delete_container_image_result) = assoc_to_yojson []
+let delete_container_image_result_to_yojson = unit_to_yojson
 let delete_container_image_request_to_yojson
   (x : delete_container_image_request) =
   assoc_to_yojson
@@ -3759,8 +3751,8 @@ let create_container_service_registry_login_result_to_yojson
     [("registryLogin",
        (option_to_yojson container_service_registry_login_to_yojson
           x.registry_login))]
-let create_container_service_registry_login_request_to_yojson
-  (x : create_container_service_registry_login_request) = assoc_to_yojson []
+let create_container_service_registry_login_request_to_yojson =
+  unit_to_yojson
 let create_container_service_deployment_result_to_yojson
   (x : create_container_service_deployment_result) =
   assoc_to_yojson

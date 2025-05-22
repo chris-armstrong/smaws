@@ -5,10 +5,9 @@ let single_header_to_yojson (x : single_header) =
   assoc_to_yojson [("Name", (Some (field_to_match_data_to_yojson x.name)))]
 let single_query_argument_to_yojson (x : single_query_argument) =
   assoc_to_yojson [("Name", (Some (field_to_match_data_to_yojson x.name)))]
-let all_query_arguments_to_yojson (x : all_query_arguments) =
-  assoc_to_yojson []
-let uri_path_to_yojson (x : uri_path) = assoc_to_yojson []
-let query_string_to_yojson (x : query_string) = assoc_to_yojson []
+let all_query_arguments_to_yojson = unit_to_yojson
+let uri_path_to_yojson = unit_to_yojson
+let query_string_to_yojson = unit_to_yojson
 let base_unit_to_yojson = unit_to_yojson
 let oversize_handling_to_yojson (x : oversize_handling) =
   match x with
@@ -19,8 +18,8 @@ let body_to_yojson (x : body) =
   assoc_to_yojson
     [("OversizeHandling",
        (option_to_yojson oversize_handling_to_yojson x.oversize_handling))]
-let method__to_yojson (x : method_) = assoc_to_yojson []
-let all_to_yojson (x : all) = assoc_to_yojson []
+let method__to_yojson = unit_to_yojson
+let all_to_yojson = unit_to_yojson
 let json_pointer_path_to_yojson = string_to_yojson
 let json_pointer_paths_to_yojson tree =
   list_to_yojson json_pointer_path_to_yojson tree
@@ -598,11 +597,9 @@ let rate_limit_query_string_to_yojson (x : rate_limit_query_string) =
   assoc_to_yojson
     [("TextTransformations",
        (Some (text_transformations_to_yojson x.text_transformations)))]
-let rate_limit_http_method_to_yojson (x : rate_limit_http_method) =
-  assoc_to_yojson []
-let rate_limit_forwarded_i_p_to_yojson (x : rate_limit_forwarded_i_p) =
-  assoc_to_yojson []
-let rate_limit_i_p_to_yojson (x : rate_limit_i_p) = assoc_to_yojson []
+let rate_limit_http_method_to_yojson = unit_to_yojson
+let rate_limit_forwarded_i_p_to_yojson = unit_to_yojson
+let rate_limit_i_p_to_yojson = unit_to_yojson
 let label_namespace_to_yojson = string_to_yojson
 let rate_limit_label_namespace_to_yojson (x : rate_limit_label_namespace) =
   assoc_to_yojson
@@ -901,7 +898,7 @@ and statement_to_yojson (x : statement) =
     ("ByteMatchStatement",
       (option_to_yojson byte_match_statement_to_yojson x.byte_match_statement))]
 and statements_to_yojson tree = list_to_yojson statement_to_yojson tree
-let none_action_to_yojson (x : none_action) = assoc_to_yojson []
+let none_action_to_yojson = unit_to_yojson
 let override_action_to_yojson (x : override_action) =
   assoc_to_yojson
     [("None", (option_to_yojson none_action_to_yojson x.none));
@@ -1319,8 +1316,7 @@ let update_ip_set_request_to_yojson (x : update_ip_set_request) =
     ("Id", (Some (entity_id_to_yojson x.id)));
     ("Scope", (Some (scope_to_yojson x.scope)));
     ("Name", (Some (entity_name_to_yojson x.name)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
@@ -1333,8 +1329,7 @@ let time_window_to_yojson (x : time_window) =
     [("EndTime", (Some (timestamp__to_yojson x.end_time)));
     ("StartTime", (Some (timestamp__to_yojson x.start_time)))]
 let tag_value_to_yojson = string_to_yojson
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_to_yojson (x : tag) =
   assoc_to_yojson
     [("Value", (Some (tag_value_to_yojson x.value)));
@@ -1503,8 +1498,7 @@ let rate_based_statement_managed_keys_ip_set_to_yojson
     [("Addresses", (option_to_yojson ip_addresses_to_yojson x.addresses));
     ("IPAddressVersion",
       (option_to_yojson ip_address_version_to_yojson x.ip_address_version))]
-let put_permission_policy_response_to_yojson
-  (x : put_permission_policy_response) = assoc_to_yojson []
+let put_permission_policy_response_to_yojson = unit_to_yojson
 let policy_string_to_yojson = string_to_yojson
 let put_permission_policy_request_to_yojson
   (x : put_permission_policy_request) =
@@ -2021,8 +2015,7 @@ let generate_mobile_sdk_release_url_request_to_yojson
     [("ReleaseVersion",
        (Some (version_key_string_to_yojson x.release_version)));
     ("Platform", (Some (platform_to_yojson x.platform)))]
-let disassociate_web_acl_response_to_yojson
-  (x : disassociate_web_acl_response) = assoc_to_yojson []
+let disassociate_web_acl_response_to_yojson = unit_to_yojson
 let disassociate_web_acl_request_to_yojson (x : disassociate_web_acl_request)
   =
   assoc_to_yojson
@@ -2070,24 +2063,21 @@ let describe_all_managed_products_response_to_yojson
 let describe_all_managed_products_request_to_yojson
   (x : describe_all_managed_products_request) =
   assoc_to_yojson [("Scope", (Some (scope_to_yojson x.scope)))]
-let delete_web_acl_response_to_yojson (x : delete_web_acl_response) =
-  assoc_to_yojson []
+let delete_web_acl_response_to_yojson = unit_to_yojson
 let delete_web_acl_request_to_yojson (x : delete_web_acl_request) =
   assoc_to_yojson
     [("LockToken", (Some (lock_token_to_yojson x.lock_token)));
     ("Id", (Some (entity_id_to_yojson x.id)));
     ("Scope", (Some (scope_to_yojson x.scope)));
     ("Name", (Some (entity_name_to_yojson x.name)))]
-let delete_rule_group_response_to_yojson (x : delete_rule_group_response) =
-  assoc_to_yojson []
+let delete_rule_group_response_to_yojson = unit_to_yojson
 let delete_rule_group_request_to_yojson (x : delete_rule_group_request) =
   assoc_to_yojson
     [("LockToken", (Some (lock_token_to_yojson x.lock_token)));
     ("Id", (Some (entity_id_to_yojson x.id)));
     ("Scope", (Some (scope_to_yojson x.scope)));
     ("Name", (Some (entity_name_to_yojson x.name)))]
-let delete_regex_pattern_set_response_to_yojson
-  (x : delete_regex_pattern_set_response) = assoc_to_yojson []
+let delete_regex_pattern_set_response_to_yojson = unit_to_yojson
 let delete_regex_pattern_set_request_to_yojson
   (x : delete_regex_pattern_set_request) =
   assoc_to_yojson
@@ -2095,22 +2085,19 @@ let delete_regex_pattern_set_request_to_yojson
     ("Id", (Some (entity_id_to_yojson x.id)));
     ("Scope", (Some (scope_to_yojson x.scope)));
     ("Name", (Some (entity_name_to_yojson x.name)))]
-let delete_permission_policy_response_to_yojson
-  (x : delete_permission_policy_response) = assoc_to_yojson []
+let delete_permission_policy_response_to_yojson = unit_to_yojson
 let delete_permission_policy_request_to_yojson
   (x : delete_permission_policy_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)))]
-let delete_logging_configuration_response_to_yojson
-  (x : delete_logging_configuration_response) = assoc_to_yojson []
+let delete_logging_configuration_response_to_yojson = unit_to_yojson
 let delete_logging_configuration_request_to_yojson
   (x : delete_logging_configuration_request) =
   assoc_to_yojson
     [("LogScope", (option_to_yojson log_scope_to_yojson x.log_scope));
     ("LogType", (option_to_yojson log_type_to_yojson x.log_type));
     ("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)))]
-let delete_ip_set_response_to_yojson (x : delete_ip_set_response) =
-  assoc_to_yojson []
+let delete_ip_set_response_to_yojson = unit_to_yojson
 let delete_ip_set_request_to_yojson (x : delete_ip_set_request) =
   assoc_to_yojson
     [("LockToken", (Some (lock_token_to_yojson x.lock_token)));
@@ -2127,8 +2114,7 @@ let delete_firewall_manager_rule_groups_request_to_yojson
   assoc_to_yojson
     [("WebACLLockToken", (Some (lock_token_to_yojson x.web_acl_lock_token)));
     ("WebACLArn", (Some (resource_arn_to_yojson x.web_acl_arn)))]
-let delete_api_key_response_to_yojson (x : delete_api_key_response) =
-  assoc_to_yojson []
+let delete_api_key_response_to_yojson = unit_to_yojson
 let delete_api_key_request_to_yojson (x : delete_api_key_request) =
   assoc_to_yojson
     [("APIKey", (Some (api_key_to_yojson x.api_key)));
@@ -2220,8 +2206,7 @@ let check_capacity_request_to_yojson (x : check_capacity_request) =
   assoc_to_yojson
     [("Rules", (Some (rules_to_yojson x.rules)));
     ("Scope", (Some (scope_to_yojson x.scope)))]
-let associate_web_acl_response_to_yojson (x : associate_web_acl_response) =
-  assoc_to_yojson []
+let associate_web_acl_response_to_yojson = unit_to_yojson
 let associate_web_acl_request_to_yojson (x : associate_web_acl_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)));

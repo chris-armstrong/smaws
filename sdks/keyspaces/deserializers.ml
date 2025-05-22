@@ -321,8 +321,7 @@ let access_denied_exception_of_yojson tree path =
     } in
   _res
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_key_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
 let tag_of_yojson tree path =
@@ -344,8 +343,7 @@ let untag_resource_request_of_yojson tree path =
   _res
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -773,8 +771,7 @@ let get_keyspace_request_of_yojson tree path =
     } in
   _res
 let delete_table_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_table_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_table_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_table_request =
@@ -786,8 +783,7 @@ let delete_table_request_of_yojson tree path =
     } in
   _res
 let delete_keyspace_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_keyspace_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_keyspace_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_keyspace_request =

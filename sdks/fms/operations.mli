@@ -73,7 +73,7 @@ module DeleteNotificationChannel :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      delete_notification_channel_request ->
+      unit ->
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -125,7 +125,7 @@ module DisassociateAdminAccount :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      disassociate_admin_account_request ->
+      unit ->
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -152,7 +152,7 @@ module GetAdminAccount :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_admin_account_request ->
+      unit ->
         (get_admin_account_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -207,7 +207,7 @@ module GetNotificationChannel :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      get_notification_channel_request ->
+      unit ->
         (get_notification_channel_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
@@ -540,7 +540,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (tag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -555,7 +555,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (untag_resource_response,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 

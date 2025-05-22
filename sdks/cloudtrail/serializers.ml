@@ -384,8 +384,7 @@ let tags_limit_exceeded_exception_to_yojson
   (x : tags_limit_exceeded_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let stop_logging_response_to_yojson (x : stop_logging_response) =
-  assoc_to_yojson []
+let stop_logging_response_to_yojson = unit_to_yojson
 let stop_logging_request_to_yojson (x : stop_logging_request) =
   assoc_to_yojson [("Name", (Some (string__to_yojson x.name)))]
 let s3_import_source_to_yojson (x : s3_import_source) =
@@ -436,8 +435,7 @@ let stop_import_request_to_yojson (x : stop_import_request) =
 let import_not_found_exception_to_yojson (x : import_not_found_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let stop_event_data_store_ingestion_response_to_yojson
-  (x : stop_event_data_store_ingestion_response) = assoc_to_yojson []
+let stop_event_data_store_ingestion_response_to_yojson = unit_to_yojson
 let stop_event_data_store_ingestion_request_to_yojson
   (x : stop_event_data_store_ingestion_request) =
   assoc_to_yojson
@@ -473,8 +471,7 @@ let invalid_query_statement_exception_to_yojson
   (x : invalid_query_statement_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let start_logging_response_to_yojson (x : start_logging_response) =
-  assoc_to_yojson []
+let start_logging_response_to_yojson = unit_to_yojson
 let start_logging_request_to_yojson (x : start_logging_request) =
   assoc_to_yojson [("Name", (Some (string__to_yojson x.name)))]
 let start_import_response_to_yojson (x : start_import_response) =
@@ -509,8 +506,7 @@ let account_has_ongoing_import_exception_to_yojson
   (x : account_has_ongoing_import_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let start_event_data_store_ingestion_response_to_yojson
-  (x : start_event_data_store_ingestion_response) = assoc_to_yojson []
+let start_event_data_store_ingestion_response_to_yojson = unit_to_yojson
 let start_event_data_store_ingestion_request_to_yojson
   (x : start_event_data_store_ingestion_request) =
   assoc_to_yojson
@@ -593,8 +589,7 @@ let resource_arn_not_valid_exception_to_yojson
   (x : resource_arn_not_valid_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let remove_tags_response_to_yojson (x : remove_tags_response) =
-  assoc_to_yojson []
+let remove_tags_response_to_yojson = unit_to_yojson
 let remove_tags_request_to_yojson (x : remove_tags_request) =
   assoc_to_yojson
     [("TagsList", (Some (tags_list_to_yojson x.tags_list)));
@@ -603,8 +598,7 @@ let invalid_tag_parameter_exception_to_yojson
   (x : invalid_tag_parameter_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let register_organization_delegated_admin_response_to_yojson
-  (x : register_organization_delegated_admin_response) = assoc_to_yojson []
+let register_organization_delegated_admin_response_to_yojson = unit_to_yojson
 let account_id_to_yojson = string_to_yojson
 let register_organization_delegated_admin_request_to_yojson
   (x : register_organization_delegated_admin_request) =
@@ -1335,8 +1329,8 @@ let describe_query_request_to_yojson (x : describe_query_request) =
     ("QueryId", (option_to_yojson uui_d_to_yojson x.query_id));
     ("EventDataStore",
       (option_to_yojson event_data_store_arn_to_yojson x.event_data_store))]
-let deregister_organization_delegated_admin_response_to_yojson
-  (x : deregister_organization_delegated_admin_response) = assoc_to_yojson []
+let deregister_organization_delegated_admin_response_to_yojson =
+  unit_to_yojson
 let deregister_organization_delegated_admin_request_to_yojson
   (x : deregister_organization_delegated_admin_request) =
   assoc_to_yojson
@@ -1346,18 +1340,15 @@ let account_not_registered_exception_to_yojson
   (x : account_not_registered_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let delete_trail_response_to_yojson (x : delete_trail_response) =
-  assoc_to_yojson []
+let delete_trail_response_to_yojson = unit_to_yojson
 let delete_trail_request_to_yojson (x : delete_trail_request) =
   assoc_to_yojson [("Name", (Some (string__to_yojson x.name)))]
-let delete_resource_policy_response_to_yojson
-  (x : delete_resource_policy_response) = assoc_to_yojson []
+let delete_resource_policy_response_to_yojson = unit_to_yojson
 let delete_resource_policy_request_to_yojson
   (x : delete_resource_policy_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)))]
-let delete_event_data_store_response_to_yojson
-  (x : delete_event_data_store_response) = assoc_to_yojson []
+let delete_event_data_store_response_to_yojson = unit_to_yojson
 let delete_event_data_store_request_to_yojson
   (x : delete_event_data_store_request) =
   assoc_to_yojson
@@ -1367,8 +1358,7 @@ let channel_exists_for_eds_exception_to_yojson
   (x : channel_exists_for_eds_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let delete_channel_response_to_yojson (x : delete_channel_response) =
-  assoc_to_yojson []
+let delete_channel_response_to_yojson = unit_to_yojson
 let delete_channel_request_to_yojson (x : delete_channel_request) =
   assoc_to_yojson [("Channel", (Some (channel_arn_to_yojson x.channel)))]
 let create_trail_response_to_yojson (x : create_trail_response) =
@@ -1490,7 +1480,7 @@ let cancel_query_request_to_yojson (x : cancel_query_request) =
     [("QueryId", (Some (uui_d_to_yojson x.query_id)));
     ("EventDataStore",
       (option_to_yojson event_data_store_arn_to_yojson x.event_data_store))]
-let add_tags_response_to_yojson (x : add_tags_response) = assoc_to_yojson []
+let add_tags_response_to_yojson = unit_to_yojson
 let add_tags_request_to_yojson (x : add_tags_request) =
   assoc_to_yojson
     [("TagsList", (Some (tags_list_to_yojson x.tags_list)));

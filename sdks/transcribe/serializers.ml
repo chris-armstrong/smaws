@@ -339,8 +339,7 @@ let update_call_analytics_category_request_to_yojson
     [("InputType", (option_to_yojson input_type_to_yojson x.input_type));
     ("Rules", (Some (rule_list_to_yojson x.rules)));
     ("CategoryName", (Some (category_name_to_yojson x.category_name)))]
-let untag_resource_response_to_yojson (x : untag_resource_response) =
-  assoc_to_yojson []
+let untag_resource_response_to_yojson = unit_to_yojson
 let transcribe_arn_to_yojson = string_to_yojson
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -584,8 +583,7 @@ let transcription_job_to_yojson (x : transcription_job) =
     ("TranscriptionJobName",
       (option_to_yojson transcription_job_name_to_yojson
          x.transcription_job_name))]
-let tag_resource_response_to_yojson (x : tag_resource_response) =
-  assoc_to_yojson []
+let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("Tags", (Some (tag_list_to_yojson x.tags)));
@@ -1354,15 +1352,13 @@ let delete_medical_scribe_job_request_to_yojson
 let delete_language_model_request_to_yojson
   (x : delete_language_model_request) =
   assoc_to_yojson [("ModelName", (Some (model_name_to_yojson x.model_name)))]
-let delete_call_analytics_job_response_to_yojson
-  (x : delete_call_analytics_job_response) = assoc_to_yojson []
+let delete_call_analytics_job_response_to_yojson = unit_to_yojson
 let delete_call_analytics_job_request_to_yojson
   (x : delete_call_analytics_job_request) =
   assoc_to_yojson
     [("CallAnalyticsJobName",
        (Some (call_analytics_job_name_to_yojson x.call_analytics_job_name)))]
-let delete_call_analytics_category_response_to_yojson
-  (x : delete_call_analytics_category_response) = assoc_to_yojson []
+let delete_call_analytics_category_response_to_yojson = unit_to_yojson
 let delete_call_analytics_category_request_to_yojson
   (x : delete_call_analytics_category_request) =
   assoc_to_yojson

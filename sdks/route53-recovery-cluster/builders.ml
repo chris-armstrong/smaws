@@ -3,8 +3,7 @@ open Types
 let make_validation_exception_field ~message:(message_ : string) 
   ~name:(name_ : string)  () =
   ({ message = message_; name = name_ } : validation_exception_field)
-let make_update_routing_control_states_response () =
-  (() : update_routing_control_states_response)
+let make_update_routing_control_states_response () = (() : unit)
 let make_update_routing_control_state_entry
   ~routing_control_state:(routing_control_state_ : routing_control_state) 
   ~routing_control_arn:(routing_control_arn_ : string)  () =
@@ -24,8 +23,7 @@ let make_update_routing_control_states_request
      update_routing_control_state_entries =
        update_routing_control_state_entries_
    } : update_routing_control_states_request)
-let make_update_routing_control_state_response () =
-  (() : update_routing_control_state_response)
+let make_update_routing_control_state_response () = (() : unit)
 let make_update_routing_control_state_request
   ?safety_rules_to_override:(safety_rules_to_override_ : string list option) 
   ~routing_control_state:(routing_control_state_ : routing_control_state) 

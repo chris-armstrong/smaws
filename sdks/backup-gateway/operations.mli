@@ -213,7 +213,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       test_hypervisor_configuration_input ->
-        (test_hypervisor_configuration_output,
+        (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `ResourceNotFoundException of resource_not_found_exception ])

@@ -63,14 +63,14 @@ val make_update_repository_link_input :
   ?encryption_key_arn:string ->
     ?connection_arn:string ->
       repository_link_id:string -> unit -> update_repository_link_input
-val make_update_host_output : unit -> update_host_output
+val make_update_host_output : unit -> unit
 val make_update_host_input :
   ?vpc_configuration:vpc_configuration ->
     ?provider_endpoint:string -> host_arn:string -> unit -> update_host_input
-val make_untag_resource_output : unit -> untag_resource_output
+val make_untag_resource_output : unit -> unit
 val make_untag_resource_input :
   tag_keys:string list -> resource_arn:string -> unit -> untag_resource_input
-val make_tag_resource_output : unit -> tag_resource_output
+val make_tag_resource_output : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_input :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_input
@@ -206,19 +206,17 @@ val make_get_connection_output :
   ?connection:connection -> unit -> get_connection_output
 val make_get_connection_input :
   connection_arn:string -> unit -> get_connection_input
-val make_delete_sync_configuration_output :
-  unit -> delete_sync_configuration_output
+val make_delete_sync_configuration_output : unit -> unit
 val make_delete_sync_configuration_input :
   resource_name:string ->
     sync_type:sync_configuration_type ->
       unit -> delete_sync_configuration_input
-val make_delete_repository_link_output :
-  unit -> delete_repository_link_output
+val make_delete_repository_link_output : unit -> unit
 val make_delete_repository_link_input :
   repository_link_id:string -> unit -> delete_repository_link_input
-val make_delete_host_output : unit -> delete_host_output
+val make_delete_host_output : unit -> unit
 val make_delete_host_input : host_arn:string -> unit -> delete_host_input
-val make_delete_connection_output : unit -> delete_connection_output
+val make_delete_connection_output : unit -> unit
 val make_delete_connection_input :
   connection_arn:string -> unit -> delete_connection_input
 val make_create_sync_configuration_output :

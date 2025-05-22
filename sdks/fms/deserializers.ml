@@ -1583,8 +1583,7 @@ let violation_detail_of_yojson tree path =
   _res
 let update_token_of_yojson = string_of_yojson
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let resource_arn_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
@@ -1700,8 +1699,7 @@ let third_party_firewall_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "ThirdPartyFirewall") : 
   third_party_firewall)
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_response = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : tag_resource_request =
@@ -3032,8 +3030,7 @@ let get_notification_channel_response_of_yojson tree path =
     } in
   _res
 let get_notification_channel_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_notification_channel_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let get_compliance_detail_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : get_compliance_detail_response =
@@ -3121,8 +3118,7 @@ let get_admin_account_response_of_yojson tree path =
     } in
   _res
 let get_admin_account_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : get_admin_account_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let failed_item_reason_of_yojson (tree : t) path =
   (match tree with
    | `String "NotValidAccountId" -> NotValidAccountId
@@ -3170,8 +3166,7 @@ let disassociate_third_party_firewall_request_of_yojson tree path =
     } in
   _res
 let disassociate_admin_account_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : disassociate_admin_account_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_resource_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_resource_set_request =
@@ -3197,8 +3192,7 @@ let delete_policy_request_of_yojson tree path =
     } in
   _res
 let delete_notification_channel_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : delete_notification_channel_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let delete_apps_list_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : delete_apps_list_request =

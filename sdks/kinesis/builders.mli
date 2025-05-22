@@ -253,7 +253,7 @@ val make_describe_limits_output :
     on_demand_stream_count:int ->
       open_shard_count:int ->
         shard_limit:int -> unit -> describe_limits_output
-val make_describe_limits_input : unit -> describe_limits_input
+val make_describe_limits_input : unit -> unit
 val make_deregister_stream_consumer_input :
   ?consumer_ar_n:string ->
     ?consumer_name:string ->

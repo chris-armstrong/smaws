@@ -266,7 +266,7 @@ module CreateSubscription =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : create_subscription_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -358,7 +358,7 @@ module DeleteSubscription =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : delete_subscription_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -410,7 +410,7 @@ module DescribeAttackStatistics =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : describe_attack_statistics_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -438,7 +438,7 @@ module DescribeDRTAccess =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : describe_drt_access_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -466,8 +466,7 @@ module DescribeEmergencyContactSettings =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context
-      (request : describe_emergency_contact_settings_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -555,7 +554,7 @@ module DescribeSubscription =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : describe_subscription_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -631,7 +630,7 @@ module DisableProactiveEngagement =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : disable_proactive_engagement_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -706,7 +705,7 @@ module DisassociateDRTRole =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : disassociate_drt_role_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -822,7 +821,7 @@ module EnableProactiveEngagement =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : enable_proactive_engagement_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =
@@ -847,7 +846,7 @@ module GetSubscriptionState =
                                        (handler
                                           Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                        tree path)
-    let request context (request : get_subscription_state_request) =
+    let request context (request : unit) =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input =

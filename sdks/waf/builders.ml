@@ -282,14 +282,14 @@ let make_update_byte_match_set_request
      change_token = change_token_;
      byte_match_set_id = byte_match_set_id_
    } : update_byte_match_set_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
 let make_time_window ~end_time:(end_time_ : CoreTypes.Timestamp.t) 
   ~start_time:(start_time_ : CoreTypes.Timestamp.t)  () =
   ({ end_time = end_time_; start_time = start_time_ } : time_window)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -410,8 +410,7 @@ let make_rate_based_rule ?metric_name:(metric_name_ : string option)
      name = name_;
      rule_id = rule_id_
    } : rate_based_rule)
-let make_put_permission_policy_response () =
-  (() : put_permission_policy_response)
+let make_put_permission_policy_response () = (() : unit)
 let make_put_permission_policy_request ~policy:(policy_ : string) 
   ~resource_arn:(resource_arn_ : string)  () =
   ({ policy = policy_; resource_arn = resource_arn_ } : put_permission_policy_request)
@@ -710,7 +709,7 @@ let make_get_change_token_status_request
 let make_get_change_token_response
   ?change_token:(change_token_ : string option)  () =
   ({ change_token = change_token_ } : get_change_token_response)
-let make_get_change_token_request () = (() : get_change_token_request)
+let make_get_change_token_request () = (() : unit)
 let make_byte_match_set ?name:(name_ : string option) 
   ~byte_match_tuples:(byte_match_tuples_ : byte_match_tuple list) 
   ~byte_match_set_id:(byte_match_set_id_ : string)  () =
@@ -794,13 +793,11 @@ let make_delete_rate_based_rule_response
 let make_delete_rate_based_rule_request
   ~change_token:(change_token_ : string)  ~rule_id:(rule_id_ : string)  () =
   ({ change_token = change_token_; rule_id = rule_id_ } : delete_rate_based_rule_request)
-let make_delete_permission_policy_response () =
-  (() : delete_permission_policy_response)
+let make_delete_permission_policy_response () = (() : unit)
 let make_delete_permission_policy_request
   ~resource_arn:(resource_arn_ : string)  () =
   ({ resource_arn = resource_arn_ } : delete_permission_policy_request)
-let make_delete_logging_configuration_response () =
-  (() : delete_logging_configuration_response)
+let make_delete_logging_configuration_response () = (() : unit)
 let make_delete_logging_configuration_request
   ~resource_arn:(resource_arn_ : string)  () =
   ({ resource_arn = resource_arn_ } : delete_logging_configuration_request)

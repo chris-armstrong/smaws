@@ -392,7 +392,7 @@ val make_violation_detail :
           resource_id:string ->
             member_account:string ->
               policy_id:string -> unit -> violation_detail
-val make_untag_resource_response : unit -> untag_resource_response
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:string list ->
     resource_arn:string -> unit -> untag_resource_request
@@ -403,7 +403,7 @@ val make_third_party_firewall_firewall_policy :
   ?firewall_policy_name:string ->
     ?firewall_policy_id:string ->
       unit -> third_party_firewall_firewall_policy
-val make_tag_resource_response : unit -> tag_resource_response
+val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tag_list:tag list -> resource_arn:string -> unit -> tag_resource_request
 val make_network_firewall_policy :
@@ -699,8 +699,7 @@ val make_get_policy_request : policy_id:string -> unit -> get_policy_request
 val make_get_notification_channel_response :
   ?sns_role_name:string ->
     ?sns_topic_arn:string -> unit -> get_notification_channel_response
-val make_get_notification_channel_request :
-  unit -> get_notification_channel_request
+val make_get_notification_channel_request : unit -> unit
 val make_get_compliance_detail_response :
   ?policy_compliance_detail:policy_compliance_detail ->
     unit -> get_compliance_detail_response
@@ -720,7 +719,7 @@ val make_get_admin_scope_request :
 val make_get_admin_account_response :
   ?role_status:account_role_status ->
     ?admin_account:string -> unit -> get_admin_account_response
-val make_get_admin_account_request : unit -> get_admin_account_request
+val make_get_admin_account_request : unit -> unit
 val make_failed_item :
   ?reason:failed_item_reason -> ?ur_i:string -> unit -> failed_item
 val make_disassociate_third_party_firewall_response :
@@ -729,8 +728,7 @@ val make_disassociate_third_party_firewall_response :
 val make_disassociate_third_party_firewall_request :
   third_party_firewall:third_party_firewall ->
     unit -> disassociate_third_party_firewall_request
-val make_disassociate_admin_account_request :
-  unit -> disassociate_admin_account_request
+val make_disassociate_admin_account_request : unit -> unit
 val make_delete_resource_set_request :
   identifier:string -> unit -> delete_resource_set_request
 val make_delete_protocols_list_request :
@@ -738,8 +736,7 @@ val make_delete_protocols_list_request :
 val make_delete_policy_request :
   ?delete_all_policy_resources:bool ->
     policy_id:string -> unit -> delete_policy_request
-val make_delete_notification_channel_request :
-  unit -> delete_notification_channel_request
+val make_delete_notification_channel_request : unit -> unit
 val make_delete_apps_list_request :
   list_id:string -> unit -> delete_apps_list_request
 val make_batch_disassociate_resource_response :

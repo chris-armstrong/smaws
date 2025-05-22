@@ -921,21 +921,21 @@ let make_update_application_maintenance_configuration_request
        application_maintenance_configuration_update_;
      application_name = application_name_
    } : update_application_maintenance_configuration_request)
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
 let make_tag ?value:(value_ : string option)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
   ~resource_ar_n:(resource_ar_n_ : string)  () =
   ({ tags = tags_; resource_ar_n = resource_ar_n_ } : tag_resource_request)
-let make_stop_application_response () = (() : stop_application_response)
+let make_stop_application_response () = (() : unit)
 let make_stop_application_request ?force:(force_ : bool option) 
   ~application_name:(application_name_ : string)  () =
   ({ force = force_; application_name = application_name_ } : stop_application_request)
-let make_start_application_response () = (() : start_application_response)
+let make_start_application_response () = (() : unit)
 let make_sql_run_configuration
   ~input_starting_position_configuration:(input_starting_position_configuration_
                                            :
@@ -1228,8 +1228,7 @@ let make_delete_application_vpc_configuration_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : delete_application_vpc_configuration_request)
-let make_delete_application_snapshot_response () =
-  (() : delete_application_snapshot_response)
+let make_delete_application_snapshot_response () = (() : unit)
 let make_delete_application_snapshot_request
   ~snapshot_creation_timestamp:(snapshot_creation_timestamp_ :
                                  CoreTypes.Timestamp.t)
@@ -1312,7 +1311,7 @@ let make_delete_application_cloud_watch_logging_option_request
      current_application_version_id = current_application_version_id_;
      application_name = application_name_
    } : delete_application_cloud_watch_logging_option_request)
-let make_delete_application_response () = (() : delete_application_response)
+let make_delete_application_response () = (() : unit)
 let make_delete_application_request
   ~create_timestamp:(create_timestamp_ : CoreTypes.Timestamp.t) 
   ~application_name:(application_name_ : string)  () =
@@ -1320,8 +1319,7 @@ let make_delete_application_request
      create_timestamp = create_timestamp_;
      application_name = application_name_
    } : delete_application_request)
-let make_create_application_snapshot_response () =
-  (() : create_application_snapshot_response)
+let make_create_application_snapshot_response () = (() : unit)
 let make_create_application_snapshot_request
   ~snapshot_name:(snapshot_name_ : string) 
   ~application_name:(application_name_ : string)  () =

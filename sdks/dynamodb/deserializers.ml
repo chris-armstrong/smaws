@@ -4315,8 +4315,7 @@ let describe_limits_output_of_yojson tree path =
     } in
   _res
 let describe_limits_input_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : describe_limits_input = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let describe_kinesis_streaming_destination_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   let _res : describe_kinesis_streaming_destination_output =
@@ -4417,8 +4416,7 @@ let describe_endpoints_response_of_yojson tree path =
     } in
   _res
 let describe_endpoints_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  let _res : describe_endpoints_request = () in _res
+  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
 let contributor_insights_rule_of_yojson = string_of_yojson
 let contributor_insights_rule_list_of_yojson tree path =
   list_of_yojson contributor_insights_rule_of_yojson tree path

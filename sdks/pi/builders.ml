@@ -1,6 +1,6 @@
 open Smaws_Lib
 open Types
-let make_untag_resource_response () = (() : untag_resource_response)
+let make_untag_resource_response () = (() : unit)
 let make_untag_resource_request ~tag_keys:(tag_keys_ : string list) 
   ~resource_ar_n:(resource_ar_n_ : string) 
   ~service_type:(service_type_ : service_type)  () =
@@ -9,7 +9,7 @@ let make_untag_resource_request ~tag_keys:(tag_keys_ : string list)
      resource_ar_n = resource_ar_n_;
      service_type = service_type_
    } : untag_resource_request)
-let make_tag_resource_response () = (() : tag_resource_response)
+let make_tag_resource_response () = (() : unit)
 let make_tag ~value:(value_ : string)  ~key:(key_ : string)  () =
   ({ value = value_; key = key_ } : tag)
 let make_tag_resource_request ~tags:(tags_ : tag list) 
@@ -328,8 +328,7 @@ let make_describe_dimension_keys_request
      identifier = identifier_;
      service_type = service_type_
    } : describe_dimension_keys_request)
-let make_delete_performance_analysis_report_response () =
-  (() : delete_performance_analysis_report_response)
+let make_delete_performance_analysis_report_response () = (() : unit)
 let make_delete_performance_analysis_report_request
   ~analysis_report_id:(analysis_report_id_ : string) 
   ~identifier:(identifier_ : string) 

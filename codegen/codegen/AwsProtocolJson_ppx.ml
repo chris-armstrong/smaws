@@ -13,10 +13,11 @@ exception UnexpectedType of string
 let has_func_body =
   Shape.(
     function
-    | StructureShape x -> true
-    | StringShape _ | IntegerShape _ | BooleanShape _ | BigIntegerShape _ | BigDecimalShape _
-    | TimestampShape _ | BlobShape _ | MapShape _ | UnionShape _ | SetShape _ | LongShape _
-    | DocumentShape | ListShape _ | FloatShape _ | DoubleShape _ | EnumShape _ | UnitShape ->
+    | StructureShape { members = []; _ } -> false
+    | StructureShape _ | StringShape _ | IntegerShape _ | BooleanShape _ | BigIntegerShape _
+    | BigDecimalShape _ | TimestampShape _ | BlobShape _ | MapShape _ | UnionShape _ | SetShape _
+    | LongShape _ | DocumentShape | ListShape _ | FloatShape _ | DoubleShape _ | EnumShape _
+    | UnitShape ->
         true
     | ResourceShape | OperationShape _ | ServiceShape _ -> false)
 
@@ -114,6 +115,7 @@ module Serialiser = struct
   let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget) =
     let exp_func name = Some (exp_ident name) in
     match shapeWithTarget.descriptor with
+    | StructureShape { members = []; _ } -> exp_func "unit_to_yojson"
     | StructureShape x -> Some (structure_func_body shapeWithTarget.name x)
     | StringShape x -> exp_func "string_to_yojson"
     | IntegerShape x -> exp_func "int_to_yojson"
@@ -323,10 +325,15 @@ module Deserialiser = struct
           None
       else B.pexp_tuple []
     in
+    let type_name =
+      match descriptor.members with
+      | [] -> B.ptyp_constr (lident_noloc "unit") []
+      | _ -> B.ptyp_constr (lident_noloc type_name) []
+    in
     let code =
       [%expr
         let _list = assoc_of_yojson tree path in
-        let _res : [%t B.ptyp_constr (lident_noloc type_name) []] = [%e member_exp] in
+        let _res : [%t type_name] = [%e member_exp] in
         _res]
     in
     exp_fun_untyped "tree" (exp_fun_untyped "path" code)
