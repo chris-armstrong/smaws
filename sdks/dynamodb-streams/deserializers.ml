@@ -3,13 +3,11 @@ open Types
 let error_message_of_yojson = string_of_yojson
 let trimmed_data_access_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : trimmed_data_access_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : trimmed_data_access_exception)
 let table_name_of_yojson = string_of_yojson
 let string_attribute_value_of_yojson = string_of_yojson
 let string_set_attribute_value_of_yojson tree path =
@@ -77,51 +75,47 @@ let sequence_number_of_yojson = string_of_yojson
 let positive_long_object_of_yojson = long_of_yojson
 let stream_record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : stream_record =
-    {
-      stream_view_type =
-        (option_of_yojson
-           (value_for_key stream_view_type_of_yojson "StreamViewType") _list
-           path);
-      size_bytes =
-        (option_of_yojson
-           (value_for_key positive_long_object_of_yojson "SizeBytes") _list
-           path);
-      sequence_number =
-        (option_of_yojson
-           (value_for_key sequence_number_of_yojson "SequenceNumber") _list
-           path);
-      old_image =
-        (option_of_yojson (value_for_key attribute_map_of_yojson "OldImage")
-           _list path);
-      new_image =
-        (option_of_yojson (value_for_key attribute_map_of_yojson "NewImage")
-           _list path);
-      keys =
-        (option_of_yojson (value_for_key attribute_map_of_yojson "Keys")
-           _list path);
-      approximate_creation_date_time =
-        (option_of_yojson
-           (value_for_key date_of_yojson "ApproximateCreationDateTime") _list
-           path)
-    } in
-  _res
+  ({
+     stream_view_type =
+       (option_of_yojson
+          (value_for_key stream_view_type_of_yojson "StreamViewType") _list
+          path);
+     size_bytes =
+       (option_of_yojson
+          (value_for_key positive_long_object_of_yojson "SizeBytes") _list
+          path);
+     sequence_number =
+       (option_of_yojson
+          (value_for_key sequence_number_of_yojson "SequenceNumber") _list
+          path);
+     old_image =
+       (option_of_yojson (value_for_key attribute_map_of_yojson "OldImage")
+          _list path);
+     new_image =
+       (option_of_yojson (value_for_key attribute_map_of_yojson "NewImage")
+          _list path);
+     keys =
+       (option_of_yojson (value_for_key attribute_map_of_yojson "Keys") _list
+          path);
+     approximate_creation_date_time =
+       (option_of_yojson
+          (value_for_key date_of_yojson "ApproximateCreationDateTime") _list
+          path)
+   } : stream_record)
 let stream_arn_of_yojson = string_of_yojson
 let stream_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : stream =
-    {
-      stream_label =
-        (option_of_yojson (value_for_key string__of_yojson "StreamLabel")
-           _list path);
-      table_name =
-        (option_of_yojson (value_for_key table_name_of_yojson "TableName")
-           _list path);
-      stream_arn =
-        (option_of_yojson (value_for_key stream_arn_of_yojson "StreamArn")
-           _list path)
-    } in
-  _res
+  ({
+     stream_label =
+       (option_of_yojson (value_for_key string__of_yojson "StreamLabel")
+          _list path);
+     table_name =
+       (option_of_yojson (value_for_key table_name_of_yojson "TableName")
+          _list path);
+     stream_arn =
+       (option_of_yojson (value_for_key stream_arn_of_yojson "StreamArn")
+          _list path)
+   } : stream)
 let stream_list_of_yojson tree path =
   list_of_yojson stream_of_yojson tree path
 let key_schema_attribute_name_of_yojson = string_of_yojson
@@ -134,86 +128,77 @@ let key_type_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "KeyType") : key_type)
 let key_schema_element_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : key_schema_element =
-    {
-      key_type = (value_for_key key_type_of_yojson "KeyType" _list path);
-      attribute_name =
-        (value_for_key key_schema_attribute_name_of_yojson "AttributeName"
-           _list path)
-    } in
-  _res
+  ({
+     key_type = (value_for_key key_type_of_yojson "KeyType" _list path);
+     attribute_name =
+       (value_for_key key_schema_attribute_name_of_yojson "AttributeName"
+          _list path)
+   } : key_schema_element)
 let key_schema_of_yojson tree path =
   list_of_yojson key_schema_element_of_yojson tree path
 let shard_id_of_yojson = string_of_yojson
 let sequence_number_range_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : sequence_number_range =
-    {
-      ending_sequence_number =
-        (option_of_yojson
-           (value_for_key sequence_number_of_yojson "EndingSequenceNumber")
-           _list path);
-      starting_sequence_number =
-        (option_of_yojson
-           (value_for_key sequence_number_of_yojson "StartingSequenceNumber")
-           _list path)
-    } in
-  _res
+  ({
+     ending_sequence_number =
+       (option_of_yojson
+          (value_for_key sequence_number_of_yojson "EndingSequenceNumber")
+          _list path);
+     starting_sequence_number =
+       (option_of_yojson
+          (value_for_key sequence_number_of_yojson "StartingSequenceNumber")
+          _list path)
+   } : sequence_number_range)
 let shard_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : shard =
-    {
-      parent_shard_id =
-        (option_of_yojson (value_for_key shard_id_of_yojson "ParentShardId")
-           _list path);
-      sequence_number_range =
-        (option_of_yojson
-           (value_for_key sequence_number_range_of_yojson
-              "SequenceNumberRange") _list path);
-      shard_id =
-        (option_of_yojson (value_for_key shard_id_of_yojson "ShardId") _list
-           path)
-    } in
-  _res
+  ({
+     parent_shard_id =
+       (option_of_yojson (value_for_key shard_id_of_yojson "ParentShardId")
+          _list path);
+     sequence_number_range =
+       (option_of_yojson
+          (value_for_key sequence_number_range_of_yojson
+             "SequenceNumberRange") _list path);
+     shard_id =
+       (option_of_yojson (value_for_key shard_id_of_yojson "ShardId") _list
+          path)
+   } : shard)
 let shard_description_list_of_yojson tree path =
   list_of_yojson shard_of_yojson tree path
 let stream_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : stream_description =
-    {
-      last_evaluated_shard_id =
-        (option_of_yojson
-           (value_for_key shard_id_of_yojson "LastEvaluatedShardId") _list
-           path);
-      shards =
-        (option_of_yojson
-           (value_for_key shard_description_list_of_yojson "Shards") _list
-           path);
-      key_schema =
-        (option_of_yojson (value_for_key key_schema_of_yojson "KeySchema")
-           _list path);
-      table_name =
-        (option_of_yojson (value_for_key table_name_of_yojson "TableName")
-           _list path);
-      creation_request_date_time =
-        (option_of_yojson
-           (value_for_key date_of_yojson "CreationRequestDateTime") _list
-           path);
-      stream_view_type =
-        (option_of_yojson
-           (value_for_key stream_view_type_of_yojson "StreamViewType") _list
-           path);
-      stream_status =
-        (option_of_yojson
-           (value_for_key stream_status_of_yojson "StreamStatus") _list path);
-      stream_label =
-        (option_of_yojson (value_for_key string__of_yojson "StreamLabel")
-           _list path);
-      stream_arn =
-        (option_of_yojson (value_for_key stream_arn_of_yojson "StreamArn")
-           _list path)
-    } in
-  _res
+  ({
+     last_evaluated_shard_id =
+       (option_of_yojson
+          (value_for_key shard_id_of_yojson "LastEvaluatedShardId") _list
+          path);
+     shards =
+       (option_of_yojson
+          (value_for_key shard_description_list_of_yojson "Shards") _list
+          path);
+     key_schema =
+       (option_of_yojson (value_for_key key_schema_of_yojson "KeySchema")
+          _list path);
+     table_name =
+       (option_of_yojson (value_for_key table_name_of_yojson "TableName")
+          _list path);
+     creation_request_date_time =
+       (option_of_yojson
+          (value_for_key date_of_yojson "CreationRequestDateTime") _list path);
+     stream_view_type =
+       (option_of_yojson
+          (value_for_key stream_view_type_of_yojson "StreamViewType") _list
+          path);
+     stream_status =
+       (option_of_yojson
+          (value_for_key stream_status_of_yojson "StreamStatus") _list path);
+     stream_label =
+       (option_of_yojson (value_for_key string__of_yojson "StreamLabel")
+          _list path);
+     stream_arn =
+       (option_of_yojson (value_for_key stream_arn_of_yojson "StreamArn")
+          _list path)
+   } : stream_description)
 let shard_iterator_type_of_yojson (tree : t) path =
   (match tree with
    | `String "AFTER_SEQUENCE_NUMBER" -> AFTER_SEQUENCE_NUMBER
@@ -228,13 +213,11 @@ let shard_iterator_type_of_yojson (tree : t) path =
 let shard_iterator_of_yojson = string_of_yojson
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_not_found_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : resource_not_found_exception)
 let operation_type_of_yojson (tree : t) path =
   (match tree with
    | `String "REMOVE" -> REMOVE
@@ -247,179 +230,150 @@ let operation_type_of_yojson (tree : t) path =
   operation_type)
 let identity_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : identity =
-    {
-      type_ =
-        (option_of_yojson (value_for_key string__of_yojson "Type") _list path);
-      principal_id =
-        (option_of_yojson (value_for_key string__of_yojson "PrincipalId")
-           _list path)
-    } in
-  _res
+  ({
+     type_ =
+       (option_of_yojson (value_for_key string__of_yojson "Type") _list path);
+     principal_id =
+       (option_of_yojson (value_for_key string__of_yojson "PrincipalId")
+          _list path)
+   } : identity)
 let record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : record =
-    {
-      user_identity =
-        (option_of_yojson (value_for_key identity_of_yojson "userIdentity")
-           _list path);
-      dynamodb =
-        (option_of_yojson (value_for_key stream_record_of_yojson "dynamodb")
-           _list path);
-      aws_region =
-        (option_of_yojson (value_for_key string__of_yojson "awsRegion") _list
-           path);
-      event_source =
-        (option_of_yojson (value_for_key string__of_yojson "eventSource")
-           _list path);
-      event_version =
-        (option_of_yojson (value_for_key string__of_yojson "eventVersion")
-           _list path);
-      event_name =
-        (option_of_yojson
-           (value_for_key operation_type_of_yojson "eventName") _list path);
-      event_i_d =
-        (option_of_yojson (value_for_key string__of_yojson "eventID") _list
-           path)
-    } in
-  _res
+  ({
+     user_identity =
+       (option_of_yojson (value_for_key identity_of_yojson "userIdentity")
+          _list path);
+     dynamodb =
+       (option_of_yojson (value_for_key stream_record_of_yojson "dynamodb")
+          _list path);
+     aws_region =
+       (option_of_yojson (value_for_key string__of_yojson "awsRegion") _list
+          path);
+     event_source =
+       (option_of_yojson (value_for_key string__of_yojson "eventSource")
+          _list path);
+     event_version =
+       (option_of_yojson (value_for_key string__of_yojson "eventVersion")
+          _list path);
+     event_name =
+       (option_of_yojson (value_for_key operation_type_of_yojson "eventName")
+          _list path);
+     event_i_d =
+       (option_of_yojson (value_for_key string__of_yojson "eventID") _list
+          path)
+   } : record)
 let record_list_of_yojson tree path =
   list_of_yojson record_of_yojson tree path
 let positive_integer_object_of_yojson = int_of_yojson
 let list_streams_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_streams_output =
-    {
-      last_evaluated_stream_arn =
-        (option_of_yojson
-           (value_for_key stream_arn_of_yojson "LastEvaluatedStreamArn")
-           _list path);
-      streams =
-        (option_of_yojson (value_for_key stream_list_of_yojson "Streams")
-           _list path)
-    } in
-  _res
+  ({
+     last_evaluated_stream_arn =
+       (option_of_yojson
+          (value_for_key stream_arn_of_yojson "LastEvaluatedStreamArn") _list
+          path);
+     streams =
+       (option_of_yojson (value_for_key stream_list_of_yojson "Streams")
+          _list path)
+   } : list_streams_output)
 let list_streams_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_streams_input =
-    {
-      exclusive_start_stream_arn =
-        (option_of_yojson
-           (value_for_key stream_arn_of_yojson "ExclusiveStartStreamArn")
-           _list path);
-      limit =
-        (option_of_yojson
-           (value_for_key positive_integer_object_of_yojson "Limit") _list
-           path);
-      table_name =
-        (option_of_yojson (value_for_key table_name_of_yojson "TableName")
-           _list path)
-    } in
-  _res
+  ({
+     exclusive_start_stream_arn =
+       (option_of_yojson
+          (value_for_key stream_arn_of_yojson "ExclusiveStartStreamArn")
+          _list path);
+     limit =
+       (option_of_yojson
+          (value_for_key positive_integer_object_of_yojson "Limit") _list
+          path);
+     table_name =
+       (option_of_yojson (value_for_key table_name_of_yojson "TableName")
+          _list path)
+   } : list_streams_input)
 let internal_server_error_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : internal_server_error =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : internal_server_error)
 let limit_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : limit_exceeded_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : limit_exceeded_exception)
 let get_shard_iterator_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_shard_iterator_output =
-    {
-      shard_iterator =
-        (option_of_yojson
-           (value_for_key shard_iterator_of_yojson "ShardIterator") _list
-           path)
-    } in
-  _res
+  ({
+     shard_iterator =
+       (option_of_yojson
+          (value_for_key shard_iterator_of_yojson "ShardIterator") _list path)
+   } : get_shard_iterator_output)
 let get_shard_iterator_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_shard_iterator_input =
-    {
-      sequence_number =
-        (option_of_yojson
-           (value_for_key sequence_number_of_yojson "SequenceNumber") _list
-           path);
-      shard_iterator_type =
-        (value_for_key shard_iterator_type_of_yojson "ShardIteratorType"
-           _list path);
-      shard_id = (value_for_key shard_id_of_yojson "ShardId" _list path);
-      stream_arn =
-        (value_for_key stream_arn_of_yojson "StreamArn" _list path)
-    } in
-  _res
+  ({
+     sequence_number =
+       (option_of_yojson
+          (value_for_key sequence_number_of_yojson "SequenceNumber") _list
+          path);
+     shard_iterator_type =
+       (value_for_key shard_iterator_type_of_yojson "ShardIteratorType" _list
+          path);
+     shard_id = (value_for_key shard_id_of_yojson "ShardId" _list path);
+     stream_arn = (value_for_key stream_arn_of_yojson "StreamArn" _list path)
+   } : get_shard_iterator_input)
 let get_records_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_records_output =
-    {
-      next_shard_iterator =
-        (option_of_yojson
-           (value_for_key shard_iterator_of_yojson "NextShardIterator") _list
-           path);
-      records =
-        (option_of_yojson (value_for_key record_list_of_yojson "Records")
-           _list path)
-    } in
-  _res
+  ({
+     next_shard_iterator =
+       (option_of_yojson
+          (value_for_key shard_iterator_of_yojson "NextShardIterator") _list
+          path);
+     records =
+       (option_of_yojson (value_for_key record_list_of_yojson "Records")
+          _list path)
+   } : get_records_output)
 let get_records_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_records_input =
-    {
-      limit =
-        (option_of_yojson
-           (value_for_key positive_integer_object_of_yojson "Limit") _list
-           path);
-      shard_iterator =
-        (value_for_key shard_iterator_of_yojson "ShardIterator" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson
+          (value_for_key positive_integer_object_of_yojson "Limit") _list
+          path);
+     shard_iterator =
+       (value_for_key shard_iterator_of_yojson "ShardIterator" _list path)
+   } : get_records_input)
 let expired_iterator_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : expired_iterator_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : expired_iterator_exception)
 let describe_stream_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_stream_output =
-    {
-      stream_description =
-        (option_of_yojson
-           (value_for_key stream_description_of_yojson "StreamDescription")
-           _list path)
-    } in
-  _res
+  ({
+     stream_description =
+       (option_of_yojson
+          (value_for_key stream_description_of_yojson "StreamDescription")
+          _list path)
+   } : describe_stream_output)
 let describe_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_stream_input =
-    {
-      exclusive_start_shard_id =
-        (option_of_yojson
-           (value_for_key shard_id_of_yojson "ExclusiveStartShardId") _list
-           path);
-      limit =
-        (option_of_yojson
-           (value_for_key positive_integer_object_of_yojson "Limit") _list
-           path);
-      stream_arn =
-        (value_for_key stream_arn_of_yojson "StreamArn" _list path)
-    } in
-  _res
+  ({
+     exclusive_start_shard_id =
+       (option_of_yojson
+          (value_for_key shard_id_of_yojson "ExclusiveStartShardId") _list
+          path);
+     limit =
+       (option_of_yojson
+          (value_for_key positive_integer_object_of_yojson "Limit") _list
+          path);
+     stream_arn = (value_for_key stream_arn_of_yojson "StreamArn" _list path)
+   } : describe_stream_input)
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson

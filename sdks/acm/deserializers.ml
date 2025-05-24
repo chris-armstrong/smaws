@@ -13,14 +13,12 @@ let validation_method_of_yojson (tree : t) path =
 let validation_exception_message_of_yojson = string_of_yojson
 let validation_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : validation_exception =
-    {
-      message =
-        (option_of_yojson
-           (value_for_key validation_exception_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson
+          (value_for_key validation_exception_message_of_yojson "message")
+          _list path)
+   } : validation_exception)
 let string__of_yojson = string_of_yojson
 let validation_email_list_of_yojson tree path =
   list_of_yojson string__of_yojson tree path
@@ -39,102 +37,82 @@ let certificate_transparency_logging_preference_of_yojson (tree : t) path =
             "CertificateTransparencyLoggingPreference") : certificate_transparency_logging_preference)
 let certificate_options_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : certificate_options =
-    {
-      certificate_transparency_logging_preference =
-        (option_of_yojson
-           (value_for_key
-              certificate_transparency_logging_preference_of_yojson
-              "CertificateTransparencyLoggingPreference") _list path)
-    } in
-  _res
+  ({
+     certificate_transparency_logging_preference =
+       (option_of_yojson
+          (value_for_key
+             certificate_transparency_logging_preference_of_yojson
+             "CertificateTransparencyLoggingPreference") _list path)
+   } : certificate_options)
 let update_certificate_options_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_certificate_options_request =
-    {
-      options =
-        (value_for_key certificate_options_of_yojson "Options" _list path);
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     options =
+       (value_for_key certificate_options_of_yojson "Options" _list path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : update_certificate_options_request)
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_not_found_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : resource_not_found_exception)
 let limit_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : limit_exceeded_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : limit_exceeded_exception)
 let invalid_state_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_state_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_state_exception)
 let invalid_arn_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_arn_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_arn_exception)
 let too_many_tags_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : too_many_tags_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : too_many_tags_exception)
 let availability_error_message_of_yojson = string_of_yojson
 let throttling_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : throttling_exception =
-    {
-      message =
-        (option_of_yojson
-           (value_for_key availability_error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson
+          (value_for_key availability_error_message_of_yojson "message")
+          _list path)
+   } : throttling_exception)
 let tag_value_of_yojson = string_of_yojson
 let tag_policy_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag_policy_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : tag_policy_exception)
 let tag_key_of_yojson = string_of_yojson
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag =
-    {
-      value =
-        (option_of_yojson (value_for_key tag_value_of_yojson "Value") _list
-           path);
-      key = (value_for_key tag_key_of_yojson "Key" _list path)
-    } in
-  _res
+  ({
+     value =
+       (option_of_yojson (value_for_key tag_value_of_yojson "Value") _list
+          path);
+     key = (value_for_key tag_key_of_yojson "Key" _list path)
+   } : tag)
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let t_stamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let sort_order_of_yojson (tree : t) path =
@@ -176,77 +154,63 @@ let record_type_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "RecordType") : record_type)
 let resource_record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_record =
-    {
-      value = (value_for_key string__of_yojson "Value" _list path);
-      type_ = (value_for_key record_type_of_yojson "Type" _list path);
-      name = (value_for_key string__of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     value = (value_for_key string__of_yojson "Value" _list path);
+     type_ = (value_for_key record_type_of_yojson "Type" _list path);
+     name = (value_for_key string__of_yojson "Name" _list path)
+   } : resource_record)
 let resource_in_use_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_in_use_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : resource_in_use_exception)
 let domain_name_string_of_yojson = string_of_yojson
 let resend_validation_email_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resend_validation_email_request =
-    {
-      validation_domain =
-        (value_for_key domain_name_string_of_yojson "ValidationDomain" _list
-           path);
-      domain =
-        (value_for_key domain_name_string_of_yojson "Domain" _list path);
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     validation_domain =
+       (value_for_key domain_name_string_of_yojson "ValidationDomain" _list
+          path);
+     domain =
+       (value_for_key domain_name_string_of_yojson "Domain" _list path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : resend_validation_email_request)
 let invalid_domain_validation_options_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_domain_validation_options_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_domain_validation_options_exception)
 let request_in_progress_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_in_progress_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : request_in_progress_exception)
 let request_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_certificate_response =
-    {
-      certificate_arn =
-        (option_of_yojson (value_for_key arn_of_yojson "CertificateArn")
-           _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : request_certificate_response)
 let domain_list_of_yojson tree path =
   list_of_yojson domain_name_string_of_yojson tree path
 let idempotency_token_of_yojson = string_of_yojson
 let domain_validation_option_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : domain_validation_option =
-    {
-      validation_domain =
-        (value_for_key domain_name_string_of_yojson "ValidationDomain" _list
-           path);
-      domain_name =
-        (value_for_key domain_name_string_of_yojson "DomainName" _list path)
-    } in
-  _res
+  ({
+     validation_domain =
+       (value_for_key domain_name_string_of_yojson "ValidationDomain" _list
+          path);
+     domain_name =
+       (value_for_key domain_name_string_of_yojson "DomainName" _list path)
+   } : domain_validation_option)
 let domain_validation_option_list_of_yojson tree path =
   list_of_yojson domain_validation_option_of_yojson tree path
 let pca_arn_of_yojson = string_of_yojson
@@ -265,59 +229,52 @@ let key_algorithm_of_yojson (tree : t) path =
   key_algorithm)
 let request_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_certificate_request =
-    {
-      key_algorithm =
-        (option_of_yojson
-           (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      certificate_authority_arn =
-        (option_of_yojson
-           (value_for_key pca_arn_of_yojson "CertificateAuthorityArn") _list
-           path);
-      options =
-        (option_of_yojson
-           (value_for_key certificate_options_of_yojson "Options") _list path);
-      domain_validation_options =
-        (option_of_yojson
-           (value_for_key domain_validation_option_list_of_yojson
-              "DomainValidationOptions") _list path);
-      idempotency_token =
-        (option_of_yojson
-           (value_for_key idempotency_token_of_yojson "IdempotencyToken")
-           _list path);
-      subject_alternative_names =
-        (option_of_yojson
-           (value_for_key domain_list_of_yojson "SubjectAlternativeNames")
-           _list path);
-      validation_method =
-        (option_of_yojson
-           (value_for_key validation_method_of_yojson "ValidationMethod")
-           _list path);
-      domain_name =
-        (value_for_key domain_name_string_of_yojson "DomainName" _list path)
-    } in
-  _res
+  ({
+     key_algorithm =
+       (option_of_yojson
+          (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     certificate_authority_arn =
+       (option_of_yojson
+          (value_for_key pca_arn_of_yojson "CertificateAuthorityArn") _list
+          path);
+     options =
+       (option_of_yojson
+          (value_for_key certificate_options_of_yojson "Options") _list path);
+     domain_validation_options =
+       (option_of_yojson
+          (value_for_key domain_validation_option_list_of_yojson
+             "DomainValidationOptions") _list path);
+     idempotency_token =
+       (option_of_yojson
+          (value_for_key idempotency_token_of_yojson "IdempotencyToken")
+          _list path);
+     subject_alternative_names =
+       (option_of_yojson
+          (value_for_key domain_list_of_yojson "SubjectAlternativeNames")
+          _list path);
+     validation_method =
+       (option_of_yojson
+          (value_for_key validation_method_of_yojson "ValidationMethod")
+          _list path);
+     domain_name =
+       (value_for_key domain_name_string_of_yojson "DomainName" _list path)
+   } : request_certificate_request)
 let invalid_tag_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_tag_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_tag_exception)
 let invalid_parameter_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_parameter_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_parameter_exception)
 let renewal_status_of_yojson (tree : t) path =
   (match tree with
    | `String "FAILED" -> FAILED
@@ -340,32 +297,30 @@ let domain_status_of_yojson (tree : t) path =
   domain_status)
 let domain_validation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : domain_validation =
-    {
-      validation_method =
-        (option_of_yojson
-           (value_for_key validation_method_of_yojson "ValidationMethod")
-           _list path);
-      resource_record =
-        (option_of_yojson
-           (value_for_key resource_record_of_yojson "ResourceRecord") _list
-           path);
-      validation_status =
-        (option_of_yojson
-           (value_for_key domain_status_of_yojson "ValidationStatus") _list
-           path);
-      validation_domain =
-        (option_of_yojson
-           (value_for_key domain_name_string_of_yojson "ValidationDomain")
-           _list path);
-      validation_emails =
-        (option_of_yojson
-           (value_for_key validation_email_list_of_yojson "ValidationEmails")
-           _list path);
-      domain_name =
-        (value_for_key domain_name_string_of_yojson "DomainName" _list path)
-    } in
-  _res
+  ({
+     validation_method =
+       (option_of_yojson
+          (value_for_key validation_method_of_yojson "ValidationMethod")
+          _list path);
+     resource_record =
+       (option_of_yojson
+          (value_for_key resource_record_of_yojson "ResourceRecord") _list
+          path);
+     validation_status =
+       (option_of_yojson
+          (value_for_key domain_status_of_yojson "ValidationStatus") _list
+          path);
+     validation_domain =
+       (option_of_yojson
+          (value_for_key domain_name_string_of_yojson "ValidationDomain")
+          _list path);
+     validation_emails =
+       (option_of_yojson
+          (value_for_key validation_email_list_of_yojson "ValidationEmails")
+          _list path);
+     domain_name =
+       (value_for_key domain_name_string_of_yojson "DomainName" _list path)
+   } : domain_validation)
 let domain_validation_list_of_yojson tree path =
   list_of_yojson domain_validation_of_yojson tree path
 let failure_reason_of_yojson (tree : t) path =
@@ -396,20 +351,18 @@ let failure_reason_of_yojson (tree : t) path =
   failure_reason)
 let renewal_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : renewal_summary =
-    {
-      updated_at = (value_for_key t_stamp_of_yojson "UpdatedAt" _list path);
-      renewal_status_reason =
-        (option_of_yojson
-           (value_for_key failure_reason_of_yojson "RenewalStatusReason")
-           _list path);
-      domain_validation_options =
-        (value_for_key domain_validation_list_of_yojson
-           "DomainValidationOptions" _list path);
-      renewal_status =
-        (value_for_key renewal_status_of_yojson "RenewalStatus" _list path)
-    } in
-  _res
+  ({
+     updated_at = (value_for_key t_stamp_of_yojson "UpdatedAt" _list path);
+     renewal_status_reason =
+       (option_of_yojson
+          (value_for_key failure_reason_of_yojson "RenewalStatusReason")
+          _list path);
+     domain_validation_options =
+       (value_for_key domain_validation_list_of_yojson
+          "DomainValidationOptions" _list path);
+     renewal_status =
+       (value_for_key renewal_status_of_yojson "RenewalStatus" _list path)
+   } : renewal_summary)
 let renewal_eligibility_of_yojson (tree : t) path =
   (match tree with
    | `String "INELIGIBLE" -> INELIGIBLE
@@ -422,64 +375,52 @@ let renewal_eligibility_of_yojson (tree : t) path =
   renewal_eligibility)
 let renew_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : renew_certificate_request =
-    {
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : renew_certificate_request)
 let remove_tags_from_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : remove_tags_from_certificate_request =
-    {
-      tags = (value_for_key tag_list_of_yojson "Tags" _list path);
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     tags = (value_for_key tag_list_of_yojson "Tags" _list path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : remove_tags_from_certificate_request)
 let positive_integer_of_yojson = int_of_yojson
 let expiry_events_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : expiry_events_configuration =
-    {
-      days_before_expiry =
-        (option_of_yojson
-           (value_for_key positive_integer_of_yojson "DaysBeforeExpiry")
-           _list path)
-    } in
-  _res
+  ({
+     days_before_expiry =
+       (option_of_yojson
+          (value_for_key positive_integer_of_yojson "DaysBeforeExpiry") _list
+          path)
+   } : expiry_events_configuration)
 let put_account_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_account_configuration_request =
-    {
-      idempotency_token =
-        (value_for_key idempotency_token_of_yojson "IdempotencyToken" _list
-           path);
-      expiry_events =
-        (option_of_yojson
-           (value_for_key expiry_events_configuration_of_yojson
-              "ExpiryEvents") _list path)
-    } in
-  _res
+  ({
+     idempotency_token =
+       (value_for_key idempotency_token_of_yojson "IdempotencyToken" _list
+          path);
+     expiry_events =
+       (option_of_yojson
+          (value_for_key expiry_events_configuration_of_yojson "ExpiryEvents")
+          _list path)
+   } : put_account_configuration_request)
 let conflict_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : conflict_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : conflict_exception)
 let access_denied_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : access_denied_exception =
-    {
-      message =
-        (option_of_yojson
-           (value_for_key service_error_message_of_yojson "Message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson
+          (value_for_key service_error_message_of_yojson "Message") _list
+          path)
+   } : access_denied_exception)
 let private_key_blob_of_yojson = blob_of_yojson
 let private_key_of_yojson = string_of_yojson
 let passphrase_blob_of_yojson = blob_of_yojson
@@ -488,21 +429,16 @@ let next_token_of_yojson = string_of_yojson
 let max_items_of_yojson = int_of_yojson
 let list_tags_for_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_certificate_response =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path)
+   } : list_tags_for_certificate_response)
 let list_tags_for_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_certificate_request =
-    {
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : list_tags_for_certificate_request)
 let certificate_status_of_yojson (tree : t) path =
   (match tree with
    | `String "FAILED" -> FAILED
@@ -570,84 +506,80 @@ let extended_key_usage_names_of_yojson tree path =
   list_of_yojson extended_key_usage_name_of_yojson tree path
 let certificate_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : certificate_summary =
-    {
-      revoked_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "RevokedAt") _list
-           path);
-      imported_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "ImportedAt")
-           _list path);
-      issued_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "IssuedAt") _list
-           path);
-      created_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "CreatedAt") _list
-           path);
-      not_after =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "NotAfter") _list
-           path);
-      not_before =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "NotBefore") _list
-           path);
-      renewal_eligibility =
-        (option_of_yojson
-           (value_for_key renewal_eligibility_of_yojson "RenewalEligibility")
-           _list path);
-      exported =
-        (option_of_yojson
-           (value_for_key nullable_boolean_of_yojson "Exported") _list path);
-      in_use =
-        (option_of_yojson (value_for_key nullable_boolean_of_yojson "InUse")
-           _list path);
-      extended_key_usages =
-        (option_of_yojson
-           (value_for_key extended_key_usage_names_of_yojson
-              "ExtendedKeyUsages") _list path);
-      key_usages =
-        (option_of_yojson
-           (value_for_key key_usage_names_of_yojson "KeyUsages") _list path);
-      key_algorithm =
-        (option_of_yojson
-           (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
-      type_ =
-        (option_of_yojson (value_for_key certificate_type_of_yojson "Type")
-           _list path);
-      status =
-        (option_of_yojson
-           (value_for_key certificate_status_of_yojson "Status") _list path);
-      has_additional_subject_alternative_names =
-        (option_of_yojson
-           (value_for_key nullable_boolean_of_yojson
-              "HasAdditionalSubjectAlternativeNames") _list path);
-      subject_alternative_name_summaries =
-        (option_of_yojson
-           (value_for_key domain_list_of_yojson
-              "SubjectAlternativeNameSummaries") _list path);
-      domain_name =
-        (option_of_yojson
-           (value_for_key domain_name_string_of_yojson "DomainName") _list
-           path);
-      certificate_arn =
-        (option_of_yojson (value_for_key arn_of_yojson "CertificateArn")
-           _list path)
-    } in
-  _res
+  ({
+     revoked_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "RevokedAt") _list
+          path);
+     imported_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "ImportedAt") _list
+          path);
+     issued_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "IssuedAt") _list
+          path);
+     created_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "CreatedAt") _list
+          path);
+     not_after =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "NotAfter") _list
+          path);
+     not_before =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "NotBefore") _list
+          path);
+     renewal_eligibility =
+       (option_of_yojson
+          (value_for_key renewal_eligibility_of_yojson "RenewalEligibility")
+          _list path);
+     exported =
+       (option_of_yojson
+          (value_for_key nullable_boolean_of_yojson "Exported") _list path);
+     in_use =
+       (option_of_yojson (value_for_key nullable_boolean_of_yojson "InUse")
+          _list path);
+     extended_key_usages =
+       (option_of_yojson
+          (value_for_key extended_key_usage_names_of_yojson
+             "ExtendedKeyUsages") _list path);
+     key_usages =
+       (option_of_yojson
+          (value_for_key key_usage_names_of_yojson "KeyUsages") _list path);
+     key_algorithm =
+       (option_of_yojson
+          (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
+     type_ =
+       (option_of_yojson (value_for_key certificate_type_of_yojson "Type")
+          _list path);
+     status =
+       (option_of_yojson
+          (value_for_key certificate_status_of_yojson "Status") _list path);
+     has_additional_subject_alternative_names =
+       (option_of_yojson
+          (value_for_key nullable_boolean_of_yojson
+             "HasAdditionalSubjectAlternativeNames") _list path);
+     subject_alternative_name_summaries =
+       (option_of_yojson
+          (value_for_key domain_list_of_yojson
+             "SubjectAlternativeNameSummaries") _list path);
+     domain_name =
+       (option_of_yojson
+          (value_for_key domain_name_string_of_yojson "DomainName") _list
+          path);
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : certificate_summary)
 let certificate_summary_list_of_yojson tree path =
   list_of_yojson certificate_summary_of_yojson tree path
 let list_certificates_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_certificates_response =
-    {
-      certificate_summary_list =
-        (option_of_yojson
-           (value_for_key certificate_summary_list_of_yojson
-              "CertificateSummaryList") _list path);
-      next_token =
-        (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-           _list path)
-    } in
-  _res
+  ({
+     certificate_summary_list =
+       (option_of_yojson
+          (value_for_key certificate_summary_list_of_yojson
+             "CertificateSummaryList") _list path);
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path)
+   } : list_certificates_response)
 let certificate_statuses_of_yojson tree path =
   list_of_yojson certificate_status_of_yojson tree path
 let extended_key_usage_filter_list_of_yojson tree path =
@@ -658,302 +590,263 @@ let key_algorithm_list_of_yojson tree path =
   list_of_yojson key_algorithm_of_yojson tree path
 let filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : filters =
-    {
-      key_types =
-        (option_of_yojson
-           (value_for_key key_algorithm_list_of_yojson "keyTypes") _list path);
-      key_usage =
-        (option_of_yojson
-           (value_for_key key_usage_filter_list_of_yojson "keyUsage") _list
-           path);
-      extended_key_usage =
-        (option_of_yojson
-           (value_for_key extended_key_usage_filter_list_of_yojson
-              "extendedKeyUsage") _list path)
-    } in
-  _res
+  ({
+     key_types =
+       (option_of_yojson
+          (value_for_key key_algorithm_list_of_yojson "keyTypes") _list path);
+     key_usage =
+       (option_of_yojson
+          (value_for_key key_usage_filter_list_of_yojson "keyUsage") _list
+          path);
+     extended_key_usage =
+       (option_of_yojson
+          (value_for_key extended_key_usage_filter_list_of_yojson
+             "extendedKeyUsage") _list path)
+   } : filters)
 let list_certificates_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_certificates_request =
-    {
-      sort_order =
-        (option_of_yojson (value_for_key sort_order_of_yojson "SortOrder")
-           _list path);
-      sort_by =
-        (option_of_yojson (value_for_key sort_by_of_yojson "SortBy") _list
-           path);
-      max_items =
-        (option_of_yojson (value_for_key max_items_of_yojson "MaxItems")
-           _list path);
-      next_token =
-        (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-           _list path);
-      includes =
-        (option_of_yojson (value_for_key filters_of_yojson "Includes") _list
-           path);
-      certificate_statuses =
-        (option_of_yojson
-           (value_for_key certificate_statuses_of_yojson
-              "CertificateStatuses") _list path)
-    } in
-  _res
+  ({
+     sort_order =
+       (option_of_yojson (value_for_key sort_order_of_yojson "SortOrder")
+          _list path);
+     sort_by =
+       (option_of_yojson (value_for_key sort_by_of_yojson "SortBy") _list
+          path);
+     max_items =
+       (option_of_yojson (value_for_key max_items_of_yojson "MaxItems") _list
+          path);
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     includes =
+       (option_of_yojson (value_for_key filters_of_yojson "Includes") _list
+          path);
+     certificate_statuses =
+       (option_of_yojson
+          (value_for_key certificate_statuses_of_yojson "CertificateStatuses")
+          _list path)
+   } : list_certificates_request)
 let invalid_args_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_args_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key string__of_yojson "message") _list
-           path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : invalid_args_exception)
 let key_usage_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : key_usage =
-    {
-      name =
-        (option_of_yojson (value_for_key key_usage_name_of_yojson "Name")
-           _list path)
-    } in
-  _res
+  ({
+     name =
+       (option_of_yojson (value_for_key key_usage_name_of_yojson "Name")
+          _list path)
+   } : key_usage)
 let key_usage_list_of_yojson tree path =
   list_of_yojson key_usage_of_yojson tree path
 let in_use_list_of_yojson tree path =
   list_of_yojson string__of_yojson tree path
 let import_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : import_certificate_response =
-    {
-      certificate_arn =
-        (option_of_yojson (value_for_key arn_of_yojson "CertificateArn")
-           _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : import_certificate_response)
 let certificate_body_blob_of_yojson = blob_of_yojson
 let certificate_chain_blob_of_yojson = blob_of_yojson
 let import_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : import_certificate_request =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      certificate_chain =
-        (option_of_yojson
-           (value_for_key certificate_chain_blob_of_yojson "CertificateChain")
-           _list path);
-      private_key =
-        (value_for_key private_key_blob_of_yojson "PrivateKey" _list path);
-      certificate =
-        (value_for_key certificate_body_blob_of_yojson "Certificate" _list
-           path);
-      certificate_arn =
-        (option_of_yojson (value_for_key arn_of_yojson "CertificateArn")
-           _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     certificate_chain =
+       (option_of_yojson
+          (value_for_key certificate_chain_blob_of_yojson "CertificateChain")
+          _list path);
+     private_key =
+       (value_for_key private_key_blob_of_yojson "PrivateKey" _list path);
+     certificate =
+       (value_for_key certificate_body_blob_of_yojson "Certificate" _list
+          path);
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : import_certificate_request)
 let certificate_body_of_yojson = string_of_yojson
 let certificate_chain_of_yojson = string_of_yojson
 let get_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_certificate_response =
-    {
-      certificate_chain =
-        (option_of_yojson
-           (value_for_key certificate_chain_of_yojson "CertificateChain")
-           _list path);
-      certificate =
-        (option_of_yojson
-           (value_for_key certificate_body_of_yojson "Certificate") _list
-           path)
-    } in
-  _res
+  ({
+     certificate_chain =
+       (option_of_yojson
+          (value_for_key certificate_chain_of_yojson "CertificateChain")
+          _list path);
+     certificate =
+       (option_of_yojson
+          (value_for_key certificate_body_of_yojson "Certificate") _list path)
+   } : get_certificate_response)
 let get_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_certificate_request =
-    {
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : get_certificate_request)
 let get_account_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_account_configuration_response =
-    {
-      expiry_events =
-        (option_of_yojson
-           (value_for_key expiry_events_configuration_of_yojson
-              "ExpiryEvents") _list path)
-    } in
-  _res
+  ({
+     expiry_events =
+       (option_of_yojson
+          (value_for_key expiry_events_configuration_of_yojson "ExpiryEvents")
+          _list path)
+   } : get_account_configuration_response)
 let extended_key_usage_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : extended_key_usage =
-    {
-      oi_d =
-        (option_of_yojson (value_for_key string__of_yojson "OID") _list path);
-      name =
-        (option_of_yojson
-           (value_for_key extended_key_usage_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     oi_d =
+       (option_of_yojson (value_for_key string__of_yojson "OID") _list path);
+     name =
+       (option_of_yojson
+          (value_for_key extended_key_usage_name_of_yojson "Name") _list path)
+   } : extended_key_usage)
 let extended_key_usage_list_of_yojson tree path =
   list_of_yojson extended_key_usage_of_yojson tree path
 let export_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : export_certificate_response =
-    {
-      private_key =
-        (option_of_yojson (value_for_key private_key_of_yojson "PrivateKey")
-           _list path);
-      certificate_chain =
-        (option_of_yojson
-           (value_for_key certificate_chain_of_yojson "CertificateChain")
-           _list path);
-      certificate =
-        (option_of_yojson
-           (value_for_key certificate_body_of_yojson "Certificate") _list
-           path)
-    } in
-  _res
+  ({
+     private_key =
+       (option_of_yojson (value_for_key private_key_of_yojson "PrivateKey")
+          _list path);
+     certificate_chain =
+       (option_of_yojson
+          (value_for_key certificate_chain_of_yojson "CertificateChain")
+          _list path);
+     certificate =
+       (option_of_yojson
+          (value_for_key certificate_body_of_yojson "Certificate") _list path)
+   } : export_certificate_response)
 let export_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : export_certificate_request =
-    {
-      passphrase =
-        (value_for_key passphrase_blob_of_yojson "Passphrase" _list path);
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     passphrase =
+       (value_for_key passphrase_blob_of_yojson "Passphrase" _list path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : export_certificate_request)
 let certificate_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : certificate_detail =
-    {
-      options =
-        (option_of_yojson
-           (value_for_key certificate_options_of_yojson "Options") _list path);
-      renewal_eligibility =
-        (option_of_yojson
-           (value_for_key renewal_eligibility_of_yojson "RenewalEligibility")
-           _list path);
-      certificate_authority_arn =
-        (option_of_yojson
-           (value_for_key arn_of_yojson "CertificateAuthorityArn") _list path);
-      extended_key_usages =
-        (option_of_yojson
-           (value_for_key extended_key_usage_list_of_yojson
-              "ExtendedKeyUsages") _list path);
-      key_usages =
-        (option_of_yojson
-           (value_for_key key_usage_list_of_yojson "KeyUsages") _list path);
-      renewal_summary =
-        (option_of_yojson
-           (value_for_key renewal_summary_of_yojson "RenewalSummary") _list
-           path);
-      type_ =
-        (option_of_yojson (value_for_key certificate_type_of_yojson "Type")
-           _list path);
-      failure_reason =
-        (option_of_yojson
-           (value_for_key failure_reason_of_yojson "FailureReason") _list
-           path);
-      in_use_by =
-        (option_of_yojson (value_for_key in_use_list_of_yojson "InUseBy")
-           _list path);
-      signature_algorithm =
-        (option_of_yojson
-           (value_for_key string__of_yojson "SignatureAlgorithm") _list path);
-      key_algorithm =
-        (option_of_yojson
-           (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
-      not_after =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "NotAfter") _list
-           path);
-      not_before =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "NotBefore") _list
-           path);
-      revocation_reason =
-        (option_of_yojson
-           (value_for_key revocation_reason_of_yojson "RevocationReason")
-           _list path);
-      revoked_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "RevokedAt") _list
-           path);
-      status =
-        (option_of_yojson
-           (value_for_key certificate_status_of_yojson "Status") _list path);
-      imported_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "ImportedAt")
-           _list path);
-      issued_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "IssuedAt") _list
-           path);
-      created_at =
-        (option_of_yojson (value_for_key t_stamp_of_yojson "CreatedAt") _list
-           path);
-      issuer =
-        (option_of_yojson (value_for_key string__of_yojson "Issuer") _list
-           path);
-      subject =
-        (option_of_yojson (value_for_key string__of_yojson "Subject") _list
-           path);
-      serial =
-        (option_of_yojson (value_for_key string__of_yojson "Serial") _list
-           path);
-      domain_validation_options =
-        (option_of_yojson
-           (value_for_key domain_validation_list_of_yojson
-              "DomainValidationOptions") _list path);
-      subject_alternative_names =
-        (option_of_yojson
-           (value_for_key domain_list_of_yojson "SubjectAlternativeNames")
-           _list path);
-      domain_name =
-        (option_of_yojson
-           (value_for_key domain_name_string_of_yojson "DomainName") _list
-           path);
-      certificate_arn =
-        (option_of_yojson (value_for_key arn_of_yojson "CertificateArn")
-           _list path)
-    } in
-  _res
+  ({
+     options =
+       (option_of_yojson
+          (value_for_key certificate_options_of_yojson "Options") _list path);
+     renewal_eligibility =
+       (option_of_yojson
+          (value_for_key renewal_eligibility_of_yojson "RenewalEligibility")
+          _list path);
+     certificate_authority_arn =
+       (option_of_yojson
+          (value_for_key arn_of_yojson "CertificateAuthorityArn") _list path);
+     extended_key_usages =
+       (option_of_yojson
+          (value_for_key extended_key_usage_list_of_yojson
+             "ExtendedKeyUsages") _list path);
+     key_usages =
+       (option_of_yojson (value_for_key key_usage_list_of_yojson "KeyUsages")
+          _list path);
+     renewal_summary =
+       (option_of_yojson
+          (value_for_key renewal_summary_of_yojson "RenewalSummary") _list
+          path);
+     type_ =
+       (option_of_yojson (value_for_key certificate_type_of_yojson "Type")
+          _list path);
+     failure_reason =
+       (option_of_yojson
+          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+     in_use_by =
+       (option_of_yojson (value_for_key in_use_list_of_yojson "InUseBy")
+          _list path);
+     signature_algorithm =
+       (option_of_yojson
+          (value_for_key string__of_yojson "SignatureAlgorithm") _list path);
+     key_algorithm =
+       (option_of_yojson
+          (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
+     not_after =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "NotAfter") _list
+          path);
+     not_before =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "NotBefore") _list
+          path);
+     revocation_reason =
+       (option_of_yojson
+          (value_for_key revocation_reason_of_yojson "RevocationReason")
+          _list path);
+     revoked_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "RevokedAt") _list
+          path);
+     status =
+       (option_of_yojson
+          (value_for_key certificate_status_of_yojson "Status") _list path);
+     imported_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "ImportedAt") _list
+          path);
+     issued_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "IssuedAt") _list
+          path);
+     created_at =
+       (option_of_yojson (value_for_key t_stamp_of_yojson "CreatedAt") _list
+          path);
+     issuer =
+       (option_of_yojson (value_for_key string__of_yojson "Issuer") _list
+          path);
+     subject =
+       (option_of_yojson (value_for_key string__of_yojson "Subject") _list
+          path);
+     serial =
+       (option_of_yojson (value_for_key string__of_yojson "Serial") _list
+          path);
+     domain_validation_options =
+       (option_of_yojson
+          (value_for_key domain_validation_list_of_yojson
+             "DomainValidationOptions") _list path);
+     subject_alternative_names =
+       (option_of_yojson
+          (value_for_key domain_list_of_yojson "SubjectAlternativeNames")
+          _list path);
+     domain_name =
+       (option_of_yojson
+          (value_for_key domain_name_string_of_yojson "DomainName") _list
+          path);
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : certificate_detail)
 let describe_certificate_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_certificate_response =
-    {
-      certificate =
-        (option_of_yojson
-           (value_for_key certificate_detail_of_yojson "Certificate") _list
-           path)
-    } in
-  _res
+  ({
+     certificate =
+       (option_of_yojson
+          (value_for_key certificate_detail_of_yojson "Certificate") _list
+          path)
+   } : describe_certificate_response)
 let describe_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_certificate_request =
-    {
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : describe_certificate_request)
 let delete_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_certificate_request =
-    {
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : delete_certificate_request)
 let add_tags_to_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : add_tags_to_certificate_request =
-    {
-      tags = (value_for_key tag_list_of_yojson "Tags" _list path);
-      certificate_arn =
-        (value_for_key arn_of_yojson "CertificateArn" _list path)
-    } in
-  _res
+  ({
+     tags = (value_for_key tag_list_of_yojson "Tags" _list path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : add_tags_to_certificate_request)
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson

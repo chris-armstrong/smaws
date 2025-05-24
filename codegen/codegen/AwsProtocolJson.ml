@@ -333,8 +333,7 @@ module Deserialiser = struct
     let code =
       [%expr
         let _list = assoc_of_yojson tree path in
-        let _res : [%t type_name] = [%e member_exp] in
-        _res]
+        ([%e member_exp] : [%t type_name])]
     in
     exp_fun_untyped "tree" (exp_fun_untyped "path" code)
 
@@ -486,7 +485,7 @@ module Operations = struct
                  in
                  B.case ~lhs:pattern ~guard:None ~rhs:expression)
         in
-        let matchers = B.pexp_function (cases @ failure_cases) in
+        let matchers = B.pexp_function_cases (cases @ failure_cases) in
 
         [%expr
           let open Deserializers in

@@ -3,22 +3,18 @@ open Types
 let field_to_match_data_of_yojson = string_of_yojson
 let single_header_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : single_header =
-    { name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
-    } in
-  _res
+  ({ name = (value_for_key field_to_match_data_of_yojson "Name" _list path) } : 
+    single_header)
 let single_query_argument_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : single_query_argument =
-    { name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
-    } in
-  _res
+  ({ name = (value_for_key field_to_match_data_of_yojson "Name" _list path) } : 
+    single_query_argument)
 let all_query_arguments_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let uri_path_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let query_string_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let base_unit_of_yojson = unit_of_yojson
 let oversize_handling_of_yojson (tree : t) path =
   (match tree with
@@ -32,32 +28,28 @@ let oversize_handling_of_yojson (tree : t) path =
   oversize_handling)
 let body_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : body =
-    {
-      oversize_handling =
-        (option_of_yojson
-           (value_for_key oversize_handling_of_yojson "OversizeHandling")
-           _list path)
-    } in
-  _res
+  ({
+     oversize_handling =
+       (option_of_yojson
+          (value_for_key oversize_handling_of_yojson "OversizeHandling")
+          _list path)
+   } : body)
 let method__of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let all_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let json_pointer_path_of_yojson = string_of_yojson
 let json_pointer_paths_of_yojson tree path =
   list_of_yojson json_pointer_path_of_yojson tree path
 let json_match_pattern_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : json_match_pattern =
-    {
-      included_paths =
-        (option_of_yojson
-           (value_for_key json_pointer_paths_of_yojson "IncludedPaths") _list
-           path);
-      all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
-    } in
-  _res
+  ({
+     included_paths =
+       (option_of_yojson
+          (value_for_key json_pointer_paths_of_yojson "IncludedPaths") _list
+          path);
+     all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
+   } : json_match_pattern)
 let json_match_scope_of_yojson (tree : t) path =
   (match tree with
    | `String "VALUE" -> VALUE
@@ -83,39 +75,33 @@ let body_parsing_fallback_behavior_of_yojson (tree : t) path =
   body_parsing_fallback_behavior)
 let json_body_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : json_body =
-    {
-      oversize_handling =
-        (option_of_yojson
-           (value_for_key oversize_handling_of_yojson "OversizeHandling")
-           _list path);
-      invalid_fallback_behavior =
-        (option_of_yojson
-           (value_for_key body_parsing_fallback_behavior_of_yojson
-              "InvalidFallbackBehavior") _list path);
-      match_scope =
-        (value_for_key json_match_scope_of_yojson "MatchScope" _list path);
-      match_pattern =
-        (value_for_key json_match_pattern_of_yojson "MatchPattern" _list path)
-    } in
-  _res
+  ({
+     oversize_handling =
+       (option_of_yojson
+          (value_for_key oversize_handling_of_yojson "OversizeHandling")
+          _list path);
+     invalid_fallback_behavior =
+       (option_of_yojson
+          (value_for_key body_parsing_fallback_behavior_of_yojson
+             "InvalidFallbackBehavior") _list path);
+     match_scope =
+       (value_for_key json_match_scope_of_yojson "MatchScope" _list path);
+     match_pattern =
+       (value_for_key json_match_pattern_of_yojson "MatchPattern" _list path)
+   } : json_body)
 let header_names_of_yojson tree path =
   list_of_yojson field_to_match_data_of_yojson tree path
 let header_match_pattern_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : header_match_pattern =
-    {
-      excluded_headers =
-        (option_of_yojson
-           (value_for_key header_names_of_yojson "ExcludedHeaders") _list
-           path);
-      included_headers =
-        (option_of_yojson
-           (value_for_key header_names_of_yojson "IncludedHeaders") _list
-           path);
-      all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
-    } in
-  _res
+  ({
+     excluded_headers =
+       (option_of_yojson
+          (value_for_key header_names_of_yojson "ExcludedHeaders") _list path);
+     included_headers =
+       (option_of_yojson
+          (value_for_key header_names_of_yojson "IncludedHeaders") _list path);
+     all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
+   } : header_match_pattern)
 let map_match_scope_of_yojson (tree : t) path =
   (match tree with
    | `String "VALUE" -> VALUE
@@ -128,59 +114,49 @@ let map_match_scope_of_yojson (tree : t) path =
   map_match_scope)
 let headers_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : headers =
-    {
-      oversize_handling =
-        (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
-           path);
-      match_scope =
-        (value_for_key map_match_scope_of_yojson "MatchScope" _list path);
-      match_pattern =
-        (value_for_key header_match_pattern_of_yojson "MatchPattern" _list
-           path)
-    } in
-  _res
+  ({
+     oversize_handling =
+       (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
+          path);
+     match_scope =
+       (value_for_key map_match_scope_of_yojson "MatchScope" _list path);
+     match_pattern =
+       (value_for_key header_match_pattern_of_yojson "MatchPattern" _list
+          path)
+   } : headers)
 let single_cookie_name_of_yojson = string_of_yojson
 let cookie_names_of_yojson tree path =
   list_of_yojson single_cookie_name_of_yojson tree path
 let cookie_match_pattern_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : cookie_match_pattern =
-    {
-      excluded_cookies =
-        (option_of_yojson
-           (value_for_key cookie_names_of_yojson "ExcludedCookies") _list
-           path);
-      included_cookies =
-        (option_of_yojson
-           (value_for_key cookie_names_of_yojson "IncludedCookies") _list
-           path);
-      all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
-    } in
-  _res
+  ({
+     excluded_cookies =
+       (option_of_yojson
+          (value_for_key cookie_names_of_yojson "ExcludedCookies") _list path);
+     included_cookies =
+       (option_of_yojson
+          (value_for_key cookie_names_of_yojson "IncludedCookies") _list path);
+     all = (option_of_yojson (value_for_key all_of_yojson "All") _list path)
+   } : cookie_match_pattern)
 let cookies_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : cookies =
-    {
-      oversize_handling =
-        (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
-           path);
-      match_scope =
-        (value_for_key map_match_scope_of_yojson "MatchScope" _list path);
-      match_pattern =
-        (value_for_key cookie_match_pattern_of_yojson "MatchPattern" _list
-           path)
-    } in
-  _res
+  ({
+     oversize_handling =
+       (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
+          path);
+     match_scope =
+       (value_for_key map_match_scope_of_yojson "MatchScope" _list path);
+     match_pattern =
+       (value_for_key cookie_match_pattern_of_yojson "MatchPattern" _list
+          path)
+   } : cookies)
 let header_order_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : header_order =
-    {
-      oversize_handling =
-        (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
-           path)
-    } in
-  _res
+  ({
+     oversize_handling =
+       (value_for_key oversize_handling_of_yojson "OversizeHandling" _list
+          path)
+   } : header_order)
 let fallback_behavior_of_yojson (tree : t) path =
   (match tree with
    | `String "NO_MATCH" -> NO_MATCH
@@ -192,57 +168,53 @@ let fallback_behavior_of_yojson (tree : t) path =
   fallback_behavior)
 let ja3_fingerprint_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : ja3_fingerprint =
-    {
-      fallback_behavior =
-        (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
-           path)
-    } in
-  _res
+  ({
+     fallback_behavior =
+       (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
+          path)
+   } : ja3_fingerprint)
 let field_to_match_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : field_to_match =
-    {
-      ja3_fingerprint =
-        (option_of_yojson
-           (value_for_key ja3_fingerprint_of_yojson "JA3Fingerprint") _list
-           path);
-      header_order =
-        (option_of_yojson
-           (value_for_key header_order_of_yojson "HeaderOrder") _list path);
-      cookies =
-        (option_of_yojson (value_for_key cookies_of_yojson "Cookies") _list
-           path);
-      headers =
-        (option_of_yojson (value_for_key headers_of_yojson "Headers") _list
-           path);
-      json_body =
-        (option_of_yojson (value_for_key json_body_of_yojson "JsonBody")
-           _list path);
-      method_ =
-        (option_of_yojson (value_for_key method__of_yojson "Method") _list
-           path);
-      body =
-        (option_of_yojson (value_for_key body_of_yojson "Body") _list path);
-      query_string =
-        (option_of_yojson
-           (value_for_key query_string_of_yojson "QueryString") _list path);
-      uri_path =
-        (option_of_yojson (value_for_key uri_path_of_yojson "UriPath") _list
-           path);
-      all_query_arguments =
-        (option_of_yojson
-           (value_for_key all_query_arguments_of_yojson "AllQueryArguments")
-           _list path);
-      single_query_argument =
-        (option_of_yojson
-           (value_for_key single_query_argument_of_yojson
-              "SingleQueryArgument") _list path);
-      single_header =
-        (option_of_yojson
-           (value_for_key single_header_of_yojson "SingleHeader") _list path)
-    } in
-  _res
+  ({
+     ja3_fingerprint =
+       (option_of_yojson
+          (value_for_key ja3_fingerprint_of_yojson "JA3Fingerprint") _list
+          path);
+     header_order =
+       (option_of_yojson (value_for_key header_order_of_yojson "HeaderOrder")
+          _list path);
+     cookies =
+       (option_of_yojson (value_for_key cookies_of_yojson "Cookies") _list
+          path);
+     headers =
+       (option_of_yojson (value_for_key headers_of_yojson "Headers") _list
+          path);
+     json_body =
+       (option_of_yojson (value_for_key json_body_of_yojson "JsonBody") _list
+          path);
+     method_ =
+       (option_of_yojson (value_for_key method__of_yojson "Method") _list
+          path);
+     body =
+       (option_of_yojson (value_for_key body_of_yojson "Body") _list path);
+     query_string =
+       (option_of_yojson (value_for_key query_string_of_yojson "QueryString")
+          _list path);
+     uri_path =
+       (option_of_yojson (value_for_key uri_path_of_yojson "UriPath") _list
+          path);
+     all_query_arguments =
+       (option_of_yojson
+          (value_for_key all_query_arguments_of_yojson "AllQueryArguments")
+          _list path);
+     single_query_argument =
+       (option_of_yojson
+          (value_for_key single_query_argument_of_yojson
+             "SingleQueryArgument") _list path);
+     single_header =
+       (option_of_yojson
+          (value_for_key single_header_of_yojson "SingleHeader") _list path)
+   } : field_to_match)
 let text_transformation_priority_of_yojson = int_of_yojson
 let text_transformation_type_of_yojson (tree : t) path =
   (match tree with
@@ -275,28 +247,24 @@ let text_transformation_type_of_yojson (tree : t) path =
   text_transformation_type)
 let text_transformation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : text_transformation =
-    {
-      type_ =
-        (value_for_key text_transformation_type_of_yojson "Type" _list path);
-      priority =
-        (value_for_key text_transformation_priority_of_yojson "Priority"
-           _list path)
-    } in
-  _res
+  ({
+     type_ =
+       (value_for_key text_transformation_type_of_yojson "Type" _list path);
+     priority =
+       (value_for_key text_transformation_priority_of_yojson "Priority" _list
+          path)
+   } : text_transformation)
 let text_transformations_of_yojson tree path =
   list_of_yojson text_transformation_of_yojson tree path
 let xss_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : xss_match_statement =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
+   } : xss_match_statement)
 let entity_name_of_yojson = string_of_yojson
 let entity_id_of_yojson = string_of_yojson
 let entity_description_of_yojson = string_of_yojson
@@ -304,25 +272,23 @@ let lock_token_of_yojson = string_of_yojson
 let resource_arn_of_yojson = string_of_yojson
 let web_acl_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : web_acl_summary =
-    {
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : web_acl_summary)
 let web_acl_summaries_of_yojson tree path =
   list_of_yojson web_acl_summary_of_yojson tree path
 let response_status_code_of_yojson = int_of_yojson
@@ -330,74 +296,62 @@ let custom_http_header_name_of_yojson = string_of_yojson
 let custom_http_header_value_of_yojson = string_of_yojson
 let custom_http_header_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : custom_http_header =
-    {
-      value =
-        (value_for_key custom_http_header_value_of_yojson "Value" _list path);
-      name =
-        (value_for_key custom_http_header_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     value =
+       (value_for_key custom_http_header_value_of_yojson "Value" _list path);
+     name =
+       (value_for_key custom_http_header_name_of_yojson "Name" _list path)
+   } : custom_http_header)
 let custom_http_headers_of_yojson tree path =
   list_of_yojson custom_http_header_of_yojson tree path
 let custom_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : custom_response =
-    {
-      response_headers =
-        (option_of_yojson
-           (value_for_key custom_http_headers_of_yojson "ResponseHeaders")
-           _list path);
-      custom_response_body_key =
-        (option_of_yojson
-           (value_for_key entity_name_of_yojson "CustomResponseBodyKey")
-           _list path);
-      response_code =
-        (value_for_key response_status_code_of_yojson "ResponseCode" _list
-           path)
-    } in
-  _res
+  ({
+     response_headers =
+       (option_of_yojson
+          (value_for_key custom_http_headers_of_yojson "ResponseHeaders")
+          _list path);
+     custom_response_body_key =
+       (option_of_yojson
+          (value_for_key entity_name_of_yojson "CustomResponseBodyKey") _list
+          path);
+     response_code =
+       (value_for_key response_status_code_of_yojson "ResponseCode" _list
+          path)
+   } : custom_response)
 let block_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : block_action =
-    {
-      custom_response =
-        (option_of_yojson
-           (value_for_key custom_response_of_yojson "CustomResponse") _list
-           path)
-    } in
-  _res
+  ({
+     custom_response =
+       (option_of_yojson
+          (value_for_key custom_response_of_yojson "CustomResponse") _list
+          path)
+   } : block_action)
 let custom_request_handling_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : custom_request_handling =
-    {
-      insert_headers =
-        (value_for_key custom_http_headers_of_yojson "InsertHeaders" _list
-           path)
-    } in
-  _res
+  ({
+     insert_headers =
+       (value_for_key custom_http_headers_of_yojson "InsertHeaders" _list
+          path)
+   } : custom_request_handling)
 let allow_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : allow_action =
-    {
-      custom_request_handling =
-        (option_of_yojson
-           (value_for_key custom_request_handling_of_yojson
-              "CustomRequestHandling") _list path)
-    } in
-  _res
+  ({
+     custom_request_handling =
+       (option_of_yojson
+          (value_for_key custom_request_handling_of_yojson
+             "CustomRequestHandling") _list path)
+   } : allow_action)
 let default_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : default_action =
-    {
-      allow =
-        (option_of_yojson (value_for_key allow_action_of_yojson "Allow")
-           _list path);
-      block =
-        (option_of_yojson (value_for_key block_action_of_yojson "Block")
-           _list path)
-    } in
-  _res
+  ({
+     allow =
+       (option_of_yojson (value_for_key allow_action_of_yojson "Allow") _list
+          path);
+     block =
+       (option_of_yojson (value_for_key block_action_of_yojson "Block") _list
+          path)
+   } : default_action)
 let rule_priority_of_yojson = int_of_yojson
 let search_string_of_yojson = blob_of_yojson
 let positional_constraint_of_yojson (tree : t) path =
@@ -415,20 +369,18 @@ let positional_constraint_of_yojson (tree : t) path =
   positional_constraint)
 let byte_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : byte_match_statement =
-    {
-      positional_constraint =
-        (value_for_key positional_constraint_of_yojson "PositionalConstraint"
-           _list path);
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
-      search_string =
-        (value_for_key search_string_of_yojson "SearchString" _list path)
-    } in
-  _res
+  ({
+     positional_constraint =
+       (value_for_key positional_constraint_of_yojson "PositionalConstraint"
+          _list path);
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
+     search_string =
+       (value_for_key search_string_of_yojson "SearchString" _list path)
+   } : byte_match_statement)
 let sensitivity_level_of_yojson (tree : t) path =
   (match tree with
    | `String "HIGH" -> HIGH
@@ -440,19 +392,17 @@ let sensitivity_level_of_yojson (tree : t) path =
   sensitivity_level)
 let sqli_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : sqli_match_statement =
-    {
-      sensitivity_level =
-        (option_of_yojson
-           (value_for_key sensitivity_level_of_yojson "SensitivityLevel")
-           _list path);
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
-    } in
-  _res
+  ({
+     sensitivity_level =
+       (option_of_yojson
+          (value_for_key sensitivity_level_of_yojson "SensitivityLevel")
+          _list path);
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
+   } : sqli_match_statement)
 let comparison_operator_of_yojson (tree : t) path =
   (match tree with
    | `String "GT" -> GT
@@ -470,19 +420,17 @@ let comparison_operator_of_yojson (tree : t) path =
 let size_of_yojson = long_of_yojson
 let size_constraint_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : size_constraint_statement =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      size = (value_for_key size_of_yojson "Size" _list path);
-      comparison_operator =
-        (value_for_key comparison_operator_of_yojson "ComparisonOperator"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     size = (value_for_key size_of_yojson "Size" _list path);
+     comparison_operator =
+       (value_for_key comparison_operator_of_yojson "ComparisonOperator"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path)
+   } : size_constraint_statement)
 let country_code_of_yojson (tree : t) path =
   (match tree with
    | `String "XK" -> XK
@@ -743,113 +691,95 @@ let country_codes_of_yojson tree path =
 let forwarded_ip_header_name_of_yojson = string_of_yojson
 let forwarded_ip_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : forwarded_ip_config =
-    {
-      fallback_behavior =
-        (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
-           path);
-      header_name =
-        (value_for_key forwarded_ip_header_name_of_yojson "HeaderName" _list
-           path)
-    } in
-  _res
+  ({
+     fallback_behavior =
+       (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
+          path);
+     header_name =
+       (value_for_key forwarded_ip_header_name_of_yojson "HeaderName" _list
+          path)
+   } : forwarded_ip_config)
 let geo_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : geo_match_statement =
-    {
-      forwarded_ip_config =
-        (option_of_yojson
-           (value_for_key forwarded_ip_config_of_yojson "ForwardedIPConfig")
-           _list path);
-      country_codes =
-        (option_of_yojson
-           (value_for_key country_codes_of_yojson "CountryCodes") _list path)
-    } in
-  _res
+  ({
+     forwarded_ip_config =
+       (option_of_yojson
+          (value_for_key forwarded_ip_config_of_yojson "ForwardedIPConfig")
+          _list path);
+     country_codes =
+       (option_of_yojson
+          (value_for_key country_codes_of_yojson "CountryCodes") _list path)
+   } : geo_match_statement)
 let excluded_rule_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : excluded_rule =
-    { name = (value_for_key entity_name_of_yojson "Name" _list path) } in
-  _res
+  ({ name = (value_for_key entity_name_of_yojson "Name" _list path) } : 
+    excluded_rule)
 let excluded_rules_of_yojson tree path =
   list_of_yojson excluded_rule_of_yojson tree path
 let count_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : count_action =
-    {
-      custom_request_handling =
-        (option_of_yojson
-           (value_for_key custom_request_handling_of_yojson
-              "CustomRequestHandling") _list path)
-    } in
-  _res
+  ({
+     custom_request_handling =
+       (option_of_yojson
+          (value_for_key custom_request_handling_of_yojson
+             "CustomRequestHandling") _list path)
+   } : count_action)
 let captcha_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : captcha_action =
-    {
-      custom_request_handling =
-        (option_of_yojson
-           (value_for_key custom_request_handling_of_yojson
-              "CustomRequestHandling") _list path)
-    } in
-  _res
+  ({
+     custom_request_handling =
+       (option_of_yojson
+          (value_for_key custom_request_handling_of_yojson
+             "CustomRequestHandling") _list path)
+   } : captcha_action)
 let challenge_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : challenge_action =
-    {
-      custom_request_handling =
-        (option_of_yojson
-           (value_for_key custom_request_handling_of_yojson
-              "CustomRequestHandling") _list path)
-    } in
-  _res
+  ({
+     custom_request_handling =
+       (option_of_yojson
+          (value_for_key custom_request_handling_of_yojson
+             "CustomRequestHandling") _list path)
+   } : challenge_action)
 let rule_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_action =
-    {
-      challenge =
-        (option_of_yojson
-           (value_for_key challenge_action_of_yojson "Challenge") _list path);
-      captcha =
-        (option_of_yojson (value_for_key captcha_action_of_yojson "Captcha")
-           _list path);
-      count =
-        (option_of_yojson (value_for_key count_action_of_yojson "Count")
-           _list path);
-      allow =
-        (option_of_yojson (value_for_key allow_action_of_yojson "Allow")
-           _list path);
-      block =
-        (option_of_yojson (value_for_key block_action_of_yojson "Block")
-           _list path)
-    } in
-  _res
+  ({
+     challenge =
+       (option_of_yojson
+          (value_for_key challenge_action_of_yojson "Challenge") _list path);
+     captcha =
+       (option_of_yojson (value_for_key captcha_action_of_yojson "Captcha")
+          _list path);
+     count =
+       (option_of_yojson (value_for_key count_action_of_yojson "Count") _list
+          path);
+     allow =
+       (option_of_yojson (value_for_key allow_action_of_yojson "Allow") _list
+          path);
+     block =
+       (option_of_yojson (value_for_key block_action_of_yojson "Block") _list
+          path)
+   } : rule_action)
 let rule_action_override_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_action_override =
-    {
-      action_to_use =
-        (value_for_key rule_action_of_yojson "ActionToUse" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     action_to_use =
+       (value_for_key rule_action_of_yojson "ActionToUse" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : rule_action_override)
 let rule_action_overrides_of_yojson tree path =
   list_of_yojson rule_action_override_of_yojson tree path
 let rule_group_reference_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_group_reference_statement =
-    {
-      rule_action_overrides =
-        (option_of_yojson
-           (value_for_key rule_action_overrides_of_yojson
-              "RuleActionOverrides") _list path);
-      excluded_rules =
-        (option_of_yojson
-           (value_for_key excluded_rules_of_yojson "ExcludedRules") _list
-           path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
-    } in
-  _res
+  ({
+     rule_action_overrides =
+       (option_of_yojson
+          (value_for_key rule_action_overrides_of_yojson
+             "RuleActionOverrides") _list path);
+     excluded_rules =
+       (option_of_yojson
+          (value_for_key excluded_rules_of_yojson "ExcludedRules") _list path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
+   } : rule_group_reference_statement)
 let forwarded_ip_position_of_yojson (tree : t) path =
   (match tree with
    | `String "ANY" -> ANY
@@ -863,41 +793,35 @@ let forwarded_ip_position_of_yojson (tree : t) path =
   forwarded_ip_position)
 let ip_set_forwarded_ip_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : ip_set_forwarded_ip_config =
-    {
-      position =
-        (value_for_key forwarded_ip_position_of_yojson "Position" _list path);
-      fallback_behavior =
-        (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
-           path);
-      header_name =
-        (value_for_key forwarded_ip_header_name_of_yojson "HeaderName" _list
-           path)
-    } in
-  _res
+  ({
+     position =
+       (value_for_key forwarded_ip_position_of_yojson "Position" _list path);
+     fallback_behavior =
+       (value_for_key fallback_behavior_of_yojson "FallbackBehavior" _list
+          path);
+     header_name =
+       (value_for_key forwarded_ip_header_name_of_yojson "HeaderName" _list
+          path)
+   } : ip_set_forwarded_ip_config)
 let ip_set_reference_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : ip_set_reference_statement =
-    {
-      ip_set_forwarded_ip_config =
-        (option_of_yojson
-           (value_for_key ip_set_forwarded_ip_config_of_yojson
-              "IPSetForwardedIPConfig") _list path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
-    } in
-  _res
+  ({
+     ip_set_forwarded_ip_config =
+       (option_of_yojson
+          (value_for_key ip_set_forwarded_ip_config_of_yojson
+             "IPSetForwardedIPConfig") _list path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
+   } : ip_set_reference_statement)
 let regex_pattern_set_reference_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : regex_pattern_set_reference_statement =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path)
+   } : regex_pattern_set_reference_statement)
 let rate_limit_of_yojson = long_of_yojson
 let evaluation_window_sec_of_yojson = long_of_yojson
 let rate_based_statement_aggregate_key_type_of_yojson (tree : t) path =
@@ -916,105 +840,91 @@ let rate_based_statement_aggregate_key_type_of_yojson (tree : t) path =
             "RateBasedStatementAggregateKeyType") : rate_based_statement_aggregate_key_type)
 let rate_limit_header_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_header =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
+   } : rate_limit_header)
 let rate_limit_cookie_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_cookie =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
+   } : rate_limit_cookie)
 let rate_limit_query_argument_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_query_argument =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     name = (value_for_key field_to_match_data_of_yojson "Name" _list path)
+   } : rate_limit_query_argument)
 let rate_limit_query_string_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_query_string =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path)
+   } : rate_limit_query_string)
 let rate_limit_http_method_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let rate_limit_forwarded_i_p_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let rate_limit_i_p_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let label_namespace_of_yojson = string_of_yojson
 let rate_limit_label_namespace_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_label_namespace =
-    {
-      namespace =
-        (value_for_key label_namespace_of_yojson "Namespace" _list path)
-    } in
-  _res
+  ({
+     namespace =
+       (value_for_key label_namespace_of_yojson "Namespace" _list path)
+   } : rate_limit_label_namespace)
 let rate_limit_uri_path_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_limit_uri_path =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path)
+   } : rate_limit_uri_path)
 let rate_based_statement_custom_key_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_based_statement_custom_key =
-    {
-      uri_path =
-        (option_of_yojson
-           (value_for_key rate_limit_uri_path_of_yojson "UriPath") _list path);
-      label_namespace =
-        (option_of_yojson
-           (value_for_key rate_limit_label_namespace_of_yojson
-              "LabelNamespace") _list path);
-      i_p =
-        (option_of_yojson (value_for_key rate_limit_i_p_of_yojson "IP") _list
-           path);
-      forwarded_i_p =
-        (option_of_yojson
-           (value_for_key rate_limit_forwarded_i_p_of_yojson "ForwardedIP")
-           _list path);
-      http_method =
-        (option_of_yojson
-           (value_for_key rate_limit_http_method_of_yojson "HTTPMethod")
-           _list path);
-      query_string =
-        (option_of_yojson
-           (value_for_key rate_limit_query_string_of_yojson "QueryString")
-           _list path);
-      query_argument =
-        (option_of_yojson
-           (value_for_key rate_limit_query_argument_of_yojson "QueryArgument")
-           _list path);
-      cookie =
-        (option_of_yojson
-           (value_for_key rate_limit_cookie_of_yojson "Cookie") _list path);
-      header =
-        (option_of_yojson
-           (value_for_key rate_limit_header_of_yojson "Header") _list path)
-    } in
-  _res
+  ({
+     uri_path =
+       (option_of_yojson
+          (value_for_key rate_limit_uri_path_of_yojson "UriPath") _list path);
+     label_namespace =
+       (option_of_yojson
+          (value_for_key rate_limit_label_namespace_of_yojson
+             "LabelNamespace") _list path);
+     i_p =
+       (option_of_yojson (value_for_key rate_limit_i_p_of_yojson "IP") _list
+          path);
+     forwarded_i_p =
+       (option_of_yojson
+          (value_for_key rate_limit_forwarded_i_p_of_yojson "ForwardedIP")
+          _list path);
+     http_method =
+       (option_of_yojson
+          (value_for_key rate_limit_http_method_of_yojson "HTTPMethod") _list
+          path);
+     query_string =
+       (option_of_yojson
+          (value_for_key rate_limit_query_string_of_yojson "QueryString")
+          _list path);
+     query_argument =
+       (option_of_yojson
+          (value_for_key rate_limit_query_argument_of_yojson "QueryArgument")
+          _list path);
+     cookie =
+       (option_of_yojson (value_for_key rate_limit_cookie_of_yojson "Cookie")
+          _list path);
+     header =
+       (option_of_yojson (value_for_key rate_limit_header_of_yojson "Header")
+          _list path)
+   } : rate_based_statement_custom_key)
 let rate_based_statement_custom_keys_of_yojson tree path =
   list_of_yojson rate_based_statement_custom_key_of_yojson tree path
 let vendor_name_of_yojson = string_of_yojson
@@ -1030,20 +940,16 @@ let payload_type_of_yojson (tree : t) path =
 let field_identifier_of_yojson = string_of_yojson
 let username_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : username_field =
-    {
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : username_field)
 let password_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : password_field =
-    {
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : password_field)
 let inspection_level_of_yojson (tree : t) path =
   (match tree with
    | `String "TARGETED" -> TARGETED
@@ -1056,30 +962,25 @@ let inspection_level_of_yojson (tree : t) path =
 let enable_machine_learning_of_yojson = bool_of_yojson
 let aws_managed_rules_bot_control_rule_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : aws_managed_rules_bot_control_rule_set =
-    {
-      enable_machine_learning =
-        (option_of_yojson
-           (value_for_key enable_machine_learning_of_yojson
-              "EnableMachineLearning") _list path);
-      inspection_level =
-        (value_for_key inspection_level_of_yojson "InspectionLevel" _list
-           path)
-    } in
-  _res
+  ({
+     enable_machine_learning =
+       (option_of_yojson
+          (value_for_key enable_machine_learning_of_yojson
+             "EnableMachineLearning") _list path);
+     inspection_level =
+       (value_for_key inspection_level_of_yojson "InspectionLevel" _list path)
+   } : aws_managed_rules_bot_control_rule_set)
 let string__of_yojson = string_of_yojson
 let request_inspection_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_inspection =
-    {
-      password_field =
-        (value_for_key password_field_of_yojson "PasswordField" _list path);
-      username_field =
-        (value_for_key username_field_of_yojson "UsernameField" _list path);
-      payload_type =
-        (value_for_key payload_type_of_yojson "PayloadType" _list path)
-    } in
-  _res
+  ({
+     password_field =
+       (value_for_key password_field_of_yojson "PasswordField" _list path);
+     username_field =
+       (value_for_key username_field_of_yojson "UsernameField" _list path);
+     payload_type =
+       (value_for_key payload_type_of_yojson "PayloadType" _list path)
+   } : request_inspection)
 let success_code_of_yojson = int_of_yojson
 let response_inspection_status_code_success_codes_of_yojson tree path =
   list_of_yojson success_code_of_yojson tree path
@@ -1088,18 +989,14 @@ let response_inspection_status_code_failure_codes_of_yojson tree path =
   list_of_yojson failure_code_of_yojson tree path
 let response_inspection_status_code_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_inspection_status_code =
-    {
-      failure_codes =
-        (value_for_key
-           response_inspection_status_code_failure_codes_of_yojson
-           "FailureCodes" _list path);
-      success_codes =
-        (value_for_key
-           response_inspection_status_code_success_codes_of_yojson
-           "SuccessCodes" _list path)
-    } in
-  _res
+  ({
+     failure_codes =
+       (value_for_key response_inspection_status_code_failure_codes_of_yojson
+          "FailureCodes" _list path);
+     success_codes =
+       (value_for_key response_inspection_status_code_success_codes_of_yojson
+          "SuccessCodes" _list path)
+   } : response_inspection_status_code)
 let response_inspection_header_name_of_yojson = string_of_yojson
 let success_value_of_yojson = string_of_yojson
 let response_inspection_header_success_values_of_yojson tree path =
@@ -1109,207 +1006,180 @@ let response_inspection_header_failure_values_of_yojson tree path =
   list_of_yojson failure_value_of_yojson tree path
 let response_inspection_header_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_inspection_header =
-    {
-      failure_values =
-        (value_for_key response_inspection_header_failure_values_of_yojson
-           "FailureValues" _list path);
-      success_values =
-        (value_for_key response_inspection_header_success_values_of_yojson
-           "SuccessValues" _list path);
-      name =
-        (value_for_key response_inspection_header_name_of_yojson "Name" _list
-           path)
-    } in
-  _res
+  ({
+     failure_values =
+       (value_for_key response_inspection_header_failure_values_of_yojson
+          "FailureValues" _list path);
+     success_values =
+       (value_for_key response_inspection_header_success_values_of_yojson
+          "SuccessValues" _list path);
+     name =
+       (value_for_key response_inspection_header_name_of_yojson "Name" _list
+          path)
+   } : response_inspection_header)
 let response_inspection_body_contains_success_strings_of_yojson tree path =
   list_of_yojson success_value_of_yojson tree path
 let response_inspection_body_contains_failure_strings_of_yojson tree path =
   list_of_yojson failure_value_of_yojson tree path
 let response_inspection_body_contains_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_inspection_body_contains =
-    {
-      failure_strings =
-        (value_for_key
-           response_inspection_body_contains_failure_strings_of_yojson
-           "FailureStrings" _list path);
-      success_strings =
-        (value_for_key
-           response_inspection_body_contains_success_strings_of_yojson
-           "SuccessStrings" _list path)
-    } in
-  _res
+  ({
+     failure_strings =
+       (value_for_key
+          response_inspection_body_contains_failure_strings_of_yojson
+          "FailureStrings" _list path);
+     success_strings =
+       (value_for_key
+          response_inspection_body_contains_success_strings_of_yojson
+          "SuccessStrings" _list path)
+   } : response_inspection_body_contains)
 let response_inspection_json_success_values_of_yojson tree path =
   list_of_yojson success_value_of_yojson tree path
 let response_inspection_json_failure_values_of_yojson tree path =
   list_of_yojson failure_value_of_yojson tree path
 let response_inspection_json_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_inspection_json =
-    {
-      failure_values =
-        (value_for_key response_inspection_json_failure_values_of_yojson
-           "FailureValues" _list path);
-      success_values =
-        (value_for_key response_inspection_json_success_values_of_yojson
-           "SuccessValues" _list path);
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     failure_values =
+       (value_for_key response_inspection_json_failure_values_of_yojson
+          "FailureValues" _list path);
+     success_values =
+       (value_for_key response_inspection_json_success_values_of_yojson
+          "SuccessValues" _list path);
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : response_inspection_json)
 let response_inspection_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_inspection =
-    {
-      json =
-        (option_of_yojson
-           (value_for_key response_inspection_json_of_yojson "Json") _list
-           path);
-      body_contains =
-        (option_of_yojson
-           (value_for_key response_inspection_body_contains_of_yojson
-              "BodyContains") _list path);
-      header =
-        (option_of_yojson
-           (value_for_key response_inspection_header_of_yojson "Header")
-           _list path);
-      status_code =
-        (option_of_yojson
-           (value_for_key response_inspection_status_code_of_yojson
-              "StatusCode") _list path)
-    } in
-  _res
+  ({
+     json =
+       (option_of_yojson
+          (value_for_key response_inspection_json_of_yojson "Json") _list
+          path);
+     body_contains =
+       (option_of_yojson
+          (value_for_key response_inspection_body_contains_of_yojson
+             "BodyContains") _list path);
+     header =
+       (option_of_yojson
+          (value_for_key response_inspection_header_of_yojson "Header") _list
+          path);
+     status_code =
+       (option_of_yojson
+          (value_for_key response_inspection_status_code_of_yojson
+             "StatusCode") _list path)
+   } : response_inspection)
 let boolean__of_yojson = bool_of_yojson
 let aws_managed_rules_atp_rule_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : aws_managed_rules_atp_rule_set =
-    {
-      enable_regex_in_path =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "EnableRegexInPath") _list path);
-      response_inspection =
-        (option_of_yojson
-           (value_for_key response_inspection_of_yojson "ResponseInspection")
-           _list path);
-      request_inspection =
-        (option_of_yojson
-           (value_for_key request_inspection_of_yojson "RequestInspection")
-           _list path);
-      login_path = (value_for_key string__of_yojson "LoginPath" _list path)
-    } in
-  _res
+  ({
+     enable_regex_in_path =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "EnableRegexInPath") _list path);
+     response_inspection =
+       (option_of_yojson
+          (value_for_key response_inspection_of_yojson "ResponseInspection")
+          _list path);
+     request_inspection =
+       (option_of_yojson
+          (value_for_key request_inspection_of_yojson "RequestInspection")
+          _list path);
+     login_path = (value_for_key string__of_yojson "LoginPath" _list path)
+   } : aws_managed_rules_atp_rule_set)
 let creation_path_string_of_yojson = string_of_yojson
 let registration_page_path_string_of_yojson = string_of_yojson
 let email_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : email_field =
-    {
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : email_field)
 let phone_number_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : phone_number_field =
-    {
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : phone_number_field)
 let phone_number_fields_of_yojson tree path =
   list_of_yojson phone_number_field_of_yojson tree path
 let address_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : address_field =
-    {
-      identifier =
-        (value_for_key field_identifier_of_yojson "Identifier" _list path)
-    } in
-  _res
+  ({
+     identifier =
+       (value_for_key field_identifier_of_yojson "Identifier" _list path)
+   } : address_field)
 let address_fields_of_yojson tree path =
   list_of_yojson address_field_of_yojson tree path
 let request_inspection_acf_p_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_inspection_acf_p =
-    {
-      address_fields =
-        (option_of_yojson
-           (value_for_key address_fields_of_yojson "AddressFields") _list
-           path);
-      phone_number_fields =
-        (option_of_yojson
-           (value_for_key phone_number_fields_of_yojson "PhoneNumberFields")
-           _list path);
-      email_field =
-        (option_of_yojson (value_for_key email_field_of_yojson "EmailField")
-           _list path);
-      password_field =
-        (option_of_yojson
-           (value_for_key password_field_of_yojson "PasswordField") _list
-           path);
-      username_field =
-        (option_of_yojson
-           (value_for_key username_field_of_yojson "UsernameField") _list
-           path);
-      payload_type =
-        (value_for_key payload_type_of_yojson "PayloadType" _list path)
-    } in
-  _res
+  ({
+     address_fields =
+       (option_of_yojson
+          (value_for_key address_fields_of_yojson "AddressFields") _list path);
+     phone_number_fields =
+       (option_of_yojson
+          (value_for_key phone_number_fields_of_yojson "PhoneNumberFields")
+          _list path);
+     email_field =
+       (option_of_yojson (value_for_key email_field_of_yojson "EmailField")
+          _list path);
+     password_field =
+       (option_of_yojson
+          (value_for_key password_field_of_yojson "PasswordField") _list path);
+     username_field =
+       (option_of_yojson
+          (value_for_key username_field_of_yojson "UsernameField") _list path);
+     payload_type =
+       (value_for_key payload_type_of_yojson "PayloadType" _list path)
+   } : request_inspection_acf_p)
 let aws_managed_rules_acfp_rule_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : aws_managed_rules_acfp_rule_set =
-    {
-      enable_regex_in_path =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "EnableRegexInPath") _list path);
-      response_inspection =
-        (option_of_yojson
-           (value_for_key response_inspection_of_yojson "ResponseInspection")
-           _list path);
-      request_inspection =
-        (value_for_key request_inspection_acf_p_of_yojson "RequestInspection"
-           _list path);
-      registration_page_path =
-        (value_for_key registration_page_path_string_of_yojson
-           "RegistrationPagePath" _list path);
-      creation_path =
-        (value_for_key creation_path_string_of_yojson "CreationPath" _list
-           path)
-    } in
-  _res
+  ({
+     enable_regex_in_path =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "EnableRegexInPath") _list path);
+     response_inspection =
+       (option_of_yojson
+          (value_for_key response_inspection_of_yojson "ResponseInspection")
+          _list path);
+     request_inspection =
+       (value_for_key request_inspection_acf_p_of_yojson "RequestInspection"
+          _list path);
+     registration_page_path =
+       (value_for_key registration_page_path_string_of_yojson
+          "RegistrationPagePath" _list path);
+     creation_path =
+       (value_for_key creation_path_string_of_yojson "CreationPath" _list
+          path)
+   } : aws_managed_rules_acfp_rule_set)
 let managed_rule_group_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_group_config =
-    {
-      aws_managed_rules_acfp_rule_set =
-        (option_of_yojson
-           (value_for_key aws_managed_rules_acfp_rule_set_of_yojson
-              "AWSManagedRulesACFPRuleSet") _list path);
-      aws_managed_rules_atp_rule_set =
-        (option_of_yojson
-           (value_for_key aws_managed_rules_atp_rule_set_of_yojson
-              "AWSManagedRulesATPRuleSet") _list path);
-      aws_managed_rules_bot_control_rule_set =
-        (option_of_yojson
-           (value_for_key aws_managed_rules_bot_control_rule_set_of_yojson
-              "AWSManagedRulesBotControlRuleSet") _list path);
-      password_field =
-        (option_of_yojson
-           (value_for_key password_field_of_yojson "PasswordField") _list
-           path);
-      username_field =
-        (option_of_yojson
-           (value_for_key username_field_of_yojson "UsernameField") _list
-           path);
-      payload_type =
-        (option_of_yojson
-           (value_for_key payload_type_of_yojson "PayloadType") _list path);
-      login_path =
-        (option_of_yojson
-           (value_for_key login_path_string_of_yojson "LoginPath") _list path)
-    } in
-  _res
+  ({
+     aws_managed_rules_acfp_rule_set =
+       (option_of_yojson
+          (value_for_key aws_managed_rules_acfp_rule_set_of_yojson
+             "AWSManagedRulesACFPRuleSet") _list path);
+     aws_managed_rules_atp_rule_set =
+       (option_of_yojson
+          (value_for_key aws_managed_rules_atp_rule_set_of_yojson
+             "AWSManagedRulesATPRuleSet") _list path);
+     aws_managed_rules_bot_control_rule_set =
+       (option_of_yojson
+          (value_for_key aws_managed_rules_bot_control_rule_set_of_yojson
+             "AWSManagedRulesBotControlRuleSet") _list path);
+     password_field =
+       (option_of_yojson
+          (value_for_key password_field_of_yojson "PasswordField") _list path);
+     username_field =
+       (option_of_yojson
+          (value_for_key username_field_of_yojson "UsernameField") _list path);
+     payload_type =
+       (option_of_yojson (value_for_key payload_type_of_yojson "PayloadType")
+          _list path);
+     login_path =
+       (option_of_yojson
+          (value_for_key login_path_string_of_yojson "LoginPath") _list path)
+   } : managed_rule_group_config)
 let managed_rule_group_configs_of_yojson tree path =
   list_of_yojson managed_rule_group_config_of_yojson tree path
 let label_match_scope_of_yojson (tree : t) path =
@@ -1324,296 +1194,256 @@ let label_match_scope_of_yojson (tree : t) path =
 let label_match_key_of_yojson = string_of_yojson
 let label_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : label_match_statement =
-    {
-      key = (value_for_key label_match_key_of_yojson "Key" _list path);
-      scope = (value_for_key label_match_scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     key = (value_for_key label_match_key_of_yojson "Key" _list path);
+     scope = (value_for_key label_match_scope_of_yojson "Scope" _list path)
+   } : label_match_statement)
 let regex_pattern_string_of_yojson = string_of_yojson
 let regex_match_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : regex_match_statement =
-    {
-      text_transformations =
-        (value_for_key text_transformations_of_yojson "TextTransformations"
-           _list path);
-      field_to_match =
-        (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
-      regex_string =
-        (value_for_key regex_pattern_string_of_yojson "RegexString" _list
-           path)
-    } in
-  _res
+  ({
+     text_transformations =
+       (value_for_key text_transformations_of_yojson "TextTransformations"
+          _list path);
+     field_to_match =
+       (value_for_key field_to_match_of_yojson "FieldToMatch" _list path);
+     regex_string =
+       (value_for_key regex_pattern_string_of_yojson "RegexString" _list path)
+   } : regex_match_statement)
 let rec and_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : and_statement =
-    {
-      statements =
-        (value_for_key statements_of_yojson "Statements" _list path)
-    } in
-  _res
+  ({
+     statements =
+       (value_for_key statements_of_yojson "Statements" _list path)
+   } : and_statement)
 and managed_rule_group_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_group_statement =
-    {
-      rule_action_overrides =
-        (option_of_yojson
-           (value_for_key rule_action_overrides_of_yojson
-              "RuleActionOverrides") _list path);
-      managed_rule_group_configs =
-        (option_of_yojson
-           (value_for_key managed_rule_group_configs_of_yojson
-              "ManagedRuleGroupConfigs") _list path);
-      scope_down_statement =
-        (option_of_yojson
-           (value_for_key statement_of_yojson "ScopeDownStatement") _list
-           path);
-      excluded_rules =
-        (option_of_yojson
-           (value_for_key excluded_rules_of_yojson "ExcludedRules") _list
-           path);
-      version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "Version") _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path);
-      vendor_name =
-        (value_for_key vendor_name_of_yojson "VendorName" _list path)
-    } in
-  _res
+  ({
+     rule_action_overrides =
+       (option_of_yojson
+          (value_for_key rule_action_overrides_of_yojson
+             "RuleActionOverrides") _list path);
+     managed_rule_group_configs =
+       (option_of_yojson
+          (value_for_key managed_rule_group_configs_of_yojson
+             "ManagedRuleGroupConfigs") _list path);
+     scope_down_statement =
+       (option_of_yojson
+          (value_for_key statement_of_yojson "ScopeDownStatement") _list path);
+     excluded_rules =
+       (option_of_yojson
+          (value_for_key excluded_rules_of_yojson "ExcludedRules") _list path);
+     version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "Version") _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path);
+     vendor_name =
+       (value_for_key vendor_name_of_yojson "VendorName" _list path)
+   } : managed_rule_group_statement)
 and not_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : not_statement =
-    { statement = (value_for_key statement_of_yojson "Statement" _list path)
-    } in
-  _res
+  ({ statement = (value_for_key statement_of_yojson "Statement" _list path) } : 
+    not_statement)
 and or_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : or_statement =
-    {
-      statements =
-        (value_for_key statements_of_yojson "Statements" _list path)
-    } in
-  _res
+  ({
+     statements =
+       (value_for_key statements_of_yojson "Statements" _list path)
+   } : or_statement)
 and rate_based_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_based_statement =
-    {
-      custom_keys =
-        (option_of_yojson
-           (value_for_key rate_based_statement_custom_keys_of_yojson
-              "CustomKeys") _list path);
-      forwarded_ip_config =
-        (option_of_yojson
-           (value_for_key forwarded_ip_config_of_yojson "ForwardedIPConfig")
-           _list path);
-      scope_down_statement =
-        (option_of_yojson
-           (value_for_key statement_of_yojson "ScopeDownStatement") _list
-           path);
-      aggregate_key_type =
-        (value_for_key rate_based_statement_aggregate_key_type_of_yojson
-           "AggregateKeyType" _list path);
-      evaluation_window_sec =
-        (option_of_yojson
-           (value_for_key evaluation_window_sec_of_yojson
-              "EvaluationWindowSec") _list path);
-      limit = (value_for_key rate_limit_of_yojson "Limit" _list path)
-    } in
-  _res
+  ({
+     custom_keys =
+       (option_of_yojson
+          (value_for_key rate_based_statement_custom_keys_of_yojson
+             "CustomKeys") _list path);
+     forwarded_ip_config =
+       (option_of_yojson
+          (value_for_key forwarded_ip_config_of_yojson "ForwardedIPConfig")
+          _list path);
+     scope_down_statement =
+       (option_of_yojson
+          (value_for_key statement_of_yojson "ScopeDownStatement") _list path);
+     aggregate_key_type =
+       (value_for_key rate_based_statement_aggregate_key_type_of_yojson
+          "AggregateKeyType" _list path);
+     evaluation_window_sec =
+       (option_of_yojson
+          (value_for_key evaluation_window_sec_of_yojson
+             "EvaluationWindowSec") _list path);
+     limit = (value_for_key rate_limit_of_yojson "Limit" _list path)
+   } : rate_based_statement)
 and statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : statement =
-    {
-      regex_match_statement =
-        (option_of_yojson
-           (value_for_key regex_match_statement_of_yojson
-              "RegexMatchStatement") _list path);
-      label_match_statement =
-        (option_of_yojson
-           (value_for_key label_match_statement_of_yojson
-              "LabelMatchStatement") _list path);
-      managed_rule_group_statement =
-        (option_of_yojson
-           (value_for_key managed_rule_group_statement_of_yojson
-              "ManagedRuleGroupStatement") _list path);
-      not_statement =
-        (option_of_yojson
-           (value_for_key not_statement_of_yojson "NotStatement") _list path);
-      or_statement =
-        (option_of_yojson
-           (value_for_key or_statement_of_yojson "OrStatement") _list path);
-      and_statement =
-        (option_of_yojson
-           (value_for_key and_statement_of_yojson "AndStatement") _list path);
-      rate_based_statement =
-        (option_of_yojson
-           (value_for_key rate_based_statement_of_yojson "RateBasedStatement")
-           _list path);
-      regex_pattern_set_reference_statement =
-        (option_of_yojson
-           (value_for_key regex_pattern_set_reference_statement_of_yojson
-              "RegexPatternSetReferenceStatement") _list path);
-      ip_set_reference_statement =
-        (option_of_yojson
-           (value_for_key ip_set_reference_statement_of_yojson
-              "IPSetReferenceStatement") _list path);
-      rule_group_reference_statement =
-        (option_of_yojson
-           (value_for_key rule_group_reference_statement_of_yojson
-              "RuleGroupReferenceStatement") _list path);
-      geo_match_statement =
-        (option_of_yojson
-           (value_for_key geo_match_statement_of_yojson "GeoMatchStatement")
-           _list path);
-      size_constraint_statement =
-        (option_of_yojson
-           (value_for_key size_constraint_statement_of_yojson
-              "SizeConstraintStatement") _list path);
-      xss_match_statement =
-        (option_of_yojson
-           (value_for_key xss_match_statement_of_yojson "XssMatchStatement")
-           _list path);
-      sqli_match_statement =
-        (option_of_yojson
-           (value_for_key sqli_match_statement_of_yojson "SqliMatchStatement")
-           _list path);
-      byte_match_statement =
-        (option_of_yojson
-           (value_for_key byte_match_statement_of_yojson "ByteMatchStatement")
-           _list path)
-    } in
-  _res
+  ({
+     regex_match_statement =
+       (option_of_yojson
+          (value_for_key regex_match_statement_of_yojson
+             "RegexMatchStatement") _list path);
+     label_match_statement =
+       (option_of_yojson
+          (value_for_key label_match_statement_of_yojson
+             "LabelMatchStatement") _list path);
+     managed_rule_group_statement =
+       (option_of_yojson
+          (value_for_key managed_rule_group_statement_of_yojson
+             "ManagedRuleGroupStatement") _list path);
+     not_statement =
+       (option_of_yojson
+          (value_for_key not_statement_of_yojson "NotStatement") _list path);
+     or_statement =
+       (option_of_yojson (value_for_key or_statement_of_yojson "OrStatement")
+          _list path);
+     and_statement =
+       (option_of_yojson
+          (value_for_key and_statement_of_yojson "AndStatement") _list path);
+     rate_based_statement =
+       (option_of_yojson
+          (value_for_key rate_based_statement_of_yojson "RateBasedStatement")
+          _list path);
+     regex_pattern_set_reference_statement =
+       (option_of_yojson
+          (value_for_key regex_pattern_set_reference_statement_of_yojson
+             "RegexPatternSetReferenceStatement") _list path);
+     ip_set_reference_statement =
+       (option_of_yojson
+          (value_for_key ip_set_reference_statement_of_yojson
+             "IPSetReferenceStatement") _list path);
+     rule_group_reference_statement =
+       (option_of_yojson
+          (value_for_key rule_group_reference_statement_of_yojson
+             "RuleGroupReferenceStatement") _list path);
+     geo_match_statement =
+       (option_of_yojson
+          (value_for_key geo_match_statement_of_yojson "GeoMatchStatement")
+          _list path);
+     size_constraint_statement =
+       (option_of_yojson
+          (value_for_key size_constraint_statement_of_yojson
+             "SizeConstraintStatement") _list path);
+     xss_match_statement =
+       (option_of_yojson
+          (value_for_key xss_match_statement_of_yojson "XssMatchStatement")
+          _list path);
+     sqli_match_statement =
+       (option_of_yojson
+          (value_for_key sqli_match_statement_of_yojson "SqliMatchStatement")
+          _list path);
+     byte_match_statement =
+       (option_of_yojson
+          (value_for_key byte_match_statement_of_yojson "ByteMatchStatement")
+          _list path)
+   } : statement)
 and statements_of_yojson tree path =
   list_of_yojson statement_of_yojson tree path
 let none_action_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let override_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : override_action =
-    {
-      none =
-        (option_of_yojson (value_for_key none_action_of_yojson "None") _list
-           path);
-      count =
-        (option_of_yojson (value_for_key count_action_of_yojson "Count")
-           _list path)
-    } in
-  _res
+  ({
+     none =
+       (option_of_yojson (value_for_key none_action_of_yojson "None") _list
+          path);
+     count =
+       (option_of_yojson (value_for_key count_action_of_yojson "Count") _list
+          path)
+   } : override_action)
 let label_name_of_yojson = string_of_yojson
 let label_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : label =
-    { name = (value_for_key label_name_of_yojson "Name" _list path) } in
-  _res
+  ({ name = (value_for_key label_name_of_yojson "Name" _list path) } : 
+    label)
 let labels_of_yojson tree path = list_of_yojson label_of_yojson tree path
 let metric_name_of_yojson = string_of_yojson
 let visibility_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : visibility_config =
-    {
-      metric_name =
-        (value_for_key metric_name_of_yojson "MetricName" _list path);
-      cloud_watch_metrics_enabled =
-        (value_for_key boolean__of_yojson "CloudWatchMetricsEnabled" _list
-           path);
-      sampled_requests_enabled =
-        (value_for_key boolean__of_yojson "SampledRequestsEnabled" _list path)
-    } in
-  _res
+  ({
+     metric_name =
+       (value_for_key metric_name_of_yojson "MetricName" _list path);
+     cloud_watch_metrics_enabled =
+       (value_for_key boolean__of_yojson "CloudWatchMetricsEnabled" _list
+          path);
+     sampled_requests_enabled =
+       (value_for_key boolean__of_yojson "SampledRequestsEnabled" _list path)
+   } : visibility_config)
 let time_window_second_of_yojson = long_of_yojson
 let immunity_time_property_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : immunity_time_property =
-    {
-      immunity_time =
-        (value_for_key time_window_second_of_yojson "ImmunityTime" _list path)
-    } in
-  _res
+  ({
+     immunity_time =
+       (value_for_key time_window_second_of_yojson "ImmunityTime" _list path)
+   } : immunity_time_property)
 let captcha_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : captcha_config =
-    {
-      immunity_time_property =
-        (option_of_yojson
-           (value_for_key immunity_time_property_of_yojson
-              "ImmunityTimeProperty") _list path)
-    } in
-  _res
+  ({
+     immunity_time_property =
+       (option_of_yojson
+          (value_for_key immunity_time_property_of_yojson
+             "ImmunityTimeProperty") _list path)
+   } : captcha_config)
 let challenge_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : challenge_config =
-    {
-      immunity_time_property =
-        (option_of_yojson
-           (value_for_key immunity_time_property_of_yojson
-              "ImmunityTimeProperty") _list path)
-    } in
-  _res
+  ({
+     immunity_time_property =
+       (option_of_yojson
+          (value_for_key immunity_time_property_of_yojson
+             "ImmunityTimeProperty") _list path)
+   } : challenge_config)
 let rule_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule =
-    {
-      challenge_config =
-        (option_of_yojson
-           (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
-           path);
-      captcha_config =
-        (option_of_yojson
-           (value_for_key captcha_config_of_yojson "CaptchaConfig") _list
-           path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rule_labels =
-        (option_of_yojson (value_for_key labels_of_yojson "RuleLabels") _list
-           path);
-      override_action =
-        (option_of_yojson
-           (value_for_key override_action_of_yojson "OverrideAction") _list
-           path);
-      action =
-        (option_of_yojson (value_for_key rule_action_of_yojson "Action")
-           _list path);
-      statement = (value_for_key statement_of_yojson "Statement" _list path);
-      priority =
-        (value_for_key rule_priority_of_yojson "Priority" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     challenge_config =
+       (option_of_yojson
+          (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
+          path);
+     captcha_config =
+       (option_of_yojson
+          (value_for_key captcha_config_of_yojson "CaptchaConfig") _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rule_labels =
+       (option_of_yojson (value_for_key labels_of_yojson "RuleLabels") _list
+          path);
+     override_action =
+       (option_of_yojson
+          (value_for_key override_action_of_yojson "OverrideAction") _list
+          path);
+     action =
+       (option_of_yojson (value_for_key rule_action_of_yojson "Action") _list
+          path);
+     statement = (value_for_key statement_of_yojson "Statement" _list path);
+     priority = (value_for_key rule_priority_of_yojson "Priority" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : rule)
 let rules_of_yojson tree path = list_of_yojson rule_of_yojson tree path
 let consumed_capacity_of_yojson = long_of_yojson
 let firewall_manager_statement_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : firewall_manager_statement =
-    {
-      rule_group_reference_statement =
-        (option_of_yojson
-           (value_for_key rule_group_reference_statement_of_yojson
-              "RuleGroupReferenceStatement") _list path);
-      managed_rule_group_statement =
-        (option_of_yojson
-           (value_for_key managed_rule_group_statement_of_yojson
-              "ManagedRuleGroupStatement") _list path)
-    } in
-  _res
+  ({
+     rule_group_reference_statement =
+       (option_of_yojson
+          (value_for_key rule_group_reference_statement_of_yojson
+             "RuleGroupReferenceStatement") _list path);
+     managed_rule_group_statement =
+       (option_of_yojson
+          (value_for_key managed_rule_group_statement_of_yojson
+             "ManagedRuleGroupStatement") _list path)
+   } : firewall_manager_statement)
 let firewall_manager_rule_group_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : firewall_manager_rule_group =
-    {
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      override_action =
-        (value_for_key override_action_of_yojson "OverrideAction" _list path);
-      firewall_manager_statement =
-        (value_for_key firewall_manager_statement_of_yojson
-           "FirewallManagerStatement" _list path);
-      priority =
-        (value_for_key rule_priority_of_yojson "Priority" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     override_action =
+       (value_for_key override_action_of_yojson "OverrideAction" _list path);
+     firewall_manager_statement =
+       (value_for_key firewall_manager_statement_of_yojson
+          "FirewallManagerStatement" _list path);
+     priority = (value_for_key rule_priority_of_yojson "Priority" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : firewall_manager_rule_group)
 let firewall_manager_rule_groups_of_yojson tree path =
   list_of_yojson firewall_manager_rule_group_of_yojson tree path
 let response_content_type_of_yojson (tree : t) path =
@@ -1630,15 +1460,13 @@ let response_content_type_of_yojson (tree : t) path =
 let response_content_of_yojson = string_of_yojson
 let custom_response_body_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : custom_response_body =
-    {
-      content =
-        (value_for_key response_content_of_yojson "Content" _list path);
-      content_type =
-        (value_for_key response_content_type_of_yojson "ContentType" _list
-           path)
-    } in
-  _res
+  ({
+     content =
+       (value_for_key response_content_of_yojson "Content" _list path);
+     content_type =
+       (value_for_key response_content_type_of_yojson "ContentType" _list
+          path)
+   } : custom_response_body)
 let custom_response_bodies_of_yojson tree path =
   map_of_yojson entity_name_of_yojson custom_response_body_of_yojson tree
     path
@@ -1659,13 +1487,11 @@ let size_inspection_limit_of_yojson (tree : t) path =
   size_inspection_limit)
 let request_body_associated_resource_type_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : request_body_associated_resource_type_config =
-    {
-      default_size_inspection_limit =
-        (value_for_key size_inspection_limit_of_yojson
-           "DefaultSizeInspectionLimit" _list path)
-    } in
-  _res
+  ({
+     default_size_inspection_limit =
+       (value_for_key size_inspection_limit_of_yojson
+          "DefaultSizeInspectionLimit" _list path)
+   } : request_body_associated_resource_type_config)
 let associated_resource_type_of_yojson (tree : t) path =
   (match tree with
    | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
@@ -1684,183 +1510,154 @@ let request_body_of_yojson tree path =
     request_body_associated_resource_type_config_of_yojson tree path
 let association_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : association_config =
-    {
-      request_body =
-        (option_of_yojson
-           (value_for_key request_body_of_yojson "RequestBody") _list path)
-    } in
-  _res
+  ({
+     request_body =
+       (option_of_yojson (value_for_key request_body_of_yojson "RequestBody")
+          _list path)
+   } : association_config)
 let web_ac_l_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : web_ac_l =
-    {
-      association_config =
-        (option_of_yojson
-           (value_for_key association_config_of_yojson "AssociationConfig")
-           _list path);
-      token_domains =
-        (option_of_yojson
-           (value_for_key token_domains_of_yojson "TokenDomains") _list path);
-      challenge_config =
-        (option_of_yojson
-           (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
-           path);
-      captcha_config =
-        (option_of_yojson
-           (value_for_key captcha_config_of_yojson "CaptchaConfig") _list
-           path);
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      label_namespace =
-        (option_of_yojson
-           (value_for_key label_name_of_yojson "LabelNamespace") _list path);
-      managed_by_firewall_manager =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "ManagedByFirewallManager")
-           _list path);
-      post_process_firewall_manager_rule_groups =
-        (option_of_yojson
-           (value_for_key firewall_manager_rule_groups_of_yojson
-              "PostProcessFirewallManagerRuleGroups") _list path);
-      pre_process_firewall_manager_rule_groups =
-        (option_of_yojson
-           (value_for_key firewall_manager_rule_groups_of_yojson
-              "PreProcessFirewallManagerRuleGroups") _list path);
-      capacity =
-        (option_of_yojson
-           (value_for_key consumed_capacity_of_yojson "Capacity") _list path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      default_action =
-        (value_for_key default_action_of_yojson "DefaultAction" _list path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     association_config =
+       (option_of_yojson
+          (value_for_key association_config_of_yojson "AssociationConfig")
+          _list path);
+     token_domains =
+       (option_of_yojson
+          (value_for_key token_domains_of_yojson "TokenDomains") _list path);
+     challenge_config =
+       (option_of_yojson
+          (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
+          path);
+     captcha_config =
+       (option_of_yojson
+          (value_for_key captcha_config_of_yojson "CaptchaConfig") _list path);
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     label_namespace =
+       (option_of_yojson
+          (value_for_key label_name_of_yojson "LabelNamespace") _list path);
+     managed_by_firewall_manager =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "ManagedByFirewallManager") _list
+          path);
+     post_process_firewall_manager_rule_groups =
+       (option_of_yojson
+          (value_for_key firewall_manager_rule_groups_of_yojson
+             "PostProcessFirewallManagerRuleGroups") _list path);
+     pre_process_firewall_manager_rule_groups =
+       (option_of_yojson
+          (value_for_key firewall_manager_rule_groups_of_yojson
+             "PreProcessFirewallManagerRuleGroups") _list path);
+     capacity =
+       (option_of_yojson
+          (value_for_key consumed_capacity_of_yojson "Capacity") _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     default_action =
+       (value_for_key default_action_of_yojson "DefaultAction" _list path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : web_ac_l)
 let error_message_of_yojson = string_of_yojson
 let waf_unsupported_aggregate_key_type_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_unsupported_aggregate_key_type_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_unsupported_aggregate_key_type_exception)
 let waf_unavailable_entity_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_unavailable_entity_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_unavailable_entity_exception)
 let waf_tag_operation_internal_error_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_tag_operation_internal_error_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_tag_operation_internal_error_exception)
 let waf_tag_operation_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_tag_operation_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_tag_operation_exception)
 let waf_subscription_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_subscription_not_found_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_subscription_not_found_exception)
 let waf_service_linked_role_error_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_service_linked_role_error_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : waf_service_linked_role_error_exception)
 let waf_optimistic_lock_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_optimistic_lock_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_optimistic_lock_exception)
 let waf_nonexistent_item_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_nonexistent_item_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_nonexistent_item_exception)
 let waf_log_destination_permission_issue_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_log_destination_permission_issue_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_log_destination_permission_issue_exception)
 let source_type_of_yojson = string_of_yojson
 let waf_limits_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_limits_exceeded_exception =
-    {
-      source_type =
-        (option_of_yojson (value_for_key source_type_of_yojson "SourceType")
-           _list path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     source_type =
+       (option_of_yojson (value_for_key source_type_of_yojson "SourceType")
+          _list path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_limits_exceeded_exception)
 let waf_invalid_resource_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_invalid_resource_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_invalid_resource_exception)
 let waf_invalid_permission_policy_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_invalid_permission_policy_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_invalid_permission_policy_exception)
 let parameter_exception_field_of_yojson (tree : t) path =
   (match tree with
    | `String "ACP_RULE_SET_RESPONSE_INSPECTION" ->
@@ -1948,105 +1745,87 @@ let parameter_exception_parameter_of_yojson = string_of_yojson
 let error_reason_of_yojson = string_of_yojson
 let waf_invalid_parameter_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_invalid_parameter_exception =
-    {
-      reason =
-        (option_of_yojson (value_for_key error_reason_of_yojson "Reason")
-           _list path);
-      parameter =
-        (option_of_yojson
-           (value_for_key parameter_exception_parameter_of_yojson "Parameter")
-           _list path);
-      field =
-        (option_of_yojson
-           (value_for_key parameter_exception_field_of_yojson "Field") _list
-           path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     reason =
+       (option_of_yojson (value_for_key error_reason_of_yojson "Reason")
+          _list path);
+     parameter =
+       (option_of_yojson
+          (value_for_key parameter_exception_parameter_of_yojson "Parameter")
+          _list path);
+     field =
+       (option_of_yojson
+          (value_for_key parameter_exception_field_of_yojson "Field") _list
+          path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : waf_invalid_parameter_exception)
 let waf_invalid_operation_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_invalid_operation_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_invalid_operation_exception)
 let waf_internal_error_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_internal_error_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_internal_error_exception)
 let waf_expired_managed_rule_group_version_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_expired_managed_rule_group_version_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_expired_managed_rule_group_version_exception)
 let waf_duplicate_item_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_duplicate_item_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_duplicate_item_exception)
 let waf_configuration_warning_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_configuration_warning_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_configuration_warning_exception)
 let waf_associated_item_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : waf_associated_item_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "Message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : waf_associated_item_exception)
 let time_window_day_of_yojson = int_of_yojson
 let version_to_publish_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : version_to_publish =
-    {
-      forecasted_lifetime =
-        (option_of_yojson
-           (value_for_key time_window_day_of_yojson "ForecastedLifetime")
-           _list path);
-      associated_rule_group_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "AssociatedRuleGroupArn")
-           _list path)
-    } in
-  _res
+  ({
+     forecasted_lifetime =
+       (option_of_yojson
+          (value_for_key time_window_day_of_yojson "ForecastedLifetime")
+          _list path);
+     associated_rule_group_arn =
+       (option_of_yojson
+          (value_for_key resource_arn_of_yojson "AssociatedRuleGroupArn")
+          _list path)
+   } : version_to_publish)
 let versions_to_publish_of_yojson tree path =
   map_of_yojson version_key_string_of_yojson version_to_publish_of_yojson
     tree path
 let update_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_web_acl_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path)
+   } : update_web_acl_response)
 let scope_of_yojson (tree : t) path =
   (match tree with
    | `String "REGIONAL" -> REGIONAL
@@ -2056,237 +1835,200 @@ let scope_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "Scope") : scope)
 let update_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_web_acl_request =
-    {
-      association_config =
-        (option_of_yojson
-           (value_for_key association_config_of_yojson "AssociationConfig")
-           _list path);
-      token_domains =
-        (option_of_yojson
-           (value_for_key token_domains_of_yojson "TokenDomains") _list path);
-      challenge_config =
-        (option_of_yojson
-           (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
-           path);
-      captcha_config =
-        (option_of_yojson
-           (value_for_key captcha_config_of_yojson "CaptchaConfig") _list
-           path);
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      default_action =
-        (value_for_key default_action_of_yojson "DefaultAction" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     association_config =
+       (option_of_yojson
+          (value_for_key association_config_of_yojson "AssociationConfig")
+          _list path);
+     token_domains =
+       (option_of_yojson
+          (value_for_key token_domains_of_yojson "TokenDomains") _list path);
+     challenge_config =
+       (option_of_yojson
+          (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
+          path);
+     captcha_config =
+       (option_of_yojson
+          (value_for_key captcha_config_of_yojson "CaptchaConfig") _list path);
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     default_action =
+       (value_for_key default_action_of_yojson "DefaultAction" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : update_web_acl_request)
 let update_rule_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_rule_group_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path)
+   } : update_rule_group_response)
 let update_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_rule_group_request =
-    {
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : update_rule_group_request)
 let update_regex_pattern_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_regex_pattern_set_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path)
+   } : update_regex_pattern_set_response)
 let regex_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : regex =
-    {
-      regex_string =
-        (option_of_yojson
-           (value_for_key regex_pattern_string_of_yojson "RegexString") _list
-           path)
-    } in
-  _res
+  ({
+     regex_string =
+       (option_of_yojson
+          (value_for_key regex_pattern_string_of_yojson "RegexString") _list
+          path)
+   } : regex)
 let regular_expression_list_of_yojson tree path =
   list_of_yojson regex_of_yojson tree path
 let update_regex_pattern_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_regex_pattern_set_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      regular_expression_list =
-        (value_for_key regular_expression_list_of_yojson
-           "RegularExpressionList" _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     regular_expression_list =
+       (value_for_key regular_expression_list_of_yojson
+          "RegularExpressionList" _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : update_regex_pattern_set_request)
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let update_managed_rule_set_version_expiry_date_response_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
-  let _res : update_managed_rule_set_version_expiry_date_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path);
-      expiry_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "ExpiryTimestamp") _list path);
-      expiring_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "ExpiringVersion")
-           _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path);
+     expiry_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "ExpiryTimestamp") _list path);
+     expiring_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "ExpiringVersion")
+          _list path)
+   } : update_managed_rule_set_version_expiry_date_response)
 let update_managed_rule_set_version_expiry_date_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_managed_rule_set_version_expiry_date_request =
-    {
-      expiry_timestamp =
-        (value_for_key timestamp__of_yojson "ExpiryTimestamp" _list path);
-      version_to_expire =
-        (value_for_key version_key_string_of_yojson "VersionToExpire" _list
-           path);
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     expiry_timestamp =
+       (value_for_key timestamp__of_yojson "ExpiryTimestamp" _list path);
+     version_to_expire =
+       (value_for_key version_key_string_of_yojson "VersionToExpire" _list
+          path);
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : update_managed_rule_set_version_expiry_date_request)
 let update_ip_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_ip_set_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path)
+   } : update_ip_set_response)
 let ip_address_of_yojson = string_of_yojson
 let ip_addresses_of_yojson tree path =
   list_of_yojson ip_address_of_yojson tree path
 let update_ip_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_ip_set_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      addresses =
-        (value_for_key ip_addresses_of_yojson "Addresses" _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     addresses =
+       (value_for_key ip_addresses_of_yojson "Addresses" _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : update_ip_set_request)
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
 let untag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_request =
-    {
-      tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path);
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
-    } in
-  _res
+  ({
+     tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path);
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
+   } : untag_resource_request)
 let uri_string_of_yojson = string_of_yojson
 let time_window_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : time_window =
-    {
-      end_time = (value_for_key timestamp__of_yojson "EndTime" _list path);
-      start_time =
-        (value_for_key timestamp__of_yojson "StartTime" _list path)
-    } in
-  _res
+  ({
+     end_time = (value_for_key timestamp__of_yojson "EndTime" _list path);
+     start_time = (value_for_key timestamp__of_yojson "StartTime" _list path)
+   } : time_window)
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag =
-    {
-      value = (value_for_key tag_value_of_yojson "Value" _list path);
-      key = (value_for_key tag_key_of_yojson "Key" _list path)
-    } in
-  _res
+  ({
+     value = (value_for_key tag_value_of_yojson "Value" _list path);
+     key = (value_for_key tag_key_of_yojson "Key" _list path)
+   } : tag)
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_request =
-    {
-      tags = (value_for_key tag_list_of_yojson "Tags" _list path);
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
-    } in
-  _res
+  ({
+     tags = (value_for_key tag_list_of_yojson "Tags" _list path);
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
+   } : tag_resource_request)
 let tag_info_for_resource_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag_info_for_resource =
-    {
-      tag_list =
-        (option_of_yojson (value_for_key tag_list_of_yojson "TagList") _list
-           path);
-      resource_ar_n =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ResourceARN") _list path)
-    } in
-  _res
+  ({
+     tag_list =
+       (option_of_yojson (value_for_key tag_list_of_yojson "TagList") _list
+          path);
+     resource_ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ResourceARN")
+          _list path)
+   } : tag_info_for_resource)
 let solve_timestamp_of_yojson = long_of_yojson
 let ip_string_of_yojson = string_of_yojson
 let country_of_yojson = string_of_yojson
@@ -2296,42 +2038,38 @@ let header_name_of_yojson = string_of_yojson
 let header_value_of_yojson = string_of_yojson
 let http_header_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : http_header =
-    {
-      value =
-        (option_of_yojson (value_for_key header_value_of_yojson "Value")
-           _list path);
-      name =
-        (option_of_yojson (value_for_key header_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     value =
+       (option_of_yojson (value_for_key header_value_of_yojson "Value") _list
+          path);
+     name =
+       (option_of_yojson (value_for_key header_name_of_yojson "Name") _list
+          path)
+   } : http_header)
 let http_headers_of_yojson tree path =
   list_of_yojson http_header_of_yojson tree path
 let http_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : http_request =
-    {
-      headers =
-        (option_of_yojson (value_for_key http_headers_of_yojson "Headers")
-           _list path);
-      http_version =
-        (option_of_yojson
-           (value_for_key http_version_of_yojson "HTTPVersion") _list path);
-      method_ =
-        (option_of_yojson (value_for_key http_method_of_yojson "Method")
-           _list path);
-      ur_i =
-        (option_of_yojson (value_for_key uri_string_of_yojson "URI") _list
-           path);
-      country =
-        (option_of_yojson (value_for_key country_of_yojson "Country") _list
-           path);
-      client_i_p =
-        (option_of_yojson (value_for_key ip_string_of_yojson "ClientIP")
-           _list path)
-    } in
-  _res
+  ({
+     headers =
+       (option_of_yojson (value_for_key http_headers_of_yojson "Headers")
+          _list path);
+     http_version =
+       (option_of_yojson (value_for_key http_version_of_yojson "HTTPVersion")
+          _list path);
+     method_ =
+       (option_of_yojson (value_for_key http_method_of_yojson "Method") _list
+          path);
+     ur_i =
+       (option_of_yojson (value_for_key uri_string_of_yojson "URI") _list
+          path);
+     country =
+       (option_of_yojson (value_for_key country_of_yojson "Country") _list
+          path);
+     client_i_p =
+       (option_of_yojson (value_for_key ip_string_of_yojson "ClientIP") _list
+          path)
+   } : http_request)
 let sample_weight_of_yojson = long_of_yojson
 let action_of_yojson = string_of_yojson
 let response_code_of_yojson = int_of_yojson
@@ -2348,164 +2086,145 @@ let failure_reason_of_yojson (tree : t) path =
   failure_reason)
 let captcha_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : captcha_response =
-    {
-      failure_reason =
-        (option_of_yojson
-           (value_for_key failure_reason_of_yojson "FailureReason") _list
-           path);
-      solve_timestamp =
-        (option_of_yojson
-           (value_for_key solve_timestamp_of_yojson "SolveTimestamp") _list
-           path);
-      response_code =
-        (option_of_yojson
-           (value_for_key response_code_of_yojson "ResponseCode") _list path)
-    } in
-  _res
+  ({
+     failure_reason =
+       (option_of_yojson
+          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+     solve_timestamp =
+       (option_of_yojson
+          (value_for_key solve_timestamp_of_yojson "SolveTimestamp") _list
+          path);
+     response_code =
+       (option_of_yojson
+          (value_for_key response_code_of_yojson "ResponseCode") _list path)
+   } : captcha_response)
 let challenge_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : challenge_response =
-    {
-      failure_reason =
-        (option_of_yojson
-           (value_for_key failure_reason_of_yojson "FailureReason") _list
-           path);
-      solve_timestamp =
-        (option_of_yojson
-           (value_for_key solve_timestamp_of_yojson "SolveTimestamp") _list
-           path);
-      response_code =
-        (option_of_yojson
-           (value_for_key response_code_of_yojson "ResponseCode") _list path)
-    } in
-  _res
+  ({
+     failure_reason =
+       (option_of_yojson
+          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+     solve_timestamp =
+       (option_of_yojson
+          (value_for_key solve_timestamp_of_yojson "SolveTimestamp") _list
+          path);
+     response_code =
+       (option_of_yojson
+          (value_for_key response_code_of_yojson "ResponseCode") _list path)
+   } : challenge_response)
 let sampled_http_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : sampled_http_request =
-    {
-      overridden_action =
-        (option_of_yojson (value_for_key action_of_yojson "OverriddenAction")
-           _list path);
-      challenge_response =
-        (option_of_yojson
-           (value_for_key challenge_response_of_yojson "ChallengeResponse")
-           _list path);
-      captcha_response =
-        (option_of_yojson
-           (value_for_key captcha_response_of_yojson "CaptchaResponse") _list
-           path);
-      labels =
-        (option_of_yojson (value_for_key labels_of_yojson "Labels") _list
-           path);
-      response_code_sent =
-        (option_of_yojson
-           (value_for_key response_status_code_of_yojson "ResponseCodeSent")
-           _list path);
-      request_headers_inserted =
-        (option_of_yojson
-           (value_for_key http_headers_of_yojson "RequestHeadersInserted")
-           _list path);
-      rule_name_within_rule_group =
-        (option_of_yojson
-           (value_for_key entity_name_of_yojson "RuleNameWithinRuleGroup")
-           _list path);
-      action =
-        (option_of_yojson (value_for_key action_of_yojson "Action") _list
-           path);
-      timestamp_ =
-        (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
-           _list path);
-      weight = (value_for_key sample_weight_of_yojson "Weight" _list path);
-      request = (value_for_key http_request_of_yojson "Request" _list path)
-    } in
-  _res
+  ({
+     overridden_action =
+       (option_of_yojson (value_for_key action_of_yojson "OverriddenAction")
+          _list path);
+     challenge_response =
+       (option_of_yojson
+          (value_for_key challenge_response_of_yojson "ChallengeResponse")
+          _list path);
+     captcha_response =
+       (option_of_yojson
+          (value_for_key captcha_response_of_yojson "CaptchaResponse") _list
+          path);
+     labels =
+       (option_of_yojson (value_for_key labels_of_yojson "Labels") _list path);
+     response_code_sent =
+       (option_of_yojson
+          (value_for_key response_status_code_of_yojson "ResponseCodeSent")
+          _list path);
+     request_headers_inserted =
+       (option_of_yojson
+          (value_for_key http_headers_of_yojson "RequestHeadersInserted")
+          _list path);
+     rule_name_within_rule_group =
+       (option_of_yojson
+          (value_for_key entity_name_of_yojson "RuleNameWithinRuleGroup")
+          _list path);
+     action =
+       (option_of_yojson (value_for_key action_of_yojson "Action") _list path);
+     timestamp_ =
+       (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
+          _list path);
+     weight = (value_for_key sample_weight_of_yojson "Weight" _list path);
+     request = (value_for_key http_request_of_yojson "Request" _list path)
+   } : sampled_http_request)
 let sampled_http_requests_of_yojson tree path =
   list_of_yojson sampled_http_request_of_yojson tree path
 let rule_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_summary =
-    {
-      action =
-        (option_of_yojson (value_for_key rule_action_of_yojson "Action")
-           _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     action =
+       (option_of_yojson (value_for_key rule_action_of_yojson "Action") _list
+          path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : rule_summary)
 let rule_summaries_of_yojson tree path =
   list_of_yojson rule_summary_of_yojson tree path
 let rule_group_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_group_summary =
-    {
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : rule_group_summary)
 let rule_group_summaries_of_yojson tree path =
   list_of_yojson rule_group_summary_of_yojson tree path
 let capacity_unit_of_yojson = long_of_yojson
 let label_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : label_summary =
-    {
-      name =
-        (option_of_yojson (value_for_key label_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     name =
+       (option_of_yojson (value_for_key label_name_of_yojson "Name") _list
+          path)
+   } : label_summary)
 let label_summaries_of_yojson tree path =
   list_of_yojson label_summary_of_yojson tree path
 let rule_group_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rule_group =
-    {
-      consumed_labels =
-        (option_of_yojson
-           (value_for_key label_summaries_of_yojson "ConsumedLabels") _list
-           path);
-      available_labels =
-        (option_of_yojson
-           (value_for_key label_summaries_of_yojson "AvailableLabels") _list
-           path);
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      label_namespace =
-        (option_of_yojson
-           (value_for_key label_name_of_yojson "LabelNamespace") _list path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
-      capacity =
-        (value_for_key capacity_unit_of_yojson "Capacity" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     consumed_labels =
+       (option_of_yojson
+          (value_for_key label_summaries_of_yojson "ConsumedLabels") _list
+          path);
+     available_labels =
+       (option_of_yojson
+          (value_for_key label_summaries_of_yojson "AvailableLabels") _list
+          path);
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     label_namespace =
+       (option_of_yojson
+          (value_for_key label_name_of_yojson "LabelNamespace") _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
+     capacity = (value_for_key capacity_unit_of_yojson "Capacity" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : rule_group)
 let resource_type_of_yojson (tree : t) path =
   (match tree with
    | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
@@ -2522,65 +2241,59 @@ let resource_arns_of_yojson tree path =
   list_of_yojson resource_arn_of_yojson tree path
 let release_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : release_summary =
-    {
-      timestamp_ =
-        (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
-           _list path);
-      release_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "ReleaseVersion")
-           _list path)
-    } in
-  _res
+  ({
+     timestamp_ =
+       (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
+          _list path);
+     release_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "ReleaseVersion") _list
+          path)
+   } : release_summary)
 let release_summaries_of_yojson tree path =
   list_of_yojson release_summary_of_yojson tree path
 let release_notes_of_yojson = string_of_yojson
 let regex_pattern_set_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : regex_pattern_set_summary =
-    {
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : regex_pattern_set_summary)
 let regex_pattern_set_summaries_of_yojson tree path =
   list_of_yojson regex_pattern_set_summary_of_yojson tree path
 let regex_pattern_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : regex_pattern_set =
-    {
-      regular_expression_list =
-        (option_of_yojson
-           (value_for_key regular_expression_list_of_yojson
-              "RegularExpressionList") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     regular_expression_list =
+       (option_of_yojson
+          (value_for_key regular_expression_list_of_yojson
+             "RegularExpressionList") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : regex_pattern_set)
 let redacted_fields_of_yojson tree path =
   list_of_yojson field_to_match_of_yojson tree path
 let ip_address_version_of_yojson (tree : t) path =
@@ -2594,57 +2307,48 @@ let ip_address_version_of_yojson (tree : t) path =
   ip_address_version)
 let rate_based_statement_managed_keys_ip_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : rate_based_statement_managed_keys_ip_set =
-    {
-      addresses =
-        (option_of_yojson (value_for_key ip_addresses_of_yojson "Addresses")
-           _list path);
-      ip_address_version =
-        (option_of_yojson
-           (value_for_key ip_address_version_of_yojson "IPAddressVersion")
-           _list path)
-    } in
-  _res
+  ({
+     addresses =
+       (option_of_yojson (value_for_key ip_addresses_of_yojson "Addresses")
+          _list path);
+     ip_address_version =
+       (option_of_yojson
+          (value_for_key ip_address_version_of_yojson "IPAddressVersion")
+          _list path)
+   } : rate_based_statement_managed_keys_ip_set)
 let put_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let policy_string_of_yojson = string_of_yojson
 let put_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_permission_policy_request =
-    {
-      policy = (value_for_key policy_string_of_yojson "Policy" _list path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     policy = (value_for_key policy_string_of_yojson "Policy" _list path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : put_permission_policy_request)
 let put_managed_rule_set_versions_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_managed_rule_set_versions_response =
-    {
-      next_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextLockToken") _list path)
-    } in
-  _res
+  ({
+     next_lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "NextLockToken")
+          _list path)
+   } : put_managed_rule_set_versions_response)
 let put_managed_rule_set_versions_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_managed_rule_set_versions_request =
-    {
-      versions_to_publish =
-        (option_of_yojson
-           (value_for_key versions_to_publish_of_yojson "VersionsToPublish")
-           _list path);
-      recommended_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "RecommendedVersion")
-           _list path);
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     versions_to_publish =
+       (option_of_yojson
+          (value_for_key versions_to_publish_of_yojson "VersionsToPublish")
+          _list path);
+     recommended_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "RecommendedVersion")
+          _list path);
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : put_managed_rule_set_versions_request)
 let log_destination_configs_of_yojson tree path =
   list_of_yojson resource_arn_of_yojson tree path
 let filter_behavior_of_yojson (tree : t) path =
@@ -2678,55 +2382,44 @@ let action_value_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "ActionValue") : action_value)
 let action_condition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : action_condition =
-    { action = (value_for_key action_value_of_yojson "Action" _list path) } in
-  _res
+  ({ action = (value_for_key action_value_of_yojson "Action" _list path) } : 
+    action_condition)
 let label_name_condition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : label_name_condition =
-    {
-      label_name =
-        (value_for_key label_name_of_yojson "LabelName" _list path)
-    } in
-  _res
+  ({ label_name = (value_for_key label_name_of_yojson "LabelName" _list path)
+   } : label_name_condition)
 let condition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : condition =
-    {
-      label_name_condition =
-        (option_of_yojson
-           (value_for_key label_name_condition_of_yojson "LabelNameCondition")
-           _list path);
-      action_condition =
-        (option_of_yojson
-           (value_for_key action_condition_of_yojson "ActionCondition") _list
-           path)
-    } in
-  _res
+  ({
+     label_name_condition =
+       (option_of_yojson
+          (value_for_key label_name_condition_of_yojson "LabelNameCondition")
+          _list path);
+     action_condition =
+       (option_of_yojson
+          (value_for_key action_condition_of_yojson "ActionCondition") _list
+          path)
+   } : condition)
 let conditions_of_yojson tree path =
   list_of_yojson condition_of_yojson tree path
 let filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : filter =
-    {
-      conditions =
-        (value_for_key conditions_of_yojson "Conditions" _list path);
-      requirement =
-        (value_for_key filter_requirement_of_yojson "Requirement" _list path);
-      behavior =
-        (value_for_key filter_behavior_of_yojson "Behavior" _list path)
-    } in
-  _res
+  ({
+     conditions =
+       (value_for_key conditions_of_yojson "Conditions" _list path);
+     requirement =
+       (value_for_key filter_requirement_of_yojson "Requirement" _list path);
+     behavior =
+       (value_for_key filter_behavior_of_yojson "Behavior" _list path)
+   } : filter)
 let filters_of_yojson tree path = list_of_yojson filter_of_yojson tree path
 let logging_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : logging_filter =
-    {
-      default_behavior =
-        (value_for_key filter_behavior_of_yojson "DefaultBehavior" _list path);
-      filters = (value_for_key filters_of_yojson "Filters" _list path)
-    } in
-  _res
+  ({
+     default_behavior =
+       (value_for_key filter_behavior_of_yojson "DefaultBehavior" _list path);
+     filters = (value_for_key filters_of_yojson "Filters" _list path)
+   } : logging_filter)
 let log_type_of_yojson (tree : t) path =
   (match tree with
    | `String "WAF_LOGS" -> WAF_LOGS
@@ -2742,79 +2435,70 @@ let log_scope_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "LogScope") : log_scope)
 let logging_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : logging_configuration =
-    {
-      log_scope =
-        (option_of_yojson (value_for_key log_scope_of_yojson "LogScope")
-           _list path);
-      log_type =
-        (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
-           path);
-      logging_filter =
-        (option_of_yojson
-           (value_for_key logging_filter_of_yojson "LoggingFilter") _list
-           path);
-      managed_by_firewall_manager =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "ManagedByFirewallManager")
-           _list path);
-      redacted_fields =
-        (option_of_yojson
-           (value_for_key redacted_fields_of_yojson "RedactedFields") _list
-           path);
-      log_destination_configs =
-        (value_for_key log_destination_configs_of_yojson
-           "LogDestinationConfigs" _list path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     log_scope =
+       (option_of_yojson (value_for_key log_scope_of_yojson "LogScope") _list
+          path);
+     log_type =
+       (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
+          path);
+     logging_filter =
+       (option_of_yojson
+          (value_for_key logging_filter_of_yojson "LoggingFilter") _list path);
+     managed_by_firewall_manager =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "ManagedByFirewallManager") _list
+          path);
+     redacted_fields =
+       (option_of_yojson
+          (value_for_key redacted_fields_of_yojson "RedactedFields") _list
+          path);
+     log_destination_configs =
+       (value_for_key log_destination_configs_of_yojson
+          "LogDestinationConfigs" _list path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : logging_configuration)
 let put_logging_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_logging_configuration_response =
-    {
-      logging_configuration =
-        (option_of_yojson
-           (value_for_key logging_configuration_of_yojson
-              "LoggingConfiguration") _list path)
-    } in
-  _res
+  ({
+     logging_configuration =
+       (option_of_yojson
+          (value_for_key logging_configuration_of_yojson
+             "LoggingConfiguration") _list path)
+   } : put_logging_configuration_response)
 let put_logging_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : put_logging_configuration_request =
-    {
-      logging_configuration =
-        (value_for_key logging_configuration_of_yojson "LoggingConfiguration"
-           _list path)
-    } in
-  _res
+  ({
+     logging_configuration =
+       (value_for_key logging_configuration_of_yojson "LoggingConfiguration"
+          _list path)
+   } : put_logging_configuration_request)
 let managed_rule_set_version_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_set_version =
-    {
-      expiry_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "ExpiryTimestamp") _list path);
-      last_update_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "LastUpdateTimestamp") _list
-           path);
-      publish_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "PublishTimestamp") _list path);
-      forecasted_lifetime =
-        (option_of_yojson
-           (value_for_key time_window_day_of_yojson "ForecastedLifetime")
-           _list path);
-      capacity =
-        (option_of_yojson (value_for_key capacity_unit_of_yojson "Capacity")
-           _list path);
-      associated_rule_group_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "AssociatedRuleGroupArn")
-           _list path)
-    } in
-  _res
+  ({
+     expiry_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "ExpiryTimestamp") _list path);
+     last_update_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "LastUpdateTimestamp") _list
+          path);
+     publish_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "PublishTimestamp") _list path);
+     forecasted_lifetime =
+       (option_of_yojson
+          (value_for_key time_window_day_of_yojson "ForecastedLifetime")
+          _list path);
+     capacity =
+       (option_of_yojson (value_for_key capacity_unit_of_yojson "Capacity")
+          _list path);
+     associated_rule_group_arn =
+       (option_of_yojson
+          (value_for_key resource_arn_of_yojson "AssociatedRuleGroupArn")
+          _list path)
+   } : managed_rule_set_version)
 let published_versions_of_yojson tree path =
   map_of_yojson version_key_string_of_yojson
     managed_rule_set_version_of_yojson tree path
@@ -2835,1220 +2519,1030 @@ let output_url_of_yojson = string_of_yojson
 let next_marker_of_yojson = string_of_yojson
 let mobile_sdk_release_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : mobile_sdk_release =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      release_notes =
-        (option_of_yojson
-           (value_for_key release_notes_of_yojson "ReleaseNotes") _list path);
-      timestamp_ =
-        (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
-           _list path);
-      release_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "ReleaseVersion")
-           _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     release_notes =
+       (option_of_yojson
+          (value_for_key release_notes_of_yojson "ReleaseNotes") _list path);
+     timestamp_ =
+       (option_of_yojson (value_for_key timestamp__of_yojson "Timestamp")
+          _list path);
+     release_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "ReleaseVersion") _list
+          path)
+   } : mobile_sdk_release)
 let managed_rule_set_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_set_summary =
-    {
-      label_namespace =
-        (option_of_yojson
-           (value_for_key label_name_of_yojson "LabelNamespace") _list path);
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     label_namespace =
+       (option_of_yojson
+          (value_for_key label_name_of_yojson "LabelNamespace") _list path);
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : managed_rule_set_summary)
 let managed_rule_set_summaries_of_yojson tree path =
   list_of_yojson managed_rule_set_summary_of_yojson tree path
 let managed_rule_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_set =
-    {
-      label_namespace =
-        (option_of_yojson
-           (value_for_key label_name_of_yojson "LabelNamespace") _list path);
-      recommended_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "RecommendedVersion")
-           _list path);
-      published_versions =
-        (option_of_yojson
-           (value_for_key published_versions_of_yojson "PublishedVersions")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     label_namespace =
+       (option_of_yojson
+          (value_for_key label_name_of_yojson "LabelNamespace") _list path);
+     recommended_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "RecommendedVersion")
+          _list path);
+     published_versions =
+       (option_of_yojson
+          (value_for_key published_versions_of_yojson "PublishedVersions")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : managed_rule_set)
 let managed_rule_group_version_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_group_version =
-    {
-      last_update_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "LastUpdateTimestamp") _list
-           path);
-      name =
-        (option_of_yojson (value_for_key version_key_string_of_yojson "Name")
-           _list path)
-    } in
-  _res
+  ({
+     last_update_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "LastUpdateTimestamp") _list
+          path);
+     name =
+       (option_of_yojson (value_for_key version_key_string_of_yojson "Name")
+          _list path)
+   } : managed_rule_group_version)
 let managed_rule_group_versions_of_yojson tree path =
   list_of_yojson managed_rule_group_version_of_yojson tree path
 let managed_rule_group_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_rule_group_summary =
-    {
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      versioning_supported =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "VersioningSupported") _list
-           path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path);
-      vendor_name =
-        (option_of_yojson (value_for_key vendor_name_of_yojson "VendorName")
-           _list path)
-    } in
-  _res
+  ({
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     versioning_supported =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "VersioningSupported") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path);
+     vendor_name =
+       (option_of_yojson (value_for_key vendor_name_of_yojson "VendorName")
+          _list path)
+   } : managed_rule_group_summary)
 let managed_rule_group_summaries_of_yojson tree path =
   list_of_yojson managed_rule_group_summary_of_yojson tree path
 let managed_product_descriptor_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : managed_product_descriptor =
-    {
-      is_advanced_managed_rule_set =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "IsAdvancedManagedRuleSet")
-           _list path);
-      is_versioning_supported =
-        (option_of_yojson
-           (value_for_key boolean__of_yojson "IsVersioningSupported") _list
-           path);
-      sns_topic_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "SnsTopicArn") _list path);
-      product_description =
-        (option_of_yojson
-           (value_for_key product_description_of_yojson "ProductDescription")
-           _list path);
-      product_title =
-        (option_of_yojson
-           (value_for_key product_title_of_yojson "ProductTitle") _list path);
-      product_link =
-        (option_of_yojson
-           (value_for_key product_link_of_yojson "ProductLink") _list path);
-      product_id =
-        (option_of_yojson (value_for_key product_id_of_yojson "ProductId")
-           _list path);
-      managed_rule_set_name =
-        (option_of_yojson
-           (value_for_key entity_name_of_yojson "ManagedRuleSetName") _list
-           path);
-      vendor_name =
-        (option_of_yojson (value_for_key vendor_name_of_yojson "VendorName")
-           _list path)
-    } in
-  _res
+  ({
+     is_advanced_managed_rule_set =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "IsAdvancedManagedRuleSet") _list
+          path);
+     is_versioning_supported =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "IsVersioningSupported") _list
+          path);
+     sns_topic_arn =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "SnsTopicArn")
+          _list path);
+     product_description =
+       (option_of_yojson
+          (value_for_key product_description_of_yojson "ProductDescription")
+          _list path);
+     product_title =
+       (option_of_yojson
+          (value_for_key product_title_of_yojson "ProductTitle") _list path);
+     product_link =
+       (option_of_yojson (value_for_key product_link_of_yojson "ProductLink")
+          _list path);
+     product_id =
+       (option_of_yojson (value_for_key product_id_of_yojson "ProductId")
+          _list path);
+     managed_rule_set_name =
+       (option_of_yojson
+          (value_for_key entity_name_of_yojson "ManagedRuleSetName") _list
+          path);
+     vendor_name =
+       (option_of_yojson (value_for_key vendor_name_of_yojson "VendorName")
+          _list path)
+   } : managed_product_descriptor)
 let managed_product_descriptors_of_yojson tree path =
   list_of_yojson managed_product_descriptor_of_yojson tree path
 let logging_configurations_of_yojson tree path =
   list_of_yojson logging_configuration_of_yojson tree path
 let list_web_ac_ls_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_web_ac_ls_response =
-    {
-      web_ac_ls =
-        (option_of_yojson
-           (value_for_key web_acl_summaries_of_yojson "WebACLs") _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     web_ac_ls =
+       (option_of_yojson
+          (value_for_key web_acl_summaries_of_yojson "WebACLs") _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_web_ac_ls_response)
 let list_web_ac_ls_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_web_ac_ls_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_web_ac_ls_request)
 let list_tags_for_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_resource_response =
-    {
-      tag_info_for_resource =
-        (option_of_yojson
-           (value_for_key tag_info_for_resource_of_yojson
-              "TagInfoForResource") _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     tag_info_for_resource =
+       (option_of_yojson
+          (value_for_key tag_info_for_resource_of_yojson "TagInfoForResource")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_tags_for_resource_response)
 let list_tags_for_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_resource_request =
-    {
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path);
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path);
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_tags_for_resource_request)
 let list_rule_groups_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_rule_groups_response =
-    {
-      rule_groups =
-        (option_of_yojson
-           (value_for_key rule_group_summaries_of_yojson "RuleGroups") _list
-           path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     rule_groups =
+       (option_of_yojson
+          (value_for_key rule_group_summaries_of_yojson "RuleGroups") _list
+          path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_rule_groups_response)
 let list_rule_groups_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_rule_groups_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_rule_groups_request)
 let list_resources_for_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_resources_for_web_acl_response =
-    {
-      resource_arns =
-        (option_of_yojson
-           (value_for_key resource_arns_of_yojson "ResourceArns") _list path)
-    } in
-  _res
+  ({
+     resource_arns =
+       (option_of_yojson
+          (value_for_key resource_arns_of_yojson "ResourceArns") _list path)
+   } : list_resources_for_web_acl_response)
 let list_resources_for_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_resources_for_web_acl_request =
-    {
-      resource_type =
-        (option_of_yojson
-           (value_for_key resource_type_of_yojson "ResourceType") _list path);
-      web_acl_arn =
-        (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
-    } in
-  _res
+  ({
+     resource_type =
+       (option_of_yojson
+          (value_for_key resource_type_of_yojson "ResourceType") _list path);
+     web_acl_arn =
+       (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
+   } : list_resources_for_web_acl_request)
 let list_regex_pattern_sets_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_regex_pattern_sets_response =
-    {
-      regex_pattern_sets =
-        (option_of_yojson
-           (value_for_key regex_pattern_set_summaries_of_yojson
-              "RegexPatternSets") _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     regex_pattern_sets =
+       (option_of_yojson
+          (value_for_key regex_pattern_set_summaries_of_yojson
+             "RegexPatternSets") _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_regex_pattern_sets_response)
 let list_regex_pattern_sets_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_regex_pattern_sets_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_regex_pattern_sets_request)
 let list_mobile_sdk_releases_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_mobile_sdk_releases_response =
-    {
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      release_summaries =
-        (option_of_yojson
-           (value_for_key release_summaries_of_yojson "ReleaseSummaries")
-           _list path)
-    } in
-  _res
+  ({
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     release_summaries =
+       (option_of_yojson
+          (value_for_key release_summaries_of_yojson "ReleaseSummaries")
+          _list path)
+   } : list_mobile_sdk_releases_response)
 let list_mobile_sdk_releases_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_mobile_sdk_releases_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      platform = (value_for_key platform_of_yojson "Platform" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     platform = (value_for_key platform_of_yojson "Platform" _list path)
+   } : list_mobile_sdk_releases_request)
 let list_max_items_of_yojson = long_of_yojson
 let list_managed_rule_sets_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_managed_rule_sets_response =
-    {
-      managed_rule_sets =
-        (option_of_yojson
-           (value_for_key managed_rule_set_summaries_of_yojson
-              "ManagedRuleSets") _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     managed_rule_sets =
+       (option_of_yojson
+          (value_for_key managed_rule_set_summaries_of_yojson
+             "ManagedRuleSets") _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_managed_rule_sets_response)
 let list_managed_rule_sets_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_managed_rule_sets_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_managed_rule_sets_request)
 let list_logging_configurations_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_logging_configurations_response =
-    {
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      logging_configurations =
-        (option_of_yojson
-           (value_for_key logging_configurations_of_yojson
-              "LoggingConfigurations") _list path)
-    } in
-  _res
+  ({
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     logging_configurations =
+       (option_of_yojson
+          (value_for_key logging_configurations_of_yojson
+             "LoggingConfigurations") _list path)
+   } : list_logging_configurations_response)
 let list_logging_configurations_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_logging_configurations_request =
-    {
-      log_scope =
-        (option_of_yojson (value_for_key log_scope_of_yojson "LogScope")
-           _list path);
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     log_scope =
+       (option_of_yojson (value_for_key log_scope_of_yojson "LogScope") _list
+          path);
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_logging_configurations_request)
 let ip_set_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : ip_set_summary =
-    {
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : ip_set_summary)
 let ip_set_summaries_of_yojson tree path =
   list_of_yojson ip_set_summary_of_yojson tree path
 let list_ip_sets_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_ip_sets_response =
-    {
-      ip_sets =
-        (option_of_yojson (value_for_key ip_set_summaries_of_yojson "IPSets")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     ip_sets =
+       (option_of_yojson (value_for_key ip_set_summaries_of_yojson "IPSets")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_ip_sets_response)
 let list_ip_sets_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_ip_sets_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_ip_sets_request)
 let list_available_managed_rule_groups_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_available_managed_rule_groups_response =
-    {
-      managed_rule_groups =
-        (option_of_yojson
-           (value_for_key managed_rule_group_summaries_of_yojson
-              "ManagedRuleGroups") _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     managed_rule_groups =
+       (option_of_yojson
+          (value_for_key managed_rule_group_summaries_of_yojson
+             "ManagedRuleGroups") _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_available_managed_rule_groups_response)
 let list_available_managed_rule_groups_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_available_managed_rule_groups_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_available_managed_rule_groups_request)
 let list_available_managed_rule_group_versions_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_available_managed_rule_group_versions_response =
-    {
-      current_default_version =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson
-              "CurrentDefaultVersion") _list path);
-      versions =
-        (option_of_yojson
-           (value_for_key managed_rule_group_versions_of_yojson "Versions")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     current_default_version =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "CurrentDefaultVersion")
+          _list path);
+     versions =
+       (option_of_yojson
+          (value_for_key managed_rule_group_versions_of_yojson "Versions")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_available_managed_rule_group_versions_response)
 let list_available_managed_rule_group_versions_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_available_managed_rule_group_versions_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path);
-      vendor_name =
-        (value_for_key vendor_name_of_yojson "VendorName" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path);
+     vendor_name =
+       (value_for_key vendor_name_of_yojson "VendorName" _list path)
+   } : list_available_managed_rule_group_versions_request)
 let api_key_of_yojson = string_of_yojson
 let api_key_version_of_yojson = int_of_yojson
 let api_key_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : api_key_summary =
-    {
-      version =
-        (option_of_yojson (value_for_key api_key_version_of_yojson "Version")
-           _list path);
-      creation_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "CreationTimestamp") _list
-           path);
-      api_key =
-        (option_of_yojson (value_for_key api_key_of_yojson "APIKey") _list
-           path);
-      token_domains =
-        (option_of_yojson
-           (value_for_key token_domains_of_yojson "TokenDomains") _list path)
-    } in
-  _res
+  ({
+     version =
+       (option_of_yojson (value_for_key api_key_version_of_yojson "Version")
+          _list path);
+     creation_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "CreationTimestamp") _list path);
+     api_key =
+       (option_of_yojson (value_for_key api_key_of_yojson "APIKey") _list
+          path);
+     token_domains =
+       (option_of_yojson
+          (value_for_key token_domains_of_yojson "TokenDomains") _list path)
+   } : api_key_summary)
 let api_key_summaries_of_yojson tree path =
   list_of_yojson api_key_summary_of_yojson tree path
 let list_api_keys_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_api_keys_response =
-    {
-      application_integration_ur_l =
-        (option_of_yojson
-           (value_for_key output_url_of_yojson "ApplicationIntegrationURL")
-           _list path);
-      api_key_summaries =
-        (option_of_yojson
-           (value_for_key api_key_summaries_of_yojson "APIKeySummaries")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path)
-    } in
-  _res
+  ({
+     application_integration_ur_l =
+       (option_of_yojson
+          (value_for_key output_url_of_yojson "ApplicationIntegrationURL")
+          _list path);
+     api_key_summaries =
+       (option_of_yojson
+          (value_for_key api_key_summaries_of_yojson "APIKeySummaries") _list
+          path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path)
+   } : list_api_keys_response)
 let list_api_keys_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_api_keys_request =
-    {
-      limit =
-        (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
-           _list path);
-      next_marker =
-        (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
-           _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key pagination_limit_of_yojson "Limit")
+          _list path);
+     next_marker =
+       (option_of_yojson (value_for_key next_marker_of_yojson "NextMarker")
+          _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : list_api_keys_request)
 let ip_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : ip_set =
-    {
-      addresses =
-        (value_for_key ip_addresses_of_yojson "Addresses" _list path);
-      ip_address_version =
-        (value_for_key ip_address_version_of_yojson "IPAddressVersion" _list
-           path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     addresses =
+       (value_for_key ip_addresses_of_yojson "Addresses" _list path);
+     ip_address_version =
+       (value_for_key ip_address_version_of_yojson "IPAddressVersion" _list
+          path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     ar_n = (value_for_key resource_arn_of_yojson "ARN" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : ip_set)
 let get_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_web_acl_response =
-    {
-      application_integration_ur_l =
-        (option_of_yojson
-           (value_for_key output_url_of_yojson "ApplicationIntegrationURL")
-           _list path);
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      web_ac_l =
-        (option_of_yojson (value_for_key web_ac_l_of_yojson "WebACL") _list
-           path)
-    } in
-  _res
+  ({
+     application_integration_ur_l =
+       (option_of_yojson
+          (value_for_key output_url_of_yojson "ApplicationIntegrationURL")
+          _list path);
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     web_ac_l =
+       (option_of_yojson (value_for_key web_ac_l_of_yojson "WebACL") _list
+          path)
+   } : get_web_acl_response)
 let get_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_web_acl_request =
-    {
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : get_web_acl_request)
 let get_web_acl_for_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_web_acl_for_resource_response =
-    {
-      web_ac_l =
-        (option_of_yojson (value_for_key web_ac_l_of_yojson "WebACL") _list
-           path)
-    } in
-  _res
+  ({
+     web_ac_l =
+       (option_of_yojson (value_for_key web_ac_l_of_yojson "WebACL") _list
+          path)
+   } : get_web_acl_for_resource_response)
 let get_web_acl_for_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_web_acl_for_resource_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : get_web_acl_for_resource_request)
 let get_sampled_requests_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_sampled_requests_response =
-    {
-      time_window =
-        (option_of_yojson (value_for_key time_window_of_yojson "TimeWindow")
-           _list path);
-      population_size =
-        (option_of_yojson
-           (value_for_key population_size_of_yojson "PopulationSize") _list
-           path);
-      sampled_requests =
-        (option_of_yojson
-           (value_for_key sampled_http_requests_of_yojson "SampledRequests")
-           _list path)
-    } in
-  _res
+  ({
+     time_window =
+       (option_of_yojson (value_for_key time_window_of_yojson "TimeWindow")
+          _list path);
+     population_size =
+       (option_of_yojson
+          (value_for_key population_size_of_yojson "PopulationSize") _list
+          path);
+     sampled_requests =
+       (option_of_yojson
+          (value_for_key sampled_http_requests_of_yojson "SampledRequests")
+          _list path)
+   } : get_sampled_requests_response)
 let get_sampled_requests_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_sampled_requests_request =
-    {
-      max_items =
-        (value_for_key list_max_items_of_yojson "MaxItems" _list path);
-      time_window =
-        (value_for_key time_window_of_yojson "TimeWindow" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      rule_metric_name =
-        (value_for_key metric_name_of_yojson "RuleMetricName" _list path);
-      web_acl_arn =
-        (value_for_key resource_arn_of_yojson "WebAclArn" _list path)
-    } in
-  _res
+  ({
+     max_items =
+       (value_for_key list_max_items_of_yojson "MaxItems" _list path);
+     time_window =
+       (value_for_key time_window_of_yojson "TimeWindow" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     rule_metric_name =
+       (value_for_key metric_name_of_yojson "RuleMetricName" _list path);
+     web_acl_arn =
+       (value_for_key resource_arn_of_yojson "WebAclArn" _list path)
+   } : get_sampled_requests_request)
 let get_rule_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_rule_group_response =
-    {
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      rule_group =
-        (option_of_yojson (value_for_key rule_group_of_yojson "RuleGroup")
-           _list path)
-    } in
-  _res
+  ({
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     rule_group =
+       (option_of_yojson (value_for_key rule_group_of_yojson "RuleGroup")
+          _list path)
+   } : get_rule_group_response)
 let get_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_rule_group_request =
-    {
-      ar_n =
-        (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
-           path);
-      id =
-        (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
-      scope =
-        (option_of_yojson (value_for_key scope_of_yojson "Scope") _list path);
-      name =
-        (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
-           path)
-    } in
-  _res
+  ({
+     ar_n =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ARN") _list
+          path);
+     id =
+       (option_of_yojson (value_for_key entity_id_of_yojson "Id") _list path);
+     scope =
+       (option_of_yojson (value_for_key scope_of_yojson "Scope") _list path);
+     name =
+       (option_of_yojson (value_for_key entity_name_of_yojson "Name") _list
+          path)
+   } : get_rule_group_request)
 let get_regex_pattern_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_regex_pattern_set_response =
-    {
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      regex_pattern_set =
-        (option_of_yojson
-           (value_for_key regex_pattern_set_of_yojson "RegexPatternSet")
-           _list path)
-    } in
-  _res
+  ({
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     regex_pattern_set =
+       (option_of_yojson
+          (value_for_key regex_pattern_set_of_yojson "RegexPatternSet") _list
+          path)
+   } : get_regex_pattern_set_response)
 let get_regex_pattern_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_regex_pattern_set_request =
-    {
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : get_regex_pattern_set_request)
 let get_rate_based_statement_managed_keys_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_rate_based_statement_managed_keys_response =
-    {
-      managed_keys_ip_v6 =
-        (option_of_yojson
-           (value_for_key rate_based_statement_managed_keys_ip_set_of_yojson
-              "ManagedKeysIPV6") _list path);
-      managed_keys_ip_v4 =
-        (option_of_yojson
-           (value_for_key rate_based_statement_managed_keys_ip_set_of_yojson
-              "ManagedKeysIPV4") _list path)
-    } in
-  _res
+  ({
+     managed_keys_ip_v6 =
+       (option_of_yojson
+          (value_for_key rate_based_statement_managed_keys_ip_set_of_yojson
+             "ManagedKeysIPV6") _list path);
+     managed_keys_ip_v4 =
+       (option_of_yojson
+          (value_for_key rate_based_statement_managed_keys_ip_set_of_yojson
+             "ManagedKeysIPV4") _list path)
+   } : get_rate_based_statement_managed_keys_response)
 let get_rate_based_statement_managed_keys_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_rate_based_statement_managed_keys_request =
-    {
-      rule_name = (value_for_key entity_name_of_yojson "RuleName" _list path);
-      rule_group_rule_name =
-        (option_of_yojson
-           (value_for_key entity_name_of_yojson "RuleGroupRuleName") _list
-           path);
-      web_acl_id = (value_for_key entity_id_of_yojson "WebACLId" _list path);
-      web_acl_name =
-        (value_for_key entity_name_of_yojson "WebACLName" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     rule_name = (value_for_key entity_name_of_yojson "RuleName" _list path);
+     rule_group_rule_name =
+       (option_of_yojson
+          (value_for_key entity_name_of_yojson "RuleGroupRuleName") _list
+          path);
+     web_acl_id = (value_for_key entity_id_of_yojson "WebACLId" _list path);
+     web_acl_name =
+       (value_for_key entity_name_of_yojson "WebACLName" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : get_rate_based_statement_managed_keys_request)
 let get_permission_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_permission_policy_response =
-    {
-      policy =
-        (option_of_yojson (value_for_key policy_string_of_yojson "Policy")
-           _list path)
-    } in
-  _res
+  ({
+     policy =
+       (option_of_yojson (value_for_key policy_string_of_yojson "Policy")
+          _list path)
+   } : get_permission_policy_response)
 let get_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_permission_policy_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : get_permission_policy_request)
 let get_mobile_sdk_release_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_mobile_sdk_release_response =
-    {
-      mobile_sdk_release =
-        (option_of_yojson
-           (value_for_key mobile_sdk_release_of_yojson "MobileSdkRelease")
-           _list path)
-    } in
-  _res
+  ({
+     mobile_sdk_release =
+       (option_of_yojson
+          (value_for_key mobile_sdk_release_of_yojson "MobileSdkRelease")
+          _list path)
+   } : get_mobile_sdk_release_response)
 let get_mobile_sdk_release_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_mobile_sdk_release_request =
-    {
-      release_version =
-        (value_for_key version_key_string_of_yojson "ReleaseVersion" _list
-           path);
-      platform = (value_for_key platform_of_yojson "Platform" _list path)
-    } in
-  _res
+  ({
+     release_version =
+       (value_for_key version_key_string_of_yojson "ReleaseVersion" _list
+          path);
+     platform = (value_for_key platform_of_yojson "Platform" _list path)
+   } : get_mobile_sdk_release_request)
 let get_managed_rule_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_managed_rule_set_response =
-    {
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      managed_rule_set =
-        (option_of_yojson
-           (value_for_key managed_rule_set_of_yojson "ManagedRuleSet") _list
-           path)
-    } in
-  _res
+  ({
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     managed_rule_set =
+       (option_of_yojson
+          (value_for_key managed_rule_set_of_yojson "ManagedRuleSet") _list
+          path)
+   } : get_managed_rule_set_response)
 let get_managed_rule_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_managed_rule_set_request =
-    {
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : get_managed_rule_set_request)
 let get_logging_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_logging_configuration_response =
-    {
-      logging_configuration =
-        (option_of_yojson
-           (value_for_key logging_configuration_of_yojson
-              "LoggingConfiguration") _list path)
-    } in
-  _res
+  ({
+     logging_configuration =
+       (option_of_yojson
+          (value_for_key logging_configuration_of_yojson
+             "LoggingConfiguration") _list path)
+   } : get_logging_configuration_response)
 let get_logging_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_logging_configuration_request =
-    {
-      log_scope =
-        (option_of_yojson (value_for_key log_scope_of_yojson "LogScope")
-           _list path);
-      log_type =
-        (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
-           path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     log_scope =
+       (option_of_yojson (value_for_key log_scope_of_yojson "LogScope") _list
+          path);
+     log_type =
+       (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
+          path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : get_logging_configuration_request)
 let get_ip_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_ip_set_response =
-    {
-      lock_token =
-        (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
-           _list path);
-      ip_set =
-        (option_of_yojson (value_for_key ip_set_of_yojson "IPSet") _list path)
-    } in
-  _res
+  ({
+     lock_token =
+       (option_of_yojson (value_for_key lock_token_of_yojson "LockToken")
+          _list path);
+     ip_set =
+       (option_of_yojson (value_for_key ip_set_of_yojson "IPSet") _list path)
+   } : get_ip_set_response)
 let get_ip_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_ip_set_request =
-    {
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : get_ip_set_request)
 let get_decrypted_api_key_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_decrypted_api_key_response =
-    {
-      creation_timestamp =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "CreationTimestamp") _list
-           path);
-      token_domains =
-        (option_of_yojson
-           (value_for_key token_domains_of_yojson "TokenDomains") _list path)
-    } in
-  _res
+  ({
+     creation_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson "CreationTimestamp") _list path);
+     token_domains =
+       (option_of_yojson
+          (value_for_key token_domains_of_yojson "TokenDomains") _list path)
+   } : get_decrypted_api_key_response)
 let get_decrypted_api_key_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_decrypted_api_key_request =
-    {
-      api_key = (value_for_key api_key_of_yojson "APIKey" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     api_key = (value_for_key api_key_of_yojson "APIKey" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : get_decrypted_api_key_request)
 let download_url_of_yojson = string_of_yojson
 let generate_mobile_sdk_release_url_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : generate_mobile_sdk_release_url_response =
-    {
-      url =
-        (option_of_yojson (value_for_key download_url_of_yojson "Url") _list
-           path)
-    } in
-  _res
+  ({
+     url =
+       (option_of_yojson (value_for_key download_url_of_yojson "Url") _list
+          path)
+   } : generate_mobile_sdk_release_url_response)
 let generate_mobile_sdk_release_url_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : generate_mobile_sdk_release_url_request =
-    {
-      release_version =
-        (value_for_key version_key_string_of_yojson "ReleaseVersion" _list
-           path);
-      platform = (value_for_key platform_of_yojson "Platform" _list path)
-    } in
-  _res
+  ({
+     release_version =
+       (value_for_key version_key_string_of_yojson "ReleaseVersion" _list
+          path);
+     platform = (value_for_key platform_of_yojson "Platform" _list path)
+   } : generate_mobile_sdk_release_url_request)
 let disassociate_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : disassociate_web_acl_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : disassociate_web_acl_request)
 let describe_managed_rule_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_managed_rule_group_response =
-    {
-      consumed_labels =
-        (option_of_yojson
-           (value_for_key label_summaries_of_yojson "ConsumedLabels") _list
-           path);
-      available_labels =
-        (option_of_yojson
-           (value_for_key label_summaries_of_yojson "AvailableLabels") _list
-           path);
-      label_namespace =
-        (option_of_yojson
-           (value_for_key label_name_of_yojson "LabelNamespace") _list path);
-      rules =
-        (option_of_yojson (value_for_key rule_summaries_of_yojson "Rules")
-           _list path);
-      capacity =
-        (option_of_yojson (value_for_key capacity_unit_of_yojson "Capacity")
-           _list path);
-      sns_topic_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "SnsTopicArn") _list path);
-      version_name =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "VersionName") _list
-           path)
-    } in
-  _res
+  ({
+     consumed_labels =
+       (option_of_yojson
+          (value_for_key label_summaries_of_yojson "ConsumedLabels") _list
+          path);
+     available_labels =
+       (option_of_yojson
+          (value_for_key label_summaries_of_yojson "AvailableLabels") _list
+          path);
+     label_namespace =
+       (option_of_yojson
+          (value_for_key label_name_of_yojson "LabelNamespace") _list path);
+     rules =
+       (option_of_yojson (value_for_key rule_summaries_of_yojson "Rules")
+          _list path);
+     capacity =
+       (option_of_yojson (value_for_key capacity_unit_of_yojson "Capacity")
+          _list path);
+     sns_topic_arn =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "SnsTopicArn")
+          _list path);
+     version_name =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "VersionName") _list
+          path)
+   } : describe_managed_rule_group_response)
 let describe_managed_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_managed_rule_group_request =
-    {
-      version_name =
-        (option_of_yojson
-           (value_for_key version_key_string_of_yojson "VersionName") _list
-           path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path);
-      vendor_name =
-        (value_for_key vendor_name_of_yojson "VendorName" _list path)
-    } in
-  _res
+  ({
+     version_name =
+       (option_of_yojson
+          (value_for_key version_key_string_of_yojson "VersionName") _list
+          path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path);
+     vendor_name =
+       (value_for_key vendor_name_of_yojson "VendorName" _list path)
+   } : describe_managed_rule_group_request)
 let describe_managed_products_by_vendor_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_managed_products_by_vendor_response =
-    {
-      managed_products =
-        (option_of_yojson
-           (value_for_key managed_product_descriptors_of_yojson
-              "ManagedProducts") _list path)
-    } in
-  _res
+  ({
+     managed_products =
+       (option_of_yojson
+          (value_for_key managed_product_descriptors_of_yojson
+             "ManagedProducts") _list path)
+   } : describe_managed_products_by_vendor_response)
 let describe_managed_products_by_vendor_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_managed_products_by_vendor_request =
-    {
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      vendor_name =
-        (value_for_key vendor_name_of_yojson "VendorName" _list path)
-    } in
-  _res
+  ({
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     vendor_name =
+       (value_for_key vendor_name_of_yojson "VendorName" _list path)
+   } : describe_managed_products_by_vendor_request)
 let describe_all_managed_products_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_all_managed_products_response =
-    {
-      managed_products =
-        (option_of_yojson
-           (value_for_key managed_product_descriptors_of_yojson
-              "ManagedProducts") _list path)
-    } in
-  _res
+  ({
+     managed_products =
+       (option_of_yojson
+          (value_for_key managed_product_descriptors_of_yojson
+             "ManagedProducts") _list path)
+   } : describe_all_managed_products_response)
 let describe_all_managed_products_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_all_managed_products_request =
-    { scope = (value_for_key scope_of_yojson "Scope" _list path) } in
-  _res
+  ({ scope = (value_for_key scope_of_yojson "Scope" _list path) } : describe_all_managed_products_request)
 let delete_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_web_acl_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : delete_web_acl_request)
 let delete_rule_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_rule_group_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : delete_rule_group_request)
 let delete_regex_pattern_set_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_regex_pattern_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_regex_pattern_set_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : delete_regex_pattern_set_request)
 let delete_permission_policy_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_permission_policy_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_permission_policy_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : delete_permission_policy_request)
 let delete_logging_configuration_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_logging_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_logging_configuration_request =
-    {
-      log_scope =
-        (option_of_yojson (value_for_key log_scope_of_yojson "LogScope")
-           _list path);
-      log_type =
-        (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
-           path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     log_scope =
+       (option_of_yojson (value_for_key log_scope_of_yojson "LogScope") _list
+          path);
+     log_type =
+       (option_of_yojson (value_for_key log_type_of_yojson "LogType") _list
+          path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : delete_logging_configuration_request)
 let delete_ip_set_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_ip_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_ip_set_request =
-    {
-      lock_token =
-        (value_for_key lock_token_of_yojson "LockToken" _list path);
-      id = (value_for_key entity_id_of_yojson "Id" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     lock_token = (value_for_key lock_token_of_yojson "LockToken" _list path);
+     id = (value_for_key entity_id_of_yojson "Id" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : delete_ip_set_request)
 let delete_firewall_manager_rule_groups_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_firewall_manager_rule_groups_response =
-    {
-      next_web_acl_lock_token =
-        (option_of_yojson
-           (value_for_key lock_token_of_yojson "NextWebACLLockToken") _list
-           path)
-    } in
-  _res
+  ({
+     next_web_acl_lock_token =
+       (option_of_yojson
+          (value_for_key lock_token_of_yojson "NextWebACLLockToken") _list
+          path)
+   } : delete_firewall_manager_rule_groups_response)
 let delete_firewall_manager_rule_groups_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_firewall_manager_rule_groups_request =
-    {
-      web_acl_lock_token =
-        (value_for_key lock_token_of_yojson "WebACLLockToken" _list path);
-      web_acl_arn =
-        (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
-    } in
-  _res
+  ({
+     web_acl_lock_token =
+       (value_for_key lock_token_of_yojson "WebACLLockToken" _list path);
+     web_acl_arn =
+       (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
+   } : delete_firewall_manager_rule_groups_request)
 let delete_api_key_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_api_key_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_api_key_request =
-    {
-      api_key = (value_for_key api_key_of_yojson "APIKey" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     api_key = (value_for_key api_key_of_yojson "APIKey" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : delete_api_key_request)
 let create_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_web_acl_response =
-    {
-      summary =
-        (option_of_yojson (value_for_key web_acl_summary_of_yojson "Summary")
-           _list path)
-    } in
-  _res
+  ({
+     summary =
+       (option_of_yojson (value_for_key web_acl_summary_of_yojson "Summary")
+          _list path)
+   } : create_web_acl_response)
 let create_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_web_acl_request =
-    {
-      association_config =
-        (option_of_yojson
-           (value_for_key association_config_of_yojson "AssociationConfig")
-           _list path);
-      token_domains =
-        (option_of_yojson
-           (value_for_key token_domains_of_yojson "TokenDomains") _list path);
-      challenge_config =
-        (option_of_yojson
-           (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
-           path);
-      captcha_config =
-        (option_of_yojson
-           (value_for_key captcha_config_of_yojson "CaptchaConfig") _list
-           path);
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      default_action =
-        (value_for_key default_action_of_yojson "DefaultAction" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     association_config =
+       (option_of_yojson
+          (value_for_key association_config_of_yojson "AssociationConfig")
+          _list path);
+     token_domains =
+       (option_of_yojson
+          (value_for_key token_domains_of_yojson "TokenDomains") _list path);
+     challenge_config =
+       (option_of_yojson
+          (value_for_key challenge_config_of_yojson "ChallengeConfig") _list
+          path);
+     captcha_config =
+       (option_of_yojson
+          (value_for_key captcha_config_of_yojson "CaptchaConfig") _list path);
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     default_action =
+       (value_for_key default_action_of_yojson "DefaultAction" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : create_web_acl_request)
 let create_rule_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_rule_group_response =
-    {
-      summary =
-        (option_of_yojson
-           (value_for_key rule_group_summary_of_yojson "Summary") _list path)
-    } in
-  _res
+  ({
+     summary =
+       (option_of_yojson
+          (value_for_key rule_group_summary_of_yojson "Summary") _list path)
+   } : create_rule_group_response)
 let create_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_rule_group_request =
-    {
-      custom_response_bodies =
-        (option_of_yojson
-           (value_for_key custom_response_bodies_of_yojson
-              "CustomResponseBodies") _list path);
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      visibility_config =
-        (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
-           path);
-      rules =
-        (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      capacity =
-        (value_for_key capacity_unit_of_yojson "Capacity" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     custom_response_bodies =
+       (option_of_yojson
+          (value_for_key custom_response_bodies_of_yojson
+             "CustomResponseBodies") _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     visibility_config =
+       (value_for_key visibility_config_of_yojson "VisibilityConfig" _list
+          path);
+     rules =
+       (option_of_yojson (value_for_key rules_of_yojson "Rules") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     capacity = (value_for_key capacity_unit_of_yojson "Capacity" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : create_rule_group_request)
 let create_regex_pattern_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_regex_pattern_set_response =
-    {
-      summary =
-        (option_of_yojson
-           (value_for_key regex_pattern_set_summary_of_yojson "Summary")
-           _list path)
-    } in
-  _res
+  ({
+     summary =
+       (option_of_yojson
+          (value_for_key regex_pattern_set_summary_of_yojson "Summary") _list
+          path)
+   } : create_regex_pattern_set_response)
 let create_regex_pattern_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_regex_pattern_set_request =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      regular_expression_list =
-        (value_for_key regular_expression_list_of_yojson
-           "RegularExpressionList" _list path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     regular_expression_list =
+       (value_for_key regular_expression_list_of_yojson
+          "RegularExpressionList" _list path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : create_regex_pattern_set_request)
 let create_ip_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_ip_set_response =
-    {
-      summary =
-        (option_of_yojson (value_for_key ip_set_summary_of_yojson "Summary")
-           _list path)
-    } in
-  _res
+  ({
+     summary =
+       (option_of_yojson (value_for_key ip_set_summary_of_yojson "Summary")
+          _list path)
+   } : create_ip_set_response)
 let create_ip_set_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_ip_set_request =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      addresses =
-        (value_for_key ip_addresses_of_yojson "Addresses" _list path);
-      ip_address_version =
-        (value_for_key ip_address_version_of_yojson "IPAddressVersion" _list
-           path);
-      description =
-        (option_of_yojson
-           (value_for_key entity_description_of_yojson "Description") _list
-           path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path);
-      name = (value_for_key entity_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     addresses =
+       (value_for_key ip_addresses_of_yojson "Addresses" _list path);
+     ip_address_version =
+       (value_for_key ip_address_version_of_yojson "IPAddressVersion" _list
+          path);
+     description =
+       (option_of_yojson
+          (value_for_key entity_description_of_yojson "Description") _list
+          path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path);
+     name = (value_for_key entity_name_of_yojson "Name" _list path)
+   } : create_ip_set_request)
 let create_api_key_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_api_key_response =
-    {
-      api_key =
-        (option_of_yojson (value_for_key api_key_of_yojson "APIKey") _list
-           path)
-    } in
-  _res
+  ({
+     api_key =
+       (option_of_yojson (value_for_key api_key_of_yojson "APIKey") _list
+          path)
+   } : create_api_key_response)
 let api_key_token_domains_of_yojson tree path =
   list_of_yojson token_domain_of_yojson tree path
 let create_api_key_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_api_key_request =
-    {
-      token_domains =
-        (value_for_key api_key_token_domains_of_yojson "TokenDomains" _list
-           path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     token_domains =
+       (value_for_key api_key_token_domains_of_yojson "TokenDomains" _list
+          path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : create_api_key_request)
 let check_capacity_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : check_capacity_response =
-    {
-      capacity =
-        (option_of_yojson
-           (value_for_key consumed_capacity_of_yojson "Capacity") _list path)
-    } in
-  _res
+  ({
+     capacity =
+       (option_of_yojson
+          (value_for_key consumed_capacity_of_yojson "Capacity") _list path)
+   } : check_capacity_response)
 let check_capacity_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : check_capacity_request =
-    {
-      rules = (value_for_key rules_of_yojson "Rules" _list path);
-      scope = (value_for_key scope_of_yojson "Scope" _list path)
-    } in
-  _res
+  ({
+     rules = (value_for_key rules_of_yojson "Rules" _list path);
+     scope = (value_for_key scope_of_yojson "Scope" _list path)
+   } : check_capacity_request)
 let associate_web_acl_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let associate_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : associate_web_acl_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path);
-      web_acl_arn =
-        (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path);
+     web_acl_arn =
+       (value_for_key resource_arn_of_yojson "WebACLArn" _list path)
+   } : associate_web_acl_request)
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson

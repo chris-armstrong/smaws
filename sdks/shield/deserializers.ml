@@ -16,16 +16,14 @@ let validation_exception_reason_of_yojson (tree : t) path =
 let string__of_yojson = string_of_yojson
 let validation_exception_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : validation_exception_field =
-    {
-      message = (value_for_key string__of_yojson "message" _list path);
-      name = (value_for_key string__of_yojson "name" _list path)
-    } in
-  _res
+  ({
+     message = (value_for_key string__of_yojson "message" _list path);
+     name = (value_for_key string__of_yojson "name" _list path)
+   } : validation_exception_field)
 let validation_exception_field_list_of_yojson tree path =
   list_of_yojson validation_exception_field_of_yojson tree path
 let update_subscription_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let auto_renew_of_yojson (tree : t) path =
   (match tree with
    | `String "DISABLED" -> DISABLED
@@ -35,71 +33,59 @@ let auto_renew_of_yojson (tree : t) path =
    | _ -> raise (deserialize_wrong_type_error path "AutoRenew") : auto_renew)
 let update_subscription_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_subscription_request =
-    {
-      auto_renew =
-        (option_of_yojson (value_for_key auto_renew_of_yojson "AutoRenew")
-           _list path)
-    } in
-  _res
+  ({
+     auto_renew =
+       (option_of_yojson (value_for_key auto_renew_of_yojson "AutoRenew")
+          _list path)
+   } : update_subscription_request)
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_not_found_exception =
-    {
-      resource_type =
-        (option_of_yojson (value_for_key string__of_yojson "resourceType")
-           _list path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     resource_type =
+       (option_of_yojson (value_for_key string__of_yojson "resourceType")
+          _list path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : resource_not_found_exception)
 let optimistic_lock_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : optimistic_lock_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : optimistic_lock_exception)
 let locked_subscription_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : locked_subscription_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : locked_subscription_exception)
 let invalid_parameter_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_parameter_exception =
-    {
-      fields =
-        (option_of_yojson
-           (value_for_key validation_exception_field_list_of_yojson "fields")
-           _list path);
-      reason =
-        (option_of_yojson
-           (value_for_key validation_exception_reason_of_yojson "reason")
-           _list path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     fields =
+       (option_of_yojson
+          (value_for_key validation_exception_field_list_of_yojson "fields")
+          _list path);
+     reason =
+       (option_of_yojson
+          (value_for_key validation_exception_reason_of_yojson "reason")
+          _list path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : invalid_parameter_exception)
 let internal_error_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : internal_error_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : internal_error_exception)
 let update_protection_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let protection_group_id_of_yojson = string_of_yojson
 let protection_group_aggregation_of_yojson (tree : t) path =
   (match tree with
@@ -143,117 +129,100 @@ let protection_group_members_of_yojson tree path =
   list_of_yojson resource_arn_of_yojson tree path
 let update_protection_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_protection_group_request =
-    {
-      members =
-        (option_of_yojson
-           (value_for_key protection_group_members_of_yojson "Members") _list
-           path);
-      resource_type =
-        (option_of_yojson
-           (value_for_key protected_resource_type_of_yojson "ResourceType")
-           _list path);
-      pattern =
-        (value_for_key protection_group_pattern_of_yojson "Pattern" _list
-           path);
-      aggregation =
-        (value_for_key protection_group_aggregation_of_yojson "Aggregation"
-           _list path);
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     members =
+       (option_of_yojson
+          (value_for_key protection_group_members_of_yojson "Members") _list
+          path);
+     resource_type =
+       (option_of_yojson
+          (value_for_key protected_resource_type_of_yojson "ResourceType")
+          _list path);
+     pattern =
+       (value_for_key protection_group_pattern_of_yojson "Pattern" _list path);
+     aggregation =
+       (value_for_key protection_group_aggregation_of_yojson "Aggregation"
+          _list path);
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : update_protection_group_request)
 let update_emergency_contact_settings_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let email_address_of_yojson = string_of_yojson
 let phone_number_of_yojson = string_of_yojson
 let contact_notes_of_yojson = string_of_yojson
 let emergency_contact_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : emergency_contact =
-    {
-      contact_notes =
-        (option_of_yojson
-           (value_for_key contact_notes_of_yojson "ContactNotes") _list path);
-      phone_number =
-        (option_of_yojson
-           (value_for_key phone_number_of_yojson "PhoneNumber") _list path);
-      email_address =
-        (value_for_key email_address_of_yojson "EmailAddress" _list path)
-    } in
-  _res
+  ({
+     contact_notes =
+       (option_of_yojson
+          (value_for_key contact_notes_of_yojson "ContactNotes") _list path);
+     phone_number =
+       (option_of_yojson (value_for_key phone_number_of_yojson "PhoneNumber")
+          _list path);
+     email_address =
+       (value_for_key email_address_of_yojson "EmailAddress" _list path)
+   } : emergency_contact)
 let emergency_contact_list_of_yojson tree path =
   list_of_yojson emergency_contact_of_yojson tree path
 let update_emergency_contact_settings_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_emergency_contact_settings_request =
-    {
-      emergency_contact_list =
-        (option_of_yojson
-           (value_for_key emergency_contact_list_of_yojson
-              "EmergencyContactList") _list path)
-    } in
-  _res
+  ({
+     emergency_contact_list =
+       (option_of_yojson
+          (value_for_key emergency_contact_list_of_yojson
+             "EmergencyContactList") _list path)
+   } : update_emergency_contact_settings_request)
 let update_application_layer_automatic_response_response_of_yojson tree path
-  = let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  = let _list = assoc_of_yojson tree path in (() : unit)
 let block_action_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let count_action_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let response_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : response_action =
-    {
-      count =
-        (option_of_yojson (value_for_key count_action_of_yojson "Count")
-           _list path);
-      block =
-        (option_of_yojson (value_for_key block_action_of_yojson "Block")
-           _list path)
-    } in
-  _res
+  ({
+     count =
+       (option_of_yojson (value_for_key count_action_of_yojson "Count") _list
+          path);
+     block =
+       (option_of_yojson (value_for_key block_action_of_yojson "Block") _list
+          path)
+   } : response_action)
 let update_application_layer_automatic_response_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : update_application_layer_automatic_response_request =
-    {
-      action = (value_for_key response_action_of_yojson "Action" _list path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     action = (value_for_key response_action_of_yojson "Action" _list path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : update_application_layer_automatic_response_request)
 let invalid_operation_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_operation_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : invalid_operation_exception)
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
 let untag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : untag_resource_request =
-    {
-      tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path);
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
-    } in
-  _res
+  ({
+     tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path);
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
+   } : untag_resource_request)
 let invalid_resource_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_resource_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : invalid_resource_exception)
 let unit__of_yojson (tree : t) path =
   (match tree with
    | `String "REQUESTS" -> REQUESTS
@@ -266,88 +235,75 @@ let unit__of_yojson (tree : t) path =
 let long_of_yojson = long_of_yojson
 let contributor_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : contributor =
-    {
-      value =
-        (option_of_yojson (value_for_key long_of_yojson "Value") _list path);
-      name =
-        (option_of_yojson (value_for_key string__of_yojson "Name") _list path)
-    } in
-  _res
+  ({
+     value =
+       (option_of_yojson (value_for_key long_of_yojson "Value") _list path);
+     name =
+       (option_of_yojson (value_for_key string__of_yojson "Name") _list path)
+   } : contributor)
 let top_contributors_of_yojson tree path =
   list_of_yojson contributor_of_yojson tree path
 let token_of_yojson = string_of_yojson
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let time_range_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : time_range =
-    {
-      to_exclusive =
-        (option_of_yojson (value_for_key timestamp__of_yojson "ToExclusive")
-           _list path);
-      from_inclusive =
-        (option_of_yojson
-           (value_for_key timestamp__of_yojson "FromInclusive") _list path)
-    } in
-  _res
+  ({
+     to_exclusive =
+       (option_of_yojson (value_for_key timestamp__of_yojson "ToExclusive")
+          _list path);
+     from_inclusive =
+       (option_of_yojson (value_for_key timestamp__of_yojson "FromInclusive")
+          _list path)
+   } : time_range)
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag =
-    {
-      value =
-        (option_of_yojson (value_for_key tag_value_of_yojson "Value") _list
-           path);
-      key =
-        (option_of_yojson (value_for_key tag_key_of_yojson "Key") _list path)
-    } in
-  _res
+  ({
+     value =
+       (option_of_yojson (value_for_key tag_value_of_yojson "Value") _list
+          path);
+     key =
+       (option_of_yojson (value_for_key tag_key_of_yojson "Key") _list path)
+   } : tag)
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : tag_resource_request =
-    {
-      tags = (value_for_key tag_list_of_yojson "Tags" _list path);
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
-    } in
-  _res
+  ({
+     tags = (value_for_key tag_list_of_yojson "Tags" _list path);
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
+   } : tag_resource_request)
 let double_of_yojson = double_of_yojson
 let integer__of_yojson = int_of_yojson
 let summarized_counter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : summarized_counter =
-    {
-      unit_ =
-        (option_of_yojson (value_for_key string__of_yojson "Unit") _list path);
-      n =
-        (option_of_yojson (value_for_key integer__of_yojson "N") _list path);
-      sum =
-        (option_of_yojson (value_for_key double_of_yojson "Sum") _list path);
-      average =
-        (option_of_yojson (value_for_key double_of_yojson "Average") _list
-           path);
-      max =
-        (option_of_yojson (value_for_key double_of_yojson "Max") _list path);
-      name =
-        (option_of_yojson (value_for_key string__of_yojson "Name") _list path)
-    } in
-  _res
+  ({
+     unit_ =
+       (option_of_yojson (value_for_key string__of_yojson "Unit") _list path);
+     n = (option_of_yojson (value_for_key integer__of_yojson "N") _list path);
+     sum =
+       (option_of_yojson (value_for_key double_of_yojson "Sum") _list path);
+     average =
+       (option_of_yojson (value_for_key double_of_yojson "Average") _list
+          path);
+     max =
+       (option_of_yojson (value_for_key double_of_yojson "Max") _list path);
+     name =
+       (option_of_yojson (value_for_key string__of_yojson "Name") _list path)
+   } : summarized_counter)
 let summarized_counter_list_of_yojson tree path =
   list_of_yojson summarized_counter_of_yojson tree path
 let summarized_attack_vector_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : summarized_attack_vector =
-    {
-      vector_counters =
-        (option_of_yojson
-           (value_for_key summarized_counter_list_of_yojson "VectorCounters")
-           _list path);
-      vector_type = (value_for_key string__of_yojson "VectorType" _list path)
-    } in
-  _res
+  ({
+     vector_counters =
+       (option_of_yojson
+          (value_for_key summarized_counter_list_of_yojson "VectorCounters")
+          _list path);
+     vector_type = (value_for_key string__of_yojson "VectorType" _list path)
+   } : summarized_attack_vector)
 let summarized_attack_vector_list_of_yojson tree path =
   list_of_yojson summarized_attack_vector_of_yojson tree path
 let subscription_state_of_yojson (tree : t) path =
@@ -361,61 +317,49 @@ let subscription_state_of_yojson (tree : t) path =
   subscription_state)
 let limit_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : limit =
-    {
-      max =
-        (option_of_yojson (value_for_key long_of_yojson "Max") _list path);
-      type_ =
-        (option_of_yojson (value_for_key string__of_yojson "Type") _list path)
-    } in
-  _res
+  ({
+     max = (option_of_yojson (value_for_key long_of_yojson "Max") _list path);
+     type_ =
+       (option_of_yojson (value_for_key string__of_yojson "Type") _list path)
+   } : limit)
 let limits_of_yojson tree path = list_of_yojson limit_of_yojson tree path
 let protection_limits_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection_limits =
-    {
-      protected_resource_type_limits =
-        (value_for_key limits_of_yojson "ProtectedResourceTypeLimits" _list
-           path)
-    } in
-  _res
+  ({
+     protected_resource_type_limits =
+       (value_for_key limits_of_yojson "ProtectedResourceTypeLimits" _list
+          path)
+   } : protection_limits)
 let protection_group_arbitrary_pattern_limits_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection_group_arbitrary_pattern_limits =
-    { max_members = (value_for_key long_of_yojson "MaxMembers" _list path) } in
-  _res
+  ({ max_members = (value_for_key long_of_yojson "MaxMembers" _list path) } : 
+    protection_group_arbitrary_pattern_limits)
 let protection_group_pattern_type_limits_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection_group_pattern_type_limits =
-    {
-      arbitrary_pattern_limits =
-        (value_for_key protection_group_arbitrary_pattern_limits_of_yojson
-           "ArbitraryPatternLimits" _list path)
-    } in
-  _res
+  ({
+     arbitrary_pattern_limits =
+       (value_for_key protection_group_arbitrary_pattern_limits_of_yojson
+          "ArbitraryPatternLimits" _list path)
+   } : protection_group_pattern_type_limits)
 let protection_group_limits_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection_group_limits =
-    {
-      pattern_type_limits =
-        (value_for_key protection_group_pattern_type_limits_of_yojson
-           "PatternTypeLimits" _list path);
-      max_protection_groups =
-        (value_for_key long_of_yojson "MaxProtectionGroups" _list path)
-    } in
-  _res
+  ({
+     pattern_type_limits =
+       (value_for_key protection_group_pattern_type_limits_of_yojson
+          "PatternTypeLimits" _list path);
+     max_protection_groups =
+       (value_for_key long_of_yojson "MaxProtectionGroups" _list path)
+   } : protection_group_limits)
 let subscription_limits_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : subscription_limits =
-    {
-      protection_group_limits =
-        (value_for_key protection_group_limits_of_yojson
-           "ProtectionGroupLimits" _list path);
-      protection_limits =
-        (value_for_key protection_limits_of_yojson "ProtectionLimits" _list
-           path)
-    } in
-  _res
+  ({
+     protection_group_limits =
+       (value_for_key protection_group_limits_of_yojson
+          "ProtectionGroupLimits" _list path);
+     protection_limits =
+       (value_for_key protection_limits_of_yojson "ProtectionLimits" _list
+          path)
+   } : subscription_limits)
 let duration_in_seconds_of_yojson = long_of_yojson
 let proactive_engagement_status_of_yojson (tree : t) path =
   (match tree with
@@ -431,37 +375,33 @@ let proactive_engagement_status_of_yojson (tree : t) path =
   proactive_engagement_status)
 let subscription_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : subscription =
-    {
-      subscription_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "SubscriptionArn") _list
-           path);
-      subscription_limits =
-        (value_for_key subscription_limits_of_yojson "SubscriptionLimits"
-           _list path);
-      proactive_engagement_status =
-        (option_of_yojson
-           (value_for_key proactive_engagement_status_of_yojson
-              "ProactiveEngagementStatus") _list path);
-      limits =
-        (option_of_yojson (value_for_key limits_of_yojson "Limits") _list
-           path);
-      auto_renew =
-        (option_of_yojson (value_for_key auto_renew_of_yojson "AutoRenew")
-           _list path);
-      time_commitment_in_seconds =
-        (option_of_yojson
-           (value_for_key duration_in_seconds_of_yojson
-              "TimeCommitmentInSeconds") _list path);
-      end_time =
-        (option_of_yojson (value_for_key timestamp__of_yojson "EndTime")
-           _list path);
-      start_time =
-        (option_of_yojson (value_for_key timestamp__of_yojson "StartTime")
-           _list path)
-    } in
-  _res
+  ({
+     subscription_arn =
+       (option_of_yojson
+          (value_for_key resource_arn_of_yojson "SubscriptionArn") _list path);
+     subscription_limits =
+       (value_for_key subscription_limits_of_yojson "SubscriptionLimits"
+          _list path);
+     proactive_engagement_status =
+       (option_of_yojson
+          (value_for_key proactive_engagement_status_of_yojson
+             "ProactiveEngagementStatus") _list path);
+     limits =
+       (option_of_yojson (value_for_key limits_of_yojson "Limits") _list path);
+     auto_renew =
+       (option_of_yojson (value_for_key auto_renew_of_yojson "AutoRenew")
+          _list path);
+     time_commitment_in_seconds =
+       (option_of_yojson
+          (value_for_key duration_in_seconds_of_yojson
+             "TimeCommitmentInSeconds") _list path);
+     end_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "EndTime") _list
+          path);
+     start_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "StartTime")
+          _list path)
+   } : subscription)
 let sub_resource_type_of_yojson (tree : t) path =
   (match tree with
    | `String "URL" -> URL
@@ -473,23 +413,21 @@ let sub_resource_type_of_yojson (tree : t) path =
   sub_resource_type)
 let sub_resource_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : sub_resource_summary =
-    {
-      counters =
-        (option_of_yojson
-           (value_for_key summarized_counter_list_of_yojson "Counters") _list
-           path);
-      attack_vectors =
-        (option_of_yojson
-           (value_for_key summarized_attack_vector_list_of_yojson
-              "AttackVectors") _list path);
-      id =
-        (option_of_yojson (value_for_key string__of_yojson "Id") _list path);
-      type_ =
-        (option_of_yojson (value_for_key sub_resource_type_of_yojson "Type")
-           _list path)
-    } in
-  _res
+  ({
+     counters =
+       (option_of_yojson
+          (value_for_key summarized_counter_list_of_yojson "Counters") _list
+          path);
+     attack_vectors =
+       (option_of_yojson
+          (value_for_key summarized_attack_vector_list_of_yojson
+             "AttackVectors") _list path);
+     id =
+       (option_of_yojson (value_for_key string__of_yojson "Id") _list path);
+     type_ =
+       (option_of_yojson (value_for_key sub_resource_type_of_yojson "Type")
+          _list path)
+   } : sub_resource_summary)
 let sub_resource_summary_list_of_yojson tree path =
   list_of_yojson sub_resource_summary_of_yojson tree path
 let role_arn_of_yojson = string_of_yojson
@@ -501,16 +439,14 @@ let resource_arn_filter_list_of_yojson tree path =
   list_of_yojson resource_arn_of_yojson tree path
 let resource_already_exists_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : resource_already_exists_exception =
-    {
-      resource_type =
-        (option_of_yojson (value_for_key string__of_yojson "resourceType")
-           _list path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     resource_type =
+       (option_of_yojson (value_for_key string__of_yojson "resourceType")
+          _list path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : resource_already_exists_exception)
 let protection_id_of_yojson = string_of_yojson
 let protection_name_of_yojson = string_of_yojson
 let health_check_id_of_yojson = string_of_yojson
@@ -530,71 +466,63 @@ let application_layer_automatic_response_status_of_yojson (tree : t) path =
             "ApplicationLayerAutomaticResponseStatus") : application_layer_automatic_response_status)
 let application_layer_automatic_response_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : application_layer_automatic_response_configuration =
-    {
-      action = (value_for_key response_action_of_yojson "Action" _list path);
-      status =
-        (value_for_key application_layer_automatic_response_status_of_yojson
-           "Status" _list path)
-    } in
-  _res
+  ({
+     action = (value_for_key response_action_of_yojson "Action" _list path);
+     status =
+       (value_for_key application_layer_automatic_response_status_of_yojson
+          "Status" _list path)
+   } : application_layer_automatic_response_configuration)
 let protection_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection =
-    {
-      application_layer_automatic_response_configuration =
-        (option_of_yojson
-           (value_for_key
-              application_layer_automatic_response_configuration_of_yojson
-              "ApplicationLayerAutomaticResponseConfiguration") _list path);
-      protection_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ProtectionArn") _list path);
-      health_check_ids =
-        (option_of_yojson
-           (value_for_key health_check_ids_of_yojson "HealthCheckIds") _list
-           path);
-      resource_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ResourceArn") _list path);
-      name =
-        (option_of_yojson (value_for_key protection_name_of_yojson "Name")
-           _list path);
-      id =
-        (option_of_yojson (value_for_key protection_id_of_yojson "Id") _list
-           path)
-    } in
-  _res
+  ({
+     application_layer_automatic_response_configuration =
+       (option_of_yojson
+          (value_for_key
+             application_layer_automatic_response_configuration_of_yojson
+             "ApplicationLayerAutomaticResponseConfiguration") _list path);
+     protection_arn =
+       (option_of_yojson
+          (value_for_key resource_arn_of_yojson "ProtectionArn") _list path);
+     health_check_ids =
+       (option_of_yojson
+          (value_for_key health_check_ids_of_yojson "HealthCheckIds") _list
+          path);
+     resource_arn =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ResourceArn")
+          _list path);
+     name =
+       (option_of_yojson (value_for_key protection_name_of_yojson "Name")
+          _list path);
+     id =
+       (option_of_yojson (value_for_key protection_id_of_yojson "Id") _list
+          path)
+   } : protection)
 let protections_of_yojson tree path =
   list_of_yojson protection_of_yojson tree path
 let protection_name_filters_of_yojson tree path =
   list_of_yojson protection_name_of_yojson tree path
 let protection_group_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : protection_group =
-    {
-      protection_group_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ProtectionGroupArn") _list
-           path);
-      members =
-        (value_for_key protection_group_members_of_yojson "Members" _list
-           path);
-      resource_type =
-        (option_of_yojson
-           (value_for_key protected_resource_type_of_yojson "ResourceType")
-           _list path);
-      pattern =
-        (value_for_key protection_group_pattern_of_yojson "Pattern" _list
-           path);
-      aggregation =
-        (value_for_key protection_group_aggregation_of_yojson "Aggregation"
-           _list path);
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     protection_group_arn =
+       (option_of_yojson
+          (value_for_key resource_arn_of_yojson "ProtectionGroupArn") _list
+          path);
+     members =
+       (value_for_key protection_group_members_of_yojson "Members" _list path);
+     resource_type =
+       (option_of_yojson
+          (value_for_key protected_resource_type_of_yojson "ResourceType")
+          _list path);
+     pattern =
+       (value_for_key protection_group_pattern_of_yojson "Pattern" _list path);
+     aggregation =
+       (value_for_key protection_group_aggregation_of_yojson "Aggregation"
+          _list path);
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : protection_group)
 let protection_groups_of_yojson tree path =
   list_of_yojson protection_group_of_yojson tree path
 let protection_group_pattern_filters_of_yojson tree path =
@@ -607,22 +535,18 @@ let protected_resource_type_filters_of_yojson tree path =
   list_of_yojson protected_resource_type_of_yojson tree path
 let no_associated_role_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : no_associated_role_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : no_associated_role_exception)
 let mitigation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : mitigation =
-    {
-      mitigation_name =
-        (option_of_yojson (value_for_key string__of_yojson "MitigationName")
-           _list path)
-    } in
-  _res
+  ({
+     mitigation_name =
+       (option_of_yojson (value_for_key string__of_yojson "MitigationName")
+          _list path)
+   } : mitigation)
 let mitigation_list_of_yojson tree path =
   list_of_yojson mitigation_of_yojson tree path
 let max_results_of_yojson = int_of_yojson
@@ -631,439 +555,368 @@ let log_bucket_list_of_yojson tree path =
   list_of_yojson log_bucket_of_yojson tree path
 let list_tags_for_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_resource_response =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path)
+   } : list_tags_for_resource_response)
 let list_tags_for_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_tags_for_resource_request =
-    {
-      resource_ar_n =
-        (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
-    } in
-  _res
+  ({
+     resource_ar_n =
+       (value_for_key resource_arn_of_yojson "ResourceARN" _list path)
+   } : list_tags_for_resource_request)
 let list_resources_in_protection_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_resources_in_protection_group_response =
-    {
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      resource_arns =
-        (value_for_key resource_arn_list_of_yojson "ResourceArns" _list path)
-    } in
-  _res
+  ({
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     resource_arns =
+       (value_for_key resource_arn_list_of_yojson "ResourceArns" _list path)
+   } : list_resources_in_protection_group_response)
 let list_resources_in_protection_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_resources_in_protection_group_request =
-    {
-      max_results =
-        (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-           _list path);
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : list_resources_in_protection_group_request)
 let invalid_pagination_token_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : invalid_pagination_token_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : invalid_pagination_token_exception)
 let list_protections_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_protections_response =
-    {
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      protections =
-        (option_of_yojson (value_for_key protections_of_yojson "Protections")
-           _list path)
-    } in
-  _res
+  ({
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     protections =
+       (option_of_yojson (value_for_key protections_of_yojson "Protections")
+          _list path)
+   } : list_protections_response)
 let inclusion_protection_filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : inclusion_protection_filters =
-    {
-      resource_types =
-        (option_of_yojson
-           (value_for_key protected_resource_type_filters_of_yojson
-              "ResourceTypes") _list path);
-      protection_names =
-        (option_of_yojson
-           (value_for_key protection_name_filters_of_yojson "ProtectionNames")
-           _list path);
-      resource_arns =
-        (option_of_yojson
-           (value_for_key resource_arn_filters_of_yojson "ResourceArns")
-           _list path)
-    } in
-  _res
+  ({
+     resource_types =
+       (option_of_yojson
+          (value_for_key protected_resource_type_filters_of_yojson
+             "ResourceTypes") _list path);
+     protection_names =
+       (option_of_yojson
+          (value_for_key protection_name_filters_of_yojson "ProtectionNames")
+          _list path);
+     resource_arns =
+       (option_of_yojson
+          (value_for_key resource_arn_filters_of_yojson "ResourceArns") _list
+          path)
+   } : inclusion_protection_filters)
 let list_protections_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_protections_request =
-    {
-      inclusion_filters =
-        (option_of_yojson
-           (value_for_key inclusion_protection_filters_of_yojson
-              "InclusionFilters") _list path);
-      max_results =
-        (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-           _list path);
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path)
-    } in
-  _res
+  ({
+     inclusion_filters =
+       (option_of_yojson
+          (value_for_key inclusion_protection_filters_of_yojson
+             "InclusionFilters") _list path);
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path)
+   } : list_protections_request)
 let list_protection_groups_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_protection_groups_response =
-    {
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      protection_groups =
-        (value_for_key protection_groups_of_yojson "ProtectionGroups" _list
-           path)
-    } in
-  _res
+  ({
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     protection_groups =
+       (value_for_key protection_groups_of_yojson "ProtectionGroups" _list
+          path)
+   } : list_protection_groups_response)
 let inclusion_protection_group_filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : inclusion_protection_group_filters =
-    {
-      aggregations =
-        (option_of_yojson
-           (value_for_key protection_group_aggregation_filters_of_yojson
-              "Aggregations") _list path);
-      resource_types =
-        (option_of_yojson
-           (value_for_key protected_resource_type_filters_of_yojson
-              "ResourceTypes") _list path);
-      patterns =
-        (option_of_yojson
-           (value_for_key protection_group_pattern_filters_of_yojson
-              "Patterns") _list path);
-      protection_group_ids =
-        (option_of_yojson
-           (value_for_key protection_group_id_filters_of_yojson
-              "ProtectionGroupIds") _list path)
-    } in
-  _res
+  ({
+     aggregations =
+       (option_of_yojson
+          (value_for_key protection_group_aggregation_filters_of_yojson
+             "Aggregations") _list path);
+     resource_types =
+       (option_of_yojson
+          (value_for_key protected_resource_type_filters_of_yojson
+             "ResourceTypes") _list path);
+     patterns =
+       (option_of_yojson
+          (value_for_key protection_group_pattern_filters_of_yojson
+             "Patterns") _list path);
+     protection_group_ids =
+       (option_of_yojson
+          (value_for_key protection_group_id_filters_of_yojson
+             "ProtectionGroupIds") _list path)
+   } : inclusion_protection_group_filters)
 let list_protection_groups_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_protection_groups_request =
-    {
-      inclusion_filters =
-        (option_of_yojson
-           (value_for_key inclusion_protection_group_filters_of_yojson
-              "InclusionFilters") _list path);
-      max_results =
-        (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-           _list path);
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path)
-    } in
-  _res
+  ({
+     inclusion_filters =
+       (option_of_yojson
+          (value_for_key inclusion_protection_group_filters_of_yojson
+             "InclusionFilters") _list path);
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path)
+   } : list_protection_groups_request)
 let attack_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let attack_vector_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_vector_description =
-    { vector_type = (value_for_key string__of_yojson "VectorType" _list path)
-    } in
-  _res
+  ({ vector_type = (value_for_key string__of_yojson "VectorType" _list path)
+   } : attack_vector_description)
 let attack_vector_description_list_of_yojson tree path =
   list_of_yojson attack_vector_description_of_yojson tree path
 let attack_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_summary =
-    {
-      attack_vectors =
-        (option_of_yojson
-           (value_for_key attack_vector_description_list_of_yojson
-              "AttackVectors") _list path);
-      end_time =
-        (option_of_yojson
-           (value_for_key attack_timestamp_of_yojson "EndTime") _list path);
-      start_time =
-        (option_of_yojson
-           (value_for_key attack_timestamp_of_yojson "StartTime") _list path);
-      resource_arn =
-        (option_of_yojson (value_for_key string__of_yojson "ResourceArn")
-           _list path);
-      attack_id =
-        (option_of_yojson (value_for_key string__of_yojson "AttackId") _list
-           path)
-    } in
-  _res
+  ({
+     attack_vectors =
+       (option_of_yojson
+          (value_for_key attack_vector_description_list_of_yojson
+             "AttackVectors") _list path);
+     end_time =
+       (option_of_yojson (value_for_key attack_timestamp_of_yojson "EndTime")
+          _list path);
+     start_time =
+       (option_of_yojson
+          (value_for_key attack_timestamp_of_yojson "StartTime") _list path);
+     resource_arn =
+       (option_of_yojson (value_for_key string__of_yojson "ResourceArn")
+          _list path);
+     attack_id =
+       (option_of_yojson (value_for_key string__of_yojson "AttackId") _list
+          path)
+   } : attack_summary)
 let attack_summaries_of_yojson tree path =
   list_of_yojson attack_summary_of_yojson tree path
 let list_attacks_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_attacks_response =
-    {
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      attack_summaries =
-        (option_of_yojson
-           (value_for_key attack_summaries_of_yojson "AttackSummaries") _list
-           path)
-    } in
-  _res
+  ({
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     attack_summaries =
+       (option_of_yojson
+          (value_for_key attack_summaries_of_yojson "AttackSummaries") _list
+          path)
+   } : list_attacks_response)
 let list_attacks_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : list_attacks_request =
-    {
-      max_results =
-        (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-           _list path);
-      next_token =
-        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
-           path);
-      end_time =
-        (option_of_yojson (value_for_key time_range_of_yojson "EndTime")
-           _list path);
-      start_time =
-        (option_of_yojson (value_for_key time_range_of_yojson "StartTime")
-           _list path);
-      resource_arns =
-        (option_of_yojson
-           (value_for_key resource_arn_filter_list_of_yojson "ResourceArns")
-           _list path)
-    } in
-  _res
+  ({
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     end_time =
+       (option_of_yojson (value_for_key time_range_of_yojson "EndTime") _list
+          path);
+     start_time =
+       (option_of_yojson (value_for_key time_range_of_yojson "StartTime")
+          _list path);
+     resource_arns =
+       (option_of_yojson
+          (value_for_key resource_arn_filter_list_of_yojson "ResourceArns")
+          _list path)
+   } : list_attacks_request)
 let limit_type_of_yojson = string_of_yojson
 let limit_number_of_yojson = long_of_yojson
 let limits_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : limits_exceeded_exception =
-    {
-      limit =
-        (option_of_yojson (value_for_key limit_number_of_yojson "Limit")
-           _list path);
-      type_ =
-        (option_of_yojson (value_for_key limit_type_of_yojson "Type") _list
-           path);
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     limit =
+       (option_of_yojson (value_for_key limit_number_of_yojson "Limit") _list
+          path);
+     type_ =
+       (option_of_yojson (value_for_key limit_type_of_yojson "Type") _list
+          path);
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : limits_exceeded_exception)
 let health_check_arn_of_yojson = string_of_yojson
 let get_subscription_state_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : get_subscription_state_response =
-    {
-      subscription_state =
-        (value_for_key subscription_state_of_yojson "SubscriptionState" _list
-           path)
-    } in
-  _res
+  ({
+     subscription_state =
+       (value_for_key subscription_state_of_yojson "SubscriptionState" _list
+          path)
+   } : get_subscription_state_response)
 let get_subscription_state_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let enable_proactive_engagement_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let enable_proactive_engagement_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let enable_application_layer_automatic_response_response_of_yojson tree path
-  = let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  = let _list = assoc_of_yojson tree path in (() : unit)
 let enable_application_layer_automatic_response_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : enable_application_layer_automatic_response_request =
-    {
-      action = (value_for_key response_action_of_yojson "Action" _list path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     action = (value_for_key response_action_of_yojson "Action" _list path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : enable_application_layer_automatic_response_request)
 let disassociate_health_check_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_health_check_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : disassociate_health_check_request =
-    {
-      health_check_arn =
-        (value_for_key health_check_arn_of_yojson "HealthCheckArn" _list path);
-      protection_id =
-        (value_for_key protection_id_of_yojson "ProtectionId" _list path)
-    } in
-  _res
+  ({
+     health_check_arn =
+       (value_for_key health_check_arn_of_yojson "HealthCheckArn" _list path);
+     protection_id =
+       (value_for_key protection_id_of_yojson "ProtectionId" _list path)
+   } : disassociate_health_check_request)
 let disassociate_drt_role_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_drt_role_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_drt_log_bucket_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_drt_log_bucket_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : disassociate_drt_log_bucket_request =
-    {
-      log_bucket =
-        (value_for_key log_bucket_of_yojson "LogBucket" _list path)
-    } in
-  _res
+  ({ log_bucket = (value_for_key log_bucket_of_yojson "LogBucket" _list path)
+   } : disassociate_drt_log_bucket_request)
 let access_denied_for_dependency_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : access_denied_for_dependency_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : access_denied_for_dependency_exception)
 let disable_proactive_engagement_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disable_proactive_engagement_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let disable_application_layer_automatic_response_response_of_yojson tree path
-  = let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  = let _list = assoc_of_yojson tree path in (() : unit)
 let disable_application_layer_automatic_response_request_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
-  let _res : disable_application_layer_automatic_response_request =
-    {
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
+   } : disable_application_layer_automatic_response_request)
 let describe_subscription_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_subscription_response =
-    {
-      subscription =
-        (option_of_yojson
-           (value_for_key subscription_of_yojson "Subscription") _list path)
-    } in
-  _res
+  ({
+     subscription =
+       (option_of_yojson
+          (value_for_key subscription_of_yojson "Subscription") _list path)
+   } : describe_subscription_response)
 let describe_subscription_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let describe_protection_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_protection_response =
-    {
-      protection =
-        (option_of_yojson (value_for_key protection_of_yojson "Protection")
-           _list path)
-    } in
-  _res
+  ({
+     protection =
+       (option_of_yojson (value_for_key protection_of_yojson "Protection")
+          _list path)
+   } : describe_protection_response)
 let describe_protection_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_protection_request =
-    {
-      resource_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ResourceArn") _list path);
-      protection_id =
-        (option_of_yojson
-           (value_for_key protection_id_of_yojson "ProtectionId") _list path)
-    } in
-  _res
+  ({
+     resource_arn =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ResourceArn")
+          _list path);
+     protection_id =
+       (option_of_yojson
+          (value_for_key protection_id_of_yojson "ProtectionId") _list path)
+   } : describe_protection_request)
 let describe_protection_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_protection_group_response =
-    {
-      protection_group =
-        (value_for_key protection_group_of_yojson "ProtectionGroup" _list
-           path)
-    } in
-  _res
+  ({
+     protection_group =
+       (value_for_key protection_group_of_yojson "ProtectionGroup" _list path)
+   } : describe_protection_group_response)
 let describe_protection_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_protection_group_request =
-    {
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : describe_protection_group_request)
 let describe_emergency_contact_settings_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_emergency_contact_settings_response =
-    {
-      emergency_contact_list =
-        (option_of_yojson
-           (value_for_key emergency_contact_list_of_yojson
-              "EmergencyContactList") _list path)
-    } in
-  _res
+  ({
+     emergency_contact_list =
+       (option_of_yojson
+          (value_for_key emergency_contact_list_of_yojson
+             "EmergencyContactList") _list path)
+   } : describe_emergency_contact_settings_response)
 let describe_emergency_contact_settings_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let describe_drt_access_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_drt_access_response =
-    {
-      log_bucket_list =
-        (option_of_yojson
-           (value_for_key log_bucket_list_of_yojson "LogBucketList") _list
-           path);
-      role_arn =
-        (option_of_yojson (value_for_key role_arn_of_yojson "RoleArn") _list
-           path)
-    } in
-  _res
+  ({
+     log_bucket_list =
+       (option_of_yojson
+          (value_for_key log_bucket_list_of_yojson "LogBucketList") _list
+          path);
+     role_arn =
+       (option_of_yojson (value_for_key role_arn_of_yojson "RoleArn") _list
+          path)
+   } : describe_drt_access_response)
 let describe_drt_access_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let attack_volume_statistics_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_volume_statistics =
-    { max = (value_for_key double_of_yojson "Max" _list path) } in
-  _res
+  ({ max = (value_for_key double_of_yojson "Max" _list path) } : attack_volume_statistics)
 let attack_volume_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_volume =
-    {
-      requests_per_second =
-        (option_of_yojson
-           (value_for_key attack_volume_statistics_of_yojson
-              "RequestsPerSecond") _list path);
-      packets_per_second =
-        (option_of_yojson
-           (value_for_key attack_volume_statistics_of_yojson
-              "PacketsPerSecond") _list path);
-      bits_per_second =
-        (option_of_yojson
-           (value_for_key attack_volume_statistics_of_yojson "BitsPerSecond")
-           _list path)
-    } in
-  _res
+  ({
+     requests_per_second =
+       (option_of_yojson
+          (value_for_key attack_volume_statistics_of_yojson
+             "RequestsPerSecond") _list path);
+     packets_per_second =
+       (option_of_yojson
+          (value_for_key attack_volume_statistics_of_yojson
+             "PacketsPerSecond") _list path);
+     bits_per_second =
+       (option_of_yojson
+          (value_for_key attack_volume_statistics_of_yojson "BitsPerSecond")
+          _list path)
+   } : attack_volume)
 let attack_statistics_data_item_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_statistics_data_item =
-    {
-      attack_count = (value_for_key long_of_yojson "AttackCount" _list path);
-      attack_volume =
-        (option_of_yojson
-           (value_for_key attack_volume_of_yojson "AttackVolume") _list path)
-    } in
-  _res
+  ({
+     attack_count = (value_for_key long_of_yojson "AttackCount" _list path);
+     attack_volume =
+       (option_of_yojson
+          (value_for_key attack_volume_of_yojson "AttackVolume") _list path)
+   } : attack_statistics_data_item)
 let attack_statistics_data_list_of_yojson tree path =
   list_of_yojson attack_statistics_data_item_of_yojson tree path
 let describe_attack_statistics_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_attack_statistics_response =
-    {
-      data_items =
-        (value_for_key attack_statistics_data_list_of_yojson "DataItems"
-           _list path);
-      time_range =
-        (value_for_key time_range_of_yojson "TimeRange" _list path)
-    } in
-  _res
+  ({
+     data_items =
+       (value_for_key attack_statistics_data_list_of_yojson "DataItems" _list
+          path);
+     time_range = (value_for_key time_range_of_yojson "TimeRange" _list path)
+   } : describe_attack_statistics_response)
 let describe_attack_statistics_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let attack_id_of_yojson = string_of_yojson
 let attack_layer_of_yojson (tree : t) path =
   (match tree with
@@ -1091,201 +944,170 @@ let attack_property_identifier_of_yojson (tree : t) path =
   attack_property_identifier)
 let attack_property_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_property =
-    {
-      total =
-        (option_of_yojson (value_for_key long_of_yojson "Total") _list path);
-      unit_ =
-        (option_of_yojson (value_for_key unit__of_yojson "Unit") _list path);
-      top_contributors =
-        (option_of_yojson
-           (value_for_key top_contributors_of_yojson "TopContributors") _list
-           path);
-      attack_property_identifier =
-        (option_of_yojson
-           (value_for_key attack_property_identifier_of_yojson
-              "AttackPropertyIdentifier") _list path);
-      attack_layer =
-        (option_of_yojson
-           (value_for_key attack_layer_of_yojson "AttackLayer") _list path)
-    } in
-  _res
+  ({
+     total =
+       (option_of_yojson (value_for_key long_of_yojson "Total") _list path);
+     unit_ =
+       (option_of_yojson (value_for_key unit__of_yojson "Unit") _list path);
+     top_contributors =
+       (option_of_yojson
+          (value_for_key top_contributors_of_yojson "TopContributors") _list
+          path);
+     attack_property_identifier =
+       (option_of_yojson
+          (value_for_key attack_property_identifier_of_yojson
+             "AttackPropertyIdentifier") _list path);
+     attack_layer =
+       (option_of_yojson (value_for_key attack_layer_of_yojson "AttackLayer")
+          _list path)
+   } : attack_property)
 let attack_properties_of_yojson tree path =
   list_of_yojson attack_property_of_yojson tree path
 let attack_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : attack_detail =
-    {
-      mitigations =
-        (option_of_yojson
-           (value_for_key mitigation_list_of_yojson "Mitigations") _list path);
-      attack_properties =
-        (option_of_yojson
-           (value_for_key attack_properties_of_yojson "AttackProperties")
-           _list path);
-      attack_counters =
-        (option_of_yojson
-           (value_for_key summarized_counter_list_of_yojson "AttackCounters")
-           _list path);
-      end_time =
-        (option_of_yojson
-           (value_for_key attack_timestamp_of_yojson "EndTime") _list path);
-      start_time =
-        (option_of_yojson
-           (value_for_key attack_timestamp_of_yojson "StartTime") _list path);
-      sub_resources =
-        (option_of_yojson
-           (value_for_key sub_resource_summary_list_of_yojson "SubResources")
-           _list path);
-      resource_arn =
-        (option_of_yojson
-           (value_for_key resource_arn_of_yojson "ResourceArn") _list path);
-      attack_id =
-        (option_of_yojson (value_for_key attack_id_of_yojson "AttackId")
-           _list path)
-    } in
-  _res
+  ({
+     mitigations =
+       (option_of_yojson
+          (value_for_key mitigation_list_of_yojson "Mitigations") _list path);
+     attack_properties =
+       (option_of_yojson
+          (value_for_key attack_properties_of_yojson "AttackProperties")
+          _list path);
+     attack_counters =
+       (option_of_yojson
+          (value_for_key summarized_counter_list_of_yojson "AttackCounters")
+          _list path);
+     end_time =
+       (option_of_yojson (value_for_key attack_timestamp_of_yojson "EndTime")
+          _list path);
+     start_time =
+       (option_of_yojson
+          (value_for_key attack_timestamp_of_yojson "StartTime") _list path);
+     sub_resources =
+       (option_of_yojson
+          (value_for_key sub_resource_summary_list_of_yojson "SubResources")
+          _list path);
+     resource_arn =
+       (option_of_yojson (value_for_key resource_arn_of_yojson "ResourceArn")
+          _list path);
+     attack_id =
+       (option_of_yojson (value_for_key attack_id_of_yojson "AttackId") _list
+          path)
+   } : attack_detail)
 let describe_attack_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_attack_response =
-    {
-      attack =
-        (option_of_yojson (value_for_key attack_detail_of_yojson "Attack")
-           _list path)
-    } in
-  _res
+  ({
+     attack =
+       (option_of_yojson (value_for_key attack_detail_of_yojson "Attack")
+          _list path)
+   } : describe_attack_response)
 let describe_attack_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : describe_attack_request =
-    { attack_id = (value_for_key attack_id_of_yojson "AttackId" _list path) } in
-  _res
+  ({ attack_id = (value_for_key attack_id_of_yojson "AttackId" _list path) } : 
+    describe_attack_request)
 let access_denied_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : access_denied_exception =
-    {
-      message =
-        (option_of_yojson (value_for_key error_message_of_yojson "message")
-           _list path)
-    } in
-  _res
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : access_denied_exception)
 let delete_subscription_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_subscription_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_protection_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_protection_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_protection_request =
-    {
-      protection_id =
-        (value_for_key protection_id_of_yojson "ProtectionId" _list path)
-    } in
-  _res
+  ({
+     protection_id =
+       (value_for_key protection_id_of_yojson "ProtectionId" _list path)
+   } : delete_protection_request)
 let delete_protection_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let delete_protection_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : delete_protection_group_request =
-    {
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : delete_protection_group_request)
 let create_subscription_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let create_subscription_request_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let create_protection_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_protection_response =
-    {
-      protection_id =
-        (option_of_yojson
-           (value_for_key protection_id_of_yojson "ProtectionId") _list path)
-    } in
-  _res
+  ({
+     protection_id =
+       (option_of_yojson
+          (value_for_key protection_id_of_yojson "ProtectionId") _list path)
+   } : create_protection_response)
 let create_protection_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_protection_request =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      resource_arn =
-        (value_for_key resource_arn_of_yojson "ResourceArn" _list path);
-      name = (value_for_key protection_name_of_yojson "Name" _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     resource_arn =
+       (value_for_key resource_arn_of_yojson "ResourceArn" _list path);
+     name = (value_for_key protection_name_of_yojson "Name" _list path)
+   } : create_protection_request)
 let create_protection_group_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let create_protection_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : create_protection_group_request =
-    {
-      tags =
-        (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list
-           path);
-      members =
-        (option_of_yojson
-           (value_for_key protection_group_members_of_yojson "Members") _list
-           path);
-      resource_type =
-        (option_of_yojson
-           (value_for_key protected_resource_type_of_yojson "ResourceType")
-           _list path);
-      pattern =
-        (value_for_key protection_group_pattern_of_yojson "Pattern" _list
-           path);
-      aggregation =
-        (value_for_key protection_group_aggregation_of_yojson "Aggregation"
-           _list path);
-      protection_group_id =
-        (value_for_key protection_group_id_of_yojson "ProtectionGroupId"
-           _list path)
-    } in
-  _res
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     members =
+       (option_of_yojson
+          (value_for_key protection_group_members_of_yojson "Members") _list
+          path);
+     resource_type =
+       (option_of_yojson
+          (value_for_key protected_resource_type_of_yojson "ResourceType")
+          _list path);
+     pattern =
+       (value_for_key protection_group_pattern_of_yojson "Pattern" _list path);
+     aggregation =
+       (value_for_key protection_group_aggregation_of_yojson "Aggregation"
+          _list path);
+     protection_group_id =
+       (value_for_key protection_group_id_of_yojson "ProtectionGroupId" _list
+          path)
+   } : create_protection_group_request)
 let associate_proactive_engagement_details_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let associate_proactive_engagement_details_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : associate_proactive_engagement_details_request =
-    {
-      emergency_contact_list =
-        (value_for_key emergency_contact_list_of_yojson
-           "EmergencyContactList" _list path)
-    } in
-  _res
+  ({
+     emergency_contact_list =
+       (value_for_key emergency_contact_list_of_yojson "EmergencyContactList"
+          _list path)
+   } : associate_proactive_engagement_details_request)
 let associate_health_check_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let associate_health_check_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : associate_health_check_request =
-    {
-      health_check_arn =
-        (value_for_key health_check_arn_of_yojson "HealthCheckArn" _list path);
-      protection_id =
-        (value_for_key protection_id_of_yojson "ProtectionId" _list path)
-    } in
-  _res
+  ({
+     health_check_arn =
+       (value_for_key health_check_arn_of_yojson "HealthCheckArn" _list path);
+     protection_id =
+       (value_for_key protection_id_of_yojson "ProtectionId" _list path)
+   } : associate_health_check_request)
 let associate_drt_role_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let associate_drt_role_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : associate_drt_role_request =
-    { role_arn = (value_for_key role_arn_of_yojson "RoleArn" _list path) } in
-  _res
+  ({ role_arn = (value_for_key role_arn_of_yojson "RoleArn" _list path) } : 
+    associate_drt_role_request)
 let associate_drt_log_bucket_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in let _res : unit = () in _res
+  let _list = assoc_of_yojson tree path in (() : unit)
 let associate_drt_log_bucket_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  let _res : associate_drt_log_bucket_request =
-    {
-      log_bucket =
-        (value_for_key log_bucket_of_yojson "LogBucket" _list path)
-    } in
-  _res
+  ({ log_bucket = (value_for_key log_bucket_of_yojson "LogBucket" _list path)
+   } : associate_drt_log_bucket_request)
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson
