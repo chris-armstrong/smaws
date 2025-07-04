@@ -59,8 +59,8 @@ let sign_request_v4 ~(config : Config.t) ~(service : Service.descriptor) ~(uri :
     algorithm ^ "\n" ^ xAmzDate ^ "\n" ^ credentialScope ^ "\n" ^ canonicalRequestHash
   in
   Logs.debug (fun s ->
-      s "signed_request: access_key_id='%s' secret_access_key='%s' session_token='%s'"
-        auth.access_key_id auth.secret_access_key
+      s "signed_request: access_key_id='%s' secret_access_key='<suppressed>' session_token='%s'"
+        auth.access_key_id
         (Option.value ~default:"<none>" auth.session_token));
   let kSecret = auth.secret_access_key in
   let kDate = SHA256.hmac_string ~key:("AWS4" ^ kSecret) date in

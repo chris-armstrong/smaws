@@ -21,7 +21,7 @@ depends: [
   "logs" {>= "0.7.0"}
   "httpun" {>= "0.2.0"}
   "httpun-eio" {>= "0.2.0"}
-  "ppx_deriving" {>= "5.0"}
+  "ppx_deriving" {>= "5.0" & build}
   "alcotest" {with-test}
   "eio_main" {with-dev-setup}
   "odoc" {with-doc}

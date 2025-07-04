@@ -122,6 +122,7 @@ type t =
 
 let isEnumTrait trait = match trait with EnumTrait _ -> true | _ -> false
 let isRequiredTrait trait = match trait with RequiredTrait -> true | _ -> false
+let isSparseTrait trait = match trait with SparseTrait -> true | _ -> false
 let isErrorTrait trait = match trait with ErrorTrait _ -> true | _ -> false
 let isAwsApiServiceTrait trait = match trait with ServiceTrait _ -> true | _ -> false
 let isTimestampFormatTrait trait = match trait with TimestampFormatTrait _ -> true | _ -> false

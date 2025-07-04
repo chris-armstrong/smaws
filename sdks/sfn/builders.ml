@@ -1,1094 +1,1066 @@
-[@@@warning "-39"]
+open Smaws_Lib
 open Types
-let make_validate_state_machine_definition_diagnostic 
-  ?(location : string option)
-  ~(message : string)
-  ~(code : string)
-  ~(severity : validate_state_machine_definition_severity)
-  () : validate_state_machine_definition_diagnostic = {
-  location; message; code; severity; 
-}
-
-let make_validate_state_machine_definition_output 
-  ~(diagnostics : validate_state_machine_definition_diagnostic list)
-  ~(result : validate_state_machine_definition_result_code)
-  () : validate_state_machine_definition_output = { diagnostics; result; 
-}
-
-let make_validate_state_machine_definition_input 
-  ?(type_ : state_machine_type option) ~(definition : string) ()
-: validate_state_machine_definition_input = { type_; definition; 
-}
-
-let make_update_state_machine_output 
-  ?(state_machine_version_arn : string option)
-  ?(revision_id : string option)
-  ~(update_date : float)
-  () : update_state_machine_output = {
-  state_machine_version_arn; revision_id; update_date; 
-}
-
-let make_cloud_watch_logs_log_group  ?(log_group_arn : string option) ()
-: cloud_watch_logs_log_group = { log_group_arn;  }
-
-let make_log_destination 
-  ?(cloud_watch_logs_log_group : cloud_watch_logs_log_group option) ()
-: log_destination = { cloud_watch_logs_log_group; 
-}
-
-let make_logging_configuration 
-  ?(destinations : log_destination list option)
-  ?(include_execution_data : bool option)
-  ?(level : log_level option)
-  () : logging_configuration = {
-  destinations; include_execution_data; level; 
-}
-
-let make_tracing_configuration  ?(enabled : bool option) ()
-: tracing_configuration = { enabled;  }
-
-let make_update_state_machine_input 
-  ?(version_description : string option)
-  ?(publish : bool option)
-  ?(tracing_configuration : tracing_configuration option)
-  ?(logging_configuration : logging_configuration option)
-  ?(role_arn : string option)
-  ?(definition : string option)
-  ~(state_machine_arn : string)
-  () : update_state_machine_input = {
-  version_description;
-  publish;
-  tracing_configuration;
-  logging_configuration;
-  role_arn;
-  definition;
-  state_machine_arn;
-   }
-
-let make_update_state_machine_alias_output  ~(update_date : float) ()
-: update_state_machine_alias_output = { update_date; 
-}
-
-let make_routing_configuration_list_item 
-  ~(weight : int) ~(state_machine_version_arn : string) ()
-: routing_configuration_list_item = { weight; state_machine_version_arn; 
-}
-
-let make_update_state_machine_alias_input 
-  ?(routing_configuration : routing_configuration_list_item list option)
-  ?(description : string option)
-  ~(state_machine_alias_arn : string)
-  () : update_state_machine_alias_input = {
-  routing_configuration; description; state_machine_alias_arn; 
-}
-
-let make_update_map_run_output  () : update_map_run_output =
-()
-
-let make_update_map_run_input 
-  ?(tolerated_failure_count : int option)
-  ?(tolerated_failure_percentage : float option)
-  ?(max_concurrency : int option)
-  ~(map_run_arn : string)
-  () : update_map_run_input = {
-  tolerated_failure_count;
-  tolerated_failure_percentage;
-  max_concurrency;
-  map_run_arn;
-   }
-
-let make_untag_resource_output  () : untag_resource_output =
-()
-
-let make_untag_resource_input 
-  ~(tag_keys : string list) ~(resource_arn : string) ()
-: untag_resource_input = { tag_keys; resource_arn; 
-}
-
-let make_inspection_data_request 
-  ?(body : string option)
-  ?(headers : string option)
-  ?(url : string option)
-  ?(method_ : string option)
-  ?(protocol : string option)
-  () : inspection_data_request = { body; headers; url; method_; protocol; 
-}
-
-let make_inspection_data_response 
-  ?(body : string option)
-  ?(headers : string option)
-  ?(status_message : string option)
-  ?(status_code : string option)
-  ?(protocol : string option)
-  () : inspection_data_response = {
-  body; headers; status_message; status_code; protocol; 
-}
-
-let make_inspection_data 
-  ?(response : inspection_data_response option)
-  ?(request : inspection_data_request option)
-  ?(after_result_path : string option)
-  ?(after_result_selector : string option)
-  ?(result : string option)
-  ?(after_parameters : string option)
-  ?(after_input_path : string option)
-  ?(input : string option)
-  () : inspection_data = {
-  response;
-  request;
-  after_result_path;
-  after_result_selector;
-  result;
-  after_parameters;
-  after_input_path;
-  input;
-   }
-
-let make_test_state_output 
-  ?(status : test_execution_status option)
-  ?(next_state : string option)
-  ?(inspection_data : inspection_data option)
-  ?(cause : string option)
-  ?(error : string option)
-  ?(output : string option)
-  () : test_state_output = {
-  status; next_state; inspection_data; cause; error; output; 
-}
-
-let make_test_state_input 
-  ?(reveal_secrets : bool option)
-  ?(inspection_level : inspection_level option)
-  ?(input : string option)
-  ~(role_arn : string)
-  ~(definition : string)
-  () : test_state_input = {
-  reveal_secrets; inspection_level; input; role_arn; definition; 
-}
-
-let make_task_timed_out_event_details 
-  ?(cause : string option)
-  ?(error : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_timed_out_event_details = {
-  cause; error; resource; resource_type; 
-}
-
-let make_history_event_execution_data_details  ?(truncated : bool option) ()
-: history_event_execution_data_details = { truncated; 
-}
-
-let make_task_succeeded_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_succeeded_event_details = {
-  output_details; output; resource; resource_type; 
-}
-
-let make_task_submitted_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_submitted_event_details = {
-  output_details; output; resource; resource_type; 
-}
-
-let make_task_submit_failed_event_details 
-  ?(cause : string option)
-  ?(error : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_submit_failed_event_details = {
-  cause; error; resource; resource_type; 
-}
-
-let make_task_started_event_details 
-  ~(resource : string) ~(resource_type : string) ()
-: task_started_event_details = { resource; resource_type; 
-}
-
-let make_task_start_failed_event_details 
-  ?(cause : string option)
-  ?(error : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_start_failed_event_details = {
-  cause; error; resource; resource_type;  }
-
-let make_task_credentials  ?(role_arn : string option) () : task_credentials
-= { role_arn;  }
-
-let make_task_scheduled_event_details 
-  ?(task_credentials : task_credentials option)
-  ?(heartbeat_in_seconds : int option)
-  ?(timeout_in_seconds : int option)
-  ~(parameters : string)
-  ~(region : string)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_scheduled_event_details = {
-  task_credentials;
-  heartbeat_in_seconds;
-  timeout_in_seconds;
-  parameters;
-  region;
-  resource;
-  resource_type;
-   }
-
-let make_task_failed_event_details 
-  ?(cause : string option)
-  ?(error : string option)
-  ~(resource : string)
-  ~(resource_type : string)
-  () : task_failed_event_details = { cause; error; resource; resource_type; 
-}
-
-let make_tag_resource_output  () : tag_resource_output = ()
-
-let make_tag  ?(value : string option) ?(key : string option) () : tag = {
-  value; key;  }
-
-let make_tag_resource_input  ~(tags : tag list) ~(resource_arn : string) ()
-: tag_resource_input = { tags; resource_arn; 
-}
-
-let make_stop_execution_output  ~(stop_date : float) ()
-: stop_execution_output = { stop_date;  }
-
-let make_stop_execution_input 
-  ?(cause : string option)
-  ?(error : string option)
-  ~(execution_arn : string)
-  () : stop_execution_input = { cause; error; execution_arn; 
-}
-
-let make_state_machine_version_list_item 
-  ~(creation_date : float) ~(state_machine_version_arn : string) ()
-: state_machine_version_list_item = {
-  creation_date; state_machine_version_arn; 
-}
-
-let make_state_machine_list_item 
-  ~(creation_date : float)
-  ~(type_ : state_machine_type)
-  ~(name : string)
-  ~(state_machine_arn : string)
-  () : state_machine_list_item = {
-  creation_date; type_; name; state_machine_arn; 
-}
-
-let make_state_machine_alias_list_item 
-  ~(creation_date : float) ~(state_machine_alias_arn : string) ()
-: state_machine_alias_list_item = { creation_date; state_machine_alias_arn; 
-}
-
-let make_state_exited_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  ~(name : string)
-  () : state_exited_event_details = { output_details; output; name; 
-}
-
-let make_state_entered_event_details 
-  ?(input_details : history_event_execution_data_details option)
-  ?(input : string option)
-  ~(name : string)
-  () : state_entered_event_details = { input_details; input; name; 
-}
-
-let make_cloud_watch_events_execution_data_details 
-  ?(included : bool option) () : cloud_watch_events_execution_data_details =
-{ included;  }
-
-let make_billing_details 
-  ?(billed_duration_in_milliseconds : int option)
-  ?(billed_memory_used_in_m_b : int option)
-  () : billing_details = {
-  billed_duration_in_milliseconds; billed_memory_used_in_m_b; 
-}
-
-let make_start_sync_execution_output 
-  ?(billing_details : billing_details option)
-  ?(trace_header : string option)
-  ?(output_details : cloud_watch_events_execution_data_details option)
-  ?(output : string option)
-  ?(input_details : cloud_watch_events_execution_data_details option)
-  ?(input : string option)
-  ?(cause : string option)
-  ?(error : string option)
-  ?(name : string option)
-  ?(state_machine_arn : string option)
-  ~(status : sync_execution_status)
-  ~(stop_date : float)
-  ~(start_date : float)
-  ~(execution_arn : string)
-  () : start_sync_execution_output = {
-  billing_details;
-  trace_header;
-  output_details;
-  output;
-  input_details;
-  input;
-  cause;
-  error;
-  status;
-  stop_date;
-  start_date;
-  name;
-  state_machine_arn;
-  execution_arn;
-   }
-
-let make_start_sync_execution_input 
-  ?(trace_header : string option)
-  ?(input : string option)
-  ?(name : string option)
-  ~(state_machine_arn : string)
-  () : start_sync_execution_input = {
-  trace_header; input; name; state_machine_arn; 
-}
-
-let make_start_execution_output 
-  ~(start_date : float) ~(execution_arn : string) () : start_execution_output
-= { start_date; execution_arn;  }
-
-let make_start_execution_input 
-  ?(trace_header : string option)
-  ?(input : string option)
-  ?(name : string option)
-  ~(state_machine_arn : string)
-  () : start_execution_input = {
-  trace_header; input; name; state_machine_arn; 
-}
-
-let make_send_task_success_output  () : send_task_success_output =
-()
-
-let make_send_task_success_input 
-  ~(output : string) ~(task_token : string) () : send_task_success_input = {
-  output; task_token;  }
-
-let make_send_task_heartbeat_output  () : send_task_heartbeat_output =
-()
-
-let make_send_task_heartbeat_input  ~(task_token : string) ()
-: send_task_heartbeat_input = { task_token; 
-}
-
-let make_send_task_failure_output  () : send_task_failure_output =
-()
-
-let make_send_task_failure_input 
-  ?(cause : string option) ?(error : string option) ~(task_token : string) ()
-: send_task_failure_input = { cause; error; task_token; 
-}
-
-let make_redrive_execution_output  ~(redrive_date : float) ()
-: redrive_execution_output = { redrive_date; 
-}
-
-let make_redrive_execution_input 
-  ?(client_token : string option) ~(execution_arn : string) ()
-: redrive_execution_input = { client_token; execution_arn; 
-}
-
-let make_publish_state_machine_version_output 
-  ~(state_machine_version_arn : string) ~(creation_date : float) ()
-: publish_state_machine_version_output = {
-  state_machine_version_arn; creation_date; 
-}
-
-let make_publish_state_machine_version_input 
-  ?(description : string option)
-  ?(revision_id : string option)
-  ~(state_machine_arn : string)
-  () : publish_state_machine_version_input = {
-  description; revision_id; state_machine_arn; 
-}
-
-let make_map_state_started_event_details  ?(length : int option) ()
-: map_state_started_event_details = { length; 
-}
-
-let make_map_run_started_event_details  ?(map_run_arn : string option) ()
-: map_run_started_event_details = { map_run_arn; 
-}
-
-let make_map_run_redriven_event_details 
-  ?(redrive_count : int option) ?(map_run_arn : string option) ()
-: map_run_redriven_event_details = { redrive_count; map_run_arn; 
-}
-
-let make_map_run_list_item 
-  ?(stop_date : float option)
-  ~(start_date : float)
-  ~(state_machine_arn : string)
-  ~(map_run_arn : string)
-  ~(execution_arn : string)
-  () : map_run_list_item = {
-  stop_date; start_date; state_machine_arn; map_run_arn; execution_arn; 
-}
-
-let make_map_run_item_counts 
-  ?(pending_redrive : int option)
-  ?(failures_not_redrivable : int option)
-  ~(results_written : int)
-  ~(total : int)
-  ~(aborted : int)
-  ~(timed_out : int)
-  ~(failed : int)
-  ~(succeeded : int)
-  ~(running : int)
-  ~(pending : int)
-  () : map_run_item_counts = {
-  pending_redrive;
-  failures_not_redrivable;
-  results_written;
-  total;
-  aborted;
-  timed_out;
-  failed;
-  succeeded;
-  running;
-  pending;
-   }
-
-let make_map_run_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: map_run_failed_event_details = { cause; error; 
-}
-
-let make_map_run_execution_counts 
-  ?(pending_redrive : int option)
-  ?(failures_not_redrivable : int option)
-  ~(results_written : int)
-  ~(total : int)
-  ~(aborted : int)
-  ~(timed_out : int)
-  ~(failed : int)
-  ~(succeeded : int)
-  ~(running : int)
-  ~(pending : int)
-  () : map_run_execution_counts = {
-  pending_redrive;
-  failures_not_redrivable;
-  results_written;
-  total;
-  aborted;
-  timed_out;
-  failed;
-  succeeded;
-  running;
-  pending;
-   }
-
-let make_map_iteration_event_details 
-  ?(index : int option) ?(name : string option) ()
-: map_iteration_event_details = { index; name; 
-}
-
-let make_list_tags_for_resource_output  ?(tags : tag list option) ()
-: list_tags_for_resource_output = { tags; 
-}
-
-let make_list_tags_for_resource_input  ~(resource_arn : string) ()
-: list_tags_for_resource_input = { resource_arn; 
-}
-
-let make_list_state_machines_output 
-  ?(next_token : string option)
-  ~(state_machines : state_machine_list_item list)
-  () : list_state_machines_output = { next_token; state_machines; 
-}
-
-let make_list_state_machines_input 
-  ?(next_token : string option) ?(max_results : int option) ()
-: list_state_machines_input = { next_token; max_results; 
-}
-
-let make_list_state_machine_versions_output 
-  ?(next_token : string option)
-  ~(state_machine_versions : state_machine_version_list_item list)
-  () : list_state_machine_versions_output = {
-  next_token; state_machine_versions; 
-}
-
-let make_list_state_machine_versions_input 
-  ?(max_results : int option)
-  ?(next_token : string option)
-  ~(state_machine_arn : string)
-  () : list_state_machine_versions_input = {
-  max_results; next_token; state_machine_arn; 
-}
-
-let make_list_state_machine_aliases_output 
-  ?(next_token : string option)
-  ~(state_machine_aliases : state_machine_alias_list_item list)
-  () : list_state_machine_aliases_output = {
-  next_token; state_machine_aliases; 
-}
-
-let make_list_state_machine_aliases_input 
-  ?(max_results : int option)
-  ?(next_token : string option)
-  ~(state_machine_arn : string)
-  () : list_state_machine_aliases_input = {
-  max_results; next_token; state_machine_arn; 
-}
-
-let make_list_map_runs_output 
-  ?(next_token : string option) ~(map_runs : map_run_list_item list) ()
-: list_map_runs_output = { next_token; map_runs; 
-}
-
-let make_list_map_runs_input 
-  ?(next_token : string option)
-  ?(max_results : int option)
-  ~(execution_arn : string)
-  () : list_map_runs_input = { next_token; max_results; execution_arn; 
-}
-
-let make_execution_list_item 
-  ?(redrive_date : float option)
-  ?(redrive_count : int option)
-  ?(state_machine_alias_arn : string option)
-  ?(state_machine_version_arn : string option)
-  ?(item_count : int option)
-  ?(map_run_arn : string option)
-  ?(stop_date : float option)
-  ~(start_date : float)
-  ~(status : execution_status)
-  ~(name : string)
-  ~(state_machine_arn : string)
-  ~(execution_arn : string)
-  () : execution_list_item = {
-  redrive_date;
-  redrive_count;
-  state_machine_alias_arn;
-  state_machine_version_arn;
-  item_count;
-  map_run_arn;
-  stop_date;
-  start_date;
-  status;
-  name;
-  state_machine_arn;
-  execution_arn;
-   }
-
-let make_list_executions_output 
-  ?(next_token : string option) ~(executions : execution_list_item list) ()
-: list_executions_output = { next_token; executions; 
-}
-
-let make_list_executions_input 
-  ?(redrive_filter : execution_redrive_filter option)
-  ?(map_run_arn : string option)
-  ?(next_token : string option)
-  ?(max_results : int option)
-  ?(status_filter : execution_status option)
-  ?(state_machine_arn : string option)
-  () : list_executions_input = {
-  redrive_filter;
-  map_run_arn;
-  next_token;
-  max_results;
-  status_filter;
-  state_machine_arn;
-   }
-
-let make_activity_list_item 
-  ~(creation_date : float) ~(name : string) ~(activity_arn : string) ()
-: activity_list_item = { creation_date; name; activity_arn; 
-}
-
-let make_list_activities_output 
-  ?(next_token : string option) ~(activities : activity_list_item list) ()
-: list_activities_output = { next_token; activities; 
-}
-
-let make_list_activities_input 
-  ?(next_token : string option) ?(max_results : int option) ()
-: list_activities_input = { next_token; max_results; 
-}
-
-let make_lambda_function_timed_out_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: lambda_function_timed_out_event_details = { cause; error; 
-}
-
-let make_lambda_function_succeeded_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  () : lambda_function_succeeded_event_details = { output_details; output; 
-}
-
-let make_lambda_function_start_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: lambda_function_start_failed_event_details = { cause; error; 
-}
-
-let make_lambda_function_scheduled_event_details 
-  ?(task_credentials : task_credentials option)
-  ?(timeout_in_seconds : int option)
-  ?(input_details : history_event_execution_data_details option)
-  ?(input : string option)
-  ~(resource : string)
-  () : lambda_function_scheduled_event_details = {
-  task_credentials; timeout_in_seconds; input_details; input; resource; 
-}
-
-let make_lambda_function_schedule_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: lambda_function_schedule_failed_event_details = { cause; error; 
-}
-
-let make_lambda_function_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: lambda_function_failed_event_details = { cause; error; 
-}
-
-let make_activity_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: activity_failed_event_details = { cause; error; 
-}
-
-let make_activity_schedule_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: activity_schedule_failed_event_details = { cause; error; 
-}
-
-let make_activity_scheduled_event_details 
-  ?(heartbeat_in_seconds : int option)
-  ?(timeout_in_seconds : int option)
-  ?(input_details : history_event_execution_data_details option)
-  ?(input : string option)
-  ~(resource : string)
-  () : activity_scheduled_event_details = {
-  heartbeat_in_seconds; timeout_in_seconds; input_details; input; resource; 
-}
-
-let make_activity_started_event_details  ?(worker_name : string option) ()
-: activity_started_event_details = { worker_name; 
-}
-
-let make_activity_succeeded_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  () : activity_succeeded_event_details = { output_details; output; 
-}
-
-let make_activity_timed_out_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: activity_timed_out_event_details = { cause; error; 
-}
-
-let make_execution_failed_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: execution_failed_event_details = { cause; error; 
-}
-
-let make_execution_started_event_details 
-  ?(state_machine_version_arn : string option)
-  ?(state_machine_alias_arn : string option)
-  ?(role_arn : string option)
-  ?(input_details : history_event_execution_data_details option)
-  ?(input : string option)
-  () : execution_started_event_details = {
-  state_machine_version_arn;
-  state_machine_alias_arn;
-  role_arn;
-  input_details;
-  input;
-   }
-
-let make_execution_succeeded_event_details 
-  ?(output_details : history_event_execution_data_details option)
-  ?(output : string option)
-  () : execution_succeeded_event_details = { output_details; output; 
-}
-
-let make_execution_aborted_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: execution_aborted_event_details = { cause; error; 
-}
-
-let make_execution_timed_out_event_details 
-  ?(cause : string option) ?(error : string option) ()
-: execution_timed_out_event_details = { cause; error; 
-}
-
-let make_execution_redriven_event_details  ?(redrive_count : int option) ()
-: execution_redriven_event_details = { redrive_count; 
-}
-
-let make_history_event 
-  ?(map_run_redriven_event_details : map_run_redriven_event_details option)
-  ?(map_run_failed_event_details : map_run_failed_event_details option)
-  ?(map_run_started_event_details : map_run_started_event_details option)
-  ?(state_exited_event_details : state_exited_event_details option)
-  ?(state_entered_event_details : state_entered_event_details option)
-  ?(lambda_function_timed_out_event_details : lambda_function_timed_out_event_details option)
-  ?(lambda_function_succeeded_event_details : lambda_function_succeeded_event_details option)
-  ?(lambda_function_start_failed_event_details : lambda_function_start_failed_event_details option)
-  ?(lambda_function_scheduled_event_details : lambda_function_scheduled_event_details option)
-  ?(lambda_function_schedule_failed_event_details : lambda_function_schedule_failed_event_details option)
-  ?(lambda_function_failed_event_details : lambda_function_failed_event_details option)
-  ?(map_iteration_aborted_event_details : map_iteration_event_details option)
-  ?(map_iteration_failed_event_details : map_iteration_event_details option)
-  ?(map_iteration_succeeded_event_details : map_iteration_event_details option)
-  ?(map_iteration_started_event_details : map_iteration_event_details option)
-  ?(map_state_started_event_details : map_state_started_event_details option)
-  ?(execution_redriven_event_details : execution_redriven_event_details option)
-  ?(execution_timed_out_event_details : execution_timed_out_event_details option)
-  ?(execution_aborted_event_details : execution_aborted_event_details option)
-  ?(execution_succeeded_event_details : execution_succeeded_event_details option)
-  ?(execution_started_event_details : execution_started_event_details option)
-  ?(execution_failed_event_details : execution_failed_event_details option)
-  ?(task_timed_out_event_details : task_timed_out_event_details option)
-  ?(task_succeeded_event_details : task_succeeded_event_details option)
-  ?(task_submitted_event_details : task_submitted_event_details option)
-  ?(task_submit_failed_event_details : task_submit_failed_event_details option)
-  ?(task_started_event_details : task_started_event_details option)
-  ?(task_start_failed_event_details : task_start_failed_event_details option)
-  ?(task_scheduled_event_details : task_scheduled_event_details option)
-  ?(task_failed_event_details : task_failed_event_details option)
-  ?(activity_timed_out_event_details : activity_timed_out_event_details option)
-  ?(activity_succeeded_event_details : activity_succeeded_event_details option)
-  ?(activity_started_event_details : activity_started_event_details option)
-  ?(activity_scheduled_event_details : activity_scheduled_event_details option)
-  ?(activity_schedule_failed_event_details : activity_schedule_failed_event_details option)
-  ?(activity_failed_event_details : activity_failed_event_details option)
-  ?(previous_event_id : int option)
-  ~(id : int)
-  ~(type_ : history_event_type)
-  ~(timestamp_ : float)
-  () : history_event = {
-  map_run_redriven_event_details;
-  map_run_failed_event_details;
-  map_run_started_event_details;
-  state_exited_event_details;
-  state_entered_event_details;
-  lambda_function_timed_out_event_details;
-  lambda_function_succeeded_event_details;
-  lambda_function_start_failed_event_details;
-  lambda_function_scheduled_event_details;
-  lambda_function_schedule_failed_event_details;
-  lambda_function_failed_event_details;
-  map_iteration_aborted_event_details;
-  map_iteration_failed_event_details;
-  map_iteration_succeeded_event_details;
-  map_iteration_started_event_details;
-  map_state_started_event_details;
-  execution_redriven_event_details;
-  execution_timed_out_event_details;
-  execution_aborted_event_details;
-  execution_succeeded_event_details;
-  execution_started_event_details;
-  execution_failed_event_details;
-  task_timed_out_event_details;
-  task_succeeded_event_details;
-  task_submitted_event_details;
-  task_submit_failed_event_details;
-  task_started_event_details;
-  task_start_failed_event_details;
-  task_scheduled_event_details;
-  task_failed_event_details;
-  activity_timed_out_event_details;
-  activity_succeeded_event_details;
-  activity_started_event_details;
-  activity_scheduled_event_details;
-  activity_schedule_failed_event_details;
-  activity_failed_event_details;
-  previous_event_id;
-  id;
-  type_;
-  timestamp_;
-   }
-
-let make_get_execution_history_output 
-  ?(next_token : string option) ~(events : history_event list) ()
-: get_execution_history_output = { next_token; events; 
-}
-
-let make_get_execution_history_input 
-  ?(include_execution_data : bool option)
-  ?(next_token : string option)
-  ?(reverse_order : bool option)
-  ?(max_results : int option)
-  ~(execution_arn : string)
-  () : get_execution_history_input = {
-  include_execution_data;
-  next_token;
-  reverse_order;
-  max_results;
-  execution_arn;
-   }
-
-let make_get_activity_task_output 
-  ?(input : string option) ?(task_token : string option) ()
-: get_activity_task_output = { input; task_token; 
-}
-
-let make_get_activity_task_input 
-  ?(worker_name : string option) ~(activity_arn : string) ()
-: get_activity_task_input = { worker_name; activity_arn; 
-}
-
-let make_describe_state_machine_output 
-  ?(description : string option)
-  ?(revision_id : string option)
-  ?(label : string option)
-  ?(tracing_configuration : tracing_configuration option)
-  ?(logging_configuration : logging_configuration option)
-  ?(status : state_machine_status option)
-  ~(creation_date : float)
-  ~(type_ : state_machine_type)
-  ~(role_arn : string)
-  ~(definition : string)
-  ~(name : string)
-  ~(state_machine_arn : string)
-  () : describe_state_machine_output = {
-  description;
-  revision_id;
-  label;
-  tracing_configuration;
-  logging_configuration;
-  creation_date;
-  type_;
-  role_arn;
-  definition;
-  status;
-  name;
-  state_machine_arn;
-   }
-
-let make_describe_state_machine_input  ~(state_machine_arn : string) ()
-: describe_state_machine_input = { state_machine_arn; 
-}
-
-let make_describe_state_machine_for_execution_output 
-  ?(revision_id : string option)
-  ?(label : string option)
-  ?(map_run_arn : string option)
-  ?(tracing_configuration : tracing_configuration option)
-  ?(logging_configuration : logging_configuration option)
-  ~(update_date : float)
-  ~(role_arn : string)
-  ~(definition : string)
-  ~(name : string)
-  ~(state_machine_arn : string)
-  () : describe_state_machine_for_execution_output = {
-  revision_id;
-  label;
-  map_run_arn;
-  tracing_configuration;
-  logging_configuration;
-  update_date;
-  role_arn;
-  definition;
-  name;
-  state_machine_arn;
-   }
-
-let make_describe_state_machine_for_execution_input 
-  ~(execution_arn : string) () : describe_state_machine_for_execution_input =
-{ execution_arn;  }
-
-let make_describe_state_machine_alias_output 
-  ?(update_date : float option)
-  ?(creation_date : float option)
-  ?(routing_configuration : routing_configuration_list_item list option)
-  ?(description : string option)
-  ?(name : string option)
-  ?(state_machine_alias_arn : string option)
-  () : describe_state_machine_alias_output = {
-  update_date;
-  creation_date;
-  routing_configuration;
-  description;
-  name;
-  state_machine_alias_arn;
-   }
-
-let make_describe_state_machine_alias_input 
-  ~(state_machine_alias_arn : string) () : describe_state_machine_alias_input
-= { state_machine_alias_arn;  }
-
-let make_describe_map_run_output 
-  ?(redrive_date : float option)
-  ?(redrive_count : int option)
-  ?(stop_date : float option)
-  ~(execution_counts : map_run_execution_counts)
-  ~(item_counts : map_run_item_counts)
-  ~(tolerated_failure_count : int)
-  ~(tolerated_failure_percentage : float)
-  ~(max_concurrency : int)
-  ~(start_date : float)
-  ~(status : map_run_status)
-  ~(execution_arn : string)
-  ~(map_run_arn : string)
-  () : describe_map_run_output = {
-  redrive_date;
-  redrive_count;
-  execution_counts;
-  item_counts;
-  tolerated_failure_count;
-  tolerated_failure_percentage;
-  max_concurrency;
-  stop_date;
-  start_date;
-  status;
-  execution_arn;
-  map_run_arn;
-   }
-
-let make_describe_map_run_input  ~(map_run_arn : string) ()
-: describe_map_run_input = { map_run_arn; 
-}
-
-let make_describe_execution_output 
-  ?(redrive_status_reason : string option)
-  ?(redrive_status : execution_redrive_status option)
-  ?(redrive_date : float option)
-  ?(redrive_count : int option)
-  ?(state_machine_alias_arn : string option)
-  ?(state_machine_version_arn : string option)
-  ?(cause : string option)
-  ?(error : string option)
-  ?(map_run_arn : string option)
-  ?(trace_header : string option)
-  ?(output_details : cloud_watch_events_execution_data_details option)
-  ?(output : string option)
-  ?(input_details : cloud_watch_events_execution_data_details option)
-  ?(input : string option)
-  ?(stop_date : float option)
-  ?(name : string option)
-  ~(start_date : float)
-  ~(status : execution_status)
-  ~(state_machine_arn : string)
-  ~(execution_arn : string)
-  () : describe_execution_output = {
-  redrive_status_reason;
-  redrive_status;
-  redrive_date;
-  redrive_count;
-  state_machine_alias_arn;
-  state_machine_version_arn;
-  cause;
-  error;
-  map_run_arn;
-  trace_header;
-  output_details;
-  output;
-  input_details;
-  input;
-  stop_date;
-  start_date;
-  status;
-  name;
-  state_machine_arn;
-  execution_arn;
-   }
-
-let make_describe_execution_input  ~(execution_arn : string) ()
-: describe_execution_input = { execution_arn; 
-}
-
-let make_describe_activity_output 
-  ~(creation_date : float) ~(name : string) ~(activity_arn : string) ()
-: describe_activity_output = { creation_date; name; activity_arn; 
-}
-
-let make_describe_activity_input  ~(activity_arn : string) ()
-: describe_activity_input = { activity_arn; 
-}
-
-let make_delete_state_machine_version_output  ()
-: delete_state_machine_version_output =
-()
-
-let make_delete_state_machine_version_input 
-  ~(state_machine_version_arn : string) ()
-: delete_state_machine_version_input = { state_machine_version_arn; 
-}
-
-let make_delete_state_machine_output  () : delete_state_machine_output =
-()
-
-let make_delete_state_machine_input  ~(state_machine_arn : string) ()
-: delete_state_machine_input = { state_machine_arn; 
-}
-
-let make_delete_state_machine_alias_output  ()
-: delete_state_machine_alias_output =
-()
-
-let make_delete_state_machine_alias_input 
-  ~(state_machine_alias_arn : string) () : delete_state_machine_alias_input =
-{ state_machine_alias_arn;  }
-
-let make_delete_activity_output  () : delete_activity_output =
-()
-
-let make_delete_activity_input  ~(activity_arn : string) ()
-: delete_activity_input = { activity_arn; 
-}
-
-let make_create_state_machine_output 
-  ?(state_machine_version_arn : string option)
-  ~(creation_date : float)
-  ~(state_machine_arn : string)
-  () : create_state_machine_output = {
-  state_machine_version_arn; creation_date; state_machine_arn; 
-}
-
-let make_create_state_machine_input 
-  ?(version_description : string option)
-  ?(publish : bool option)
-  ?(tracing_configuration : tracing_configuration option)
-  ?(tags : tag list option)
-  ?(logging_configuration : logging_configuration option)
-  ?(type_ : state_machine_type option)
-  ~(role_arn : string)
-  ~(definition : string)
-  ~(name : string)
-  () : create_state_machine_input = {
-  version_description;
-  publish;
-  tracing_configuration;
-  tags;
-  logging_configuration;
-  type_;
-  role_arn;
-  definition;
-  name;
-   }
-
-let make_create_state_machine_alias_output 
-  ~(creation_date : float) ~(state_machine_alias_arn : string) ()
-: create_state_machine_alias_output = {
-  creation_date; state_machine_alias_arn; 
-}
-
-let make_create_state_machine_alias_input 
-  ?(description : string option)
-  ~(routing_configuration : routing_configuration_list_item list)
-  ~(name : string)
-  () : create_state_machine_alias_input = {
-  routing_configuration; name; description; 
-}
-
-let make_create_activity_output 
-  ~(creation_date : float) ~(activity_arn : string) ()
-: create_activity_output = { creation_date; activity_arn; 
-}
-
-let make_create_activity_input  ?(tags : tag list option) ~(name : string) ()
-: create_activity_input = { tags; name; 
-}
-
+let make_validate_state_machine_definition_diagnostic
+  ?location:(location_ : string option) ~message:(message_ : string)
+  ~code:(code_ : string)
+  ~severity:(severity_ : validate_state_machine_definition_severity) () =
+  ({
+     location = location_;
+     message = message_;
+     code = code_;
+     severity = severity_
+   } : validate_state_machine_definition_diagnostic)
+let make_validate_state_machine_definition_output
+  ~diagnostics:(diagnostics_ :
+                 validate_state_machine_definition_diagnostic list)
+  ~result:(result_ : validate_state_machine_definition_result_code) () =
+  ({ diagnostics = diagnostics_; result = result_ } : validate_state_machine_definition_output)
+let make_validate_state_machine_definition_input
+  ?type_:(type__ : state_machine_type option)
+  ~definition:(definition_ : string) () =
+  ({ type_ = type__; definition = definition_ } : validate_state_machine_definition_input)
+let make_update_state_machine_output
+  ?state_machine_version_arn:(state_machine_version_arn_ : string option)
+  ?revision_id:(revision_id_ : string option)
+  ~update_date:(update_date_ : CoreTypes.Timestamp.t) () =
+  ({
+     state_machine_version_arn = state_machine_version_arn_;
+     revision_id = revision_id_;
+     update_date = update_date_
+   } : update_state_machine_output)
+let make_cloud_watch_logs_log_group
+  ?log_group_arn:(log_group_arn_ : string option) () =
+  ({ log_group_arn = log_group_arn_ } : cloud_watch_logs_log_group)
+let make_log_destination
+  ?cloud_watch_logs_log_group:(cloud_watch_logs_log_group_ :
+                                cloud_watch_logs_log_group option)
+  () =
+  ({ cloud_watch_logs_log_group = cloud_watch_logs_log_group_ } : log_destination)
+let make_logging_configuration
+  ?destinations:(destinations_ : log_destination list option)
+  ?include_execution_data:(include_execution_data_ : bool option)
+  ?level:(level_ : log_level option) () =
+  ({
+     destinations = destinations_;
+     include_execution_data = include_execution_data_;
+     level = level_
+   } : logging_configuration)
+let make_tracing_configuration ?enabled:(enabled_ : bool option) () =
+  ({ enabled = enabled_ } : tracing_configuration)
+let make_update_state_machine_input
+  ?version_description:(version_description_ : string option)
+  ?publish:(publish_ : bool option)
+  ?tracing_configuration:(tracing_configuration_ :
+                           tracing_configuration option)
+  ?logging_configuration:(logging_configuration_ :
+                           logging_configuration option)
+  ?role_arn:(role_arn_ : string option)
+  ?definition:(definition_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     version_description = version_description_;
+     publish = publish_;
+     tracing_configuration = tracing_configuration_;
+     logging_configuration = logging_configuration_;
+     role_arn = role_arn_;
+     definition = definition_;
+     state_machine_arn = state_machine_arn_
+   } : update_state_machine_input)
+let make_update_state_machine_alias_output
+  ~update_date:(update_date_ : CoreTypes.Timestamp.t) () =
+  ({ update_date = update_date_ } : update_state_machine_alias_output)
+let make_routing_configuration_list_item ~weight:(weight_ : int)
+  ~state_machine_version_arn:(state_machine_version_arn_ : string) () =
+  ({ weight = weight_; state_machine_version_arn = state_machine_version_arn_
+   } : routing_configuration_list_item)
+let make_update_state_machine_alias_input
+  ?routing_configuration:(routing_configuration_ :
+                           routing_configuration_list_item list option)
+  ?description:(description_ : string option)
+  ~state_machine_alias_arn:(state_machine_alias_arn_ : string) () =
+  ({
+     routing_configuration = routing_configuration_;
+     description = description_;
+     state_machine_alias_arn = state_machine_alias_arn_
+   } : update_state_machine_alias_input)
+let make_update_map_run_output () = (() : unit)
+let make_update_map_run_input
+  ?tolerated_failure_count:(tolerated_failure_count_ : int option)
+  ?tolerated_failure_percentage:(tolerated_failure_percentage_ :
+                                  float option)
+  ?max_concurrency:(max_concurrency_ : int option)
+  ~map_run_arn:(map_run_arn_ : string) () =
+  ({
+     tolerated_failure_count = tolerated_failure_count_;
+     tolerated_failure_percentage = tolerated_failure_percentage_;
+     max_concurrency = max_concurrency_;
+     map_run_arn = map_run_arn_
+   } : update_map_run_input)
+let make_untag_resource_output () = (() : unit)
+let make_untag_resource_input ~tag_keys:(tag_keys_ : string list)
+  ~resource_arn:(resource_arn_ : string) () =
+  ({ tag_keys = tag_keys_; resource_arn = resource_arn_ } : untag_resource_input)
+let make_inspection_data_request ?body:(body_ : string option)
+  ?headers:(headers_ : string option) ?url:(url_ : string option)
+  ?method_:(method__ : string option) ?protocol:(protocol_ : string option)
+  () =
+  ({
+     body = body_;
+     headers = headers_;
+     url = url_;
+     method_ = method__;
+     protocol = protocol_
+   } : inspection_data_request)
+let make_inspection_data_response ?body:(body_ : string option)
+  ?headers:(headers_ : string option)
+  ?status_message:(status_message_ : string option)
+  ?status_code:(status_code_ : string option)
+  ?protocol:(protocol_ : string option) () =
+  ({
+     body = body_;
+     headers = headers_;
+     status_message = status_message_;
+     status_code = status_code_;
+     protocol = protocol_
+   } : inspection_data_response)
+let make_inspection_data
+  ?response:(response_ : inspection_data_response option)
+  ?request:(request_ : inspection_data_request option)
+  ?after_result_path:(after_result_path_ : string option)
+  ?after_result_selector:(after_result_selector_ : string option)
+  ?result:(result_ : string option)
+  ?after_parameters:(after_parameters_ : string option)
+  ?after_input_path:(after_input_path_ : string option)
+  ?input:(input_ : string option) () =
+  ({
+     response = response_;
+     request = request_;
+     after_result_path = after_result_path_;
+     after_result_selector = after_result_selector_;
+     result = result_;
+     after_parameters = after_parameters_;
+     after_input_path = after_input_path_;
+     input = input_
+   } : inspection_data)
+let make_test_state_output ?status:(status_ : test_execution_status option)
+  ?next_state:(next_state_ : string option)
+  ?inspection_data:(inspection_data_ : inspection_data option)
+  ?cause:(cause_ : string option) ?error:(error_ : string option)
+  ?output:(output_ : string option) () =
+  ({
+     status = status_;
+     next_state = next_state_;
+     inspection_data = inspection_data_;
+     cause = cause_;
+     error = error_;
+     output = output_
+   } : test_state_output)
+let make_test_state_input ?reveal_secrets:(reveal_secrets_ : bool option)
+  ?inspection_level:(inspection_level_ : inspection_level option)
+  ?input:(input_ : string option) ~role_arn:(role_arn_ : string)
+  ~definition:(definition_ : string) () =
+  ({
+     reveal_secrets = reveal_secrets_;
+     inspection_level = inspection_level_;
+     input = input_;
+     role_arn = role_arn_;
+     definition = definition_
+   } : test_state_input)
+let make_task_timed_out_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     cause = cause_;
+     error = error_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_timed_out_event_details)
+let make_history_event_execution_data_details
+  ?truncated:(truncated_ : bool option) () =
+  ({ truncated = truncated_ } : history_event_execution_data_details)
+let make_task_succeeded_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     output_details = output_details_;
+     output = output_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_succeeded_event_details)
+let make_task_submitted_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     output_details = output_details_;
+     output = output_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_submitted_event_details)
+let make_task_submit_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     cause = cause_;
+     error = error_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_submit_failed_event_details)
+let make_task_started_event_details ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({ resource = resource_; resource_type = resource_type_ } : task_started_event_details)
+let make_task_start_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     cause = cause_;
+     error = error_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_start_failed_event_details)
+let make_task_credentials ?role_arn:(role_arn_ : string option) () =
+  ({ role_arn = role_arn_ } : task_credentials)
+let make_task_scheduled_event_details
+  ?task_credentials:(task_credentials_ : task_credentials option)
+  ?heartbeat_in_seconds:(heartbeat_in_seconds_ : int option)
+  ?timeout_in_seconds:(timeout_in_seconds_ : int option)
+  ~parameters:(parameters_ : string) ~region:(region_ : string)
+  ~resource:(resource_ : string) ~resource_type:(resource_type_ : string) ()
+  =
+  ({
+     task_credentials = task_credentials_;
+     heartbeat_in_seconds = heartbeat_in_seconds_;
+     timeout_in_seconds = timeout_in_seconds_;
+     parameters = parameters_;
+     region = region_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_scheduled_event_details)
+let make_task_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~resource:(resource_ : string)
+  ~resource_type:(resource_type_ : string) () =
+  ({
+     cause = cause_;
+     error = error_;
+     resource = resource_;
+     resource_type = resource_type_
+   } : task_failed_event_details)
+let make_tag_resource_output () = (() : unit)
+let make_tag ?value:(value_ : string option) ?key:(key_ : string option) () =
+  ({ value = value_; key = key_ } : tag)
+let make_tag_resource_input ~tags:(tags_ : tag list)
+  ~resource_arn:(resource_arn_ : string) () =
+  ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_input)
+let make_stop_execution_output
+  ~stop_date:(stop_date_ : CoreTypes.Timestamp.t) () =
+  ({ stop_date = stop_date_ } : stop_execution_output)
+let make_stop_execution_input ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~execution_arn:(execution_arn_ : string) ()
+  =
+  ({ cause = cause_; error = error_; execution_arn = execution_arn_ } : 
+  stop_execution_input)
+let make_state_machine_version_list_item
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~state_machine_version_arn:(state_machine_version_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     state_machine_version_arn = state_machine_version_arn_
+   } : state_machine_version_list_item)
+let make_state_machine_list_item
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~type_:(type__ : state_machine_type) ~name:(name_ : string)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     type_ = type__;
+     name = name_;
+     state_machine_arn = state_machine_arn_
+   } : state_machine_list_item)
+let make_state_machine_alias_list_item
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~state_machine_alias_arn:(state_machine_alias_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     state_machine_alias_arn = state_machine_alias_arn_
+   } : state_machine_alias_list_item)
+let make_state_exited_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) ~name:(name_ : string) () =
+  ({ output_details = output_details_; output = output_; name = name_ } : 
+  state_exited_event_details)
+let make_state_entered_event_details
+  ?input_details:(input_details_ :
+                   history_event_execution_data_details option)
+  ?input:(input_ : string option) ~name:(name_ : string) () =
+  ({ input_details = input_details_; input = input_; name = name_ } : 
+  state_entered_event_details)
+let make_cloud_watch_events_execution_data_details
+  ?included:(included_ : bool option) () =
+  ({ included = included_ } : cloud_watch_events_execution_data_details)
+let make_billing_details
+  ?billed_duration_in_milliseconds:(billed_duration_in_milliseconds_ :
+                                     int option)
+  ?billed_memory_used_in_m_b:(billed_memory_used_in_m_b_ : int option) () =
+  ({
+     billed_duration_in_milliseconds = billed_duration_in_milliseconds_;
+     billed_memory_used_in_m_b = billed_memory_used_in_m_b_
+   } : billing_details)
+let make_start_sync_execution_output
+  ?billing_details:(billing_details_ : billing_details option)
+  ?trace_header:(trace_header_ : string option)
+  ?output_details:(output_details_ :
+                    cloud_watch_events_execution_data_details option)
+  ?output:(output_ : string option)
+  ?input_details:(input_details_ :
+                   cloud_watch_events_execution_data_details option)
+  ?input:(input_ : string option) ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ?name:(name_ : string option)
+  ?state_machine_arn:(state_machine_arn_ : string option)
+  ~status:(status_ : sync_execution_status)
+  ~stop_date:(stop_date_ : CoreTypes.Timestamp.t)
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     billing_details = billing_details_;
+     trace_header = trace_header_;
+     output_details = output_details_;
+     output = output_;
+     input_details = input_details_;
+     input = input_;
+     cause = cause_;
+     error = error_;
+     status = status_;
+     stop_date = stop_date_;
+     start_date = start_date_;
+     name = name_;
+     state_machine_arn = state_machine_arn_;
+     execution_arn = execution_arn_
+   } : start_sync_execution_output)
+let make_start_sync_execution_input
+  ?trace_header:(trace_header_ : string option)
+  ?input:(input_ : string option) ?name:(name_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     trace_header = trace_header_;
+     input = input_;
+     name = name_;
+     state_machine_arn = state_machine_arn_
+   } : start_sync_execution_input)
+let make_start_execution_output
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({ start_date = start_date_; execution_arn = execution_arn_ } : start_execution_output)
+let make_start_execution_input ?trace_header:(trace_header_ : string option)
+  ?input:(input_ : string option) ?name:(name_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     trace_header = trace_header_;
+     input = input_;
+     name = name_;
+     state_machine_arn = state_machine_arn_
+   } : start_execution_input)
+let make_send_task_success_output () = (() : unit)
+let make_send_task_success_input ~output:(output_ : string)
+  ~task_token:(task_token_ : string) () =
+  ({ output = output_; task_token = task_token_ } : send_task_success_input)
+let make_send_task_heartbeat_output () = (() : unit)
+let make_send_task_heartbeat_input ~task_token:(task_token_ : string) () =
+  ({ task_token = task_token_ } : send_task_heartbeat_input)
+let make_send_task_failure_output () = (() : unit)
+let make_send_task_failure_input ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~task_token:(task_token_ : string) () =
+  ({ cause = cause_; error = error_; task_token = task_token_ } : send_task_failure_input)
+let make_redrive_execution_output
+  ~redrive_date:(redrive_date_ : CoreTypes.Timestamp.t) () =
+  ({ redrive_date = redrive_date_ } : redrive_execution_output)
+let make_redrive_execution_input
+  ?client_token:(client_token_ : string option)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({ client_token = client_token_; execution_arn = execution_arn_ } : 
+  redrive_execution_input)
+let make_publish_state_machine_version_output
+  ~state_machine_version_arn:(state_machine_version_arn_ : string)
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t) () =
+  ({
+     state_machine_version_arn = state_machine_version_arn_;
+     creation_date = creation_date_
+   } : publish_state_machine_version_output)
+let make_publish_state_machine_version_input
+  ?description:(description_ : string option)
+  ?revision_id:(revision_id_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     description = description_;
+     revision_id = revision_id_;
+     state_machine_arn = state_machine_arn_
+   } : publish_state_machine_version_input)
+let make_map_state_started_event_details ?length:(length_ : int option) () =
+  ({ length = length_ } : map_state_started_event_details)
+let make_map_run_started_event_details
+  ?map_run_arn:(map_run_arn_ : string option) () =
+  ({ map_run_arn = map_run_arn_ } : map_run_started_event_details)
+let make_map_run_redriven_event_details
+  ?redrive_count:(redrive_count_ : int option)
+  ?map_run_arn:(map_run_arn_ : string option) () =
+  ({ redrive_count = redrive_count_; map_run_arn = map_run_arn_ } : map_run_redriven_event_details)
+let make_map_run_list_item
+  ?stop_date:(stop_date_ : CoreTypes.Timestamp.t option)
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~state_machine_arn:(state_machine_arn_ : string)
+  ~map_run_arn:(map_run_arn_ : string)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     stop_date = stop_date_;
+     start_date = start_date_;
+     state_machine_arn = state_machine_arn_;
+     map_run_arn = map_run_arn_;
+     execution_arn = execution_arn_
+   } : map_run_list_item)
+let make_map_run_item_counts ?pending_redrive:(pending_redrive_ : int option)
+  ?failures_not_redrivable:(failures_not_redrivable_ : int option)
+  ~results_written:(results_written_ : int) ~total:(total_ : int)
+  ~aborted:(aborted_ : int) ~timed_out:(timed_out_ : int)
+  ~failed:(failed_ : int) ~succeeded:(succeeded_ : int)
+  ~running:(running_ : int) ~pending:(pending_ : int) () =
+  ({
+     pending_redrive = pending_redrive_;
+     failures_not_redrivable = failures_not_redrivable_;
+     results_written = results_written_;
+     total = total_;
+     aborted = aborted_;
+     timed_out = timed_out_;
+     failed = failed_;
+     succeeded = succeeded_;
+     running = running_;
+     pending = pending_
+   } : map_run_item_counts)
+let make_map_run_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : map_run_failed_event_details)
+let make_map_run_execution_counts
+  ?pending_redrive:(pending_redrive_ : int option)
+  ?failures_not_redrivable:(failures_not_redrivable_ : int option)
+  ~results_written:(results_written_ : int) ~total:(total_ : int)
+  ~aborted:(aborted_ : int) ~timed_out:(timed_out_ : int)
+  ~failed:(failed_ : int) ~succeeded:(succeeded_ : int)
+  ~running:(running_ : int) ~pending:(pending_ : int) () =
+  ({
+     pending_redrive = pending_redrive_;
+     failures_not_redrivable = failures_not_redrivable_;
+     results_written = results_written_;
+     total = total_;
+     aborted = aborted_;
+     timed_out = timed_out_;
+     failed = failed_;
+     succeeded = succeeded_;
+     running = running_;
+     pending = pending_
+   } : map_run_execution_counts)
+let make_map_iteration_event_details ?index:(index_ : int option)
+  ?name:(name_ : string option) () =
+  ({ index = index_; name = name_ } : map_iteration_event_details)
+let make_list_tags_for_resource_output ?tags:(tags_ : tag list option) () =
+  ({ tags = tags_ } : list_tags_for_resource_output)
+let make_list_tags_for_resource_input ~resource_arn:(resource_arn_ : string)
+  () = ({ resource_arn = resource_arn_ } : list_tags_for_resource_input)
+let make_list_state_machines_output ?next_token:(next_token_ : string option)
+  ~state_machines:(state_machines_ : state_machine_list_item list) () =
+  ({ next_token = next_token_; state_machines = state_machines_ } : list_state_machines_output)
+let make_list_state_machines_input ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option) () =
+  ({ next_token = next_token_; max_results = max_results_ } : list_state_machines_input)
+let make_list_state_machine_versions_output
+  ?next_token:(next_token_ : string option)
+  ~state_machine_versions:(state_machine_versions_ :
+                            state_machine_version_list_item list)
+  () =
+  ({
+     next_token = next_token_;
+     state_machine_versions = state_machine_versions_
+   } : list_state_machine_versions_output)
+let make_list_state_machine_versions_input
+  ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     state_machine_arn = state_machine_arn_
+   } : list_state_machine_versions_input)
+let make_list_state_machine_aliases_output
+  ?next_token:(next_token_ : string option)
+  ~state_machine_aliases:(state_machine_aliases_ :
+                           state_machine_alias_list_item list)
+  () =
+  ({ next_token = next_token_; state_machine_aliases = state_machine_aliases_
+   } : list_state_machine_aliases_output)
+let make_list_state_machine_aliases_input
+  ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     state_machine_arn = state_machine_arn_
+   } : list_state_machine_aliases_input)
+let make_list_map_runs_output ?next_token:(next_token_ : string option)
+  ~map_runs:(map_runs_ : map_run_list_item list) () =
+  ({ next_token = next_token_; map_runs = map_runs_ } : list_map_runs_output)
+let make_list_map_runs_input ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     next_token = next_token_;
+     max_results = max_results_;
+     execution_arn = execution_arn_
+   } : list_map_runs_input)
+let make_execution_list_item
+  ?redrive_date:(redrive_date_ : CoreTypes.Timestamp.t option)
+  ?redrive_count:(redrive_count_ : int option)
+  ?state_machine_alias_arn:(state_machine_alias_arn_ : string option)
+  ?state_machine_version_arn:(state_machine_version_arn_ : string option)
+  ?item_count:(item_count_ : int option)
+  ?map_run_arn:(map_run_arn_ : string option)
+  ?stop_date:(stop_date_ : CoreTypes.Timestamp.t option)
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~status:(status_ : execution_status) ~name:(name_ : string)
+  ~state_machine_arn:(state_machine_arn_ : string)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     redrive_date = redrive_date_;
+     redrive_count = redrive_count_;
+     state_machine_alias_arn = state_machine_alias_arn_;
+     state_machine_version_arn = state_machine_version_arn_;
+     item_count = item_count_;
+     map_run_arn = map_run_arn_;
+     stop_date = stop_date_;
+     start_date = start_date_;
+     status = status_;
+     name = name_;
+     state_machine_arn = state_machine_arn_;
+     execution_arn = execution_arn_
+   } : execution_list_item)
+let make_list_executions_output ?next_token:(next_token_ : string option)
+  ~executions:(executions_ : execution_list_item list) () =
+  ({ next_token = next_token_; executions = executions_ } : list_executions_output)
+let make_list_executions_input
+  ?redrive_filter:(redrive_filter_ : execution_redrive_filter option)
+  ?map_run_arn:(map_run_arn_ : string option)
+  ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option)
+  ?status_filter:(status_filter_ : execution_status option)
+  ?state_machine_arn:(state_machine_arn_ : string option) () =
+  ({
+     redrive_filter = redrive_filter_;
+     map_run_arn = map_run_arn_;
+     next_token = next_token_;
+     max_results = max_results_;
+     status_filter = status_filter_;
+     state_machine_arn = state_machine_arn_
+   } : list_executions_input)
+let make_activity_list_item
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~name:(name_ : string) ~activity_arn:(activity_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     name = name_;
+     activity_arn = activity_arn_
+   } : activity_list_item)
+let make_list_activities_output ?next_token:(next_token_ : string option)
+  ~activities:(activities_ : activity_list_item list) () =
+  ({ next_token = next_token_; activities = activities_ } : list_activities_output)
+let make_list_activities_input ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option) () =
+  ({ next_token = next_token_; max_results = max_results_ } : list_activities_input)
+let make_lambda_function_timed_out_event_details
+  ?cause:(cause_ : string option) ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : lambda_function_timed_out_event_details)
+let make_lambda_function_succeeded_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) () =
+  ({ output_details = output_details_; output = output_ } : lambda_function_succeeded_event_details)
+let make_lambda_function_start_failed_event_details
+  ?cause:(cause_ : string option) ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : lambda_function_start_failed_event_details)
+let make_lambda_function_scheduled_event_details
+  ?task_credentials:(task_credentials_ : task_credentials option)
+  ?timeout_in_seconds:(timeout_in_seconds_ : int option)
+  ?input_details:(input_details_ :
+                   history_event_execution_data_details option)
+  ?input:(input_ : string option) ~resource:(resource_ : string) () =
+  ({
+     task_credentials = task_credentials_;
+     timeout_in_seconds = timeout_in_seconds_;
+     input_details = input_details_;
+     input = input_;
+     resource = resource_
+   } : lambda_function_scheduled_event_details)
+let make_lambda_function_schedule_failed_event_details
+  ?cause:(cause_ : string option) ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : lambda_function_schedule_failed_event_details)
+let make_lambda_function_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : lambda_function_failed_event_details)
+let make_activity_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : activity_failed_event_details)
+let make_activity_schedule_failed_event_details
+  ?cause:(cause_ : string option) ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : activity_schedule_failed_event_details)
+let make_activity_scheduled_event_details
+  ?heartbeat_in_seconds:(heartbeat_in_seconds_ : int option)
+  ?timeout_in_seconds:(timeout_in_seconds_ : int option)
+  ?input_details:(input_details_ :
+                   history_event_execution_data_details option)
+  ?input:(input_ : string option) ~resource:(resource_ : string) () =
+  ({
+     heartbeat_in_seconds = heartbeat_in_seconds_;
+     timeout_in_seconds = timeout_in_seconds_;
+     input_details = input_details_;
+     input = input_;
+     resource = resource_
+   } : activity_scheduled_event_details)
+let make_activity_started_event_details
+  ?worker_name:(worker_name_ : string option) () =
+  ({ worker_name = worker_name_ } : activity_started_event_details)
+let make_activity_succeeded_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) () =
+  ({ output_details = output_details_; output = output_ } : activity_succeeded_event_details)
+let make_activity_timed_out_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : activity_timed_out_event_details)
+let make_execution_failed_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : execution_failed_event_details)
+let make_execution_started_event_details
+  ?state_machine_version_arn:(state_machine_version_arn_ : string option)
+  ?state_machine_alias_arn:(state_machine_alias_arn_ : string option)
+  ?role_arn:(role_arn_ : string option)
+  ?input_details:(input_details_ :
+                   history_event_execution_data_details option)
+  ?input:(input_ : string option) () =
+  ({
+     state_machine_version_arn = state_machine_version_arn_;
+     state_machine_alias_arn = state_machine_alias_arn_;
+     role_arn = role_arn_;
+     input_details = input_details_;
+     input = input_
+   } : execution_started_event_details)
+let make_execution_succeeded_event_details
+  ?output_details:(output_details_ :
+                    history_event_execution_data_details option)
+  ?output:(output_ : string option) () =
+  ({ output_details = output_details_; output = output_ } : execution_succeeded_event_details)
+let make_execution_aborted_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : execution_aborted_event_details)
+let make_execution_timed_out_event_details ?cause:(cause_ : string option)
+  ?error:(error_ : string option) () =
+  ({ cause = cause_; error = error_ } : execution_timed_out_event_details)
+let make_execution_redriven_event_details
+  ?redrive_count:(redrive_count_ : int option) () =
+  ({ redrive_count = redrive_count_ } : execution_redriven_event_details)
+let make_history_event
+  ?map_run_redriven_event_details:(map_run_redriven_event_details_ :
+                                    map_run_redriven_event_details option)
+  ?map_run_failed_event_details:(map_run_failed_event_details_ :
+                                  map_run_failed_event_details option)
+  ?map_run_started_event_details:(map_run_started_event_details_ :
+                                   map_run_started_event_details option)
+  ?state_exited_event_details:(state_exited_event_details_ :
+                                state_exited_event_details option)
+  ?state_entered_event_details:(state_entered_event_details_ :
+                                 state_entered_event_details option)
+  ?lambda_function_timed_out_event_details:(lambda_function_timed_out_event_details_
+                                             :
+                                             lambda_function_timed_out_event_details
+                                               option)
+  ?lambda_function_succeeded_event_details:(lambda_function_succeeded_event_details_
+                                             :
+                                             lambda_function_succeeded_event_details
+                                               option)
+  ?lambda_function_start_failed_event_details:(lambda_function_start_failed_event_details_
+                                                :
+                                                lambda_function_start_failed_event_details
+                                                  option)
+  ?lambda_function_scheduled_event_details:(lambda_function_scheduled_event_details_
+                                             :
+                                             lambda_function_scheduled_event_details
+                                               option)
+  ?lambda_function_schedule_failed_event_details:(lambda_function_schedule_failed_event_details_
+                                                   :
+                                                   lambda_function_schedule_failed_event_details
+                                                     option)
+  ?lambda_function_failed_event_details:(lambda_function_failed_event_details_
+                                          :
+                                          lambda_function_failed_event_details
+                                            option)
+  ?map_iteration_aborted_event_details:(map_iteration_aborted_event_details_
+                                         :
+                                         map_iteration_event_details option)
+  ?map_iteration_failed_event_details:(map_iteration_failed_event_details_ :
+                                        map_iteration_event_details option)
+  ?map_iteration_succeeded_event_details:(map_iteration_succeeded_event_details_
+                                           :
+                                           map_iteration_event_details option)
+  ?map_iteration_started_event_details:(map_iteration_started_event_details_
+                                         :
+                                         map_iteration_event_details option)
+  ?map_state_started_event_details:(map_state_started_event_details_ :
+                                     map_state_started_event_details option)
+  ?execution_redriven_event_details:(execution_redriven_event_details_ :
+                                      execution_redriven_event_details option)
+  ?execution_timed_out_event_details:(execution_timed_out_event_details_ :
+                                       execution_timed_out_event_details
+                                         option)
+  ?execution_aborted_event_details:(execution_aborted_event_details_ :
+                                     execution_aborted_event_details option)
+  ?execution_succeeded_event_details:(execution_succeeded_event_details_ :
+                                       execution_succeeded_event_details
+                                         option)
+  ?execution_started_event_details:(execution_started_event_details_ :
+                                     execution_started_event_details option)
+  ?execution_failed_event_details:(execution_failed_event_details_ :
+                                    execution_failed_event_details option)
+  ?task_timed_out_event_details:(task_timed_out_event_details_ :
+                                  task_timed_out_event_details option)
+  ?task_succeeded_event_details:(task_succeeded_event_details_ :
+                                  task_succeeded_event_details option)
+  ?task_submitted_event_details:(task_submitted_event_details_ :
+                                  task_submitted_event_details option)
+  ?task_submit_failed_event_details:(task_submit_failed_event_details_ :
+                                      task_submit_failed_event_details option)
+  ?task_started_event_details:(task_started_event_details_ :
+                                task_started_event_details option)
+  ?task_start_failed_event_details:(task_start_failed_event_details_ :
+                                     task_start_failed_event_details option)
+  ?task_scheduled_event_details:(task_scheduled_event_details_ :
+                                  task_scheduled_event_details option)
+  ?task_failed_event_details:(task_failed_event_details_ :
+                               task_failed_event_details option)
+  ?activity_timed_out_event_details:(activity_timed_out_event_details_ :
+                                      activity_timed_out_event_details option)
+  ?activity_succeeded_event_details:(activity_succeeded_event_details_ :
+                                      activity_succeeded_event_details option)
+  ?activity_started_event_details:(activity_started_event_details_ :
+                                    activity_started_event_details option)
+  ?activity_scheduled_event_details:(activity_scheduled_event_details_ :
+                                      activity_scheduled_event_details option)
+  ?activity_schedule_failed_event_details:(activity_schedule_failed_event_details_
+                                            :
+                                            activity_schedule_failed_event_details
+                                              option)
+  ?activity_failed_event_details:(activity_failed_event_details_ :
+                                   activity_failed_event_details option)
+  ?previous_event_id:(previous_event_id_ : int option) ~id:(id_ : int)
+  ~type_:(type__ : history_event_type)
+  ~timestamp_:(timestamp__ : CoreTypes.Timestamp.t) () =
+  ({
+     map_run_redriven_event_details = map_run_redriven_event_details_;
+     map_run_failed_event_details = map_run_failed_event_details_;
+     map_run_started_event_details = map_run_started_event_details_;
+     state_exited_event_details = state_exited_event_details_;
+     state_entered_event_details = state_entered_event_details_;
+     lambda_function_timed_out_event_details =
+       lambda_function_timed_out_event_details_;
+     lambda_function_succeeded_event_details =
+       lambda_function_succeeded_event_details_;
+     lambda_function_start_failed_event_details =
+       lambda_function_start_failed_event_details_;
+     lambda_function_scheduled_event_details =
+       lambda_function_scheduled_event_details_;
+     lambda_function_schedule_failed_event_details =
+       lambda_function_schedule_failed_event_details_;
+     lambda_function_failed_event_details =
+       lambda_function_failed_event_details_;
+     map_iteration_aborted_event_details =
+       map_iteration_aborted_event_details_;
+     map_iteration_failed_event_details = map_iteration_failed_event_details_;
+     map_iteration_succeeded_event_details =
+       map_iteration_succeeded_event_details_;
+     map_iteration_started_event_details =
+       map_iteration_started_event_details_;
+     map_state_started_event_details = map_state_started_event_details_;
+     execution_redriven_event_details = execution_redriven_event_details_;
+     execution_timed_out_event_details = execution_timed_out_event_details_;
+     execution_aborted_event_details = execution_aborted_event_details_;
+     execution_succeeded_event_details = execution_succeeded_event_details_;
+     execution_started_event_details = execution_started_event_details_;
+     execution_failed_event_details = execution_failed_event_details_;
+     task_timed_out_event_details = task_timed_out_event_details_;
+     task_succeeded_event_details = task_succeeded_event_details_;
+     task_submitted_event_details = task_submitted_event_details_;
+     task_submit_failed_event_details = task_submit_failed_event_details_;
+     task_started_event_details = task_started_event_details_;
+     task_start_failed_event_details = task_start_failed_event_details_;
+     task_scheduled_event_details = task_scheduled_event_details_;
+     task_failed_event_details = task_failed_event_details_;
+     activity_timed_out_event_details = activity_timed_out_event_details_;
+     activity_succeeded_event_details = activity_succeeded_event_details_;
+     activity_started_event_details = activity_started_event_details_;
+     activity_scheduled_event_details = activity_scheduled_event_details_;
+     activity_schedule_failed_event_details =
+       activity_schedule_failed_event_details_;
+     activity_failed_event_details = activity_failed_event_details_;
+     previous_event_id = previous_event_id_;
+     id = id_;
+     type_ = type__;
+     timestamp_ = timestamp__
+   } : history_event)
+let make_get_execution_history_output
+  ?next_token:(next_token_ : string option)
+  ~events:(events_ : history_event list) () =
+  ({ next_token = next_token_; events = events_ } : get_execution_history_output)
+let make_get_execution_history_input
+  ?include_execution_data:(include_execution_data_ : bool option)
+  ?next_token:(next_token_ : string option)
+  ?reverse_order:(reverse_order_ : bool option)
+  ?max_results:(max_results_ : int option)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     include_execution_data = include_execution_data_;
+     next_token = next_token_;
+     reverse_order = reverse_order_;
+     max_results = max_results_;
+     execution_arn = execution_arn_
+   } : get_execution_history_input)
+let make_get_activity_task_output ?input:(input_ : string option)
+  ?task_token:(task_token_ : string option) () =
+  ({ input = input_; task_token = task_token_ } : get_activity_task_output)
+let make_get_activity_task_input ?worker_name:(worker_name_ : string option)
+  ~activity_arn:(activity_arn_ : string) () =
+  ({ worker_name = worker_name_; activity_arn = activity_arn_ } : get_activity_task_input)
+let make_describe_state_machine_output
+  ?description:(description_ : string option)
+  ?revision_id:(revision_id_ : string option) ?label:(label_ : string option)
+  ?tracing_configuration:(tracing_configuration_ :
+                           tracing_configuration option)
+  ?logging_configuration:(logging_configuration_ :
+                           logging_configuration option)
+  ?status:(status_ : state_machine_status option)
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~type_:(type__ : state_machine_type) ~role_arn:(role_arn_ : string)
+  ~definition:(definition_ : string) ~name:(name_ : string)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     description = description_;
+     revision_id = revision_id_;
+     label = label_;
+     tracing_configuration = tracing_configuration_;
+     logging_configuration = logging_configuration_;
+     creation_date = creation_date_;
+     type_ = type__;
+     role_arn = role_arn_;
+     definition = definition_;
+     status = status_;
+     name = name_;
+     state_machine_arn = state_machine_arn_
+   } : describe_state_machine_output)
+let make_describe_state_machine_input
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({ state_machine_arn = state_machine_arn_ } : describe_state_machine_input)
+let make_describe_state_machine_for_execution_output
+  ?revision_id:(revision_id_ : string option) ?label:(label_ : string option)
+  ?map_run_arn:(map_run_arn_ : string option)
+  ?tracing_configuration:(tracing_configuration_ :
+                           tracing_configuration option)
+  ?logging_configuration:(logging_configuration_ :
+                           logging_configuration option)
+  ~update_date:(update_date_ : CoreTypes.Timestamp.t)
+  ~role_arn:(role_arn_ : string) ~definition:(definition_ : string)
+  ~name:(name_ : string) ~state_machine_arn:(state_machine_arn_ : string) ()
+  =
+  ({
+     revision_id = revision_id_;
+     label = label_;
+     map_run_arn = map_run_arn_;
+     tracing_configuration = tracing_configuration_;
+     logging_configuration = logging_configuration_;
+     update_date = update_date_;
+     role_arn = role_arn_;
+     definition = definition_;
+     name = name_;
+     state_machine_arn = state_machine_arn_
+   } : describe_state_machine_for_execution_output)
+let make_describe_state_machine_for_execution_input
+  ~execution_arn:(execution_arn_ : string) () =
+  ({ execution_arn = execution_arn_ } : describe_state_machine_for_execution_input)
+let make_describe_state_machine_alias_output
+  ?update_date:(update_date_ : CoreTypes.Timestamp.t option)
+  ?creation_date:(creation_date_ : CoreTypes.Timestamp.t option)
+  ?routing_configuration:(routing_configuration_ :
+                           routing_configuration_list_item list option)
+  ?description:(description_ : string option) ?name:(name_ : string option)
+  ?state_machine_alias_arn:(state_machine_alias_arn_ : string option) () =
+  ({
+     update_date = update_date_;
+     creation_date = creation_date_;
+     routing_configuration = routing_configuration_;
+     description = description_;
+     name = name_;
+     state_machine_alias_arn = state_machine_alias_arn_
+   } : describe_state_machine_alias_output)
+let make_describe_state_machine_alias_input
+  ~state_machine_alias_arn:(state_machine_alias_arn_ : string) () =
+  ({ state_machine_alias_arn = state_machine_alias_arn_ } : describe_state_machine_alias_input)
+let make_describe_map_run_output
+  ?redrive_date:(redrive_date_ : CoreTypes.Timestamp.t option)
+  ?redrive_count:(redrive_count_ : int option)
+  ?stop_date:(stop_date_ : CoreTypes.Timestamp.t option)
+  ~execution_counts:(execution_counts_ : map_run_execution_counts)
+  ~item_counts:(item_counts_ : map_run_item_counts)
+  ~tolerated_failure_count:(tolerated_failure_count_ : int)
+  ~tolerated_failure_percentage:(tolerated_failure_percentage_ : float)
+  ~max_concurrency:(max_concurrency_ : int)
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~status:(status_ : map_run_status) ~execution_arn:(execution_arn_ : string)
+  ~map_run_arn:(map_run_arn_ : string) () =
+  ({
+     redrive_date = redrive_date_;
+     redrive_count = redrive_count_;
+     execution_counts = execution_counts_;
+     item_counts = item_counts_;
+     tolerated_failure_count = tolerated_failure_count_;
+     tolerated_failure_percentage = tolerated_failure_percentage_;
+     max_concurrency = max_concurrency_;
+     stop_date = stop_date_;
+     start_date = start_date_;
+     status = status_;
+     execution_arn = execution_arn_;
+     map_run_arn = map_run_arn_
+   } : describe_map_run_output)
+let make_describe_map_run_input ~map_run_arn:(map_run_arn_ : string) () =
+  ({ map_run_arn = map_run_arn_ } : describe_map_run_input)
+let make_describe_execution_output
+  ?redrive_status_reason:(redrive_status_reason_ : string option)
+  ?redrive_status:(redrive_status_ : execution_redrive_status option)
+  ?redrive_date:(redrive_date_ : CoreTypes.Timestamp.t option)
+  ?redrive_count:(redrive_count_ : int option)
+  ?state_machine_alias_arn:(state_machine_alias_arn_ : string option)
+  ?state_machine_version_arn:(state_machine_version_arn_ : string option)
+  ?cause:(cause_ : string option) ?error:(error_ : string option)
+  ?map_run_arn:(map_run_arn_ : string option)
+  ?trace_header:(trace_header_ : string option)
+  ?output_details:(output_details_ :
+                    cloud_watch_events_execution_data_details option)
+  ?output:(output_ : string option)
+  ?input_details:(input_details_ :
+                   cloud_watch_events_execution_data_details option)
+  ?input:(input_ : string option)
+  ?stop_date:(stop_date_ : CoreTypes.Timestamp.t option)
+  ?name:(name_ : string option)
+  ~start_date:(start_date_ : CoreTypes.Timestamp.t)
+  ~status:(status_ : execution_status)
+  ~state_machine_arn:(state_machine_arn_ : string)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({
+     redrive_status_reason = redrive_status_reason_;
+     redrive_status = redrive_status_;
+     redrive_date = redrive_date_;
+     redrive_count = redrive_count_;
+     state_machine_alias_arn = state_machine_alias_arn_;
+     state_machine_version_arn = state_machine_version_arn_;
+     cause = cause_;
+     error = error_;
+     map_run_arn = map_run_arn_;
+     trace_header = trace_header_;
+     output_details = output_details_;
+     output = output_;
+     input_details = input_details_;
+     input = input_;
+     stop_date = stop_date_;
+     start_date = start_date_;
+     status = status_;
+     name = name_;
+     state_machine_arn = state_machine_arn_;
+     execution_arn = execution_arn_
+   } : describe_execution_output)
+let make_describe_execution_input ~execution_arn:(execution_arn_ : string) ()
+  = ({ execution_arn = execution_arn_ } : describe_execution_input)
+let make_describe_activity_output
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~name:(name_ : string) ~activity_arn:(activity_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     name = name_;
+     activity_arn = activity_arn_
+   } : describe_activity_output)
+let make_describe_activity_input ~activity_arn:(activity_arn_ : string) () =
+  ({ activity_arn = activity_arn_ } : describe_activity_input)
+let make_delete_state_machine_version_output () = (() : unit)
+let make_delete_state_machine_version_input
+  ~state_machine_version_arn:(state_machine_version_arn_ : string) () =
+  ({ state_machine_version_arn = state_machine_version_arn_ } : delete_state_machine_version_input)
+let make_delete_state_machine_output () = (() : unit)
+let make_delete_state_machine_input
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({ state_machine_arn = state_machine_arn_ } : delete_state_machine_input)
+let make_delete_state_machine_alias_output () = (() : unit)
+let make_delete_state_machine_alias_input
+  ~state_machine_alias_arn:(state_machine_alias_arn_ : string) () =
+  ({ state_machine_alias_arn = state_machine_alias_arn_ } : delete_state_machine_alias_input)
+let make_delete_activity_output () = (() : unit)
+let make_delete_activity_input ~activity_arn:(activity_arn_ : string) () =
+  ({ activity_arn = activity_arn_ } : delete_activity_input)
+let make_create_state_machine_output
+  ?state_machine_version_arn:(state_machine_version_arn_ : string option)
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~state_machine_arn:(state_machine_arn_ : string) () =
+  ({
+     state_machine_version_arn = state_machine_version_arn_;
+     creation_date = creation_date_;
+     state_machine_arn = state_machine_arn_
+   } : create_state_machine_output)
+let make_create_state_machine_input
+  ?version_description:(version_description_ : string option)
+  ?publish:(publish_ : bool option)
+  ?tracing_configuration:(tracing_configuration_ :
+                           tracing_configuration option)
+  ?tags:(tags_ : tag list option)
+  ?logging_configuration:(logging_configuration_ :
+                           logging_configuration option)
+  ?type_:(type__ : state_machine_type option) ~role_arn:(role_arn_ : string)
+  ~definition:(definition_ : string) ~name:(name_ : string) () =
+  ({
+     version_description = version_description_;
+     publish = publish_;
+     tracing_configuration = tracing_configuration_;
+     tags = tags_;
+     logging_configuration = logging_configuration_;
+     type_ = type__;
+     role_arn = role_arn_;
+     definition = definition_;
+     name = name_
+   } : create_state_machine_input)
+let make_create_state_machine_alias_output
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~state_machine_alias_arn:(state_machine_alias_arn_ : string) () =
+  ({
+     creation_date = creation_date_;
+     state_machine_alias_arn = state_machine_alias_arn_
+   } : create_state_machine_alias_output)
+let make_create_state_machine_alias_input
+  ?description:(description_ : string option)
+  ~routing_configuration:(routing_configuration_ :
+                           routing_configuration_list_item list)
+  ~name:(name_ : string) () =
+  ({
+     routing_configuration = routing_configuration_;
+     name = name_;
+     description = description_
+   } : create_state_machine_alias_input)
+let make_create_activity_output
+  ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
+  ~activity_arn:(activity_arn_ : string) () =
+  ({ creation_date = creation_date_; activity_arn = activity_arn_ } : 
+  create_activity_output)
+let make_create_activity_input ?tags:(tags_ : tag list option)
+  ~name:(name_ : string) () =
+  ({ tags = tags_; name = name_ } : create_activity_input)

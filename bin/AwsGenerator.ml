@@ -75,15 +75,16 @@ let _ =
         Ast.Organize.partitionOperationShapes ordered
       in
       let serviceDetails = Ast.Trait.extractServiceTrait service.traits in
-      let alias_context =
-        Codegen.Types.create_alias_context
-          (structure_shapes
-          |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
-                 Ast.Shape.{ name; descriptor }
-                 :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
-                        List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
-                            Ast.Shape.{ name; descriptor }))))
+      let shapes =
+        structure_shapes
+        |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
+               Ast.Shape.{ name; descriptor }
+               :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
+                      List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
+                          Ast.Shape.{ name; descriptor })))
       in
+
+      let alias_context = Gen_types.create_alias_context shapes in
       List.iter
         ~f:(fun command ->
           let sdkId = serviceDetails.sdkId |> Str.global_replace (Str.regexp "[ ]") "" in
@@ -99,11 +100,9 @@ let _ =
           match command with
           | TypesCommand ->
               write_output "types.ml" (fun output_fmt ->
-                  Gen_types.generate ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt);
+                  Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context output_fmt);
               write_output "types.mli" (fun output_fmt ->
-                  Gen_types.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context output_fmt)
+                  Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context output_fmt)
           | BuildersCommand ->
               write_output "builders.ml" (fun output_fmt ->
                   Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes
@@ -138,8 +137,8 @@ let _ =
                   Gen_doc.module_doc ~name ~service ~operation_shapes ~structure_shapes output_fmt;
                   Fmt.pf output_fmt "open Smaws_Lib@\n@\n";
                   Fmt.pf output_fmt "(** {1:types Types} *)@\n@\n";
-                  Gen_types.generate_mli ~name ~service ~operation_shapes ~structure_shapes
-                    ~alias_context ~no_open:true output_fmt;
+                  Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context
+                    ~no_open:true output_fmt;
                   Fmt.pf output_fmt "(** {1:builders Builders} *)@\n@\n";
                   Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes
                     ~alias_context ~no_open:true output_fmt;

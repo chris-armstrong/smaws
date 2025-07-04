@@ -1,6 +1,7 @@
 module Auth = Auth
 module Context = Context
 module Config = Config
+module CoreTypes = CoreTypes
 module AwsErrors = AwsErrors
 module Ini = Ini
 module Http = Http

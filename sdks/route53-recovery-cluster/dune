@@ -1,5 +1,5 @@
 (rule
-  (mode promote)
+ (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
   (:input ../../definitions/route53-recovery-cluster.json))
@@ -40,3 +40,8 @@
   operations
   builders)
  (libraries smaws-lib))
+
+(env
+ (dev
+  (flags
+   (:standard -w -33))))

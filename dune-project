@@ -25,14 +25,22 @@
   (fmt
    (>= "0.9.0"))
   base
-  (base64 (>= "3.4.0"))
-  (digestif (>= "1.1.4"))
-  (ppx_deriving (>= "5.0"))
+  (base64
+   (>= "3.4.0"))
+  (digestif
+   (>= "1.1.4"))
+  (ppx_deriving
+   (>= "5.0" :with-dev-setup))
   ocamlgraph
-  (markup (>= "1.0.3"))
-  (uri (>= "4.2.0"))
-  (logs (>= "0.7.0"))
+  (markup
+   (>= "1.0.3"))
+  (uri
+   (>= "4.2.0"))
+  (logs
+   (>= "0.7.0"))
   ppx_compare
+  (ppxlib
+   (>= "0.36.0"))
   (alcotest :with-test)
   (eio_main :with-dev-setup)
   (odoc :with-doc)))
@@ -58,15 +66,26 @@
    (>= "2.0.0"))
   (fmt
    (>= "0.9.0"))
-  (xmlm (>= "1.4.0"))
-  (base64 (>= "3.4.0"))
-  (digestif (>= "1.1.4"))
-  (eio-ssl (>= "0.3.0"))
-  (uri (>= "4.2.0"))
-  (logs (>= "0.7.0"))
-  (httpun (>= "0.2.0"))
-  (httpun-eio (>= "0.2.0"))
-  (ppx_deriving (>= "5.0"))
+  (xmlm
+   (>= "1.4.0"))
+  (base64
+   (>= "3.4.0"))
+  (digestif
+   (>= "1.1.4"))
+  (eio-ssl
+   (>= "0.3.0"))
+  (uri
+   (>= "4.2.0"))
+  (logs
+   (>= "0.7.0"))
+  (httpun
+   (>= "0.2.0"))
+  (httpun-eio
+   (>= "0.2.0"))
+  (ppx_deriving
+   (and
+    (>= "5.0")
+    :build))
   (alcotest :with-test)
   (eio_main :with-dev-setup)
   (odoc :with-doc)))
@@ -75,7 +94,8 @@
  (name smaws-clients)
  (allow_empty)
  (synopsis "Amazon Web Services SDK clients using EIO")
- (description "This is a generated set of AWS SDK clients. It uses EIO for asynchronous requests.")
+ (description
+  "This is a generated set of AWS SDK clients. It uses EIO for asynchronous requests.")
  (authors "Chris Armstrong")
  (maintainers "Chris Armstrong <oss@chrisarmstrong.dev>")
  (homepage https://github.com/chris-armstrong/smaws)
@@ -90,6 +110,3 @@
   smaws-lib
   (alcotest :with-test)
   (odoc :with-doc)))
-
-
-
