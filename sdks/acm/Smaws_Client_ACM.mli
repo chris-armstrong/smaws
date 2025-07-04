@@ -9,6 +9,7 @@ open Smaws_Lib
 
 val service : Smaws_Lib.Service.descriptor
 type nonrec validation_method =
+  | HTTP [@ocaml.doc ""]
   | DNS [@ocaml.doc ""]
   | EMAIL [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validation_exception = {
@@ -17,19 +18,25 @@ type nonrec validation_exception = {
 type nonrec certificate_transparency_logging_preference =
   | DISABLED [@ocaml.doc ""]
   | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec certificate_export =
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec certificate_options =
   {
+  export_: certificate_export option
+    [@ocaml.doc
+      "You can opt in to allow the export of your certificates by specifying [ENABLED].\n"];
   certificate_transparency_logging_preference:
     certificate_transparency_logging_preference option
     [@ocaml.doc
       "You can opt out of certificate transparency logging by specifying the [DISABLED] option. Opt in by specifying [ENABLED]. \n"]}
 [@@ocaml.doc
-  "Structure that contains options for your certificate. Currently, you can use this only to specify whether to opt in to or out of certificate transparency logging. Some browsers require that public certificates issued for your domain be recorded in a log. Certificates that are not logged typically generate a browser error. Transparency makes it possible for you to detect SSL/TLS certificates that have been mistakenly or maliciously issued for your domain. For general information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency}Certificate Transparency Logging}. \n"]
+  "Structure that contains options for your certificate. You can use this structure to specify whether to opt in to or out of certificate transparency logging and export your certificate. \n\n Some browsers require that public certificates issued for your domain be recorded in a log. Certificates that are not logged typically generate a browser error. Transparency makes it possible for you to detect SSL/TLS certificates that have been mistakenly or maliciously issued for your domain. For general information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency}Certificate Transparency Logging}.\n \n  You can export public ACM certificates to use with Amazon Web Services services as well as outside Amazon Web Services Cloud. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html}Certificate Manager exportable public certificate}.\n  "]
 type nonrec update_certificate_options_request =
   {
   options: certificate_options
     [@ocaml.doc
-      "Use to update the options for your certificate. Currently, you can specify whether to add your certificate to a transparency log. Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. \n"];
+      "Use to update the options for your certificate. Currently, you can specify whether to add your certificate to a transparency log or export your certificate. Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. \n"];
   certificate_arn: string
     [@ocaml.doc
       "ARN of the requested certificate to update. This must be of the form:\n\n  \n {[\n arn:aws:acm:us-east-1:{i account}:certificate/{i 12345678-1234-1234-1234-123456789012} \n ]}\n  \n "]}
@@ -69,17 +76,43 @@ type nonrec sort_order =
   | ASCENDING [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec sort_by =
   | CREATED_AT [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec revoke_certificate_response =
+  {
+  certificate_arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the public or private certificate that was revoked.\n"]}
+[@@ocaml.doc ""]
 type nonrec revocation_reason =
   | A_A_COMPROMISE [@ocaml.doc ""]
   | PRIVILEGE_WITHDRAWN [@ocaml.doc ""]
   | REMOVE_FROM_CRL [@ocaml.doc ""]
   | CERTIFICATE_HOLD [@ocaml.doc ""]
   | CESSATION_OF_OPERATION [@ocaml.doc ""]
+  | SUPERSEDED [@ocaml.doc ""]
   | SUPERCEDED [@ocaml.doc ""]
   | AFFILIATION_CHANGED [@ocaml.doc ""]
   | CA_COMPROMISE [@ocaml.doc ""]
   | KEY_COMPROMISE [@ocaml.doc ""]
   | UNSPECIFIED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec revoke_certificate_request =
+  {
+  revocation_reason: revocation_reason
+    [@ocaml.doc "Specifies why you revoked the certificate.\n"];
+  certificate_arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the public or private certificate that will be revoked. The ARN must have the following form: \n\n  [arn:aws:acm:region:account:certificate/12345678-1234-1234-1234-123456789012] \n "]}
+[@@ocaml.doc ""]
+type nonrec resource_in_use_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The certificate is in use by another Amazon Web Services service in the caller's account. Remove the association and try again.\n"]
+type nonrec conflict_exception = {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "You are trying to update a resource or configuration that is already being created or updated. Wait for the previous operation to finish and try again.\n"]
+type nonrec access_denied_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "You do not have access required to perform this action.\n"]
 type nonrec record_type =
   | CNAME [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec resource_record =
@@ -94,10 +127,6 @@ type nonrec resource_record =
       "The name of the DNS record to create in your domain. This is supplied by ACM.\n"]}
 [@@ocaml.doc
   "Contains a DNS record value that you can use to validate ownership or control of a domain. This is used by the [DescribeCertificate] action. \n"]
-type nonrec resource_in_use_exception =
-  {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The certificate is in use by another Amazon Web Services service in the caller's account. Remove the association and try again.\n"]
 type nonrec resend_validation_email_request =
   {
   validation_domain: string
@@ -142,11 +171,16 @@ type nonrec key_algorithm =
   | RSA_3072 [@ocaml.doc ""]
   | RSA_2048 [@ocaml.doc ""]
   | RSA_1024 [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec certificate_managed_by =
+  | CLOUDFRONT [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec request_certificate_request =
   {
+  managed_by: certificate_managed_by option
+    [@ocaml.doc
+      "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"];
   key_algorithm: key_algorithm option
     [@ocaml.doc
-      "Specifies the algorithm of the public and private key pair that your certificate uses to encrypt data. RSA is the default key algorithm for ACM certificates. Elliptic Curve Digital Signature Algorithm (ECDSA) keys are smaller, offering security comparable to RSA keys but with greater computing efficiency. However, ECDSA is not supported by all network clients. Some AWS services may require RSA keys, or only support ECDSA keys of a particular size, while others allow the use of either RSA and ECDSA keys to ensure that compatibility is not broken. Check the requirements for the AWS service where you plan to deploy your certificate.\n\n Default: RSA_2048\n "];
+      "Specifies the algorithm of the public and private key pair that your certificate uses to encrypt data. RSA is the default key algorithm for ACM certificates. Elliptic Curve Digital Signature Algorithm (ECDSA) keys are smaller, offering security comparable to RSA keys but with greater computing efficiency. However, ECDSA is not supported by all network clients. Some Amazon Web Services services may require RSA keys, or only support ECDSA keys of a particular size, while others allow the use of either RSA and ECDSA keys to ensure that compatibility is not broken. Check the requirements for the Amazon Web Services service where you plan to deploy your certificate. For more information about selecting an algorithm, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-certificate.html#algorithms}Key algorithms}.\n\n  Algorithms supported for an ACM certificate request include: \n  \n   {ul\n         {-   [RSA_2048] \n             \n              }\n         {-   [EC_prime256v1] \n             \n              }\n         {-   [EC_secp384r1] \n             \n              }\n         }\n   Other listed algorithms are for imported certificates only. \n   \n      When you request a private PKI certificate signed by a CA from Amazon Web Services Private CA, the specified signing algorithm family (RSA or ECDSA) must match the algorithm family of the CA's secret key.\n      \n        Default: RSA_2048\n        "];
   tags: tag list option
     [@ocaml.doc
       "One or more resource tags to associate with the certificate.\n"];
@@ -155,7 +189,7 @@ type nonrec request_certificate_request =
       "The Amazon Resource Name (ARN) of the private certificate authority (CA) that will be used to issue the certificate. If you do not provide an ARN and you are trying to request a private certificate, ACM will attempt to issue a public certificate. For more information about private CAs, see the {{:https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html}Amazon Web Services Private Certificate Authority} user guide. The ARN must have the following form: \n\n  [arn:aws:acm-pca:region:account:certificate-authority/12345678-1234-1234-1234-123456789012] \n "];
   options: certificate_options option
     [@ocaml.doc
-      "Currently, you can use this parameter to specify whether to add the certificate to a certificate transparency log. Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency}Opting Out of Certificate Transparency Logging}.\n"];
+      "You can use this parameter to specify whether to add the certificate to a certificate transparency log and export your certificate.\n\n Certificate transparency makes it possible to detect SSL/TLS certificates that have been mistakenly or maliciously issued. Certificates that have not been logged typically produce an error message in a browser. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency}Opting Out of Certificate Transparency Logging}.\n \n  You can export public ACM certificates to use with Amazon Web Services services as well as outside the Amazon Web Services Cloud. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html}Certificate Manager exportable public certificate}.\n  "];
   domain_validation_options: domain_validation_option list option
     [@ocaml.doc
       "The domain name that you want ACM to use to send you emails so that you can validate domain ownership.\n"];
@@ -188,16 +222,29 @@ type nonrec domain_status =
   | FAILED [@ocaml.doc ""]
   | SUCCESS [@ocaml.doc ""]
   | PENDING_VALIDATION [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec http_redirect =
+  {
+  redirect_to: string option
+    [@ocaml.doc
+      "The URL hosting the validation token. [RedirectFrom] must return this content or redirect here.\n"];
+  redirect_from: string option
+    [@ocaml.doc
+      "The URL including the domain to be validated. The certificate authority sends [GET] requests here during validation.\n"]}
+[@@ocaml.doc
+  "Contains information for HTTP-based domain validation of certificates requested through Amazon CloudFront and issued by ACM. This field exists only when the certificate type is [AMAZON_ISSUED] and the validation method is [HTTP].\n"]
 type nonrec domain_validation =
   {
   validation_method: validation_method option
     [@ocaml.doc "Specifies the domain validation method.\n"];
+  http_redirect: http_redirect option
+    [@ocaml.doc
+      "Contains information for HTTP-based domain validation of certificates requested through Amazon CloudFront and issued by ACM. This field exists only when the certificate type is [AMAZON_ISSUED] and the validation method is [HTTP].\n"];
   resource_record: resource_record option
     [@ocaml.doc
-      "Contains the CNAME record that you add to your DNS database for domain validation. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html}Use DNS to Validate Domain Ownership}.\n\n Note: The CNAME information that you need does not include the name of your domain. If you include\226\128\168 your domain name in the DNS database CNAME record, validation fails.\226\128\168 For example, if the name is \"_a79865eb4cd1a6ab990a45779b4e0b96.yourdomain.com\", only \"_a79865eb4cd1a6ab990a45779b4e0b96\" must be used.\n "];
+      "Contains the CNAME record that you add to your DNS database for domain validation. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html}Use DNS to Validate Domain Ownership}.\n\n  The CNAME information that you need does not include the name of your domain. If you include your domain name in the DNS database CNAME record, validation fails. For example, if the name is [_a79865eb4cd1a6ab990a45779b4e0b96.yourdomain.com], only [_a79865eb4cd1a6ab990a45779b4e0b96] must be used.\n  \n   "];
   validation_status: domain_status option
     [@ocaml.doc
-      "The validation status of the domain name. This can be one of the following values:\n\n {ul\n       {-   [PENDING_VALIDATION] \n           \n            }\n       {-   SUCCESS\n           \n            }\n       {-   FAILED\n           \n            }\n       }\n  "];
+      "The validation status of the domain name. This can be one of the following values:\n\n {ul\n       {-   [PENDING_VALIDATION] \n           \n            }\n       {-   [SUCCESS]\n           \n           [ ]}\n      \n      {[\n       {-   [FAILED]\n           \n           [ ]}\n      [ ]\n      ]}\n      }\n  "];
   validation_domain: string option
     [@ocaml.doc
       "The domain name that ACM used to send domain validation emails.\n"];
@@ -273,13 +320,6 @@ type nonrec put_account_configuration_request =
   expiry_events: expiry_events_configuration option
     [@ocaml.doc "Specifies expiration events associated with an account.\n"]}
 [@@ocaml.doc ""]
-type nonrec conflict_exception = {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "You are trying to update a resource or configuration that is already being created or updated. Wait for the previous operation to finish and try again.\n"]
-type nonrec access_denied_exception =
-  {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "You do not have access required to perform this action.\n"]
 type nonrec list_tags_for_certificate_response =
   {
   tags: tag list option
@@ -330,6 +370,9 @@ type nonrec extended_key_usage_name =
   | TLS_WEB_SERVER_AUTHENTICATION [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec certificate_summary =
   {
+  managed_by: certificate_managed_by option
+    [@ocaml.doc
+      "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"];
   revoked_at: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "The time at which the certificate was revoked. This value exists only when the certificate status is [REVOKED]. \n"];
@@ -354,6 +397,8 @@ type nonrec certificate_summary =
   in_use: bool option
     [@ocaml.doc
       "Indicates whether the certificate is currently in use by any Amazon Web Services resources.\n"];
+  export_option: certificate_export option
+    [@ocaml.doc "Indicates if export is enabled for the certificate.\n"];
   extended_key_usages: extended_key_usage_name list option
     [@ocaml.doc
       "Contains a list of Extended Key Usage X.509 v3 extension objects. Each object specifies a purpose for which the certificate public key can be used and consists of a name and an object identifier (OID). \n"];
@@ -393,9 +438,15 @@ type nonrec list_certificates_response =
 [@@ocaml.doc ""]
 type nonrec filters =
   {
+  managed_by: certificate_managed_by option
+    [@ocaml.doc
+      "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"];
+  export_option: certificate_export option
+    [@ocaml.doc
+      "Specify [ENABLED] or [DISABLED] to identify certificates that can be exported.\n"];
   key_types: key_algorithm list option
     [@ocaml.doc
-      "Specify one or more algorithms that can be used to generate key pairs.\n\n Default filtering returns only [RSA_1024] and [RSA_2048] certificates that have at least one domain. To return other certificate types, provide the desired type signatures in a comma-separated list. For example, [\"keyTypes\":\n        \\[\"RSA_2048\",\"RSA_4096\"\\]] returns both [RSA_2048] and [RSA_4096] certificates.\n "];
+      "Specify one or more algorithms that can be used to generate key pairs.\n\n Default filtering returns only [RSA_1024] and [RSA_2048] certificates that have at least one domain. To return other certificate types, provide the desired type signatures in a comma-separated list. For example, [\"keyTypes\": \\[\"RSA_2048\",\"RSA_4096\"\\]] returns both [RSA_2048] and [RSA_4096] certificates.\n "];
   key_usage: key_usage_name list option
     [@ocaml.doc "Specify one or more [KeyUsage] extension values.\n"];
   extended_key_usage: extended_key_usage_name list option
@@ -424,7 +475,7 @@ type nonrec list_certificates_request =
                                                                     ""]
 type nonrec invalid_args_exception = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "One or more of of request parameters specified is not valid.\n"]
+                                           "One or more of request parameters specified is not valid.\n"]
 type nonrec key_usage =
   {
   name: key_usage_name option
@@ -566,6 +617,9 @@ type nonrec certificate_detail =
   domain_validation_options: domain_validation list option
     [@ocaml.doc
       "Contains information about the initial validation of each domain name that occurs as a result of the [RequestCertificate] request. This field exists only when the certificate type is [AMAZON_ISSUED]. \n"];
+  managed_by: certificate_managed_by option
+    [@ocaml.doc
+      "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"];
   subject_alternative_names: string list option
     [@ocaml.doc
       "One or more domain names (subject alternative names) included in the certificate. This list contains the domain names that are bound to the public key that is contained in the certificate. The subject alternative names include the canonical domain name (CN) of the certificate and additional domain names that can be used to connect to the website. \n"];
@@ -604,12 +658,18 @@ type nonrec add_tags_to_certificate_request =
 [@@ocaml.doc ""](** {1:builders Builders} *)
 
 val make_certificate_options :
-  ?certificate_transparency_logging_preference:certificate_transparency_logging_preference
-    -> unit -> certificate_options
+  ?export_:certificate_export ->
+    ?certificate_transparency_logging_preference:certificate_transparency_logging_preference
+      -> unit -> certificate_options
 val make_update_certificate_options_request :
   options:certificate_options ->
     certificate_arn:string -> unit -> update_certificate_options_request
 val make_tag : ?value:string -> key:string -> unit -> tag
+val make_revoke_certificate_response :
+  ?certificate_arn:string -> unit -> revoke_certificate_response
+val make_revoke_certificate_request :
+  revocation_reason:revocation_reason ->
+    certificate_arn:string -> unit -> revoke_certificate_request
 val make_resource_record :
   value:string -> type_:record_type -> name:string -> unit -> resource_record
 val make_resend_validation_email_request :
@@ -622,22 +682,26 @@ val make_domain_validation_option :
   validation_domain:string ->
     domain_name:string -> unit -> domain_validation_option
 val make_request_certificate_request :
-  ?key_algorithm:key_algorithm ->
-    ?tags:tag list ->
-      ?certificate_authority_arn:string ->
-        ?options:certificate_options ->
-          ?domain_validation_options:domain_validation_option list ->
-            ?idempotency_token:string ->
-              ?subject_alternative_names:string list ->
-                ?validation_method:validation_method ->
-                  domain_name:string -> unit -> request_certificate_request
+  ?managed_by:certificate_managed_by ->
+    ?key_algorithm:key_algorithm ->
+      ?tags:tag list ->
+        ?certificate_authority_arn:string ->
+          ?options:certificate_options ->
+            ?domain_validation_options:domain_validation_option list ->
+              ?idempotency_token:string ->
+                ?subject_alternative_names:string list ->
+                  ?validation_method:validation_method ->
+                    domain_name:string -> unit -> request_certificate_request
+val make_http_redirect :
+  ?redirect_to:string -> ?redirect_from:string -> unit -> http_redirect
 val make_domain_validation :
   ?validation_method:validation_method ->
-    ?resource_record:resource_record ->
-      ?validation_status:domain_status ->
-        ?validation_domain:string ->
-          ?validation_emails:string list ->
-            domain_name:string -> unit -> domain_validation
+    ?http_redirect:http_redirect ->
+      ?resource_record:resource_record ->
+        ?validation_status:domain_status ->
+          ?validation_domain:string ->
+            ?validation_emails:string list ->
+              domain_name:string -> unit -> domain_validation
 val make_renewal_summary :
   ?renewal_status_reason:failure_reason ->
     updated_at:CoreTypes.Timestamp.t ->
@@ -658,34 +722,38 @@ val make_list_tags_for_certificate_response :
 val make_list_tags_for_certificate_request :
   certificate_arn:string -> unit -> list_tags_for_certificate_request
 val make_certificate_summary :
-  ?revoked_at:CoreTypes.Timestamp.t ->
-    ?imported_at:CoreTypes.Timestamp.t ->
-      ?issued_at:CoreTypes.Timestamp.t ->
-        ?created_at:CoreTypes.Timestamp.t ->
-          ?not_after:CoreTypes.Timestamp.t ->
-            ?not_before:CoreTypes.Timestamp.t ->
-              ?renewal_eligibility:renewal_eligibility ->
-                ?exported:bool ->
-                  ?in_use:bool ->
-                    ?extended_key_usages:extended_key_usage_name list ->
-                      ?key_usages:key_usage_name list ->
-                        ?key_algorithm:key_algorithm ->
-                          ?type_:certificate_type ->
-                            ?status:certificate_status ->
-                              ?has_additional_subject_alternative_names:bool
-                                ->
-                                ?subject_alternative_name_summaries:string
-                                  list ->
-                                  ?domain_name:string ->
-                                    ?certificate_arn:string ->
-                                      unit -> certificate_summary
+  ?managed_by:certificate_managed_by ->
+    ?revoked_at:CoreTypes.Timestamp.t ->
+      ?imported_at:CoreTypes.Timestamp.t ->
+        ?issued_at:CoreTypes.Timestamp.t ->
+          ?created_at:CoreTypes.Timestamp.t ->
+            ?not_after:CoreTypes.Timestamp.t ->
+              ?not_before:CoreTypes.Timestamp.t ->
+                ?renewal_eligibility:renewal_eligibility ->
+                  ?exported:bool ->
+                    ?in_use:bool ->
+                      ?export_option:certificate_export ->
+                        ?extended_key_usages:extended_key_usage_name list ->
+                          ?key_usages:key_usage_name list ->
+                            ?key_algorithm:key_algorithm ->
+                              ?type_:certificate_type ->
+                                ?status:certificate_status ->
+                                  ?has_additional_subject_alternative_names:bool
+                                    ->
+                                    ?subject_alternative_name_summaries:string
+                                      list ->
+                                      ?domain_name:string ->
+                                        ?certificate_arn:string ->
+                                          unit -> certificate_summary
 val make_list_certificates_response :
   ?certificate_summary_list:certificate_summary list ->
     ?next_token:string -> unit -> list_certificates_response
 val make_filters :
-  ?key_types:key_algorithm list ->
-    ?key_usage:key_usage_name list ->
-      ?extended_key_usage:extended_key_usage_name list -> unit -> filters
+  ?managed_by:certificate_managed_by ->
+    ?export_option:certificate_export ->
+      ?key_types:key_algorithm list ->
+        ?key_usage:key_usage_name list ->
+          ?extended_key_usage:extended_key_usage_name list -> unit -> filters
 val make_list_certificates_request :
   ?sort_order:sort_order ->
     ?sort_by:sort_by ->
@@ -745,13 +813,15 @@ val make_certificate_detail :
                                             ?serial:string ->
                                               ?domain_validation_options:domain_validation
                                                 list ->
-                                                ?subject_alternative_names:string
-                                                  list ->
-                                                  ?domain_name:string ->
-                                                    ?certificate_arn:string
-                                                      ->
-                                                      unit ->
-                                                        certificate_detail
+                                                ?managed_by:certificate_managed_by
+                                                  ->
+                                                  ?subject_alternative_names:string
+                                                    list ->
+                                                    ?domain_name:string ->
+                                                      ?certificate_arn:string
+                                                        ->
+                                                        unit ->
+                                                          certificate_detail
 val make_describe_certificate_response :
   ?certificate:certificate_detail -> unit -> describe_certificate_response
 val make_describe_certificate_request :
@@ -817,7 +887,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Exports a private certificate issued by a private certificate authority (CA) for use anywhere. The exported file contains the certificate, the certificate chain, and the encrypted private 2048-bit RSA key associated with the public key that is embedded in the certificate. For security, you must assign a passphrase for the private key when exporting it. \n\n For information about exporting and formatting a certificate using the ACM console or CLI, see {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-export-private.html}Export a Private Certificate}.\n "]
+     "Exports a private certificate issued by a private certificate authority (CA) or public certificate for use anywhere. The exported file contains the certificate, the certificate chain, and the encrypted private key associated with the public key that is embedded in the certificate. For security, you must assign a passphrase for the private key when exporting it. \n\n For information about exporting and formatting a certificate using the ACM console or CLI, see {{:https://docs.aws.amazon.com/acm/latest/userguide/export-private.html}Export a private certificate} and {{:https://docs.aws.amazon.com/acm/latest/userguide/export-public-certificate}Export a public certificate}.\n "]
 module GetAccountConfiguration :
 sig
   val request :
@@ -841,7 +911,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Retrieves an Amazon-issued certificate and its certificate chain. The chain consists of the certificate of the issuing CA and the intermediate certificates of any other subordinate CAs. All of the certificates are base64 encoded. You can use {{:https://wiki.openssl.org/index.php/Command_Line_Utilities}OpenSSL} to decode the certificates and inspect individual fields.\n"]
+     "Retrieves a certificate and its certificate chain. The certificate may be either a public or private certificate issued using the ACM [RequestCertificate] action, or a certificate imported into ACM using the [ImportCertificate] action. The chain consists of the certificate of the issuing CA and the intermediate certificates of any other subordinate CAs. All of the certificates are base64 encoded. You can use {{:https://wiki.openssl.org/index.php/Command_Line_Utilities}OpenSSL} to decode the certificates and inspect individual fields.\n"]
 module ImportCertificate :
 sig
   val request :
@@ -857,7 +927,7 @@ sig
           | `TagPolicyException of tag_policy_exception 
           | `TooManyTagsException of too_many_tags_exception ]) result
 end[@@ocaml.doc
-     "Imports a certificate into Certificate Manager (ACM) to use with services that are integrated with ACM. Note that {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html}integrated services} allow only certificate types and keys they support to be associated with their resources. Further, their support differs depending on whether the certificate is imported into IAM or into ACM. For more information, see the documentation for each service. For more information about importing certificates into ACM, see {{:https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html}Importing Certificates} in the {i Certificate Manager User Guide}. \n\n  ACM does not provide {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html}managed renewal} for certificates that you import.\n  \n    Note the following guidelines when importing third party certificates:\n    \n     {ul\n           {-  You must enter the private key that matches the certificate you are importing.\n               \n                }\n           {-  The private key must be unencrypted. You cannot import a private key that is protected by a password or a passphrase.\n               \n                }\n           {-  The private key must be no larger than 5 KB (5,120 bytes).\n               \n                }\n           {-  If the certificate you are importing is not self-signed, you must enter its certificate chain.\n               \n                }\n           {-  If a certificate chain is included, the issuer must be the subject of one of the certificates in the chain.\n               \n                }\n           {-  The certificate, private key, and certificate chain must be PEM-encoded.\n               \n                }\n           {-  The current time must be between the [Not Before] and [Not\n            After] certificate fields.\n               \n                }\n           {-  The [Issuer] field must not be empty.\n               \n                }\n           {-  The OCSP authority URL, if present, must not exceed 1000 characters.\n               \n                }\n           {-  To import a new certificate, omit the [CertificateArn] argument. Include this argument only when you want to replace a previously imported certificate.\n               \n                }\n           {-  When you import a certificate by using the CLI, you must specify the certificate, the certificate chain, and the private key by their file names preceded by [fileb://]. For example, you can specify a certificate saved in the [C:\\temp] folder as [fileb://C:\\temp\\certificate_to_import.pem]. If you are making an HTTP or HTTPS Query request, include these arguments as BLOBs. \n               \n                }\n           {-  When you import a certificate by using an SDK, you must specify the certificate, the certificate chain, and the private key files in the manner required by the programming language you're using. \n               \n                }\n           {-  The cryptographic algorithm of an imported certificate must match the algorithm of the signing CA. For example, if the signing CA key type is RSA, then the certificate key type must also be RSA.\n               \n                }\n           }\n   This operation returns the {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon Resource Name (ARN)} of the imported certificate.\n   "]
+     "Imports a certificate into Certificate Manager (ACM) to use with services that are integrated with ACM. Note that {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html}integrated services} allow only certificate types and keys they support to be associated with their resources. Further, their support differs depending on whether the certificate is imported into IAM or into ACM. For more information, see the documentation for each service. For more information about importing certificates into ACM, see {{:https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html}Importing Certificates} in the {i Certificate Manager User Guide}. \n\n  ACM does not provide {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html}managed renewal} for certificates that you import.\n  \n    Note the following guidelines when importing third party certificates:\n    \n     {ul\n           {-  You must enter the private key that matches the certificate you are importing.\n               \n                }\n           {-  The private key must be unencrypted. You cannot import a private key that is protected by a password or a passphrase.\n               \n                }\n           {-  The private key must be no larger than 5 KB (5,120 bytes).\n               \n                }\n           {-  The certificate, private key, and certificate chain must be PEM-encoded.\n               \n                }\n           {-  The current time must be between the [Not Before] and [Not After] certificate fields.\n               \n                }\n           {-  The [Issuer] field must not be empty.\n               \n                }\n           {-  The OCSP authority URL, if present, must not exceed 1000 characters.\n               \n                }\n           {-  To import a new certificate, omit the [CertificateArn] argument. Include this argument only when you want to replace a previously imported certificate.\n               \n                }\n           {-  When you import a certificate by using the CLI, you must specify the certificate, the certificate chain, and the private key by their file names preceded by [fileb://]. For example, you can specify a certificate saved in the [C:\\temp] folder as [fileb://C:\\temp\\certificate_to_import.pem]. If you are making an HTTP or HTTPS Query request, include these arguments as BLOBs. \n               \n                }\n           {-  When you import a certificate by using an SDK, you must specify the certificate, the certificate chain, and the private key files in the manner required by the programming language you're using. \n               \n                }\n           {-  The cryptographic algorithm of an imported certificate must match the algorithm of the signing CA. For example, if the signing CA key type is RSA, then the certificate key type must also be RSA.\n               \n                }\n           }\n   This operation returns the {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon Resource Name (ARN)} of the imported certificate.\n   "]
 module ListCertificates :
 sig
   val request :
@@ -917,10 +987,11 @@ sig
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
+          | `RequestInProgressException of request_in_progress_exception 
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Renews an eligible ACM certificate. At this time, only exported private certificates can be renewed with this operation. In order to renew your Amazon Web Services Private CA certificates with ACM, you must first {{:https://docs.aws.amazon.com/privateca/latest/userguide/PcaPermissions.html}grant the ACM service principal permission to do so}. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/manual-renewal.html}Testing Managed Renewal} in the ACM User Guide.\n"]
+     "Renews an {{:https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html}eligible ACM certificate}. In order to renew your Amazon Web Services Private CA certificates with ACM, you must first {{:https://docs.aws.amazon.com/privateca/latest/userguide/PcaPermissions.html}grant the ACM service principal permission to do so}. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/manual-renewal.html}Testing Managed Renewal} in the ACM User Guide.\n"]
 module RequestCertificate :
 sig
   val request :
@@ -937,7 +1008,7 @@ sig
           | `TagPolicyException of tag_policy_exception 
           | `TooManyTagsException of too_many_tags_exception ]) result
 end[@@ocaml.doc
-     "Requests an ACM certificate for use with other Amazon Web Services services. To request an ACM certificate, you must specify a fully qualified domain name (FQDN) in the [DomainName] parameter. You can also specify additional FQDNs in the [SubjectAlternativeNames] parameter. \n\n If you are requesting a private certificate, domain validation is not required. If you are requesting a public certificate, each domain name that you specify must be validated to verify that you own or control the domain. You can use {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html}DNS validation} or {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-email.html}email validation}. We recommend that you use DNS validation. ACM issues public certificates after receiving approval from the domain owner. \n \n   ACM behavior differs from the {{:https://datatracker.ietf.org/doc/html/rfc6125#appendix-B.2}RFC 6125} specification of the certificate validation process. ACM first checks for a Subject Alternative Name, and, if it finds one, ignores the common name (CN).\n   \n     After successful completion of the [RequestCertificate] action, there is a delay of several seconds before you can retrieve information about the new certificate.\n     "]
+     "Requests an ACM certificate for use with other Amazon Web Services services. To request an ACM certificate, you must specify a fully qualified domain name (FQDN) in the [DomainName] parameter. You can also specify additional FQDNs in the [SubjectAlternativeNames] parameter. \n\n If you are requesting a private certificate, domain validation is not required. If you are requesting a public certificate, each domain name that you specify must be validated to verify that you own or control the domain. You can use {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html}DNS validation} or {{:https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-email.html}email validation}. We recommend that you use DNS validation.\n \n   ACM behavior differs from the {{:https://datatracker.ietf.org/doc/html/rfc6125#appendix-B.2}RFC 6125} specification of the certificate validation process. ACM first checks for a Subject Alternative Name, and, if it finds one, ignores the common name (CN).\n   \n     After successful completion of the [RequestCertificate] action, there is a delay of several seconds before you can retrieve information about the new certificate.\n     "]
 module ResendValidationEmail :
 sig
   val request :
@@ -953,6 +1024,21 @@ sig
           result
 end[@@ocaml.doc
      "Resends the email that requests domain ownership validation. The domain owner or an authorized representative must approve the ACM certificate before it can be issued. The certificate can be approved by clicking a link in the mail to navigate to the Amazon certificate approval website and then clicking {b I Approve}. However, the validation email can be blocked by spam filters. Therefore, if you do not receive the original mail, you can request that the mail be resent within 72 hours of requesting the ACM certificate. If more than 72 hours have elapsed since your original request or since your last attempt to resend validation mail, you must request a new certificate. For more information about setting up your contact email addresses, see {{:https://docs.aws.amazon.com/acm/latest/userguide/setup-email.html}Configure Email for your Domain}. \n"]
+module RevokeCertificate :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      revoke_certificate_request ->
+        (revoke_certificate_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ConflictException of conflict_exception 
+          | `InvalidArnException of invalid_arn_exception 
+          | `ResourceInUseException of resource_in_use_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ThrottlingException of throttling_exception ]) result
+end[@@ocaml.doc
+     "Revokes a public ACM certificate. You can only revoke certificates that have been previously exported.\n"]
 module UpdateCertificateOptions :
 sig
   val request :
@@ -966,4 +1052,4 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Updates a certificate. Currently, you can use this function to specify whether to opt in to or out of recording your certificate in a certificate transparency log. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency} Opting Out of Certificate Transparency Logging}. \n"]
+     "Updates a certificate. You can use this function to specify whether to opt in to or out of recording your certificate in a certificate transparency log and exporting. For more information, see {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency} Opting Out of Certificate Transparency Logging} and {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html}Certificate Manager Exportable Managed Certificates}.\n"]

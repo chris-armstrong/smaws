@@ -2,7 +2,10 @@ open Smaws_Lib.Json.SerializeHelpers
 open Types
 let base_unit_to_yojson = unit_to_yojson
 let validation_method_to_yojson (x : validation_method) =
-  match x with | DNS -> `String "DNS" | EMAIL -> `String "EMAIL"
+  match x with
+  | HTTP -> `String "HTTP"
+  | DNS -> `String "DNS"
+  | EMAIL -> `String "EMAIL"
 let validation_exception_message_to_yojson = string_to_yojson
 let validation_exception_to_yojson (x : validation_exception) =
   assoc_to_yojson
@@ -17,12 +20,16 @@ let certificate_transparency_logging_preference_to_yojson
   match x with
   | DISABLED -> `String "DISABLED"
   | ENABLED -> `String "ENABLED"
+let certificate_export_to_yojson (x : certificate_export) =
+  match x with
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
 let certificate_options_to_yojson (x : certificate_options) =
   assoc_to_yojson
-    [("CertificateTransparencyLoggingPreference",
-       (option_to_yojson
-          certificate_transparency_logging_preference_to_yojson
-          x.certificate_transparency_logging_preference))]
+    [("Export", (option_to_yojson certificate_export_to_yojson x.export_));
+    ("CertificateTransparencyLoggingPreference",
+      (option_to_yojson certificate_transparency_logging_preference_to_yojson
+         x.certificate_transparency_logging_preference))]
 let update_certificate_options_request_to_yojson
   (x : update_certificate_options_request) =
   assoc_to_yojson
@@ -67,6 +74,9 @@ let sort_order_to_yojson (x : sort_order) =
 let sort_by_to_yojson (x : sort_by) =
   match x with | CREATED_AT -> `String "CREATED_AT"
 let service_error_message_to_yojson = string_to_yojson
+let revoke_certificate_response_to_yojson (x : revoke_certificate_response) =
+  assoc_to_yojson
+    [("CertificateArn", (option_to_yojson arn_to_yojson x.certificate_arn))]
 let revocation_reason_to_yojson (x : revocation_reason) =
   match x with
   | A_A_COMPROMISE -> `String "A_A_COMPROMISE"
@@ -74,11 +84,27 @@ let revocation_reason_to_yojson (x : revocation_reason) =
   | REMOVE_FROM_CRL -> `String "REMOVE_FROM_CRL"
   | CERTIFICATE_HOLD -> `String "CERTIFICATE_HOLD"
   | CESSATION_OF_OPERATION -> `String "CESSATION_OF_OPERATION"
+  | SUPERSEDED -> `String "SUPERSEDED"
   | SUPERCEDED -> `String "SUPERCEDED"
   | AFFILIATION_CHANGED -> `String "AFFILIATION_CHANGED"
   | CA_COMPROMISE -> `String "CA_COMPROMISE"
   | KEY_COMPROMISE -> `String "KEY_COMPROMISE"
   | UNSPECIFIED -> `String "UNSPECIFIED"
+let revoke_certificate_request_to_yojson (x : revoke_certificate_request) =
+  assoc_to_yojson
+    [("RevocationReason",
+       (Some (revocation_reason_to_yojson x.revocation_reason)));
+    ("CertificateArn", (Some (arn_to_yojson x.certificate_arn)))]
+let resource_in_use_exception_to_yojson (x : resource_in_use_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson string__to_yojson x.message))]
+let conflict_exception_to_yojson (x : conflict_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson string__to_yojson x.message))]
+let access_denied_exception_to_yojson (x : access_denied_exception) =
+  assoc_to_yojson
+    [("Message",
+       (option_to_yojson service_error_message_to_yojson x.message))]
 let record_type_to_yojson (x : record_type) =
   match x with | CNAME -> `String "CNAME"
 let resource_record_to_yojson (x : resource_record) =
@@ -86,9 +112,6 @@ let resource_record_to_yojson (x : resource_record) =
     [("Value", (Some (string__to_yojson x.value)));
     ("Type", (Some (record_type_to_yojson x.type_)));
     ("Name", (Some (string__to_yojson x.name)))]
-let resource_in_use_exception_to_yojson (x : resource_in_use_exception) =
-  assoc_to_yojson
-    [("message", (option_to_yojson string__to_yojson x.message))]
 let domain_name_string_to_yojson = string_to_yojson
 let resend_validation_email_request_to_yojson
   (x : resend_validation_email_request) =
@@ -129,10 +152,14 @@ let key_algorithm_to_yojson (x : key_algorithm) =
   | RSA_3072 -> `String "RSA_3072"
   | RSA_2048 -> `String "RSA_2048"
   | RSA_1024 -> `String "RSA_1024"
+let certificate_managed_by_to_yojson (x : certificate_managed_by) =
+  match x with | CLOUDFRONT -> `String "CLOUDFRONT"
 let request_certificate_request_to_yojson (x : request_certificate_request) =
   assoc_to_yojson
-    [("KeyAlgorithm",
-       (option_to_yojson key_algorithm_to_yojson x.key_algorithm));
+    [("ManagedBy",
+       (option_to_yojson certificate_managed_by_to_yojson x.managed_by));
+    ("KeyAlgorithm",
+      (option_to_yojson key_algorithm_to_yojson x.key_algorithm));
     ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("CertificateAuthorityArn",
       (option_to_yojson pca_arn_to_yojson x.certificate_authority_arn));
@@ -164,10 +191,16 @@ let domain_status_to_yojson (x : domain_status) =
   | FAILED -> `String "FAILED"
   | SUCCESS -> `String "SUCCESS"
   | PENDING_VALIDATION -> `String "PENDING_VALIDATION"
+let http_redirect_to_yojson (x : http_redirect) =
+  assoc_to_yojson
+    [("RedirectTo", (option_to_yojson string__to_yojson x.redirect_to));
+    ("RedirectFrom", (option_to_yojson string__to_yojson x.redirect_from))]
 let domain_validation_to_yojson (x : domain_validation) =
   assoc_to_yojson
     [("ValidationMethod",
        (option_to_yojson validation_method_to_yojson x.validation_method));
+    ("HttpRedirect",
+      (option_to_yojson http_redirect_to_yojson x.http_redirect));
     ("ResourceRecord",
       (option_to_yojson resource_record_to_yojson x.resource_record));
     ("ValidationStatus",
@@ -232,13 +265,6 @@ let put_account_configuration_request_to_yojson
        (Some (idempotency_token_to_yojson x.idempotency_token)));
     ("ExpiryEvents",
       (option_to_yojson expiry_events_configuration_to_yojson x.expiry_events))]
-let conflict_exception_to_yojson (x : conflict_exception) =
-  assoc_to_yojson
-    [("message", (option_to_yojson string__to_yojson x.message))]
-let access_denied_exception_to_yojson (x : access_denied_exception) =
-  assoc_to_yojson
-    [("Message",
-       (option_to_yojson service_error_message_to_yojson x.message))]
 let private_key_blob_to_yojson = blob_to_yojson
 let private_key_to_yojson = string_to_yojson
 let passphrase_blob_to_yojson = blob_to_yojson
@@ -299,7 +325,9 @@ let extended_key_usage_names_to_yojson tree =
   list_to_yojson extended_key_usage_name_to_yojson tree
 let certificate_summary_to_yojson (x : certificate_summary) =
   assoc_to_yojson
-    [("RevokedAt", (option_to_yojson t_stamp_to_yojson x.revoked_at));
+    [("ManagedBy",
+       (option_to_yojson certificate_managed_by_to_yojson x.managed_by));
+    ("RevokedAt", (option_to_yojson t_stamp_to_yojson x.revoked_at));
     ("ImportedAt", (option_to_yojson t_stamp_to_yojson x.imported_at));
     ("IssuedAt", (option_to_yojson t_stamp_to_yojson x.issued_at));
     ("CreatedAt", (option_to_yojson t_stamp_to_yojson x.created_at));
@@ -309,6 +337,8 @@ let certificate_summary_to_yojson (x : certificate_summary) =
       (option_to_yojson renewal_eligibility_to_yojson x.renewal_eligibility));
     ("Exported", (option_to_yojson nullable_boolean_to_yojson x.exported));
     ("InUse", (option_to_yojson nullable_boolean_to_yojson x.in_use));
+    ("ExportOption",
+      (option_to_yojson certificate_export_to_yojson x.export_option));
     ("ExtendedKeyUsages",
       (option_to_yojson extended_key_usage_names_to_yojson
          x.extended_key_usages));
@@ -344,8 +374,11 @@ let key_algorithm_list_to_yojson tree =
   list_to_yojson key_algorithm_to_yojson tree
 let filters_to_yojson (x : filters) =
   assoc_to_yojson
-    [("keyTypes",
-       (option_to_yojson key_algorithm_list_to_yojson x.key_types));
+    [("managedBy",
+       (option_to_yojson certificate_managed_by_to_yojson x.managed_by));
+    ("exportOption",
+      (option_to_yojson certificate_export_to_yojson x.export_option));
+    ("keyTypes", (option_to_yojson key_algorithm_list_to_yojson x.key_types));
     ("keyUsage",
       (option_to_yojson key_usage_filter_list_to_yojson x.key_usage));
     ("extendedKeyUsage",
@@ -451,6 +484,8 @@ let certificate_detail_to_yojson (x : certificate_detail) =
     ("DomainValidationOptions",
       (option_to_yojson domain_validation_list_to_yojson
          x.domain_validation_options));
+    ("ManagedBy",
+      (option_to_yojson certificate_managed_by_to_yojson x.managed_by));
     ("SubjectAlternativeNames",
       (option_to_yojson domain_list_to_yojson x.subject_alternative_names));
     ("DomainName",

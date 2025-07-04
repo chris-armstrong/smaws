@@ -364,6 +364,9 @@ module RenewCertificate =
           | (_, "InvalidArnException") ->
               `InvalidArnException
                 (invalid_arn_exception_of_yojson tree path)
+          | (_, "RequestInProgressException") ->
+              `RequestInProgressException
+                (request_in_progress_exception_of_yojson tree path)
           | (_, "ResourceNotFoundException") ->
               `ResourceNotFoundException
                 (resource_not_found_exception_of_yojson tree path)
@@ -457,6 +460,44 @@ module ResendValidationEmail =
             ~shape_name:"CertificateManagerResendValidationEmail" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
+  end
+module RevokeCertificate =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "InvalidArnException") ->
+              `InvalidArnException
+                (invalid_arn_exception_of_yojson tree path)
+          | (_, "ResourceInUseException") ->
+              `ResourceInUseException
+                (resource_in_use_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : revoke_certificate_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.revoke_certificate_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CertificateManagerRevokeCertificate" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:revoke_certificate_response_of_yojson
+            ~error_deserializer
   end
 module UpdateCertificateOptions =
   struct

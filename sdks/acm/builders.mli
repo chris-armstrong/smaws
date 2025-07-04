@@ -1,12 +1,18 @@
 open Smaws_Lib
 open Types
 val make_certificate_options :
-  ?certificate_transparency_logging_preference:certificate_transparency_logging_preference
-    -> unit -> certificate_options
+  ?export_:certificate_export ->
+    ?certificate_transparency_logging_preference:certificate_transparency_logging_preference
+      -> unit -> certificate_options
 val make_update_certificate_options_request :
   options:certificate_options ->
     certificate_arn:string -> unit -> update_certificate_options_request
 val make_tag : ?value:string -> key:string -> unit -> tag
+val make_revoke_certificate_response :
+  ?certificate_arn:string -> unit -> revoke_certificate_response
+val make_revoke_certificate_request :
+  revocation_reason:revocation_reason ->
+    certificate_arn:string -> unit -> revoke_certificate_request
 val make_resource_record :
   value:string -> type_:record_type -> name:string -> unit -> resource_record
 val make_resend_validation_email_request :
@@ -19,22 +25,26 @@ val make_domain_validation_option :
   validation_domain:string ->
     domain_name:string -> unit -> domain_validation_option
 val make_request_certificate_request :
-  ?key_algorithm:key_algorithm ->
-    ?tags:tag list ->
-      ?certificate_authority_arn:string ->
-        ?options:certificate_options ->
-          ?domain_validation_options:domain_validation_option list ->
-            ?idempotency_token:string ->
-              ?subject_alternative_names:string list ->
-                ?validation_method:validation_method ->
-                  domain_name:string -> unit -> request_certificate_request
+  ?managed_by:certificate_managed_by ->
+    ?key_algorithm:key_algorithm ->
+      ?tags:tag list ->
+        ?certificate_authority_arn:string ->
+          ?options:certificate_options ->
+            ?domain_validation_options:domain_validation_option list ->
+              ?idempotency_token:string ->
+                ?subject_alternative_names:string list ->
+                  ?validation_method:validation_method ->
+                    domain_name:string -> unit -> request_certificate_request
+val make_http_redirect :
+  ?redirect_to:string -> ?redirect_from:string -> unit -> http_redirect
 val make_domain_validation :
   ?validation_method:validation_method ->
-    ?resource_record:resource_record ->
-      ?validation_status:domain_status ->
-        ?validation_domain:string ->
-          ?validation_emails:string list ->
-            domain_name:string -> unit -> domain_validation
+    ?http_redirect:http_redirect ->
+      ?resource_record:resource_record ->
+        ?validation_status:domain_status ->
+          ?validation_domain:string ->
+            ?validation_emails:string list ->
+              domain_name:string -> unit -> domain_validation
 val make_renewal_summary :
   ?renewal_status_reason:failure_reason ->
     updated_at:CoreTypes.Timestamp.t ->
@@ -55,34 +65,38 @@ val make_list_tags_for_certificate_response :
 val make_list_tags_for_certificate_request :
   certificate_arn:string -> unit -> list_tags_for_certificate_request
 val make_certificate_summary :
-  ?revoked_at:CoreTypes.Timestamp.t ->
-    ?imported_at:CoreTypes.Timestamp.t ->
-      ?issued_at:CoreTypes.Timestamp.t ->
-        ?created_at:CoreTypes.Timestamp.t ->
-          ?not_after:CoreTypes.Timestamp.t ->
-            ?not_before:CoreTypes.Timestamp.t ->
-              ?renewal_eligibility:renewal_eligibility ->
-                ?exported:bool ->
-                  ?in_use:bool ->
-                    ?extended_key_usages:extended_key_usage_name list ->
-                      ?key_usages:key_usage_name list ->
-                        ?key_algorithm:key_algorithm ->
-                          ?type_:certificate_type ->
-                            ?status:certificate_status ->
-                              ?has_additional_subject_alternative_names:bool
-                                ->
-                                ?subject_alternative_name_summaries:string
-                                  list ->
-                                  ?domain_name:string ->
-                                    ?certificate_arn:string ->
-                                      unit -> certificate_summary
+  ?managed_by:certificate_managed_by ->
+    ?revoked_at:CoreTypes.Timestamp.t ->
+      ?imported_at:CoreTypes.Timestamp.t ->
+        ?issued_at:CoreTypes.Timestamp.t ->
+          ?created_at:CoreTypes.Timestamp.t ->
+            ?not_after:CoreTypes.Timestamp.t ->
+              ?not_before:CoreTypes.Timestamp.t ->
+                ?renewal_eligibility:renewal_eligibility ->
+                  ?exported:bool ->
+                    ?in_use:bool ->
+                      ?export_option:certificate_export ->
+                        ?extended_key_usages:extended_key_usage_name list ->
+                          ?key_usages:key_usage_name list ->
+                            ?key_algorithm:key_algorithm ->
+                              ?type_:certificate_type ->
+                                ?status:certificate_status ->
+                                  ?has_additional_subject_alternative_names:bool
+                                    ->
+                                    ?subject_alternative_name_summaries:string
+                                      list ->
+                                      ?domain_name:string ->
+                                        ?certificate_arn:string ->
+                                          unit -> certificate_summary
 val make_list_certificates_response :
   ?certificate_summary_list:certificate_summary list ->
     ?next_token:string -> unit -> list_certificates_response
 val make_filters :
-  ?key_types:key_algorithm list ->
-    ?key_usage:key_usage_name list ->
-      ?extended_key_usage:extended_key_usage_name list -> unit -> filters
+  ?managed_by:certificate_managed_by ->
+    ?export_option:certificate_export ->
+      ?key_types:key_algorithm list ->
+        ?key_usage:key_usage_name list ->
+          ?extended_key_usage:extended_key_usage_name list -> unit -> filters
 val make_list_certificates_request :
   ?sort_order:sort_order ->
     ?sort_by:sort_by ->
@@ -142,13 +156,15 @@ val make_certificate_detail :
                                             ?serial:string ->
                                               ?domain_validation_options:domain_validation
                                                 list ->
-                                                ?subject_alternative_names:string
-                                                  list ->
-                                                  ?domain_name:string ->
-                                                    ?certificate_arn:string
-                                                      ->
-                                                      unit ->
-                                                        certificate_detail
+                                                ?managed_by:certificate_managed_by
+                                                  ->
+                                                  ?subject_alternative_names:string
+                                                    list ->
+                                                    ?domain_name:string ->
+                                                      ?certificate_arn:string
+                                                        ->
+                                                        unit ->
+                                                          certificate_detail
 val make_describe_certificate_response :
   ?certificate:certificate_detail -> unit -> describe_certificate_response
 val make_describe_certificate_request :

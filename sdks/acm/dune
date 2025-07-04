@@ -2,7 +2,7 @@
   (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/acm.json))
+  (:input ../../api-models-aws/models/acm/service/2015-12-08/acm-2015-12-08.json))
  (targets
   builders.ml
   builders.mli

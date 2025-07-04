@@ -3,6 +3,7 @@ open Types
 let base_unit_of_yojson = unit_of_yojson
 let validation_method_of_yojson (tree : t) path =
   (match tree with
+   | `String "HTTP" -> HTTP
    | `String "DNS" -> DNS
    | `String "EMAIL" -> EMAIL
    | `String value ->
@@ -35,9 +36,21 @@ let certificate_transparency_logging_preference_of_yojson (tree : t) path =
        raise
          (deserialize_wrong_type_error path
             "CertificateTransparencyLoggingPreference") : certificate_transparency_logging_preference)
+let certificate_export_of_yojson (tree : t) path =
+  (match tree with
+   | `String "DISABLED" -> DISABLED
+   | `String "ENABLED" -> ENABLED
+   | `String value ->
+       raise
+         (deserialize_unknown_enum_value_error path "CertificateExport" value)
+   | _ -> raise (deserialize_wrong_type_error path "CertificateExport") : 
+  certificate_export)
 let certificate_options_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     export_ =
+       (option_of_yojson
+          (value_for_key certificate_export_of_yojson "Export") _list path);
      certificate_transparency_logging_preference =
        (option_of_yojson
           (value_for_key
@@ -129,6 +142,13 @@ let sort_by_of_yojson (tree : t) path =
        raise (deserialize_unknown_enum_value_error path "SortBy" value)
    | _ -> raise (deserialize_wrong_type_error path "SortBy") : sort_by)
 let service_error_message_of_yojson = string_of_yojson
+let revoke_certificate_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     certificate_arn =
+       (option_of_yojson (value_for_key arn_of_yojson "CertificateArn") _list
+          path)
+   } : revoke_certificate_response)
 let revocation_reason_of_yojson (tree : t) path =
   (match tree with
    | `String "A_A_COMPROMISE" -> A_A_COMPROMISE
@@ -136,6 +156,7 @@ let revocation_reason_of_yojson (tree : t) path =
    | `String "REMOVE_FROM_CRL" -> REMOVE_FROM_CRL
    | `String "CERTIFICATE_HOLD" -> CERTIFICATE_HOLD
    | `String "CESSATION_OF_OPERATION" -> CESSATION_OF_OPERATION
+   | `String "SUPERSEDED" -> SUPERSEDED
    | `String "SUPERCEDED" -> SUPERCEDED
    | `String "AFFILIATION_CHANGED" -> AFFILIATION_CHANGED
    | `String "CA_COMPROMISE" -> CA_COMPROMISE
@@ -146,6 +167,37 @@ let revocation_reason_of_yojson (tree : t) path =
          (deserialize_unknown_enum_value_error path "RevocationReason" value)
    | _ -> raise (deserialize_wrong_type_error path "RevocationReason") : 
   revocation_reason)
+let revoke_certificate_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     revocation_reason =
+       (value_for_key revocation_reason_of_yojson "RevocationReason" _list
+          path);
+     certificate_arn =
+       (value_for_key arn_of_yojson "CertificateArn" _list path)
+   } : revoke_certificate_request)
+let resource_in_use_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : resource_in_use_exception)
+let conflict_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key string__of_yojson "message") _list
+          path)
+   } : conflict_exception)
+let access_denied_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson
+          (value_for_key service_error_message_of_yojson "Message") _list
+          path)
+   } : access_denied_exception)
 let record_type_of_yojson (tree : t) path =
   (match tree with
    | `String "CNAME" -> CNAME
@@ -159,13 +211,6 @@ let resource_record_of_yojson tree path =
      type_ = (value_for_key record_type_of_yojson "Type" _list path);
      name = (value_for_key string__of_yojson "Name" _list path)
    } : resource_record)
-let resource_in_use_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "message") _list
-          path)
-   } : resource_in_use_exception)
 let domain_name_string_of_yojson = string_of_yojson
 let resend_validation_email_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -227,9 +272,22 @@ let key_algorithm_of_yojson (tree : t) path =
        raise (deserialize_unknown_enum_value_error path "KeyAlgorithm" value)
    | _ -> raise (deserialize_wrong_type_error path "KeyAlgorithm") : 
   key_algorithm)
+let certificate_managed_by_of_yojson (tree : t) path =
+  (match tree with
+   | `String "CLOUDFRONT" -> CLOUDFRONT
+   | `String value ->
+       raise
+         (deserialize_unknown_enum_value_error path "CertificateManagedBy"
+            value)
+   | _ -> raise (deserialize_wrong_type_error path "CertificateManagedBy") : 
+  certificate_managed_by)
 let request_certificate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     managed_by =
+       (option_of_yojson
+          (value_for_key certificate_managed_by_of_yojson "ManagedBy") _list
+          path);
      key_algorithm =
        (option_of_yojson
           (value_for_key key_algorithm_of_yojson "KeyAlgorithm") _list path);
@@ -295,6 +353,16 @@ let domain_status_of_yojson (tree : t) path =
        raise (deserialize_unknown_enum_value_error path "DomainStatus" value)
    | _ -> raise (deserialize_wrong_type_error path "DomainStatus") : 
   domain_status)
+let http_redirect_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     redirect_to =
+       (option_of_yojson (value_for_key string__of_yojson "RedirectTo") _list
+          path);
+     redirect_from =
+       (option_of_yojson (value_for_key string__of_yojson "RedirectFrom")
+          _list path)
+   } : http_redirect)
 let domain_validation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -302,6 +370,9 @@ let domain_validation_of_yojson tree path =
        (option_of_yojson
           (value_for_key validation_method_of_yojson "ValidationMethod")
           _list path);
+     http_redirect =
+       (option_of_yojson
+          (value_for_key http_redirect_of_yojson "HttpRedirect") _list path);
      resource_record =
        (option_of_yojson
           (value_for_key resource_record_of_yojson "ResourceRecord") _list
@@ -406,21 +477,6 @@ let put_account_configuration_request_of_yojson tree path =
           (value_for_key expiry_events_configuration_of_yojson "ExpiryEvents")
           _list path)
    } : put_account_configuration_request)
-let conflict_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "message") _list
-          path)
-   } : conflict_exception)
-let access_denied_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson
-          (value_for_key service_error_message_of_yojson "Message") _list
-          path)
-   } : access_denied_exception)
 let private_key_blob_of_yojson = blob_of_yojson
 let private_key_of_yojson = string_of_yojson
 let passphrase_blob_of_yojson = blob_of_yojson
@@ -507,6 +563,10 @@ let extended_key_usage_names_of_yojson tree path =
 let certificate_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     managed_by =
+       (option_of_yojson
+          (value_for_key certificate_managed_by_of_yojson "ManagedBy") _list
+          path);
      revoked_at =
        (option_of_yojson (value_for_key t_stamp_of_yojson "RevokedAt") _list
           path);
@@ -535,6 +595,10 @@ let certificate_summary_of_yojson tree path =
      in_use =
        (option_of_yojson (value_for_key nullable_boolean_of_yojson "InUse")
           _list path);
+     export_option =
+       (option_of_yojson
+          (value_for_key certificate_export_of_yojson "ExportOption") _list
+          path);
      extended_key_usages =
        (option_of_yojson
           (value_for_key extended_key_usage_names_of_yojson
@@ -591,6 +655,14 @@ let key_algorithm_list_of_yojson tree path =
 let filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     managed_by =
+       (option_of_yojson
+          (value_for_key certificate_managed_by_of_yojson "managedBy") _list
+          path);
+     export_option =
+       (option_of_yojson
+          (value_for_key certificate_export_of_yojson "exportOption") _list
+          path);
      key_types =
        (option_of_yojson
           (value_for_key key_algorithm_list_of_yojson "keyTypes") _list path);
@@ -808,6 +880,10 @@ let certificate_detail_of_yojson tree path =
        (option_of_yojson
           (value_for_key domain_validation_list_of_yojson
              "DomainValidationOptions") _list path);
+     managed_by =
+       (option_of_yojson
+          (value_for_key certificate_managed_by_of_yojson "ManagedBy") _list
+          path);
      subject_alternative_names =
        (option_of_yojson
           (value_for_key domain_list_of_yojson "SubjectAlternativeNames")

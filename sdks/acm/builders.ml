@@ -1,12 +1,13 @@
 open Smaws_Lib
 open Types
-let make_certificate_options
+let make_certificate_options ?export_:(export__ : certificate_export option)
   ?certificate_transparency_logging_preference:(certificate_transparency_logging_preference_
                                                  :
                                                  certificate_transparency_logging_preference
                                                    option)
   () =
   ({
+     export_ = export__;
      certificate_transparency_logging_preference =
        certificate_transparency_logging_preference_
    } : certificate_options)
@@ -16,6 +17,16 @@ let make_update_certificate_options_request
   ({ options = options_; certificate_arn = certificate_arn_ } : update_certificate_options_request)
 let make_tag ?value:(value_ : string option) ~key:(key_ : string) () =
   ({ value = value_; key = key_ } : tag)
+let make_revoke_certificate_response
+  ?certificate_arn:(certificate_arn_ : string option) () =
+  ({ certificate_arn = certificate_arn_ } : revoke_certificate_response)
+let make_revoke_certificate_request
+  ~revocation_reason:(revocation_reason_ : revocation_reason)
+  ~certificate_arn:(certificate_arn_ : string) () =
+  ({
+     revocation_reason = revocation_reason_;
+     certificate_arn = certificate_arn_
+   } : revoke_certificate_request)
 let make_resource_record ~value:(value_ : string)
   ~type_:(type__ : record_type) ~name:(name_ : string) () =
   ({ value = value_; type_ = type__; name = name_ } : resource_record)
@@ -36,6 +47,7 @@ let make_domain_validation_option
   ({ validation_domain = validation_domain_; domain_name = domain_name_ } : 
   domain_validation_option)
 let make_request_certificate_request
+  ?managed_by:(managed_by_ : certificate_managed_by option)
   ?key_algorithm:(key_algorithm_ : key_algorithm option)
   ?tags:(tags_ : tag list option)
   ?certificate_authority_arn:(certificate_authority_arn_ : string option)
@@ -48,6 +60,7 @@ let make_request_certificate_request
   ?validation_method:(validation_method_ : validation_method option)
   ~domain_name:(domain_name_ : string) () =
   ({
+     managed_by = managed_by_;
      key_algorithm = key_algorithm_;
      tags = tags_;
      certificate_authority_arn = certificate_authority_arn_;
@@ -58,8 +71,12 @@ let make_request_certificate_request
      validation_method = validation_method_;
      domain_name = domain_name_
    } : request_certificate_request)
+let make_http_redirect ?redirect_to:(redirect_to_ : string option)
+  ?redirect_from:(redirect_from_ : string option) () =
+  ({ redirect_to = redirect_to_; redirect_from = redirect_from_ } : http_redirect)
 let make_domain_validation
   ?validation_method:(validation_method_ : validation_method option)
+  ?http_redirect:(http_redirect_ : http_redirect option)
   ?resource_record:(resource_record_ : resource_record option)
   ?validation_status:(validation_status_ : domain_status option)
   ?validation_domain:(validation_domain_ : string option)
@@ -67,6 +84,7 @@ let make_domain_validation
   ~domain_name:(domain_name_ : string) () =
   ({
      validation_method = validation_method_;
+     http_redirect = http_redirect_;
      resource_record = resource_record_;
      validation_status = validation_status_;
      validation_domain = validation_domain_;
@@ -105,6 +123,7 @@ let make_list_tags_for_certificate_request
   ~certificate_arn:(certificate_arn_ : string) () =
   ({ certificate_arn = certificate_arn_ } : list_tags_for_certificate_request)
 let make_certificate_summary
+  ?managed_by:(managed_by_ : certificate_managed_by option)
   ?revoked_at:(revoked_at_ : CoreTypes.Timestamp.t option)
   ?imported_at:(imported_at_ : CoreTypes.Timestamp.t option)
   ?issued_at:(issued_at_ : CoreTypes.Timestamp.t option)
@@ -113,6 +132,7 @@ let make_certificate_summary
   ?not_before:(not_before_ : CoreTypes.Timestamp.t option)
   ?renewal_eligibility:(renewal_eligibility_ : renewal_eligibility option)
   ?exported:(exported_ : bool option) ?in_use:(in_use_ : bool option)
+  ?export_option:(export_option_ : certificate_export option)
   ?extended_key_usages:(extended_key_usages_ :
                          extended_key_usage_name list option)
   ?key_usages:(key_usages_ : key_usage_name list option)
@@ -126,6 +146,7 @@ let make_certificate_summary
   ?domain_name:(domain_name_ : string option)
   ?certificate_arn:(certificate_arn_ : string option) () =
   ({
+     managed_by = managed_by_;
      revoked_at = revoked_at_;
      imported_at = imported_at_;
      issued_at = issued_at_;
@@ -135,6 +156,7 @@ let make_certificate_summary
      renewal_eligibility = renewal_eligibility_;
      exported = exported_;
      in_use = in_use_;
+     export_option = export_option_;
      extended_key_usages = extended_key_usages_;
      key_usages = key_usages_;
      key_algorithm = key_algorithm_;
@@ -154,12 +176,16 @@ let make_list_certificates_response
      certificate_summary_list = certificate_summary_list_;
      next_token = next_token_
    } : list_certificates_response)
-let make_filters ?key_types:(key_types_ : key_algorithm list option)
+let make_filters ?managed_by:(managed_by_ : certificate_managed_by option)
+  ?export_option:(export_option_ : certificate_export option)
+  ?key_types:(key_types_ : key_algorithm list option)
   ?key_usage:(key_usage_ : key_usage_name list option)
   ?extended_key_usage:(extended_key_usage_ :
                         extended_key_usage_name list option)
   () =
   ({
+     managed_by = managed_by_;
+     export_option = export_option_;
      key_types = key_types_;
      key_usage = key_usage_;
      extended_key_usage = extended_key_usage_
@@ -247,6 +273,7 @@ let make_certificate_detail ?options:(options_ : certificate_options option)
   ?serial:(serial_ : string option)
   ?domain_validation_options:(domain_validation_options_ :
                                domain_validation list option)
+  ?managed_by:(managed_by_ : certificate_managed_by option)
   ?subject_alternative_names:(subject_alternative_names_ :
                                string list option)
   ?domain_name:(domain_name_ : string option)
@@ -275,6 +302,7 @@ let make_certificate_detail ?options:(options_ : certificate_options option)
      subject = subject_;
      serial = serial_;
      domain_validation_options = domain_validation_options_;
+     managed_by = managed_by_;
      subject_alternative_names = subject_alternative_names_;
      domain_name = domain_name_;
      certificate_arn = certificate_arn_
