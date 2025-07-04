@@ -1,5 +1,16 @@
 open Smaws_Lib
 open Types
+let make_widget
+  ?view_properties:(view_properties_ : view_properties_map option)
+  ?query_parameters:(query_parameters_ : string list option)
+  ?query_statement:(query_statement_ : string option)
+  ?query_alias:(query_alias_ : string option) () =
+  ({
+     view_properties = view_properties_;
+     query_parameters = query_parameters_;
+     query_statement = query_statement_;
+     query_alias = query_alias_
+   } : widget)
 let make_update_trail_response
   ?is_organization_trail:(is_organization_trail_ : bool option)
   ?kms_key_id:(kms_key_id_ : string option)
@@ -133,6 +144,54 @@ let make_update_event_data_store_request
      name = name_;
      event_data_store = event_data_store_
    } : update_event_data_store_request)
+let make_refresh_schedule_frequency ?value:(value_ : int option)
+  ?unit_:(unit__ : refresh_schedule_frequency_unit option) () =
+  ({ value = value_; unit_ = unit__ } : refresh_schedule_frequency)
+let make_refresh_schedule ?time_of_day:(time_of_day_ : string option)
+  ?status:(status_ : refresh_schedule_status option)
+  ?frequency:(frequency_ : refresh_schedule_frequency option) () =
+  ({ time_of_day = time_of_day_; status = status_; frequency = frequency_ } : 
+  refresh_schedule)
+let make_update_dashboard_response
+  ?updated_timestamp:(updated_timestamp_ : CoreTypes.Timestamp.t option)
+  ?created_timestamp:(created_timestamp_ : CoreTypes.Timestamp.t option)
+  ?termination_protection_enabled:(termination_protection_enabled_ :
+                                    bool option)
+  ?refresh_schedule:(refresh_schedule_ : refresh_schedule option)
+  ?widgets:(widgets_ : widget list option)
+  ?type_:(type__ : dashboard_type option) ?name:(name_ : string option)
+  ?dashboard_arn:(dashboard_arn_ : string option) () =
+  ({
+     updated_timestamp = updated_timestamp_;
+     created_timestamp = created_timestamp_;
+     termination_protection_enabled = termination_protection_enabled_;
+     refresh_schedule = refresh_schedule_;
+     widgets = widgets_;
+     type_ = type__;
+     name = name_;
+     dashboard_arn = dashboard_arn_
+   } : update_dashboard_response)
+let make_request_widget
+  ?query_parameters:(query_parameters_ : string list option)
+  ~view_properties:(view_properties_ : view_properties_map)
+  ~query_statement:(query_statement_ : string) () =
+  ({
+     view_properties = view_properties_;
+     query_parameters = query_parameters_;
+     query_statement = query_statement_
+   } : request_widget)
+let make_update_dashboard_request
+  ?termination_protection_enabled:(termination_protection_enabled_ :
+                                    bool option)
+  ?refresh_schedule:(refresh_schedule_ : refresh_schedule option)
+  ?widgets:(widgets_ : request_widget list option)
+  ~dashboard_id:(dashboard_id_ : string) () =
+  ({
+     termination_protection_enabled = termination_protection_enabled_;
+     refresh_schedule = refresh_schedule_;
+     widgets = widgets_;
+     dashboard_id = dashboard_id_
+   } : update_dashboard_request)
 let make_destination ~location:(location_ : string)
   ~type_:(type__ : destination_type) () =
   ({ location = location_; type_ = type__ } : destination)
@@ -247,14 +306,23 @@ let make_stop_event_data_store_ingestion_response () = (() : unit)
 let make_stop_event_data_store_ingestion_request
   ~event_data_store:(event_data_store_ : string) () =
   ({ event_data_store = event_data_store_ } : stop_event_data_store_ingestion_request)
-let make_start_query_response ?query_id:(query_id_ : string option) () =
-  ({ query_id = query_id_ } : start_query_response)
+let make_start_query_response
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
+  ?query_id:(query_id_ : string option) () =
+  ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     query_id = query_id_
+   } : start_query_response)
 let make_start_query_request
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
   ?query_parameters:(query_parameters_ : string list option)
   ?query_alias:(query_alias_ : string option)
   ?delivery_s3_uri:(delivery_s3_uri_ : string option)
   ?query_statement:(query_statement_ : string option) () =
   ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
      query_parameters = query_parameters_;
      query_alias = query_alias_;
      delivery_s3_uri = delivery_s3_uri_;
@@ -298,6 +366,17 @@ let make_start_event_data_store_ingestion_response () = (() : unit)
 let make_start_event_data_store_ingestion_request
   ~event_data_store:(event_data_store_ : string) () =
   ({ event_data_store = event_data_store_ } : start_event_data_store_ingestion_request)
+let make_start_dashboard_refresh_response
+  ?refresh_id:(refresh_id_ : string option) () =
+  ({ refresh_id = refresh_id_ } : start_dashboard_refresh_response)
+let make_start_dashboard_refresh_request
+  ?query_parameter_values:(query_parameter_values_ :
+                            query_parameter_values option)
+  ~dashboard_id:(dashboard_id_ : string) () =
+  ({
+     query_parameter_values = query_parameter_values_;
+     dashboard_id = dashboard_id_
+   } : start_dashboard_refresh_request)
 let make_source_config
   ?advanced_event_selectors:(advanced_event_selectors_ :
                               advanced_event_selector list option)
@@ -306,6 +385,21 @@ let make_source_config
      advanced_event_selectors = advanced_event_selectors_;
      apply_to_all_regions = apply_to_all_regions_
    } : source_config)
+let make_search_sample_queries_response
+  ?next_token:(next_token_ : string option)
+  ?search_results:(search_results_ :
+                    search_sample_queries_search_result list option)
+  () =
+  ({ next_token = next_token_; search_results = search_results_ } : search_sample_queries_response)
+let make_search_sample_queries_request
+  ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option)
+  ~search_phrase:(search_phrase_ : string) () =
+  ({
+     next_token = next_token_;
+     max_results = max_results_;
+     search_phrase = search_phrase_
+   } : search_sample_queries_request)
 let make_restore_event_data_store_response
   ?billing_mode:(billing_mode_ : billing_mode option)
   ?kms_key_id:(kms_key_id_ : string option)
@@ -383,10 +477,15 @@ let make_query ?creation_time:(creation_time_ : CoreTypes.Timestamp.t option)
      query_id = query_id_
    } : query)
 let make_put_resource_policy_response
+  ?delegated_admin_resource_policy:(delegated_admin_resource_policy_ :
+                                     string option)
   ?resource_policy:(resource_policy_ : string option)
   ?resource_arn:(resource_arn_ : string option) () =
-  ({ resource_policy = resource_policy_; resource_arn = resource_arn_ } : 
-  put_resource_policy_response)
+  ({
+     delegated_admin_resource_policy = delegated_admin_resource_policy_;
+     resource_policy = resource_policy_;
+     resource_arn = resource_arn_
+   } : put_resource_policy_response)
 let make_put_resource_policy_request
   ~resource_policy:(resource_policy_ : string)
   ~resource_arn:(resource_arn_ : string) () =
@@ -451,6 +550,28 @@ let make_put_event_selectors_request
      event_selectors = event_selectors_;
      trail_name = trail_name_
    } : put_event_selectors_request)
+let make_context_key_selector ~equals:(equals_ : string list)
+  ~type_:(type__ : type_) () =
+  ({ equals = equals_; type_ = type__ } : context_key_selector)
+let make_put_event_configuration_response
+  ?context_key_selectors:(context_key_selectors_ :
+                           context_key_selector list option)
+  ?max_event_size:(max_event_size_ : max_event_size option)
+  ?event_data_store_arn:(event_data_store_arn_ : string option) () =
+  ({
+     context_key_selectors = context_key_selectors_;
+     max_event_size = max_event_size_;
+     event_data_store_arn = event_data_store_arn_
+   } : put_event_configuration_response)
+let make_put_event_configuration_request
+  ?event_data_store:(event_data_store_ : string option)
+  ~context_key_selectors:(context_key_selectors_ : context_key_selector list)
+  ~max_event_size:(max_event_size_ : max_event_size) () =
+  ({
+     context_key_selectors = context_key_selectors_;
+     max_event_size = max_event_size_;
+     event_data_store = event_data_store_
+   } : put_event_configuration_request)
 let make_public_key ?fingerprint:(fingerprint_ : string option)
   ?validity_end_time:(validity_end_time_ : CoreTypes.Timestamp.t option)
   ?validity_start_time:(validity_start_time_ : CoreTypes.Timestamp.t option)
@@ -670,6 +791,22 @@ let make_list_event_data_stores_request
   ?max_results:(max_results_ : int option)
   ?next_token:(next_token_ : string option) () =
   ({ max_results = max_results_; next_token = next_token_ } : list_event_data_stores_request)
+let make_dashboard_detail ?type_:(type__ : dashboard_type option)
+  ?dashboard_arn:(dashboard_arn_ : string option) () =
+  ({ type_ = type__; dashboard_arn = dashboard_arn_ } : dashboard_detail)
+let make_list_dashboards_response ?next_token:(next_token_ : string option)
+  ?dashboards:(dashboards_ : dashboard_detail list option) () =
+  ({ next_token = next_token_; dashboards = dashboards_ } : list_dashboards_response)
+let make_list_dashboards_request ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ?type_:(type__ : dashboard_type option)
+  ?name_prefix:(name_prefix_ : string option) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     type_ = type__;
+     name_prefix = name_prefix_
+   } : list_dashboards_request)
 let make_channel ?name:(name_ : string option)
   ?channel_arn:(channel_arn_ : string option) () =
   ({ name = name_; channel_arn = channel_arn_ } : channel)
@@ -754,10 +891,15 @@ let make_get_trail_response ?trail:(trail_ : trail option) () =
 let make_get_trail_request ~name:(name_ : string) () =
   ({ name = name_ } : get_trail_request)
 let make_get_resource_policy_response
+  ?delegated_admin_resource_policy:(delegated_admin_resource_policy_ :
+                                     string option)
   ?resource_policy:(resource_policy_ : string option)
   ?resource_arn:(resource_arn_ : string option) () =
-  ({ resource_policy = resource_policy_; resource_arn = resource_arn_ } : 
-  get_resource_policy_response)
+  ({
+     delegated_admin_resource_policy = delegated_admin_resource_policy_;
+     resource_policy = resource_policy_;
+     resource_arn = resource_arn_
+   } : get_resource_policy_response)
 let make_get_resource_policy_request ~resource_arn:(resource_arn_ : string)
   () = ({ resource_arn = resource_arn_ } : get_resource_policy_request)
 let make_get_query_results_response
@@ -775,11 +917,14 @@ let make_get_query_results_response
      query_status = query_status_
    } : get_query_results_response)
 let make_get_query_results_request
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
   ?max_query_results:(max_query_results_ : int option)
   ?next_token:(next_token_ : string option)
   ?event_data_store:(event_data_store_ : string option)
   ~query_id:(query_id_ : string) () =
   ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
      max_query_results = max_query_results_;
      next_token = next_token_;
      query_id = query_id_;
@@ -874,6 +1019,45 @@ let make_get_event_data_store_response
 let make_get_event_data_store_request
   ~event_data_store:(event_data_store_ : string) () =
   ({ event_data_store = event_data_store_ } : get_event_data_store_request)
+let make_get_event_configuration_response
+  ?context_key_selectors:(context_key_selectors_ :
+                           context_key_selector list option)
+  ?max_event_size:(max_event_size_ : max_event_size option)
+  ?event_data_store_arn:(event_data_store_arn_ : string option) () =
+  ({
+     context_key_selectors = context_key_selectors_;
+     max_event_size = max_event_size_;
+     event_data_store_arn = event_data_store_arn_
+   } : get_event_configuration_response)
+let make_get_event_configuration_request
+  ?event_data_store:(event_data_store_ : string option) () =
+  ({ event_data_store = event_data_store_ } : get_event_configuration_request)
+let make_get_dashboard_response
+  ?termination_protection_enabled:(termination_protection_enabled_ :
+                                    bool option)
+  ?last_refresh_failure_reason:(last_refresh_failure_reason_ : string option)
+  ?last_refresh_id:(last_refresh_id_ : string option)
+  ?updated_timestamp:(updated_timestamp_ : CoreTypes.Timestamp.t option)
+  ?created_timestamp:(created_timestamp_ : CoreTypes.Timestamp.t option)
+  ?refresh_schedule:(refresh_schedule_ : refresh_schedule option)
+  ?widgets:(widgets_ : widget list option)
+  ?status:(status_ : dashboard_status option)
+  ?type_:(type__ : dashboard_type option)
+  ?dashboard_arn:(dashboard_arn_ : string option) () =
+  ({
+     termination_protection_enabled = termination_protection_enabled_;
+     last_refresh_failure_reason = last_refresh_failure_reason_;
+     last_refresh_id = last_refresh_id_;
+     updated_timestamp = updated_timestamp_;
+     created_timestamp = created_timestamp_;
+     refresh_schedule = refresh_schedule_;
+     widgets = widgets_;
+     status = status_;
+     type_ = type__;
+     dashboard_arn = dashboard_arn_
+   } : get_dashboard_response)
+let make_get_dashboard_request ~dashboard_id:(dashboard_id_ : string) () =
+  ({ dashboard_id = dashboard_id_ } : get_dashboard_request)
 let make_get_channel_response
   ?ingestion_status:(ingestion_status_ : ingestion_status option)
   ?destinations:(destinations_ : destination list option)
@@ -890,6 +1074,19 @@ let make_get_channel_response
    } : get_channel_response)
 let make_get_channel_request ~channel:(channel_ : string) () =
   ({ channel = channel_ } : get_channel_request)
+let make_generate_query_response
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
+  ?query_alias:(query_alias_ : string option)
+  ?query_statement:(query_statement_ : string option) () =
+  ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     query_alias = query_alias_;
+     query_statement = query_statement_
+   } : generate_query_response)
+let make_generate_query_request ~prompt:(prompt_ : string)
+  ~event_data_stores:(event_data_stores_ : string list) () =
+  ({ prompt = prompt_; event_data_stores = event_data_stores_ } : generate_query_request)
 let make_enable_federation_response
   ?federation_role_arn:(federation_role_arn_ : string option)
   ?federation_status:(federation_status_ : federation_status option)
@@ -927,6 +1124,9 @@ let make_describe_trails_request
      trail_name_list = trail_name_list_
    } : describe_trails_request)
 let make_describe_query_response
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
+  ?prompt:(prompt_ : string option)
   ?delivery_status:(delivery_status_ : delivery_status option)
   ?delivery_s3_uri:(delivery_s3_uri_ : string option)
   ?error_message:(error_message_ : string option)
@@ -936,6 +1136,8 @@ let make_describe_query_response
   ?query_string:(query_string_ : string option)
   ?query_id:(query_id_ : string option) () =
   ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     prompt = prompt_;
      delivery_status = delivery_status_;
      delivery_s3_uri = delivery_s3_uri_;
      error_message = error_message_;
@@ -944,10 +1146,16 @@ let make_describe_query_response
      query_string = query_string_;
      query_id = query_id_
    } : describe_query_response)
-let make_describe_query_request ?query_alias:(query_alias_ : string option)
+let make_describe_query_request
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
+  ?refresh_id:(refresh_id_ : string option)
+  ?query_alias:(query_alias_ : string option)
   ?query_id:(query_id_ : string option)
   ?event_data_store:(event_data_store_ : string option) () =
   ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     refresh_id = refresh_id_;
      query_alias = query_alias_;
      query_id = query_id_;
      event_data_store = event_data_store_
@@ -967,6 +1175,9 @@ let make_delete_event_data_store_response () = (() : unit)
 let make_delete_event_data_store_request
   ~event_data_store:(event_data_store_ : string) () =
   ({ event_data_store = event_data_store_ } : delete_event_data_store_request)
+let make_delete_dashboard_response () = (() : unit)
+let make_delete_dashboard_request ~dashboard_id:(dashboard_id_ : string) () =
+  ({ dashboard_id = dashboard_id_ } : delete_dashboard_request)
 let make_delete_channel_response () = (() : unit)
 let make_delete_channel_request ~channel:(channel_ : string) () =
   ({ channel = channel_ } : delete_channel_request)
@@ -1084,6 +1295,37 @@ let make_create_event_data_store_request
      advanced_event_selectors = advanced_event_selectors_;
      name = name_
    } : create_event_data_store_request)
+let make_create_dashboard_response
+  ?termination_protection_enabled:(termination_protection_enabled_ :
+                                    bool option)
+  ?refresh_schedule:(refresh_schedule_ : refresh_schedule option)
+  ?tags_list:(tags_list_ : tag list option)
+  ?widgets:(widgets_ : widget list option)
+  ?type_:(type__ : dashboard_type option) ?name:(name_ : string option)
+  ?dashboard_arn:(dashboard_arn_ : string option) () =
+  ({
+     termination_protection_enabled = termination_protection_enabled_;
+     refresh_schedule = refresh_schedule_;
+     tags_list = tags_list_;
+     widgets = widgets_;
+     type_ = type__;
+     name = name_;
+     dashboard_arn = dashboard_arn_
+   } : create_dashboard_response)
+let make_create_dashboard_request
+  ?widgets:(widgets_ : request_widget list option)
+  ?termination_protection_enabled:(termination_protection_enabled_ :
+                                    bool option)
+  ?tags_list:(tags_list_ : tag list option)
+  ?refresh_schedule:(refresh_schedule_ : refresh_schedule option)
+  ~name:(name_ : string) () =
+  ({
+     widgets = widgets_;
+     termination_protection_enabled = termination_protection_enabled_;
+     tags_list = tags_list_;
+     refresh_schedule = refresh_schedule_;
+     name = name_
+   } : create_dashboard_request)
 let make_create_channel_response ?tags:(tags_ : tag list option)
   ?destinations:(destinations_ : destination list option)
   ?source:(source_ : string option) ?name:(name_ : string option)
@@ -1104,13 +1346,26 @@ let make_create_channel_request ?tags:(tags_ : tag list option)
      source = source_;
      name = name_
    } : create_channel_request)
-let make_cancel_query_response ~query_status:(query_status_ : query_status)
-  ~query_id:(query_id_ : string) () =
-  ({ query_status = query_status_; query_id = query_id_ } : cancel_query_response)
+let make_cancel_query_response
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
+  ~query_status:(query_status_ : query_status) ~query_id:(query_id_ : string)
+  () =
+  ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     query_status = query_status_;
+     query_id = query_id_
+   } : cancel_query_response)
 let make_cancel_query_request
+  ?event_data_store_owner_account_id:(event_data_store_owner_account_id_ :
+                                       string option)
   ?event_data_store:(event_data_store_ : string option)
   ~query_id:(query_id_ : string) () =
-  ({ query_id = query_id_; event_data_store = event_data_store_ } : cancel_query_request)
+  ({
+     event_data_store_owner_account_id = event_data_store_owner_account_id_;
+     query_id = query_id_;
+     event_data_store = event_data_store_
+   } : cancel_query_request)
 let make_add_tags_response () = (() : unit)
 let make_add_tags_request ~tags_list:(tags_list_ : tag list)
   ~resource_id:(resource_id_ : string) () =

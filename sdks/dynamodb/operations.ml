@@ -84,6 +84,9 @@ module BatchWriteItem =
               `ProvisionedThroughputExceededException
                 (provisioned_throughput_exceeded_exception_of_yojson tree
                    path)
+          | (_, "ReplicatedWriteConflictException") ->
+              `ReplicatedWriteConflictException
+                (replicated_write_conflict_exception_of_yojson tree path)
           | (_, "RequestLimitExceeded") ->
               `RequestLimitExceeded
                 (request_limit_exceeded_of_yojson tree path)
@@ -275,6 +278,9 @@ module DeleteItem =
               `ProvisionedThroughputExceededException
                 (provisioned_throughput_exceeded_exception_of_yojson tree
                    path)
+          | (_, "ReplicatedWriteConflictException") ->
+              `ReplicatedWriteConflictException
+                (replicated_write_conflict_exception_of_yojson tree path)
           | (_, "RequestLimitExceeded") ->
               `RequestLimitExceeded
                 (request_limit_exceeded_of_yojson tree path)
@@ -1270,6 +1276,9 @@ module PutItem =
               `ProvisionedThroughputExceededException
                 (provisioned_throughput_exceeded_exception_of_yojson tree
                    path)
+          | (_, "ReplicatedWriteConflictException") ->
+              `ReplicatedWriteConflictException
+                (replicated_write_conflict_exception_of_yojson tree path)
           | (_, "RequestLimitExceeded") ->
               `RequestLimitExceeded
                 (request_limit_exceeded_of_yojson tree path)
@@ -1820,6 +1829,9 @@ module UpdateItem =
               `ProvisionedThroughputExceededException
                 (provisioned_throughput_exceeded_exception_of_yojson tree
                    path)
+          | (_, "ReplicatedWriteConflictException") ->
+              `ReplicatedWriteConflictException
+                (replicated_write_conflict_exception_of_yojson tree path)
           | (_, "RequestLimitExceeded") ->
               `RequestLimitExceeded
                 (request_limit_exceeded_of_yojson tree path)

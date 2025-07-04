@@ -8,6 +8,7 @@ open Smaws_Lib
 (** {1:types Types} *)
 
 val service : Smaws_Lib.Service.descriptor
+type nonrec variable_references = (string * string list) list[@@ocaml.doc ""]
 type nonrec validation_exception_reason =
   | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]
   | CANNOT_UPDATE_COMPLETED_MAP_RUN [@ocaml.doc ""]
@@ -21,6 +22,7 @@ type nonrec validation_exception =
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The input does not satisfy the constraints specified by an Amazon Web Services service.\n"]
 type nonrec validate_state_machine_definition_severity =
+  | WARNING [@ocaml.doc ""]
   | ERROR [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validate_state_machine_definition_result_code =
   | FAIL [@ocaml.doc ""]
@@ -35,14 +37,17 @@ type nonrec validate_state_machine_definition_diagnostic =
   code: string [@ocaml.doc "Identifying code for the diagnostic.\n"];
   severity: validate_state_machine_definition_severity
     [@ocaml.doc
-      "A value of [ERROR] means that you cannot create or update a state machine with this definition.\n"]}
+      "A value of [ERROR] means that you cannot create or update a state machine with this definition.\n\n  [WARNING] level diagnostics alert you to potential issues, but they will not prevent you from creating or updating your state machine.\n "]}
 [@@ocaml.doc
-  "Describes an error found during validation. Validation errors found in the definition return in the response as {b diagnostic elements}, rather than raise an exception.\n"]
+  "Describes potential issues found during state machine validation. Rather than raise an exception, validation will return a list of {b diagnostic elements} containing diagnostic information. \n\n  The {{:https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinition.html}ValidateStateMachineDefinitionlAPI} might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the {b result} field value (OK, FAIL). Do {b not} rely on the exact order, count, or wording of diagnostic messages.\n  \n     {b List of warning codes} \n    \n      NO_DOLLAR  No [.$] on a field that appears to be a JSONPath or Intrinsic Function.\n                 \n                   NO_PATH  Field value looks like a path, but field name does not end with 'Path'.\n                            \n                              PASS_RESULT_IS_STATIC  Attempt to use a path in the result of a pass state.\n                                                     \n                                                         {b List of error codes} \n                                                        \n                                                          INVALID_JSON_DESCRIPTION  \nJSON syntax problem found.\n\n  MISSING_DESCRIPTION  Received a null or empty workflow input.\n                       \n                         SCHEMA_VALIDATION_FAILED  Schema validation reported errors.\n                                                   \n                                                     INVALID_RESOURCE  The value of a Task-state resource field is invalid.\n                                                                       \n                                                                         MISSING_END_STATE  \nThe workflow does not have a terminal state.\n\n  DUPLICATE_STATE_NAME  The same state name appears more than once.\n                        \n                          INVALID_STATE_NAME  The state name does not follow the naming convention.\n                                              \n                                                STATE_MACHINE_NAME_EMPTY  The state machine name has not been specified.\n                                                                          \n                                                                            STATE_MACHINE_NAME_INVALID  \nThe state machine name does not follow the naming convention.\n\n  STATE_MACHINE_NAME_TOO_LONG  The state name exceeds the allowed length.\n                               \n                                 STATE_MACHINE_NAME_ALREADY_EXISTS  The state name already exists.\n                                                                    \n                                                                      DUPLICATE_LABEL_NAME  \nA label name appears more than once.\n\n  INVALID_LABEL_NAME  You have provided an invalid label name.\n                      \n                        MISSING_TRANSITION_TARGET  The value of \"Next\" field doesn't match a known state name.\n                                                   \n                                                     TOO_DEEPLY_NESTED  The states are too deeply nested.\n                                                                        \n                                                                          "]
 type nonrec validate_state_machine_definition_output =
   {
+  truncated: bool option
+    [@ocaml.doc
+      "The result value will be [true] if the number of diagnostics found in the workflow definition exceeds [maxResults]. When all diagnostics results are returned, the value will be [false].\n"];
   diagnostics: validate_state_machine_definition_diagnostic list
     [@ocaml.doc
-      "If the result is [OK], this field will be empty. When there are errors, this field will contain an array of {b Diagnostic} objects to help you troubleshoot.\n"];
+      "An array of diagnostic errors and warnings found during validation of the state machine definition. Since {b warnings} do not prevent deploying your workflow definition, the {b result} value could be [OK] even when warning diagnostics are present in the response.\n"];
   result: validate_state_machine_definition_result_code
     [@ocaml.doc
       "The result value will be [OK] when no syntax errors are found, or [FAIL] if the workflow definition does not pass verification.\n"]}
@@ -52,6 +57,12 @@ type nonrec state_machine_type =
   | STANDARD [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validate_state_machine_definition_input =
   {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of diagnostics that are returned per call. The default and maximum value is 100. Setting the value to 0 will also use the default of 100.\n\n If the number of diagnostics returned in the response exceeds [maxResults], the value of the [truncated] field in the response will be set to [true].\n "];
+  severity: validate_state_machine_definition_severity option
+    [@ocaml.doc
+      "Minimum level of diagnostics to return. [ERROR] returns only [ERROR] diagnostics, whereas [WARNING] returns both [WARNING] and [ERROR] diagnostics. The default is [ERROR]. \n"];
   type_: state_machine_type option
     [@ocaml.doc
       "The target type of state machine for this definition. The default is [STANDARD].\n"];
@@ -104,8 +115,24 @@ type nonrec tracing_configuration =
   enabled: bool option
     [@ocaml.doc "When set to [true], X-Ray tracing is enabled.\n"]}[@@ocaml.doc
                                                                     "Selects whether or not the state machine's X-Ray tracing is enabled. Default is [false] \n"]
+type nonrec encryption_type =
+  | CUSTOMER_MANAGED_KMS_KEY [@ocaml.doc ""]
+  | AWS_OWNED_KEY [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec encryption_configuration =
+  {
+  type_: encryption_type [@ocaml.doc "Encryption type\n"];
+  kms_data_key_reuse_period_seconds: int option
+    [@ocaml.doc
+      "Maximum duration that Step Functions will reuse data keys. When the period expires, Step Functions will call [GenerateDataKey]. Only applies to customer managed keys.\n"];
+  kms_key_id: string option
+    [@ocaml.doc
+      "An alias, alias ARN, key ID, or key ARN of a symmetric encryption KMS key to encrypt data. To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN.\n"]}
+[@@ocaml.doc
+  "Settings to configure server-side encryption. \n\n  For additional control over security, you can encrypt your data using a {b customer-managed key} for Step Functions state machines and activities. You can configure a symmetric KMS key and data key reuse period when creating or updating a {b State Machine}, and when creating an {b Activity}. The execution history and state machine definition will be encrypted with the key applied to the State Machine. Activity inputs will be encrypted with the key applied to the Activity. \n \n    Step Functions automatically enables encryption at rest using Amazon Web Services owned keys at no charge. However, KMS charges apply when using a customer managed key. For more information about pricing, see {{:https://aws.amazon.com/kms/pricing/}Key Management Service pricing}.\n   \n     For more information on KMS, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/overview.html}What is Key Management Service?} \n     "]
 type nonrec update_state_machine_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   version_description: string option
     [@ocaml.doc
       "An optional description of the state machine version to publish.\n\n You can only specify the [versionDescription] parameter if you've set [publish] to [true].\n "];
@@ -178,13 +205,26 @@ type nonrec missing_required_parameter =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Request is missing a required parameter. This error occurs if both [definition] and [roleArn] are not specified.\n"]
+type nonrec kms_throttling_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Received when KMS returns [ThrottlingException] for a KMS call that Step Functions makes on behalf of the caller.\n"]
+type nonrec kms_access_denied_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Either your KMS key policy or API caller does not have the required permissions.\n"]
 type nonrec invalid_tracing_configuration =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Your [tracingConfiguration] key does not match, or [enabled] has not been set to [true] or [false].\n"]
 type nonrec invalid_logging_configuration =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc "\n"]
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Configuration is not valid.\n"]
+type nonrec invalid_encryption_configuration =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Received when [encryptionConfiguration] is specified but various conditions exist which make the configuration invalid. For example, if [type] is set to [CUSTOMER_MANAGED_KMS_KEY], but [kmsKeyId] is null, or [kmsDataKeyReusePeriodSeconds] is not between 60 and 900, or the KMS key is not symmetric or inactive.\n"]
 type nonrec invalid_definition = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The provided Amazon States Language definition is not valid.\n"]
@@ -241,6 +281,9 @@ type nonrec inspection_data_response =
                                                                     "Contains additional details about the state's execution, including its input and output data processing flow, and HTTP response information. The [inspectionLevel] request parameter specifies which details are returned.\n"]
 type nonrec inspection_data =
   {
+  variables: string option
+    [@ocaml.doc
+      "JSON string that contains the set of workflow variables after execution of the state. The set will include variables assigned in the state and variables set up as test state input.\n"];
   response: inspection_data_response option
     [@ocaml.doc
       "The raw HTTP response that is returned when you test an HTTP Task.\n"];
@@ -249,17 +292,20 @@ type nonrec inspection_data =
       "The raw HTTP request that is sent when you test an HTTP Task.\n"];
   after_result_path: string option
     [@ocaml.doc
-      "The effective result combined with the raw state input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} filter.\n"];
+      "The effective result combined with the raw state input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} filter. Not populated when QueryLanguage is JSONata.\n"];
   after_result_selector: string option
     [@ocaml.doc
-      "The effective result after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} filter.\n"];
+      "The effective result after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} filter. Not populated when QueryLanguage is JSONata.\n"];
   result: string option [@ocaml.doc "The state's raw result.\n"];
   after_parameters: string option
     [@ocaml.doc
-      "The effective input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} filter.\n"];
+      "The effective input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} filter. Not populated when QueryLanguage is JSONata.\n"];
   after_input_path: string option
     [@ocaml.doc
-      "The input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} filter.\n"];
+      "The input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} filter. Not populated when QueryLanguage is JSONata.\n"];
+  after_arguments: string option
+    [@ocaml.doc
+      "The input after Step Functions applies an Arguments filter. This event will only be present when QueryLanguage for the state machine or individual states is set to JSONata. For more info, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/data-transform.html}Transforming data with Step Functions}.\n"];
   input: string option [@ocaml.doc "The raw state input.\n"]}[@@ocaml.doc
                                                                "Contains additional details about the state's execution, including its input and output data processing flow, and HTTP request and response information.\n"]
 type nonrec test_execution_status =
@@ -292,6 +338,9 @@ type nonrec inspection_level =
   | INFO [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec test_state_input =
   {
+  variables: string option
+    [@ocaml.doc
+      "JSON object literal that sets variables used in the state under test. Object keys are the variable names and values are the variable values.\n"];
   reveal_secrets: bool option
     [@ocaml.doc
       "Specifies whether or not to include secret information in the test result. For HTTP Tasks, a secret includes the data that an EventBridge connection adds to modify the HTTP request headers, query parameters, and body. Step Functions doesn't omit any information included in the state definition or the HTTP response.\n\n If you set [revealSecrets] to [true], you must make sure that the IAM user that calls the [TestState] API has permission for the [states:RevealSecrets] action. For an example of IAM policy that sets the [states:RevealSecrets] permission, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions}IAM permissions to test a state}. Without this permission, Step Functions throws an access denied error.\n \n  By default, [revealSecrets] is set to [false].\n  "];
@@ -301,7 +350,7 @@ type nonrec test_state_input =
   input: string option
     [@ocaml.doc
       "A string that contains the JSON input data for the state.\n"];
-  role_arn: string
+  role_arn: string option
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution role with the required IAM permissions for the state.\n"];
   definition: string
@@ -330,7 +379,7 @@ type nonrec history_event_execution_data_details =
   {
   truncated: bool option
     [@ocaml.doc
-      "Indicates whether input or output was truncated in the response. Always [false] for API calls.\n"]}
+      "Indicates whether input or output was truncated in the response. Always [false] for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.\n"]}
 [@@ocaml.doc
   "Provides details about input or output in an execution history event.\n"]
 type nonrec task_succeeded_event_details =
@@ -459,6 +508,20 @@ type nonrec stop_execution_input =
   execution_arn: string
     [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to stop.\n"]}
 [@@ocaml.doc ""]
+type nonrec kms_key_state =
+  | CREATING [@ocaml.doc ""]
+  | UNAVAILABLE [@ocaml.doc ""]
+  | PENDING_IMPORT [@ocaml.doc ""]
+  | PENDING_DELETION [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec kms_invalid_state_exception =
+  {
+  message: string option [@ocaml.doc ""];
+  kms_key_state: kms_key_state option
+    [@ocaml.doc
+      "Current status of the KMS; key. For example: [DISABLED], [PENDING_DELETION], [PENDING_IMPORT], [UNAVAILABLE], [CREATING].\n"]}
+[@@ocaml.doc
+  "The KMS key is not in valid state, for example: Disabled or Deleted.\n"]
 type nonrec execution_does_not_exist =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -473,7 +536,8 @@ type nonrec state_machine_version_list_item =
 [@@ocaml.doc "Contains details about a specific state machine version.\n"]
 type nonrec state_machine_type_not_supported =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc "\n"]
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "State machine type is not supported.\n"]
 type nonrec state_machine_status =
   | DELETING [@ocaml.doc ""]
   | ACTIVE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -505,8 +569,22 @@ type nonrec state_machine_alias_list_item =
     [@ocaml.doc
       "The Amazon Resource Name (ARN) that identifies a state machine alias. The alias ARN is a combination of state machine ARN and the alias name separated by a colon (:). For example, [stateMachineARN:PROD].\n"]}
 [@@ocaml.doc "Contains details about a specific state machine alias.\n"]
+type nonrec assigned_variables = (string * string) list[@@ocaml.doc ""]
+type nonrec assigned_variables_details =
+  {
+  truncated: bool option
+    [@ocaml.doc
+      "Indicates whether assigned variables were truncated in the response. Always [false] for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.\n"]}
+[@@ocaml.doc
+  "Provides details about assigned variables in an execution history event.\n"]
 type nonrec state_exited_event_details =
   {
+  assigned_variables_details: assigned_variables_details option
+    [@ocaml.doc
+      "Provides details about input or output in an execution history event.\n"];
+  assigned_variables: assigned_variables option
+    [@ocaml.doc
+      "Map of variable name and value as a serialized JSON representation.\n"];
   output_details: history_event_execution_data_details option
     [@ocaml.doc
       "Contains details about the output of an execution history event.\n"];
@@ -576,8 +654,14 @@ type nonrec start_sync_execution_output =
     [@ocaml.doc
       "The Amazon Resource Name (ARN) that identifies the execution.\n"]}
 [@@ocaml.doc ""]
+type nonrec included_data =
+  | METADATA_ONLY [@ocaml.doc ""]
+  | ALL_DATA [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec start_sync_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   trace_header: string option
     [@ocaml.doc
       "Passes the X-Ray trace header. The trace header can also be passed in the request payload.\n"];
@@ -1054,6 +1138,7 @@ type nonrec lambda_function_failed_event_details =
 [@@ocaml.doc
   "Contains details about a Lambda function that failed during an execution.\n"]
 type nonrec history_event_type =
+  | EvaluationFailed [@ocaml.doc ""]
   | MapRunRedriven [@ocaml.doc ""]
   | ExecutionRedriven [@ocaml.doc ""]
   | MapRunSucceeded [@ocaml.doc ""]
@@ -1224,8 +1309,24 @@ type nonrec execution_redriven_event_details =
     [@ocaml.doc
       "The number of times you've redriven an execution. If you have not yet redriven an execution, the [redriveCount] is 0. This count is not updated for redrives that failed to start or are pending to be redriven.\n"]}
 [@@ocaml.doc "Contains details about a redriven execution.\n"]
+type nonrec evaluation_failed_event_details =
+  {
+  state: string
+    [@ocaml.doc
+      "The name of the state in which the evaluation error occurred.\n"];
+  location: string option
+    [@ocaml.doc
+      "The location of the field in the state in which the evaluation error occurred.\n"];
+  cause: string option
+    [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"];
+  error: string option [@ocaml.doc "The error code of the failure.\n"]}
+[@@ocaml.doc
+  "Contains details about an evaluation failure that occurred while processing a state, for example, when a JSONata expression throws an error. This event will only be present in state machines that have {b  QueryLanguage} set to JSONata, or individual states set to JSONata.\n"]
 type nonrec history_event =
   {
+  evaluation_failed_event_details: evaluation_failed_event_details option
+    [@ocaml.doc
+      "Contains details about an evaluation failure that occurred while processing a state.\n"];
   map_run_redriven_event_details: map_run_redriven_event_details option
     [@ocaml.doc "Contains details about the redrive attempt of a Map Run.\n"];
   map_run_failed_event_details: map_run_failed_event_details option
@@ -1377,6 +1478,11 @@ type nonrec execution_redrive_status =
   | REDRIVABLE [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec describe_state_machine_output =
   {
+  variable_references: variable_references option
+    [@ocaml.doc
+      "A map of {b state name} to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.\n"];
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   description: string option
     [@ocaml.doc "The description of the state machine version.\n"];
   revision_id: string option
@@ -1399,7 +1505,7 @@ type nonrec describe_state_machine_output =
       "The Amazon Resource Name (ARN) of the IAM role used when creating this state machine. (The IAM role maintains security by granting Step Functions access to Amazon Web Services resources.)\n"];
   definition: string
     [@ocaml.doc
-      "The Amazon States Language definition of the state machine. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language}.\n"];
+      "The Amazon States Language definition of the state machine. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language}.\n\n If called with [includedData = METADATA_ONLY], the returned definition will be [{}].\n "];
   status: state_machine_status option
     [@ocaml.doc "The current status of the state machine.\n"];
   name: string
@@ -1411,12 +1517,20 @@ type nonrec describe_state_machine_output =
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n\n   When calling a labelled ARN for an encrypted state machine, the [includedData = METADATA_ONLY] parameter will not apply because Step Functions needs to decrypt the entire state machine definition to get the Distributed Map state\226\128\153s definition. In this case, the API caller needs to have [kms:Decrypt] permission. \n  \n   "];
   state_machine_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the state machine for which you want the information.\n\n If you specify a state machine version ARN, this API returns details about that version. The version ARN is a combination of state machine ARN and the version number separated by a colon (:). For example, [stateMachineARN:1].\n "]}
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_for_execution_output =
   {
+  variable_references: variable_references option
+    [@ocaml.doc
+      "A map of {b state name} to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.\n"];
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   revision_id: string option
     [@ocaml.doc
       "The revision identifier for the state machine. The first revision ID when you create the state machine is null.\n\n Use the state machine [revisionId] parameter to compare the revision of a state machine with the configuration of the state machine used for executions without performing a diff of the properties, such as [definition] and [roleArn].\n "];
@@ -1447,6 +1561,9 @@ type nonrec describe_state_machine_for_execution_output =
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_for_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   execution_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution you want state machine information for.\n"]}
@@ -1570,12 +1687,17 @@ type nonrec describe_execution_output =
 [@@ocaml.doc ""]
 type nonrec describe_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call DescribeStateMachine API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   execution_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution to describe.\n"]}
 [@@ocaml.doc ""]
 type nonrec describe_activity_output =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings for configured server-side encryption.\n"];
   creation_date: CoreTypes.Timestamp.t
     [@ocaml.doc "The date the activity is created.\n"];
   name: string
@@ -1628,6 +1750,8 @@ type nonrec create_state_machine_output =
 [@@ocaml.doc ""]
 type nonrec create_state_machine_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption.\n"];
   version_description: string option
     [@ocaml.doc
       "Sets description about the state machine version. You can only set the description if the [publish] parameter is set to [true]. Otherwise, if you set [versionDescription], but [publish] to [false], this API action throws [ValidationException].\n"];
@@ -1684,6 +1808,8 @@ type nonrec create_activity_output =
 [@@ocaml.doc ""]
 type nonrec create_activity_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption.\n"];
   tags: tag list option
     [@ocaml.doc
       "The list of tags to add to a resource.\n\n An array of key-value pairs. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html}Using Cost Allocation Tags} in the {i Amazon Web Services Billing and Cost Management User Guide}, and {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html}Controlling Access Using IAM Tags}.\n \n  Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / = + - @].\n  "];
@@ -1694,7 +1820,11 @@ type nonrec create_activity_input =
 type nonrec activity_limit_exceeded =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The maximum number of activities has been reached. Existing activities must be deleted before a new activity can be created.\n"](** {1:builders Builders} *)
+                                           "The maximum number of activities has been reached. Existing activities must be deleted before a new activity can be created.\n"]
+type nonrec activity_already_exists =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Activity already exists. [EncryptionConfiguration] may not be updated.\n"](** {1:builders Builders} *)
 
 val make_validate_state_machine_definition_diagnostic :
   ?location:string ->
@@ -1703,12 +1833,15 @@ val make_validate_state_machine_definition_diagnostic :
         severity:validate_state_machine_definition_severity ->
           unit -> validate_state_machine_definition_diagnostic
 val make_validate_state_machine_definition_output :
-  diagnostics:validate_state_machine_definition_diagnostic list ->
-    result:validate_state_machine_definition_result_code ->
-      unit -> validate_state_machine_definition_output
+  ?truncated:bool ->
+    diagnostics:validate_state_machine_definition_diagnostic list ->
+      result:validate_state_machine_definition_result_code ->
+        unit -> validate_state_machine_definition_output
 val make_validate_state_machine_definition_input :
-  ?type_:state_machine_type ->
-    definition:string -> unit -> validate_state_machine_definition_input
+  ?max_results:int ->
+    ?severity:validate_state_machine_definition_severity ->
+      ?type_:state_machine_type ->
+        definition:string -> unit -> validate_state_machine_definition_input
 val make_update_state_machine_output :
   ?state_machine_version_arn:string ->
     ?revision_id:string ->
@@ -1725,14 +1858,20 @@ val make_logging_configuration :
       ?level:log_level -> unit -> logging_configuration
 val make_tracing_configuration :
   ?enabled:bool -> unit -> tracing_configuration
+val make_encryption_configuration :
+  ?kms_data_key_reuse_period_seconds:int ->
+    ?kms_key_id:string ->
+      type_:encryption_type -> unit -> encryption_configuration
 val make_update_state_machine_input :
-  ?version_description:string ->
-    ?publish:bool ->
-      ?tracing_configuration:tracing_configuration ->
-        ?logging_configuration:logging_configuration ->
-          ?role_arn:string ->
-            ?definition:string ->
-              state_machine_arn:string -> unit -> update_state_machine_input
+  ?encryption_configuration:encryption_configuration ->
+    ?version_description:string ->
+      ?publish:bool ->
+        ?tracing_configuration:tracing_configuration ->
+          ?logging_configuration:logging_configuration ->
+            ?role_arn:string ->
+              ?definition:string ->
+                state_machine_arn:string ->
+                  unit -> update_state_machine_input
 val make_update_state_machine_alias_output :
   update_date:CoreTypes.Timestamp.t ->
     unit -> update_state_machine_alias_output
@@ -1767,14 +1906,16 @@ val make_inspection_data_response :
         ?status_code:string ->
           ?protocol:string -> unit -> inspection_data_response
 val make_inspection_data :
-  ?response:inspection_data_response ->
-    ?request:inspection_data_request ->
-      ?after_result_path:string ->
-        ?after_result_selector:string ->
-          ?result:string ->
-            ?after_parameters:string ->
-              ?after_input_path:string ->
-                ?input:string -> unit -> inspection_data
+  ?variables:string ->
+    ?response:inspection_data_response ->
+      ?request:inspection_data_request ->
+        ?after_result_path:string ->
+          ?after_result_selector:string ->
+            ?result:string ->
+              ?after_parameters:string ->
+                ?after_input_path:string ->
+                  ?after_arguments:string ->
+                    ?input:string -> unit -> inspection_data
 val make_test_state_output :
   ?status:test_execution_status ->
     ?next_state:string ->
@@ -1782,10 +1923,11 @@ val make_test_state_output :
         ?cause:string ->
           ?error:string -> ?output:string -> unit -> test_state_output
 val make_test_state_input :
-  ?reveal_secrets:bool ->
-    ?inspection_level:inspection_level ->
-      ?input:string ->
-        role_arn:string -> definition:string -> unit -> test_state_input
+  ?variables:string ->
+    ?reveal_secrets:bool ->
+      ?inspection_level:inspection_level ->
+        ?input:string ->
+          ?role_arn:string -> definition:string -> unit -> test_state_input
 val make_task_timed_out_event_details :
   ?cause:string ->
     ?error:string ->
@@ -1851,9 +1993,13 @@ val make_state_machine_list_item :
 val make_state_machine_alias_list_item :
   creation_date:CoreTypes.Timestamp.t ->
     state_machine_alias_arn:string -> unit -> state_machine_alias_list_item
+val make_assigned_variables_details :
+  ?truncated:bool -> unit -> assigned_variables_details
 val make_state_exited_event_details :
-  ?output_details:history_event_execution_data_details ->
-    ?output:string -> name:string -> unit -> state_exited_event_details
+  ?assigned_variables_details:assigned_variables_details ->
+    ?assigned_variables:assigned_variables ->
+      ?output_details:history_event_execution_data_details ->
+        ?output:string -> name:string -> unit -> state_exited_event_details
 val make_state_entered_event_details :
   ?input_details:history_event_execution_data_details ->
     ?input:string -> name:string -> unit -> state_entered_event_details
@@ -1879,10 +2025,11 @@ val make_start_sync_execution_output :
                             execution_arn:string ->
                               unit -> start_sync_execution_output
 val make_start_sync_execution_input :
-  ?trace_header:string ->
-    ?input:string ->
-      ?name:string ->
-        state_machine_arn:string -> unit -> start_sync_execution_input
+  ?included_data:included_data ->
+    ?trace_header:string ->
+      ?input:string ->
+        ?name:string ->
+          state_machine_arn:string -> unit -> start_sync_execution_input
 val make_start_execution_output :
   start_date:CoreTypes.Timestamp.t ->
     execution_arn:string -> unit -> start_execution_output
@@ -2071,67 +2218,73 @@ val make_execution_timed_out_event_details :
   ?cause:string -> ?error:string -> unit -> execution_timed_out_event_details
 val make_execution_redriven_event_details :
   ?redrive_count:int -> unit -> execution_redriven_event_details
+val make_evaluation_failed_event_details :
+  ?location:string ->
+    ?cause:string ->
+      ?error:string ->
+        state:string -> unit -> evaluation_failed_event_details
 val make_history_event :
-  ?map_run_redriven_event_details:map_run_redriven_event_details ->
-    ?map_run_failed_event_details:map_run_failed_event_details ->
-      ?map_run_started_event_details:map_run_started_event_details ->
-        ?state_exited_event_details:state_exited_event_details ->
-          ?state_entered_event_details:state_entered_event_details ->
-            ?lambda_function_timed_out_event_details:lambda_function_timed_out_event_details
-              ->
-              ?lambda_function_succeeded_event_details:lambda_function_succeeded_event_details
+  ?evaluation_failed_event_details:evaluation_failed_event_details ->
+    ?map_run_redriven_event_details:map_run_redriven_event_details ->
+      ?map_run_failed_event_details:map_run_failed_event_details ->
+        ?map_run_started_event_details:map_run_started_event_details ->
+          ?state_exited_event_details:state_exited_event_details ->
+            ?state_entered_event_details:state_entered_event_details ->
+              ?lambda_function_timed_out_event_details:lambda_function_timed_out_event_details
                 ->
-                ?lambda_function_start_failed_event_details:lambda_function_start_failed_event_details
+                ?lambda_function_succeeded_event_details:lambda_function_succeeded_event_details
                   ->
-                  ?lambda_function_scheduled_event_details:lambda_function_scheduled_event_details
+                  ?lambda_function_start_failed_event_details:lambda_function_start_failed_event_details
                     ->
-                    ?lambda_function_schedule_failed_event_details:lambda_function_schedule_failed_event_details
+                    ?lambda_function_scheduled_event_details:lambda_function_scheduled_event_details
                       ->
-                      ?lambda_function_failed_event_details:lambda_function_failed_event_details
+                      ?lambda_function_schedule_failed_event_details:lambda_function_schedule_failed_event_details
                         ->
-                        ?map_iteration_aborted_event_details:map_iteration_event_details
+                        ?lambda_function_failed_event_details:lambda_function_failed_event_details
                           ->
-                          ?map_iteration_failed_event_details:map_iteration_event_details
+                          ?map_iteration_aborted_event_details:map_iteration_event_details
                             ->
-                            ?map_iteration_succeeded_event_details:map_iteration_event_details
+                            ?map_iteration_failed_event_details:map_iteration_event_details
                               ->
-                              ?map_iteration_started_event_details:map_iteration_event_details
+                              ?map_iteration_succeeded_event_details:map_iteration_event_details
                                 ->
-                                ?map_state_started_event_details:map_state_started_event_details
+                                ?map_iteration_started_event_details:map_iteration_event_details
                                   ->
-                                  ?execution_redriven_event_details:execution_redriven_event_details
+                                  ?map_state_started_event_details:map_state_started_event_details
                                     ->
-                                    ?execution_timed_out_event_details:execution_timed_out_event_details
+                                    ?execution_redriven_event_details:execution_redriven_event_details
                                       ->
-                                      ?execution_aborted_event_details:execution_aborted_event_details
+                                      ?execution_timed_out_event_details:execution_timed_out_event_details
                                         ->
-                                        ?execution_succeeded_event_details:execution_succeeded_event_details
+                                        ?execution_aborted_event_details:execution_aborted_event_details
                                           ->
-                                          ?execution_started_event_details:execution_started_event_details
+                                          ?execution_succeeded_event_details:execution_succeeded_event_details
                                             ->
-                                            ?execution_failed_event_details:execution_failed_event_details
+                                            ?execution_started_event_details:execution_started_event_details
                                               ->
-                                              ?task_timed_out_event_details:task_timed_out_event_details
+                                              ?execution_failed_event_details:execution_failed_event_details
                                                 ->
-                                                ?task_succeeded_event_details:task_succeeded_event_details
+                                                ?task_timed_out_event_details:task_timed_out_event_details
                                                   ->
-                                                  ?task_submitted_event_details:task_submitted_event_details
+                                                  ?task_succeeded_event_details:task_succeeded_event_details
                                                     ->
-                                                    ?task_submit_failed_event_details:task_submit_failed_event_details
+                                                    ?task_submitted_event_details:task_submitted_event_details
                                                       ->
-                                                      ?task_started_event_details:task_started_event_details
+                                                      ?task_submit_failed_event_details:task_submit_failed_event_details
                                                         ->
-                                                        ?task_start_failed_event_details:task_start_failed_event_details
+                                                        ?task_started_event_details:task_started_event_details
                                                           ->
-                                                          ?task_scheduled_event_details:task_scheduled_event_details
+                                                          ?task_start_failed_event_details:task_start_failed_event_details
                                                             ->
-                                                            ?task_failed_event_details:task_failed_event_details
+                                                            ?task_scheduled_event_details:task_scheduled_event_details
                                                               ->
-                                                              ?activity_timed_out_event_details:activity_timed_out_event_details
+                                                              ?task_failed_event_details:task_failed_event_details
                                                                 ->
-                                                                ?activity_succeeded_event_details:activity_succeeded_event_details
+                                                                ?activity_timed_out_event_details:activity_timed_out_event_details
                                                                   ->
-                                                                  ?activity_started_event_details:activity_started_event_details
+                                                                  ?activity_succeeded_event_details:activity_succeeded_event_details
+                                                                    ->
+                                                                    ?activity_started_event_details:activity_started_event_details
                                                                     ->
                                                                     ?activity_scheduled_event_details:activity_scheduled_event_details
                                                                     ->
@@ -2163,35 +2316,42 @@ val make_get_activity_task_input :
   ?worker_name:string ->
     activity_arn:string -> unit -> get_activity_task_input
 val make_describe_state_machine_output :
-  ?description:string ->
-    ?revision_id:string ->
-      ?label:string ->
-        ?tracing_configuration:tracing_configuration ->
-          ?logging_configuration:logging_configuration ->
-            ?status:state_machine_status ->
-              creation_date:CoreTypes.Timestamp.t ->
-                type_:state_machine_type ->
+  ?variable_references:variable_references ->
+    ?encryption_configuration:encryption_configuration ->
+      ?description:string ->
+        ?revision_id:string ->
+          ?label:string ->
+            ?tracing_configuration:tracing_configuration ->
+              ?logging_configuration:logging_configuration ->
+                ?status:state_machine_status ->
+                  creation_date:CoreTypes.Timestamp.t ->
+                    type_:state_machine_type ->
+                      role_arn:string ->
+                        definition:string ->
+                          name:string ->
+                            state_machine_arn:string ->
+                              unit -> describe_state_machine_output
+val make_describe_state_machine_input :
+  ?included_data:included_data ->
+    state_machine_arn:string -> unit -> describe_state_machine_input
+val make_describe_state_machine_for_execution_output :
+  ?variable_references:variable_references ->
+    ?encryption_configuration:encryption_configuration ->
+      ?revision_id:string ->
+        ?label:string ->
+          ?map_run_arn:string ->
+            ?tracing_configuration:tracing_configuration ->
+              ?logging_configuration:logging_configuration ->
+                update_date:CoreTypes.Timestamp.t ->
                   role_arn:string ->
                     definition:string ->
                       name:string ->
                         state_machine_arn:string ->
-                          unit -> describe_state_machine_output
-val make_describe_state_machine_input :
-  state_machine_arn:string -> unit -> describe_state_machine_input
-val make_describe_state_machine_for_execution_output :
-  ?revision_id:string ->
-    ?label:string ->
-      ?map_run_arn:string ->
-        ?tracing_configuration:tracing_configuration ->
-          ?logging_configuration:logging_configuration ->
-            update_date:CoreTypes.Timestamp.t ->
-              role_arn:string ->
-                definition:string ->
-                  name:string ->
-                    state_machine_arn:string ->
-                      unit -> describe_state_machine_for_execution_output
+                          unit -> describe_state_machine_for_execution_output
 val make_describe_state_machine_for_execution_input :
-  execution_arn:string -> unit -> describe_state_machine_for_execution_input
+  ?included_data:included_data ->
+    execution_arn:string ->
+      unit -> describe_state_machine_for_execution_input
 val make_describe_state_machine_alias_output :
   ?update_date:CoreTypes.Timestamp.t ->
     ?creation_date:CoreTypes.Timestamp.t ->
@@ -2243,10 +2403,12 @@ val make_describe_execution_output :
                                         execution_arn:string ->
                                           unit -> describe_execution_output
 val make_describe_execution_input :
-  execution_arn:string -> unit -> describe_execution_input
+  ?included_data:included_data ->
+    execution_arn:string -> unit -> describe_execution_input
 val make_describe_activity_output :
-  creation_date:CoreTypes.Timestamp.t ->
-    name:string -> activity_arn:string -> unit -> describe_activity_output
+  ?encryption_configuration:encryption_configuration ->
+    creation_date:CoreTypes.Timestamp.t ->
+      name:string -> activity_arn:string -> unit -> describe_activity_output
 val make_describe_activity_input :
   activity_arn:string -> unit -> describe_activity_input
 val make_delete_state_machine_version_output : unit -> unit
@@ -2267,15 +2429,16 @@ val make_create_state_machine_output :
     creation_date:CoreTypes.Timestamp.t ->
       state_machine_arn:string -> unit -> create_state_machine_output
 val make_create_state_machine_input :
-  ?version_description:string ->
-    ?publish:bool ->
-      ?tracing_configuration:tracing_configuration ->
-        ?tags:tag list ->
-          ?logging_configuration:logging_configuration ->
-            ?type_:state_machine_type ->
-              role_arn:string ->
-                definition:string ->
-                  name:string -> unit -> create_state_machine_input
+  ?encryption_configuration:encryption_configuration ->
+    ?version_description:string ->
+      ?publish:bool ->
+        ?tracing_configuration:tracing_configuration ->
+          ?tags:tag list ->
+            ?logging_configuration:logging_configuration ->
+              ?type_:state_machine_type ->
+                role_arn:string ->
+                  definition:string ->
+                    name:string -> unit -> create_state_machine_input
 val make_create_state_machine_alias_output :
   creation_date:CoreTypes.Timestamp.t ->
     state_machine_alias_arn:string ->
@@ -2288,7 +2451,8 @@ val make_create_activity_output :
   creation_date:CoreTypes.Timestamp.t ->
     activity_arn:string -> unit -> create_activity_output
 val make_create_activity_input :
-  ?tags:tag list -> name:string -> unit -> create_activity_input(** {1:operations Operations} *)
+  ?encryption_configuration:encryption_configuration ->
+    ?tags:tag list -> name:string -> unit -> create_activity_input(** {1:operations Operations} *)
 
 module CreateActivity :
 sig
@@ -2297,9 +2461,14 @@ sig
       create_activity_input ->
         (create_activity_output,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `ActivityAlreadyExists of activity_already_exists 
           | `ActivityLimitExceeded of activity_limit_exceeded 
-          | `InvalidName of invalid_name  | `TooManyTags of too_many_tags ])
-          result
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
+          | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
+          | `TooManyTags of too_many_tags ]) result
 end[@@ocaml.doc
      "Creates an activity. An activity is a task that you write in any programming language and host on any machine that has access to Step Functions. Activities must poll Step Functions using the [GetActivityTask] API action and respond using [SendTask*] API actions. This function lets Step Functions know the existence of your activity and returns an identifier for use in a state machine and when polling from the activity.\n\n  This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n  \n      [CreateActivity] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateActivity]'s idempotency check is based on the activity [name]. If a following request has different [tags] values, Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n     \n      "]
 module CreateStateMachine :
@@ -2312,9 +2481,13 @@ sig
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
           | `InvalidDefinition of invalid_definition 
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
           | `InvalidLoggingConfiguration of invalid_logging_configuration 
           | `InvalidName of invalid_name 
           | `InvalidTracingConfiguration of invalid_tracing_configuration 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineAlreadyExists of state_machine_already_exists 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineLimitExceeded of state_machine_limit_exceeded 
@@ -2322,7 +2495,7 @@ sig
           | `TooManyTags of too_many_tags 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Creates a state machine. A state machine consists of a collection of states that can do work ([Task] states), determine to which states to transition next ([Choice] states), stop an execution with an error ([Fail] states), and so on. State machines are specified using a JSON-based, structured language. For more information, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} in the Step Functions User Guide.\n\n If you set the [publish] parameter of this API action to [true], it publishes version [1] as the first revision of the state machine.\n \n   This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n   \n       [CreateStateMachine] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateStateMachine]'s idempotency check is based on the state machine [name], [definition], [type], [LoggingConfiguration], and [TracingConfiguration]. The check is also based on the [publish] and [versionDescription] parameters. If a following request has a different [roleArn] or [tags], Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [roleArn] and [tags] will not be updated, even if they are different.\n      \n       "]
+     "Creates a state machine. A state machine consists of a collection of states that can do work ([Task] states), determine to which states to transition next ([Choice] states), stop an execution with an error ([Fail] states), and so on. State machines are specified using a JSON-based, structured language. For more information, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} in the Step Functions User Guide.\n\n If you set the [publish] parameter of this API action to [true], it publishes version [1] as the first revision of the state machine.\n \n   For additional control over security, you can encrypt your data using a {b customer-managed key} for Step Functions state machines. You can configure a symmetric KMS key and data key reuse period when creating or updating a {b State Machine}. The execution history and state machine definition will be encrypted with the key applied to the State Machine. \n  \n    This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n    \n        [CreateStateMachine] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateStateMachine]'s idempotency check is based on the state machine [name], [definition], [type], [LoggingConfiguration], [TracingConfiguration], and [EncryptionConfiguration] The check is also based on the [publish] and [versionDescription] parameters. If a following request has a different [roleArn] or [tags], Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [roleArn] and [tags] will not be updated, even if they are different.\n       \n        "]
 module CreateStateMachineAlias :
 sig
   val request :
@@ -2402,7 +2575,10 @@ sig
         (describe_execution_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Provides information about a state machine execution, such as the state machine associated with the execution, the execution input and output, and relevant execution metadata. If you've {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html}redriven} an execution, you can use this API action to return information about the redrives of that execution. In addition, you can use this API action to return the Map Run Amazon Resource Name (ARN) if the execution was dispatched by a Map Run.\n\n If you specify a version or alias ARN when you call the [StartExecution] API action, [DescribeExecution] returns that ARN.\n \n   This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n   \n     Executions of an [EXPRESS] state machine aren't supported by [DescribeExecution] unless a Map Run dispatched them.\n     "]
 module DescribeMapRun :
@@ -2422,6 +2598,9 @@ sig
       describe_state_machine_input ->
         (describe_state_machine_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDoesNotExist of state_machine_does_not_exist ])
           result
 end[@@ocaml.doc
@@ -2445,7 +2624,10 @@ sig
         (describe_state_machine_for_execution_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Provides information about a state machine's definition, its execution role ARN, and configuration. If a Map Run dispatched the execution, this action returns the Map Run Amazon Resource Name (ARN) in the response. The state machine returned is the state machine associated with the Map Run.\n\n  This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n  \n    This API action is not supported by [EXPRESS] state machines.\n    "]
 module GetActivityTask :
@@ -2457,7 +2639,10 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ActivityDoesNotExist of activity_does_not_exist 
           | `ActivityWorkerLimitExceeded of activity_worker_limit_exceeded 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Used by workers to retrieve a task (with the specified activity ARN) which has been scheduled for execution by a running state machine. This initiates a long poll, where the service holds the HTTP connection open and responds as soon as a task becomes available (i.e. an execution of a task of this type is needed.) The maximum time the service holds on to the request before responding is 60 seconds. If no task is available within 60 seconds, the poll returns a [taskToken] with a null string.\n\n  This API action isn't logged in CloudTrail.\n  \n     Workers should set their client side socket timeout to at least 65 seconds (5 seconds higher than the maximum time the service may hold the poll request).\n     \n      Polling with [GetActivityTask] can cause latency in some implementations. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/bp-activity-pollers.html}Avoid Latency When Polling for Activity Tasks} in the Step Functions Developer Guide.\n      \n       "]
 module GetExecutionHistory :
@@ -2468,8 +2653,10 @@ sig
         (get_execution_history_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn  | `InvalidToken of invalid_token ])
-          result
+          | `InvalidArn of invalid_arn  | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Returns the history of the specified execution as a list of events. By default, the results are returned in ascending order of the [timeStamp] of the events. Use the [reverseOrder] parameter to get the latest events first.\n\n If [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an {i HTTP 400 InvalidToken} error.\n \n  This API action is not supported by [EXPRESS] state machines.\n  "]
 module ListActivities :
@@ -2591,10 +2778,13 @@ sig
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `TaskDoesNotExist of task_does_not_exist 
           | `TaskTimedOut of task_timed_out ]) result
 end[@@ocaml.doc
-     "Used by activity workers, Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token}callback} pattern, and optionally Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-sync}job run} pattern to report that the task identified by the [taskToken] failed.\n"]
+     "Used by activity workers, Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token}callback} pattern, and optionally Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-sync}job run} pattern to report that the task identified by the [taskToken] failed.\n\n For an execution with encryption enabled, Step Functions will encrypt the error and cause fields using the KMS key for the execution role.\n \n  A caller can mark a task as fail without using any KMS permissions in the execution role if the caller provides a null value for both [error] and [cause] fields because no data needs to be encrypted.\n  "]
 module SendTaskHeartbeat :
 sig
   val request :
@@ -2616,6 +2806,9 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidOutput of invalid_output 
           | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `TaskDoesNotExist of task_does_not_exist 
           | `TaskTimedOut of task_timed_out ]) result
 end[@@ocaml.doc
@@ -2632,6 +2825,9 @@ sig
           | `InvalidArn of invalid_arn 
           | `InvalidExecutionInput of invalid_execution_input 
           | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `ValidationException of validation_exception ]) result
@@ -2646,6 +2842,9 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `InvalidExecutionInput of invalid_execution_input 
           | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `StateMachineTypeNotSupported of state_machine_type_not_supported ])
@@ -2661,9 +2860,12 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
           | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Stops an execution.\n\n This API action is not supported by [EXPRESS] state machines.\n "]
+     "Stops an execution.\n\n This API action is not supported by [EXPRESS] state machines.\n \n  For an execution with encryption enabled, Step Functions will encrypt the error and cause fields using the KMS key for the execution role.\n  \n   A caller can stop an execution without using any KMS permissions in the execution role if the caller provides a null value for both [error] and [cause] fields because no data needs to be encrypted.\n   "]
 module TagResource :
 sig
   val request :
@@ -2717,8 +2919,12 @@ sig
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
           | `InvalidDefinition of invalid_definition 
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
           | `InvalidLoggingConfiguration of invalid_logging_configuration 
           | `InvalidTracingConfiguration of invalid_tracing_configuration 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `MissingRequiredParameter of missing_required_parameter 
           | `ServiceQuotaExceededException of
               service_quota_exceeded_exception 
@@ -2726,7 +2932,7 @@ sig
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Updates an existing state machine by modifying its [definition], [roleArn], or [loggingConfiguration]. Running executions will continue to use the previous [definition] and [roleArn]. You must include at least one of [definition] or [roleArn] or you will receive a [MissingRequiredParameter] error.\n\n A qualified state machine ARN refers to a {i Distributed Map state} defined within a state machine. For example, the qualified state machine ARN [arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel] refers to a {i Distributed Map state} with a label [mapStateLabel] in the state machine named [stateMachineName].\n \n  A qualified state machine ARN can either refer to a {i Distributed Map state} defined within a state machine, a version ARN, or an alias ARN.\n  \n   The following are some examples of qualified and unqualified state machine ARNs:\n   \n    {ul\n          {-  The following qualified state machine ARN refers to a {i Distributed Map state} with a label [mapStateLabel] in a state machine named [myStateMachine].\n              \n                [arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel] \n               \n                 If you provide a qualified state machine ARN that refers to a {i Distributed Map state}, the request fails with [ValidationException].\n                 \n                   }\n          {-  The following qualified state machine ARN refers to an alias named [PROD].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                 If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.\n                 \n                   }\n          {-  The following unqualified state machine ARN refers to a state machine named [myStateMachine].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                }\n          }\n   After you update your state machine, you can set the [publish] parameter to [true] in the same action to publish a new {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}. This way, you can opt-in to strict versioning of your state machine.\n   \n     Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.\n     \n        All [StartExecution] calls within a few seconds use the updated [definition] and [roleArn]. Executions started immediately after you call [UpdateStateMachine] may use the previous state machine [definition] and [roleArn]. \n        \n         "]
+     "Updates an existing state machine by modifying its [definition], [roleArn], [loggingConfiguration], or [EncryptionConfiguration]. Running executions will continue to use the previous [definition] and [roleArn]. You must include at least one of [definition] or [roleArn] or you will receive a [MissingRequiredParameter] error.\n\n A qualified state machine ARN refers to a {i Distributed Map state} defined within a state machine. For example, the qualified state machine ARN [arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel] refers to a {i Distributed Map state} with a label [mapStateLabel] in the state machine named [stateMachineName].\n \n  A qualified state machine ARN can either refer to a {i Distributed Map state} defined within a state machine, a version ARN, or an alias ARN.\n  \n   The following are some examples of qualified and unqualified state machine ARNs:\n   \n    {ul\n          {-  The following qualified state machine ARN refers to a {i Distributed Map state} with a label [mapStateLabel] in a state machine named [myStateMachine].\n              \n                [arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel] \n               \n                 If you provide a qualified state machine ARN that refers to a {i Distributed Map state}, the request fails with [ValidationException].\n                 \n                   }\n          {-  The following qualified state machine ARN refers to an alias named [PROD].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                 If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.\n                 \n                   }\n          {-  The following unqualified state machine ARN refers to a state machine named [myStateMachine].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                }\n          }\n   After you update your state machine, you can set the [publish] parameter to [true] in the same action to publish a new {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}. This way, you can opt-in to strict versioning of your state machine.\n   \n     Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.\n     \n        All [StartExecution] calls within a few seconds use the updated [definition] and [roleArn]. Executions started immediately after you call [UpdateStateMachine] may use the previous state machine [definition] and [roleArn]. \n        \n         "]
 module UpdateStateMachineAlias :
 sig
   val request :
@@ -2750,4 +2956,4 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Validates the syntax of a state machine definition.\n\n You can validate that a state machine definition is correct without creating a state machine resource. Step Functions will implicitly perform the same syntax check when you invoke [CreateStateMachine] and [UpdateStateMachine]. State machine definitions are specified using a JSON-based, structured language. For more information on Amazon States Language see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} (ASL). \n \n  Suggested uses for [ValidateStateMachineDefinition]:\n  \n   {ul\n         {-  Integrate automated checks into your code review or Continuous Integration (CI) process to validate state machine definitions before starting deployments.\n             \n              }\n         {-  Run the validation from a Git pre-commit hook to check your state machine definitions before committing them to your source repository.\n             \n              }\n         }\n    Errors found in the state machine definition will be returned in the response as a list of {b diagnostic elements}, rather than raise an exception.\n    \n     "]
+     "Validates the syntax of a state machine definition specified in {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} (ASL), a JSON-based, structured language.\n\n You can validate that a state machine definition is correct without creating a state machine resource.\n \n  Suggested uses for [ValidateStateMachineDefinition]:\n  \n   {ul\n         {-  Integrate automated checks into your code review or Continuous Integration (CI) process to check state machine definitions before starting deployments.\n             \n              }\n         {-  Run validation from a Git pre-commit hook to verify the definition before committing to your source repository.\n             \n              }\n         }\n   Validation will look for problems in your state machine definition and return a {b result} and a list of {b diagnostic elements}.\n   \n    The {b result} value will be [OK] when your workflow definition can be successfully created or updated. Note the result can be [OK] even when diagnostic warnings are present in the response. The {b result} value will be [FAIL] when the workflow definition contains errors that would prevent you from creating or updating your state machine. \n    \n     The list of {{:https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinitionDiagnostic.html}ValidateStateMachineDefinitionDiagnostic} data elements can contain zero or more {b WARNING} and/or {b ERROR} elements.\n     \n       The {b ValidateStateMachineDefinition API} might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the {b result} field value (OK, FAIL). Do {b not} rely on the exact order, count, or wording of diagnostic messages.\n       \n        "]

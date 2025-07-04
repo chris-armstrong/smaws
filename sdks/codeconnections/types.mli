@@ -29,8 +29,14 @@ type nonrec publish_deployment_status =
 type nonrec trigger_resource_update_on =
   | FILE_CHANGE [@ocaml.doc ""]
   | ANY_CHANGE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec pull_request_comment =
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec sync_configuration =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "A toggle that specifies whether to enable or disable pull request comments for the sync configuration to be created.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option
@@ -72,6 +78,9 @@ type nonrec update_sync_configuration_output =
 [@@ocaml.doc ""]
 type nonrec update_sync_configuration_input =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "TA toggle that specifies whether to enable or disable pull request comments for the sync configuration to be updated.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option
@@ -507,7 +516,7 @@ type nonrec connection =
       "The name of the external provider where your third-party code repository is configured.\n"];
   connection_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the connection. The ARN is used as the connection reference when the connection is shared between Amazon Web Services.\n\n  The ARN is never reused if the connection is deleted.\n  \n   "];
+      "The Amazon Resource Name (ARN) of the connection. The ARN is used as the connection reference when the connection is shared between Amazon Web Servicesservices.\n\n  The ARN is never reused if the connection is deleted.\n  \n   "];
   connection_name: string option
     [@ocaml.doc
       "The name of the connection. Connection names must be unique in an Amazon Web Services account.\n"]}
@@ -675,6 +684,9 @@ type nonrec create_sync_configuration_output =
 [@@ocaml.doc ""]
 type nonrec create_sync_configuration_input =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "A toggle that specifies whether to enable or disable pull request comments for the sync configuration to be created.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option

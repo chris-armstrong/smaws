@@ -178,6 +178,50 @@ module CreateChannel =
             ~output_deserializer:create_channel_response_of_yojson
             ~error_deserializer
   end
+module CreateDashboard =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "InactiveEventDataStoreException") ->
+              `InactiveEventDataStoreException
+                (inactive_event_data_store_exception_of_yojson tree path)
+          | (_, "InsufficientEncryptionPolicyException") ->
+              `InsufficientEncryptionPolicyException
+                (insufficient_encryption_policy_exception_of_yojson tree path)
+          | (_, "InvalidQueryStatementException") ->
+              `InvalidQueryStatementException
+                (invalid_query_statement_exception_of_yojson tree path)
+          | (_, "InvalidTagParameterException") ->
+              `InvalidTagParameterException
+                (invalid_tag_parameter_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : create_dashboard_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.create_dashboard_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101CreateDashboard" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:create_dashboard_response_of_yojson
+            ~error_deserializer
+  end
 module CreateEventDataStore =
   struct
     let error_deserializer tree path =
@@ -417,6 +461,35 @@ module DeleteChannel =
             ~output_deserializer:delete_channel_response_of_yojson
             ~error_deserializer
   end
+module DeleteDashboard =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : delete_dashboard_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.delete_dashboard_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101DeleteDashboard" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_dashboard_response_of_yojson
+            ~error_deserializer
+  end
 module DeleteEventDataStore =
   struct
     let error_deserializer tree path =
@@ -492,6 +565,8 @@ module DeleteResourcePolicy =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "OperationNotPermittedException") ->
               `OperationNotPermittedException
                 (operation_not_permitted_exception_of_yojson tree path)
@@ -862,6 +937,52 @@ module EnableFederation =
             ~output_deserializer:enable_federation_response_of_yojson
             ~error_deserializer
   end
+module GenerateQuery =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "EventDataStoreARNInvalidException") ->
+              `EventDataStoreARNInvalidException
+                (event_data_store_arn_invalid_exception_of_yojson tree path)
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "GenerateResponseException") ->
+              `GenerateResponseException
+                (generate_response_exception_of_yojson tree path)
+          | (_, "InactiveEventDataStoreException") ->
+              `InactiveEventDataStoreException
+                (inactive_event_data_store_exception_of_yojson tree path)
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "NoManagementAccountSLRExistsException") ->
+              `NoManagementAccountSLRExistsException
+                (no_management_account_slr_exists_exception_of_yojson tree
+                   path)
+          | (_, "OperationNotPermittedException") ->
+              `OperationNotPermittedException
+                (operation_not_permitted_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : generate_query_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.generate_query_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101GenerateQuery" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:generate_query_response_of_yojson
+            ~error_deserializer
+  end
 module GetChannel =
   struct
     let error_deserializer tree path =
@@ -893,6 +1014,88 @@ module GetChannel =
             ~shape_name:"CloudTrail_20131101GetChannel" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:get_channel_response_of_yojson
+            ~error_deserializer
+  end
+module GetDashboard =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_dashboard_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.get_dashboard_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101GetDashboard" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_dashboard_response_of_yojson
+            ~error_deserializer
+  end
+module GetEventConfiguration =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "CloudTrailARNInvalidException") ->
+              `CloudTrailARNInvalidException
+                (cloud_trail_arn_invalid_exception_of_yojson tree path)
+          | (_, "EventDataStoreARNInvalidException") ->
+              `EventDataStoreARNInvalidException
+                (event_data_store_arn_invalid_exception_of_yojson tree path)
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "InvalidEventDataStoreCategoryException") ->
+              `InvalidEventDataStoreCategoryException
+                (invalid_event_data_store_category_exception_of_yojson tree
+                   path)
+          | (_, "InvalidEventDataStoreStatusException") ->
+              `InvalidEventDataStoreStatusException
+                (invalid_event_data_store_status_exception_of_yojson tree
+                   path)
+          | (_, "InvalidParameterCombinationException") ->
+              `InvalidParameterCombinationException
+                (invalid_parameter_combination_exception_of_yojson tree path)
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "NoManagementAccountSLRExistsException") ->
+              `NoManagementAccountSLRExistsException
+                (no_management_account_slr_exists_exception_of_yojson tree
+                   path)
+          | (_, "OperationNotPermittedException") ->
+              `OperationNotPermittedException
+                (operation_not_permitted_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_event_configuration_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.get_event_configuration_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101GetEventConfiguration" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_event_configuration_response_of_yojson
             ~error_deserializer
   end
 module GetEventDataStore =
@@ -1259,6 +1462,30 @@ module ListChannels =
             ~output_deserializer:list_channels_response_of_yojson
             ~error_deserializer
   end
+module ListDashboards =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_dashboards_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.list_dashboards_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101ListDashboards" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_dashboards_response_of_yojson
+            ~error_deserializer
+  end
 module ListEventDataStores =
   struct
     let error_deserializer tree path =
@@ -1613,6 +1840,80 @@ module LookupEvents =
             ~output_deserializer:lookup_events_response_of_yojson
             ~error_deserializer
   end
+module PutEventConfiguration =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "CloudTrailARNInvalidException") ->
+              `CloudTrailARNInvalidException
+                (cloud_trail_arn_invalid_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "EventDataStoreARNInvalidException") ->
+              `EventDataStoreARNInvalidException
+                (event_data_store_arn_invalid_exception_of_yojson tree path)
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "InactiveEventDataStoreException") ->
+              `InactiveEventDataStoreException
+                (inactive_event_data_store_exception_of_yojson tree path)
+          | (_, "InsufficientDependencyServiceAccessPermissionException") ->
+              `InsufficientDependencyServiceAccessPermissionException
+                (insufficient_dependency_service_access_permission_exception_of_yojson
+                   tree path)
+          | (_, "InsufficientIAMAccessPermissionException") ->
+              `InsufficientIAMAccessPermissionException
+                (insufficient_iam_access_permission_exception_of_yojson tree
+                   path)
+          | (_, "InvalidEventDataStoreCategoryException") ->
+              `InvalidEventDataStoreCategoryException
+                (invalid_event_data_store_category_exception_of_yojson tree
+                   path)
+          | (_, "InvalidEventDataStoreStatusException") ->
+              `InvalidEventDataStoreStatusException
+                (invalid_event_data_store_status_exception_of_yojson tree
+                   path)
+          | (_, "InvalidParameterCombinationException") ->
+              `InvalidParameterCombinationException
+                (invalid_parameter_combination_exception_of_yojson tree path)
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "NoManagementAccountSLRExistsException") ->
+              `NoManagementAccountSLRExistsException
+                (no_management_account_slr_exists_exception_of_yojson tree
+                   path)
+          | (_, "NotOrganizationMasterAccountException") ->
+              `NotOrganizationMasterAccountException
+                (not_organization_master_account_exception_of_yojson tree
+                   path)
+          | (_, "OperationNotPermittedException") ->
+              `OperationNotPermittedException
+                (operation_not_permitted_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : put_event_configuration_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.put_event_configuration_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101PutEventConfiguration" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:put_event_configuration_response_of_yojson
+            ~error_deserializer
+  end
 module PutEventSelectors =
   struct
     let error_deserializer tree path =
@@ -1748,6 +2049,8 @@ module PutResourcePolicy =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "OperationNotPermittedException") ->
               `OperationNotPermittedException
                 (operation_not_permitted_exception_of_yojson tree path)
@@ -1811,6 +2114,10 @@ module RegisterOrganizationDelegatedAdmin =
               `InsufficientDependencyServiceAccessPermissionException
                 (insufficient_dependency_service_access_permission_exception_of_yojson
                    tree path)
+          | (_, "InsufficientIAMAccessPermissionException") ->
+              `InsufficientIAMAccessPermissionException
+                (insufficient_iam_access_permission_exception_of_yojson tree
+                   path)
           | (_, "InvalidParameterException") ->
               `InvalidParameterException
                 (invalid_parameter_exception_of_yojson tree path)
@@ -1864,6 +2171,8 @@ module RemoveTags =
           | (_, "CloudTrailARNInvalidException") ->
               `CloudTrailARNInvalidException
                 (cloud_trail_arn_invalid_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "EventDataStoreARNInvalidException") ->
               `EventDataStoreARNInvalidException
                 (event_data_store_arn_invalid_exception_of_yojson tree path)
@@ -1981,12 +2290,82 @@ module RestoreEventDataStore =
             ~output_deserializer:restore_event_data_store_response_of_yojson
             ~error_deserializer
   end
+module SearchSampleQueries =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OperationNotPermittedException") ->
+              `OperationNotPermittedException
+                (operation_not_permitted_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : search_sample_queries_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.search_sample_queries_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101SearchSampleQueries" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:search_sample_queries_response_of_yojson
+            ~error_deserializer
+  end
+module StartDashboardRefresh =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "InactiveEventDataStoreException") ->
+              `InactiveEventDataStoreException
+                (inactive_event_data_store_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : start_dashboard_refresh_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.start_dashboard_refresh_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101StartDashboardRefresh" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:start_dashboard_refresh_response_of_yojson
+            ~error_deserializer
+  end
 module StartEventDataStoreIngestion =
   struct
     let error_deserializer tree path =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "EventDataStoreARNInvalidException") ->
               `EventDataStoreARNInvalidException
                 (event_data_store_arn_invalid_exception_of_yojson tree path)
@@ -2224,6 +2603,8 @@ module StopEventDataStoreIngestion =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "EventDataStoreARNInvalidException") ->
               `EventDataStoreARNInvalidException
                 (event_data_store_arn_invalid_exception_of_yojson tree path)
@@ -2414,6 +2795,50 @@ module UpdateChannel =
             ~shape_name:"CloudTrail_20131101UpdateChannel" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:update_channel_response_of_yojson
+            ~error_deserializer
+  end
+module UpdateDashboard =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "EventDataStoreNotFoundException") ->
+              `EventDataStoreNotFoundException
+                (event_data_store_not_found_exception_of_yojson tree path)
+          | (_, "InactiveEventDataStoreException") ->
+              `InactiveEventDataStoreException
+                (inactive_event_data_store_exception_of_yojson tree path)
+          | (_, "InsufficientEncryptionPolicyException") ->
+              `InsufficientEncryptionPolicyException
+                (insufficient_encryption_policy_exception_of_yojson tree path)
+          | (_, "InvalidQueryStatementException") ->
+              `InvalidQueryStatementException
+                (invalid_query_statement_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : update_dashboard_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.update_dashboard_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"CloudTrail_20131101UpdateDashboard" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:update_dashboard_response_of_yojson
             ~error_deserializer
   end
 module UpdateEventDataStore =

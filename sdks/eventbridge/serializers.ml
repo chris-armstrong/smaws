@@ -115,6 +115,8 @@ let update_endpoint_request_to_yojson (x : update_endpoint_request) =
 let connection_arn_to_yojson = string_to_yojson
 let connection_state_to_yojson (x : connection_state) =
   match x with
+  | FAILED_CONNECTIVITY -> `String "FAILED_CONNECTIVITY"
+  | ACTIVE -> `String "ACTIVE"
   | DEAUTHORIZING -> `String "DEAUTHORIZING"
   | AUTHORIZING -> `String "AUTHORIZING"
   | DEAUTHORIZED -> `String "DEAUTHORIZED"
@@ -232,12 +234,29 @@ let update_connection_api_key_auth_request_parameters_to_yojson
           x.api_key_value));
     ("ApiKeyName",
       (option_to_yojson auth_header_parameters_to_yojson x.api_key_name))]
+let resource_configuration_arn_to_yojson = string_to_yojson
+let connectivity_resource_configuration_arn_to_yojson
+  (x : connectivity_resource_configuration_arn) =
+  assoc_to_yojson
+    [("ResourceConfigurationArn",
+       (Some
+          (resource_configuration_arn_to_yojson x.resource_configuration_arn)))]
+let connectivity_resource_parameters_to_yojson
+  (x : connectivity_resource_parameters) =
+  assoc_to_yojson
+    [("ResourceParameters",
+       (Some
+          (connectivity_resource_configuration_arn_to_yojson
+             x.resource_parameters)))]
 let update_connection_auth_request_parameters_to_yojson
   (x : update_connection_auth_request_parameters) =
   assoc_to_yojson
-    [("InvocationHttpParameters",
-       (option_to_yojson connection_http_parameters_to_yojson
-          x.invocation_http_parameters));
+    [("ConnectivityParameters",
+       (option_to_yojson connectivity_resource_parameters_to_yojson
+          x.connectivity_parameters));
+    ("InvocationHttpParameters",
+      (option_to_yojson connection_http_parameters_to_yojson
+         x.invocation_http_parameters));
     ("ApiKeyAuthParameters",
       (option_to_yojson
          update_connection_api_key_auth_request_parameters_to_yojson
@@ -251,16 +270,27 @@ let update_connection_auth_request_parameters_to_yojson
          x.basic_auth_parameters))]
 let update_connection_request_to_yojson (x : update_connection_request) =
   assoc_to_yojson
-    [("AuthParameters",
-       (option_to_yojson update_connection_auth_request_parameters_to_yojson
-          x.auth_parameters));
+    [("KmsKeyIdentifier",
+       (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
+    ("InvocationConnectivityParameters",
+      (option_to_yojson connectivity_resource_parameters_to_yojson
+         x.invocation_connectivity_parameters));
+    ("AuthParameters",
+      (option_to_yojson update_connection_auth_request_parameters_to_yojson
+         x.auth_parameters));
     ("AuthorizationType",
       (option_to_yojson connection_authorization_type_to_yojson
          x.authorization_type));
     ("Description",
       (option_to_yojson connection_description_to_yojson x.description));
     ("Name", (Some (connection_name_to_yojson x.name)))]
+let throttling_exception_to_yojson (x : throttling_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
 let limit_exceeded_exception_to_yojson (x : limit_exceeded_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let archive_arn_to_yojson = string_to_yojson
@@ -287,8 +317,10 @@ let event_pattern_to_yojson = string_to_yojson
 let retention_days_to_yojson = int_to_yojson
 let update_archive_request_to_yojson (x : update_archive_request) =
   assoc_to_yojson
-    [("RetentionDays",
-       (option_to_yojson retention_days_to_yojson x.retention_days));
+    [("KmsKeyIdentifier",
+       (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
+    ("RetentionDays",
+      (option_to_yojson retention_days_to_yojson x.retention_days));
     ("EventPattern",
       (option_to_yojson event_pattern_to_yojson x.event_pattern));
     ("Description",
@@ -654,7 +686,7 @@ let start_replay_request_to_yojson (x : start_replay_request) =
     [("Destination", (Some (replay_destination_to_yojson x.destination)));
     ("EventEndTime", (Some (timestamp__to_yojson x.event_end_time)));
     ("EventStartTime", (Some (timestamp__to_yojson x.event_start_time)));
-    ("EventSourceArn", (Some (arn_to_yojson x.event_source_arn)));
+    ("EventSourceArn", (Some (archive_arn_to_yojson x.event_source_arn)));
     ("Description",
       (option_to_yojson replay_description_to_yojson x.description));
     ("ReplayName", (Some (replay_name_to_yojson x.replay_name)))]
@@ -691,6 +723,7 @@ let rule_to_yojson (x : rule) =
     ("Name", (option_to_yojson rule_name_to_yojson x.name))]
 let rule_response_list_to_yojson tree = list_to_yojson rule_to_yojson tree
 let rule_name_list_to_yojson tree = list_to_yojson rule_name_to_yojson tree
+let resource_association_arn_to_yojson = string_to_yojson
 let replay_to_yojson (x : replay) =
   assoc_to_yojson
     [("ReplayEndTime",
@@ -706,7 +739,8 @@ let replay_to_yojson (x : replay) =
     ("StateReason",
       (option_to_yojson replay_state_reason_to_yojson x.state_reason));
     ("State", (option_to_yojson replay_state_to_yojson x.state));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson archive_arn_to_yojson x.event_source_arn));
     ("ReplayName", (option_to_yojson replay_name_to_yojson x.replay_name))]
 let replay_list_to_yojson tree = list_to_yojson replay_to_yojson tree
 let error_code_to_yojson = string_to_yojson
@@ -948,7 +982,8 @@ let list_replays_request_to_yojson (x : list_replays_request) =
   assoc_to_yojson
     [("Limit", (option_to_yojson limit_max100_to_yojson x.limit));
     ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson archive_arn_to_yojson x.event_source_arn));
     ("State", (option_to_yojson replay_state_to_yojson x.state));
     ("NamePrefix", (option_to_yojson replay_name_to_yojson x.name_prefix))]
 let list_partner_event_sources_response_to_yojson
@@ -1089,6 +1124,7 @@ let list_connections_request_to_yojson (x : list_connections_request) =
       (option_to_yojson connection_state_to_yojson x.connection_state));
     ("NamePrefix",
       (option_to_yojson connection_name_to_yojson x.name_prefix))]
+let event_bus_arn_to_yojson = string_to_yojson
 let archive_to_yojson (x : archive) =
   assoc_to_yojson
     [("CreationTime",
@@ -1100,7 +1136,8 @@ let archive_to_yojson (x : archive) =
     ("StateReason",
       (option_to_yojson archive_state_reason_to_yojson x.state_reason));
     ("State", (option_to_yojson archive_state_to_yojson x.state));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson event_bus_arn_to_yojson x.event_source_arn));
     ("ArchiveName", (option_to_yojson archive_name_to_yojson x.archive_name))]
 let archive_response_list_to_yojson tree =
   list_to_yojson archive_to_yojson tree
@@ -1114,7 +1151,8 @@ let list_archives_request_to_yojson (x : list_archives_request) =
     [("Limit", (option_to_yojson limit_max100_to_yojson x.limit));
     ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
     ("State", (option_to_yojson archive_state_to_yojson x.state));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson event_bus_arn_to_yojson x.event_source_arn));
     ("NamePrefix", (option_to_yojson archive_name_to_yojson x.name_prefix))]
 let api_destination_to_yojson (x : api_destination) =
   assoc_to_yojson
@@ -1207,7 +1245,8 @@ let describe_replay_response_to_yojson (x : describe_replay_response) =
       (option_to_yojson timestamp__to_yojson x.event_start_time));
     ("Destination",
       (option_to_yojson replay_destination_to_yojson x.destination));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson archive_arn_to_yojson x.event_source_arn));
     ("StateReason",
       (option_to_yojson replay_state_reason_to_yojson x.state_reason));
     ("State", (option_to_yojson replay_state_to_yojson x.state));
@@ -1281,6 +1320,21 @@ let describe_endpoint_request_to_yojson (x : describe_endpoint_request) =
   assoc_to_yojson
     [("HomeRegion", (option_to_yojson home_region_to_yojson x.home_region));
     ("Name", (Some (endpoint_name_to_yojson x.name)))]
+let describe_connection_resource_parameters_to_yojson
+  (x : describe_connection_resource_parameters) =
+  assoc_to_yojson
+    [("ResourceAssociationArn",
+       (Some (resource_association_arn_to_yojson x.resource_association_arn)));
+    ("ResourceConfigurationArn",
+      (Some
+         (resource_configuration_arn_to_yojson x.resource_configuration_arn)))]
+let describe_connection_connectivity_parameters_to_yojson
+  (x : describe_connection_connectivity_parameters) =
+  assoc_to_yojson
+    [("ResourceParameters",
+       (Some
+          (describe_connection_resource_parameters_to_yojson
+             x.resource_parameters)))]
 let connection_basic_auth_response_parameters_to_yojson
   (x : connection_basic_auth_response_parameters) =
   assoc_to_yojson
@@ -1313,9 +1367,13 @@ let connection_api_key_auth_response_parameters_to_yojson
 let connection_auth_response_parameters_to_yojson
   (x : connection_auth_response_parameters) =
   assoc_to_yojson
-    [("InvocationHttpParameters",
-       (option_to_yojson connection_http_parameters_to_yojson
-          x.invocation_http_parameters));
+    [("ConnectivityParameters",
+       (option_to_yojson
+          describe_connection_connectivity_parameters_to_yojson
+          x.connectivity_parameters));
+    ("InvocationHttpParameters",
+      (option_to_yojson connection_http_parameters_to_yojson
+         x.invocation_http_parameters));
     ("ApiKeyAuthParameters",
       (option_to_yojson connection_api_key_auth_response_parameters_to_yojson
          x.api_key_auth_parameters));
@@ -1336,6 +1394,8 @@ let describe_connection_response_to_yojson (x : describe_connection_response)
     ("AuthParameters",
       (option_to_yojson connection_auth_response_parameters_to_yojson
          x.auth_parameters));
+    ("KmsKeyIdentifier",
+      (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
     ("SecretArn",
       (option_to_yojson secrets_manager_secret_arn_to_yojson x.secret_arn));
     ("AuthorizationType",
@@ -1345,6 +1405,9 @@ let describe_connection_response_to_yojson (x : describe_connection_response)
       (option_to_yojson connection_state_reason_to_yojson x.state_reason));
     ("ConnectionState",
       (option_to_yojson connection_state_to_yojson x.connection_state));
+    ("InvocationConnectivityParameters",
+      (option_to_yojson describe_connection_connectivity_parameters_to_yojson
+         x.invocation_connectivity_parameters));
     ("Description",
       (option_to_yojson connection_description_to_yojson x.description));
     ("Name", (option_to_yojson connection_name_to_yojson x.name));
@@ -1360,6 +1423,8 @@ let describe_archive_response_to_yojson (x : describe_archive_response) =
     ("SizeBytes", (option_to_yojson long_to_yojson x.size_bytes));
     ("RetentionDays",
       (option_to_yojson retention_days_to_yojson x.retention_days));
+    ("KmsKeyIdentifier",
+      (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
     ("StateReason",
       (option_to_yojson archive_state_reason_to_yojson x.state_reason));
     ("State", (option_to_yojson archive_state_to_yojson x.state));
@@ -1367,7 +1432,8 @@ let describe_archive_response_to_yojson (x : describe_archive_response) =
       (option_to_yojson event_pattern_to_yojson x.event_pattern));
     ("Description",
       (option_to_yojson archive_description_to_yojson x.description));
-    ("EventSourceArn", (option_to_yojson arn_to_yojson x.event_source_arn));
+    ("EventSourceArn",
+      (option_to_yojson event_bus_arn_to_yojson x.event_source_arn));
     ("ArchiveName", (option_to_yojson archive_name_to_yojson x.archive_name));
     ("ArchiveArn", (option_to_yojson archive_arn_to_yojson x.archive_arn))]
 let describe_archive_request_to_yojson (x : describe_archive_request) =
@@ -1552,9 +1618,12 @@ let create_connection_api_key_auth_request_parameters_to_yojson
 let create_connection_auth_request_parameters_to_yojson
   (x : create_connection_auth_request_parameters) =
   assoc_to_yojson
-    [("InvocationHttpParameters",
-       (option_to_yojson connection_http_parameters_to_yojson
-          x.invocation_http_parameters));
+    [("ConnectivityParameters",
+       (option_to_yojson connectivity_resource_parameters_to_yojson
+          x.connectivity_parameters));
+    ("InvocationHttpParameters",
+      (option_to_yojson connection_http_parameters_to_yojson
+         x.invocation_http_parameters));
     ("ApiKeyAuthParameters",
       (option_to_yojson
          create_connection_api_key_auth_request_parameters_to_yojson
@@ -1568,10 +1637,15 @@ let create_connection_auth_request_parameters_to_yojson
          x.basic_auth_parameters))]
 let create_connection_request_to_yojson (x : create_connection_request) =
   assoc_to_yojson
-    [("AuthParameters",
-       (Some
-          (create_connection_auth_request_parameters_to_yojson
-             x.auth_parameters)));
+    [("KmsKeyIdentifier",
+       (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
+    ("InvocationConnectivityParameters",
+      (option_to_yojson connectivity_resource_parameters_to_yojson
+         x.invocation_connectivity_parameters));
+    ("AuthParameters",
+      (Some
+         (create_connection_auth_request_parameters_to_yojson
+            x.auth_parameters)));
     ("AuthorizationType",
       (Some (connection_authorization_type_to_yojson x.authorization_type)));
     ("Description",
@@ -1587,13 +1661,15 @@ let create_archive_response_to_yojson (x : create_archive_response) =
     ("ArchiveArn", (option_to_yojson archive_arn_to_yojson x.archive_arn))]
 let create_archive_request_to_yojson (x : create_archive_request) =
   assoc_to_yojson
-    [("RetentionDays",
-       (option_to_yojson retention_days_to_yojson x.retention_days));
+    [("KmsKeyIdentifier",
+       (option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier));
+    ("RetentionDays",
+      (option_to_yojson retention_days_to_yojson x.retention_days));
     ("EventPattern",
       (option_to_yojson event_pattern_to_yojson x.event_pattern));
     ("Description",
       (option_to_yojson archive_description_to_yojson x.description));
-    ("EventSourceArn", (Some (arn_to_yojson x.event_source_arn)));
+    ("EventSourceArn", (Some (event_bus_arn_to_yojson x.event_source_arn)));
     ("ArchiveName", (Some (archive_name_to_yojson x.archive_name)))]
 let create_api_destination_response_to_yojson
   (x : create_api_destination_response) =

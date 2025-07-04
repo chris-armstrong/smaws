@@ -11,19 +11,54 @@ type nonrec validation_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "The requested action is not valid.\n\n For PutStoredQuery, you will see this exception if there are missing required fields or if the input value fails the validation, or if you are trying to create more than 300 queries.\n \n  For GetStoredQuery, ListStoredQuery, and DeleteStoredQuery you will see this exception if there are missing required fields or if the input value fails the validation.\n  "]
+  "The requested operation is not valid. You will see this exception if there are missing required fields or if the input value fails the validation.\n\n For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutStoredQuery.html}PutStoredQuery}, one of the following errors:\n \n  {ul\n        {-  There are missing required fields.\n            \n             }\n        {-  The input value fails the validation.\n            \n             }\n        {-  You are trying to create more than 300 queries.\n            \n             }\n        }\n   For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DescribeConfigurationRecorders.html}DescribeConfigurationRecorders} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DescribeConfigurationRecorderStatus.html}DescribeConfigurationRecorderStatus}, one of the following errors:\n   \n    {ul\n          {-  You have specified more than one configuration recorder.\n              \n               }\n          {-  You have provided a service principal for service-linked configuration recorder that is not valid.\n              \n               }\n          }\n   For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_AssociateResourceTypes.html}AssociateResourceTypes} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DisassociateResourceTypes.html}DisassociateResourceTypes}, one of the following errors:\n   \n    {ul\n          {-  Your configuraiton recorder has a recording strategy that does not allow the association or disassociation of resource types.\n              \n               }\n          {-  One or more of the specified resource types are already associated or disassociated with the configuration recorder.\n              \n               }\n          {-  For service-linked configuration recorders, the configuration recorder does not record one or more of the specified resource types.\n              \n               }\n          }\n  "]
 type nonrec untag_resource_request =
   {
   tag_keys: string list [@ocaml.doc "The keys of the tags to be removed.\n"];
   resource_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. Currently, the supported resources are [ConfigRule], [ConfigurationAggregator] and [AggregatorAuthorization].\n"]}
+      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. The following resources are supported:\n\n {ul\n       {-   [ConfigurationRecorder] \n           \n            }\n       {-   [ConfigRule] \n           \n            }\n       {-   [OrganizationConfigRule] \n           \n            }\n       {-   [ConformancePack] \n           \n            }\n       {-   [OrganizationConformancePack] \n           \n            }\n       {-   [ConfigurationAggregator] \n           \n            }\n       {-   [AggregationAuthorization] \n           \n            }\n       {-   [StoredQuery] \n           \n            }\n       }\n  "]}
 [@@ocaml.doc ""]
 type nonrec resource_not_found_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc "You have specified a resource that does not exist.\n"]
 type nonrec resource_type =
+  | TransferProfile [@ocaml.doc ""]
+  | SecurityHubStandard [@ocaml.doc ""]
+  | SageMakerInferenceExperiment [@ocaml.doc ""]
+  | S3ExpressDirectoryBucket [@ocaml.doc ""]
+  | S3ExpressBucketPolicy [@ocaml.doc ""]
+  | S3StorageLensGroup [@ocaml.doc ""]
+  | Route53ProfilesProfile [@ocaml.doc ""]
+  | RedshiftEndpointAuthorization [@ocaml.doc ""]
+  | OpenSearchServerlessVpcEndpoint [@ocaml.doc ""]
+  | OpenSearchServerlessCollection [@ocaml.doc ""]
+  | MemoryDBSubnetGroup [@ocaml.doc ""]
+  | MediaConnectGateway [@ocaml.doc ""]
+  | MSKVpcConnection [@ocaml.doc ""]
+  | MSKClusterPolicy [@ocaml.doc ""]
+  | InspectorV2Activation [@ocaml.doc ""]
+  | IAMOIDCProvider [@ocaml.doc ""]
+  | EvidentlySegment [@ocaml.doc ""]
+  | EC2VPNConnectionRoute [@ocaml.doc ""]
+  | EC2VPCEndpointConnectionNotification [@ocaml.doc ""]
+  | EC2VPCBlockPublicAccessOptions [@ocaml.doc ""]
+  | EC2VPCBlockPublicAccessExclusion [@ocaml.doc ""]
+  | EC2SnapshotBlockPublicAccess [@ocaml.doc ""]
+  | EC2InstanceConnectEndpoint [@ocaml.doc ""]
+  | EC2IPAMResourceDiscoveryAssociation [@ocaml.doc ""]
+  | EC2IPAMResourceDiscovery [@ocaml.doc ""]
+  | EC2EIPAssociation [@ocaml.doc ""]
+  | EC2ClientVpnTargetNetworkAssociation [@ocaml.doc ""]
+  | ConnectUser [@ocaml.doc ""]
+  | ConnectRule [@ocaml.doc ""]
+  | CognitoIdentityPool [@ocaml.doc ""]
+  | BedrockKnowledgeBase [@ocaml.doc ""]
+  | BedrockGuardrail [@ocaml.doc ""]
+  | AppSyncApiCache [@ocaml.doc ""]
+  | AppIntegrationsApplication [@ocaml.doc ""]
+  | AppConfigExtensionAssociation [@ocaml.doc ""]
   | SSMDocument [@ocaml.doc ""]
   | Route53ResolverFirewallRuleGroup [@ocaml.doc ""]
   | RedshiftEndpointAccess [@ocaml.doc ""]
@@ -444,6 +479,11 @@ type nonrec aggregate_resource_identifier =
   source_account_id: string
     [@ocaml.doc "The 12-digit account ID of the source account.\n"]}[@@ocaml.doc
                                                                     "The details that identify a resource that is collected by Config aggregator, including the resource type, ID, (if available) the custom resource name, the source account, and source region.\n"]
+type nonrec unmodifiable_entity_exception =
+  {
+  message: string option [@ocaml.doc "Error executing the command\n"]}
+[@@ocaml.doc
+  "The requested operation is not valid.\n\n For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutConfigurationRecorder.html}PutConfigurationRecorder}, you will see this exception because you cannot use this operation to create a service-linked configuration recorder. Use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutServiceLinkedConfigurationRecorder.html}PutServiceLinkedConfigurationRecorder} operation to create a service-linked configuration recorder.\n \n  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DeleteConfigurationRecorder.html}DeleteConfigurationRecorder}, you will see this exception because you cannot use this operation to delete a service-linked configuration recorder. Use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DeleteServiceLinkedConfigurationRecorder.html}DeleteServiceLinkedConfigurationRecorder} operation to delete a service-linked configuration recorder.\n  \n   For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_StartConfigurationRecorder.html}StartConfigurationRecorder} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_StopConfigurationRecorder.html}StopConfigurationRecorder}, you will see this exception because these operations do not affect service-linked configuration recorders. Service-linked configuration recorders are always recording. To stop recording, you must delete the service-linked configuration recorder. Use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DeleteServiceLinkedConfigurationRecorder.html}DeleteServiceLinkedConfigurationRecorder} operation to delete a service-linked configuration recorder.\n   "]
 type nonrec too_many_tags_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -483,7 +523,7 @@ type nonrec tag_resource_request =
   tags: tag list [@ocaml.doc "An array of tag object.\n"];
   resource_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. Currently, the supported resources are [ConfigRule], [ConfigurationAggregator] and [AggregatorAuthorization].\n"]}
+      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. The following resources are supported:\n\n {ul\n       {-   [ConfigurationRecorder] \n           \n            }\n       {-   [ConfigRule] \n           \n            }\n       {-   [OrganizationConfigRule] \n           \n            }\n       {-   [ConformancePack] \n           \n            }\n       {-   [OrganizationConformancePack] \n           \n            }\n       {-   [ConfigurationAggregator] \n           \n            }\n       {-   [AggregationAuthorization] \n           \n            }\n       {-   [StoredQuery] \n           \n            }\n       }\n  "]}
 [@@ocaml.doc ""]
 type nonrec supplementary_configuration = (string * string) list[@@ocaml.doc
                                                                   ""]
@@ -514,8 +554,8 @@ type nonrec stop_configuration_recorder_request =
   {
   configuration_recorder_name: string
     [@ocaml.doc
-      "The name of the recorder object that records each configuration change made to the resources.\n"]}
-[@@ocaml.doc "The input for the [StopConfigurationRecorder] action.\n"]
+      "The name of the customer managed configuration recorder that you want to stop.\n"]}
+[@@ocaml.doc "The input for the [StopConfigurationRecorder] operation.\n"]
 type nonrec no_such_configuration_recorder_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -636,13 +676,13 @@ type nonrec insufficient_permissions_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "Indicates one of the following errors:\n\n {ul\n       {-  For PutConfigRule, the rule cannot be created because the IAM role assigned to Config lacks permissions to perform the config:Put* action.\n           \n            }\n       {-  For PutConfigRule, the Lambda function cannot be invoked. Check the function ARN, and check the function's permissions.\n           \n            }\n       {-  For PutOrganizationConfigRule, organization Config rule cannot be created because you do not have permissions to call IAM [GetRole] action or create a service-linked role.\n           \n            }\n       {-  For PutConformancePack and PutOrganizationConformancePack, a conformance pack cannot be created because you do not have the following permissions: \n           \n            {ul\n                  {-  You do not have permission to call IAM [GetRole] action or create a service-linked role.\n                      \n                       }\n                  {-  You do not have permission to read Amazon S3 bucket or call SSM:GetDocument.\n                      \n                       }\n                  \n        }\n         }\n       }\n  "]
+  "Indicates one of the following errors:\n\n {ul\n       {-  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutConfigRule.html}PutConfigRule}, the rule cannot be created because the IAM role assigned to Config lacks permissions to perform the config:Put* action.\n           \n            }\n       {-  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutConfigRule.html}PutConfigRule}, the Lambda function cannot be invoked. Check the function ARN, and check the function's permissions.\n           \n            }\n       {-  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutOrganizationConfigRule.html}PutOrganizationConfigRule}, organization Config rule cannot be created because you do not have permissions to call IAM [GetRole] action or create a service-linked role.\n           \n            }\n       {-  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutConformancePack.html}PutConformancePack} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutOrganizationConformancePack.html}PutOrganizationConformancePack}, a conformance pack cannot be created because you do not have the following permissions: \n           \n            {ul\n                  {-  You do not have permission to call IAM [GetRole] action or create a service-linked role.\n                      \n                       }\n                  {-  You do not have permission to read Amazon S3 bucket or call SSM:GetDocument.\n                      \n                       }\n                  \n        }\n         }\n       {-  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutServiceLinkedConfigurationRecorder.html}PutServiceLinkedConfigurationRecorder}, a service-linked configuration recorder cannot be created because you do not have the following permissions: IAM [CreateServiceLinkedRole].\n           \n            }\n       }\n  "]
 type nonrec start_configuration_recorder_request =
   {
   configuration_recorder_name: string
     [@ocaml.doc
-      "The name of the recorder object that records each configuration change made to the resources.\n"]}
-[@@ocaml.doc "The input for the [StartConfigurationRecorder] action.\n"]
+      "The name of the customer managed configuration recorder that you want to start.\n"]}
+[@@ocaml.doc "The input for the [StartConfigurationRecorder] operation.\n"]
 type nonrec no_available_delivery_channel_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -668,7 +708,7 @@ type nonrec limit_exceeded_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "For [StartConfigRulesEvaluation] API, this exception is thrown if an evaluation is in progress or if you call the [StartConfigRulesEvaluation] API more than once per minute.\n\n For [PutConfigurationAggregator] API, this exception is thrown if the number of accounts and aggregators exceeds the limit.\n "]
+  "For [PutServiceLinkedConfigurationRecorder] API, this exception is thrown if the number of service-linked roles in the account exceeds the limit.\n\n For [StartConfigRulesEvaluation] API, this exception is thrown if an evaluation is in progress or if you call the [StartConfigRulesEvaluation] API more than once per minute.\n \n  For [PutConfigurationAggregator] API, this exception is thrown if the number of accounts and aggregators exceeds the limit.\n  "]
 type nonrec invalid_next_token_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -754,6 +794,29 @@ type nonrec put_stored_query_request =
   stored_query: stored_query
     [@ocaml.doc
       "A list of [StoredQuery] objects. The mandatory fields are [QueryName] and [Expression].\n\n  When you are creating a query, you must provide a query name and an expression. When you are updating a query, you must provide a query name but updating the description is optional.\n  \n   "]}
+[@@ocaml.doc ""]
+type nonrec conflict_exception =
+  {
+  message: string option [@ocaml.doc "Error executing the command\n"]}
+[@@ocaml.doc
+  "For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutServiceLinkedConfigurationRecorder.html}PutServiceLinkedConfigurationRecorder}, you cannot create a service-linked recorder because a service-linked recorder already exists for the specified service.\n\n For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DeleteServiceLinkedConfigurationRecorder.html}DeleteServiceLinkedConfigurationRecorder}, you cannot delete the service-linked recorder because it is currently in use by the linked Amazon Web Services service.\n \n  For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DeleteDeliveryChannel.html}DeleteDeliveryChannel}, you cannot delete the specified delivery channel because the customer managed configuration recorder is running. Use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_StopConfigurationRecorder.html}StopConfigurationRecorder} operation to stop the customer managed configuration recorder.\n  \n   For {{:https://docs.aws.amazon.com/config/latest/APIReference/API_AssociateResourceTypes.html}AssociateResourceTypes} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DisassociateResourceTypes.html}DisassociateResourceTypes}, one of the following errors:\n   \n    {ul\n          {-  For service-linked configuration recorders, the configuration recorder is not in use by the service. No association or dissociation of resource types is permitted.\n              \n               }\n          {-  For service-linked configuration recorders, your requested change to the configuration recorder has been denied by its linked Amazon Web Services service.\n              \n               }\n          }\n  "]
+type nonrec put_service_linked_configuration_recorder_response =
+  {
+  name: string option
+    [@ocaml.doc
+      "The name of the specified configuration recorder.\n\n For service-linked configuration recorders, Config automatically assigns a name that has the prefix \"[AWS]\" to the new service-linked configuration recorder.\n "];
+  arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]}
+[@@ocaml.doc ""]
+type nonrec put_service_linked_configuration_recorder_request =
+  {
+  tags: tag list option
+    [@ocaml.doc
+      "The tags for a service-linked configuration recorder. Each tag consists of a key and an optional value, both of which you define.\n"];
+  service_principal: string
+    [@ocaml.doc
+      "The service principal of the Amazon Web Services service for the service-linked configuration recorder that you want to create.\n"]}
 [@@ocaml.doc ""]
 type nonrec max_number_of_retention_configurations_exceeded_exception =
   {
@@ -950,7 +1013,7 @@ type nonrec organization_access_denied_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "For [PutConfigurationAggregator] API, you can see this exception for the following reasons:\n\n {ul\n       {-  No permission to call [EnableAWSServiceAccess] API\n           \n            }\n       {-  The configuration aggregator cannot be updated because your Amazon Web Services Organization management account or the delegated administrator role changed. Delete this aggregator and create a new one with the current Amazon Web Services Organization.\n           \n            }\n       {-  The configuration aggregator is associated with a previous Amazon Web Services Organization and Config cannot aggregate data with current Amazon Web Services Organization. Delete this aggregator and create a new one with the current Amazon Web Services Organization.\n           \n            }\n       {-  You are not a registered delegated administrator for Config with permissions to call [ListDelegatedAdministrators] API. Ensure that the management account registers delagated administrator for Config service principle name before the delegated administrator creates an aggregator.\n           \n            }\n       }\n   For all [OrganizationConfigRule] and [OrganizationConformancePack] APIs, Config throws an exception if APIs are called from member accounts. All APIs must be called from organization management account.\n   "]
+  "For [PutConfigurationAggregator] API, you can see this exception for the following reasons:\n\n {ul\n       {-  No permission to call [EnableAWSServiceAccess] API\n           \n            }\n       {-  The configuration aggregator cannot be updated because your Amazon Web Services Organization management account or the delegated administrator role changed. Delete this aggregator and create a new one with the current Amazon Web Services Organization.\n           \n            }\n       {-  The configuration aggregator is associated with a previous Amazon Web Services Organization and Config cannot aggregate data with current Amazon Web Services Organization. Delete this aggregator and create a new one with the current Amazon Web Services Organization.\n           \n            }\n       {-  You are not a registered delegated administrator for Config with permissions to call [ListDelegatedAdministrators] API. Ensure that the management account registers delagated administrator for Config service principal name before the delegated administrator creates an aggregator.\n           \n            }\n       }\n   For all [OrganizationConfigRule] and [OrganizationConformancePack] APIs, Config throws an exception if APIs are called from member accounts. All APIs must be called from organization management account.\n   "]
 type nonrec no_available_organization_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -1214,7 +1277,7 @@ type nonrec no_available_configuration_recorder_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.\n"]
+  "There are no customer managed configuration recorders available to record your resources. Use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutConfigurationRecorder.html}PutConfigurationRecorder} operation to create the customer managed configuration recorder.\n"]
 type nonrec max_number_of_delivery_channels_exceeded_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -1240,7 +1303,7 @@ type nonrec insufficient_delivery_policy_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "Your Amazon S3 bucket policy does not permit Config to write to it.\n"]
+  "Your Amazon S3 bucket policy does not allow Config to write to it.\n"]
 type nonrec config_snapshot_delivery_properties =
   {
   delivery_frequency: maximum_execution_frequency option
@@ -1274,7 +1337,7 @@ type nonrec put_delivery_channel_request =
   {
   delivery_channel: delivery_channel
     [@ocaml.doc
-      "The configuration delivery channel object that delivers the configuration information to an Amazon S3 bucket and to an Amazon SNS topic.\n"]}
+      "An object for the delivery channel. A delivery channel sends notifications and updated configuration states. \n"]}
 [@@ocaml.doc "The input for the [PutDeliveryChannel] action.\n"]
 type nonrec max_number_of_conformance_packs_exceeded_exception =
   {
@@ -1323,24 +1386,24 @@ type nonrec invalid_role_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "You have provided a null or empty Amazon Resource Name (ARN) for the IAM role assumed by Config and used by the configuration recorder.\n"]
+  "You have provided a null or empty Amazon Resource Name (ARN) for the IAM role assumed by Config and used by the customer managed configuration recorder.\n"]
 type nonrec invalid_recording_group_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "Indicates one of the following errors:\n\n {ul\n       {-  You have provided a combination of parameter values that is not valid. For example:\n           \n            {ul\n                  {-  Setting the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true], but providing a non-empty list for the [resourceTypes]field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n                      \n                       }\n                  {-  Setting the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true], but also setting the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES].\n                      \n                       }\n                  \n        }\n         }\n       {-  Every parameter is either null, false, or empty.\n           \n            }\n       {-  You have reached the limit of the number of resource types you can provide for the recording group.\n           \n            }\n       {-  You have provided resource types or a recording strategy that are not valid.\n           \n            }\n       }\n  "]
+  "One of the following errors:\n\n {ul\n       {-  You have provided a combination of parameter values that is not valid. For example:\n           \n            {ul\n                  {-  Setting the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true], but providing a non-empty list for the [resourceTypes]field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n                      \n                       }\n                  {-  Setting the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true], but also setting the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES].\n                      \n                       }\n                  \n        }\n         }\n       {-  Every parameter is either null, false, or empty.\n           \n            }\n       {-  You have reached the limit of the number of resource types you can provide for the recording group.\n           \n            }\n       {-  You have provided resource types or a recording strategy that are not valid.\n           \n            }\n       }\n  "]
 type nonrec invalid_configuration_recorder_name_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "You have provided a name for the configuration recorder that is not valid.\n"]
+  "You have provided a name for the customer managed configuration recorder that is not valid.\n"]
 type nonrec exclusion_by_resource_types =
   {
   resource_types: resource_type list option
     [@ocaml.doc
       "A comma-separated list of resource types to exclude from recording by the configuration recorder.\n"]}
 [@@ocaml.doc
-  "Specifies whether the configuration recorder excludes certain resource types from being recorded. Use the [resourceTypes] field to enter a comma-separated list of resource types you want to exclude from recording.\n\n By default, when Config adds support for a new resource type in the Region where you set up the configuration recorder, including global resource types, Config starts recording resources of that type automatically.\n \n    {b How to use the exclusion recording strategy } \n   \n    To use this option, you must set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES].\n    \n     Config will then record configuration changes for all supported resource types, except the resource types that you specify to exclude from being recorded.\n     \n       {b Global resource types and the exclusion recording strategy } \n      \n       Unless specifically listed as exclusions, [AWS::RDS::GlobalCluster] will be recorded automatically in all supported Config Regions were the configuration recorder is enabled.\n       \n        IAM users, groups, roles, and customer managed policies will be recorded in the Region where you set up the configuration recorder if that is a Region where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. This list where you cannot record the global IAM resource types includes the following Regions:\n        \n         {ul\n               {-  Asia Pacific (Hyderabad)\n                   \n                    }\n               {-  Asia Pacific (Melbourne)\n                   \n                    }\n               {-  Canada West (Calgary)\n                   \n                    }\n               {-  Europe (Spain)\n                   \n                    }\n               {-  Europe (Zurich)\n                   \n                    }\n               {-  Israel (Tel Aviv)\n                   \n                    }\n               {-  Middle East (UAE)\n                   \n                    }\n               }\n   "]
+  "Specifies whether the configuration recorder excludes certain resource types from being recorded. Use the [resourceTypes] field to enter a comma-separated list of resource types you want to exclude from recording.\n\n By default, when Config adds support for a new resource type in the Region where you set up the configuration recorder, including global resource types, Config starts recording resources of that type automatically.\n \n    {b How to use the exclusion recording strategy } \n   \n    To use this option, you must set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES].\n    \n     Config will then record configuration changes for all supported resource types, except the resource types that you specify to exclude from being recorded.\n     \n       {b Global resource types and the exclusion recording strategy } \n      \n       Unless specifically listed as exclusions, [AWS::RDS::GlobalCluster] will be recorded automatically in all supported Config Regions were the configuration recorder is enabled.\n       \n        IAM users, groups, roles, and customer managed policies will be recorded in the Region where you set up the configuration recorder if that is a Region where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. For a list of those Regions, see {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all}Recording Amazon Web Services Resources | Global Resources}.\n        \n         "]
 type nonrec recording_strategy_type =
   | EXCLUSION_BY_RESOURCE_TYPES [@ocaml.doc ""]
   | INCLUSION_BY_RESOURCE_TYPES [@ocaml.doc ""]
@@ -1356,7 +1419,7 @@ type nonrec recording_group =
   {
   recording_strategy: recording_strategy option
     [@ocaml.doc
-      "An object that specifies the recording strategy for the configuration recorder.\n\n {ul\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [ALL_SUPPORTED_RESOURCE_TYPES], Config records configuration changes for all supported resource types, excluding the global IAM resource types. You also must set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true]. When Config adds support for a new resource type, Config automatically starts recording resources of that type.\n           \n            }\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [INCLUSION_BY_RESOURCE_TYPES], Config records configuration changes for only the resource types you specify in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n           \n            }\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES], Config records configuration changes for all supported resource types except the resource types that you specify to exclude from being recorded in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html}ExclusionByResourceTypes}.\n           \n            }\n       }\n     {b Required and optional fields} \n    \n     The [recordingStrategy] field is optional when you set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true].\n     \n      The [recordingStrategy] field is optional when you list resource types in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n      \n       The [recordingStrategy] field is required if you list resource types to exclude from recording in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html}ExclusionByResourceTypes}.\n       \n           {b Overriding fields} \n          \n           If you choose [EXCLUSION_BY_RESOURCE_TYPES] for the recording strategy, the [exclusionByResourceTypes] field will override other properties in the request.\n           \n            For example, even if you set [includeGlobalResourceTypes] to false, global IAM resource types will still be automatically recorded in this option unless those resource types are specifically listed as exclusions in the [resourceTypes] field of [exclusionByResourceTypes].\n            \n                {b Global resources types and the resource exclusion recording strategy} \n               \n                By default, if you choose the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy, when Config adds support for a new resource type in the Region where you set up the configuration recorder, including global resource types, Config starts recording resources of that type automatically.\n                \n                 Unless specifically listed as exclusions, [AWS::RDS::GlobalCluster] will be recorded automatically in all supported Config Regions were the configuration recorder is enabled.\n                 \n                  IAM users, groups, roles, and customer managed policies will be recorded in the Region where you set up the configuration recorder if that is a Region where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. This list where you cannot record the global IAM resource types includes the following Regions:\n                  \n                   {ul\n                         {-  Asia Pacific (Hyderabad)\n                             \n                              }\n                         {-  Asia Pacific (Melbourne)\n                             \n                              }\n                         {-  Canada West (Calgary)\n                             \n                              }\n                         {-  Europe (Spain)\n                             \n                              }\n                         {-  Europe (Zurich)\n                             \n                              }\n                         {-  Israel (Tel Aviv)\n                             \n                              }\n                         {-  Middle East (UAE)\n                             \n                              }\n                         }\n   "];
+      "An object that specifies the recording strategy for the configuration recorder.\n\n {ul\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [ALL_SUPPORTED_RESOURCE_TYPES], Config records configuration changes for all supported resource types, excluding the global IAM resource types. You also must set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true]. When Config adds support for a new resource type, Config automatically starts recording resources of that type.\n           \n            }\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [INCLUSION_BY_RESOURCE_TYPES], Config records configuration changes for only the resource types you specify in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n           \n            }\n       {-  If you set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES], Config records configuration changes for all supported resource types except the resource types that you specify to exclude from being recorded in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html}ExclusionByResourceTypes}.\n           \n            }\n       }\n     {b Required and optional fields} \n    \n     The [recordingStrategy] field is optional when you set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true].\n     \n      The [recordingStrategy] field is optional when you list resource types in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}.\n      \n       The [recordingStrategy] field is required if you list resource types to exclude from recording in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html}ExclusionByResourceTypes}.\n       \n           {b Overriding fields} \n          \n           If you choose [EXCLUSION_BY_RESOURCE_TYPES] for the recording strategy, the [exclusionByResourceTypes] field will override other properties in the request.\n           \n            For example, even if you set [includeGlobalResourceTypes] to false, global IAM resource types will still be automatically recorded in this option unless those resource types are specifically listed as exclusions in the [resourceTypes] field of [exclusionByResourceTypes].\n            \n                {b Global resources types and the resource exclusion recording strategy} \n               \n                By default, if you choose the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy, when Config adds support for a new resource type in the Region where you set up the configuration recorder, including global resource types, Config starts recording resources of that type automatically.\n                \n                 Unless specifically listed as exclusions, [AWS::RDS::GlobalCluster] will be recorded automatically in all supported Config Regions were the configuration recorder is enabled.\n                 \n                  IAM users, groups, roles, and customer managed policies will be recorded in the Region where you set up the configuration recorder if that is a Region where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. For a list of those Regions, see {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all}Recording Amazon Web Services Resources | Global Resources}.\n                  \n                   "];
   exclusion_by_resource_types: exclusion_by_resource_types option
     [@ocaml.doc
       "An object that specifies how Config excludes resource types from being recorded by the configuration recorder.\n\n   {b Required fields} \n  \n   To use this option, you must set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [EXCLUSION_BY_RESOURCE_TYPES].\n   \n    "];
@@ -1365,7 +1428,7 @@ type nonrec recording_group =
       "A comma-separated list that specifies which resource types Config records.\n\n For a list of valid [resourceTypes] values, see the {b Resource Type Value} column in {{:https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources}Supported Amazon Web Services resource Types} in the {i Config developer guide}.\n \n    {b Required and optional fields} \n   \n    Optionally, you can set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [INCLUSION_BY_RESOURCE_TYPES].\n    \n     To record all configuration changes, set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true], and either omit this field or don't specify any resource types in this field. If you set the [allSupported] field to [false] and specify values for [resourceTypes], when Config adds support for a new type of resource, it will not record resources of that type unless you manually add that type to your recording group.\n     \n         {b Region availability} \n        \n         Before specifying a resource type for Config to track, check {{:https://docs.aws.amazon.com/config/latest/developerguide/what-is-resource-config-coverage.html}Resource Coverage by Region Availability} to see if the resource type is supported in the Amazon Web Services Region where you set up Config. If a resource type is supported by Config in at least one Region, you can enable the recording of that resource type in all Regions supported by Config, even if the specified resource type is not supported in the Amazon Web Services Region where you set up Config.\n         \n          "];
   include_global_resource_types: bool option
     [@ocaml.doc
-      "This option is a bundle which only applies to the global IAM resource types: IAM users, groups, roles, and customer managed policies. These global IAM resource types can only be recorded by Config in Regions where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. This list where you cannot record the global IAM resource types includes the following Regions:\n\n {ul\n       {-  Asia Pacific (Hyderabad)\n           \n            }\n       {-  Asia Pacific (Melbourne)\n           \n            }\n       {-  Canada West (Calgary)\n           \n            }\n       {-  Europe (Spain)\n           \n            }\n       {-  Europe (Zurich)\n           \n            }\n       {-  Israel (Tel Aviv)\n           \n            }\n       {-  Middle East (UAE)\n           \n            }\n       }\n     {b Aurora global clusters are recorded in all enabled Regions} \n    \n     The [AWS::RDS::GlobalCluster] resource type will be recorded in all supported Config Regions where the configuration recorder is enabled, even if [includeGlobalResourceTypes] is set[false]. The [includeGlobalResourceTypes] option is a bundle which only applies to IAM users, groups, roles, and customer managed policies. \n     \n      If you do not want to record [AWS::RDS::GlobalCluster] in all enabled Regions, use one of the following recording strategies:\n      \n       {ol\n             {-   {b Record all current and future resource types with exclusions} ([EXCLUSION_BY_RESOURCE_TYPES]), or\n                 \n                  }\n             {-   {b Record specific resource types} ([INCLUSION_BY_RESOURCE_TYPES]).\n                 \n                  }\n             }\n   For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all}Selecting Which Resources are Recorded} in the {i Config developer guide}.\n   \n       {b includeGlobalResourceTypes and the exclusion recording strategy} \n      \n       The [includeGlobalResourceTypes] field has no impact on the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy. This means that the global IAM resource types (IAM users, groups, roles, and customer managed policies) will not be automatically added as exclusions for [exclusionByResourceTypes] when [includeGlobalResourceTypes] is set to [false].\n       \n        The [includeGlobalResourceTypes] field should only be used to modify the [AllSupported] field, as the default for the [AllSupported] field is to record configuration changes for all supported resource types excluding the global IAM resource types. To include the global IAM resource types when [AllSupported] is set to [true], make sure to set [includeGlobalResourceTypes] to [true].\n        \n         To exclude the global IAM resource types for the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy, you need to manually add them to the [resourceTypes] field of [exclusionByResourceTypes].\n         \n             {b Required and optional fields} \n            \n             Before you set this field to [true], set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true]. Optionally, you can set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [ALL_SUPPORTED_RESOURCE_TYPES].\n             \n                 {b Overriding fields} \n                \n                 If you set this field to [false] but list global IAM resource types in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}, Config will still record configuration changes for those specified resource types {i regardless} of if you set the [includeGlobalResourceTypes] field to false.\n                 \n                  If you do not want to record configuration changes to the global IAM resource types (IAM users, groups, roles, and customer managed policies), make sure to not list them in the [resourceTypes] field in addition to setting the [includeGlobalResourceTypes] field to false.\n                  \n                   "];
+      "This option is a bundle which only applies to the global IAM resource types: IAM users, groups, roles, and customer managed policies. These global IAM resource types can only be recorded by Config in Regions where Config was available before February 2022. You cannot be record the global IAM resouce types in Regions supported by Config after February 2022. For a list of those Regions, see {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all}Recording Amazon Web Services Resources | Global Resources}.\n\n   {b Aurora global clusters are recorded in all enabled Regions} \n  \n   The [AWS::RDS::GlobalCluster] resource type will be recorded in all supported Config Regions where the configuration recorder is enabled, even if [includeGlobalResourceTypes] is set[false]. The [includeGlobalResourceTypes] option is a bundle which only applies to IAM users, groups, roles, and customer managed policies. \n   \n    If you do not want to record [AWS::RDS::GlobalCluster] in all enabled Regions, use one of the following recording strategies:\n    \n     {ol\n           {-   {b Record all current and future resource types with exclusions} ([EXCLUSION_BY_RESOURCE_TYPES]), or\n               \n                }\n           {-   {b Record specific resource types} ([INCLUSION_BY_RESOURCE_TYPES]).\n               \n                }\n           }\n   For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all}Selecting Which Resources are Recorded} in the {i Config developer guide}.\n   \n       {b includeGlobalResourceTypes and the exclusion recording strategy} \n      \n       The [includeGlobalResourceTypes] field has no impact on the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy. This means that the global IAM resource types (IAM users, groups, roles, and customer managed policies) will not be automatically added as exclusions for [exclusionByResourceTypes] when [includeGlobalResourceTypes] is set to [false].\n       \n        The [includeGlobalResourceTypes] field should only be used to modify the [AllSupported] field, as the default for the [AllSupported] field is to record configuration changes for all supported resource types excluding the global IAM resource types. To include the global IAM resource types when [AllSupported] is set to [true], make sure to set [includeGlobalResourceTypes] to [true].\n        \n         To exclude the global IAM resource types for the [EXCLUSION_BY_RESOURCE_TYPES] recording strategy, you need to manually add them to the [resourceTypes] field of [exclusionByResourceTypes].\n         \n             {b Required and optional fields} \n            \n             Before you set this field to [true], set the [allSupported] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} to [true]. Optionally, you can set the [useOnly] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} to [ALL_SUPPORTED_RESOURCE_TYPES].\n             \n                 {b Overriding fields} \n                \n                 If you set this field to [false] but list global IAM resource types in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}, Config will still record configuration changes for those specified resource types {i regardless} of if you set the [includeGlobalResourceTypes] field to false.\n                 \n                  If you do not want to record configuration changes to the global IAM resource types (IAM users, groups, roles, and customer managed policies), make sure to not list them in the [resourceTypes] field in addition to setting the [includeGlobalResourceTypes] field to false.\n                  \n                   "];
   all_supported: bool option
     [@ocaml.doc
       "Specifies whether Config records configuration changes for all supported resource types, excluding the global IAM resource types.\n\n If you set this field to [true], when Config adds support for a new resource type, Config starts recording resources of that type automatically.\n \n  If you set this field to [true], you cannot enumerate specific resource types to record in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup}, or to exclude in the [resourceTypes] field of {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html}ExclusionByResourceTypes}.\n  \n     {b Region availability} \n    \n     Check {{:https://docs.aws.amazon.com/config/latest/developerguide/what-is-resource-config-coverage.html}Resource Coverage by Region Availability} to see if a resource type is supported in the Amazon Web Services Region where you set up Config.\n     \n      "]}
@@ -1381,7 +1444,7 @@ type nonrec recording_mode_override =
       "The recording frequency that will be applied to all the resource types specified in the override.\n\n {ul\n       {-  Continuous recording allows you to record configuration changes continuously whenever a change occurs.\n           \n            }\n       {-  Daily recording allows you to receive a configuration item (CI) representing the most recent state of your resources over the last 24-hour period, only if it\226\128\153s different from the previous CI recorded. \n           \n            }\n       }\n    Firewall Manager depends on continuous recording to monitor your resources. If you are using Firewall Manager, it is recommended that you set the recording frequency to Continuous.\n    \n     "];
   resource_types: resource_type list
     [@ocaml.doc
-      "A comma-separated list that specifies which resource types Config includes in the override.\n\n  Daily recording is not supported for the following resource types:\n  \n   {ul\n         {-   [AWS::Config::ResourceCompliance] \n             \n              }\n         {-   [AWS::Config::ConformancePackCompliance] \n             \n              }\n         {-   [AWS::Config::ConfigurationRecorder] \n             \n              }\n         }\n   "];
+      "A comma-separated list that specifies which resource types Config includes in the override.\n\n  Daily recording cannot be specified for the following resource types:\n  \n   {ul\n         {-   [AWS::Config::ResourceCompliance] \n             \n              }\n         {-   [AWS::Config::ConformancePackCompliance] \n             \n              }\n         {-   [AWS::Config::ConfigurationRecorder] \n             \n              }\n         }\n   "];
   description: string option
     [@ocaml.doc "A description that you provide for the override.\n"]}
 [@@ocaml.doc
@@ -1393,30 +1456,45 @@ type nonrec recording_mode =
       "An array of [recordingModeOverride] objects for you to specify your overrides for the recording mode. The [recordingModeOverride] object in the [recordingModeOverrides] array consists of three fields: a [description], the new [recordingFrequency], and an array of [resourceTypes] to override.\n"];
   recording_frequency: recording_frequency
     [@ocaml.doc
-      "The default recording frequency that Config uses to record configuration changes.\n\n  Daily recording is not supported for the following resource types:\n  \n   {ul\n         {-   [AWS::Config::ResourceCompliance] \n             \n              }\n         {-   [AWS::Config::ConformancePackCompliance] \n             \n              }\n         {-   [AWS::Config::ConfigurationRecorder] \n             \n              }\n         }\n   For the {b allSupported} ([ALL_SUPPORTED_RESOURCE_TYPES]) recording strategy, these resource types will be set to Continuous recording.\n   \n    "]}
+      "The default recording frequency that Config uses to record configuration changes.\n\n  Daily recording cannot be specified for the following resource types:\n  \n   {ul\n         {-   [AWS::Config::ResourceCompliance] \n             \n              }\n         {-   [AWS::Config::ConformancePackCompliance] \n             \n              }\n         {-   [AWS::Config::ConfigurationRecorder] \n             \n              }\n         }\n   For the {b allSupported} ([ALL_SUPPORTED_RESOURCE_TYPES]) recording strategy, these resource types will be set to Continuous recording.\n   \n    "]}
 [@@ocaml.doc
   "Specifies the default recording frequency that Config uses to record configuration changes. Config supports {i Continuous recording} and {i Daily recording}.\n\n {ul\n       {-  Continuous recording allows you to record configuration changes continuously whenever a change occurs.\n           \n            }\n       {-  Daily recording allows you to receive a configuration item (CI) representing the most recent state of your resources over the last 24-hour period, only if it\226\128\153s different from the previous CI recorded. \n           \n            }\n       }\n    Firewall Manager depends on continuous recording to monitor your resources. If you are using Firewall Manager, it is recommended that you set the recording frequency to Continuous.\n    \n      You can also override the recording frequency for specific resource types.\n      "]
+type nonrec recording_scope =
+  | PAID [@ocaml.doc ""]
+  | INTERNAL [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec configuration_recorder =
   {
+  service_principal: string option
+    [@ocaml.doc
+      "For service-linked configuration recorders, specifies the linked Amazon Web Services service for the configuration recorder.\n"];
+  recording_scope: recording_scope option
+    [@ocaml.doc
+      "Specifies whether the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ConfigurationItem.html}ConfigurationItems} in scope for the specified configuration recorder are recorded for free ([INTERNAL]) or if it impacts the costs to your bill ([PAID]).\n"];
   recording_mode: recording_mode option
     [@ocaml.doc
-      "Specifies the default recording frequency that Config uses to record configuration changes. Config supports {i Continuous recording} and {i Daily recording}.\n\n {ul\n       {-  Continuous recording allows you to record configuration changes continuously whenever a change occurs.\n           \n            }\n       {-  Daily recording allows you to receive a configuration item (CI) representing the most recent state of your resources over the last 24-hour period, only if it\226\128\153s different from the previous CI recorded. \n           \n            }\n       }\n    Firewall Manager depends on continuous recording to monitor your resources. If you are using Firewall Manager, it is recommended that you set the recording frequency to Continuous.\n    \n      You can also override the recording frequency for specific resource types.\n      "];
+      "Specifies the default recording frequency for the configuration recorder. Config supports {i Continuous recording} and {i Daily recording}.\n\n {ul\n       {-  Continuous recording allows you to record configuration changes continuously whenever a change occurs.\n           \n            }\n       {-  Daily recording allows you to receive a configuration item (CI) representing the most recent state of your resources over the last 24-hour period, only if it\226\128\153s different from the previous CI recorded. \n           \n            }\n       }\n     {b Some resource types require continuous recording} \n    \n     Firewall Manager depends on continuous recording to monitor your resources. If you are using Firewall Manager, it is recommended that you set the recording frequency to Continuous.\n     \n       You can also override the recording frequency for specific resource types.\n       "];
   recording_group: recording_group option
     [@ocaml.doc
-      "Specifies which resource types Config records for configuration changes.\n\n   {b  High Number of Config Evaluations} \n  \n   You may notice increased activity in your account during your initial month recording with Config when compared to subsequent months. During the initial bootstrapping process, Config runs evaluations on all the resources in your account that you have selected for Config to record.\n   \n    If you are running ephemeral workloads, you may see increased activity from Config as it records configuration changes associated with creating and deleting these temporary resources. An {i ephemeral workload} is a temporary use of computing resources that are loaded and run when needed. Examples include Amazon Elastic Compute Cloud (Amazon EC2) Spot Instances, Amazon EMR jobs, and Auto Scaling. If you want to avoid the increased activity from running ephemeral workloads, you can run these types of workloads in a separate account with Config turned off to avoid increased configuration recording and rule evaluations.\n    \n     "];
+      "Specifies which resource types are in scope for the configuration recorder to record.\n\n   {b  High Number of Config Evaluations} \n  \n   You might notice increased activity in your account during your initial month recording with Config when compared to subsequent months. During the initial bootstrapping process, Config runs evaluations on all the resources in your account that you have selected for Config to record.\n   \n    If you are running ephemeral workloads, you may see increased activity from Config as it records configuration changes associated with creating and deleting these temporary resources. An {i ephemeral workload} is a temporary use of computing resources that are loaded and run when needed. Examples include Amazon Elastic Compute Cloud (Amazon EC2) Spot Instances, Amazon EMR jobs, and Auto Scaling.\n    \n     If you want to avoid the increased activity from running ephemeral workloads, you can set up the configuration recorder to exclude these resource types from being recorded, or run these types of workloads in a separate account with Config turned off to avoid increased configuration recording and rule evaluations.\n     \n      "];
   role_ar_n: string option
     [@ocaml.doc
-      "Amazon Resource Name (ARN) of the IAM role assumed by Config and used by the configuration recorder.\n\n  While the API model does not require this field, the server will reject a request without a defined [roleARN] for the configuration recorder.\n  \n      {b Pre-existing Config role} \n     \n      If you have used an Amazon Web Services service that uses Config, such as Security Hub or Control Tower, and an Config role has already been created, make sure that the IAM role that you use when setting up Config keeps the same minimum permissions as the already created Config role. You must do this so that the other Amazon Web Services service continues to run as expected. \n      \n       For example, if Control Tower has an IAM role that allows Config to read Amazon Simple Storage Service (Amazon S3) objects, make sure that the same permissions are granted within the IAM role you use when setting up Config. Otherwise, it may interfere with how Control Tower operates. For more information about IAM roles for Config, see {{:https://docs.aws.amazon.com/config/latest/developerguide/security-iam.html} {b Identity and Access Management for Config} } in the {i Config Developer Guide}. \n       \n        "];
+      "The Amazon Resource Name (ARN) of the IAM role assumed by Config and used by the specified configuration recorder.\n\n   {b The server will reject a request without a defined [roleARN] for the configuration recorder} \n  \n   While the API model does not require this field, the server will reject a request without a defined [roleARN] for the configuration recorder.\n   \n     {b Policies and compliance results} \n    \n      {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html}IAM policies} and {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html}other policies managed in Organizations} can impact whether Config has permissions to record configuration changes for your resources. Additionally, rules directly evaluate the configuration of a resource and rules don't take into account these policies when running evaluations. Make sure that the policies in effect align with how you intend to use Config.\n     \n       {b Keep Minimum Permisions When Reusing an IAM role} \n      \n       If you use an Amazon Web Services service that uses Config, such as Security Hub or Control Tower, and an IAM role has already been created, make sure that the IAM role that you use when setting up Config keeps the same minimum permissions as the pre-existing IAM role. You must do this to ensure that the other Amazon Web Services service continues to run as expected. \n       \n        For example, if Control Tower has an IAM role that allows Config to read S3 objects, make sure that the same permissions are granted to the IAM role you use when setting up Config. Otherwise, it may interfere with how Control Tower operates.\n        \n          {b The service-linked IAM role for Config must be used for service-linked configuration recorders} \n         \n          For service-linked configuration recorders, you must use the service-linked IAM role for Config: {{:https://docs.aws.amazon.com/config/latest/developerguide/using-service-linked-roles.html}AWSServiceRoleForConfig}.\n          \n           "];
   name: string option
     [@ocaml.doc
-      "The name of the configuration recorder. Config automatically assigns the name of \"default\" when creating the configuration recorder.\n\n  You cannot change the name of the configuration recorder after it has been created. To change the configuration recorder name, you must delete it and create a new configuration recorder with a new name. \n  \n   "]}
+      "The name of the configuration recorder.\n\n For customer managed configuration recorders, Config automatically assigns the name of \"default\" when creating a configuration recorder if you do not specify a name at creation time.\n \n  For service-linked configuration recorders, Config automatically assigns a name that has the prefix \"[AWS]\" to a new service-linked configuration recorder.\n  \n     {b Changing the name of a configuration recorder} \n    \n     To change the name of the customer managed configuration recorder, you must delete it and create a new customer managed configuration recorder with a new name.\n     \n      You cannot change the name of a service-linked configuration recorder.\n      \n       "];
+  arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]}
 [@@ocaml.doc
-  "Records configuration changes to your specified resource types. For more information about the configuration recorder, see {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b Managing the Configuration Recorder} } in the {i Config Developer Guide}.\n"]
+  "Records configuration changes to the resource types in scope.\n\n For more information about the configuration recorder, see {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b Working with the Configuration Recorder} } in the {i Config Developer Guide}.\n "]
 type nonrec put_configuration_recorder_request =
   {
+  tags: tag list option
+    [@ocaml.doc
+      "The tags for the customer managed configuration recorder. Each tag consists of a key and an optional value, both of which you define.\n"];
   configuration_recorder: configuration_recorder
     [@ocaml.doc
-      "An object for the configuration recorder to record configuration changes for specified resource types.\n"]}
+      "An object for the configuration recorder. A configuration recorder records configuration changes for the resource types in scope.\n"]}
 [@@ocaml.doc "The input for the [PutConfigurationRecorder] action.\n"]
 type nonrec account_aggregation_source =
   {
@@ -1441,8 +1519,42 @@ type nonrec organization_aggregation_source =
       "ARN of the IAM role used to retrieve Amazon Web Services Organization details associated with the aggregator account.\n"]}
 [@@ocaml.doc
   "This object contains regions to set up the aggregator and an IAM role to retrieve organization details.\n"]
+type nonrec aggregator_filter_type =
+  | INCLUDE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec aggregator_filter_resource_type =
+  {
+  value: string list option
+    [@ocaml.doc
+      "Comma-separate list of resource types to filter your aggregated configuration recorders.\n"];
+  type_: aggregator_filter_type option
+    [@ocaml.doc
+      "The type of resource type filter to apply. [INCLUDE] specifies that the list of resource types in the [Value] field will be aggregated and no other resource types will be filtered.\n"]}
+[@@ocaml.doc
+  "An object to filter the configuration recorders based on the resource types in scope for recording.\n"]
+type nonrec aggregator_filter_service_principal =
+  {
+  value: string list option
+    [@ocaml.doc
+      "Comma-separated list of service principals for the linked Amazon Web Services services to filter your aggregated service-linked configuration recorders.\n"];
+  type_: aggregator_filter_type option
+    [@ocaml.doc
+      "The type of service principal filter to apply. [INCLUDE] specifies that the list of service principals in the [Value] field will be aggregated and no other service principals will be filtered.\n"]}
+[@@ocaml.doc
+  "An object to filter service-linked configuration recorders in an aggregator based on the linked Amazon Web Services service.\n"]
+type nonrec aggregator_filters =
+  {
+  service_principal: aggregator_filter_service_principal option
+    [@ocaml.doc
+      "An object to filter service-linked configuration recorders in an aggregator based on the linked Amazon Web Services service.\n"];
+  resource_type: aggregator_filter_resource_type option
+    [@ocaml.doc
+      "An object to filter the configuration recorders based on the resource types in scope for recording.\n"]}
+[@@ocaml.doc "An object to filter the data you specify for an aggregator.\n"]
 type nonrec configuration_aggregator =
   {
+  aggregator_filters: aggregator_filters option
+    [@ocaml.doc
+      "An object to filter the data you specify for an aggregator.\n"];
   created_by: string option
     [@ocaml.doc
       "Amazon Web Services service that created the configuration aggregator.\n"];
@@ -1469,6 +1581,9 @@ type nonrec put_configuration_aggregator_response =
                                                                  ""]
 type nonrec put_configuration_aggregator_request =
   {
+  aggregator_filters: aggregator_filters option
+    [@ocaml.doc
+      "An object to filter configuration recorders in an aggregator. Either [ResourceType] or [ServicePrincipal] is required.\n"];
   tags: tag list option [@ocaml.doc "An array of tag object.\n"];
   organization_aggregation_source: organization_aggregation_source option
     [@ocaml.doc "An OrganizationAggregationSource object.\n"];
@@ -1648,13 +1763,13 @@ type nonrec list_tags_for_resource_request =
       "The maximum number of tags returned on each page. The limit maximum is 50. You cannot specify a number greater than 50. If you specify 0, Config uses the default. \n"];
   resource_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. Currently, the supported resources are [ConfigRule], [ConfigurationAggregator] and [AggregatorAuthorization].\n"]}
+      "The Amazon Resource Name (ARN) that identifies the resource for which to list the tags. The following resources are supported:\n\n {ul\n       {-   [ConfigurationRecorder] \n           \n            }\n       {-   [ConfigRule] \n           \n            }\n       {-   [OrganizationConfigRule] \n           \n            }\n       {-   [ConformancePack] \n           \n            }\n       {-   [OrganizationConformancePack] \n           \n            }\n       {-   [ConfigurationAggregator] \n           \n            }\n       {-   [AggregationAuthorization] \n           \n            }\n       {-   [StoredQuery] \n           \n            }\n       }\n  "]}
 [@@ocaml.doc ""]
 type nonrec list_stored_queries_response =
   {
   next_token: string option
     [@ocaml.doc
-      "If the previous paginated request didn't return all of the remaining results, the response object's [NextToken] parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's [NextToken] parameter. If there are no remaining results, the previous response object's [NextToken] parameter is set to [null]. \n"];
+      "If the previous paginated request didn't return all of the remaining results, the response object's [NextToken] parameter value is set to a token. To retrieve the next set of results, call this operation again and assign that token to the request object's [NextToken] parameter. If there are no remaining results, the previous response object's [NextToken] parameter is set to [null]. \n"];
   stored_query_metadata: stored_query_metadata list option
     [@ocaml.doc "A list of [StoredQueryMetadata] objects.\n"]}[@@ocaml.doc
                                                                 ""]
@@ -1802,6 +1917,52 @@ type nonrec list_conformance_pack_compliance_scores_request =
   filters: conformance_pack_compliance_scores_filters option
     [@ocaml.doc
       "Filters the results based on the [ConformancePackComplianceScoresFilters].\n"]}
+[@@ocaml.doc ""]
+type nonrec configuration_recorder_summary =
+  {
+  recording_scope: recording_scope
+    [@ocaml.doc
+      "Indicates whether the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ConfigurationItem.html}ConfigurationItems} in scope for the configuration recorder are recorded for free ([INTERNAL]) or if you are charged a service fee for recording ([PAID]).\n"];
+  service_principal: string option
+    [@ocaml.doc
+      "For service-linked configuration recorders, indicates which Amazon Web Services service the configuration recorder is linked to.\n"];
+  name: string [@ocaml.doc "The name of the configuration recorder.\n"];
+  arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the configuration recorder.\n"]}
+[@@ocaml.doc
+  "A summary of a configuration recorder, including the [arn], [name], [servicePrincipal], and [recordingScope].\n"]
+type nonrec list_configuration_recorders_response =
+  {
+  next_token: string option
+    [@ocaml.doc
+      "The [NextToken] string returned on a previous page that you use to get the next page of results in a paginated response.\n"];
+  configuration_recorder_summaries: configuration_recorder_summary list
+    [@ocaml.doc
+      "A list of [ConfigurationRecorderSummary] objects that includes.\n"]}
+[@@ocaml.doc ""]
+type nonrec configuration_recorder_filter_name =
+  | RecordingScope [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec configuration_recorder_filter =
+  {
+  filter_value: string list option
+    [@ocaml.doc
+      "The value of the filter. For [recordingScope], valid values include: [INTERNAL] and [PAID].\n\n  [INTERNAL] indicates that the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ConfigurationItem.html}ConfigurationItems} in scope for the configuration recorder are recorded for free.\n \n   [PAID] indicates that the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_ConfigurationItem.html}ConfigurationItems} in scope for the configuration recorder impact the costs to your bill.\n  "];
+  filter_name: configuration_recorder_filter_name option
+    [@ocaml.doc
+      "The name of the type of filter. Currently, only [recordingScope] is supported.\n"]}
+[@@ocaml.doc "Filters configuration recorders by recording scope.\n"]
+type nonrec list_configuration_recorders_request =
+  {
+  next_token: string option
+    [@ocaml.doc
+      "The [NextToken] string returned on a previous page that you use to get the next page of results in a paginated response.\n"];
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of results to include in the response.\n"];
+  filters: configuration_recorder_filter list option
+    [@ocaml.doc
+      "Filters the results based on a list of [ConfigurationRecorderFilter] objects that you specify.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_aggregate_discovered_resources_response =
   {
@@ -2615,6 +2776,19 @@ type nonrec get_aggregate_compliance_details_by_config_rule_request =
   configuration_aggregator_name: string
     [@ocaml.doc "The name of the configuration aggregator.\n"]}[@@ocaml.doc
                                                                  ""]
+type nonrec disassociate_resource_types_response =
+  {
+  configuration_recorder: configuration_recorder [@ocaml.doc ""]}[@@ocaml.doc
+                                                                   ""]
+type nonrec disassociate_resource_types_request =
+  {
+  resource_types: resource_type list
+    [@ocaml.doc
+      "The list of resource types you want to remove from the recording group of the specified configuration recorder.\n"];
+  configuration_recorder_arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]}
+[@@ocaml.doc ""]
 type nonrec no_such_retention_configuration_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
@@ -2692,7 +2866,7 @@ type nonrec describe_remediation_execution_status_request =
   resource_keys: resource_key list option
     [@ocaml.doc
       "A list of resource keys to be processed with the current request. Each element in the list consists of the resource type and resource ID. \n"];
-  config_rule_name: string [@ocaml.doc "A list of Config rule names.\n"]}
+  config_rule_name: string [@ocaml.doc "The name of the Config rule.\n"]}
 [@@ocaml.doc ""]
 type nonrec describe_remediation_exceptions_response =
   {
@@ -3175,11 +3349,15 @@ type nonrec describe_conformance_pack_compliance_request =
   conformance_pack_name: string
     [@ocaml.doc "Name of the conformance pack.\n"]}[@@ocaml.doc ""]
 type nonrec recorder_status =
+  | NotApplicable [@ocaml.doc ""]
   | Failure [@ocaml.doc ""]
   | Success [@ocaml.doc ""]
   | Pending [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec configuration_recorder_status =
   {
+  service_principal: string option
+    [@ocaml.doc
+      "For service-linked configuration recorders, the service principal of the linked Amazon Web Services service.\n"];
   last_status_change_time: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "The time of the latest change in status of an recording event processed by the recorder.\n"];
@@ -3200,8 +3378,12 @@ type nonrec configuration_recorder_status =
   last_start_time: CoreTypes.Timestamp.t option
     [@ocaml.doc "The time the recorder was last started.\n"];
   name: string option
-    [@ocaml.doc "The name of the configuration recorder.\n"]}[@@ocaml.doc
-                                                               "The current status of the configuration recorder.\n\n  For a detailed status of recording events over time, add your Config events to CloudWatch metrics and use CloudWatch metrics.\n  \n   "]
+    [@ocaml.doc "The name of the configuration recorder.\n"];
+  arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the configuration recorder.\n"]}
+[@@ocaml.doc
+  "The current status of the configuration recorder.\n\n For a detailed status of recording events over time, add your Config events to CloudWatch metrics and use CloudWatch metrics.\n "]
 type nonrec describe_configuration_recorder_status_response =
   {
   configuration_recorders_status: configuration_recorder_status list option
@@ -3210,9 +3392,15 @@ type nonrec describe_configuration_recorder_status_response =
   "The output for the [DescribeConfigurationRecorderStatus] action, in JSON format.\n"]
 type nonrec describe_configuration_recorder_status_request =
   {
+  arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the configuration recorder that you want to specify.\n"];
+  service_principal: string option
+    [@ocaml.doc
+      "For service-linked configuration recorders, you can use the service principal of the linked Amazon Web Services service to specify the configuration recorder.\n"];
   configuration_recorder_names: string list option
     [@ocaml.doc
-      "The name(s) of the configuration recorder. If the name is not specified, the action returns the current status of all the configuration recorders associated with the account.\n"]}
+      "The name of the configuration recorder. If the name is not specified, the opertation returns the status for the customer managed configuration recorder configured for the account, if applicable.\n\n  When making a request to this operation, you can only specify one configuration recorder.\n  \n   "]}
 [@@ocaml.doc
   "The input for the [DescribeConfigurationRecorderStatus] action.\n"]
 type nonrec describe_configuration_recorders_response =
@@ -3223,9 +3411,16 @@ type nonrec describe_configuration_recorders_response =
 [@@ocaml.doc "The output for the [DescribeConfigurationRecorders] action.\n"]
 type nonrec describe_configuration_recorders_request =
   {
+  arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the configuration recorder that you want to specify.\n"];
+  service_principal: string option
+    [@ocaml.doc
+      "For service-linked configuration recorders, you can use the service principal of the linked Amazon Web Services service to specify the configuration recorder.\n"];
   configuration_recorder_names: string list option
-    [@ocaml.doc "A list of configuration recorder names.\n"]}[@@ocaml.doc
-                                                               "The input for the [DescribeConfigurationRecorders] action.\n"]
+    [@ocaml.doc
+      "A list of names of the configuration recorders that you want to specify.\n"]}
+[@@ocaml.doc "The input for the [DescribeConfigurationRecorders] action.\n"]
 type nonrec aggregated_source_type =
   | ORGANIZATION [@ocaml.doc ""]
   | ACCOUNT [@ocaml.doc ""][@@ocaml.doc ""]
@@ -3361,7 +3556,7 @@ type nonrec config_rule_evaluation_status =
     [@ocaml.doc "The Amazon Resource Name (ARN) of the Config rule.\n"];
   config_rule_name: string option
     [@ocaml.doc "The name of the Config rule.\n"]}[@@ocaml.doc
-                                                    "Status information for your Config Managed rules and Config Custom Policy rules. The status includes information such as the last time the rule ran, the last time it failed, and the related error for the last failure.\n\n This action does not return status information about Config Custom Lambda rules.\n "]
+                                                    "Status information for your Config Managed rules and Config Custom Policy rules. The status includes information such as the last time the rule ran, the last time it failed, and the related error for the last failure.\n\n This operation does not return status information about Config Custom Lambda rules.\n "]
 type nonrec describe_config_rule_evaluation_status_response =
   {
   next_token: string option
@@ -3429,7 +3624,7 @@ type nonrec describe_compliance_by_resource_request =
       "The ID of the Amazon Web Services resource for which you want compliance information. You can specify only one resource ID. If you specify a resource ID, you must also specify a type for [ResourceType].\n"];
   resource_type: string option
     [@ocaml.doc
-      "The types of Amazon Web Services resources for which you want compliance information (for example, [AWS::EC2::Instance]). For this action, you can specify that the resource type is an Amazon Web Services account by specifying [AWS::::Account].\n"]}
+      "The types of Amazon Web Services resources for which you want compliance information (for example, [AWS::EC2::Instance]). For this operation, you can specify that the resource type is an Amazon Web Services account by specifying [AWS::::Account].\n"]}
 [@@ocaml.doc "\n"]
 type nonrec compliance_by_config_rule =
   {
@@ -3602,6 +3797,20 @@ type nonrec delete_stored_query_request =
   query_name: string
     [@ocaml.doc "The name of the query that you want to delete.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec delete_service_linked_configuration_recorder_response =
+  {
+  name: string
+    [@ocaml.doc "The name of the specified configuration recorder.\n"];
+  arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]}
+[@@ocaml.doc ""]
+type nonrec delete_service_linked_configuration_recorder_request =
+  {
+  service_principal: string
+    [@ocaml.doc
+      "The service principal of the Amazon Web Services service for the service-linked configuration recorder that you want to delete.\n"]}
+[@@ocaml.doc ""]
 type nonrec delete_retention_configuration_request =
   {
   retention_configuration_name: string
@@ -3684,12 +3893,14 @@ type nonrec last_delivery_channel_delete_failed_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}
 [@@ocaml.doc
-  "You cannot delete the delivery channel you specified because the configuration recorder is running.\n"]
+  "You cannot delete the delivery channel you specified because the customer managed configuration recorder is running.\n"]
 type nonrec delete_delivery_channel_request =
   {
   delivery_channel_name: string
-    [@ocaml.doc "The name of the delivery channel to delete.\n"]}[@@ocaml.doc
-                                                                   "The input for the [DeleteDeliveryChannel] action. The action accepts the following data, in JSON format. \n"]
+    [@ocaml.doc
+      "The name of the delivery channel that you want to delete.\n"]}
+[@@ocaml.doc
+  "The input for the [DeleteDeliveryChannel] action. The action accepts the following data, in JSON format. \n"]
 type nonrec delete_conformance_pack_request =
   {
   conformance_pack_name: string
@@ -3699,9 +3910,9 @@ type nonrec delete_configuration_recorder_request =
   {
   configuration_recorder_name: string
     [@ocaml.doc
-      "The name of the configuration recorder to be deleted. You can retrieve the name of your configuration recorder by using the [DescribeConfigurationRecorders] action.\n"]}
+      "The name of the customer managed configuration recorder that you want to delete. You can retrieve the name of your configuration recorders by using the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_DescribeConfigurationRecorders.html}DescribeConfigurationRecorders} operation.\n"]}
 [@@ocaml.doc
-  "The request object for the [DeleteConfigurationRecorder] action.\n"]
+  "The request object for the [DeleteConfigurationRecorder] operation.\n"]
 type nonrec delete_configuration_aggregator_request =
   {
   configuration_aggregator_name: string
@@ -3793,3 +4004,16 @@ type nonrec batch_get_aggregate_resource_config_request =
   configuration_aggregator_name: string
     [@ocaml.doc "The name of the configuration aggregator.\n"]}[@@ocaml.doc
                                                                  ""]
+type nonrec associate_resource_types_response =
+  {
+  configuration_recorder: configuration_recorder [@ocaml.doc ""]}[@@ocaml.doc
+                                                                   ""]
+type nonrec associate_resource_types_request =
+  {
+  resource_types: resource_type list
+    [@ocaml.doc
+      "The list of resource types you want to add to the recording group of the specified configuration recorder.\n"];
+  configuration_recorder_arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]}
+[@@ocaml.doc ""]

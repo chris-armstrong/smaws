@@ -70,6 +70,43 @@ module CreateTable =
             ~output_deserializer:create_table_response_of_yojson
             ~error_deserializer
   end
+module CreateType =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "InternalServerException") ->
+              `InternalServerException
+                (internal_server_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : create_type_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.create_type_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KeyspacesServiceCreateType" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:create_type_response_of_yojson
+            ~error_deserializer
+  end
 module DeleteKeyspace =
   struct
     let error_deserializer tree path =
@@ -142,6 +179,43 @@ module DeleteTable =
             ~shape_name:"KeyspacesServiceDeleteTable" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:delete_table_response_of_yojson
+            ~error_deserializer
+  end
+module DeleteType =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "InternalServerException") ->
+              `InternalServerException
+                (internal_server_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : delete_type_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.delete_type_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KeyspacesServiceDeleteType" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_type_response_of_yojson
             ~error_deserializer
   end
 module GetKeyspace =
@@ -251,6 +325,41 @@ module GetTableAutoScalingSettings =
             ~output_deserializer:get_table_auto_scaling_settings_response_of_yojson
             ~error_deserializer
   end
+module GetType =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerException") ->
+              `InternalServerException
+                (internal_server_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_type_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.get_type_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KeyspacesServiceGetType" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_type_response_of_yojson
+            ~error_deserializer
+  end
 module ListKeyspaces =
   struct
     let error_deserializer tree path =
@@ -357,6 +466,41 @@ module ListTagsForResource =
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
+module ListTypes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerException") ->
+              `InternalServerException
+                (internal_server_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_types_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.list_types_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KeyspacesServiceListTypes" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_types_response_of_yojson
+            ~error_deserializer
+  end
 module RestoreTable =
   struct
     let error_deserializer tree path =
@@ -403,6 +547,8 @@ module TagResource =
           | (_, "AccessDeniedException") ->
               `AccessDeniedException
                 (access_denied_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
           | (_, "InternalServerException") ->
               `InternalServerException
                 (internal_server_exception_of_yojson tree path)
@@ -464,6 +610,43 @@ module UntagResource =
             ~shape_name:"KeyspacesServiceUntagResource" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:untag_resource_response_of_yojson
+            ~error_deserializer
+  end
+module UpdateKeyspace =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "InternalServerException") ->
+              `InternalServerException
+                (internal_server_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : update_keyspace_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.update_keyspace_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KeyspacesServiceUpdateKeyspace" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:update_keyspace_response_of_yojson
             ~error_deserializer
   end
 module UpdateTable =

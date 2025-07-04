@@ -1,5 +1,14 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
+let base_unit_of_yojson = unit_of_yojson
+let update_type_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MigrationTaskStateUpdated" -> MigrationTaskStateUpdated
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "UpdateType" value)
+    | _ -> raise (deserialize_wrong_type_error path "UpdateType") : update_type) : 
+  update_type)
 let update_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 let error_message_of_yojson = string_of_yojson
 let unauthorized_operation_of_yojson tree path =
@@ -20,16 +29,17 @@ let throttling_exception_of_yojson tree path =
           _list path);
      message = (value_for_key error_message_of_yojson "Message" _list path)
    } : throttling_exception)
-let base_unit_of_yojson = unit_of_yojson
 let status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "NOT_STARTED" -> NOT_STARTED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Status" value)
-   | _ -> raise (deserialize_wrong_type_error path "Status") : status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "NOT_STARTED" -> NOT_STARTED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Status" value)
+    | _ -> raise (deserialize_wrong_type_error path "Status") : status) : 
+  status)
 let status_detail_of_yojson = string_of_yojson
 let progress_percent_of_yojson = int_of_yojson
 let task_of_yojson tree path =
@@ -44,6 +54,22 @@ let task_of_yojson tree path =
           (value_for_key status_detail_of_yojson "StatusDetail") _list path);
      status = (value_for_key status_of_yojson "Status" _list path)
    } : task)
+let source_resource_name_of_yojson = string_of_yojson
+let source_resource_description_of_yojson = string_of_yojson
+let source_resource_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     status_detail =
+       (option_of_yojson
+          (value_for_key status_detail_of_yojson "StatusDetail") _list path);
+     description =
+       (option_of_yojson
+          (value_for_key source_resource_description_of_yojson "Description")
+          _list path);
+     name = (value_for_key source_resource_name_of_yojson "Name" _list path)
+   } : source_resource)
+let source_resource_list_of_yojson tree path =
+  list_of_yojson source_resource_of_yojson tree path
 let service_unavailable_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -61,23 +87,24 @@ let resource_not_found_exception_of_yojson tree path =
 let resource_name_of_yojson = string_of_yojson
 let resource_attribute_value_of_yojson = string_of_yojson
 let resource_attribute_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MOTHERBOARD_SERIAL_NUMBER" -> MOTHERBOARD_SERIAL_NUMBER
-   | `String "BIOS_ID" -> BIOS_ID
-   | `String "VM_PATH" -> VM_PATH
-   | `String "VM_NAME" -> VM_NAME
-   | `String "VM_MANAGED_OBJECT_REFERENCE" -> VM_MANAGED_OBJECT_REFERENCE
-   | `String "VM_MANAGER_ID" -> VM_MANAGER_ID
-   | `String "FQDN" -> FQDN
-   | `String "MAC_ADDRESS" -> MAC_ADDRESS
-   | `String "IPV6_ADDRESS" -> IPV6_ADDRESS
-   | `String "IPV4_ADDRESS" -> IPV4_ADDRESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ResourceAttributeType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceAttributeType") : 
-  resource_attribute_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MOTHERBOARD_SERIAL_NUMBER" -> MOTHERBOARD_SERIAL_NUMBER
+    | `String "BIOS_ID" -> BIOS_ID
+    | `String "VM_PATH" -> VM_PATH
+    | `String "VM_NAME" -> VM_NAME
+    | `String "VM_MANAGED_OBJECT_REFERENCE" -> VM_MANAGED_OBJECT_REFERENCE
+    | `String "VM_MANAGER_ID" -> VM_MANAGER_ID
+    | `String "FQDN" -> FQDN
+    | `String "MAC_ADDRESS" -> MAC_ADDRESS
+    | `String "IPV6_ADDRESS" -> IPV6_ADDRESS
+    | `String "IPV4_ADDRESS" -> IPV4_ADDRESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceAttributeType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceAttributeType") : 
+     resource_attribute_type) : resource_attribute_type)
 let resource_attribute_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -187,15 +214,17 @@ let notify_application_state_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let application_id_of_yojson = string_of_yojson
 let application_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "NOT_STARTED" -> NOT_STARTED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ApplicationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
-  application_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "NOT_STARTED" -> NOT_STARTED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ApplicationStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
+     application_status) : application_status)
 let notify_application_state_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -211,6 +240,22 @@ let notify_application_state_request_of_yojson tree path =
      application_id =
        (value_for_key application_id_of_yojson "ApplicationId" _list path)
    } : notify_application_state_request)
+let migration_task_update_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     migration_task_state =
+       (option_of_yojson (value_for_key task_of_yojson "MigrationTaskState")
+          _list path);
+     update_type =
+       (option_of_yojson (value_for_key update_type_of_yojson "UpdateType")
+          _list path);
+     update_date_time =
+       (option_of_yojson
+          (value_for_key update_date_time_of_yojson "UpdateDateTime") _list
+          path)
+   } : migration_task_update)
+let migration_task_update_list_of_yojson tree path =
+  list_of_yojson migration_task_update_of_yojson tree path
 let migration_task_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -262,9 +307,38 @@ let migration_task_of_yojson tree path =
           (value_for_key progress_update_stream_of_yojson
              "ProgressUpdateStream") _list path)
    } : migration_task)
+let max_results_source_resources_of_yojson = int_of_yojson
 let max_results_resources_of_yojson = int_of_yojson
 let max_results_created_artifacts_of_yojson = int_of_yojson
 let max_results_of_yojson = int_of_yojson
+let list_source_resources_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     source_resource_list =
+       (option_of_yojson
+          (value_for_key source_resource_list_of_yojson "SourceResourceList")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path)
+   } : list_source_resources_result)
+let list_source_resources_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       (option_of_yojson
+          (value_for_key max_results_source_resources_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     migration_task_name =
+       (value_for_key migration_task_name_of_yojson "MigrationTaskName" _list
+          path);
+     progress_update_stream =
+       (value_for_key progress_update_stream_of_yojson "ProgressUpdateStream"
+          _list path)
+   } : list_source_resources_request)
 let list_progress_update_streams_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -310,6 +384,33 @@ let list_migration_tasks_request_of_yojson tree path =
        (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
           path)
    } : list_migration_tasks_request)
+let list_migration_task_updates_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     migration_task_update_list =
+       (option_of_yojson
+          (value_for_key migration_task_update_list_of_yojson
+             "MigrationTaskUpdateList") _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path)
+   } : list_migration_task_updates_result)
+let list_migration_task_updates_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key token_of_yojson "NextToken") _list
+          path);
+     migration_task_name =
+       (value_for_key migration_task_name_of_yojson "MigrationTaskName" _list
+          path);
+     progress_update_stream =
+       (value_for_key progress_update_stream_of_yojson "ProgressUpdateStream"
+          _list path)
+   } : list_migration_task_updates_request)
 let configuration_id_of_yojson = string_of_yojson
 let discovered_resource_description_of_yojson = string_of_yojson
 let discovered_resource_of_yojson tree path =
@@ -452,6 +553,24 @@ let import_migration_task_request_of_yojson tree path =
        (value_for_key progress_update_stream_of_yojson "ProgressUpdateStream"
           _list path)
    } : import_migration_task_request)
+let disassociate_source_resource_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let disassociate_source_resource_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dry_run =
+       (option_of_yojson (value_for_key dry_run_of_yojson "DryRun") _list
+          path);
+     source_resource_name =
+       (value_for_key source_resource_name_of_yojson "SourceResourceName"
+          _list path);
+     migration_task_name =
+       (value_for_key migration_task_name_of_yojson "MigrationTaskName" _list
+          path);
+     progress_update_stream =
+       (value_for_key progress_update_stream_of_yojson "ProgressUpdateStream"
+          _list path)
+   } : disassociate_source_resource_request)
 let disassociate_discovered_resource_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let disassociate_discovered_resource_request_of_yojson tree path =
@@ -546,6 +665,23 @@ let create_progress_update_stream_request_of_yojson tree path =
        (value_for_key progress_update_stream_of_yojson
           "ProgressUpdateStreamName" _list path)
    } : create_progress_update_stream_request)
+let associate_source_resource_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let associate_source_resource_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dry_run =
+       (option_of_yojson (value_for_key dry_run_of_yojson "DryRun") _list
+          path);
+     source_resource =
+       (value_for_key source_resource_of_yojson "SourceResource" _list path);
+     migration_task_name =
+       (value_for_key migration_task_name_of_yojson "MigrationTaskName" _list
+          path);
+     progress_update_stream =
+       (value_for_key progress_update_stream_of_yojson "ProgressUpdateStream"
+          _list path)
+   } : associate_source_resource_request)
 let associate_discovered_resource_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let associate_discovered_resource_request_of_yojson tree path =

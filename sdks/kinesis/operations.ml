@@ -409,6 +409,9 @@ module GetRecords =
           | (_, "ExpiredIteratorException") ->
               `ExpiredIteratorException
                 (expired_iterator_exception_of_yojson tree path)
+          | (_, "InternalFailureException") ->
+              `InternalFailureException
+                (internal_failure_exception_of_yojson tree path)
           | (_, "InvalidArgumentException") ->
               `InvalidArgumentException
                 (invalid_argument_exception_of_yojson tree path)
@@ -466,6 +469,9 @@ module GetResourcePolicy =
           | (_, "LimitExceededException") ->
               `LimitExceededException
                 (limit_exceeded_exception_of_yojson tree path)
+          | (_, "ResourceInUseException") ->
+              `ResourceInUseException
+                (resource_in_use_exception_of_yojson tree path)
           | (_, "ResourceNotFoundException") ->
               `ResourceNotFoundException
                 (resource_not_found_exception_of_yojson tree path)
@@ -493,6 +499,9 @@ module GetShardIterator =
           | (_, "AccessDeniedException") ->
               `AccessDeniedException
                 (access_denied_exception_of_yojson tree path)
+          | (_, "InternalFailureException") ->
+              `InternalFailureException
+                (internal_failure_exception_of_yojson tree path)
           | (_, "InvalidArgumentException") ->
               `InvalidArgumentException
                 (invalid_argument_exception_of_yojson tree path)
@@ -661,6 +670,43 @@ module ListStreams =
             ~output_deserializer:list_streams_output_of_yojson
             ~error_deserializer
   end
+module ListTagsForResource =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InvalidArgumentException") ->
+              `InvalidArgumentException
+                (invalid_argument_exception_of_yojson tree path)
+          | (_, "LimitExceededException") ->
+              `LimitExceededException
+                (limit_exceeded_exception_of_yojson tree path)
+          | (_, "ResourceInUseException") ->
+              `ResourceInUseException
+                (resource_in_use_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_tags_for_resource_input) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_tags_for_resource_input_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Kinesis_20131202ListTagsForResource" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_tags_for_resource_output_of_yojson
+            ~error_deserializer
+  end
 module ListTagsForStream =
   struct
     let error_deserializer tree path =
@@ -741,6 +787,9 @@ module PutRecord =
           | (_, "AccessDeniedException") ->
               `AccessDeniedException
                 (access_denied_exception_of_yojson tree path)
+          | (_, "InternalFailureException") ->
+              `InternalFailureException
+                (internal_failure_exception_of_yojson tree path)
           | (_, "InvalidArgumentException") ->
               `InvalidArgumentException
                 (invalid_argument_exception_of_yojson tree path)
@@ -792,6 +841,9 @@ module PutRecords =
           | (_, "AccessDeniedException") ->
               `AccessDeniedException
                 (access_denied_exception_of_yojson tree path)
+          | (_, "InternalFailureException") ->
+              `InternalFailureException
+                (internal_failure_exception_of_yojson tree path)
           | (_, "InvalidArgumentException") ->
               `InvalidArgumentException
                 (invalid_argument_exception_of_yojson tree path)
@@ -1100,6 +1152,76 @@ module SubscribeToShard =
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:subscribe_to_shard_output_of_yojson
             ~error_deserializer
+  end
+module TagResource =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InvalidArgumentException") ->
+              `InvalidArgumentException
+                (invalid_argument_exception_of_yojson tree path)
+          | (_, "LimitExceededException") ->
+              `LimitExceededException
+                (limit_exceeded_exception_of_yojson tree path)
+          | (_, "ResourceInUseException") ->
+              `ResourceInUseException
+                (resource_in_use_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : tag_resource_input) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.tag_resource_input_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Kinesis_20131202TagResource" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:base_unit_of_yojson ~error_deserializer
+  end
+module UntagResource =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InvalidArgumentException") ->
+              `InvalidArgumentException
+                (invalid_argument_exception_of_yojson tree path)
+          | (_, "LimitExceededException") ->
+              `LimitExceededException
+                (limit_exceeded_exception_of_yojson tree path)
+          | (_, "ResourceInUseException") ->
+              `ResourceInUseException
+                (resource_in_use_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : untag_resource_input) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.untag_resource_input_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Kinesis_20131202UntagResource" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateShardCount =
   struct

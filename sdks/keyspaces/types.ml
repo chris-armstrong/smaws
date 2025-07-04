@@ -10,6 +10,11 @@ let service =
 type nonrec rs =
   | SINGLE_REGION [@ocaml.doc ""]
   | MULTI_REGION [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec view_type =
+  | NEW_IMAGE [@ocaml.doc ""]
+  | OLD_IMAGE [@ocaml.doc ""]
+  | KEYS_ONLY [@ocaml.doc ""]
+  | NEW_AND_OLD_IMAGES [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validation_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
@@ -142,8 +147,44 @@ type nonrec replica_specification =
       "The provisioned read capacity units for the multi-Region table in the specified Amazon Web Services Region.\n"];
   region: string [@ocaml.doc "The Amazon Web Services Region.\n"]}[@@ocaml.doc
                                                                     "The Amazon Web Services Region specific settings of a multi-Region table.\n\n For a multi-Region table, you can configure the table's read capacity differently per Amazon Web Services Region. You can do this by configuring the following parameters.\n \n  {ul\n        {-   [region]: The Region where these settings are applied. (Required)\n            \n             }\n        {-   [readCapacityUnits]: The provisioned read capacity units. (Optional)\n            \n             }\n        {-   [readCapacityAutoScaling]: The read capacity auto scaling settings for the table. (Optional)\n            \n             }\n        }\n  "]
+type nonrec cdc_status =
+  | ENABLED [@ocaml.doc ""]
+  | ENABLING [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec tag =
+  {
+  value: string
+    [@ocaml.doc
+      "The value of the tag. Tag values are case-sensitive and can be null.\n"];
+  key: string
+    [@ocaml.doc
+      "The key of the tag. Tag keys are case sensitive. Each Amazon Keyspaces resource can only have up to one tag with the same key. If you try to add an existing tag (same key), the existing tag value will be updated to the new value.\n"]}
+[@@ocaml.doc
+  "Describes a tag. A tag is a key-value pair. You can add up to 50 tags to a single Amazon Keyspaces resource.\n\n Amazon Web Services-assigned tag names and values are automatically assigned the [aws:] prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix [user:] in the Cost Allocation Report. You cannot backdate the application of a tag.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+type nonrec cdc_propagate_tags =
+  | TABLE [@ocaml.doc ""]
+  | NONE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec cdc_specification =
+  {
+  propagate_tags: cdc_propagate_tags option
+    [@ocaml.doc
+      "Specifies that the stream inherits the tags from the table.\n"];
+  tags: tag list option
+    [@ocaml.doc
+      "The tags (key-value pairs) that you want to apply to the stream.\n"];
+  view_type: view_type option
+    [@ocaml.doc
+      "The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. After you create the stream, you can't make changes to this selection. \n\n The options are:\n \n  {ul\n        {-   [NEW_AND_OLD_IMAGES] - both versions of the row, before and after the change. This is the default.\n            \n             }\n        {-   [NEW_IMAGE] - the version of the row after the change.\n            \n             }\n        {-   [OLD_IMAGE] - the version of the row before the change.\n            \n             }\n        {-   [KEYS_ONLY] - the partition and clustering keys of the row that was changed.\n            \n             }\n        }\n  "];
+  status: cdc_status
+    [@ocaml.doc
+      "The status of the CDC stream. You can enable or disable a stream for a table.\n"]}
+[@@ocaml.doc
+  "The settings for the CDC stream of a table. For more information about CDC streams, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html}Working with change data capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 type nonrec update_table_request =
   {
+  cdc_specification: cdc_specification option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
   replica_specifications: replica_specification list option
     [@ocaml.doc "The Region specific settings of a multi-Regional table.\n"];
   auto_scaling_specification: auto_scaling_specification option
@@ -183,9 +224,9 @@ type nonrec resource_not_found_exception =
   {
   resource_arn: string option
     [@ocaml.doc
-      "The unique identifier in the format of Amazon Resource Name (ARN), for the resource not found.\n"];
+      "The unique identifier in the format of Amazon Resource Name (ARN) for the resource couldn\226\128\153t be found.\n"];
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
-                                                                    "The operation tried to access a keyspace or table that doesn't exist. The resource might not be specified correctly, or its status might not be [ACTIVE].\n"]
+                                                                    "The operation tried to access a keyspace, table, or type that doesn't exist. The resource might not be specified correctly, or its status might not be [ACTIVE].\n"]
 type nonrec internal_server_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
@@ -198,16 +239,28 @@ type nonrec access_denied_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                                     "You don't have sufficient access permissions to perform this action. \n"]
-type nonrec tag =
+type nonrec update_keyspace_response =
   {
-  value: string
+  resource_arn: string
     [@ocaml.doc
-      "The value of the tag. Tag values are case-sensitive and can be null.\n"];
-  key: string
+      " The unique identifier of the keyspace in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec replication_specification =
+  {
+  region_list: string list option
     [@ocaml.doc
-      "The key of the tag. Tag keys are case sensitive. Each Amazon Keyspaces resource can only have up to one tag with the same key. If you try to add an existing tag (same key), the existing tag value will be updated to the new value.\n"]}
+      " The [regionList] contains the Amazon Web Services Regions where the keyspace is replicated in. \n"];
+  replication_strategy: rs
+    [@ocaml.doc
+      " The [replicationStrategy] of a keyspace, the required value is [SINGLE_REGION] or [MULTI_REGION]. \n"]}
 [@@ocaml.doc
-  "Describes a tag. A tag is a key-value pair. You can add up to 50 tags to a single Amazon Keyspaces resource.\n\n Amazon Web Services-assigned tag names and values are automatically assigned the [aws:] prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix [user:] in the Cost Allocation Report. You cannot backdate the application of a tag.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+  " The replication specification of the keyspace includes:\n\n {ul\n       {-   [regionList] - the Amazon Web Services Regions where the keyspace is replicated in.\n           \n            }\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       }\n  "]
+type nonrec update_keyspace_request =
+  {
+  client_side_timestamps: client_side_timestamps option [@ocaml.doc ""];
+  replication_specification: replication_specification [@ocaml.doc ""];
+  keyspace_name: string [@ocaml.doc " The name of the keyspace. \n"]}
+[@@ocaml.doc ""]
 type nonrec untag_resource_request =
   {
   tags: tag list
@@ -217,6 +270,11 @@ type nonrec untag_resource_request =
     [@ocaml.doc
       "The Amazon Keyspaces resource that the tags will be removed from. This value is an Amazon Resource Name (ARN).\n"]}
 [@@ocaml.doc ""]
+type nonrec type_status =
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | RESTORING [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec tag_resource_request =
   {
   tags: tag list
@@ -311,16 +369,22 @@ type nonrec restore_table_request =
   source_table_name: string [@ocaml.doc "The name of the source table.\n"];
   source_keyspace_name: string
     [@ocaml.doc "The keyspace name of the source table.\n"]}[@@ocaml.doc ""]
-type nonrec replication_specification =
+type nonrec keyspace_status =
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec replication_group_status =
   {
-  region_list: string list option
+  tables_replication_progress: string option
     [@ocaml.doc
-      " The [regionList] can contain up to six Amazon Web Services Regions where the keyspace is replicated in. \n"];
-  replication_strategy: rs
-    [@ocaml.doc
-      " The [replicationStrategy] of a keyspace, the required value is [SINGLE_REGION] or [MULTI_REGION]. \n"]}
+      " This shows the replication progress of tables in the keyspace. The value is expressed as a percentage of the newly replicated tables with status [Active] compared to the total number of tables in the keyspace. \n"];
+  keyspace_status: keyspace_status
+    [@ocaml.doc " The status of the keyspace. \n"];
+  region: string
+    [@ocaml.doc " The name of the Region that was added to the keyspace. \n"]}
 [@@ocaml.doc
-  " The replication specification of the keyspace includes:\n\n {ul\n       {-   [regionList] - up to six Amazon Web Services Regions where the keyspace is replicated in.\n           \n            }\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       }\n  "]
+  " This shows the summary status of the keyspace after a new Amazon Web Services Region was added. \n"]
 type nonrec capacity_specification_summary =
   {
   last_update_to_pay_per_request_timestamp: CoreTypes.Timestamp.t option
@@ -364,6 +428,26 @@ type nonrec point_in_time_recovery_summary =
     [@ocaml.doc
       "Shows if point-in-time recovery is enabled or disabled for the specified table.\n"]}
 [@@ocaml.doc "The point-in-time recovery status of the specified table.\n"]
+type nonrec list_types_response =
+  {
+  types: string list
+    [@ocaml.doc " The list of types contained in the specified keyspace. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The pagination token. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"]}
+[@@ocaml.doc ""]
+type nonrec list_types_request =
+  {
+  keyspace_name: string
+    [@ocaml.doc
+      " The name of the keyspace that contains the listed types. \n"];
+  max_results: int option
+    [@ocaml.doc
+      " The total number of types to return in the output. If the total number of types available is more than the value specified, a [NextToken] is provided in the output. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The pagination token. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"]}
+[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_response =
   {
   tags: tag list option [@ocaml.doc "A list of tags.\n"];
@@ -429,6 +513,42 @@ type nonrec list_keyspaces_request =
     [@ocaml.doc
       "The pagination token. To resume pagination, provide the [NextToken] value as argument of a subsequent API invocation.\n"]}
 [@@ocaml.doc ""]
+type nonrec field_definition =
+  {
+  type_: string
+    [@ocaml.doc
+      " Any supported Cassandra data type, including collections and other user-defined types that are contained in the same keyspace. \n\n For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cassandra-apis.html#cassandra-data-type}Cassandra data type support} in the {i Amazon Keyspaces Developer Guide}.\n "];
+  name: string [@ocaml.doc " The identifier. \n"]}[@@ocaml.doc
+                                                    " A field definition consists out of a name and a type. \n"]
+type nonrec get_type_response =
+  {
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace that contains this type in the format of an Amazon Resource Name (ARN). \n"];
+  max_nesting_depth: int option
+    [@ocaml.doc " The level of nesting implemented for this type. \n"];
+  direct_parent_types: string list option
+    [@ocaml.doc " The types that use this type. \n"];
+  direct_referring_tables: string list option
+    [@ocaml.doc " The tables that use this type. \n"];
+  status: type_status option [@ocaml.doc " The status of this type. \n"];
+  last_modified_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when this type was last modified. \n"];
+  field_definitions: field_definition list option
+    [@ocaml.doc " The names and types that define this type. \n"];
+  type_name: string [@ocaml.doc " The name of the type. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace that contains this type. \n"]}
+[@@ocaml.doc ""]
+type nonrec get_type_request =
+  {
+  type_name: string
+    [@ocaml.doc
+      "The formatted name of the type. For example, if the name of the type was created without double quotes, Amazon Keyspaces saved the name in lower-case characters. If the name was created in double quotes, you must use double quotes to specify the type name. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace that contains this type. \n"]}
+[@@ocaml.doc ""]
 type nonrec get_table_auto_scaling_settings_response =
   {
   replica_specifications: replica_auto_scaling_specification list option
@@ -450,8 +570,22 @@ type nonrec comment =
   {
   message: string [@ocaml.doc "An optional description of the table.\n"]}
 [@@ocaml.doc "An optional comment that describes the table.\n"]
+type nonrec cdc_specification_summary =
+  {
+  view_type: view_type option
+    [@ocaml.doc
+      "The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. This setting can't be changed, after the stream has been created. \n\n The options are:\n \n  {ul\n        {-   [NEW_AND_OLD_IMAGES] - both versions of the row, before and after the change. This is the default.\n            \n             }\n        {-   [NEW_IMAGE] - the version of the row after the change.\n            \n             }\n        {-   [OLD_IMAGE] - the version of the row before the change.\n            \n             }\n        {-   [KEYS_ONLY] - the partition and clustering keys of the row that was changed.\n            \n             }\n        }\n  "];
+  status: cdc_status
+    [@ocaml.doc
+      "The status of the CDC stream. Specifies if the table has a CDC stream.\n"]}
+[@@ocaml.doc
+  "The settings of the CDC stream of the table. For more information about CDC streams, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html}Working with change data capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 type nonrec get_table_response =
   {
+  cdc_specification: cdc_specification_summary option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
+  latest_stream_arn: string option
+    [@ocaml.doc "The Amazon Resource Name (ARN) of the stream.\n"];
   replica_specifications: replica_specification_summary list option
     [@ocaml.doc
       "Returns the Amazon Web Services Region specific settings of all Regions a multi-Region table is replicated in.\n"];
@@ -493,6 +627,9 @@ type nonrec get_table_request =
 [@@ocaml.doc ""]
 type nonrec get_keyspace_response =
   {
+  replication_group_statuses: replication_group_status list option
+    [@ocaml.doc
+      " A list of all Regions the keyspace is replicated in after the update keyspace operation and their status. \n"];
   replication_regions: string list option
     [@ocaml.doc
       " If the [replicationStrategy] of the keyspace is [MULTI_REGION], a list of replication Regions is returned. \n"];
@@ -506,6 +643,19 @@ type nonrec get_keyspace_request =
   {
   keyspace_name: string [@ocaml.doc "The name of the keyspace.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec delete_type_response =
+  {
+  type_name: string [@ocaml.doc " The name of the type that was deleted. \n"];
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace from which the type was deleted in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec delete_type_request =
+  {
+  type_name: string [@ocaml.doc " The name of the type to be deleted. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace of the to be deleted type. \n"]}
+[@@ocaml.doc ""]
 type nonrec delete_table_request =
   {
   table_name: string [@ocaml.doc "The name of the table to be deleted.\n"];
@@ -516,6 +666,25 @@ type nonrec delete_keyspace_request =
   {
   keyspace_name: string
     [@ocaml.doc "The name of the keyspace to be deleted.\n"]}[@@ocaml.doc ""]
+type nonrec create_type_response =
+  {
+  type_name: string
+    [@ocaml.doc
+      " The formatted name of the user-defined type that was created. Note that Amazon Keyspaces requires the formatted name of the type for other operations, for example [GetType]. \n"];
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace that contains the new type in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec create_type_request =
+  {
+  field_definitions: field_definition list
+    [@ocaml.doc
+      " The field definitions, consisting of names and types, that define this type. \n"];
+  type_name: string
+    [@ocaml.doc
+      " The name of the user-defined type. \n\n UDT names must contain 48 characters or less, must begin with an alphabetic character, and can only contain alpha-numeric characters and underscores. Amazon Keyspaces converts upper case characters automatically into lower case characters. \n \n  Alternatively, you can declare a UDT name in double quotes. When declaring a UDT name inside double quotes, Amazon Keyspaces preserves upper casing and allows special characters.\n  \n   You can also use double quotes as part of the name when you create the UDT, but you must escape each double quote character with an additional double quote character.\n   "];
+  keyspace_name: string [@ocaml.doc " The name of the keyspace. \n"]}
+[@@ocaml.doc ""]
 type nonrec create_table_response =
   {
   resource_arn: string
@@ -524,6 +693,8 @@ type nonrec create_table_response =
 [@@ocaml.doc ""]
 type nonrec create_table_request =
   {
+  cdc_specification: cdc_specification option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
   replica_specifications: replica_specification list option
     [@ocaml.doc
       "The optional Amazon Web Services Region specific settings of a multi-Region table. These settings overwrite the general settings of the table for the specified Region. \n\n For a multi-Region table in provisioned capacity mode, you can configure the table's read capacity differently for each Region's replica. The write capacity, however, remains synchronized between all replicas to ensure that there's enough capacity to replicate writes across all Regions. To define the read capacity for a table replica in a specific Region, you can do so by configuring the following parameters.\n \n  {ul\n        {-   [region]: The Region where these settings are applied. (Required)\n            \n             }\n        {-   [readCapacityUnits]: The provisioned read capacity units. (Optional)\n            \n             }\n        {-   [readCapacityAutoScaling]: The read capacity auto scaling settings for the table. (Optional) \n            \n             }\n        }\n  "];
@@ -572,7 +743,7 @@ type nonrec create_keyspace_request =
   {
   replication_specification: replication_specification option
     [@ocaml.doc
-      " The replication specification of the keyspace includes:\n\n {ul\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       {-   [regionList] - if the [replicationStrategy] is [MULTI_REGION], the [regionList] requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in. The maximum number of supported replication Regions including the current Region is six.\n           \n            }\n       }\n  "];
+      " The replication specification of the keyspace includes:\n\n {ul\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       {-   [regionList] - if the [replicationStrategy] is [MULTI_REGION], the [regionList] requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in.\n           \n            }\n       }\n  "];
   tags: tag list option
     [@ocaml.doc
       "A list of key-value pair tags to be attached to the keyspace.\n\n For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n "];

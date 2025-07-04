@@ -1,5 +1,17 @@
 open Smaws_Lib
 open Types
+let make_web_acl_has_out_of_scope_resources_violation
+  ?out_of_scope_resource_list:(out_of_scope_resource_list_ :
+                                string list option)
+  ?web_acl_arn:(web_acl_arn_ : string option) () =
+  ({
+     out_of_scope_resource_list = out_of_scope_resource_list_;
+     web_acl_arn = web_acl_arn_
+   } : web_acl_has_out_of_scope_resources_violation)
+let make_web_acl_has_incompatible_configuration_violation
+  ?description:(description_ : string option)
+  ?web_acl_arn:(web_acl_arn_ : string option) () =
+  ({ description = description_; web_acl_arn = web_acl_arn_ } : web_acl_has_incompatible_configuration_violation)
 let make_partial_match
   ?target_violation_reasons:(target_violation_reasons_ : string list option)
   ?reference:(reference_ : string option) () =
@@ -714,6 +726,14 @@ let make_possible_remediation_actions
   ?description:(description_ : string option) () =
   ({ actions = actions_; description = description_ } : possible_remediation_actions)
 let make_resource_violation
+  ?web_acl_has_out_of_scope_resources_violation:(web_acl_has_out_of_scope_resources_violation_
+                                                  :
+                                                  web_acl_has_out_of_scope_resources_violation
+                                                    option)
+  ?web_acl_has_incompatible_configuration_violation:(web_acl_has_incompatible_configuration_violation_
+                                                      :
+                                                      web_acl_has_incompatible_configuration_violation
+                                                        option)
   ?possible_remediation_actions:(possible_remediation_actions_ :
                                   possible_remediation_actions option)
   ?invalid_network_acl_entries_violation:(invalid_network_acl_entries_violation_
@@ -805,6 +825,10 @@ let make_resource_violation
                                       aws_vpc_security_group_violation option)
   () =
   ({
+     web_acl_has_out_of_scope_resources_violation =
+       web_acl_has_out_of_scope_resources_violation_;
+     web_acl_has_incompatible_configuration_violation =
+       web_acl_has_incompatible_configuration_violation_;
      possible_remediation_actions = possible_remediation_actions_;
      invalid_network_acl_entries_violation =
        invalid_network_acl_entries_violation_;
@@ -1009,6 +1033,8 @@ let make_put_protocols_list_request ?tag_list:(tag_list_ : tag list option)
   ~protocols_list:(protocols_list_ : protocols_list_data) () =
   ({ tag_list = tag_list_; protocols_list = protocols_list_ } : put_protocols_list_request)
 let make_policy
+  ?resource_tag_logical_operator:(resource_tag_logical_operator_ :
+                                   resource_tag_logical_operator option)
   ?policy_status:(policy_status_ : customer_policy_status option)
   ?policy_description:(policy_description_ : string option)
   ?resource_set_ids:(resource_set_ids_ : string list option)
@@ -1027,6 +1053,7 @@ let make_policy
                                   security_service_policy_data)
   ~policy_name:(policy_name_ : string) () =
   ({
+     resource_tag_logical_operator = resource_tag_logical_operator_;
      policy_status = policy_status_;
      policy_description = policy_description_;
      resource_set_ids = resource_set_ids_;

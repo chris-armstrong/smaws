@@ -9,12 +9,14 @@ val make_vpc_endpoint_error_detail :
   ?error_code:string ->
     ?error_message:string -> ?id:string -> unit -> vpc_endpoint_error_detail
 val make_vpc_endpoint_detail :
-  ?created_date:int ->
-    ?status:vpc_endpoint_status ->
-      ?security_group_ids:string list ->
-        ?subnet_ids:string list ->
-          ?vpc_id:string ->
-            ?name:string -> ?id:string -> unit -> vpc_endpoint_detail
+  ?failure_message:string ->
+    ?failure_code:string ->
+      ?created_date:int ->
+        ?status:vpc_endpoint_status ->
+          ?security_group_ids:string list ->
+            ?subnet_ids:string list ->
+              ?vpc_id:string ->
+                ?name:string -> ?id:string -> unit -> vpc_endpoint_detail
 val make_update_vpc_endpoint_detail :
   ?last_modified_date:int ->
     ?security_group_ids:string list ->
@@ -52,26 +54,42 @@ val make_update_security_policy_request :
               unit -> update_security_policy_request
 val make_saml_config_options :
   ?session_timeout:int ->
-    ?group_attribute:string ->
-      ?user_attribute:string ->
-        metadata:string -> unit -> saml_config_options
+    ?open_search_serverless_entity_id:string ->
+      ?group_attribute:string ->
+        ?user_attribute:string ->
+          metadata:string -> unit -> saml_config_options
+val make_iam_identity_center_config_options :
+  ?group_attribute:iam_identity_center_group_attribute ->
+    ?user_attribute:iam_identity_center_user_attribute ->
+      ?application_description:string ->
+        ?application_name:string ->
+          ?application_arn:string ->
+            ?instance_arn:string ->
+              unit -> iam_identity_center_config_options
 val make_security_config_detail :
   ?last_modified_date:int ->
     ?created_date:int ->
-      ?saml_options:saml_config_options ->
-        ?description:string ->
-          ?config_version:string ->
-            ?type_:security_config_type ->
-              ?id:string -> unit -> security_config_detail
+      ?iam_identity_center_options:iam_identity_center_config_options ->
+        ?saml_options:saml_config_options ->
+          ?description:string ->
+            ?config_version:string ->
+              ?type_:security_config_type ->
+                ?id:string -> unit -> security_config_detail
 val make_update_security_config_response :
   ?security_config_detail:security_config_detail ->
     unit -> update_security_config_response
+val make_update_iam_identity_center_config_options :
+  ?group_attribute:iam_identity_center_group_attribute ->
+    ?user_attribute:iam_identity_center_user_attribute ->
+      unit -> update_iam_identity_center_config_options
 val make_update_security_config_request :
   ?client_token:string ->
-    ?saml_options:saml_config_options ->
-      ?description:string ->
-        config_version:string ->
-          id:string -> unit -> update_security_config_request
+    ?iam_identity_center_options_updates:update_iam_identity_center_config_options
+      ->
+      ?saml_options:saml_config_options ->
+        ?description:string ->
+          config_version:string ->
+            id:string -> unit -> update_security_config_request
 val make_lifecycle_policy_detail :
   ?last_modified_date:int ->
     ?created_date:int ->
@@ -248,17 +266,20 @@ val make_batch_get_effective_lifecycle_policy_request :
   resource_identifiers:lifecycle_policy_resource_identifier list ->
     unit -> batch_get_effective_lifecycle_policy_request
 val make_collection_detail :
-  ?dashboard_endpoint:string ->
-    ?collection_endpoint:string ->
-      ?last_modified_date:int ->
-        ?created_date:int ->
-          ?standby_replicas:standby_replicas ->
-            ?kms_key_arn:string ->
-              ?arn:string ->
-                ?description:string ->
-                  ?type_:collection_type ->
-                    ?status:collection_status ->
-                      ?name:string -> ?id:string -> unit -> collection_detail
+  ?failure_message:string ->
+    ?failure_code:string ->
+      ?dashboard_endpoint:string ->
+        ?collection_endpoint:string ->
+          ?last_modified_date:int ->
+            ?created_date:int ->
+              ?standby_replicas:standby_replicas ->
+                ?kms_key_arn:string ->
+                  ?arn:string ->
+                    ?description:string ->
+                      ?type_:collection_type ->
+                        ?status:collection_status ->
+                          ?name:string ->
+                            ?id:string -> unit -> collection_detail
 val make_collection_error_detail :
   ?error_code:string ->
     ?error_message:string ->
@@ -409,13 +430,19 @@ val make_create_vpc_endpoint_request :
 val make_create_security_config_response :
   ?security_config_detail:security_config_detail ->
     unit -> create_security_config_response
+val make_create_iam_identity_center_config_options :
+  ?group_attribute:iam_identity_center_group_attribute ->
+    ?user_attribute:iam_identity_center_user_attribute ->
+      instance_arn:string ->
+        unit -> create_iam_identity_center_config_options
 val make_create_security_config_request :
   ?client_token:string ->
-    ?saml_options:saml_config_options ->
-      ?description:string ->
-        name:string ->
-          type_:security_config_type ->
-            unit -> create_security_config_request
+    ?iam_identity_center_options:create_iam_identity_center_config_options ->
+      ?saml_options:saml_config_options ->
+        ?description:string ->
+          name:string ->
+            type_:security_config_type ->
+              unit -> create_security_config_request
 val make_create_collection_detail :
   ?last_modified_date:int ->
     ?created_date:int ->

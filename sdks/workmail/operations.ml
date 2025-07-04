@@ -288,6 +288,33 @@ module CreateGroup =
             ~output_deserializer:create_group_response_of_yojson
             ~error_deserializer
   end
+module CreateIdentityCenterApplication =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : create_identity_center_application_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.create_identity_center_application_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceCreateIdentityCenterApplication"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:create_identity_center_application_response_of_yojson
+            ~error_deserializer
+  end
 module CreateImpersonationRole =
   struct
     let error_deserializer tree path =
@@ -666,6 +693,69 @@ module DeleteGroup =
             ~output_deserializer:delete_group_response_of_yojson
             ~error_deserializer
   end
+module DeleteIdentityCenterApplication =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : delete_identity_center_application_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.delete_identity_center_application_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceDeleteIdentityCenterApplication"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_identity_center_application_response_of_yojson
+            ~error_deserializer
+  end
+module DeleteIdentityProviderConfiguration =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : delete_identity_provider_configuration_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.delete_identity_provider_configuration_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceDeleteIdentityProviderConfiguration"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_identity_provider_configuration_response_of_yojson
+            ~error_deserializer
+  end
 module DeleteImpersonationRole =
   struct
     let error_deserializer tree path =
@@ -832,6 +922,38 @@ module DeleteOrganization =
             ~shape_name:"WorkMailServiceDeleteOrganization" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:delete_organization_response_of_yojson
+            ~error_deserializer
+  end
+module DeletePersonalAccessToken =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : delete_personal_access_token_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.delete_personal_access_token_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceDeletePersonalAccessToken" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_personal_access_token_response_of_yojson
             ~error_deserializer
   end
 module DeleteResource =
@@ -1121,6 +1243,42 @@ module DescribeGroup =
             ~output_deserializer:describe_group_response_of_yojson
             ~error_deserializer
   end
+module DescribeIdentityProviderConfiguration =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : describe_identity_provider_configuration_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.describe_identity_provider_configuration_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceDescribeIdentityProviderConfiguration"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:describe_identity_provider_configuration_response_of_yojson
+            ~error_deserializer
+  end
 module DescribeInboundDmarcSettings =
   struct
     let error_deserializer tree path =
@@ -1254,6 +1412,13 @@ module DescribeUser =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "DirectoryServiceAuthenticationFailedException") ->
+              `DirectoryServiceAuthenticationFailedException
+                (directory_service_authentication_failed_exception_of_yojson
+                   tree path)
+          | (_, "DirectoryUnavailableException") ->
+              `DirectoryUnavailableException
+                (directory_unavailable_exception_of_yojson tree path)
           | (_, "EntityNotFoundException") ->
               `EntityNotFoundException
                 (entity_not_found_exception_of_yojson tree path)
@@ -1656,6 +1821,42 @@ module GetMobileDeviceAccessOverride =
             ~output_deserializer:get_mobile_device_access_override_response_of_yojson
             ~error_deserializer
   end
+module GetPersonalAccessTokenMetadata =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : get_personal_access_token_metadata_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.get_personal_access_token_metadata_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceGetPersonalAccessTokenMetadata"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_personal_access_token_metadata_response_of_yojson
+            ~error_deserializer
+  end
 module ListAccessControlRules =
   struct
     let error_deserializer tree path =
@@ -1726,6 +1927,9 @@ module ListAvailabilityConfigurations =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
           | (_, "OrganizationNotFoundException") ->
               `OrganizationNotFoundException
                 (organization_not_found_exception_of_yojson tree path)
@@ -2076,6 +2280,43 @@ module ListOrganizations =
             ~output_deserializer:list_organizations_response_of_yojson
             ~error_deserializer
   end
+module ListPersonalAccessTokens =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "EntityNotFoundException") ->
+              `EntityNotFoundException
+                (entity_not_found_exception_of_yojson tree path)
+          | (_, "EntityStateException") ->
+              `EntityStateException
+                (entity_state_exception_of_yojson tree path)
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_personal_access_tokens_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_personal_access_tokens_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServiceListPersonalAccessTokens" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_personal_access_tokens_response_of_yojson
+            ~error_deserializer
+  end
 module ListResourceDelegates =
   struct
     let error_deserializer tree path =
@@ -2278,6 +2519,42 @@ module PutEmailMonitoringConfiguration =
             ~shape_name:"WorkMailServicePutEmailMonitoringConfiguration"
             ~service ~config:context.config ~http:context.http ~input
             ~output_deserializer:put_email_monitoring_configuration_response_of_yojson
+            ~error_deserializer
+  end
+module PutIdentityProviderConfiguration =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidParameterException") ->
+              `InvalidParameterException
+                (invalid_parameter_exception_of_yojson tree path)
+          | (_, "OrganizationNotFoundException") ->
+              `OrganizationNotFoundException
+                (organization_not_found_exception_of_yojson tree path)
+          | (_, "OrganizationStateException") ->
+              `OrganizationStateException
+                (organization_state_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : put_identity_provider_configuration_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.put_identity_provider_configuration_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"WorkMailServicePutIdentityProviderConfiguration"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:put_identity_provider_configuration_response_of_yojson
             ~error_deserializer
   end
 module PutInboundDmarcSettings =

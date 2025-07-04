@@ -1,5 +1,9 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
+let base_unit_to_yojson = unit_to_yojson
+let update_type_to_yojson (x : update_type) =
+  match x with
+  | MigrationTaskStateUpdated -> `String "MIGRATION_TASK_STATE_UPDATED"
 let update_date_time_to_yojson = timestamp_to_yojson
 let error_message_to_yojson = string_to_yojson
 let unauthorized_operation_to_yojson (x : unauthorized_operation) =
@@ -12,7 +16,6 @@ let throttling_exception_to_yojson (x : throttling_exception) =
     [("RetryAfterSeconds",
        (option_to_yojson retry_after_seconds_to_yojson x.retry_after_seconds));
     ("Message", (Some (error_message_to_yojson x.message)))]
-let base_unit_to_yojson = unit_to_yojson
 let status_to_yojson (x : status) =
   match x with
   | COMPLETED -> `String "COMPLETED"
@@ -28,6 +31,17 @@ let task_to_yojson (x : task) =
     ("StatusDetail",
       (option_to_yojson status_detail_to_yojson x.status_detail));
     ("Status", (Some (status_to_yojson x.status)))]
+let source_resource_name_to_yojson = string_to_yojson
+let source_resource_description_to_yojson = string_to_yojson
+let source_resource_to_yojson (x : source_resource) =
+  assoc_to_yojson
+    [("StatusDetail",
+       (option_to_yojson status_detail_to_yojson x.status_detail));
+    ("Description",
+      (option_to_yojson source_resource_description_to_yojson x.description));
+    ("Name", (Some (source_resource_name_to_yojson x.name)))]
+let source_resource_list_to_yojson tree =
+  list_to_yojson source_resource_to_yojson tree
 let service_unavailable_exception_to_yojson
   (x : service_unavailable_exception) =
   assoc_to_yojson
@@ -127,6 +141,15 @@ let notify_application_state_request_to_yojson
       (option_to_yojson update_date_time_to_yojson x.update_date_time));
     ("Status", (Some (application_status_to_yojson x.status)));
     ("ApplicationId", (Some (application_id_to_yojson x.application_id)))]
+let migration_task_update_to_yojson (x : migration_task_update) =
+  assoc_to_yojson
+    [("MigrationTaskState",
+       (option_to_yojson task_to_yojson x.migration_task_state));
+    ("UpdateType", (option_to_yojson update_type_to_yojson x.update_type));
+    ("UpdateDateTime",
+      (option_to_yojson update_date_time_to_yojson x.update_date_time))]
+let migration_task_update_list_to_yojson tree =
+  list_to_yojson migration_task_update_to_yojson tree
 let migration_task_summary_to_yojson (x : migration_task_summary) =
   assoc_to_yojson
     [("UpdateDateTime",
@@ -158,9 +181,27 @@ let migration_task_to_yojson (x : migration_task) =
     ("ProgressUpdateStream",
       (option_to_yojson progress_update_stream_to_yojson
          x.progress_update_stream))]
+let max_results_source_resources_to_yojson = int_to_yojson
 let max_results_resources_to_yojson = int_to_yojson
 let max_results_created_artifacts_to_yojson = int_to_yojson
 let max_results_to_yojson = int_to_yojson
+let list_source_resources_result_to_yojson (x : list_source_resources_result)
+  =
+  assoc_to_yojson
+    [("SourceResourceList",
+       (option_to_yojson source_resource_list_to_yojson
+          x.source_resource_list));
+    ("NextToken", (option_to_yojson token_to_yojson x.next_token))]
+let list_source_resources_request_to_yojson
+  (x : list_source_resources_request) =
+  assoc_to_yojson
+    [("MaxResults",
+       (option_to_yojson max_results_source_resources_to_yojson x.max_results));
+    ("NextToken", (option_to_yojson token_to_yojson x.next_token));
+    ("MigrationTaskName",
+      (Some (migration_task_name_to_yojson x.migration_task_name)));
+    ("ProgressUpdateStream",
+      (Some (progress_update_stream_to_yojson x.progress_update_stream)))]
 let list_progress_update_streams_result_to_yojson
   (x : list_progress_update_streams_result) =
   assoc_to_yojson
@@ -186,6 +227,22 @@ let list_migration_tasks_request_to_yojson (x : list_migration_tasks_request)
        (option_to_yojson resource_name_to_yojson x.resource_name));
     ("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
     ("NextToken", (option_to_yojson token_to_yojson x.next_token))]
+let list_migration_task_updates_result_to_yojson
+  (x : list_migration_task_updates_result) =
+  assoc_to_yojson
+    [("MigrationTaskUpdateList",
+       (option_to_yojson migration_task_update_list_to_yojson
+          x.migration_task_update_list));
+    ("NextToken", (option_to_yojson token_to_yojson x.next_token))]
+let list_migration_task_updates_request_to_yojson
+  (x : list_migration_task_updates_request) =
+  assoc_to_yojson
+    [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("NextToken", (option_to_yojson token_to_yojson x.next_token));
+    ("MigrationTaskName",
+      (Some (migration_task_name_to_yojson x.migration_task_name)));
+    ("ProgressUpdateStream",
+      (Some (progress_update_stream_to_yojson x.progress_update_stream)))]
 let configuration_id_to_yojson = string_to_yojson
 let discovered_resource_description_to_yojson = string_to_yojson
 let discovered_resource_to_yojson (x : discovered_resource) =
@@ -276,6 +333,17 @@ let import_migration_task_request_to_yojson
       (Some (migration_task_name_to_yojson x.migration_task_name)));
     ("ProgressUpdateStream",
       (Some (progress_update_stream_to_yojson x.progress_update_stream)))]
+let disassociate_source_resource_result_to_yojson = unit_to_yojson
+let disassociate_source_resource_request_to_yojson
+  (x : disassociate_source_resource_request) =
+  assoc_to_yojson
+    [("DryRun", (option_to_yojson dry_run_to_yojson x.dry_run));
+    ("SourceResourceName",
+      (Some (source_resource_name_to_yojson x.source_resource_name)));
+    ("MigrationTaskName",
+      (Some (migration_task_name_to_yojson x.migration_task_name)));
+    ("ProgressUpdateStream",
+      (Some (progress_update_stream_to_yojson x.progress_update_stream)))]
 let disassociate_discovered_resource_result_to_yojson = unit_to_yojson
 let disassociate_discovered_resource_request_to_yojson
   (x : disassociate_discovered_resource_request) =
@@ -335,6 +403,16 @@ let create_progress_update_stream_request_to_yojson
     [("DryRun", (option_to_yojson dry_run_to_yojson x.dry_run));
     ("ProgressUpdateStreamName",
       (Some (progress_update_stream_to_yojson x.progress_update_stream_name)))]
+let associate_source_resource_result_to_yojson = unit_to_yojson
+let associate_source_resource_request_to_yojson
+  (x : associate_source_resource_request) =
+  assoc_to_yojson
+    [("DryRun", (option_to_yojson dry_run_to_yojson x.dry_run));
+    ("SourceResource", (Some (source_resource_to_yojson x.source_resource)));
+    ("MigrationTaskName",
+      (Some (migration_task_name_to_yojson x.migration_task_name)));
+    ("ProgressUpdateStream",
+      (Some (progress_update_stream_to_yojson x.progress_update_stream)))]
 let associate_discovered_resource_result_to_yojson = unit_to_yojson
 let associate_discovered_resource_request_to_yojson
   (x : associate_discovered_resource_request) =

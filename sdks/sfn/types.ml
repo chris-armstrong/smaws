@@ -7,6 +7,7 @@ let service =
       version = "2016-11-23";
       protocol = Smaws_Lib.Service.AwsJson_1_0
     }
+type nonrec variable_references = (string * string list) list[@@ocaml.doc ""]
 type nonrec validation_exception_reason =
   | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]
   | CANNOT_UPDATE_COMPLETED_MAP_RUN [@ocaml.doc ""]
@@ -20,6 +21,7 @@ type nonrec validation_exception =
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The input does not satisfy the constraints specified by an Amazon Web Services service.\n"]
 type nonrec validate_state_machine_definition_severity =
+  | WARNING [@ocaml.doc ""]
   | ERROR [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validate_state_machine_definition_result_code =
   | FAIL [@ocaml.doc ""]
@@ -34,14 +36,17 @@ type nonrec validate_state_machine_definition_diagnostic =
   code: string [@ocaml.doc "Identifying code for the diagnostic.\n"];
   severity: validate_state_machine_definition_severity
     [@ocaml.doc
-      "A value of [ERROR] means that you cannot create or update a state machine with this definition.\n"]}
+      "A value of [ERROR] means that you cannot create or update a state machine with this definition.\n\n  [WARNING] level diagnostics alert you to potential issues, but they will not prevent you from creating or updating your state machine.\n "]}
 [@@ocaml.doc
-  "Describes an error found during validation. Validation errors found in the definition return in the response as {b diagnostic elements}, rather than raise an exception.\n"]
+  "Describes potential issues found during state machine validation. Rather than raise an exception, validation will return a list of {b diagnostic elements} containing diagnostic information. \n\n  The {{:https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinition.html}ValidateStateMachineDefinitionlAPI} might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the {b result} field value (OK, FAIL). Do {b not} rely on the exact order, count, or wording of diagnostic messages.\n  \n     {b List of warning codes} \n    \n      NO_DOLLAR  No [.$] on a field that appears to be a JSONPath or Intrinsic Function.\n                 \n                   NO_PATH  Field value looks like a path, but field name does not end with 'Path'.\n                            \n                              PASS_RESULT_IS_STATIC  Attempt to use a path in the result of a pass state.\n                                                     \n                                                         {b List of error codes} \n                                                        \n                                                          INVALID_JSON_DESCRIPTION  \nJSON syntax problem found.\n\n  MISSING_DESCRIPTION  Received a null or empty workflow input.\n                       \n                         SCHEMA_VALIDATION_FAILED  Schema validation reported errors.\n                                                   \n                                                     INVALID_RESOURCE  The value of a Task-state resource field is invalid.\n                                                                       \n                                                                         MISSING_END_STATE  \nThe workflow does not have a terminal state.\n\n  DUPLICATE_STATE_NAME  The same state name appears more than once.\n                        \n                          INVALID_STATE_NAME  The state name does not follow the naming convention.\n                                              \n                                                STATE_MACHINE_NAME_EMPTY  The state machine name has not been specified.\n                                                                          \n                                                                            STATE_MACHINE_NAME_INVALID  \nThe state machine name does not follow the naming convention.\n\n  STATE_MACHINE_NAME_TOO_LONG  The state name exceeds the allowed length.\n                               \n                                 STATE_MACHINE_NAME_ALREADY_EXISTS  The state name already exists.\n                                                                    \n                                                                      DUPLICATE_LABEL_NAME  \nA label name appears more than once.\n\n  INVALID_LABEL_NAME  You have provided an invalid label name.\n                      \n                        MISSING_TRANSITION_TARGET  The value of \"Next\" field doesn't match a known state name.\n                                                   \n                                                     TOO_DEEPLY_NESTED  The states are too deeply nested.\n                                                                        \n                                                                          "]
 type nonrec validate_state_machine_definition_output =
   {
+  truncated: bool option
+    [@ocaml.doc
+      "The result value will be [true] if the number of diagnostics found in the workflow definition exceeds [maxResults]. When all diagnostics results are returned, the value will be [false].\n"];
   diagnostics: validate_state_machine_definition_diagnostic list
     [@ocaml.doc
-      "If the result is [OK], this field will be empty. When there are errors, this field will contain an array of {b Diagnostic} objects to help you troubleshoot.\n"];
+      "An array of diagnostic errors and warnings found during validation of the state machine definition. Since {b warnings} do not prevent deploying your workflow definition, the {b result} value could be [OK] even when warning diagnostics are present in the response.\n"];
   result: validate_state_machine_definition_result_code
     [@ocaml.doc
       "The result value will be [OK] when no syntax errors are found, or [FAIL] if the workflow definition does not pass verification.\n"]}
@@ -51,6 +56,12 @@ type nonrec state_machine_type =
   | STANDARD [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validate_state_machine_definition_input =
   {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of diagnostics that are returned per call. The default and maximum value is 100. Setting the value to 0 will also use the default of 100.\n\n If the number of diagnostics returned in the response exceeds [maxResults], the value of the [truncated] field in the response will be set to [true].\n "];
+  severity: validate_state_machine_definition_severity option
+    [@ocaml.doc
+      "Minimum level of diagnostics to return. [ERROR] returns only [ERROR] diagnostics, whereas [WARNING] returns both [WARNING] and [ERROR] diagnostics. The default is [ERROR]. \n"];
   type_: state_machine_type option
     [@ocaml.doc
       "The target type of state machine for this definition. The default is [STANDARD].\n"];
@@ -103,8 +114,24 @@ type nonrec tracing_configuration =
   enabled: bool option
     [@ocaml.doc "When set to [true], X-Ray tracing is enabled.\n"]}[@@ocaml.doc
                                                                     "Selects whether or not the state machine's X-Ray tracing is enabled. Default is [false] \n"]
+type nonrec encryption_type =
+  | CUSTOMER_MANAGED_KMS_KEY [@ocaml.doc ""]
+  | AWS_OWNED_KEY [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec encryption_configuration =
+  {
+  type_: encryption_type [@ocaml.doc "Encryption type\n"];
+  kms_data_key_reuse_period_seconds: int option
+    [@ocaml.doc
+      "Maximum duration that Step Functions will reuse data keys. When the period expires, Step Functions will call [GenerateDataKey]. Only applies to customer managed keys.\n"];
+  kms_key_id: string option
+    [@ocaml.doc
+      "An alias, alias ARN, key ID, or key ARN of a symmetric encryption KMS key to encrypt data. To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN.\n"]}
+[@@ocaml.doc
+  "Settings to configure server-side encryption. \n\n  For additional control over security, you can encrypt your data using a {b customer-managed key} for Step Functions state machines and activities. You can configure a symmetric KMS key and data key reuse period when creating or updating a {b State Machine}, and when creating an {b Activity}. The execution history and state machine definition will be encrypted with the key applied to the State Machine. Activity inputs will be encrypted with the key applied to the Activity. \n \n    Step Functions automatically enables encryption at rest using Amazon Web Services owned keys at no charge. However, KMS charges apply when using a customer managed key. For more information about pricing, see {{:https://aws.amazon.com/kms/pricing/}Key Management Service pricing}.\n   \n     For more information on KMS, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/overview.html}What is Key Management Service?} \n     "]
 type nonrec update_state_machine_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   version_description: string option
     [@ocaml.doc
       "An optional description of the state machine version to publish.\n\n You can only specify the [versionDescription] parameter if you've set [publish] to [true].\n "];
@@ -177,13 +204,26 @@ type nonrec missing_required_parameter =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Request is missing a required parameter. This error occurs if both [definition] and [roleArn] are not specified.\n"]
+type nonrec kms_throttling_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Received when KMS returns [ThrottlingException] for a KMS call that Step Functions makes on behalf of the caller.\n"]
+type nonrec kms_access_denied_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Either your KMS key policy or API caller does not have the required permissions.\n"]
 type nonrec invalid_tracing_configuration =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Your [tracingConfiguration] key does not match, or [enabled] has not been set to [true] or [false].\n"]
 type nonrec invalid_logging_configuration =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc "\n"]
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Configuration is not valid.\n"]
+type nonrec invalid_encryption_configuration =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Received when [encryptionConfiguration] is specified but various conditions exist which make the configuration invalid. For example, if [type] is set to [CUSTOMER_MANAGED_KMS_KEY], but [kmsKeyId] is null, or [kmsDataKeyReusePeriodSeconds] is not between 60 and 900, or the KMS key is not symmetric or inactive.\n"]
 type nonrec invalid_definition = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The provided Amazon States Language definition is not valid.\n"]
@@ -240,6 +280,9 @@ type nonrec inspection_data_response =
                                                                     "Contains additional details about the state's execution, including its input and output data processing flow, and HTTP response information. The [inspectionLevel] request parameter specifies which details are returned.\n"]
 type nonrec inspection_data =
   {
+  variables: string option
+    [@ocaml.doc
+      "JSON string that contains the set of workflow variables after execution of the state. The set will include variables assigned in the state and variables set up as test state input.\n"];
   response: inspection_data_response option
     [@ocaml.doc
       "The raw HTTP response that is returned when you test an HTTP Task.\n"];
@@ -248,17 +291,20 @@ type nonrec inspection_data =
       "The raw HTTP request that is sent when you test an HTTP Task.\n"];
   after_result_path: string option
     [@ocaml.doc
-      "The effective result combined with the raw state input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} filter.\n"];
+      "The effective result combined with the raw state input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html}ResultPath} filter. Not populated when QueryLanguage is JSONata.\n"];
   after_result_selector: string option
     [@ocaml.doc
-      "The effective result after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} filter.\n"];
+      "The effective result after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} filter. Not populated when QueryLanguage is JSONata.\n"];
   result: string option [@ocaml.doc "The state's raw result.\n"];
   after_parameters: string option
     [@ocaml.doc
-      "The effective input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} filter.\n"];
+      "The effective input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters}Parameters} filter. Not populated when QueryLanguage is JSONata.\n"];
   after_input_path: string option
     [@ocaml.doc
-      "The input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} filter.\n"];
+      "The input after Step Functions applies the {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath}InputPath} filter. Not populated when QueryLanguage is JSONata.\n"];
+  after_arguments: string option
+    [@ocaml.doc
+      "The input after Step Functions applies an Arguments filter. This event will only be present when QueryLanguage for the state machine or individual states is set to JSONata. For more info, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/data-transform.html}Transforming data with Step Functions}.\n"];
   input: string option [@ocaml.doc "The raw state input.\n"]}[@@ocaml.doc
                                                                "Contains additional details about the state's execution, including its input and output data processing flow, and HTTP request and response information.\n"]
 type nonrec test_execution_status =
@@ -291,6 +337,9 @@ type nonrec inspection_level =
   | INFO [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec test_state_input =
   {
+  variables: string option
+    [@ocaml.doc
+      "JSON object literal that sets variables used in the state under test. Object keys are the variable names and values are the variable values.\n"];
   reveal_secrets: bool option
     [@ocaml.doc
       "Specifies whether or not to include secret information in the test result. For HTTP Tasks, a secret includes the data that an EventBridge connection adds to modify the HTTP request headers, query parameters, and body. Step Functions doesn't omit any information included in the state definition or the HTTP response.\n\n If you set [revealSecrets] to [true], you must make sure that the IAM user that calls the [TestState] API has permission for the [states:RevealSecrets] action. For an example of IAM policy that sets the [states:RevealSecrets] permission, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions}IAM permissions to test a state}. Without this permission, Step Functions throws an access denied error.\n \n  By default, [revealSecrets] is set to [false].\n  "];
@@ -300,7 +349,7 @@ type nonrec test_state_input =
   input: string option
     [@ocaml.doc
       "A string that contains the JSON input data for the state.\n"];
-  role_arn: string
+  role_arn: string option
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution role with the required IAM permissions for the state.\n"];
   definition: string
@@ -329,7 +378,7 @@ type nonrec history_event_execution_data_details =
   {
   truncated: bool option
     [@ocaml.doc
-      "Indicates whether input or output was truncated in the response. Always [false] for API calls.\n"]}
+      "Indicates whether input or output was truncated in the response. Always [false] for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.\n"]}
 [@@ocaml.doc
   "Provides details about input or output in an execution history event.\n"]
 type nonrec task_succeeded_event_details =
@@ -458,6 +507,20 @@ type nonrec stop_execution_input =
   execution_arn: string
     [@ocaml.doc "The Amazon Resource Name (ARN) of the execution to stop.\n"]}
 [@@ocaml.doc ""]
+type nonrec kms_key_state =
+  | CREATING [@ocaml.doc ""]
+  | UNAVAILABLE [@ocaml.doc ""]
+  | PENDING_IMPORT [@ocaml.doc ""]
+  | PENDING_DELETION [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec kms_invalid_state_exception =
+  {
+  message: string option [@ocaml.doc ""];
+  kms_key_state: kms_key_state option
+    [@ocaml.doc
+      "Current status of the KMS; key. For example: [DISABLED], [PENDING_DELETION], [PENDING_IMPORT], [UNAVAILABLE], [CREATING].\n"]}
+[@@ocaml.doc
+  "The KMS key is not in valid state, for example: Disabled or Deleted.\n"]
 type nonrec execution_does_not_exist =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -472,7 +535,8 @@ type nonrec state_machine_version_list_item =
 [@@ocaml.doc "Contains details about a specific state machine version.\n"]
 type nonrec state_machine_type_not_supported =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc "\n"]
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "State machine type is not supported.\n"]
 type nonrec state_machine_status =
   | DELETING [@ocaml.doc ""]
   | ACTIVE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -504,8 +568,22 @@ type nonrec state_machine_alias_list_item =
     [@ocaml.doc
       "The Amazon Resource Name (ARN) that identifies a state machine alias. The alias ARN is a combination of state machine ARN and the alias name separated by a colon (:). For example, [stateMachineARN:PROD].\n"]}
 [@@ocaml.doc "Contains details about a specific state machine alias.\n"]
+type nonrec assigned_variables = (string * string) list[@@ocaml.doc ""]
+type nonrec assigned_variables_details =
+  {
+  truncated: bool option
+    [@ocaml.doc
+      "Indicates whether assigned variables were truncated in the response. Always [false] for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.\n"]}
+[@@ocaml.doc
+  "Provides details about assigned variables in an execution history event.\n"]
 type nonrec state_exited_event_details =
   {
+  assigned_variables_details: assigned_variables_details option
+    [@ocaml.doc
+      "Provides details about input or output in an execution history event.\n"];
+  assigned_variables: assigned_variables option
+    [@ocaml.doc
+      "Map of variable name and value as a serialized JSON representation.\n"];
   output_details: history_event_execution_data_details option
     [@ocaml.doc
       "Contains details about the output of an execution history event.\n"];
@@ -575,8 +653,14 @@ type nonrec start_sync_execution_output =
     [@ocaml.doc
       "The Amazon Resource Name (ARN) that identifies the execution.\n"]}
 [@@ocaml.doc ""]
+type nonrec included_data =
+  | METADATA_ONLY [@ocaml.doc ""]
+  | ALL_DATA [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec start_sync_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   trace_header: string option
     [@ocaml.doc
       "Passes the X-Ray trace header. The trace header can also be passed in the request payload.\n"];
@@ -1053,6 +1137,7 @@ type nonrec lambda_function_failed_event_details =
 [@@ocaml.doc
   "Contains details about a Lambda function that failed during an execution.\n"]
 type nonrec history_event_type =
+  | EvaluationFailed [@ocaml.doc ""]
   | MapRunRedriven [@ocaml.doc ""]
   | ExecutionRedriven [@ocaml.doc ""]
   | MapRunSucceeded [@ocaml.doc ""]
@@ -1223,8 +1308,24 @@ type nonrec execution_redriven_event_details =
     [@ocaml.doc
       "The number of times you've redriven an execution. If you have not yet redriven an execution, the [redriveCount] is 0. This count is not updated for redrives that failed to start or are pending to be redriven.\n"]}
 [@@ocaml.doc "Contains details about a redriven execution.\n"]
+type nonrec evaluation_failed_event_details =
+  {
+  state: string
+    [@ocaml.doc
+      "The name of the state in which the evaluation error occurred.\n"];
+  location: string option
+    [@ocaml.doc
+      "The location of the field in the state in which the evaluation error occurred.\n"];
+  cause: string option
+    [@ocaml.doc "A more detailed explanation of the cause of the failure.\n"];
+  error: string option [@ocaml.doc "The error code of the failure.\n"]}
+[@@ocaml.doc
+  "Contains details about an evaluation failure that occurred while processing a state, for example, when a JSONata expression throws an error. This event will only be present in state machines that have {b  QueryLanguage} set to JSONata, or individual states set to JSONata.\n"]
 type nonrec history_event =
   {
+  evaluation_failed_event_details: evaluation_failed_event_details option
+    [@ocaml.doc
+      "Contains details about an evaluation failure that occurred while processing a state.\n"];
   map_run_redriven_event_details: map_run_redriven_event_details option
     [@ocaml.doc "Contains details about the redrive attempt of a Map Run.\n"];
   map_run_failed_event_details: map_run_failed_event_details option
@@ -1376,6 +1477,11 @@ type nonrec execution_redrive_status =
   | REDRIVABLE [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec describe_state_machine_output =
   {
+  variable_references: variable_references option
+    [@ocaml.doc
+      "A map of {b state name} to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.\n"];
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   description: string option
     [@ocaml.doc "The description of the state machine version.\n"];
   revision_id: string option
@@ -1398,7 +1504,7 @@ type nonrec describe_state_machine_output =
       "The Amazon Resource Name (ARN) of the IAM role used when creating this state machine. (The IAM role maintains security by granting Step Functions access to Amazon Web Services resources.)\n"];
   definition: string
     [@ocaml.doc
-      "The Amazon States Language definition of the state machine. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language}.\n"];
+      "The Amazon States Language definition of the state machine. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language}.\n\n If called with [includedData = METADATA_ONLY], the returned definition will be [{}].\n "];
   status: state_machine_status option
     [@ocaml.doc "The current status of the state machine.\n"];
   name: string
@@ -1410,12 +1516,20 @@ type nonrec describe_state_machine_output =
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n\n   When calling a labelled ARN for an encrypted state machine, the [includedData = METADATA_ONLY] parameter will not apply because Step Functions needs to decrypt the entire state machine definition to get the Distributed Map state\226\128\153s definition. In this case, the API caller needs to have [kms:Decrypt] permission. \n  \n   "];
   state_machine_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the state machine for which you want the information.\n\n If you specify a state machine version ARN, this API returns details about that version. The version ARN is a combination of state machine ARN and the version number separated by a colon (:). For example, [stateMachineARN:1].\n "]}
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_for_execution_output =
   {
+  variable_references: variable_references option
+    [@ocaml.doc
+      "A map of {b state name} to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.\n"];
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption. \n"];
   revision_id: string option
     [@ocaml.doc
       "The revision identifier for the state machine. The first revision ID when you create the state machine is null.\n\n Use the state machine [revisionId] parameter to compare the revision of a state machine with the configuration of the state machine used for executions without performing a diff of the properties, such as [definition] and [roleArn].\n "];
@@ -1446,6 +1560,9 @@ type nonrec describe_state_machine_for_execution_output =
 [@@ocaml.doc ""]
 type nonrec describe_state_machine_for_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call the API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   execution_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution you want state machine information for.\n"]}
@@ -1569,12 +1686,17 @@ type nonrec describe_execution_output =
 [@@ocaml.doc ""]
 type nonrec describe_execution_input =
   {
+  included_data: included_data option
+    [@ocaml.doc
+      "If your state machine definition is encrypted with a KMS key, callers must have [kms:Decrypt] permission to decrypt the definition. Alternatively, you can call DescribeStateMachine API with [includedData = METADATA_ONLY] to get a successful response without the encrypted definition.\n"];
   execution_arn: string
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the execution to describe.\n"]}
 [@@ocaml.doc ""]
 type nonrec describe_activity_output =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings for configured server-side encryption.\n"];
   creation_date: CoreTypes.Timestamp.t
     [@ocaml.doc "The date the activity is created.\n"];
   name: string
@@ -1627,6 +1749,8 @@ type nonrec create_state_machine_output =
 [@@ocaml.doc ""]
 type nonrec create_state_machine_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption.\n"];
   version_description: string option
     [@ocaml.doc
       "Sets description about the state machine version. You can only set the description if the [publish] parameter is set to [true]. Otherwise, if you set [versionDescription], but [publish] to [false], this API action throws [ValidationException].\n"];
@@ -1683,6 +1807,8 @@ type nonrec create_activity_output =
 [@@ocaml.doc ""]
 type nonrec create_activity_input =
   {
+  encryption_configuration: encryption_configuration option
+    [@ocaml.doc "Settings to configure server-side encryption.\n"];
   tags: tag list option
     [@ocaml.doc
       "The list of tags to add to a resource.\n\n An array of key-value pairs. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html}Using Cost Allocation Tags} in the {i Amazon Web Services Billing and Cost Management User Guide}, and {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html}Controlling Access Using IAM Tags}.\n \n  Tags may only contain Unicode letters, digits, white space, or these symbols: [_ . : / = + - @].\n  "];
@@ -1694,3 +1820,7 @@ type nonrec activity_limit_exceeded =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The maximum number of activities has been reached. Existing activities must be deleted before a new activity can be created.\n"]
+type nonrec activity_already_exists =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "Activity already exists. [EncryptionConfiguration] may not be updated.\n"]

@@ -74,12 +74,14 @@ val make_sentiment_filter :
       ?relative_time_range:relative_time_range ->
         ?absolute_time_range:absolute_time_range ->
           sentiments:sentiment_value list -> unit -> sentiment_filter
+val make_tag : value:string -> key:string -> unit -> tag
 val make_category_properties :
   ?input_type:input_type ->
-    ?last_update_time:CoreTypes.Timestamp.t ->
-      ?create_time:CoreTypes.Timestamp.t ->
-        ?rules:rule list ->
-          ?category_name:string -> unit -> category_properties
+    ?tags:tag list ->
+      ?last_update_time:CoreTypes.Timestamp.t ->
+        ?create_time:CoreTypes.Timestamp.t ->
+          ?rules:rule list ->
+            ?category_name:string -> unit -> category_properties
 val make_update_call_analytics_category_response :
   ?category_properties:category_properties ->
     unit -> update_call_analytics_category_response
@@ -137,7 +139,6 @@ val make_settings :
 val make_job_execution_settings :
   ?data_access_role_arn:string ->
     ?allow_deferred_execution:bool -> unit -> job_execution_settings
-val make_tag : value:string -> key:string -> unit -> tag
 val make_subtitles_output :
   ?output_start_index:int ->
     ?subtitle_file_uris:string list ->
@@ -257,13 +258,17 @@ val make_start_medical_transcription_job_request :
 val make_medical_scribe_output :
   clinical_document_uri:string ->
     transcript_file_uri:string -> unit -> medical_scribe_output
+val make_clinical_note_generation_settings :
+  ?note_template:medical_scribe_note_template ->
+    unit -> clinical_note_generation_settings
 val make_medical_scribe_settings :
-  ?vocabulary_filter_method:vocabulary_filter_method ->
-    ?vocabulary_filter_name:string ->
-      ?vocabulary_name:string ->
-        ?channel_identification:bool ->
-          ?max_speaker_labels:int ->
-            ?show_speaker_labels:bool -> unit -> medical_scribe_settings
+  ?clinical_note_generation_settings:clinical_note_generation_settings ->
+    ?vocabulary_filter_method:vocabulary_filter_method ->
+      ?vocabulary_filter_name:string ->
+        ?vocabulary_name:string ->
+          ?channel_identification:bool ->
+            ?max_speaker_labels:int ->
+              ?show_speaker_labels:bool -> unit -> medical_scribe_settings
 val make_medical_scribe_channel_definition :
   participant_role:medical_scribe_participant_role ->
     channel_id:int -> unit -> medical_scribe_channel_definition
@@ -321,37 +326,39 @@ val make_channel_definition :
   ?participant_role:participant_role ->
     ?channel_id:int -> unit -> channel_definition
 val make_call_analytics_job :
-  ?channel_definitions:channel_definition list ->
-    ?settings:call_analytics_job_settings ->
-      ?identified_language_score:float ->
-        ?data_access_role_arn:string ->
-          ?failure_reason:string ->
-            ?completion_time:CoreTypes.Timestamp.t ->
-              ?creation_time:CoreTypes.Timestamp.t ->
-                ?start_time:CoreTypes.Timestamp.t ->
-                  ?transcript:transcript ->
-                    ?media:media ->
-                      ?media_format:media_format ->
-                        ?media_sample_rate_hertz:int ->
-                          ?language_code:language_code ->
-                            ?call_analytics_job_details:call_analytics_job_details
-                              ->
-                              ?call_analytics_job_status:call_analytics_job_status
+  ?tags:tag list ->
+    ?channel_definitions:channel_definition list ->
+      ?settings:call_analytics_job_settings ->
+        ?identified_language_score:float ->
+          ?data_access_role_arn:string ->
+            ?failure_reason:string ->
+              ?completion_time:CoreTypes.Timestamp.t ->
+                ?creation_time:CoreTypes.Timestamp.t ->
+                  ?start_time:CoreTypes.Timestamp.t ->
+                    ?transcript:transcript ->
+                      ?media:media ->
+                        ?media_format:media_format ->
+                          ?media_sample_rate_hertz:int ->
+                            ?language_code:language_code ->
+                              ?call_analytics_job_details:call_analytics_job_details
                                 ->
-                                ?call_analytics_job_name:string ->
-                                  unit -> call_analytics_job
+                                ?call_analytics_job_status:call_analytics_job_status
+                                  ->
+                                  ?call_analytics_job_name:string ->
+                                    unit -> call_analytics_job
 val make_start_call_analytics_job_response :
   ?call_analytics_job:call_analytics_job ->
     unit -> start_call_analytics_job_response
 val make_start_call_analytics_job_request :
   ?channel_definitions:channel_definition list ->
-    ?settings:call_analytics_job_settings ->
-      ?data_access_role_arn:string ->
-        ?output_encryption_kms_key_id:string ->
-          ?output_location:string ->
-            media:media ->
-              call_analytics_job_name:string ->
-                unit -> start_call_analytics_job_request
+    ?tags:tag list ->
+      ?settings:call_analytics_job_settings ->
+        ?data_access_role_arn:string ->
+          ?output_encryption_kms_key_id:string ->
+            ?output_location:string ->
+              media:media ->
+                call_analytics_job_name:string ->
+                  unit -> start_call_analytics_job_request
 val make_list_vocabulary_filters_response :
   ?vocabulary_filters:vocabulary_filter_info list ->
     ?next_token:string -> unit -> list_vocabulary_filters_response
@@ -621,5 +628,7 @@ val make_create_call_analytics_category_response :
     unit -> create_call_analytics_category_response
 val make_create_call_analytics_category_request :
   ?input_type:input_type ->
-    rules:rule list ->
-      category_name:string -> unit -> create_call_analytics_category_request
+    ?tags:tag list ->
+      rules:rule list ->
+        category_name:string ->
+          unit -> create_call_analytics_category_request

@@ -68,7 +68,14 @@ let make_header_order
 let make_ja3_fingerprint
   ~fallback_behavior:(fallback_behavior_ : fallback_behavior) () =
   ({ fallback_behavior = fallback_behavior_ } : ja3_fingerprint)
-let make_field_to_match
+let make_ja4_fingerprint
+  ~fallback_behavior:(fallback_behavior_ : fallback_behavior) () =
+  ({ fallback_behavior = fallback_behavior_ } : ja4_fingerprint)
+let make_uri_fragment
+  ?fallback_behavior:(fallback_behavior_ : fallback_behavior option) () =
+  ({ fallback_behavior = fallback_behavior_ } : uri_fragment)
+let make_field_to_match ?uri_fragment:(uri_fragment_ : uri_fragment option)
+  ?ja4_fingerprint:(ja4_fingerprint_ : ja4_fingerprint option)
   ?ja3_fingerprint:(ja3_fingerprint_ : ja3_fingerprint option)
   ?header_order:(header_order_ : header_order option)
   ?cookies:(cookies_ : cookies option) ?headers:(headers_ : headers option)
@@ -81,6 +88,8 @@ let make_field_to_match
                            single_query_argument option)
   ?single_header:(single_header_ : single_header option) () =
   ({
+     uri_fragment = uri_fragment_;
+     ja4_fingerprint = ja4_fingerprint_;
      ja3_fingerprint = ja3_fingerprint_;
      header_order = header_order_;
      cookies = cookies_;
@@ -272,7 +281,16 @@ let make_rate_limit_label_namespace ~namespace:(namespace_ : string) () =
 let make_rate_limit_uri_path
   ~text_transformations:(text_transformations_ : text_transformation list) ()
   = ({ text_transformations = text_transformations_ } : rate_limit_uri_path)
-let make_rate_based_statement_custom_key
+let make_rate_limit_ja3_fingerprint
+  ~fallback_behavior:(fallback_behavior_ : fallback_behavior) () =
+  ({ fallback_behavior = fallback_behavior_ } : rate_limit_ja3_fingerprint)
+let make_rate_limit_ja4_fingerprint
+  ~fallback_behavior:(fallback_behavior_ : fallback_behavior) () =
+  ({ fallback_behavior = fallback_behavior_ } : rate_limit_ja4_fingerprint)
+let make_rate_limit_asn () = (() : unit)
+let make_rate_based_statement_custom_key ?as_n:(as_n_ : unit option)
+  ?ja4_fingerprint:(ja4_fingerprint_ : rate_limit_ja4_fingerprint option)
+  ?ja3_fingerprint:(ja3_fingerprint_ : rate_limit_ja3_fingerprint option)
   ?uri_path:(uri_path_ : rate_limit_uri_path option)
   ?label_namespace:(label_namespace_ : rate_limit_label_namespace option)
   ?i_p:(i_p_ : unit option) ?forwarded_i_p:(forwarded_i_p_ : unit option)
@@ -282,6 +300,9 @@ let make_rate_based_statement_custom_key
   ?cookie:(cookie_ : rate_limit_cookie option)
   ?header:(header_ : rate_limit_header option) () =
   ({
+     as_n = as_n_;
+     ja4_fingerprint = ja4_fingerprint_;
+     ja3_fingerprint = ja3_fingerprint_;
      uri_path = uri_path_;
      label_namespace = label_namespace_;
      i_p = i_p_;
@@ -395,7 +416,35 @@ let make_aws_managed_rules_acfp_rule_set
      registration_page_path = registration_page_path_;
      creation_path = creation_path_
    } : aws_managed_rules_acfp_rule_set)
+let make_regex ?regex_string:(regex_string_ : string option) () =
+  ({ regex_string = regex_string_ } : regex)
+let make_client_side_action
+  ?exempt_uri_regular_expressions:(exempt_uri_regular_expressions_ :
+                                    regex list option)
+  ?sensitivity:(sensitivity_ : sensitivity_to_act option)
+  ~usage_of_action:(usage_of_action_ : usage_of_action) () =
+  ({
+     exempt_uri_regular_expressions = exempt_uri_regular_expressions_;
+     sensitivity = sensitivity_;
+     usage_of_action = usage_of_action_
+   } : client_side_action)
+let make_client_side_action_config
+  ~challenge:(challenge_ : client_side_action) () =
+  ({ challenge = challenge_ } : client_side_action_config)
+let make_aws_managed_rules_anti_d_do_s_rule_set
+  ?sensitivity_to_block:(sensitivity_to_block_ : sensitivity_to_act option)
+  ~client_side_action_config:(client_side_action_config_ :
+                               client_side_action_config)
+  () =
+  ({
+     sensitivity_to_block = sensitivity_to_block_;
+     client_side_action_config = client_side_action_config_
+   } : aws_managed_rules_anti_d_do_s_rule_set)
 let make_managed_rule_group_config
+  ?aws_managed_rules_anti_d_do_s_rule_set:(aws_managed_rules_anti_d_do_s_rule_set_
+                                            :
+                                            aws_managed_rules_anti_d_do_s_rule_set
+                                              option)
   ?aws_managed_rules_acfp_rule_set:(aws_managed_rules_acfp_rule_set_ :
                                      aws_managed_rules_acfp_rule_set option)
   ?aws_managed_rules_atp_rule_set:(aws_managed_rules_atp_rule_set_ :
@@ -409,6 +458,8 @@ let make_managed_rule_group_config
   ?payload_type:(payload_type_ : payload_type option)
   ?login_path:(login_path_ : string option) () =
   ({
+     aws_managed_rules_anti_d_do_s_rule_set =
+       aws_managed_rules_anti_d_do_s_rule_set_;
      aws_managed_rules_acfp_rule_set = aws_managed_rules_acfp_rule_set_;
      aws_managed_rules_atp_rule_set = aws_managed_rules_atp_rule_set_;
      aws_managed_rules_bot_control_rule_set =
@@ -430,6 +481,11 @@ let make_regex_match_statement
      field_to_match = field_to_match_;
      regex_string = regex_string_
    } : regex_match_statement)
+let make_asn_match_statement
+  ?forwarded_ip_config:(forwarded_ip_config_ : forwarded_ip_config option)
+  ~asn_list:(asn_list_ : int list) () =
+  ({ forwarded_ip_config = forwarded_ip_config_; asn_list = asn_list_ } : 
+  asn_match_statement)
 let make_and_statement ~statements:(statements_ : statement list) () =
   ({ statements = statements_ } : and_statement)
 let make_managed_rule_group_statement
@@ -471,6 +527,7 @@ let make_rate_based_statement
      limit = limit_
    } : rate_based_statement)
 let make_statement
+  ?asn_match_statement:(asn_match_statement_ : asn_match_statement option)
   ?regex_match_statement:(regex_match_statement_ :
                            regex_match_statement option)
   ?label_match_statement:(label_match_statement_ :
@@ -497,6 +554,7 @@ let make_statement
   ?byte_match_statement:(byte_match_statement_ : byte_match_statement option)
   () =
   ({
+     asn_match_statement = asn_match_statement_;
      regex_match_statement = regex_match_statement_;
      label_match_statement = label_match_statement_;
      managed_rule_group_statement = managed_rule_group_statement_;
@@ -558,6 +616,23 @@ let make_rule ?challenge_config:(challenge_config_ : challenge_config option)
      priority = priority_;
      name = name_
    } : rule)
+let make_field_to_protect ?field_keys:(field_keys_ : string list option)
+  ~field_type:(field_type_ : field_to_protect_type) () =
+  ({ field_keys = field_keys_; field_type = field_type_ } : field_to_protect)
+let make_data_protection
+  ?exclude_rate_based_details:(exclude_rate_based_details_ : bool option)
+  ?exclude_rule_match_details:(exclude_rule_match_details_ : bool option)
+  ~action:(action_ : data_protection_action)
+  ~field:(field_ : field_to_protect) () =
+  ({
+     exclude_rate_based_details = exclude_rate_based_details_;
+     exclude_rule_match_details = exclude_rule_match_details_;
+     action = action_;
+     field = field_
+   } : data_protection)
+let make_data_protection_config
+  ~data_protections:(data_protections_ : data_protection list) () =
+  ({ data_protections = data_protections_ } : data_protection_config)
 let make_firewall_manager_statement
   ?rule_group_reference_statement:(rule_group_reference_statement_ :
                                     rule_group_reference_statement option)
@@ -593,7 +668,23 @@ let make_request_body_associated_resource_type_config
 let make_association_config
   ?request_body:(request_body_ : request_body option) () =
   ({ request_body = request_body_ } : association_config)
+let make_on_source_d_do_s_protection_config
+  ~alb_low_reputation_mode:(alb_low_reputation_mode_ : low_reputation_mode)
+  () =
+  ({ alb_low_reputation_mode = alb_low_reputation_mode_ } : on_source_d_do_s_protection_config)
+let make_application_attribute ?values:(values_ : string list option)
+  ?name:(name_ : string option) () =
+  ({ values = values_; name = name_ } : application_attribute)
+let make_application_config
+  ?attributes:(attributes_ : application_attribute list option) () =
+  ({ attributes = attributes_ } : application_config)
 let make_web_ac_l
+  ?application_config:(application_config_ : application_config option)
+  ?on_source_d_do_s_protection_config:(on_source_d_do_s_protection_config_ :
+                                        on_source_d_do_s_protection_config
+                                          option)
+  ?retrofitted_by_firewall_manager:(retrofitted_by_firewall_manager_ :
+                                     bool option)
   ?association_config:(association_config_ : association_config option)
   ?token_domains:(token_domains_ : string list option)
   ?challenge_config:(challenge_config_ : challenge_config option)
@@ -610,12 +701,18 @@ let make_web_ac_l
                                               :
                                               firewall_manager_rule_group
                                                 list option)
-  ?capacity:(capacity_ : int option) ?rules:(rules_ : rule list option)
+  ?capacity:(capacity_ : int option)
+  ?data_protection_config:(data_protection_config_ :
+                            data_protection_config option)
+  ?rules:(rules_ : rule list option)
   ?description:(description_ : string option)
   ~visibility_config:(visibility_config_ : visibility_config)
   ~default_action:(default_action_ : default_action) ~ar_n:(ar_n_ : string)
   ~id:(id_ : string) ~name:(name_ : string) () =
   ({
+     application_config = application_config_;
+     on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
+     retrofitted_by_firewall_manager = retrofitted_by_firewall_manager_;
      association_config = association_config_;
      token_domains = token_domains_;
      challenge_config = challenge_config_;
@@ -628,6 +725,7 @@ let make_web_ac_l
      pre_process_firewall_manager_rule_groups =
        pre_process_firewall_manager_rule_groups_;
      capacity = capacity_;
+     data_protection_config = data_protection_config_;
      visibility_config = visibility_config_;
      rules = rules_;
      description = description_;
@@ -648,12 +746,17 @@ let make_update_web_acl_response
   ?next_lock_token:(next_lock_token_ : string option) () =
   ({ next_lock_token = next_lock_token_ } : update_web_acl_response)
 let make_update_web_acl_request
+  ?on_source_d_do_s_protection_config:(on_source_d_do_s_protection_config_ :
+                                        on_source_d_do_s_protection_config
+                                          option)
   ?association_config:(association_config_ : association_config option)
   ?token_domains:(token_domains_ : string list option)
   ?challenge_config:(challenge_config_ : challenge_config option)
   ?captcha_config:(captcha_config_ : captcha_config option)
   ?custom_response_bodies:(custom_response_bodies_ :
                             custom_response_bodies option)
+  ?data_protection_config:(data_protection_config_ :
+                            data_protection_config option)
   ?rules:(rules_ : rule list option)
   ?description:(description_ : string option)
   ~lock_token:(lock_token_ : string)
@@ -661,12 +764,14 @@ let make_update_web_acl_request
   ~default_action:(default_action_ : default_action) ~id:(id_ : string)
   ~scope:(scope_ : scope) ~name:(name_ : string) () =
   ({
+     on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
      association_config = association_config_;
      token_domains = token_domains_;
      challenge_config = challenge_config_;
      captcha_config = captcha_config_;
      custom_response_bodies = custom_response_bodies_;
      lock_token = lock_token_;
+     data_protection_config = data_protection_config_;
      visibility_config = visibility_config_;
      rules = rules_;
      description = description_;
@@ -699,8 +804,6 @@ let make_update_rule_group_request
 let make_update_regex_pattern_set_response
   ?next_lock_token:(next_lock_token_ : string option) () =
   ({ next_lock_token = next_lock_token_ } : update_regex_pattern_set_response)
-let make_regex ?regex_string:(regex_string_ : string option) () =
-  ({ regex_string = regex_string_ } : regex)
 let make_update_regex_pattern_set_request
   ?description:(description_ : string option)
   ~lock_token:(lock_token_ : string)
@@ -1233,9 +1336,10 @@ let make_get_web_acl_response
      lock_token = lock_token_;
      web_ac_l = web_ac_l_
    } : get_web_acl_response)
-let make_get_web_acl_request ~id:(id_ : string) ~scope:(scope_ : scope)
-  ~name:(name_ : string) () =
-  ({ id = id_; scope = scope_; name = name_ } : get_web_acl_request)
+let make_get_web_acl_request ?ar_n:(ar_n_ : string option)
+  ?id:(id_ : string option) ?scope:(scope_ : scope option)
+  ?name:(name_ : string option) () =
+  ({ ar_n = ar_n_; id = id_; scope = scope_; name = name_ } : get_web_acl_request)
 let make_get_web_acl_for_resource_response
   ?web_ac_l:(web_ac_l_ : web_ac_l option) () =
   ({ web_ac_l = web_ac_l_ } : get_web_acl_for_resource_response)
@@ -1445,24 +1549,34 @@ let make_delete_api_key_request ~api_key:(api_key_ : string)
 let make_create_web_acl_response ?summary:(summary_ : web_acl_summary option)
   () = ({ summary = summary_ } : create_web_acl_response)
 let make_create_web_acl_request
+  ?application_config:(application_config_ : application_config option)
+  ?on_source_d_do_s_protection_config:(on_source_d_do_s_protection_config_ :
+                                        on_source_d_do_s_protection_config
+                                          option)
   ?association_config:(association_config_ : association_config option)
   ?token_domains:(token_domains_ : string list option)
   ?challenge_config:(challenge_config_ : challenge_config option)
   ?captcha_config:(captcha_config_ : captcha_config option)
   ?custom_response_bodies:(custom_response_bodies_ :
                             custom_response_bodies option)
-  ?tags:(tags_ : tag list option) ?rules:(rules_ : rule list option)
+  ?tags:(tags_ : tag list option)
+  ?data_protection_config:(data_protection_config_ :
+                            data_protection_config option)
+  ?rules:(rules_ : rule list option)
   ?description:(description_ : string option)
   ~visibility_config:(visibility_config_ : visibility_config)
   ~default_action:(default_action_ : default_action) ~scope:(scope_ : scope)
   ~name:(name_ : string) () =
   ({
+     application_config = application_config_;
+     on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
      association_config = association_config_;
      token_domains = token_domains_;
      challenge_config = challenge_config_;
      captcha_config = captcha_config_;
      custom_response_bodies = custom_response_bodies_;
      tags = tags_;
+     data_protection_config = data_protection_config_;
      visibility_config = visibility_config_;
      rules = rules_;
      description = description_;

@@ -75,6 +75,15 @@ let parseStaticContextParams value =
   in
   Result.map x ~f:(fun x -> Trait.RulesStaticContextParams x)
 
+let parseOperationContextParams value =
+  let x =
+    value
+    |> parseRecord (fun name ocf ->
+           ocf |> parseObject |> field "path" |> parseString
+           |> Result.map ~f:(fun path -> (name, ({ path } : Trait.operationContextParam))))
+  in
+  Result.map x ~f:(fun x -> Trait.RulesOperationContextParams x)
+
 let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
   let open Result in
   let traitValue =
@@ -200,6 +209,7 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
         value |> parseObject |> field "name" |> parseString
         |> map ~f:(fun contextParam -> Trait.RulesContextParam contextParam)
     | "smithy.rules#staticContextParams" -> value |> parseStaticContextParams
+    | "smithy.rules#operationContextParams" -> value |> parseOperationContextParams
     | "smithy.api#default" -> Ok Trait.DefaultTrait
     | "smithy.api#enumValue" ->
         value |> parseString |> map ~f:(fun enumValue -> Trait.EnumValueTrait enumValue)

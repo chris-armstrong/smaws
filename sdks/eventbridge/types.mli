@@ -6,7 +6,7 @@ type nonrec dead_letter_config =
     [@ocaml.doc
       "The ARN of the SQS queue specified as the target for the dead-letter queue.\n"]}
 [@@ocaml.doc
-  "Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).\n\n For more information, see {{:eventbridge/latest/userguide/eb-rule-dlq.html}Event retry policy and using dead-letter queues} in the {i EventBridge User Guide}.\n "]
+  "Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq}Using dead-letter queues to process undelivered events} in the {i EventBridge User Guide}.\n "]
 type nonrec update_event_bus_response =
   {
   dead_letter_config: dead_letter_config option [@ocaml.doc ""];
@@ -24,7 +24,7 @@ type nonrec update_event_bus_request =
   description: string option [@ocaml.doc "The event bus description.\n"];
   kms_key_identifier: string option
     [@ocaml.doc
-      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html}Managing keys} in the {i Key Management Service Developer Guide}. \n  \n    Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:\n    \n     {ul\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html}CreateArchive} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} \n               ]}\n                to set a customer managed key on an event bus with an archives or schema discovery enabled.\n               \n                }\n           }\n   To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n   \n    "];
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  \n    Schema discovery is not supported for event buses encrypted using a customer managed key. EventBridge returns an error if: \n    \n     {ul\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} \n               ]}\n                to set a customer managed key on an event bus with schema discovery enabled.\n               \n                }\n           }\n   To enable schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html}Encrypting events} in the {i Amazon EventBridge User Guide}.\n   \n      If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. \n      \n       For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n       \n        "];
   name: string option [@ocaml.doc "The name of the event bus.\n"]}[@@ocaml.doc
                                                                     ""]
 type nonrec resource_not_found_exception =
@@ -129,6 +129,8 @@ type nonrec update_endpoint_request =
   name: string [@ocaml.doc "The name of the endpoint you want to update.\n"]}
 [@@ocaml.doc ""]
 type nonrec connection_state =
+  | FAILED_CONNECTIVITY [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
   | DEAUTHORIZING [@ocaml.doc ""]
   | AUTHORIZING [@ocaml.doc ""]
   | DEAUTHORIZED [@ocaml.doc ""]
@@ -163,7 +165,7 @@ type nonrec update_connection_basic_auth_request_parameters =
       "The password associated with the user name to use for Basic authorization.\n"];
   username: string option
     [@ocaml.doc "The user name to use for Basic authorization.\n"]}[@@ocaml.doc
-                                                                    "Contains the Basic authorization parameters for the connection.\n"]
+                                                                    "The Basic authorization parameters for the connection.\n"]
 type nonrec update_connection_o_auth_client_request_parameters =
   {
   client_secret: string option
@@ -171,7 +173,7 @@ type nonrec update_connection_o_auth_client_request_parameters =
       "The client secret assciated with the client ID to use for OAuth authorization.\n"];
   client_i_d: string option
     [@ocaml.doc "The client ID to use for OAuth authorization.\n"]}[@@ocaml.doc
-                                                                    "Contains the OAuth authorization parameters to use for the connection.\n"]
+                                                                    "The OAuth authorization parameters to use for the connection.\n"]
 type nonrec connection_o_auth_http_method =
   | PUT [@ocaml.doc ""]
   | POST [@ocaml.doc ""]
@@ -179,7 +181,7 @@ type nonrec connection_o_auth_http_method =
 type nonrec connection_header_parameter =
   {
   is_value_secret: bool option
-    [@ocaml.doc "Specified whether the value is a secret.\n"];
+    [@ocaml.doc "Specifies whether the value is a secret.\n"];
   value: string option [@ocaml.doc "The value associated with the key.\n"];
   key: string option [@ocaml.doc "The key for the parameter.\n"]}[@@ocaml.doc
                                                                    "Additional parameter included in the header. You can include up to 100 additional header parameters per request. An event payload cannot exceed 64 KB.\n"]
@@ -192,11 +194,11 @@ type nonrec connection_query_string_parameter =
       "The value associated with the key for the query string parameter.\n"];
   key: string option [@ocaml.doc "The key for a query string parameter.\n"]}
 [@@ocaml.doc
-  "Additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.\n"]
+  "Any additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.\n"]
 type nonrec connection_body_parameter =
   {
   is_value_secret: bool option
-    [@ocaml.doc "Specified whether the value is secret.\n"];
+    [@ocaml.doc "Specifies whether the value is secret.\n"];
   value: string option [@ocaml.doc "The value associated with the key.\n"];
   key: string option [@ocaml.doc "The key for the parameter.\n"]}[@@ocaml.doc
                                                                    "Additional parameter included in the body. You can include up to 100 additional body parameters per request. An event payload cannot exceed 64 KB.\n"]
@@ -204,14 +206,13 @@ type nonrec connection_http_parameters =
   {
   body_parameters: connection_body_parameter list option
     [@ocaml.doc
-      "Contains additional body string parameters for the connection.\n"];
+      "Any additional body string parameters for the connection.\n"];
   query_string_parameters: connection_query_string_parameter list option
     [@ocaml.doc
-      "Contains additional query string parameters for the connection.\n"];
+      "Any additional query string parameters for the connection.\n"];
   header_parameters: connection_header_parameter list option
-    [@ocaml.doc
-      "Contains additional header parameters for the connection.\n"]}
-[@@ocaml.doc "Contains additional parameters for the connection.\n"]
+    [@ocaml.doc "Any additional header parameters for the connection.\n"]}
+[@@ocaml.doc "Any additional parameters for the connection.\n"]
 type nonrec update_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option
@@ -225,38 +226,56 @@ type nonrec update_connection_o_auth_request_parameters =
   client_parameters:
     update_connection_o_auth_client_request_parameters option
     [@ocaml.doc
-      "A [UpdateConnectionOAuthClientRequestParameters] object that contains the client parameters to use for the connection when OAuth is specified as the authorization type.\n"]}
-[@@ocaml.doc
-  "Contains the OAuth request parameters to use for the connection.\n"]
+      "The client parameters to use for the connection when OAuth is specified as the authorization type.\n"]}
+[@@ocaml.doc "The OAuth request parameters to use for the connection.\n"]
 type nonrec update_connection_api_key_auth_request_parameters =
   {
   api_key_value: string option
     [@ocaml.doc
-      "The value associated with teh API key to use for authorization.\n"];
+      "The value associated with the API key to use for authorization.\n"];
   api_key_name: string option
     [@ocaml.doc "The name of the API key to use for authorization.\n"]}
 [@@ocaml.doc
   "Contains the API key authorization parameters to use to update the connection.\n"]
+type nonrec connectivity_resource_configuration_arn =
+  {
+  resource_configuration_arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Amazon VPC Lattice resource configuration for the resource endpoint.\n"]}
+[@@ocaml.doc
+  "The Amazon Resource Name (ARN) of the Amazon VPC Lattice resource configuration for the resource endpoint.\n"]
+type nonrec connectivity_resource_parameters =
+  {
+  resource_parameters: connectivity_resource_configuration_arn
+    [@ocaml.doc
+      "The parameters for EventBridge to use when invoking the resource endpoint.\n"]}
+[@@ocaml.doc
+  "The parameters for EventBridge to use when invoking the resource endpoint.\n"]
 type nonrec update_connection_auth_request_parameters =
   {
-  invocation_http_parameters: connection_http_parameters option
+  connectivity_parameters: connectivity_resource_parameters option
     [@ocaml.doc
-      "A [ConnectionHttpParameters] object that contains the additional parameters to use for the connection.\n"];
+      "If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n "];
+  invocation_http_parameters: connection_http_parameters option
+    [@ocaml.doc "The additional parameters to use for the connection.\n"];
   api_key_auth_parameters:
     update_connection_api_key_auth_request_parameters option
-    [@ocaml.doc
-      "A [UpdateConnectionApiKeyAuthRequestParameters] object that contains the authorization parameters for API key authorization.\n"];
+    [@ocaml.doc "The authorization parameters for API key authorization.\n"];
   o_auth_parameters: update_connection_o_auth_request_parameters option
-    [@ocaml.doc
-      "A [UpdateConnectionOAuthRequestParameters] object that contains the authorization parameters for OAuth authorization.\n"];
+    [@ocaml.doc "The authorization parameters for OAuth authorization.\n"];
   basic_auth_parameters:
     update_connection_basic_auth_request_parameters option
-    [@ocaml.doc
-      "A [UpdateConnectionBasicAuthRequestParameters] object that contains the authorization parameters for Basic authorization.\n"]}
+    [@ocaml.doc "The authorization parameters for Basic authorization.\n"]}
 [@@ocaml.doc
   "Contains the additional parameters to use for the connection.\n"]
 type nonrec update_connection_request =
   {
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this connection. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the connection.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  "];
+  invocation_connectivity_parameters: connectivity_resource_parameters option
+    [@ocaml.doc
+      "For connections to private APIs, the parameters to use for invoking the API.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n "];
   auth_parameters: update_connection_auth_request_parameters option
     [@ocaml.doc "The authorization parameters to use for the connection.\n"];
   authorization_type: connection_authorization_type option
@@ -265,10 +284,17 @@ type nonrec update_connection_request =
     [@ocaml.doc "A description for the connection.\n"];
   name: string [@ocaml.doc "The name of the connection to update.\n"]}
 [@@ocaml.doc ""]
+type nonrec throttling_exception = {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "This request cannot be completed due to throttling issues.\n"]
 type nonrec limit_exceeded_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The request failed because it attempted to create resource beyond the allowed service quota.\n"]
+type nonrec access_denied_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "You do not have the necessary permissions for this action.\n"]
 type nonrec archive_state =
   | UPDATE_FAILED [@ocaml.doc ""]
   | CREATE_FAILED [@ocaml.doc ""]
@@ -287,6 +313,9 @@ type nonrec update_archive_response =
 [@@ocaml.doc ""]
 type nonrec update_archive_request =
   {
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this archive. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the archive.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  \n    If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. \n    \n     For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n     \n      "];
   retention_days: int option
     [@ocaml.doc "The number of days to retain events in the archive.\n"];
   event_pattern: string option
@@ -598,19 +627,19 @@ type nonrec sage_maker_pipeline_parameter =
   {
   value: string
     [@ocaml.doc
-      "Value of parameter to start execution of a SageMaker Model Building Pipeline.\n"];
+      "Value of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"];
   name: string
     [@ocaml.doc
-      "Name of parameter to start execution of a SageMaker Model Building Pipeline.\n"]}
+      "Name of parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]}
 [@@ocaml.doc
-  "Name/Value pair of a parameter to start execution of a SageMaker Model Building Pipeline.\n"]
+  "Name/Value pair of a parameter to start execution of a SageMaker AI Model Building Pipeline.\n"]
 type nonrec sage_maker_pipeline_parameters =
   {
   pipeline_parameter_list: sage_maker_pipeline_parameter list option
     [@ocaml.doc
-      "List of Parameter names and values for SageMaker Model Building Pipeline execution.\n"]}
+      "List of Parameter names and values for SageMaker AI Model Building Pipeline execution.\n"]}
 [@@ocaml.doc
-  "These are custom parameters to use when the target is a SageMaker Model Building Pipeline that starts based on EventBridge events.\n"]
+  "These are custom parameters to use when the target is a SageMaker AI Model Building Pipeline that starts based on EventBridge events.\n"]
 type nonrec retry_policy =
   {
   maximum_event_age_in_seconds: int option
@@ -635,13 +664,13 @@ type nonrec target =
       "Contains the GraphQL operation to be parsed and executed, if the event target is an AppSync API.\n"];
   retry_policy: retry_policy option
     [@ocaml.doc
-      "The [RetryPolicy] object that contains the retry policy configuration to use for the dead-letter queue.\n"];
+      "The retry policy configuration to use for the dead-letter queue.\n"];
   dead_letter_config: dead_letter_config option
     [@ocaml.doc
       "The [DeadLetterConfig] that defines the target queue to send dead-letter queue events to.\n"];
   sage_maker_pipeline_parameters: sage_maker_pipeline_parameters option
     [@ocaml.doc
-      "Contains the SageMaker Model Building Pipeline parameters to start execution of a SageMaker Model Building Pipeline.\n\n If you specify a SageMaker Model Building Pipeline as a target, you can use this to specify parameters to start a pipeline execution based on EventBridge events.\n "];
+      "Contains the SageMaker AI Model Building Pipeline parameters to start execution of a SageMaker AI Model Building Pipeline.\n\n If you specify a SageMaker AI Model Building Pipeline as a target, you can use this to specify parameters to start a pipeline execution based on EventBridge events.\n "];
   redshift_data_parameters: redshift_data_parameters option
     [@ocaml.doc
       "Contains the Amazon Redshift Data API parameters to use when the target is a Amazon Redshift cluster.\n\n If you specify a Amazon Redshift Cluster as a Target, you can use this to specify parameters to invoke the Amazon Redshift Data API ExecuteStatement based on EventBridge events.\n "];
@@ -1036,7 +1065,7 @@ type nonrec list_targets_by_rule_response =
   {
   next_token: string option
     [@ocaml.doc
-      "Indicates whether there are additional results to retrieve. If there are no more results, the value is null.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   targets: target list option
     [@ocaml.doc "The targets assigned to the rule.\n"]}[@@ocaml.doc ""]
 type nonrec list_targets_by_rule_request =
@@ -1044,7 +1073,7 @@ type nonrec list_targets_by_rule_request =
   limit: int option [@ocaml.doc "The maximum number of results to return.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_bus_name: string option
     [@ocaml.doc
       "The name or ARN of the event bus associated with the rule. If you omit this, the default event bus is used.\n"];
@@ -1065,7 +1094,7 @@ type nonrec list_rules_response =
   {
   next_token: string option
     [@ocaml.doc
-      "Indicates whether there are additional results to retrieve. If there are no more results, the value is null.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   rules: rule list option
     [@ocaml.doc "The rules that match the specified criteria.\n"]}[@@ocaml.doc
                                                                     ""]
@@ -1074,7 +1103,7 @@ type nonrec list_rules_request =
   limit: int option [@ocaml.doc "The maximum number of results to return.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_bus_name: string option
     [@ocaml.doc
       "The name or ARN of the event bus to list the rules for. If you omit this, the default event bus is used.\n"];
@@ -1084,7 +1113,7 @@ type nonrec list_rule_names_by_target_response =
   {
   next_token: string option
     [@ocaml.doc
-      "Indicates whether there are additional results to retrieve. If there are no more results, the value is null.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   rule_names: string list option
     [@ocaml.doc "The names of the rules that can invoke the given target.\n"]}
 [@@ocaml.doc ""]
@@ -1093,7 +1122,7 @@ type nonrec list_rule_names_by_target_request =
   limit: int option [@ocaml.doc "The maximum number of results to return.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_bus_name: string option
     [@ocaml.doc
       "The name or ARN of the event bus to list rules for. If you omit this, the default event bus is used.\n"];
@@ -1104,7 +1133,7 @@ type nonrec list_replays_response =
   {
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   replays: replay list option
     [@ocaml.doc
       "An array of [Replay] objects that contain information about the replay.\n"]}
@@ -1115,7 +1144,7 @@ type nonrec list_replays_request =
     [@ocaml.doc "The maximum number of replays to retrieve.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_source_arn: string option
     [@ocaml.doc
       "The ARN of the archive from which the events are replayed.\n"];
@@ -1128,7 +1157,7 @@ type nonrec list_partner_event_sources_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent operation to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   partner_event_sources: partner_event_source list option
     [@ocaml.doc
       "The list of partner event sources returned by the operation.\n"]}
@@ -1140,7 +1169,7 @@ type nonrec list_partner_event_sources_request =
       "pecifying this limits the number of results returned by this operation. The operation also returns a NextToken which you can use in a subsequent operation to retrieve the next set of results.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to this operation. Specifying this retrieves the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   name_prefix: string
     [@ocaml.doc
       "If you specify this, the results are limited to only those partner event sources that start with the string you specify.\n"]}
@@ -1149,7 +1178,7 @@ type nonrec list_partner_event_source_accounts_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent operation to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   partner_event_source_accounts: partner_event_source_account list option
     [@ocaml.doc
       "The list of partner event sources returned by the operation.\n"]}
@@ -1161,7 +1190,7 @@ type nonrec list_partner_event_source_accounts_request =
       "Specifying this limits the number of results returned by this operation. The operation also returns a NextToken which you can use in a subsequent operation to retrieve the next set of results.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to this operation. Specifying this retrieves the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_source_name: string
     [@ocaml.doc
       "The name of the partner event source to display account information about.\n"]}
@@ -1185,7 +1214,7 @@ type nonrec list_event_sources_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent operation to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_sources: event_source list option
     [@ocaml.doc "The list of event sources.\n"]}[@@ocaml.doc ""]
 type nonrec list_event_sources_request =
@@ -1195,7 +1224,7 @@ type nonrec list_event_sources_request =
       "Specifying this limits the number of results returned by this operation. The operation also returns a NextToken which you can use in a subsequent operation to retrieve the next set of results.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   name_prefix: string option
     [@ocaml.doc
       "Specifying this limits the results to only those partner event sources with names that start with the specified prefix.\n"]}
@@ -1217,7 +1246,7 @@ type nonrec list_event_buses_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent operation to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   event_buses: event_bus list option
     [@ocaml.doc "This list of event buses.\n"]}[@@ocaml.doc ""]
 type nonrec list_event_buses_request =
@@ -1227,7 +1256,7 @@ type nonrec list_event_buses_request =
       "Specifying this limits the number of results returned by this operation. The operation also returns a NextToken which you can use in a subsequent operation to retrieve the next set of results.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   name_prefix: string option
     [@ocaml.doc
       "Specifying this limits the results to only those event buses with names that start with the specified prefix.\n"]}
@@ -1264,7 +1293,7 @@ type nonrec list_endpoints_response =
   {
   next_token: string option
     [@ocaml.doc
-      "If [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   endpoints: endpoint list option
     [@ocaml.doc "The endpoints returned by the call.\n"]}[@@ocaml.doc ""]
 type nonrec list_endpoints_request =
@@ -1273,7 +1302,7 @@ type nonrec list_endpoints_request =
     [@ocaml.doc "The maximum number of results returned by the call.\n"];
   next_token: string option
     [@ocaml.doc
-      "If [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   home_region: string option
     [@ocaml.doc
       "The primary Region of the endpoints associated with this account. For example [\"HomeRegion\": \"us-east-1\"].\n"];
@@ -1307,7 +1336,7 @@ type nonrec list_connections_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent request to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   connections: connection list option
     [@ocaml.doc
       "An array of connections objects that include details about the connections.\n"]}
@@ -1318,7 +1347,7 @@ type nonrec list_connections_request =
     [@ocaml.doc "The maximum number of connections to return.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   connection_state: connection_state option
     [@ocaml.doc "The state of the connection.\n"];
   name_prefix: string option
@@ -1350,7 +1379,7 @@ type nonrec list_archives_response =
   {
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   archives: archive list option
     [@ocaml.doc
       "An array of [Archive] objects that include details about an archive.\n"]}
@@ -1360,7 +1389,7 @@ type nonrec list_archives_request =
   limit: int option [@ocaml.doc "The maximum number of results to return.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   state: archive_state option [@ocaml.doc "The state of the archive.\n"];
   event_source_arn: string option
     [@ocaml.doc "The ARN of the event source associated with the archive.\n"];
@@ -1396,10 +1425,10 @@ type nonrec list_api_destinations_response =
   {
   next_token: string option
     [@ocaml.doc
-      "A token you can use in a subsequent request to retrieve the next set of results.\n"];
+      "A token indicating there are more results available. If there are no more results, no token is included in the response.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   api_destinations: api_destination list option
     [@ocaml.doc
-      "An array of [ApiDestination] objects that include information about an API destination.\n"]}
+      "An array that includes information about each API destination.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_api_destinations_request =
   {
@@ -1408,7 +1437,7 @@ type nonrec list_api_destinations_request =
       "The maximum number of API destinations to include in the response.\n"];
   next_token: string option
     [@ocaml.doc
-      "The token returned by a previous call to retrieve the next set of results.\n"];
+      "The token returned by a previous call, which you can use to retrieve the next set of results.\n\n The value of [nextToken] is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.\n \n   Using an expired pagination token results in an [HTTP 400 InvalidToken] error.\n  "];
   connection_arn: string option
     [@ocaml.doc
       "The ARN of the connection specified for the API destination.\n"];
@@ -1604,18 +1633,35 @@ type nonrec describe_endpoint_request =
     [@ocaml.doc
       "The name of the endpoint you want to get information about. For example, [\"Name\":\"us-east-2-custom_bus_A-endpoint\"].\n"]}
 [@@ocaml.doc ""]
+type nonrec describe_connection_resource_parameters =
+  {
+  resource_association_arn: string
+    [@ocaml.doc
+      "For connections to private APIs, the Amazon Resource Name (ARN) of the resource association EventBridge created between the connection and the private API's resource configuration.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html#connection-private-snra} Managing service network resource associations for connections} in the {i  {i Amazon EventBridge User Guide} }.\n "];
+  resource_configuration_arn: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the resource configuration for the private API.\n"]}
+[@@ocaml.doc
+  "The parameters for EventBridge to use when invoking the resource endpoint.\n"]
+type nonrec describe_connection_connectivity_parameters =
+  {
+  resource_parameters: describe_connection_resource_parameters
+    [@ocaml.doc
+      "The parameters for EventBridge to use when invoking the resource endpoint.\n"]}
+[@@ocaml.doc
+  "If the connection uses a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n "]
 type nonrec connection_basic_auth_response_parameters =
   {
   username: string option
     [@ocaml.doc "The user name to use for Basic authorization.\n"]}[@@ocaml.doc
-                                                                    "Contains the authorization parameters for the connection if Basic is specified as the authorization type.\n"]
+                                                                    "The authorization parameters for the connection if Basic is specified as the authorization type.\n"]
 type nonrec connection_o_auth_client_response_parameters =
   {
   client_i_d: string option
     [@ocaml.doc
       "The client ID associated with the response to the connection request.\n"]}
 [@@ocaml.doc
-  "Contains the client response parameters for the connection when OAuth is specified as the authorization type.\n"]
+  "The client response parameters for the connection when OAuth is specified as the authorization type.\n"]
 type nonrec connection_o_auth_response_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option
@@ -1628,9 +1674,9 @@ type nonrec connection_o_auth_response_parameters =
       "The URL to the HTTP endpoint that authorized the request.\n"];
   client_parameters: connection_o_auth_client_response_parameters option
     [@ocaml.doc
-      "A [ConnectionOAuthClientResponseParameters] object that contains details about the client parameters returned when OAuth is specified as the authorization type.\n"]}
+      "Details about the client parameters returned when OAuth is specified as the authorization type.\n"]}
 [@@ocaml.doc
-  "Contains the response parameters when OAuth is specified as the authorization type.\n"]
+  "The response parameters when OAuth is specified as the authorization type.\n"]
 type nonrec connection_api_key_auth_response_parameters =
   {
   api_key_name: string option
@@ -1640,6 +1686,9 @@ type nonrec connection_api_key_auth_response_parameters =
   "Contains the authorization parameters for the connection if API Key is specified as the authorization type.\n"]
 type nonrec connection_auth_response_parameters =
   {
+  connectivity_parameters: describe_connection_connectivity_parameters option
+    [@ocaml.doc
+      "For private OAuth authentication endpoints. The parameters EventBridge uses to authenticate against the endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n "];
   invocation_http_parameters: connection_http_parameters option
     [@ocaml.doc
       "Additional parameters for the connection that are passed through with every invocation to the HTTP endpoint.\n"];
@@ -1649,8 +1698,7 @@ type nonrec connection_auth_response_parameters =
     [@ocaml.doc "The OAuth parameters to use for authorization.\n"];
   basic_auth_parameters: connection_basic_auth_response_parameters option
     [@ocaml.doc "The authorization parameters for Basic authorization.\n"]}
-[@@ocaml.doc
-  "Contains the authorization parameters to use for the connection.\n"]
+[@@ocaml.doc "Tthe authorization parameters to use for the connection.\n"]
 type nonrec describe_connection_response =
   {
   last_authorized_time: CoreTypes.Timestamp.t option
@@ -1665,6 +1713,9 @@ type nonrec describe_connection_response =
   auth_parameters: connection_auth_response_parameters option
     [@ocaml.doc
       "The parameters to use for authorization for the connection.\n"];
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use to encrypt the connection, if one has been specified.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-connections.html}Encrypting connections} in the {i Amazon EventBridge User Guide}.\n "];
   secret_arn: string option
     [@ocaml.doc
       "The ARN of the secret created from the authorization parameters specified for the connection.\n"];
@@ -1675,6 +1726,10 @@ type nonrec describe_connection_response =
       "The reason that the connection is in the current connection state.\n"];
   connection_state: connection_state option
     [@ocaml.doc "The state of the connection retrieved.\n"];
+  invocation_connectivity_parameters:
+    describe_connection_connectivity_parameters option
+    [@ocaml.doc
+      "For connections to private APIs The parameters EventBridge uses to invoke the resource endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n "];
   description: string option
     [@ocaml.doc "The description for the connection retrieved.\n"];
   name: string option [@ocaml.doc "The name of the connection retrieved.\n"];
@@ -1693,6 +1748,9 @@ type nonrec describe_archive_response =
   size_bytes: int option [@ocaml.doc "The size of the archive in bytes.\n"];
   retention_days: int option
     [@ocaml.doc "The number of days to retain events for in the archive.\n"];
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use to encrypt this archive, if one has been specified.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n "];
   state_reason: string option
     [@ocaml.doc "The reason that the archive is in the state.\n"];
   state: archive_state option [@ocaml.doc "The state of the archive.\n"];
@@ -1850,7 +1908,7 @@ type nonrec create_event_bus_request =
   dead_letter_config: dead_letter_config option [@ocaml.doc ""];
   kms_key_identifier: string option
     [@ocaml.doc
-      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html}Managing keys} in the {i Key Management Service Developer Guide}. \n  \n    Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:\n    \n     {ul\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html}CreateArchive} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} \n               ]}\n                to set a customer managed key on an event bus with an archives or schema discovery enabled.\n               \n                }\n           }\n   To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n   \n    "];
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  \n    Schema discovery is not supported for event buses encrypted using a customer managed key. EventBridge returns an error if: \n    \n     {ul\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} \n               ]}\n                on an event bus set to use a customer managed key for encryption.\n               \n                }\n           {-  You call \n               {[\n                {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} \n               ]}\n                to set a customer managed key on an event bus with schema discovery enabled.\n               \n                }\n           }\n   To enable schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html}Encrypting events} in the {i Amazon EventBridge User Guide}.\n   \n      If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. \n      \n       For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n       \n        "];
   description: string option [@ocaml.doc "The event bus description.\n"];
   event_source_name: string option
     [@ocaml.doc
@@ -1932,52 +1990,59 @@ type nonrec create_connection_o_auth_client_request_parameters =
     [@ocaml.doc
       "The client ID to use for OAuth authorization for the connection.\n"]}
 [@@ocaml.doc
-  "Contains the Basic authorization parameters to use for the connection.\n"]
+  "The Basic authorization parameters to use for the connection.\n"]
 type nonrec create_connection_o_auth_request_parameters =
   {
   o_auth_http_parameters: connection_http_parameters option
     [@ocaml.doc
-      "A [ConnectionHttpParameters] object that contains details about the additional parameters to use for the connection.\n"];
+      "Details about the additional parameters to use for the connection.\n"];
   http_method: connection_o_auth_http_method
     [@ocaml.doc "The method to use for the authorization request.\n"];
   authorization_endpoint: string
     [@ocaml.doc
       "The URL to the authorization endpoint when OAuth is specified as the authorization type.\n"];
   client_parameters: create_connection_o_auth_client_request_parameters
-    [@ocaml.doc
-      "A [CreateConnectionOAuthClientRequestParameters] object that contains the client parameters for OAuth authorization.\n"]}
-[@@ocaml.doc
-  "Contains the OAuth authorization parameters to use for the connection.\n"]
+    [@ocaml.doc "The client parameters for OAuth authorization.\n"]}[@@ocaml.doc
+                                                                    "Contains the OAuth authorization parameters to use for the connection.\n"]
 type nonrec create_connection_api_key_auth_request_parameters =
   {
   api_key_value: string
     [@ocaml.doc "The value for the API key to use for authorization.\n"];
   api_key_name: string
     [@ocaml.doc "The name of the API key to use for authorization.\n"]}
-[@@ocaml.doc
-  "Contains the API key authorization parameters for the connection.\n"]
+[@@ocaml.doc "The API key authorization parameters for the connection.\n"]
 type nonrec create_connection_auth_request_parameters =
   {
+  connectivity_parameters: connectivity_resource_parameters option
+    [@ocaml.doc
+      "If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html}Authorization methods for connections} in the {i  {i Amazon EventBridge User Guide} }.\n "];
   invocation_http_parameters: connection_http_parameters option
     [@ocaml.doc
-      "A [ConnectionHttpParameters] object that contains the API key authorization parameters to use for the connection. Note that if you include additional parameters for the target of a rule via [HttpParameters], including query strings, the parameters added for the connection take precedence.\n"];
+      "The API key authorization parameters to use for the connection. Note that if you include additional parameters for the target of a rule via [HttpParameters], including query strings, the parameters added for the connection take precedence.\n"];
   api_key_auth_parameters:
     create_connection_api_key_auth_request_parameters option
     [@ocaml.doc
-      "A [CreateConnectionApiKeyAuthRequestParameters] object that contains the API key authorization parameters to use for the connection.\n"];
+      "The API key authorization parameters to use for the connection.\n"];
   o_auth_parameters: create_connection_o_auth_request_parameters option
     [@ocaml.doc
-      "A [CreateConnectionOAuthRequestParameters] object that contains the OAuth authorization parameters to use for the connection.\n"];
+      "The OAuth authorization parameters to use for the connection.\n"];
   basic_auth_parameters:
     create_connection_basic_auth_request_parameters option
     [@ocaml.doc
-      "A [CreateConnectionBasicAuthRequestParameters] object that contains the Basic authorization parameters to use for the connection.\n"]}
-[@@ocaml.doc "Contains the authorization parameters for the connection.\n"]
+      "The Basic authorization parameters to use for the connection.\n"]}
+[@@ocaml.doc
+  "The authorization parameters for the connection.\n\n You must include only authorization parameters for the [AuthorizationType] you specify.\n "]
 type nonrec create_connection_request =
   {
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this connection. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the connection.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  "];
+  invocation_connectivity_parameters: connectivity_resource_parameters option
+    [@ocaml.doc
+      "For connections to private APIs, the parameters to use for invoking the API.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html}Connecting to private APIs} in the {i  {i Amazon EventBridge User Guide} }.\n "];
   auth_parameters: create_connection_auth_request_parameters
     [@ocaml.doc
-      "A [CreateConnectionAuthRequestParameters] object that contains the authorization parameters to use to authorize with the endpoint. \n"];
+      "The authorization parameters to use to authorize with the endpoint. \n\n You must include only authorization parameters for the [AuthorizationType] you specify.\n "];
   authorization_type: connection_authorization_type
     [@ocaml.doc
       "The type of authorization to use for the connection.\n\n  OAUTH tokens are refreshed when a 401 or 407 response is returned.\n  \n   "];
@@ -1998,6 +2063,9 @@ type nonrec create_archive_response =
                                                                 ""]
 type nonrec create_archive_request =
   {
+  kms_key_identifier: string option
+    [@ocaml.doc
+      "The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this archive. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.\n\n If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the archive.\n \n  For more information, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html}Identify and view keys} in the {i Key Management Service Developer Guide}. \n  \n    If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. \n    \n     For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n     \n      "];
   retention_days: int option
     [@ocaml.doc
       "The number of days to retain events for. Default value is 0. If set to 0, events are retained indefinitely\n"];

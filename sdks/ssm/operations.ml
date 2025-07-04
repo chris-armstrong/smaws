@@ -292,6 +292,8 @@ module CreateDocument =
           | (_, "MaxDocumentSizeExceeded") ->
               `MaxDocumentSizeExceeded
                 (max_document_size_exceeded_of_yojson tree path)
+          | (_, "TooManyUpdates") ->
+              `TooManyUpdates (too_many_updates_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -560,6 +562,8 @@ module DeleteDocument =
           | (_, "InvalidDocumentOperation") ->
               `InvalidDocumentOperation
                 (invalid_document_operation_of_yojson tree path)
+          | (_, "TooManyUpdates") ->
+              `TooManyUpdates (too_many_updates_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -2009,6 +2013,40 @@ module DisassociateOpsItemRelatedItem =
             ~output_deserializer:disassociate_ops_item_related_item_response_of_yojson
             ~error_deserializer
   end
+module GetAccessToken =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_access_token_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.get_access_token_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMGetAccessToken" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_access_token_response_of_yojson
+            ~error_deserializer
+  end
 module GetAutomationExecution =
   struct
     let error_deserializer tree path =
@@ -2214,6 +2252,34 @@ module GetDocument =
             ~shape_name:"AmazonSSMGetDocument" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:get_document_result_of_yojson
+            ~error_deserializer
+  end
+module GetExecutionPreview =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_execution_preview_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.get_execution_preview_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMGetExecutionPreview" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_execution_preview_response_of_yojson
             ~error_deserializer
   end
 module GetInventory =
@@ -3113,6 +3179,78 @@ module ListInventoryEntries =
             ~output_deserializer:list_inventory_entries_result_of_yojson
             ~error_deserializer
   end
+module ListNodes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidFilter") ->
+              `InvalidFilter (invalid_filter_of_yojson tree path)
+          | (_, "InvalidNextToken") ->
+              `InvalidNextToken (invalid_next_token_of_yojson tree path)
+          | (_, "ResourceDataSyncNotFoundException") ->
+              `ResourceDataSyncNotFoundException
+                (resource_data_sync_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_nodes_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input = Serializers.list_nodes_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMListNodes" ~service ~config:context.config
+            ~http:context.http ~input
+            ~output_deserializer:list_nodes_result_of_yojson
+            ~error_deserializer
+  end
+module ListNodesSummary =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidAggregatorException") ->
+              `InvalidAggregatorException
+                (invalid_aggregator_exception_of_yojson tree path)
+          | (_, "InvalidFilter") ->
+              `InvalidFilter (invalid_filter_of_yojson tree path)
+          | (_, "InvalidNextToken") ->
+              `InvalidNextToken (invalid_next_token_of_yojson tree path)
+          | (_, "ResourceDataSyncNotFoundException") ->
+              `ResourceDataSyncNotFoundException
+                (resource_data_sync_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_nodes_summary_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_nodes_summary_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMListNodesSummary" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_nodes_summary_result_of_yojson
+            ~error_deserializer
+  end
 module ListOpsItemEvents =
   struct
     let error_deserializer tree path =
@@ -3858,6 +3996,44 @@ module SendCommand =
             ~output_deserializer:send_command_result_of_yojson
             ~error_deserializer
   end
+module StartAccessRequest =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceQuotaExceededException") ->
+              `ServiceQuotaExceededException
+                (service_quota_exceeded_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : start_access_request_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.start_access_request_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMStartAccessRequest" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:start_access_request_response_of_yojson
+            ~error_deserializer
+  end
 module StartAssociationsOnce =
   struct
     let error_deserializer tree path =
@@ -3978,6 +4154,33 @@ module StartChangeRequestExecution =
             ~shape_name:"AmazonSSMStartChangeRequestExecution" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:start_change_request_execution_result_of_yojson
+            ~error_deserializer
+  end
+module StartExecutionPreview =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : start_execution_preview_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.start_execution_preview_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AmazonSSMStartExecutionPreview" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:start_execution_preview_response_of_yojson
             ~error_deserializer
   end
 module StartSession =
@@ -4287,6 +4490,8 @@ module UpdateDocumentMetadata =
           | (_, "InvalidDocumentVersion") ->
               `InvalidDocumentVersion
                 (invalid_document_version_of_yojson tree path)
+          | (_, "TooManyUpdates") ->
+              `TooManyUpdates (too_many_updates_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler

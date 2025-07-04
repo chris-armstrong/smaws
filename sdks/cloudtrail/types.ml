@@ -7,6 +7,20 @@ let service =
       version = "2013-11-01";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
+type nonrec view_properties_map = (string * string) list[@@ocaml.doc ""]
+type nonrec widget =
+  {
+  view_properties: view_properties_map option
+    [@ocaml.doc
+      " The view properties for the widget. For more information about view properties, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-widget-properties.html} View properties for widgets } in the {i CloudTrail User Guide}.. \n"];
+  query_parameters: string list option
+    [@ocaml.doc " The query parameters for the widget. \n"];
+  query_statement: string option
+    [@ocaml.doc " The SQL query statement for the widget. \n"];
+  query_alias: string option
+    [@ocaml.doc
+      "The query alias used to identify the query for the widget. \n"]}
+[@@ocaml.doc " A widget on a CloudTrail Lake dashboard. \n"]
 type nonrec update_trail_response =
   {
   is_organization_trail: bool option
@@ -71,7 +85,7 @@ type nonrec update_trail_request =
       "Specifies whether the trail is publishing events from global services such as IAM to the log files.\n"];
   sns_topic_name: string option
     [@ocaml.doc
-      "Specifies the name of the Amazon SNS topic defined for notification of log file delivery. The maximum length is 256 characters.\n"];
+      "Specifies the name or ARN of the Amazon SNS topic defined for notification of log file delivery. The maximum length is 256 characters.\n"];
   s3_key_prefix: string option
     [@ocaml.doc
       "Specifies the Amazon S3 key prefix that comes after the name of the bucket you have designated for log file delivery. For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/get-and-view-cloudtrail-log-files.html#cloudtrail-find-log-files}Finding Your CloudTrail Log Files}. The maximum length is 200 characters.\n"];
@@ -266,7 +280,7 @@ type nonrec insufficient_encryption_policy_exception =
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
-  "This exception is thrown when the policy on the S3 bucket or KMS key does not have sufficient permissions for the operation.\n"]
+  "For the [CreateTrail] [PutInsightSelectors], [UpdateTrail], [StartQuery], and [StartImport] operations, this exception is thrown when the policy on the S3 bucket or KMS key does not have sufficient permissions for the operation.\n\n For all other operations, this exception is thrown when the policy for the KMS key does not have sufficient permissions for the operation.\n "]
 type nonrec insufficient_dependency_service_access_permission_exception =
   {
   message: string option
@@ -300,7 +314,7 @@ type nonrec cloud_trail_arn_invalid_exception =
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
-  "This exception is thrown when an operation is called with an ARN that is not valid.\n\n The following is the format of a trail ARN: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  The following is the format of an event data store ARN: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   The following is the format of a channel ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]
+  "This exception is thrown when an operation is called with an ARN that is not valid.\n\n The following is the format of a trail ARN: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  The following is the format of an event data store ARN: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   The following is the format of a dashboard ARN: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n   \n    The following is the format of a channel ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n    "]
 type nonrec cloud_trail_access_not_enabled_exception =
   {
   message: string option
@@ -337,7 +351,7 @@ type nonrec advanced_field_selector =
       " An operator that includes events that match the exact value of the event record field specified as the value of [Field]. This is the only valid operator that you can use with the [readOnly], [eventCategory], and [resources.type] fields.\n"];
   field: string
     [@ocaml.doc
-      " A field in a CloudTrail event record on which to filter events to be logged. For event data stores for CloudTrail Insights events, Config configuration items, Audit Manager evidence, or events outside of Amazon Web Services, the field is used only for selecting events as filtering is not supported.\n\n For CloudTrail management events, supported fields include [readOnly], [eventCategory], and [eventSource].\n \n  For CloudTrail data events, supported fields include [readOnly], [eventCategory], [eventName], [resources.type], and [resources.ARN].\n  \n    For event data stores for CloudTrail Insights events, Config configuration items, Audit Manager evidence, or events outside of Amazon Web Services, the only supported field is [eventCategory]. \n   \n    {ul\n          {-   {b  [readOnly] } - Optional. Can be set to [Equals] a value of [true] or [false]. If you do not add this field, CloudTrail logs both [read] and [write] events. A value of [true] logs only [read] events. A value of [false] logs only [write] events.\n              \n               }\n          {-   {b  [eventSource] } - For filtering management events only. This can be set to [NotEquals] [kms.amazonaws.com] or [NotEquals] [rdsdata.amazonaws.com].\n              \n               }\n          {-   {b  [eventName] } - Can use any operator. You can use it to \239\172\129lter in or \239\172\129lter out any data event logged to CloudTrail, such as [PutBucket] or [GetSnapshotBlock]. You can have multiple values for this \239\172\129eld, separated by commas.\n              \n               }\n          {-   {b  [eventCategory] } - This is required and must be set to [Equals]. \n              \n               {ul\n                     {-   For CloudTrail management events, the value must be [Management]. \n                         \n                          }\n                     {-   For CloudTrail data events, the value must be [Data]. \n                         \n                          }\n                     \n           }\n            The following are used only for event data stores:\n            \n             {ul\n                   {-   For CloudTrail Insights events, the value must be [Insight]. \n                       \n                        }\n                   {-   For Config configuration items, the value must be [ConfigurationItem]. \n                       \n                        }\n                   {-   For Audit Manager evidence, the value must be [Evidence]. \n                       \n                        }\n                   {-   For non-Amazon Web Services events, the value must be [ActivityAuditLog]. \n                       \n                        }\n                   \n           }\n            }\n          {-   {b  [resources.type] } - This \239\172\129eld is required for CloudTrail data events. [resources.type] can only use the [Equals] operator, and the value can be one of the following:\n              \n               {ul\n                     {-   [AWS::DynamoDB::Table] \n                         \n                          }\n                     {-   [AWS::Lambda::Function] \n                         \n                          }\n                     {-   [AWS::S3::Object] \n                         \n                          }\n                     {-   [AWS::AppConfig::Configuration] \n                         \n                          }\n                     {-   [AWS::B2BI::Transformer] \n                         \n                          }\n                     {-   [AWS::Bedrock::AgentAlias] \n                         \n                          }\n                     {-   [AWS::Bedrock::KnowledgeBase] \n                         \n                          }\n                     {-   [AWS::Cassandra::Table] \n                         \n                          }\n                     {-   [AWS::CloudFront::KeyValueStore] \n                         \n                          }\n                     {-   [AWS::CloudTrail::Channel] \n                         \n                          }\n                     {-   [AWS::CodeWhisperer::Customization] \n                         \n                          }\n                     {-   [AWS::CodeWhisperer::Profile] \n                         \n                          }\n                     {-   [AWS::Cognito::IdentityPool] \n                         \n                          }\n                     {-   [AWS::DynamoDB::Stream] \n                         \n                          }\n                     {-   [AWS::EC2::Snapshot] \n                         \n                          }\n                     {-   [AWS::EMRWAL::Workspace] \n                         \n                          }\n                     {-   [AWS::FinSpace::Environment] \n                         \n                          }\n                     {-   [AWS::Glue::Table] \n                         \n                          }\n                     {-   [AWS::GreengrassV2::ComponentVersion] \n                         \n                          }\n                     {-   [AWS::GreengrassV2::Deployment] \n                         \n                          }\n                     {-   [AWS::GuardDuty::Detector] \n                         \n                          }\n                     {-   [AWS::IoT::Certificate] \n                         \n                          }\n                     {-   [AWS::IoT::Thing] \n                         \n                          }\n                     {-   [AWS::IoTSiteWise::Asset] \n                         \n                          }\n                     {-   [AWS::IoTSiteWise::TimeSeries] \n                         \n                          }\n                     {-   [AWS::IoTTwinMaker::Entity] \n                         \n                          }\n                     {-   [AWS::IoTTwinMaker::Workspace] \n                         \n                          }\n                     {-   [AWS::KendraRanking::ExecutionPlan] \n                         \n                          }\n                     {-   [AWS::KinesisVideo::Stream] \n                         \n                          }\n                     {-   [AWS::ManagedBlockchain::Network] \n                         \n                          }\n                     {-   [AWS::ManagedBlockchain::Node] \n                         \n                          }\n                     {-   [AWS::MedicalImaging::Datastore] \n                         \n                          }\n                     {-   [AWS::NeptuneGraph::Graph] \n                         \n                          }\n                     {-   [AWS::PCAConnectorAD::Connector] \n                         \n                          }\n                     {-   [AWS::QApps:QApp] \n                         \n                          }\n                     {-   [AWS::QBusiness::Application] \n                         \n                          }\n                     {-   [AWS::QBusiness::DataSource] \n                         \n                          }\n                     {-   [AWS::QBusiness::Index] \n                         \n                          }\n                     {-   [AWS::QBusiness::WebExperience] \n                         \n                          }\n                     {-   [AWS::RDS::DBCluster] \n                         \n                          }\n                     {-   [AWS::S3::AccessPoint] \n                         \n                          }\n                     {-   [AWS::S3ObjectLambda::AccessPoint] \n                         \n                          }\n                     {-   [AWS::S3Outposts::Object] \n                         \n                          }\n                     {-   [AWS::SageMaker::Endpoint] \n                         \n                          }\n                     {-   [AWS::SageMaker::ExperimentTrialComponent] \n                         \n                          }\n                     {-   [AWS::SageMaker::FeatureGroup] \n                         \n                          }\n                     {-   [AWS::ServiceDiscovery::Namespace ] \n                         \n                          }\n                     {-   [AWS::ServiceDiscovery::Service] \n                         \n                          }\n                     {-   [AWS::SCN::Instance] \n                         \n                          }\n                     {-   [AWS::SNS::PlatformEndpoint] \n                         \n                          }\n                     {-   [AWS::SNS::Topic] \n                         \n                          }\n                     {-   [AWS::SQS::Queue] \n                         \n                          }\n                     {-   [AWS::SSM::ManagedNode] \n                         \n                          }\n                     {-   [AWS::SSMMessages::ControlChannel] \n                         \n                          }\n                     {-   [AWS::SWF::Domain] \n                         \n                          }\n                     {-   [AWS::ThinClient::Device] \n                         \n                          }\n                     {-   [AWS::ThinClient::Environment] \n                         \n                          }\n                     {-   [AWS::Timestream::Database] \n                         \n                          }\n                     {-   [AWS::Timestream::Table] \n                         \n                          }\n                     {-   [AWS::VerifiedPermissions::PolicyStore] \n                         \n                          }\n                     {-   [AWS::XRay::Trace] \n                         \n                          }\n                     \n           }\n             You can have only one [resources.type] \239\172\129eld per selector. To log data events on more than one resource type, add another selector.\n            \n             }\n          {-   {b  [resources.ARN] } - You can use any operator with [resources.ARN], but if you use [Equals] or [NotEquals], the value must exactly match the ARN of a valid resource of the type you've speci\239\172\129ed in the template as the value of resources.type.\n              \n                You can't use the [resources.ARN] field to filter resource types that do not have ARNs.\n                \n                  The [resources.ARN] field can be set one of the following.\n                  \n                   If resources.type equals [AWS::S3::Object], the ARN must be in one of the following formats. To log all data events for all objects in a specific S3 bucket, use the [StartsWith] operator, and include only the bucket ARN as the matching value.\n                   \n                    The trailing slash is intentional; do not exclude it. Replace the text between less than and greater than symbols (<>) with resource-specific information. \n                    \n                     {ul\n                           {-   \n                               {[\n                               arn::s3:::/\n                               ]}\n                                \n                               \n                                }\n                           {-   \n                               {[\n                               arn::s3::://\n                               ]}\n                                \n                               \n                                }\n                           \n           }\n            When resources.type equals [AWS::DynamoDB::Table], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::dynamodb:::table/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::Lambda::Function], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::lambda:::function:\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::AppConfig::Configuration], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::appconfig:::application//environment//configuration/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::B2BI::Transformer], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::b2bi:::transformer/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::Bedrock::AgentAlias], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::bedrock:::agent-alias//\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::Bedrock::KnowledgeBase], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::bedrock:::knowledge-base/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::Cassandra::Table], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::cassandra:::/keyspace//table/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::CloudFront::KeyValueStore], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::cloudfront:::key-value-store/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::CloudTrail::Channel], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::cloudtrail:::channel/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::CodeWhisperer::Customization], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::codewhisperer:::customization/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::CodeWhisperer::Profile], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::codewhisperer:::profile/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::Cognito::IdentityPool], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::cognito-identity:::identitypool/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::DynamoDB::Stream], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::dynamodb:::table//stream/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::EC2::Snapshot], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::ec2:::snapshot/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::EMRWAL::Workspace], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::emrwal:::workspace/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::FinSpace::Environment], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::finspace:::environment/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::Glue::Table], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::glue:::table//\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::GreengrassV2::ComponentVersion], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::greengrass:::components/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::GreengrassV2::Deployment], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::greengrass:::deployments/ \n                       ]}\n                       \n                       \n                       [\n                  ]}\n                  [\n               ]\n           }\n           \n         {[\n          When [resources.type] equals [AWS::GuardDuty::Detector], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n          \n           {ul\n                 {-   \n                     {[\n                     arn::guardduty:::detector/\n                     ]}\n                      \n                     \n                      }\n                 \n           }\n            When [resources.type] equals [AWS::IoT::Certificate], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iot:::cert/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::IoT::Thing], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iot:::thing/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::IoTSiteWise::Asset], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iotsitewise:::asset/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::IoTSiteWise::TimeSeries], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iotsitewise:::timeseries/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::IoTTwinMaker::Entity], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iottwinmaker:::workspace//entity/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::IoTTwinMaker::Workspace], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::iottwinmaker:::workspace/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::KendraRanking::ExecutionPlan], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::kendra-ranking:::rescore-execution-plan/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::KinesisVideo::Stream], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::kinesisvideo:::stream//\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ManagedBlockchain::Network], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::managedblockchain:::networks/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ManagedBlockchain::Node], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::managedblockchain:::nodes/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::MedicalImaging::Datastore], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::medical-imaging:::datastore/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::NeptuneGraph::Graph], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::neptune-graph:::graph/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::PCAConnectorAD::Connector], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::pca-connector-ad:::connector/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::QApps:QApp], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::qapps:::application//qapp/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::QBusiness::Application], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::qbusiness:::application/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::QBusiness::DataSource], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::qbusiness:::application//index//data-source/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::QBusiness::Index], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::qbusiness:::application//index/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::QBusiness::WebExperience], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::qbusiness:::application//web-experience/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::RDS::DBCluster], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::rds:::cluster/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::S3::AccessPoint], and the operator is set to [Equals] or [NotEquals], the ARN must be in one of the following formats. To log events on all objects in an S3 access point, we recommend that you use only the access point ARN, don\226\128\153t include the object path, and use the [StartsWith] or [NotStartsWith] operators.\n            \n             {ul\n                   {-   \n                       {[\n                       arn::s3:::accesspoint/\n                       ]}\n                        \n                       \n                        }\n                   {-   \n                       {[\n                       arn::s3:::accesspoint//object/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::S3ObjectLambda::AccessPoint], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::s3-object-lambda:::accesspoint/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::S3Outposts::Object], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::s3-outposts:::\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SageMaker::Endpoint], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sagemaker:::endpoint/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SageMaker::ExperimentTrialComponent], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sagemaker:::experiment-trial-component/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SageMaker::FeatureGroup], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sagemaker:::feature-group/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SCN::Instance], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::scn:::instance/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ServiceDiscovery::Namespace], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::servicediscovery:::namespace/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ServiceDiscovery::Service], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::servicediscovery:::service/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SNS::PlatformEndpoint], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sns:::endpoint///\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SNS::Topic], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sns:::\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SQS::Queue], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::sqs:::\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SSM::ManagedNode], and the operator is set to [Equals] or [NotEquals], the ARN must be in one of the following formats:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::ssm:::managed-instance/\n                       ]}\n                        \n                       \n                        }\n                   {-   \n                       {[\n                       arn::ec2:::instance/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SSMMessages::ControlChannel], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::ssmmessages:::control-channel/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::SWF::Domain], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::swf:::domain/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ThinClient::Device], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::thinclient:::device/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::ThinClient::Environment], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::thinclient:::environment/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::Timestream::Database], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::timestream:::database/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When [resources.type] equals [AWS::Timestream::Table], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::timestream:::database//table/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            When resources.type equals [AWS::VerifiedPermissions::PolicyStore], and the operator is set to [Equals] or [NotEquals], the ARN must be in the following format:\n            \n             {ul\n                   {-   \n                       {[\n                       arn::verifiedpermissions:::policy-store/\n                       ]}\n                        \n                       \n                        }\n                   \n           }\n            \n         ]}\n         }\n         [\n         ]}\n  "]}
+      " A field in a CloudTrail event record on which to filter events to be logged. For event data stores for CloudTrail Insights events, Config configuration items, Audit Manager evidence, or events outside of Amazon Web Services, the field is used only for selecting events as filtering is not supported.\n\n For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedFieldSelector.html}AdvancedFieldSelector} in the {i CloudTrail API Reference}.\n \n   Selectors don't support the use of wildcards like [*] . To match multiple values with a single condition, you may use [StartsWith], [EndsWith], [NotStartsWith], or [NotEndsWith] to explicitly match the beginning or end of the event field.\n   \n    "]}
 [@@ocaml.doc "A single selector statement in an advanced event selector.\n"]
 type nonrec advanced_event_selector =
   {
@@ -348,7 +362,7 @@ type nonrec advanced_event_selector =
     [@ocaml.doc
       "An optional, descriptive name for an advanced event selector, such as \"Log data events for only two S3 buckets\".\n"]}
 [@@ocaml.doc
-  "Advanced event selectors let you create fine-grained selectors for CloudTrail management and data events. They help you control costs by logging only those events that are important to you. For more information about advanced event selectors, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html}Logging management events} and {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Logging data events} in the {i CloudTrail User Guide}.\n\n You cannot apply both event selectors and advanced event selectors to a trail.\n \n   {b Supported CloudTrail event record fields for management events} \n  \n   {ul\n         {-   [eventCategory] (required)\n             \n              }\n         {-   [eventSource] \n             \n              }\n         {-   [readOnly] \n             \n              }\n         }\n    {b Supported CloudTrail event record fields for data events} \n   \n    {ul\n          {-   [eventCategory] (required)\n              \n               }\n          {-   [resources.type] (required)\n              \n               }\n          {-   [readOnly] \n              \n               }\n          {-   [eventName] \n              \n               }\n          {-   [resources.ARN] \n              \n               }\n          }\n    For event data stores for CloudTrail Insights events, Config configuration items, Audit Manager evidence, or events outside of Amazon Web Services, the only supported field is [eventCategory]. \n    \n     "]
+  "Advanced event selectors let you create fine-grained selectors for CloudTrail management, data, and network activity events. They help you control costs by logging only those events that are important to you. For more information about configuring advanced event selectors, see the {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Logging data events}, {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-network-events-with-cloudtrail.html}Logging network activity events}, and {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html}Logging management events} topics in the {i CloudTrail User Guide}.\n\n You cannot apply both event selectors and advanced event selectors to a trail.\n \n  For information about configurable advanced event selector fields, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedEventSelector.html}AdvancedEventSelector} in the {i CloudTrail API Reference}.\n  "]
 type nonrec billing_mode =
   | FIXED_RETENTION_PRICING [@ocaml.doc ""]
   | EXTENDABLE_RETENTION_PRICING [@ocaml.doc ""][@@ocaml.doc ""]
@@ -462,6 +476,102 @@ type nonrec event_data_store_already_exists_exception =
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc "An event data store with that name already exists.\n"]
+type nonrec dashboard_type =
+  | CUSTOM [@ocaml.doc ""]
+  | MANAGED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec refresh_schedule_frequency_unit =
+  | DAYS [@ocaml.doc ""]
+  | HOURS [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec refresh_schedule_frequency =
+  {
+  value: int option
+    [@ocaml.doc
+      " The value for the refresh schedule. \n\n  For custom dashboards, the following values are valid when the unit is [HOURS]: [1], [6], [12], [24] \n \n  For custom dashboards, the only valid value when the unit is [DAYS] is [1].\n  \n   For the Highlights dashboard, the [Value] must be [6].\n   "];
+  unit_: refresh_schedule_frequency_unit option
+    [@ocaml.doc
+      " The unit to use for the refresh. \n\n For custom dashboards, the unit can be [HOURS] or [DAYS].\n \n  For the Highlights dashboard, the [Unit] must be [HOURS].\n  "]}
+[@@ocaml.doc
+  " Specifies the frequency for a dashboard refresh schedule. \n\n  For a custom dashboard, you can schedule a refresh for every 1, 6, 12, or 24 hours, or every day. \n "]
+type nonrec refresh_schedule_status =
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec refresh_schedule =
+  {
+  time_of_day: string option
+    [@ocaml.doc
+      " The time of day in UTC to run the schedule; for hourly only refer to minutes; default is 00:00. \n"];
+  status: refresh_schedule_status option
+    [@ocaml.doc
+      " Specifies whether the refresh schedule is enabled. Set the value to [ENABLED] to enable the refresh schedule, or to [DISABLED] to turn off the refresh schedule. \n"];
+  frequency: refresh_schedule_frequency option
+    [@ocaml.doc
+      " The frequency at which you want the dashboard refreshed. \n"]}
+[@@ocaml.doc " The schedule for a dashboard refresh. \n"]
+type nonrec update_dashboard_response =
+  {
+  updated_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when the dashboard was updated. \n"];
+  created_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when the dashboard was created. \n"];
+  termination_protection_enabled: bool option
+    [@ocaml.doc
+      " Indicates whether termination protection is enabled for the dashboard. \n"];
+  refresh_schedule: refresh_schedule option
+    [@ocaml.doc " The refresh schedule for the dashboard, if configured. \n"];
+  widgets: widget list option
+    [@ocaml.doc " An array of widgets for the dashboard. \n"];
+  type_: dashboard_type option [@ocaml.doc " The type of dashboard. \n"];
+  name: string option [@ocaml.doc " The name for the dashboard. \n"];
+  dashboard_arn: string option [@ocaml.doc " The ARN for the dashboard. \n"]}
+[@@ocaml.doc ""]
+type nonrec request_widget =
+  {
+  view_properties: view_properties_map
+    [@ocaml.doc
+      " The view properties for the widget. For more information about view properties, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-widget-properties.html} View properties for widgets } in the {i CloudTrail User Guide}. \n"];
+  query_parameters: string list option
+    [@ocaml.doc
+      " The optional query parameters. The following query parameters are valid: [$StartTime$], [$EndTime$], and [$Period$]. \n"];
+  query_statement: string
+    [@ocaml.doc
+      " The query statement for the widget. For custom dashboard widgets, you can query across multiple event data stores as long as all event data stores exist in your account. \n\n  When a query uses [?] with [eventTime], [?] must be surrounded by single quotes as follows: ['?'].\n  \n   "]}
+[@@ocaml.doc
+  " Contains information about a widget on a CloudTrail Lake dashboard. \n"]
+type nonrec update_dashboard_request =
+  {
+  termination_protection_enabled: bool option
+    [@ocaml.doc
+      " Specifies whether termination protection is enabled for the dashboard. If termination protection is enabled, you cannot delete the dashboard until termination protection is disabled. \n"];
+  refresh_schedule: refresh_schedule option
+    [@ocaml.doc " The refresh schedule configuration for the dashboard. \n"];
+  widgets: request_widget list option
+    [@ocaml.doc
+      " An array of widgets for the dashboard. A custom dashboard can have a maximum of 10 widgets. \n\n To add new widgets, pass in an array that includes the existing widgets along with any new widgets. Run the [GetDashboard] operation to get the list of widgets for the dashboard.\n \n  To remove widgets, pass in an array that includes the existing widgets minus the widgets you want removed.\n  "];
+  dashboard_id: string [@ocaml.doc " The name or ARN of the dashboard. \n"]}
+[@@ocaml.doc ""]
+type nonrec service_quota_exceeded_exception =
+  {
+  message: string option
+    [@ocaml.doc
+      "Brief description of the exception returned by the request.\n"]}
+[@@ocaml.doc
+  " This exception is thrown when the quota is exceeded. For information about CloudTrail quotas, see {{:https://docs.aws.amazon.com/general/latest/gr/ct.html#limits_cloudtrail}Service quotas} in the {i Amazon Web Services General Reference}. \n"]
+type nonrec resource_not_found_exception =
+  {
+  message: string option
+    [@ocaml.doc
+      "Brief description of the exception returned by the request.\n"]}
+[@@ocaml.doc
+  "This exception is thrown when the specified resource is not found.\n"]
+type nonrec invalid_query_statement_exception =
+  {
+  message: string option
+    [@ocaml.doc
+      "Brief description of the exception returned by the request.\n"]}
+[@@ocaml.doc
+  "The query that was submitted has validation errors, or uses incorrect syntax or unsupported keywords. For more information about writing a query, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-create-edit-query.html}Create or edit a query} in the {i CloudTrail User Guide}.\n"]
 type nonrec destination_type =
   | AWS_SERVICE [@ocaml.doc ""]
   | EVENT_DATA_STORE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -525,6 +635,9 @@ type nonrec channel_already_exists_exception =
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
   " This exception is thrown when the provided channel already exists. \n"]
+type nonrec type_ =
+  | RequestContext [@ocaml.doc ""]
+  | TagContext [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec trail_info =
   {
   home_region: string option
@@ -595,14 +708,14 @@ type nonrec tag =
     [@ocaml.doc
       "The key in a key-value pair. The key must be must be no longer than 128 Unicode characters. The key must be unique for the resource to which it applies.\n"]}
 [@@ocaml.doc
-  "A custom key-value pair associated with a resource such as a CloudTrail trail, event data store, or channel.\n"]
+  "A custom key-value pair associated with a resource such as a CloudTrail trail, event data store, dashboard, or channel.\n"]
 type nonrec tags_limit_exceeded_exception =
   {
   message: string option
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
-  "The number of tags per trail, event data store, or channel has exceeded the permitted amount. Currently, the limit is 50.\n"]
+  "The number of tags per trail, event data store, dashboard, or channel has exceeded the permitted amount. Currently, the limit is 50.\n"]
 type nonrec stop_logging_request =
   {
   name: string
@@ -689,10 +802,14 @@ type nonrec invalid_event_data_store_status_exception =
   "The event data store is not in a status that supports the operation.\n"]
 type nonrec start_query_response =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
   query_id: string option [@ocaml.doc "The ID of the started query.\n"]}
 [@@ocaml.doc ""]
 type nonrec start_query_request =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
   query_parameters: string list option
     [@ocaml.doc " The query parameters for the specified [QueryAlias]. \n"];
   query_alias: string option
@@ -709,13 +826,6 @@ type nonrec max_concurrent_queries_exception =
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
   "You are already running the maximum number of concurrent queries. The maximum number of concurrent queries is 10. Wait a minute for some queries to finish, and then run the query again.\n"]
-type nonrec invalid_query_statement_exception =
-  {
-  message: string option
-    [@ocaml.doc
-      "Brief description of the exception returned by the request.\n"]}
-[@@ocaml.doc
-  "The query that was submitted has validation errors, or uses incorrect syntax or unsupported keywords. For more information about writing a query, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-create-edit-query.html}Create or edit a query} in the {i CloudTrail User Guide}.\n"]
 type nonrec start_logging_request =
   {
   name: string
@@ -783,6 +893,18 @@ type nonrec start_event_data_store_ingestion_request =
     [@ocaml.doc
       "The ARN (or ID suffix of the ARN) of the event data store for which you want to start ingestion.\n"]}
 [@@ocaml.doc ""]
+type nonrec start_dashboard_refresh_response =
+  {
+  refresh_id: string option
+    [@ocaml.doc " The refresh ID for the dashboard. \n"]}[@@ocaml.doc ""]
+type nonrec query_parameter_values = (string * string) list[@@ocaml.doc ""]
+type nonrec start_dashboard_refresh_request =
+  {
+  query_parameter_values: query_parameter_values option
+    [@ocaml.doc
+      " The query parameter values for the dashboard \n\n For custom dashboards, the following query parameters are valid: [$StartTime$], [$EndTime$], and [$Period$].\n \n  For managed dashboards, the following query parameters are valid: [$StartTime$], [$EndTime$], [$Period$], and [$EventDataStoreId$]. The [$EventDataStoreId$] query parameter is required.\n  "];
+  dashboard_id: string [@ocaml.doc " The name or ARN of the dashboard. \n"]}
+[@@ocaml.doc ""]
 type nonrec source_config =
   {
   advanced_event_selectors: advanced_event_selector list option
@@ -792,6 +914,37 @@ type nonrec source_config =
     [@ocaml.doc
       " Specifies whether the channel applies to a single Region or to all Regions.\n"]}
 [@@ocaml.doc " Contains configuration information about the channel. \n"]
+type nonrec search_sample_queries_search_result =
+  {
+  relevance: float option
+    [@ocaml.doc
+      " A value between 0 and 1 indicating the similarity between the search phrase and result. \n"];
+  sq_l: string option [@ocaml.doc " The SQL code of the sample query. \n"];
+  description: string option
+    [@ocaml.doc " A longer description of a sample query. \n"];
+  name: string option [@ocaml.doc " The name of a sample query. \n"]}
+[@@ocaml.doc
+  " A search result returned by the [SearchSampleQueries] operation. \n"]
+type nonrec search_sample_queries_response =
+  {
+  next_token: string option
+    [@ocaml.doc " A token you can use to get the next page of results.\n"];
+  search_results: search_sample_queries_search_result list option
+    [@ocaml.doc
+      " A list of objects containing the search results ordered from most relevant to least relevant. \n"]}
+[@@ocaml.doc ""]
+type nonrec search_sample_queries_request =
+  {
+  next_token: string option
+    [@ocaml.doc
+      " A token you can use to get the next page of results. The length constraint is in characters, not words. \n"];
+  max_results: int option
+    [@ocaml.doc
+      " The maximum number of results to return on a single page. The default value is 10. \n"];
+  search_phrase: string
+    [@ocaml.doc
+      " The natural language phrase to use for the semantic search. The phrase must be in English. The length constraint is in characters, not words.\n"]}
+[@@ocaml.doc ""]
 type nonrec restore_event_data_store_response =
   {
   billing_mode: billing_mode option
@@ -855,7 +1008,7 @@ type nonrec resource_policy_not_valid_exception =
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
-  " This exception is thrown when the resouce-based policy has syntax errors, or contains a principal that is not valid. \n\n The following are requirements for the resource policy:\n \n  {ul\n        {-   Contains only one action: cloudtrail-data:PutAuditEvents \n            \n             }\n        {-   Contains at least one statement. The policy can have a maximum of 20 statements. \n            \n             }\n        {-   Each statement contains at least one principal. A statement can have a maximum of 50 principals. \n            \n             }\n        }\n  "]
+  " This exception is thrown when the resouce-based policy has syntax errors, or contains a principal that is not valid. \n"]
 type nonrec resource_policy_not_found_exception =
   {
   message: string option
@@ -863,13 +1016,6 @@ type nonrec resource_policy_not_found_exception =
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
   " This exception is thrown when the specified resource policy is not found. \n"]
-type nonrec resource_not_found_exception =
-  {
-  message: string option
-    [@ocaml.doc
-      "Brief description of the exception returned by the request.\n"]}
-[@@ocaml.doc
-  "This exception is thrown when the specified resource is not found.\n"]
 type nonrec resource =
   {
   resource_name: string option
@@ -886,16 +1032,16 @@ type nonrec resource_arn_not_valid_exception =
     [@ocaml.doc
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
-  " This exception is thrown when the provided resource does not exist, or the ARN format of the resource is not valid. The following is the valid format for a resource ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel]. \n"]
+  " This exception is thrown when the provided resource does not exist, or the ARN format of the resource is not valid. \n\n The following is the format of an event data store ARN: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  The following is the format of a dashboard ARN: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   The following is the format of a channel ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]
 type nonrec remove_tags_request =
   {
   tags_list: tag list
     [@ocaml.doc "Specifies a list of tags to be removed.\n"];
   resource_id: string
     [@ocaml.doc
-      "Specifies the ARN of the trail, event data store, or channel from which tags should be removed.\n\n  Example trail ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
+      "Specifies the ARN of the trail, event data store, dashboard, or channel from which tags should be removed.\n\n  Example trail ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n   \n    Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n    "]}
 [@@ocaml.doc
-  "Specifies the tags to remove from a trail, event data store, or channel.\n"]
+  "Specifies the tags to remove from a trail, event data store, dashboard, or channel.\n"]
 type nonrec invalid_tag_parameter_exception =
   {
   message: string option
@@ -917,6 +1063,13 @@ type nonrec not_organization_management_account_exception =
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
   " This exception is thrown when the account making the request is not the organization's management account. \n"]
+type nonrec insufficient_iam_access_permission_exception =
+  {
+  message: string option
+    [@ocaml.doc
+      "Brief description of the exception returned by the request.\n"]}
+[@@ocaml.doc
+  "The task can't be completed because you are signed in with an account that lacks permissions to view or create a service-linked role. Sign in with an account that has the required permissions and then try again.\n"]
 type nonrec delegated_admin_account_limit_exceeded_exception =
   {
   message: string option
@@ -998,21 +1151,24 @@ type nonrec query =
                                                                 "A SQL string of criteria about events that you want to collect in an event data store.\n"]
 type nonrec put_resource_policy_response =
   {
+  delegated_admin_resource_policy: string option
+    [@ocaml.doc
+      " The default resource-based policy that is automatically generated for the delegated administrator of an Organizations organization. This policy will be evaluated in tandem with any policy you submit for the resource. For more information about this policy, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-organizations.html#cloudtrail-lake-organizations-eds-rbp}Default resource policy for delegated administrators}. \n"];
   resource_policy: string option
     [@ocaml.doc
-      " The JSON-formatted string of the Amazon Web Services resource-based policy attached to the CloudTrail channel. \n"];
+      " The JSON-formatted string of the Amazon Web Services resource-based policy attached to the CloudTrail event data store, dashboard, or channel. \n"];
   resource_arn: string option
     [@ocaml.doc
-      " The Amazon Resource Name (ARN) of the CloudTrail channel attached to the resource-based policy. \n"]}
+      " The Amazon Resource Name (ARN) of the CloudTrail event data store, dashboard, or channel attached to the resource-based policy. \n\n Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
 [@@ocaml.doc ""]
 type nonrec put_resource_policy_request =
   {
   resource_policy: string
     [@ocaml.doc
-      " A JSON-formatted string for an Amazon Web Services resource-based policy. \n\n The following are requirements for the resource policy:\n \n  {ul\n        {-   Contains only one action: cloudtrail-data:PutAuditEvents \n            \n             }\n        {-   Contains at least one statement. The policy can have a maximum of 20 statements. \n            \n             }\n        {-   Each statement contains at least one principal. A statement can have a maximum of 50 principals. \n            \n             }\n        }\n  "];
+      " A JSON-formatted string for an Amazon Web Services resource-based policy. \n\n  For example resource-based policies, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html}CloudTrail resource-based policy examples} in the {i CloudTrail User Guide}.\n "];
   resource_arn: string
     [@ocaml.doc
-      " The Amazon Resource Name (ARN) of the CloudTrail channel attached to the resource-based policy. The following is the format of a resource ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel]. \n"]}
+      " The Amazon Resource Name (ARN) of the CloudTrail event data store, dashboard, or channel attached to the resource-based policy.\n\n Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
 [@@ocaml.doc ""]
 type nonrec insight_type =
   | ApiErrorRateInsight [@ocaml.doc ""]
@@ -1058,12 +1214,12 @@ type nonrec data_resource =
   {
   values: string list option
     [@ocaml.doc
-      "An array of Amazon Resource Name (ARN) strings or partial ARN strings for the specified resource type.\n\n {ul\n       {-  To log data events for all objects in all S3 buckets in your Amazon Web Services account, specify the prefix as [arn:aws:s3].\n           \n             This also enables logging of data event activity performed by any user or role in your Amazon Web Services account, even if that activity is performed on a bucket that belongs to another Amazon Web Services account.\n             \n               }\n       {-  To log data events for all objects in an S3 bucket, specify the bucket and an empty object prefix such as [arn:aws:s3:::bucket-1/]. The trail logs data events for all objects in this S3 bucket.\n           \n            }\n       {-  To log data events for specific objects, specify the S3 bucket and object prefix such as [arn:aws:s3:::bucket-1/example-images]. The trail logs data events for objects in this S3 bucket that match the prefix.\n           \n            }\n       {-  To log data events for all Lambda functions in your Amazon Web Services account, specify the prefix as [arn:aws:lambda].\n           \n             This also enables logging of [Invoke] activity performed by any user or role in your Amazon Web Services account, even if that activity is performed on a function that belongs to another Amazon Web Services account. \n             \n               }\n       {-  To log data events for a specific Lambda function, specify the function ARN.\n           \n             Lambda function ARNs are exact. For example, if you specify a function ARN {i arn:aws:lambda:us-west-2:111111111111:function:helloworld}, data events will only be logged for {i arn:aws:lambda:us-west-2:111111111111:function:helloworld}. They will not be logged for {i arn:aws:lambda:us-west-2:111111111111:function:helloworld2}.\n             \n               }\n       {-  To log data events for all DynamoDB tables in your Amazon Web Services account, specify the prefix as [arn:aws:dynamodb].\n           \n            }\n       }\n  "];
+      "An array of Amazon Resource Name (ARN) strings or partial ARN strings for the specified resource type.\n\n {ul\n       {-  To log data events for all objects in all S3 buckets in your Amazon Web Services account, specify the prefix as [arn:aws:s3].\n           \n             This also enables logging of data event activity performed by any user or role in your Amazon Web Services account, even if that activity is performed on a bucket that belongs to another Amazon Web Services account.\n             \n               }\n       {-  To log data events for all objects in an S3 bucket, specify the bucket and an empty object prefix such as [arn:aws:s3:::amzn-s3-demo-bucket1/]. The trail logs data events for all objects in this S3 bucket.\n           \n            }\n       {-  To log data events for specific objects, specify the S3 bucket and object prefix such as [arn:aws:s3:::amzn-s3-demo-bucket1/example-images]. The trail logs data events for objects in this S3 bucket that match the prefix.\n           \n            }\n       {-  To log data events for all Lambda functions in your Amazon Web Services account, specify the prefix as [arn:aws:lambda].\n           \n             This also enables logging of [Invoke] activity performed by any user or role in your Amazon Web Services account, even if that activity is performed on a function that belongs to another Amazon Web Services account. \n             \n               }\n       {-  To log data events for a specific Lambda function, specify the function ARN.\n           \n             Lambda function ARNs are exact. For example, if you specify a function ARN {i arn:aws:lambda:us-west-2:111111111111:function:helloworld}, data events will only be logged for {i arn:aws:lambda:us-west-2:111111111111:function:helloworld}. They will not be logged for {i arn:aws:lambda:us-west-2:111111111111:function:helloworld2}.\n             \n               }\n       {-  To log data events for all DynamoDB tables in your Amazon Web Services account, specify the prefix as [arn:aws:dynamodb].\n           \n            }\n       }\n  "];
   type_: string option
     [@ocaml.doc
-      "The resource type in which you want to log data events. You can specify the following {i basic} event selector resource types:\n\n {ul\n       {-   [AWS::DynamoDB::Table] \n           \n            }\n       {-   [AWS::Lambda::Function] \n           \n            }\n       {-   [AWS::S3::Object] \n           \n            }\n       }\n   Additional resource types are available through {i advanced} event selectors. For more information about these additional resource types, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedFieldSelector.html}AdvancedFieldSelector}.\n   "]}
+      "The resource type in which you want to log data events. You can specify the following {i basic} event selector resource types:\n\n {ul\n       {-   [AWS::DynamoDB::Table] \n           \n            }\n       {-   [AWS::Lambda::Function] \n           \n            }\n       {-   [AWS::S3::Object] \n           \n            }\n       }\n   Additional resource types are available through {i advanced} event selectors. For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedEventSelector.html}AdvancedEventSelector}.\n   "]}
 [@@ocaml.doc
-  "Data events provide information about the resource operations performed on or within a resource itself. These are also known as data plane operations. You can specify up to 250 data resources for a trail.\n\n Configure the [DataResource] to specify the resource type and resource ARNs for which you want to log data events.\n \n  You can specify the following resource types in your event selectors for your trail:\n  \n   {ul\n         {-   [AWS::DynamoDB::Table] \n             \n              }\n         {-   [AWS::Lambda::Function] \n             \n              }\n         {-   [AWS::S3::Object] \n             \n              }\n         }\n    The total number of allowed data resources is 250. This number can be distributed between 1 and 5 event selectors, but the total cannot exceed 250 across all selectors for the trail.\n    \n     If you are using advanced event selectors, the maximum total number of values for all conditions, across all advanced event selectors for the trail, is 500.\n     \n       The following example demonstrates how logging works when you configure logging of all data events for an S3 bucket named [bucket-1]. In this example, the CloudTrail user specified an empty prefix, and the option to log both [Read] and [Write] data events.\n       \n        {ol\n              {-  A user uploads an image file to [bucket-1].\n                  \n                   }\n              {-  The [PutObject] API operation is an Amazon S3 object-level API. It is recorded as a data event in CloudTrail. Because the CloudTrail user specified an S3 bucket with an empty prefix, events that occur on any object in that bucket are logged. The trail processes and logs the event.\n                  \n                   }\n              {-  A user uploads an object to an Amazon S3 bucket named [arn:aws:s3:::bucket-2].\n                  \n                   }\n              {-  The [PutObject] API operation occurred for an object in an S3 bucket that the CloudTrail user didn't specify for the trail. The trail doesn\226\128\153t log the event.\n                  \n                   }\n              }\n   The following example demonstrates how logging works when you configure logging of Lambda data events for a Lambda function named {i MyLambdaFunction}, but not for all Lambda functions.\n   \n    {ol\n          {-  A user runs a script that includes a call to the {i MyLambdaFunction} function and the {i MyOtherLambdaFunction} function.\n              \n               }\n          {-  The [Invoke] API operation on {i MyLambdaFunction} is an Lambda API. It is recorded as a data event in CloudTrail. Because the CloudTrail user specified logging data events for {i MyLambdaFunction}, any invocations of that function are logged. The trail processes and logs the event.\n              \n               }\n          {-  The [Invoke] API operation on {i MyOtherLambdaFunction} is an Lambda API. Because the CloudTrail user did not specify logging data events for all Lambda functions, the [Invoke] operation for {i MyOtherLambdaFunction} does not match the function specified for the trail. The trail doesn\226\128\153t log the event. \n              \n               }\n          }\n  "]
+  "You can configure the [DataResource] in an [EventSelector] to log data events for the following three resource types:\n\n {ul\n       {-   [AWS::DynamoDB::Table] \n           \n            }\n       {-   [AWS::Lambda::Function] \n           \n            }\n       {-   [AWS::S3::Object] \n           \n            }\n       }\n   To log data events for all other resource types including objects stored in {{:https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html}directory buckets}, you must use {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedEventSelector.html}AdvancedEventSelectors}. You must also use [AdvancedEventSelectors] if you want to filter on the [eventName] field.\n   \n    Configure the [DataResource] to specify the resource type and resource ARNs for which you want to log data events.\n    \n      The total number of allowed data resources is 250. This number can be distributed between 1 and 5 event selectors, but the total cannot exceed 250 across all selectors for the trail.\n      \n        The following example demonstrates how logging works when you configure logging of all data events for a general purpose bucket named [amzn-s3-demo-bucket1]. In this example, the CloudTrail user specified an empty prefix, and the option to log both [Read] and [Write] data events.\n        \n         {ol\n               {-  A user uploads an image file to [amzn-s3-demo-bucket1].\n                   \n                    }\n               {-  The [PutObject] API operation is an Amazon S3 object-level API. It is recorded as a data event in CloudTrail. Because the CloudTrail user specified an S3 bucket with an empty prefix, events that occur on any object in that bucket are logged. The trail processes and logs the event.\n                   \n                    }\n               {-  A user uploads an object to an Amazon S3 bucket named [arn:aws:s3:::amzn-s3-demo-bucket1].\n                   \n                    }\n               {-  The [PutObject] API operation occurred for an object in an S3 bucket that the CloudTrail user didn't specify for the trail. The trail doesn\226\128\153t log the event.\n                   \n                    }\n               }\n   The following example demonstrates how logging works when you configure logging of Lambda data events for a Lambda function named {i MyLambdaFunction}, but not for all Lambda functions.\n   \n    {ol\n          {-  A user runs a script that includes a call to the {i MyLambdaFunction} function and the {i MyOtherLambdaFunction} function.\n              \n               }\n          {-  The [Invoke] API operation on {i MyLambdaFunction} is an Lambda API. It is recorded as a data event in CloudTrail. Because the CloudTrail user specified logging data events for {i MyLambdaFunction}, any invocations of that function are logged. The trail processes and logs the event.\n              \n               }\n          {-  The [Invoke] API operation on {i MyOtherLambdaFunction} is an Lambda API. Because the CloudTrail user did not specify logging data events for all Lambda functions, the [Invoke] operation for {i MyOtherLambdaFunction} does not match the function specified for the trail. The trail doesn\226\128\153t log the event. \n              \n               }\n          }\n  "]
 type nonrec event_selector =
   {
   exclude_management_event_sources: string list option
@@ -1071,7 +1227,7 @@ type nonrec event_selector =
       "An optional list of service event sources from which you do not want management events to be logged on your trail. In this release, the list can be empty (disables the filter), or it can filter out Key Management Service or Amazon RDS Data API events by containing [kms.amazonaws.com] or [rdsdata.amazonaws.com]. By default, [ExcludeManagementEventSources] is empty, and KMS and Amazon RDS Data API events are logged to your trail. You can exclude management event sources only in Regions that support the event source.\n"];
   data_resources: data_resource list option
     [@ocaml.doc
-      "CloudTrail supports data event logging for Amazon S3 objects, Lambda functions, and Amazon DynamoDB tables with basic event selectors. You can specify up to 250 resources for an individual event selector, but the total number of data resources cannot exceed 250 across all event selectors in a trail. This limit does not apply if you configure resource logging for all data events.\n\n For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Data Events} and {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/WhatIsCloudTrail-Limits.html}Limits in CloudTrail} in the {i CloudTrail User Guide}.\n "];
+      "CloudTrail supports data event logging for Amazon S3 objects in standard S3 buckets, Lambda functions, and Amazon DynamoDB tables with basic event selectors. You can specify up to 250 resources for an individual event selector, but the total number of data resources cannot exceed 250 across all event selectors in a trail. This limit does not apply if you configure resource logging for all data events.\n\n For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Data Events} and {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/WhatIsCloudTrail-Limits.html}Limits in CloudTrail} in the {i CloudTrail User Guide}.\n \n   To log data events for all other resource types including objects stored in {{:https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html}directory buckets}, you must use {{:https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_AdvancedEventSelector.html}AdvancedEventSelectors}. You must also use [AdvancedEventSelectors] if you want to filter on the [eventName] field.\n   \n    "];
   include_management_events: bool option
     [@ocaml.doc
       "Specify if you want your event selector to include management events for your trail.\n\n  For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html}Management Events} in the {i CloudTrail User Guide}.\n \n  By default, the value is [true].\n  \n   The first copy of management events is free. You are charged for additional copies of management events that you are logging on any subsequent trail in the same Region. For more information about CloudTrail pricing, see {{:http://aws.amazon.com/cloudtrail/pricing/}CloudTrail Pricing}.\n   "];
@@ -1095,13 +1251,50 @@ type nonrec put_event_selectors_request =
   {
   advanced_event_selectors: advanced_event_selector list option
     [@ocaml.doc
-      " Specifies the settings for advanced event selectors. You can add advanced event selectors, and conditions for your advanced event selectors, up to a maximum of 500 values for all conditions and selectors on a trail. You can use either [AdvancedEventSelectors] or [EventSelectors], but not both. If you apply [AdvancedEventSelectors] to a trail, any existing [EventSelectors] are overwritten. For more information about advanced event selectors, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Logging data events} in the {i CloudTrail User Guide}. \n"];
+      " Specifies the settings for advanced event selectors. You can use advanced event selectors to log management events, data events for all resource types, and network activity events.\n\n You can add advanced event selectors, and conditions for your advanced event selectors, up to a maximum of 500 values for all conditions and selectors on a trail. You can use either [AdvancedEventSelectors] or [EventSelectors], but not both. If you apply [AdvancedEventSelectors] to a trail, any existing [EventSelectors] are overwritten. For more information about advanced event selectors, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}Logging data events} and {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-network-events-with-cloudtrail.html}Logging network activity events} in the {i CloudTrail User Guide}. \n "];
   event_selectors: event_selector list option
     [@ocaml.doc
-      "Specifies the settings for your event selectors. You can configure up to five event selectors for a trail. You can use either [EventSelectors] or [AdvancedEventSelectors] in a [PutEventSelectors] request, but not both. If you apply [EventSelectors] to a trail, any existing [AdvancedEventSelectors] are overwritten.\n"];
+      "Specifies the settings for your event selectors. You can use event selectors to log management events and data events for the following resource types:\n\n {ul\n       {-   [AWS::DynamoDB::Table] \n           \n            }\n       {-   [AWS::Lambda::Function] \n           \n            }\n       {-   [AWS::S3::Object] \n           \n            }\n       }\n   You can't use event selectors to log network activity events.\n   \n    You can configure up to five event selectors for a trail. You can use either [EventSelectors] or [AdvancedEventSelectors] in a [PutEventSelectors] request, but not both. If you apply [EventSelectors] to a trail, any existing [AdvancedEventSelectors] are overwritten.\n    "];
   trail_name: string
     [@ocaml.doc
       "Specifies the name of the trail or trail ARN. If you specify a trail name, the string must meet the following requirements:\n\n {ul\n       {-  Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-)\n           \n            }\n       {-  Start with a letter or number, and end with a letter or number\n           \n            }\n       {-  Be between 3 and 128 characters\n           \n            }\n       {-  Have no adjacent periods, underscores or dashes. Names like [my-_namespace] and [my--namespace] are not valid.\n           \n            }\n       {-  Not be in IP address format (for example, 192.168.5.4)\n           \n            }\n       }\n   If you specify a trail ARN, it must be in the following format.\n   \n     [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n    "]}
+[@@ocaml.doc ""]
+type nonrec max_event_size =
+  | Large [@ocaml.doc ""]
+  | Standard [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec context_key_selector =
+  {
+  equals: string list
+    [@ocaml.doc
+      "A list of keys defined by Type to be included in CloudTrail enriched events. \n"];
+  type_: type_
+    [@ocaml.doc
+      "Specifies the type of the event record field in ContextKeySelector. Valid values include RequestContext, TagContext.\n"]}
+[@@ocaml.doc
+  "An object that contains information types to be included in CloudTrail enriched events.\n"]
+type nonrec put_event_configuration_response =
+  {
+  context_key_selectors: context_key_selector list option
+    [@ocaml.doc
+      "The list of context key selectors that are configured for the event data store.\n"];
+  max_event_size: max_event_size option
+    [@ocaml.doc
+      "The maximum allowed size for events stored in the specified event data store.\n"];
+  event_data_store_arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which the event configuration settings were updated.\n"]}
+[@@ocaml.doc ""]
+type nonrec put_event_configuration_request =
+  {
+  context_key_selectors: context_key_selector list
+    [@ocaml.doc
+      "A list of context key selectors that will be included to provide enriched event data.\n"];
+  max_event_size: max_event_size
+    [@ocaml.doc
+      "The maximum allowed size for events to be stored in the specified event data store. If you are using context key selectors, MaxEventSize must be set to Large.\n"];
+  event_data_store: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which you want to update event configuration settings.\n"]}
 [@@ocaml.doc ""]
 type nonrec public_key =
   {
@@ -1265,7 +1458,7 @@ type nonrec list_tags_request =
   next_token: string option [@ocaml.doc "Reserved for future use.\n"];
   resource_id_list: string list
     [@ocaml.doc
-      "Specifies a list of trail, event data store, or channel ARNs whose tags will be listed. The list has a limit of 20 ARNs.\n\n  Example trail ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
+      "Specifies a list of trail, event data store, dashboard, or channel ARNs whose tags will be listed. The list has a limit of 20 ARNs.\n\n  Example trail ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n   \n    Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n    "]}
 [@@ocaml.doc "Specifies a list of tags to return.\n"]
 type nonrec invalid_token_exception =
   {
@@ -1365,10 +1558,10 @@ type nonrec list_insights_metric_data_request =
       "Returned if all datapoints can't be returned in a single call. For example, due to reaching [MaxResults].\n\n Add this parameter to the request to continue retrieving results starting from the last evaluated point.\n "];
   max_results: int option
     [@ocaml.doc
-      "The maximum number of datapoints to return. Valid values are integers from 1 to 21600. The default value is 21600.\n"];
+      "The maximum number of data points to return. Valid values are integers from 1 to 21600. The default value is 21600.\n"];
   data_type: insights_metric_data_type option
     [@ocaml.doc
-      "Type of datapoints to return. Valid values are [NonZeroData] and [FillWithZeros]. The default is [NonZeroData].\n"];
+      "Type of data points to return. Valid values are [NonZeroData] and [FillWithZeros]. The default is [NonZeroData].\n"];
   period: int option
     [@ocaml.doc
       "Granularity of data to retrieve, in seconds. Valid values are [60], [300], and [3600]. If you specify any other value, you will get an error. The default is 3600 seconds.\n"];
@@ -1499,6 +1692,33 @@ type nonrec list_event_data_stores_request =
     [@ocaml.doc
       "A token you can use to get the next page of event data store results.\n"]}
 [@@ocaml.doc ""]
+type nonrec dashboard_detail =
+  {
+  type_: dashboard_type option [@ocaml.doc " The type of dashboard. \n"];
+  dashboard_arn: string option [@ocaml.doc " The ARN for the dashboard. \n"]}
+[@@ocaml.doc " Provides information about a CloudTrail Lake dashboard. \n"]
+type nonrec list_dashboards_response =
+  {
+  next_token: string option
+    [@ocaml.doc
+      " A token you can use to get the next page of dashboard results. \n"];
+  dashboards: dashboard_detail list option
+    [@ocaml.doc
+      " Contains information about dashboards in the account, in the current Region that match the applied filters. \n"]}
+[@@ocaml.doc ""]
+type nonrec list_dashboards_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      " The maximum number of dashboards to display on a single page. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " A token you can use to get the next page of dashboard results. \n"];
+  type_: dashboard_type option
+    [@ocaml.doc
+      " Specify a dashboard type to filter on: [CUSTOM] or [MANAGED]. \n"];
+  name_prefix: string option
+    [@ocaml.doc " Specify a name prefix to filter on. \n"]}[@@ocaml.doc ""]
 type nonrec channel =
   {
   name: string option
@@ -1616,7 +1836,7 @@ type nonrec get_trail_status_request =
   {
   name: string
     [@ocaml.doc
-      "Specifies the name or the CloudTrail ARN of the trail for which you are requesting status. To get the status of a shadow trail (a replication of the trail in another Region), you must specify its ARN. The following is the format of a trail ARN.\n\n  [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n "]}
+      "Specifies the name or the CloudTrail ARN of the trail for which you are requesting status. To get the status of a shadow trail (a replication of the trail in another Region), you must specify its ARN.\n\n  The following is the format of a trail ARN: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n   If the trail is an organization trail and you are a member account in the organization in Organizations, you must provide the full ARN of that trail, and not just the name.\n   \n    "]}
 [@@ocaml.doc
   "The name of a trail about which you want the current status.\n"]
 type nonrec get_trail_response = {
@@ -1629,18 +1849,21 @@ type nonrec get_trail_request =
 [@@ocaml.doc ""]
 type nonrec get_resource_policy_response =
   {
+  delegated_admin_resource_policy: string option
+    [@ocaml.doc
+      " The default resource-based policy that is automatically generated for the delegated administrator of an Organizations organization. This policy will be evaluated in tandem with any policy you submit for the resource. For more information about this policy, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-organizations.html#cloudtrail-lake-organizations-eds-rbp}Default resource policy for delegated administrators}. \n"];
   resource_policy: string option
     [@ocaml.doc
-      " A JSON-formatted string that contains the resource-based policy attached to the CloudTrail channel. \n"];
+      " A JSON-formatted string that contains the resource-based policy attached to the CloudTrail event data store, dashboard, or channel. \n"];
   resource_arn: string option
     [@ocaml.doc
-      " The Amazon Resource Name (ARN) of the CloudTrail channel attached to resource-based policy. \n"]}
+      " The Amazon Resource Name (ARN) of the CloudTrail event data store, dashboard, or channel attached to resource-based policy. \n\n Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
 [@@ocaml.doc ""]
 type nonrec get_resource_policy_request =
   {
   resource_arn: string
     [@ocaml.doc
-      " The Amazon Resource Name (ARN) of the CloudTrail channel attached to the resource-based policy. The following is the format of a resource ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel]. \n"]}
+      " The Amazon Resource Name (ARN) of the CloudTrail event data store, dashboard, or channel attached to the resource-based policy.\n\n Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
 [@@ocaml.doc ""]
 type nonrec get_query_results_response =
   {
@@ -1659,6 +1882,8 @@ type nonrec get_query_results_response =
 [@@ocaml.doc ""]
 type nonrec get_query_results_request =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
   max_query_results: int option
     [@ocaml.doc
       "The maximum number of query results to display on a single page.\n"];
@@ -1784,6 +2009,59 @@ type nonrec get_event_data_store_request =
     [@ocaml.doc
       "The ARN (or ID suffix of the ARN) of the event data store about which you want information.\n"]}
 [@@ocaml.doc ""]
+type nonrec get_event_configuration_response =
+  {
+  context_key_selectors: context_key_selector list option
+    [@ocaml.doc
+      "The list of context key selectors that are configured for the event data store.\n"];
+  max_event_size: max_event_size option
+    [@ocaml.doc
+      "The maximum allowed size for events stored in the specified event data store.\n"];
+  event_data_store_arn: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which the event configuration settings are returned.\n"]}
+[@@ocaml.doc ""]
+type nonrec get_event_configuration_request =
+  {
+  event_data_store: string option
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which you want to retrieve event configuration settings.\n"]}
+[@@ocaml.doc ""]
+type nonrec dashboard_status =
+  | DELETING [@ocaml.doc ""]
+  | UPDATED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | CREATED [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec get_dashboard_response =
+  {
+  termination_protection_enabled: bool option
+    [@ocaml.doc
+      " Indicates whether termination protection is enabled for the dashboard. \n"];
+  last_refresh_failure_reason: string option
+    [@ocaml.doc
+      " Provides information about failures for the last scheduled refresh. \n"];
+  last_refresh_id: string option
+    [@ocaml.doc " The ID of the last dashboard refresh. \n"];
+  updated_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when the dashboard was last updated. \n"];
+  created_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when the dashboard was created. \n"];
+  refresh_schedule: refresh_schedule option
+    [@ocaml.doc " The refresh schedule for the dashboard, if configured. \n"];
+  widgets: widget list option
+    [@ocaml.doc " An array of widgets for the dashboard. \n"];
+  status: dashboard_status option
+    [@ocaml.doc " The status of the dashboard. \n"];
+  type_: dashboard_type option [@ocaml.doc " The type of dashboard. \n"];
+  dashboard_arn: string option [@ocaml.doc " The ARN for the dashboard. \n"]}
+[@@ocaml.doc ""]
+type nonrec get_dashboard_request =
+  {
+  dashboard_id: string [@ocaml.doc " The name or ARN for the dashboard. \n"]}
+[@@ocaml.doc ""]
 type nonrec get_channel_response =
   {
   ingestion_status: ingestion_status option
@@ -1808,6 +2086,32 @@ type nonrec get_channel_request =
   {
   channel: string [@ocaml.doc "The ARN or [UUID] of a channel.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec generate_response_exception =
+  {
+  message: string option
+    [@ocaml.doc
+      "Brief description of the exception returned by the request.\n"]}
+[@@ocaml.doc
+  " This exception is thrown when a valid query could not be generated for the provided prompt. \n"]
+type nonrec generate_query_response =
+  {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
+  query_alias: string option
+    [@ocaml.doc
+      " An alias that identifies the prompt. When you run the [StartQuery] operation, you can pass in either the [QueryAlias] or [QueryStatement] parameter. \n"];
+  query_statement: string option
+    [@ocaml.doc " The SQL query statement generated from the prompt. \n"]}
+[@@ocaml.doc ""]
+type nonrec generate_query_request =
+  {
+  prompt: string
+    [@ocaml.doc
+      " The prompt that you want to use to generate the query. The prompt must be in English. For example prompts, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-query-generator.html#lake-query-generator-examples}Example prompts} in the {i CloudTrail } user guide. \n"];
+  event_data_stores: string list
+    [@ocaml.doc
+      " The ARN (or ID suffix of the ARN) of the event data store that you want to query. You can only specify one event data store. \n"]}
+[@@ocaml.doc ""]
 type nonrec event_data_store_termination_protected_exception =
   {
   message: string option
@@ -1896,6 +2200,11 @@ type nonrec delivery_status =
   | SUCCESS [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec describe_query_response =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
+  prompt: string option
+    [@ocaml.doc
+      " The prompt used for a generated query. For information about generated queries, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-query-generator.html}Create CloudTrail Lake queries from natural language prompts} in the {i CloudTrail } user guide. \n"];
   delivery_status: delivery_status option
     [@ocaml.doc "The delivery status.\n"];
   delivery_s3_uri: string option
@@ -1914,6 +2223,10 @@ type nonrec describe_query_response =
                                                                   ""]
 type nonrec describe_query_request =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
+  refresh_id: string option
+    [@ocaml.doc " The ID of the dashboard refresh. \n"];
   query_alias: string option
     [@ocaml.doc " The alias that identifies a query template. \n"];
   query_id: string option [@ocaml.doc "The query ID.\n"];
@@ -1945,7 +2258,7 @@ type nonrec delete_resource_policy_request =
   {
   resource_arn: string
     [@ocaml.doc
-      " The Amazon Resource Name (ARN) of the CloudTrail channel you're deleting the resource-based policy from. The following is the format of a resource ARN: [arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel]. \n"]}
+      " The Amazon Resource Name (ARN) of the CloudTrail event data store, dashboard, or channel you're deleting the resource-based policy from.\n\n Example event data store ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n \n  Example dashboard ARN format: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n  \n   Example channel ARN format: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
 [@@ocaml.doc ""]
 type nonrec delete_event_data_store_request =
   {
@@ -1960,6 +2273,10 @@ type nonrec channel_exists_for_eds_exception =
       "Brief description of the exception returned by the request.\n"]}
 [@@ocaml.doc
   "This exception is thrown when the specified event data store cannot yet be deleted because it is in use by a channel.\n"]
+type nonrec delete_dashboard_request =
+  {
+  dashboard_id: string [@ocaml.doc " The name or ARN for the dashboard. \n"]}
+[@@ocaml.doc ""]
 type nonrec delete_channel_request =
   {
   channel: string
@@ -2031,7 +2348,7 @@ type nonrec create_trail_request =
       "Specifies whether the trail is publishing events from global services such as IAM to the log files.\n"];
   sns_topic_name: string option
     [@ocaml.doc
-      "Specifies the name of the Amazon SNS topic defined for notification of log file delivery. The maximum length is 256 characters.\n"];
+      "Specifies the name or ARN of the Amazon SNS topic defined for notification of log file delivery. The maximum length is 256 characters.\n"];
   s3_key_prefix: string option
     [@ocaml.doc
       "Specifies the Amazon S3 key prefix that comes after the name of the bucket you have designated for log file delivery. For more information, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/get-and-view-cloudtrail-log-files.html#cloudtrail-find-log-files}Finding Your CloudTrail Log Files}. The maximum length is 200 characters.\n"];
@@ -2104,6 +2421,36 @@ type nonrec create_event_data_store_request =
       "The advanced event selectors to use to select the events for the data store. You can configure up to five advanced event selectors for each event data store.\n\n  For more information about how to use advanced event selectors to log CloudTrail events, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html#creating-data-event-selectors-advanced}Log events by using advanced event selectors} in the CloudTrail User Guide.\n \n  For more information about how to use advanced event selectors to include Config configuration items in your event data store, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-eds-cli.html#lake-cli-create-eds-config}Create an event data store for Config configuration items} in the CloudTrail User Guide.\n  \n   For more information about how to use advanced event selectors to include events outside of Amazon Web Services events in your event data store, see {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-integrations-cli.html#lake-cli-create-integration}Create an integration to log events from outside Amazon Web Services} in the CloudTrail User Guide.\n   "];
   name: string [@ocaml.doc "The name of the event data store.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec create_dashboard_response =
+  {
+  termination_protection_enabled: bool option
+    [@ocaml.doc
+      " Indicates whether termination protection is enabled for the dashboard. \n"];
+  refresh_schedule: refresh_schedule option
+    [@ocaml.doc " The refresh schedule for the dashboard, if configured. \n"];
+  tags_list: tag list option [@ocaml.doc ""];
+  widgets: widget list option
+    [@ocaml.doc " An array of widgets for the dashboard. \n"];
+  type_: dashboard_type option [@ocaml.doc " The dashboard type. \n"];
+  name: string option [@ocaml.doc " The name of the dashboard. \n"];
+  dashboard_arn: string option [@ocaml.doc " The ARN for the dashboard. \n"]}
+[@@ocaml.doc ""]
+type nonrec create_dashboard_request =
+  {
+  widgets: request_widget list option
+    [@ocaml.doc
+      " An array of widgets for a custom dashboard. A custom dashboard can have a maximum of ten widgets. \n\n You do not need to specify widgets for the Highlights dashboard.\n "];
+  termination_protection_enabled: bool option
+    [@ocaml.doc
+      " Specifies whether termination protection is enabled for the dashboard. If termination protection is enabled, you cannot delete the dashboard until termination protection is disabled. \n"];
+  tags_list: tag list option [@ocaml.doc ""];
+  refresh_schedule: refresh_schedule option
+    [@ocaml.doc
+      " The refresh schedule configuration for the dashboard. \n\n To create the Highlights dashboard, you must set a refresh schedule and set the [Status] to [ENABLED]. The [Unit] for the refresh schedule must be [HOURS] and the [Value] must be [6].\n "];
+  name: string
+    [@ocaml.doc
+      " The name of the dashboard. The name must be unique to your account. \n\n To create the Highlights dashboard, the name must be [AWSCloudTrail-Highlights].\n "]}
+[@@ocaml.doc ""]
 type nonrec create_channel_response =
   {
   tags: tag list option [@ocaml.doc ""];
@@ -2135,6 +2482,8 @@ type nonrec channel_max_limit_exceeded_exception =
   " This exception is thrown when the maximum number of channels limit is exceeded. \n"]
 type nonrec cancel_query_response =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
   query_status: query_status
     [@ocaml.doc
       "Shows the status of a query after a [CancelQuery] request. Typically, the values shown are either [RUNNING] or [CANCELLED].\n"];
@@ -2142,6 +2491,8 @@ type nonrec cancel_query_response =
                                                                     ""]
 type nonrec cancel_query_request =
   {
+  event_data_store_owner_account_id: string option
+    [@ocaml.doc " The account ID of the event data store owner. \n"];
   query_id: string
     [@ocaml.doc
       "The ID of the query that you want to cancel. The [QueryId] comes from the response of a [StartQuery] operation.\n"];
@@ -2155,6 +2506,6 @@ type nonrec add_tags_request =
     [@ocaml.doc "Contains a list of tags, up to a limit of 50\n"];
   resource_id: string
     [@ocaml.doc
-      "Specifies the ARN of the trail, event data store, or channel to which one or more tags will be added.\n\n The format of a trail ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  The format of an event data store ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   The format of a channel ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n   "]}
+      "Specifies the ARN of the trail, event data store, dashboard, or channel to which one or more tags will be added.\n\n The format of a trail ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail] \n \n  The format of an event data store ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE] \n  \n   The format of a dashboard ARN is: [arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash] \n   \n    The format of a channel ARN is: [arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890] \n    "]}
 [@@ocaml.doc
-  "Specifies the tags to add to a trail, event data store, or channel.\n"]
+  "Specifies the tags to add to a trail, event data store, dashboard, or channel.\n"]

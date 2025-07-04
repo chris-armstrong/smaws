@@ -3,21 +3,24 @@ open Types
 let saml_user_attribute_of_yojson = string_of_yojson
 let saml_metadata_of_yojson = string_of_yojson
 let saml_group_attribute_of_yojson = string_of_yojson
+let open_search_serverless_entity_id_of_yojson = string_of_yojson
 let vpc_id_of_yojson = string_of_yojson
 let vpc_endpoint_id_of_yojson = string_of_yojson
 let vpc_endpoint_name_of_yojson = string_of_yojson
 let base_unit_of_yojson = unit_of_yojson
 let vpc_endpoint_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PENDING" -> PENDING
-   | `String "DELETING" -> DELETING
-   | `String "ACTIVE" -> ACTIVE
-   | `String "FAILED" -> FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "VpcEndpointStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "VpcEndpointStatus") : 
-  vpc_endpoint_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PENDING" -> PENDING
+    | `String "DELETING" -> DELETING
+    | `String "ACTIVE" -> ACTIVE
+    | `String "FAILED" -> FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "VpcEndpointStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "VpcEndpointStatus") : 
+     vpc_endpoint_status) : vpc_endpoint_status)
 let vpc_endpoint_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -68,6 +71,12 @@ let base_long_of_yojson = long_of_yojson
 let vpc_endpoint_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     failure_message =
+       (option_of_yojson
+          (value_for_key base_string_of_yojson "failureMessage") _list path);
+     failure_code =
+       (option_of_yojson (value_for_key base_string_of_yojson "failureCode")
+          _list path);
      created_date =
        (option_of_yojson (value_for_key base_long_of_yojson "createdDate")
           _list path);
@@ -168,15 +177,16 @@ let conflict_exception_of_yojson tree path =
           _list path)
    } : conflict_exception)
 let security_policy_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "encryption" -> Encryption
-   | `String "network" -> Network
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SecurityPolicyType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "SecurityPolicyType") : 
-  security_policy_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "encryption" -> Encryption
+    | `String "network" -> Network
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SecurityPolicyType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "SecurityPolicyType") : 
+     security_policy_type) : security_policy_type)
 let policy_name_of_yojson = string_of_yojson
 let policy_version_of_yojson = string_of_yojson
 let policy_description_of_yojson = string_of_yojson
@@ -259,14 +269,16 @@ let resource_not_found_exception_of_yojson tree path =
    } : resource_not_found_exception)
 let security_config_id_of_yojson = string_of_yojson
 let security_config_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "saml" -> Saml
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SecurityConfigType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "SecurityConfigType") : 
-  security_config_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "saml" -> Saml
+    | `String "iamidentitycenter" -> Iamidentitycenter
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SecurityConfigType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "SecurityConfigType") : 
+     security_config_type) : security_config_type)
 let config_description_of_yojson = string_of_yojson
 let base_integer_of_yojson = int_of_yojson
 let saml_config_options_of_yojson tree path =
@@ -275,6 +287,10 @@ let saml_config_options_of_yojson tree path =
      session_timeout =
        (option_of_yojson
           (value_for_key base_integer_of_yojson "sessionTimeout") _list path);
+     open_search_serverless_entity_id =
+       (option_of_yojson
+          (value_for_key open_search_serverless_entity_id_of_yojson
+             "openSearchServerlessEntityId") _list path);
      group_attribute =
        (option_of_yojson
           (value_for_key saml_group_attribute_of_yojson "groupAttribute")
@@ -285,6 +301,63 @@ let saml_config_options_of_yojson tree path =
           path);
      metadata = (value_for_key saml_metadata_of_yojson "metadata" _list path)
    } : saml_config_options)
+let iam_identity_center_instance_arn_of_yojson = string_of_yojson
+let iam_identity_center_application_arn_of_yojson = string_of_yojson
+let iam_identity_center_user_attribute_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UserId" -> UserId
+    | `String "UserName" -> UserName
+    | `String "Email" -> Email
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "IamIdentityCenterUserAttribute" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "IamIdentityCenterUserAttribute") : 
+     iam_identity_center_user_attribute) : iam_identity_center_user_attribute)
+let iam_identity_center_group_attribute_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "GroupId" -> GroupId
+    | `String "GroupName" -> GroupName
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "IamIdentityCenterGroupAttribute" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "IamIdentityCenterGroupAttribute") : iam_identity_center_group_attribute) : 
+  iam_identity_center_group_attribute)
+let iam_identity_center_config_options_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     group_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_group_attribute_of_yojson
+             "groupAttribute") _list path);
+     user_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_user_attribute_of_yojson
+             "userAttribute") _list path);
+     application_description =
+       (option_of_yojson
+          (value_for_key base_string_of_yojson "applicationDescription")
+          _list path);
+     application_name =
+       (option_of_yojson
+          (value_for_key base_string_of_yojson "applicationName") _list path);
+     application_arn =
+       (option_of_yojson
+          (value_for_key iam_identity_center_application_arn_of_yojson
+             "applicationArn") _list path);
+     instance_arn =
+       (option_of_yojson
+          (value_for_key iam_identity_center_instance_arn_of_yojson
+             "instanceArn") _list path)
+   } : iam_identity_center_config_options)
 let security_config_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -294,6 +367,10 @@ let security_config_detail_of_yojson tree path =
      created_date =
        (option_of_yojson (value_for_key base_long_of_yojson "createdDate")
           _list path);
+     iam_identity_center_options =
+       (option_of_yojson
+          (value_for_key iam_identity_center_config_options_of_yojson
+             "iamIdentityCenterOptions") _list path);
      saml_options =
        (option_of_yojson
           (value_for_key saml_config_options_of_yojson "samlOptions") _list
@@ -320,12 +397,28 @@ let update_security_config_response_of_yojson tree path =
           (value_for_key security_config_detail_of_yojson
              "securityConfigDetail") _list path)
    } : update_security_config_response)
+let update_iam_identity_center_config_options_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     group_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_group_attribute_of_yojson
+             "groupAttribute") _list path);
+     user_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_user_attribute_of_yojson
+             "userAttribute") _list path)
+   } : update_iam_identity_center_config_options)
 let update_security_config_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token =
        (option_of_yojson (value_for_key client_token_of_yojson "clientToken")
           _list path);
+     iam_identity_center_options_updates =
+       (option_of_yojson
+          (value_for_key update_iam_identity_center_config_options_of_yojson
+             "iamIdentityCenterOptionsUpdates") _list path);
      saml_options =
        (option_of_yojson
           (value_for_key saml_config_options_of_yojson "samlOptions") _list
@@ -339,14 +432,15 @@ let update_security_config_request_of_yojson tree path =
      id = (value_for_key security_config_id_of_yojson "id" _list path)
    } : update_security_config_request)
 let lifecycle_policy_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "retention" -> Retention
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "LifecyclePolicyType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "LifecyclePolicyType") : 
-  lifecycle_policy_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "retention" -> Retention
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LifecyclePolicyType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "LifecyclePolicyType") : 
+     lifecycle_policy_type) : lifecycle_policy_type)
 let lifecycle_policy_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -403,26 +497,28 @@ let update_lifecycle_policy_request_of_yojson tree path =
 let collection_id_of_yojson = string_of_yojson
 let collection_name_of_yojson = string_of_yojson
 let collection_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CREATING" -> CREATING
-   | `String "DELETING" -> DELETING
-   | `String "ACTIVE" -> ACTIVE
-   | `String "FAILED" -> FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CollectionStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "CollectionStatus") : 
-  collection_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CREATING" -> CREATING
+    | `String "DELETING" -> DELETING
+    | `String "ACTIVE" -> ACTIVE
+    | `String "FAILED" -> FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CollectionStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "CollectionStatus") : 
+     collection_status) : collection_status)
 let collection_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SEARCH" -> SEARCH
-   | `String "TIMESERIES" -> TIMESERIES
-   | `String "VECTORSEARCH" -> VECTORSEARCH
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CollectionType" value)
-   | _ -> raise (deserialize_wrong_type_error path "CollectionType") : 
-  collection_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SEARCH" -> SEARCH
+    | `String "TIMESERIES" -> TIMESERIES
+    | `String "VECTORSEARCH" -> VECTORSEARCH
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CollectionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "CollectionType") : 
+     collection_type) : collection_type)
 let update_collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -509,13 +605,14 @@ let update_account_settings_request_of_yojson tree path =
           path)
    } : update_account_settings_request)
 let access_policy_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "data" -> Data
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AccessPolicyType" value)
-   | _ -> raise (deserialize_wrong_type_error path "AccessPolicyType") : 
-  access_policy_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "data" -> Data
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AccessPolicyType" value)
+    | _ -> raise (deserialize_wrong_type_error path "AccessPolicyType") : 
+     access_policy_type) : access_policy_type)
 let access_policy_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -596,14 +693,15 @@ let tag_resource_request_of_yojson tree path =
      resource_arn = (value_for_key arn_of_yojson "resourceArn" _list path)
    } : tag_resource_request)
 let standby_replicas_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ENABLED" -> ENABLED
-   | `String "DISABLED" -> DISABLED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "StandbyReplicas" value)
-   | _ -> raise (deserialize_wrong_type_error path "StandbyReplicas") : 
-  standby_replicas)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ENABLED" -> ENABLED
+    | `String "DISABLED" -> DISABLED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "StandbyReplicas" value)
+    | _ -> raise (deserialize_wrong_type_error path "StandbyReplicas") : 
+     standby_replicas) : standby_replicas)
 let security_policy_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -673,12 +771,14 @@ let security_config_stats_of_yojson tree path =
           (value_for_key base_long_of_yojson "SamlConfigCount") _list path)
    } : security_config_stats)
 let resource_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "index" -> Index
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ResourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
-  resource_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "index" -> Index
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
+     resource_type) : resource_type)
 let resource_name_of_yojson = string_of_yojson
 let resource_of_yojson = string_of_yojson
 let resource_filter_of_yojson tree path =
@@ -927,6 +1027,12 @@ let batch_get_effective_lifecycle_policy_request_of_yojson tree path =
 let collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     failure_message =
+       (option_of_yojson
+          (value_for_key base_string_of_yojson "failureMessage") _list path);
+     failure_code =
+       (option_of_yojson (value_for_key base_string_of_yojson "failureCode")
+          _list path);
      dashboard_endpoint =
        (option_of_yojson
           (value_for_key base_string_of_yojson "dashboardEndpoint") _list
@@ -1433,12 +1539,31 @@ let create_security_config_response_of_yojson tree path =
              "securityConfigDetail") _list path)
    } : create_security_config_response)
 let config_name_of_yojson = string_of_yojson
+let create_iam_identity_center_config_options_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     group_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_group_attribute_of_yojson
+             "groupAttribute") _list path);
+     user_attribute =
+       (option_of_yojson
+          (value_for_key iam_identity_center_user_attribute_of_yojson
+             "userAttribute") _list path);
+     instance_arn =
+       (value_for_key iam_identity_center_instance_arn_of_yojson
+          "instanceArn" _list path)
+   } : create_iam_identity_center_config_options)
 let create_security_config_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token =
        (option_of_yojson (value_for_key client_token_of_yojson "clientToken")
           _list path);
+     iam_identity_center_options =
+       (option_of_yojson
+          (value_for_key create_iam_identity_center_config_options_of_yojson
+             "iamIdentityCenterOptions") _list path);
      saml_options =
        (option_of_yojson
           (value_for_key saml_config_options_of_yojson "samlOptions") _list

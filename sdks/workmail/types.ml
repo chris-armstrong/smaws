@@ -45,10 +45,13 @@ type nonrec user_role =
   | USER [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec update_user_request =
   {
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   office: string option [@ocaml.doc "Updates the user's office.\n"];
   country: string option [@ocaml.doc "Updates the user's country.\n"];
   department: string option [@ocaml.doc "Updates the user's department.\n"];
-  zip_code: string option [@ocaml.doc "Updates the user's zipcode.\n"];
+  zip_code: string option [@ocaml.doc "Updates the user's zip code.\n"];
   company: string option [@ocaml.doc "Updates the user's company.\n"];
   city: string option [@ocaml.doc "Updates the user's city.\n"];
   job_title: string option [@ocaml.doc "Updates the user's job title.\n"];
@@ -454,6 +457,41 @@ type nonrec put_inbound_dmarc_settings_request =
     [@ocaml.doc
       "The ID of the organization that you are applying the DMARC policy to.\n"]}
 [@@ocaml.doc ""]
+type nonrec identity_provider_authentication_mode =
+  | IDENTITY_PROVIDER_AND_DIRECTORY [@ocaml.doc ""]
+  | IDENTITY_PROVIDER_ONLY [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec identity_center_configuration =
+  {
+  application_arn: string
+    [@ocaml.doc
+      " The Amazon Resource Name (ARN) of IAMIdentity Center Application for WorkMail. Must be created by the WorkMail API, see CreateIdentityCenterApplication.\n"];
+  instance_arn: string
+    [@ocaml.doc
+      " The Amazon Resource Name (ARN) of the of IAM Identity Center instance. Must be in the same AWS account and region as WorkMail organization.\n"]}
+[@@ocaml.doc " The IAM Identity Center configuration. \n"]
+type nonrec personal_access_token_configuration_status =
+  | INACTIVE [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec personal_access_token_configuration =
+  {
+  lifetime_in_days: int option
+    [@ocaml.doc
+      " The validity of the Personal Access Token status in days. \n"];
+  status: personal_access_token_configuration_status
+    [@ocaml.doc
+      " The status of the Personal Access Token allowed for the organization. \n\n {ul\n       {-   {i Active} - Mailbox users can login to the web application and choose {i Settings} to see the new {i Personal Access Tokens} page to create and delete the Personal Access Tokens. Mailbox users can use the Personal Access Tokens to set up mailbox connection from desktop or mobile email clients.\n           \n            }\n       {-   {i Inactive} - Personal Access Tokens are disabled for your organization. Mailbox users can\226\128\153t create, list, or delete Personal Access Tokens and can\226\128\153t use them to connect to their mailboxes from desktop or mobile email clients.\n           \n            }\n       }\n  "]}
+[@@ocaml.doc " Displays the Personal Access Token status. \n"]
+type nonrec put_identity_provider_configuration_request =
+  {
+  personal_access_token_configuration: personal_access_token_configuration
+    [@ocaml.doc
+      " The details of the Personal Access Token configuration. \n"];
+  identity_center_configuration: identity_center_configuration
+    [@ocaml.doc " The details of the IAM Identity Center configuration.\n"];
+  authentication_mode: identity_provider_authentication_mode
+    [@ocaml.doc " The authentication mode used in WorkMail.\n"];
+  organization_id: string
+    [@ocaml.doc " The ID of the WorkMail Organization. \n"]}[@@ocaml.doc ""]
 type nonrec put_email_monitoring_configuration_request =
   {
   log_group_arn: string
@@ -500,6 +538,12 @@ type nonrec entity_state =
   | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec user =
   {
+  identity_provider_identity_store_id: string option
+    [@ocaml.doc
+      "Identity store ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   disabled_date: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "The date indicating when the user was disabled from WorkMail use.\n"];
@@ -525,6 +569,9 @@ type nonrec list_users_response =
                                                                   ""]
 type nonrec list_users_filters =
   {
+  identity_provider_user_id_prefix: string option
+    [@ocaml.doc
+      "Filters only users with the ID from the IAM Identity Center.\n"];
   state: entity_state option
     [@ocaml.doc "Filters only users with the provided state.\n"];
   primary_email_prefix: string option
@@ -644,6 +691,45 @@ type nonrec list_resource_delegates_request =
     [@ocaml.doc
       "The identifier for the organization that contains the resource for which delegates are listed.\n"]}
 [@@ocaml.doc ""]
+type nonrec personal_access_token_summary =
+  {
+  scopes: string list option
+    [@ocaml.doc
+      " Lists all the Personal Access Token permissions for a mailbox. \n"];
+  expires_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token will expire. \n"];
+  date_last_used: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token was last used. \n"];
+  date_created: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token was created. \n"];
+  name: string option
+    [@ocaml.doc " The name of the Personal Access Token. \n"];
+  user_id: string option
+    [@ocaml.doc
+      " The user ID of the WorkMail user associated with the Personal Access Token. \n"];
+  personal_access_token_id: string option
+    [@ocaml.doc " The ID of the Personal Access Token. \n"]}[@@ocaml.doc
+                                                              " The summary of the Personal Access Token. \n"]
+type nonrec list_personal_access_tokens_response =
+  {
+  personal_access_token_summaries: personal_access_token_summary list option
+    [@ocaml.doc
+      " Lists all the personal tokens in an organization or user, if user ID is provided. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The token from the previous response to query the next page.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_personal_access_tokens_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      " The maximum amount of items that should be returned in a response. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The token from the previous response to query the next page.\n"];
+  user_id: string option [@ocaml.doc " The WorkMail User ID. \n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec organization_summary =
   {
   state: string option
@@ -1136,6 +1222,30 @@ type nonrec list_access_control_rules_request =
   {
   organization_id: string
     [@ocaml.doc "The identifier for the organization.\n"]}[@@ocaml.doc ""]
+type nonrec get_personal_access_token_metadata_response =
+  {
+  scopes: string list option
+    [@ocaml.doc
+      " Lists all the Personal Access Token permissions for a mailbox. \n"];
+  expires_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The time when the Personal Access Token ID will expire. \n"];
+  date_last_used: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The date when the Personal Access Token ID was last used. \n"];
+  date_created: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The date when the Personal Access Token ID was created. \n"];
+  name: string option [@ocaml.doc " The Personal Access Token name. \n"];
+  user_id: string option [@ocaml.doc " The WorkMail User ID. \n"];
+  personal_access_token_id: string option
+    [@ocaml.doc " The Personal Access Token ID.\n"]}[@@ocaml.doc ""]
+type nonrec get_personal_access_token_metadata_request =
+  {
+  personal_access_token_id: string
+    [@ocaml.doc " The Personal Access Token ID.\n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec get_mobile_device_access_override_response =
   {
   date_modified: CoreTypes.Timestamp.t option
@@ -1357,6 +1467,12 @@ type nonrec disassociate_delegate_from_resource_request =
 [@@ocaml.doc ""]
 type nonrec describe_user_response =
   {
+  identity_provider_identity_store_id: string option
+    [@ocaml.doc
+      " Identity Store ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail. \n"];
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   office: string option [@ocaml.doc "Office where the user is located.\n"];
   country: string option [@ocaml.doc "Country where the user is located.\n"];
   department: string option [@ocaml.doc "Department of the user.\n"];
@@ -1512,6 +1628,21 @@ type nonrec describe_inbound_dmarc_settings_request =
   {
   organization_id: string
     [@ocaml.doc "Lists the ID of the given organization.\n"]}[@@ocaml.doc ""]
+type nonrec describe_identity_provider_configuration_response =
+  {
+  personal_access_token_configuration:
+    personal_access_token_configuration option
+    [@ocaml.doc
+      " The details of the Personal Access Token configuration. \n"];
+  identity_center_configuration: identity_center_configuration option
+    [@ocaml.doc " The details of the IAM Identity Center configuration. \n"];
+  authentication_mode: identity_provider_authentication_mode option
+    [@ocaml.doc " The authentication mode used in WorkMail.\n"]}[@@ocaml.doc
+                                                                  ""]
+type nonrec describe_identity_provider_configuration_request =
+  {
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec describe_group_response =
   {
   hidden_from_global_address_list: bool option
@@ -1617,6 +1748,12 @@ type nonrec delete_resource_request =
     [@ocaml.doc
       "The identifier associated with the organization from which the resource is deleted.\n"]}
 [@@ocaml.doc ""]
+type nonrec delete_personal_access_token_request =
+  {
+  personal_access_token_id: string
+    [@ocaml.doc " The Personal Access Token ID.\n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec delete_organization_response =
   {
   state: string option [@ocaml.doc "The state of the organization.\n"];
@@ -1624,6 +1761,9 @@ type nonrec delete_organization_response =
 [@@ocaml.doc ""]
 type nonrec delete_organization_request =
   {
+  delete_identity_center_application: bool option
+    [@ocaml.doc
+      "Deletes IAM Identity Center application for WorkMail. This action does not affect authentication settings for any organization.\n"];
   force_delete: bool option
     [@ocaml.doc
       "Deletes a WorkMail organization even if the organization has enabled users.\n"];
@@ -1673,6 +1813,15 @@ type nonrec delete_impersonation_role_request =
   organization_id: string
     [@ocaml.doc
       "The WorkMail organization from which to delete the impersonation role.\n"]}
+[@@ocaml.doc ""]
+type nonrec delete_identity_provider_configuration_request =
+  {
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
+type nonrec delete_identity_center_application_request =
+  {
+  application_arn: string
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the application. \n"]}
 [@@ocaml.doc ""]
 type nonrec delete_group_request =
   {
@@ -1724,6 +1873,9 @@ type nonrec create_user_response =
 [@@ocaml.doc ""]
 type nonrec create_user_request =
   {
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   hidden_from_global_address_list: bool option
     [@ocaml.doc
       "If this parameter is enabled, the user will be hidden from the address book.\n"];
@@ -1849,6 +2001,20 @@ type nonrec create_impersonation_role_request =
   client_token: string option
     [@ocaml.doc "The idempotency token for the client request.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec create_identity_center_application_response =
+  {
+  application_arn: string option
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the application. \n"]}
+[@@ocaml.doc ""]
+type nonrec create_identity_center_application_request =
+  {
+  client_token: string option
+    [@ocaml.doc " The idempotency token associated with the request. \n"];
+  instance_arn: string
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the instance. \n"];
+  name: string
+    [@ocaml.doc " The name of the IAM Identity Center application. \n"]}
+[@@ocaml.doc ""]
 type nonrec create_group_response =
   {
   group_id: string option [@ocaml.doc "The identifier of the group.\n"]}

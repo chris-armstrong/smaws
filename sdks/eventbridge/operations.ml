@@ -143,6 +143,9 @@ module CreateConnection =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
           | (_, "InternalException") ->
               `InternalException (internal_exception_of_yojson tree path)
           | (_, "LimitExceededException") ->
@@ -151,6 +154,11 @@ module CreateConnection =
           | (_, "ResourceAlreadyExistsException") ->
               `ResourceAlreadyExistsException
                 (resource_already_exists_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -1604,6 +1612,9 @@ module UpdateConnection =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
           | (_, "ConcurrentModificationException") ->
               `ConcurrentModificationException
                 (concurrent_modification_exception_of_yojson tree path)
@@ -1615,6 +1626,8 @@ module UpdateConnection =
           | (_, "ResourceNotFoundException") ->
               `ResourceNotFoundException
                 (resource_not_found_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler

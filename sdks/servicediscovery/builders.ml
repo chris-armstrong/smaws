@@ -28,6 +28,11 @@ let make_service_change
 let make_update_service_request ~service:(service_ : service_change)
   ~id:(id_ : string) () =
   ({ service = service_; id = id_ } : update_service_request)
+let make_update_service_attributes_response () = (() : unit)
+let make_update_service_attributes_request
+  ~attributes:(attributes_ : service_attributes_map)
+  ~service_id:(service_id_ : string) () =
+  ({ attributes = attributes_; service_id = service_id_ } : update_service_attributes_request)
 let make_update_public_dns_namespace_response
   ?operation_id:(operation_id_ : string option) () =
   ({ operation_id = operation_id_ } : update_public_dns_namespace_response)
@@ -138,6 +143,10 @@ let make_service_summary
 let make_service_filter ?condition:(condition_ : filter_condition option)
   ~values:(values_ : string list) ~name:(name_ : service_filter_name) () =
   ({ condition = condition_; values = values_; name = name_ } : service_filter)
+let make_service_attributes
+  ?attributes:(attributes_ : service_attributes_map option)
+  ?service_arn:(service_arn_ : string option) () =
+  ({ attributes = attributes_; service_arn = service_arn_ } : service_attributes)
 let make_service ?creator_request_id:(creator_request_id_ : string option)
   ?create_date:(create_date_ : CoreTypes.Timestamp.t option)
   ?health_check_custom_config:(health_check_custom_config_ :
@@ -259,6 +268,11 @@ let make_list_instances_request ?max_results:(max_results_ : int option)
      next_token = next_token_;
      service_id = service_id_
    } : list_instances_request)
+let make_get_service_attributes_response
+  ?service_attributes:(service_attributes_ : service_attributes option) () =
+  ({ service_attributes = service_attributes_ } : get_service_attributes_response)
+let make_get_service_attributes_request ~service_id:(service_id_ : string) ()
+  = ({ service_id = service_id_ } : get_service_attributes_request)
 let make_get_service_response ?service:(service_ : service option) () =
   ({ service = service_ } : get_service_response)
 let make_get_service_request ~id:(id_ : string) () =
@@ -380,6 +394,11 @@ let make_deregister_instance_response
 let make_deregister_instance_request ~instance_id:(instance_id_ : string)
   ~service_id:(service_id_ : string) () =
   ({ instance_id = instance_id_; service_id = service_id_ } : deregister_instance_request)
+let make_delete_service_attributes_response () = (() : unit)
+let make_delete_service_attributes_request
+  ~attributes:(attributes_ : string list) ~service_id:(service_id_ : string)
+  () =
+  ({ attributes = attributes_; service_id = service_id_ } : delete_service_attributes_request)
 let make_delete_service_response () = (() : unit)
 let make_delete_service_request ~id:(id_ : string) () =
   ({ id = id_ } : delete_service_request)

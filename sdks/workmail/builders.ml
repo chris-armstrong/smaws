@@ -1,8 +1,9 @@
 open Smaws_Lib
 open Types
 let make_update_user_response () = (() : unit)
-let make_update_user_request ?office:(office_ : string option)
-  ?country:(country_ : string option)
+let make_update_user_request
+  ?identity_provider_user_id:(identity_provider_user_id_ : string option)
+  ?office:(office_ : string option) ?country:(country_ : string option)
   ?department:(department_ : string option)
   ?zip_code:(zip_code_ : string option) ?company:(company_ : string option)
   ?city:(city_ : string option) ?job_title:(job_title_ : string option)
@@ -16,6 +17,7 @@ let make_update_user_request ?office:(office_ : string option)
   ?role:(role_ : user_role option) ~user_id:(user_id_ : string)
   ~organization_id:(organization_id_ : string) () =
   ({
+     identity_provider_user_id = identity_provider_user_id_;
      office = office_;
      country = country_;
      department = department_;
@@ -296,6 +298,32 @@ let make_put_inbound_dmarc_settings_response () = (() : unit)
 let make_put_inbound_dmarc_settings_request ~enforced:(enforced_ : bool)
   ~organization_id:(organization_id_ : string) () =
   ({ enforced = enforced_; organization_id = organization_id_ } : put_inbound_dmarc_settings_request)
+let make_put_identity_provider_configuration_response () = (() : unit)
+let make_identity_center_configuration
+  ~application_arn:(application_arn_ : string)
+  ~instance_arn:(instance_arn_ : string) () =
+  ({ application_arn = application_arn_; instance_arn = instance_arn_ } : 
+  identity_center_configuration)
+let make_personal_access_token_configuration
+  ?lifetime_in_days:(lifetime_in_days_ : int option)
+  ~status:(status_ : personal_access_token_configuration_status) () =
+  ({ lifetime_in_days = lifetime_in_days_; status = status_ } : personal_access_token_configuration)
+let make_put_identity_provider_configuration_request
+  ~personal_access_token_configuration:(personal_access_token_configuration_
+                                         :
+                                         personal_access_token_configuration)
+  ~identity_center_configuration:(identity_center_configuration_ :
+                                   identity_center_configuration)
+  ~authentication_mode:(authentication_mode_ :
+                         identity_provider_authentication_mode)
+  ~organization_id:(organization_id_ : string) () =
+  ({
+     personal_access_token_configuration =
+       personal_access_token_configuration_;
+     identity_center_configuration = identity_center_configuration_;
+     authentication_mode = authentication_mode_;
+     organization_id = organization_id_
+   } : put_identity_provider_configuration_request)
 let make_put_email_monitoring_configuration_response () = (() : unit)
 let make_put_email_monitoring_configuration_request
   ~log_group_arn:(log_group_arn_ : string) ~role_arn:(role_arn_ : string)
@@ -334,13 +362,20 @@ let make_put_access_control_rule_request
      effect_ = effect__;
      name = name_
    } : put_access_control_rule_request)
-let make_user ?disabled_date:(disabled_date_ : CoreTypes.Timestamp.t option)
+let make_user
+  ?identity_provider_identity_store_id:(identity_provider_identity_store_id_
+                                         : string option)
+  ?identity_provider_user_id:(identity_provider_user_id_ : string option)
+  ?disabled_date:(disabled_date_ : CoreTypes.Timestamp.t option)
   ?enabled_date:(enabled_date_ : CoreTypes.Timestamp.t option)
   ?user_role:(user_role_ : user_role option)
   ?state:(state_ : entity_state option)
   ?display_name:(display_name_ : string option) ?name:(name_ : string option)
   ?email:(email_ : string option) ?id:(id_ : string option) () =
   ({
+     identity_provider_identity_store_id =
+       identity_provider_identity_store_id_;
+     identity_provider_user_id = identity_provider_user_id_;
      disabled_date = disabled_date_;
      enabled_date = enabled_date_;
      user_role = user_role_;
@@ -353,11 +388,15 @@ let make_user ?disabled_date:(disabled_date_ : CoreTypes.Timestamp.t option)
 let make_list_users_response ?next_token:(next_token_ : string option)
   ?users:(users_ : user list option) () =
   ({ next_token = next_token_; users = users_ } : list_users_response)
-let make_list_users_filters ?state:(state_ : entity_state option)
+let make_list_users_filters
+  ?identity_provider_user_id_prefix:(identity_provider_user_id_prefix_ :
+                                      string option)
+  ?state:(state_ : entity_state option)
   ?primary_email_prefix:(primary_email_prefix_ : string option)
   ?display_name_prefix:(display_name_prefix_ : string option)
   ?username_prefix:(username_prefix_ : string option) () =
   ({
+     identity_provider_user_id_prefix = identity_provider_user_id_prefix_;
      state = state_;
      primary_email_prefix = primary_email_prefix_;
      display_name_prefix = display_name_prefix_;
@@ -433,6 +472,41 @@ let make_list_resource_delegates_request
      resource_id = resource_id_;
      organization_id = organization_id_
    } : list_resource_delegates_request)
+let make_personal_access_token_summary ?scopes:(scopes_ : string list option)
+  ?expires_time:(expires_time_ : CoreTypes.Timestamp.t option)
+  ?date_last_used:(date_last_used_ : CoreTypes.Timestamp.t option)
+  ?date_created:(date_created_ : CoreTypes.Timestamp.t option)
+  ?name:(name_ : string option) ?user_id:(user_id_ : string option)
+  ?personal_access_token_id:(personal_access_token_id_ : string option) () =
+  ({
+     scopes = scopes_;
+     expires_time = expires_time_;
+     date_last_used = date_last_used_;
+     date_created = date_created_;
+     name = name_;
+     user_id = user_id_;
+     personal_access_token_id = personal_access_token_id_
+   } : personal_access_token_summary)
+let make_list_personal_access_tokens_response
+  ?personal_access_token_summaries:(personal_access_token_summaries_ :
+                                     personal_access_token_summary list
+                                       option)
+  ?next_token:(next_token_ : string option) () =
+  ({
+     personal_access_token_summaries = personal_access_token_summaries_;
+     next_token = next_token_
+   } : list_personal_access_tokens_response)
+let make_list_personal_access_tokens_request
+  ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ?user_id:(user_id_ : string option)
+  ~organization_id:(organization_id_ : string) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     user_id = user_id_;
+     organization_id = organization_id_
+   } : list_personal_access_tokens_request)
 let make_organization_summary ?state:(state_ : string option)
   ?error_message:(error_message_ : string option)
   ?default_mail_domain:(default_mail_domain_ : string option)
@@ -792,6 +866,29 @@ let make_list_access_control_rules_response
 let make_list_access_control_rules_request
   ~organization_id:(organization_id_ : string) () =
   ({ organization_id = organization_id_ } : list_access_control_rules_request)
+let make_get_personal_access_token_metadata_response
+  ?scopes:(scopes_ : string list option)
+  ?expires_time:(expires_time_ : CoreTypes.Timestamp.t option)
+  ?date_last_used:(date_last_used_ : CoreTypes.Timestamp.t option)
+  ?date_created:(date_created_ : CoreTypes.Timestamp.t option)
+  ?name:(name_ : string option) ?user_id:(user_id_ : string option)
+  ?personal_access_token_id:(personal_access_token_id_ : string option) () =
+  ({
+     scopes = scopes_;
+     expires_time = expires_time_;
+     date_last_used = date_last_used_;
+     date_created = date_created_;
+     name = name_;
+     user_id = user_id_;
+     personal_access_token_id = personal_access_token_id_
+   } : get_personal_access_token_metadata_response)
+let make_get_personal_access_token_metadata_request
+  ~personal_access_token_id:(personal_access_token_id_ : string)
+  ~organization_id:(organization_id_ : string) () =
+  ({
+     personal_access_token_id = personal_access_token_id_;
+     organization_id = organization_id_
+   } : get_personal_access_token_metadata_request)
 let make_get_mobile_device_access_override_response
   ?date_modified:(date_modified_ : CoreTypes.Timestamp.t option)
   ?date_created:(date_created_ : CoreTypes.Timestamp.t option)
@@ -962,8 +1059,11 @@ let make_disassociate_delegate_from_resource_request
      resource_id = resource_id_;
      organization_id = organization_id_
    } : disassociate_delegate_from_resource_request)
-let make_describe_user_response ?office:(office_ : string option)
-  ?country:(country_ : string option)
+let make_describe_user_response
+  ?identity_provider_identity_store_id:(identity_provider_identity_store_id_
+                                         : string option)
+  ?identity_provider_user_id:(identity_provider_user_id_ : string option)
+  ?office:(office_ : string option) ?country:(country_ : string option)
   ?department:(department_ : string option)
   ?zip_code:(zip_code_ : string option) ?company:(company_ : string option)
   ?city:(city_ : string option) ?job_title:(job_title_ : string option)
@@ -985,6 +1085,9 @@ let make_describe_user_response ?office:(office_ : string option)
   ?email:(email_ : string option) ?name:(name_ : string option)
   ?user_id:(user_id_ : string option) () =
   ({
+     identity_provider_identity_store_id =
+       identity_provider_identity_store_id_;
+     identity_provider_user_id = identity_provider_user_id_;
      office = office_;
      country = country_;
      department = department_;
@@ -1102,6 +1205,25 @@ let make_describe_inbound_dmarc_settings_response
 let make_describe_inbound_dmarc_settings_request
   ~organization_id:(organization_id_ : string) () =
   ({ organization_id = organization_id_ } : describe_inbound_dmarc_settings_request)
+let make_describe_identity_provider_configuration_response
+  ?personal_access_token_configuration:(personal_access_token_configuration_
+                                         :
+                                         personal_access_token_configuration
+                                           option)
+  ?identity_center_configuration:(identity_center_configuration_ :
+                                   identity_center_configuration option)
+  ?authentication_mode:(authentication_mode_ :
+                         identity_provider_authentication_mode option)
+  () =
+  ({
+     personal_access_token_configuration =
+       personal_access_token_configuration_;
+     identity_center_configuration = identity_center_configuration_;
+     authentication_mode = authentication_mode_
+   } : describe_identity_provider_configuration_response)
+let make_describe_identity_provider_configuration_request
+  ~organization_id:(organization_id_ : string) () =
+  ({ organization_id = organization_id_ } : describe_identity_provider_configuration_request)
 let make_describe_group_response
   ?hidden_from_global_address_list:(hidden_from_global_address_list_ :
                                      bool option)
@@ -1156,15 +1278,26 @@ let make_delete_resource_request ~resource_id:(resource_id_ : string)
   ~organization_id:(organization_id_ : string) () =
   ({ resource_id = resource_id_; organization_id = organization_id_ } : 
   delete_resource_request)
+let make_delete_personal_access_token_response () = (() : unit)
+let make_delete_personal_access_token_request
+  ~personal_access_token_id:(personal_access_token_id_ : string)
+  ~organization_id:(organization_id_ : string) () =
+  ({
+     personal_access_token_id = personal_access_token_id_;
+     organization_id = organization_id_
+   } : delete_personal_access_token_request)
 let make_delete_organization_response ?state:(state_ : string option)
   ?organization_id:(organization_id_ : string option) () =
   ({ state = state_; organization_id = organization_id_ } : delete_organization_response)
 let make_delete_organization_request
+  ?delete_identity_center_application:(delete_identity_center_application_ :
+                                        bool option)
   ?force_delete:(force_delete_ : bool option)
   ?client_token:(client_token_ : string option)
   ~delete_directory:(delete_directory_ : bool)
   ~organization_id:(organization_id_ : string) () =
   ({
+     delete_identity_center_application = delete_identity_center_application_;
      force_delete = force_delete_;
      delete_directory = delete_directory_;
      organization_id = organization_id_;
@@ -1204,6 +1337,14 @@ let make_delete_impersonation_role_request
      impersonation_role_id = impersonation_role_id_;
      organization_id = organization_id_
    } : delete_impersonation_role_request)
+let make_delete_identity_provider_configuration_response () = (() : unit)
+let make_delete_identity_provider_configuration_request
+  ~organization_id:(organization_id_ : string) () =
+  ({ organization_id = organization_id_ } : delete_identity_provider_configuration_request)
+let make_delete_identity_center_application_response () = (() : unit)
+let make_delete_identity_center_application_request
+  ~application_arn:(application_arn_ : string) () =
+  ({ application_arn = application_arn_ } : delete_identity_center_application_request)
 let make_delete_group_response () = (() : unit)
 let make_delete_group_request ~group_id:(group_id_ : string)
   ~organization_id:(organization_id_ : string) () =
@@ -1234,6 +1375,7 @@ let make_delete_access_control_rule_request ~name:(name_ : string)
 let make_create_user_response ?user_id:(user_id_ : string option) () =
   ({ user_id = user_id_ } : create_user_response)
 let make_create_user_request
+  ?identity_provider_user_id:(identity_provider_user_id_ : string option)
   ?hidden_from_global_address_list:(hidden_from_global_address_list_ :
                                      bool option)
   ?last_name:(last_name_ : string option)
@@ -1242,6 +1384,7 @@ let make_create_user_request
   ~display_name:(display_name_ : string) ~name:(name_ : string)
   ~organization_id:(organization_id_ : string) () =
   ({
+     identity_provider_user_id = identity_provider_user_id_;
      hidden_from_global_address_list = hidden_from_global_address_list_;
      last_name = last_name_;
      first_name = first_name_;
@@ -1338,6 +1481,14 @@ let make_create_impersonation_role_request
      organization_id = organization_id_;
      client_token = client_token_
    } : create_impersonation_role_request)
+let make_create_identity_center_application_response
+  ?application_arn:(application_arn_ : string option) () =
+  ({ application_arn = application_arn_ } : create_identity_center_application_response)
+let make_create_identity_center_application_request
+  ?client_token:(client_token_ : string option)
+  ~instance_arn:(instance_arn_ : string) ~name:(name_ : string) () =
+  ({ client_token = client_token_; instance_arn = instance_arn_; name = name_
+   } : create_identity_center_application_request)
 let make_create_group_response ?group_id:(group_id_ : string option) () =
   ({ group_id = group_id_ } : create_group_response)
 let make_create_group_request

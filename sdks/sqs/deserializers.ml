@@ -94,37 +94,39 @@ let resource_not_found_exception_of_yojson tree path =
           (value_for_key exception_message_of_yojson "message") _list path)
    } : resource_not_found_exception)
 let queue_attribute_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SqsManagedSseEnabled" -> SqsManagedSseEnabled
-   | `String "RedriveAllowPolicy" -> RedriveAllowPolicy
-   | `String "FifoThroughputLimit" -> FifoThroughputLimit
-   | `String "DeduplicationScope" -> DeduplicationScope
-   | `String "KmsDataKeyReusePeriodSeconds" -> KmsDataKeyReusePeriodSeconds
-   | `String "KmsMasterKeyId" -> KmsMasterKeyId
-   | `String "ContentBasedDeduplication" -> ContentBasedDeduplication
-   | `String "FifoQueue" -> FifoQueue
-   | `String "RedrivePolicy" -> RedrivePolicy
-   | `String "ReceiveMessageWaitTimeSeconds" -> ReceiveMessageWaitTimeSeconds
-   | `String "DelaySeconds" -> DelaySeconds
-   | `String "ApproximateNumberOfMessagesDelayed" ->
-       ApproximateNumberOfMessagesDelayed
-   | `String "QueueArn" -> QueueArn
-   | `String "LastModifiedTimestamp" -> LastModifiedTimestamp
-   | `String "CreatedTimestamp" -> CreatedTimestamp
-   | `String "ApproximateNumberOfMessagesNotVisible" ->
-       ApproximateNumberOfMessagesNotVisible
-   | `String "ApproximateNumberOfMessages" -> ApproximateNumberOfMessages
-   | `String "MessageRetentionPeriod" -> MessageRetentionPeriod
-   | `String "MaximumMessageSize" -> MaximumMessageSize
-   | `String "VisibilityTimeout" -> VisibilityTimeout
-   | `String "Policy" -> Policy
-   | `String "All" -> All
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "QueueAttributeName"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "QueueAttributeName") : 
-  queue_attribute_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SqsManagedSseEnabled" -> SqsManagedSseEnabled
+    | `String "RedriveAllowPolicy" -> RedriveAllowPolicy
+    | `String "FifoThroughputLimit" -> FifoThroughputLimit
+    | `String "DeduplicationScope" -> DeduplicationScope
+    | `String "KmsDataKeyReusePeriodSeconds" -> KmsDataKeyReusePeriodSeconds
+    | `String "KmsMasterKeyId" -> KmsMasterKeyId
+    | `String "ContentBasedDeduplication" -> ContentBasedDeduplication
+    | `String "FifoQueue" -> FifoQueue
+    | `String "RedrivePolicy" -> RedrivePolicy
+    | `String "ReceiveMessageWaitTimeSeconds" ->
+        ReceiveMessageWaitTimeSeconds
+    | `String "DelaySeconds" -> DelaySeconds
+    | `String "ApproximateNumberOfMessagesDelayed" ->
+        ApproximateNumberOfMessagesDelayed
+    | `String "QueueArn" -> QueueArn
+    | `String "LastModifiedTimestamp" -> LastModifiedTimestamp
+    | `String "CreatedTimestamp" -> CreatedTimestamp
+    | `String "ApproximateNumberOfMessagesNotVisible" ->
+        ApproximateNumberOfMessagesNotVisible
+    | `String "ApproximateNumberOfMessages" -> ApproximateNumberOfMessages
+    | `String "MessageRetentionPeriod" -> MessageRetentionPeriod
+    | `String "MaximumMessageSize" -> MaximumMessageSize
+    | `String "VisibilityTimeout" -> VisibilityTimeout
+    | `String "Policy" -> Policy
+    | `String "All" -> All
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "QueueAttributeName"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "QueueAttributeName") : 
+     queue_attribute_name) : queue_attribute_name)
 let queue_attribute_map_of_yojson tree path =
   map_of_yojson queue_attribute_name_of_yojson string__of_yojson tree path
 let set_queue_attributes_request_of_yojson tree path =
@@ -216,16 +218,18 @@ let message_system_attribute_value_of_yojson tree path =
           _list path)
    } : message_system_attribute_value)
 let message_system_attribute_name_for_sends_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AWSTraceHeader" -> AWSTraceHeader
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MessageSystemAttributeNameForSends" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "MessageSystemAttributeNameForSends") : message_system_attribute_name_for_sends)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWSTraceHeader" -> AWSTraceHeader
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MessageSystemAttributeNameForSends" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "MessageSystemAttributeNameForSends") : message_system_attribute_name_for_sends) : 
+  message_system_attribute_name_for_sends)
 let message_body_system_attribute_map_of_yojson tree path =
   map_of_yojson message_system_attribute_name_for_sends_of_yojson
     message_system_attribute_value_of_yojson tree path
@@ -427,25 +431,27 @@ let remove_permission_request_of_yojson tree path =
      queue_url = (value_for_key string__of_yojson "QueueUrl" _list path)
    } : remove_permission_request)
 let message_system_attribute_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DeadLetterQueueSourceArn" -> DeadLetterQueueSourceArn
-   | `String "AWSTraceHeader" -> AWSTraceHeader
-   | `String "MessageGroupId" -> MessageGroupId
-   | `String "MessageDeduplicationId" -> MessageDeduplicationId
-   | `String "SequenceNumber" -> SequenceNumber
-   | `String "ApproximateFirstReceiveTimestamp" ->
-       ApproximateFirstReceiveTimestamp
-   | `String "ApproximateReceiveCount" -> ApproximateReceiveCount
-   | `String "SentTimestamp" -> SentTimestamp
-   | `String "SenderId" -> SenderId
-   | `String "All" -> All
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MessageSystemAttributeName" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "MessageSystemAttributeName") : 
-  message_system_attribute_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DeadLetterQueueSourceArn" -> DeadLetterQueueSourceArn
+    | `String "AWSTraceHeader" -> AWSTraceHeader
+    | `String "MessageGroupId" -> MessageGroupId
+    | `String "MessageDeduplicationId" -> MessageDeduplicationId
+    | `String "SequenceNumber" -> SequenceNumber
+    | `String "ApproximateFirstReceiveTimestamp" ->
+        ApproximateFirstReceiveTimestamp
+    | `String "ApproximateReceiveCount" -> ApproximateReceiveCount
+    | `String "SentTimestamp" -> SentTimestamp
+    | `String "SenderId" -> SenderId
+    | `String "All" -> All
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MessageSystemAttributeName" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "MessageSystemAttributeName") : 
+     message_system_attribute_name) : message_system_attribute_name)
 let message_system_attribute_map_of_yojson tree path =
   map_of_yojson message_system_attribute_name_of_yojson string__of_yojson
     tree path

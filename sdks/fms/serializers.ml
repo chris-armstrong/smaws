@@ -1,9 +1,28 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
+let resource_arn_to_yojson = string_to_yojson
+let resource_arn_list_to_yojson tree =
+  list_to_yojson resource_arn_to_yojson tree
+let web_acl_has_out_of_scope_resources_violation_to_yojson
+  (x : web_acl_has_out_of_scope_resources_violation) =
+  assoc_to_yojson
+    [("OutOfScopeResourceList",
+       (option_to_yojson resource_arn_list_to_yojson
+          x.out_of_scope_resource_list));
+    ("WebACLArn", (option_to_yojson resource_arn_to_yojson x.web_acl_arn))]
+let length_bounded_string_to_yojson = string_to_yojson
+let web_acl_has_incompatible_configuration_violation_to_yojson
+  (x : web_acl_has_incompatible_configuration_violation) =
+  assoc_to_yojson
+    [("Description",
+       (option_to_yojson length_bounded_string_to_yojson x.description));
+    ("WebACLArn", (option_to_yojson resource_arn_to_yojson x.web_acl_arn))]
 let violation_target_to_yojson = string_to_yojson
 let base_unit_to_yojson = unit_to_yojson
 let violation_reason_to_yojson (x : violation_reason) =
   match x with
+  | WebACLConfigurationOrScopeOfUse ->
+      `String "WEB_ACL_CONFIGURATION_OR_SCOPE_OF_USE"
   | InvalidNetworkAclEntry -> `String "INVALID_NETWORK_ACL_ENTRY"
   | FirewallSubnetMissingVPCEndpoint ->
       `String "FIREWALL_SUBNET_MISSING_VPCE_ENDPOINT"
@@ -48,7 +67,6 @@ let policy_id_to_yojson = string_to_yojson
 let aws_account_id_to_yojson = string_to_yojson
 let resource_id_to_yojson = string_to_yojson
 let resource_type_to_yojson = string_to_yojson
-let length_bounded_string_to_yojson = string_to_yojson
 let reference_rule_to_yojson = string_to_yojson
 let target_violation_reason_to_yojson = string_to_yojson
 let target_violation_reasons_to_yojson tree =
@@ -807,9 +825,17 @@ let possible_remediation_actions_to_yojson (x : possible_remediation_actions)
       (option_to_yojson length_bounded_string_to_yojson x.description))]
 let resource_violation_to_yojson (x : resource_violation) =
   assoc_to_yojson
-    [("PossibleRemediationActions",
-       (option_to_yojson possible_remediation_actions_to_yojson
-          x.possible_remediation_actions));
+    [("WebACLHasOutOfScopeResourcesViolation",
+       (option_to_yojson
+          web_acl_has_out_of_scope_resources_violation_to_yojson
+          x.web_acl_has_out_of_scope_resources_violation));
+    ("WebACLHasIncompatibleConfigurationViolation",
+      (option_to_yojson
+         web_acl_has_incompatible_configuration_violation_to_yojson
+         x.web_acl_has_incompatible_configuration_violation));
+    ("PossibleRemediationActions",
+      (option_to_yojson possible_remediation_actions_to_yojson
+         x.possible_remediation_actions));
     ("InvalidNetworkAclEntriesViolation",
       (option_to_yojson invalid_network_acl_entries_violation_to_yojson
          x.invalid_network_acl_entries_violation));
@@ -913,7 +939,6 @@ let violation_detail_to_yojson (x : violation_detail) =
     ("PolicyId", (Some (policy_id_to_yojson x.policy_id)))]
 let update_token_to_yojson = string_to_yojson
 let untag_resource_response_to_yojson = unit_to_yojson
-let resource_arn_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
   assoc_to_yojson
@@ -1040,6 +1065,9 @@ let resource_tag_to_yojson (x : resource_tag) =
     [("Value", (option_to_yojson resource_tag_value_to_yojson x.value));
     ("Key", (Some (resource_tag_key_to_yojson x.key)))]
 let resource_tags_to_yojson tree = list_to_yojson resource_tag_to_yojson tree
+let resource_tag_logical_operator_to_yojson
+  (x : resource_tag_logical_operator) =
+  match x with | OR -> `String "OR" | AND -> `String "AND"
 let base62_id_to_yojson = string_to_yojson
 let name_to_yojson = string_to_yojson
 let description_to_yojson = string_to_yojson
@@ -1143,8 +1171,11 @@ let customer_policy_status_to_yojson (x : customer_policy_status) =
   | ACTIVE -> `String "ACTIVE"
 let policy_to_yojson (x : policy) =
   assoc_to_yojson
-    [("PolicyStatus",
-       (option_to_yojson customer_policy_status_to_yojson x.policy_status));
+    [("ResourceTagLogicalOperator",
+       (option_to_yojson resource_tag_logical_operator_to_yojson
+          x.resource_tag_logical_operator));
+    ("PolicyStatus",
+      (option_to_yojson customer_policy_status_to_yojson x.policy_status));
     ("PolicyDescription",
       (option_to_yojson resource_description_to_yojson x.policy_description));
     ("ResourceSetIds",

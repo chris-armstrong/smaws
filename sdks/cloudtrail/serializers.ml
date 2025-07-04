@@ -1,5 +1,25 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
+let query_alias_to_yojson = string_to_yojson
+let query_statement_to_yojson = string_to_yojson
+let query_parameter_to_yojson = string_to_yojson
+let query_parameters_to_yojson tree =
+  list_to_yojson query_parameter_to_yojson tree
+let view_properties_value_to_yojson = string_to_yojson
+let view_properties_key_to_yojson = string_to_yojson
+let view_properties_map_to_yojson tree =
+  map_to_yojson view_properties_key_to_yojson view_properties_value_to_yojson
+    tree
+let widget_to_yojson (x : widget) =
+  assoc_to_yojson
+    [("ViewProperties",
+       (option_to_yojson view_properties_map_to_yojson x.view_properties));
+    ("QueryParameters",
+      (option_to_yojson query_parameters_to_yojson x.query_parameters));
+    ("QueryStatement",
+      (option_to_yojson query_statement_to_yojson x.query_statement));
+    ("QueryAlias", (option_to_yojson query_alias_to_yojson x.query_alias))]
+let widget_list_to_yojson tree = list_to_yojson widget_to_yojson tree
 let string__to_yojson = string_to_yojson
 let boolean__to_yojson = bool_to_yojson
 let update_trail_response_to_yojson (x : update_trail_response) =
@@ -292,6 +312,77 @@ let event_data_store_already_exists_exception_to_yojson
   (x : event_data_store_already_exists_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let dashboard_arn_to_yojson = string_to_yojson
+let dashboard_name_to_yojson = string_to_yojson
+let dashboard_type_to_yojson (x : dashboard_type) =
+  match x with | CUSTOM -> `String "CUSTOM" | MANAGED -> `String "MANAGED"
+let refresh_schedule_frequency_unit_to_yojson
+  (x : refresh_schedule_frequency_unit) =
+  match x with | DAYS -> `String "DAYS" | HOURS -> `String "HOURS"
+let refresh_schedule_frequency_value_to_yojson = int_to_yojson
+let refresh_schedule_frequency_to_yojson (x : refresh_schedule_frequency) =
+  assoc_to_yojson
+    [("Value",
+       (option_to_yojson refresh_schedule_frequency_value_to_yojson x.value));
+    ("Unit",
+      (option_to_yojson refresh_schedule_frequency_unit_to_yojson x.unit_))]
+let refresh_schedule_status_to_yojson (x : refresh_schedule_status) =
+  match x with
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
+let time_of_day_to_yojson = string_to_yojson
+let refresh_schedule_to_yojson (x : refresh_schedule) =
+  assoc_to_yojson
+    [("TimeOfDay", (option_to_yojson time_of_day_to_yojson x.time_of_day));
+    ("Status", (option_to_yojson refresh_schedule_status_to_yojson x.status));
+    ("Frequency",
+      (option_to_yojson refresh_schedule_frequency_to_yojson x.frequency))]
+let update_dashboard_response_to_yojson (x : update_dashboard_response) =
+  assoc_to_yojson
+    [("UpdatedTimestamp",
+       (option_to_yojson date_to_yojson x.updated_timestamp));
+    ("CreatedTimestamp",
+      (option_to_yojson date_to_yojson x.created_timestamp));
+    ("TerminationProtectionEnabled",
+      (option_to_yojson termination_protection_enabled_to_yojson
+         x.termination_protection_enabled));
+    ("RefreshSchedule",
+      (option_to_yojson refresh_schedule_to_yojson x.refresh_schedule));
+    ("Widgets", (option_to_yojson widget_list_to_yojson x.widgets));
+    ("Type", (option_to_yojson dashboard_type_to_yojson x.type_));
+    ("Name", (option_to_yojson dashboard_name_to_yojson x.name));
+    ("DashboardArn",
+      (option_to_yojson dashboard_arn_to_yojson x.dashboard_arn))]
+let request_widget_to_yojson (x : request_widget) =
+  assoc_to_yojson
+    [("ViewProperties",
+       (Some (view_properties_map_to_yojson x.view_properties)));
+    ("QueryParameters",
+      (option_to_yojson query_parameters_to_yojson x.query_parameters));
+    ("QueryStatement", (Some (query_statement_to_yojson x.query_statement)))]
+let request_widget_list_to_yojson tree =
+  list_to_yojson request_widget_to_yojson tree
+let update_dashboard_request_to_yojson (x : update_dashboard_request) =
+  assoc_to_yojson
+    [("TerminationProtectionEnabled",
+       (option_to_yojson termination_protection_enabled_to_yojson
+          x.termination_protection_enabled));
+    ("RefreshSchedule",
+      (option_to_yojson refresh_schedule_to_yojson x.refresh_schedule));
+    ("Widgets", (option_to_yojson request_widget_list_to_yojson x.widgets));
+    ("DashboardId", (Some (dashboard_arn_to_yojson x.dashboard_id)))]
+let service_quota_exceeded_exception_to_yojson
+  (x : service_quota_exceeded_exception) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
+  =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let invalid_query_statement_exception_to_yojson
+  (x : invalid_query_statement_exception) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let channel_arn_to_yojson = string_to_yojson
 let channel_name_to_yojson = string_to_yojson
 let source_to_yojson = string_to_yojson
@@ -334,6 +425,10 @@ let channel_already_exists_exception_to_yojson
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let uui_d_to_yojson = string_to_yojson
+let type__to_yojson (x : type_) =
+  match x with
+  | RequestContext -> `String "RequestContext"
+  | TagContext -> `String "TagContext"
 let trail_info_to_yojson (x : trail_info) =
   assoc_to_yojson
     [("HomeRegion", (option_to_yojson string__to_yojson x.home_region));
@@ -445,19 +540,21 @@ let invalid_event_data_store_status_exception_to_yojson
   (x : invalid_event_data_store_status_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let account_id_to_yojson = string_to_yojson
 let start_query_response_to_yojson (x : start_query_response) =
   assoc_to_yojson
-    [("QueryId", (option_to_yojson uui_d_to_yojson x.query_id))]
-let query_statement_to_yojson = string_to_yojson
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("QueryId", (option_to_yojson uui_d_to_yojson x.query_id))]
 let delivery_s3_uri_to_yojson = string_to_yojson
-let query_alias_to_yojson = string_to_yojson
-let query_parameter_to_yojson = string_to_yojson
-let query_parameters_to_yojson tree =
-  list_to_yojson query_parameter_to_yojson tree
 let start_query_request_to_yojson (x : start_query_request) =
   assoc_to_yojson
-    [("QueryParameters",
-       (option_to_yojson query_parameters_to_yojson x.query_parameters));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("QueryParameters",
+      (option_to_yojson query_parameters_to_yojson x.query_parameters));
     ("QueryAlias", (option_to_yojson query_alias_to_yojson x.query_alias));
     ("DeliveryS3Uri",
       (option_to_yojson delivery_s3_uri_to_yojson x.delivery_s3_uri));
@@ -465,10 +562,6 @@ let start_query_request_to_yojson (x : start_query_request) =
       (option_to_yojson query_statement_to_yojson x.query_statement))]
 let max_concurrent_queries_exception_to_yojson
   (x : max_concurrent_queries_exception) =
-  assoc_to_yojson
-    [("Message", (option_to_yojson error_message_to_yojson x.message))]
-let invalid_query_statement_exception_to_yojson
-  (x : invalid_query_statement_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let start_logging_response_to_yojson = unit_to_yojson
@@ -512,6 +605,23 @@ let start_event_data_store_ingestion_request_to_yojson
   assoc_to_yojson
     [("EventDataStore",
        (Some (event_data_store_arn_to_yojson x.event_data_store)))]
+let refresh_id_to_yojson = string_to_yojson
+let start_dashboard_refresh_response_to_yojson
+  (x : start_dashboard_refresh_response) =
+  assoc_to_yojson
+    [("RefreshId", (option_to_yojson refresh_id_to_yojson x.refresh_id))]
+let query_parameter_value_to_yojson = string_to_yojson
+let query_parameter_key_to_yojson = string_to_yojson
+let query_parameter_values_to_yojson tree =
+  map_to_yojson query_parameter_key_to_yojson query_parameter_value_to_yojson
+    tree
+let start_dashboard_refresh_request_to_yojson
+  (x : start_dashboard_refresh_request) =
+  assoc_to_yojson
+    [("QueryParameterValues",
+       (option_to_yojson query_parameter_values_to_yojson
+          x.query_parameter_values));
+    ("DashboardId", (Some (dashboard_arn_to_yojson x.dashboard_id)))]
 let source_config_to_yojson (x : source_config) =
   assoc_to_yojson
     [("AdvancedEventSelectors",
@@ -519,6 +629,42 @@ let source_config_to_yojson (x : source_config) =
           x.advanced_event_selectors));
     ("ApplyToAllRegions",
       (option_to_yojson boolean__to_yojson x.apply_to_all_regions))]
+let sample_query_name_to_yojson = string_to_yojson
+let sample_query_description_to_yojson = string_to_yojson
+let sample_query_sq_l_to_yojson = string_to_yojson
+let sample_query_relevance_to_yojson = float_to_yojson
+let search_sample_queries_search_result_to_yojson
+  (x : search_sample_queries_search_result) =
+  assoc_to_yojson
+    [("Relevance",
+       (option_to_yojson sample_query_relevance_to_yojson x.relevance));
+    ("SQL", (option_to_yojson sample_query_sq_l_to_yojson x.sq_l));
+    ("Description",
+      (option_to_yojson sample_query_description_to_yojson x.description));
+    ("Name", (option_to_yojson sample_query_name_to_yojson x.name))]
+let search_sample_queries_search_results_to_yojson tree =
+  list_to_yojson search_sample_queries_search_result_to_yojson tree
+let search_sample_queries_search_phrase_to_yojson = string_to_yojson
+let pagination_token_to_yojson = string_to_yojson
+let search_sample_queries_response_to_yojson
+  (x : search_sample_queries_response) =
+  assoc_to_yojson
+    [("NextToken",
+       (option_to_yojson pagination_token_to_yojson x.next_token));
+    ("SearchResults",
+      (option_to_yojson search_sample_queries_search_results_to_yojson
+         x.search_results))]
+let search_sample_queries_max_results_to_yojson = int_to_yojson
+let search_sample_queries_request_to_yojson
+  (x : search_sample_queries_request) =
+  assoc_to_yojson
+    [("NextToken",
+       (option_to_yojson pagination_token_to_yojson x.next_token));
+    ("MaxResults",
+      (option_to_yojson search_sample_queries_max_results_to_yojson
+         x.max_results));
+    ("SearchPhrase",
+      (Some (search_sample_queries_search_phrase_to_yojson x.search_phrase)))]
 let restore_event_data_store_response_to_yojson
   (x : restore_event_data_store_response) =
   assoc_to_yojson
@@ -574,10 +720,6 @@ let resource_policy_not_found_exception_to_yojson
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let resource_policy_to_yojson = string_to_yojson
-let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
-  =
-  assoc_to_yojson
-    [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let resource_to_yojson (x : resource) =
   assoc_to_yojson
     [("ResourceName", (option_to_yojson string__to_yojson x.resource_name));
@@ -599,13 +741,16 @@ let invalid_tag_parameter_exception_to_yojson
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let register_organization_delegated_admin_response_to_yojson = unit_to_yojson
-let account_id_to_yojson = string_to_yojson
 let register_organization_delegated_admin_request_to_yojson
   (x : register_organization_delegated_admin_request) =
   assoc_to_yojson
     [("MemberAccountId", (Some (account_id_to_yojson x.member_account_id)))]
 let not_organization_management_account_exception_to_yojson
   (x : not_organization_management_account_exception) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let insufficient_iam_access_permission_exception_to_yojson
+  (x : insufficient_iam_access_permission_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let delegated_admin_account_limit_exceeded_exception_to_yojson
@@ -673,8 +818,11 @@ let queries_to_yojson tree = list_to_yojson query_to_yojson tree
 let put_resource_policy_response_to_yojson (x : put_resource_policy_response)
   =
   assoc_to_yojson
-    [("ResourcePolicy",
-       (option_to_yojson resource_policy_to_yojson x.resource_policy));
+    [("DelegatedAdminResourcePolicy",
+       (option_to_yojson resource_policy_to_yojson
+          x.delegated_admin_resource_policy));
+    ("ResourcePolicy",
+      (option_to_yojson resource_policy_to_yojson x.resource_policy));
     ("ResourceArn", (option_to_yojson resource_arn_to_yojson x.resource_arn))]
 let put_resource_policy_request_to_yojson (x : put_resource_policy_request) =
   assoc_to_yojson
@@ -752,6 +900,35 @@ let put_event_selectors_request_to_yojson (x : put_event_selectors_request) =
     ("EventSelectors",
       (option_to_yojson event_selectors_to_yojson x.event_selectors));
     ("TrailName", (Some (string__to_yojson x.trail_name)))]
+let max_event_size_to_yojson (x : max_event_size) =
+  match x with | Large -> `String "Large" | Standard -> `String "Standard"
+let operator_target_list_member_to_yojson = string_to_yojson
+let operator_target_list_to_yojson tree =
+  list_to_yojson operator_target_list_member_to_yojson tree
+let context_key_selector_to_yojson (x : context_key_selector) =
+  assoc_to_yojson
+    [("Equals", (Some (operator_target_list_to_yojson x.equals)));
+    ("Type", (Some (type__to_yojson x.type_)))]
+let context_key_selectors_to_yojson tree =
+  list_to_yojson context_key_selector_to_yojson tree
+let put_event_configuration_response_to_yojson
+  (x : put_event_configuration_response) =
+  assoc_to_yojson
+    [("ContextKeySelectors",
+       (option_to_yojson context_key_selectors_to_yojson
+          x.context_key_selectors));
+    ("MaxEventSize",
+      (option_to_yojson max_event_size_to_yojson x.max_event_size));
+    ("EventDataStoreArn",
+      (option_to_yojson event_data_store_arn_to_yojson x.event_data_store_arn))]
+let put_event_configuration_request_to_yojson
+  (x : put_event_configuration_request) =
+  assoc_to_yojson
+    [("ContextKeySelectors",
+       (Some (context_key_selectors_to_yojson x.context_key_selectors)));
+    ("MaxEventSize", (Some (max_event_size_to_yojson x.max_event_size)));
+    ("EventDataStore",
+      (option_to_yojson string__to_yojson x.event_data_store))]
 let byte_buffer_to_yojson = blob_to_yojson
 let public_key_to_yojson (x : public_key) =
   assoc_to_yojson
@@ -762,6 +939,7 @@ let public_key_to_yojson (x : public_key) =
       (option_to_yojson date_to_yojson x.validity_start_time));
     ("Value", (option_to_yojson byte_buffer_to_yojson x.value))]
 let public_key_list_to_yojson tree = list_to_yojson public_key_to_yojson tree
+let prompt_to_yojson = string_to_yojson
 let partition_key_type_to_yojson = string_to_yojson
 let partition_key_name_to_yojson = string_to_yojson
 let partition_key_to_yojson (x : partition_key) =
@@ -770,7 +948,6 @@ let partition_key_to_yojson (x : partition_key) =
     ("Name", (Some (partition_key_name_to_yojson x.name)))]
 let partition_key_list_to_yojson tree =
   list_to_yojson partition_key_to_yojson tree
-let pagination_token_to_yojson = string_to_yojson
 let next_token_to_yojson = string_to_yojson
 let maximum_number_of_trails_exceeded_exception_to_yojson
   (x : maximum_number_of_trails_exceeded_exception) =
@@ -1041,6 +1218,27 @@ let list_event_data_stores_request_to_yojson
        (option_to_yojson list_event_data_stores_max_results_count_to_yojson
           x.max_results));
     ("NextToken", (option_to_yojson pagination_token_to_yojson x.next_token))]
+let dashboard_detail_to_yojson (x : dashboard_detail) =
+  assoc_to_yojson
+    [("Type", (option_to_yojson dashboard_type_to_yojson x.type_));
+    ("DashboardArn",
+      (option_to_yojson dashboard_arn_to_yojson x.dashboard_arn))]
+let dashboards_to_yojson tree =
+  list_to_yojson dashboard_detail_to_yojson tree
+let list_dashboards_response_to_yojson (x : list_dashboards_response) =
+  assoc_to_yojson
+    [("NextToken",
+       (option_to_yojson pagination_token_to_yojson x.next_token));
+    ("Dashboards", (option_to_yojson dashboards_to_yojson x.dashboards))]
+let list_dashboards_max_results_count_to_yojson = int_to_yojson
+let list_dashboards_request_to_yojson (x : list_dashboards_request) =
+  assoc_to_yojson
+    [("MaxResults",
+       (option_to_yojson list_dashboards_max_results_count_to_yojson
+          x.max_results));
+    ("NextToken", (option_to_yojson pagination_token_to_yojson x.next_token));
+    ("Type", (option_to_yojson dashboard_type_to_yojson x.type_));
+    ("NamePrefix", (option_to_yojson dashboard_name_to_yojson x.name_prefix))]
 let channel_to_yojson (x : channel) =
   assoc_to_yojson
     [("Name", (option_to_yojson channel_name_to_yojson x.name));
@@ -1128,8 +1326,11 @@ let get_trail_request_to_yojson (x : get_trail_request) =
 let get_resource_policy_response_to_yojson (x : get_resource_policy_response)
   =
   assoc_to_yojson
-    [("ResourcePolicy",
-       (option_to_yojson resource_policy_to_yojson x.resource_policy));
+    [("DelegatedAdminResourcePolicy",
+       (option_to_yojson resource_policy_to_yojson
+          x.delegated_admin_resource_policy));
+    ("ResourcePolicy",
+      (option_to_yojson resource_policy_to_yojson x.resource_policy));
     ("ResourceArn", (option_to_yojson resource_arn_to_yojson x.resource_arn))]
 let get_resource_policy_request_to_yojson (x : get_resource_policy_request) =
   assoc_to_yojson
@@ -1146,8 +1347,11 @@ let get_query_results_response_to_yojson (x : get_query_results_response) =
     ("QueryStatus", (option_to_yojson query_status_to_yojson x.query_status))]
 let get_query_results_request_to_yojson (x : get_query_results_request) =
   assoc_to_yojson
-    [("MaxQueryResults",
-       (option_to_yojson max_query_results_to_yojson x.max_query_results));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("MaxQueryResults",
+      (option_to_yojson max_query_results_to_yojson x.max_query_results));
     ("NextToken", (option_to_yojson pagination_token_to_yojson x.next_token));
     ("QueryId", (Some (uui_d_to_yojson x.query_id)));
     ("EventDataStore",
@@ -1236,6 +1440,51 @@ let get_event_data_store_request_to_yojson (x : get_event_data_store_request)
   assoc_to_yojson
     [("EventDataStore",
        (Some (event_data_store_arn_to_yojson x.event_data_store)))]
+let get_event_configuration_response_to_yojson
+  (x : get_event_configuration_response) =
+  assoc_to_yojson
+    [("ContextKeySelectors",
+       (option_to_yojson context_key_selectors_to_yojson
+          x.context_key_selectors));
+    ("MaxEventSize",
+      (option_to_yojson max_event_size_to_yojson x.max_event_size));
+    ("EventDataStoreArn",
+      (option_to_yojson event_data_store_arn_to_yojson x.event_data_store_arn))]
+let get_event_configuration_request_to_yojson
+  (x : get_event_configuration_request) =
+  assoc_to_yojson
+    [("EventDataStore",
+       (option_to_yojson string__to_yojson x.event_data_store))]
+let dashboard_status_to_yojson (x : dashboard_status) =
+  match x with
+  | DELETING -> `String "DELETING"
+  | UPDATED -> `String "UPDATED"
+  | UPDATING -> `String "UPDATING"
+  | CREATED -> `String "CREATED"
+  | CREATING -> `String "CREATING"
+let get_dashboard_response_to_yojson (x : get_dashboard_response) =
+  assoc_to_yojson
+    [("TerminationProtectionEnabled",
+       (option_to_yojson termination_protection_enabled_to_yojson
+          x.termination_protection_enabled));
+    ("LastRefreshFailureReason",
+      (option_to_yojson error_message_to_yojson x.last_refresh_failure_reason));
+    ("LastRefreshId",
+      (option_to_yojson refresh_id_to_yojson x.last_refresh_id));
+    ("UpdatedTimestamp",
+      (option_to_yojson date_to_yojson x.updated_timestamp));
+    ("CreatedTimestamp",
+      (option_to_yojson date_to_yojson x.created_timestamp));
+    ("RefreshSchedule",
+      (option_to_yojson refresh_schedule_to_yojson x.refresh_schedule));
+    ("Widgets", (option_to_yojson widget_list_to_yojson x.widgets));
+    ("Status", (option_to_yojson dashboard_status_to_yojson x.status));
+    ("Type", (option_to_yojson dashboard_type_to_yojson x.type_));
+    ("DashboardArn",
+      (option_to_yojson dashboard_arn_to_yojson x.dashboard_arn))]
+let get_dashboard_request_to_yojson (x : get_dashboard_request) =
+  assoc_to_yojson
+    [("DashboardId", (Some (dashboard_arn_to_yojson x.dashboard_id)))]
 let get_channel_response_to_yojson (x : get_channel_response) =
   assoc_to_yojson
     [("IngestionStatus",
@@ -1249,6 +1498,24 @@ let get_channel_response_to_yojson (x : get_channel_response) =
     ("ChannelArn", (option_to_yojson channel_arn_to_yojson x.channel_arn))]
 let get_channel_request_to_yojson (x : get_channel_request) =
   assoc_to_yojson [("Channel", (Some (channel_arn_to_yojson x.channel)))]
+let generate_response_exception_to_yojson (x : generate_response_exception) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let generate_query_response_to_yojson (x : generate_query_response) =
+  assoc_to_yojson
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("QueryAlias", (option_to_yojson query_alias_to_yojson x.query_alias));
+    ("QueryStatement",
+      (option_to_yojson query_statement_to_yojson x.query_statement))]
+let event_data_store_list_to_yojson tree =
+  list_to_yojson event_data_store_arn_to_yojson tree
+let generate_query_request_to_yojson (x : generate_query_request) =
+  assoc_to_yojson
+    [("Prompt", (Some (prompt_to_yojson x.prompt)));
+    ("EventDataStores",
+      (Some (event_data_store_list_to_yojson x.event_data_stores)))]
 let event_data_store_termination_protected_exception_to_yojson
   (x : event_data_store_termination_protected_exception) =
   assoc_to_yojson
@@ -1310,8 +1577,12 @@ let delivery_status_to_yojson (x : delivery_status) =
   | SUCCESS -> `String "SUCCESS"
 let describe_query_response_to_yojson (x : describe_query_response) =
   assoc_to_yojson
-    [("DeliveryStatus",
-       (option_to_yojson delivery_status_to_yojson x.delivery_status));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("Prompt", (option_to_yojson prompt_to_yojson x.prompt));
+    ("DeliveryStatus",
+      (option_to_yojson delivery_status_to_yojson x.delivery_status));
     ("DeliveryS3Uri",
       (option_to_yojson delivery_s3_uri_to_yojson x.delivery_s3_uri));
     ("ErrorMessage",
@@ -1325,7 +1596,11 @@ let describe_query_response_to_yojson (x : describe_query_response) =
     ("QueryId", (option_to_yojson uui_d_to_yojson x.query_id))]
 let describe_query_request_to_yojson (x : describe_query_request) =
   assoc_to_yojson
-    [("QueryAlias", (option_to_yojson query_alias_to_yojson x.query_alias));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("RefreshId", (option_to_yojson refresh_id_to_yojson x.refresh_id));
+    ("QueryAlias", (option_to_yojson query_alias_to_yojson x.query_alias));
     ("QueryId", (option_to_yojson uui_d_to_yojson x.query_id));
     ("EventDataStore",
       (option_to_yojson event_data_store_arn_to_yojson x.event_data_store))]
@@ -1358,6 +1633,10 @@ let channel_exists_for_eds_exception_to_yojson
   (x : channel_exists_for_eds_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let delete_dashboard_response_to_yojson = unit_to_yojson
+let delete_dashboard_request_to_yojson (x : delete_dashboard_request) =
+  assoc_to_yojson
+    [("DashboardId", (Some (dashboard_arn_to_yojson x.dashboard_id)))]
 let delete_channel_response_to_yojson = unit_to_yojson
 let delete_channel_request_to_yojson (x : delete_channel_request) =
   assoc_to_yojson [("Channel", (Some (channel_arn_to_yojson x.channel)))]
@@ -1453,6 +1732,29 @@ let create_event_data_store_request_to_yojson
       (option_to_yojson advanced_event_selectors_to_yojson
          x.advanced_event_selectors));
     ("Name", (Some (event_data_store_name_to_yojson x.name)))]
+let create_dashboard_response_to_yojson (x : create_dashboard_response) =
+  assoc_to_yojson
+    [("TerminationProtectionEnabled",
+       (option_to_yojson termination_protection_enabled_to_yojson
+          x.termination_protection_enabled));
+    ("RefreshSchedule",
+      (option_to_yojson refresh_schedule_to_yojson x.refresh_schedule));
+    ("TagsList", (option_to_yojson tags_list_to_yojson x.tags_list));
+    ("Widgets", (option_to_yojson widget_list_to_yojson x.widgets));
+    ("Type", (option_to_yojson dashboard_type_to_yojson x.type_));
+    ("Name", (option_to_yojson dashboard_name_to_yojson x.name));
+    ("DashboardArn",
+      (option_to_yojson dashboard_arn_to_yojson x.dashboard_arn))]
+let create_dashboard_request_to_yojson (x : create_dashboard_request) =
+  assoc_to_yojson
+    [("Widgets", (option_to_yojson request_widget_list_to_yojson x.widgets));
+    ("TerminationProtectionEnabled",
+      (option_to_yojson termination_protection_enabled_to_yojson
+         x.termination_protection_enabled));
+    ("TagsList", (option_to_yojson tags_list_to_yojson x.tags_list));
+    ("RefreshSchedule",
+      (option_to_yojson refresh_schedule_to_yojson x.refresh_schedule));
+    ("Name", (Some (dashboard_name_to_yojson x.name)))]
 let create_channel_response_to_yojson (x : create_channel_response) =
   assoc_to_yojson
     [("Tags", (option_to_yojson tags_list_to_yojson x.tags));
@@ -1473,11 +1775,17 @@ let channel_max_limit_exceeded_exception_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let cancel_query_response_to_yojson (x : cancel_query_response) =
   assoc_to_yojson
-    [("QueryStatus", (Some (query_status_to_yojson x.query_status)));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("QueryStatus", (Some (query_status_to_yojson x.query_status)));
     ("QueryId", (Some (uui_d_to_yojson x.query_id)))]
 let cancel_query_request_to_yojson (x : cancel_query_request) =
   assoc_to_yojson
-    [("QueryId", (Some (uui_d_to_yojson x.query_id)));
+    [("EventDataStoreOwnerAccountId",
+       (option_to_yojson account_id_to_yojson
+          x.event_data_store_owner_account_id));
+    ("QueryId", (Some (uui_d_to_yojson x.query_id)));
     ("EventDataStore",
       (option_to_yojson event_data_store_arn_to_yojson x.event_data_store))]
 let add_tags_response_to_yojson = unit_to_yojson

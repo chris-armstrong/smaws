@@ -24,25 +24,26 @@ let validity_term_of_yojson tree path =
    } : validity_term)
 let base_unit_of_yojson = unit_of_yojson
 let validation_exception_reason_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OTHER" -> OTHER
-   | `String "UNSUPPORTED_FILTERS" -> UNSUPPORTED_FILTERS
-   | `String "INVALID_MAX_RESULTS" -> INVALID_MAX_RESULTS
-   | `String "INVALID_NEXT_TOKEN" -> INVALID_NEXT_TOKEN
-   | `String "INVALID_SORT_ORDER" -> INVALID_SORT_ORDER
-   | `String "INVALID_SORT_BY" -> INVALID_SORT_BY
-   | `String "INVALID_FILTER_VALUES" -> INVALID_FILTER_VALUES
-   | `String "INVALID_FILTER_NAME" -> INVALID_FILTER_NAME
-   | `String "INVALID_CATALOG" -> INVALID_CATALOG
-   | `String "MISSING_AGREEMENT_ID" -> MISSING_AGREEMENT_ID
-   | `String "INVALID_AGREEMENT_ID" -> INVALID_AGREEMENT_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ValidationExceptionReason" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ValidationExceptionReason") : 
-  validation_exception_reason)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OTHER" -> OTHER
+    | `String "UNSUPPORTED_FILTERS" -> UNSUPPORTED_FILTERS
+    | `String "INVALID_MAX_RESULTS" -> INVALID_MAX_RESULTS
+    | `String "INVALID_NEXT_TOKEN" -> INVALID_NEXT_TOKEN
+    | `String "INVALID_SORT_ORDER" -> INVALID_SORT_ORDER
+    | `String "INVALID_SORT_BY" -> INVALID_SORT_BY
+    | `String "INVALID_FILTER_VALUES" -> INVALID_FILTER_VALUES
+    | `String "INVALID_FILTER_NAME" -> INVALID_FILTER_NAME
+    | `String "INVALID_CATALOG" -> INVALID_CATALOG
+    | `String "MISSING_AGREEMENT_ID" -> MISSING_AGREEMENT_ID
+    | `String "INVALID_AGREEMENT_ID" -> INVALID_AGREEMENT_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ValidationExceptionReason" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ValidationExceptionReason") : 
+     validation_exception_reason) : validation_exception_reason)
 let validation_exception_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -128,12 +129,14 @@ let support_term_of_yojson tree path =
           (value_for_key unversioned_term_type_of_yojson "type") _list path)
    } : support_term)
 let sort_order_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DESCENDING" -> DESCENDING
-   | `String "ASCENDING" -> ASCENDING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SortOrder" value)
-   | _ -> raise (deserialize_wrong_type_error path "SortOrder") : sort_order)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DESCENDING" -> DESCENDING
+    | `String "ASCENDING" -> ASCENDING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SortOrder" value)
+    | _ -> raise (deserialize_wrong_type_error path "SortOrder") : sort_order) : 
+  sort_order)
 let sort_by_of_yojson = string_of_yojson
 let sort_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -197,21 +200,22 @@ let proposal_summary_of_yojson tree path =
           _list path)
    } : proposal_summary)
 let agreement_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TERMINATED" -> TERMINATED
-   | `String "SUPERSEDED" -> SUPERSEDED
-   | `String "ROLLED_BACK" -> ROLLED_BACK
-   | `String "REPLACED" -> REPLACED
-   | `String "RENEWED" -> RENEWED
-   | `String "EXPIRED" -> EXPIRED
-   | `String "CANCELLED" -> CANCELLED
-   | `String "ARCHIVED" -> ARCHIVED
-   | `String "ACTIVE" -> ACTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AgreementStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "AgreementStatus") : 
-  agreement_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TERMINATED" -> TERMINATED
+    | `String "SUPERSEDED" -> SUPERSEDED
+    | `String "ROLLED_BACK" -> ROLLED_BACK
+    | `String "REPLACED" -> REPLACED
+    | `String "RENEWED" -> RENEWED
+    | `String "EXPIRED" -> EXPIRED
+    | `String "CANCELLED" -> CANCELLED
+    | `String "ARCHIVED" -> ARCHIVED
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AgreementStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "AgreementStatus") : 
+     agreement_status) : agreement_status)
 let agreement_view_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -327,12 +331,14 @@ let schedule_item_of_yojson tree path =
 let schedule_list_of_yojson tree path =
   list_of_yojson schedule_item_of_yojson tree path
 let resource_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AGREEMENT" -> AGREEMENT
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ResourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
-  resource_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AGREEMENT" -> AGREEMENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
+     resource_type) : resource_type)
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -545,30 +551,31 @@ let accepted_term_of_yojson (tree : t) path =
     match _list with
     | (key, value_)::_ -> (key, value_)
     | _ -> raise (deserialize_wrong_type_error path "union") in
-  match key with
-  | "fixedUpfrontPricingTerm" ->
-      FixedUpfrontPricingTerm
-        (fixed_upfront_pricing_term_of_yojson value_ path)
-  | "freeTrialPricingTerm" ->
-      FreeTrialPricingTerm (free_trial_pricing_term_of_yojson value_ path)
-  | "paymentScheduleTerm" ->
-      PaymentScheduleTerm (payment_schedule_term_of_yojson value_ path)
-  | "validityTerm" -> ValidityTerm (validity_term_of_yojson value_ path)
-  | "recurringPaymentTerm" ->
-      RecurringPaymentTerm (recurring_payment_term_of_yojson value_ path)
-  | "byolPricingTerm" ->
-      ByolPricingTerm (byol_pricing_term_of_yojson value_ path)
-  | "configurableUpfrontPricingTerm" ->
-      ConfigurableUpfrontPricingTerm
-        (configurable_upfront_pricing_term_of_yojson value_ path)
-  | "usageBasedPricingTerm" ->
-      UsageBasedPricingTerm (usage_based_pricing_term_of_yojson value_ path)
-  | "renewalTerm" -> RenewalTerm (renewal_term_of_yojson value_ path)
-  | "supportTerm" -> SupportTerm (support_term_of_yojson value_ path)
-  | "legalTerm" -> LegalTerm (legal_term_of_yojson value_ path)
-  | _ as unknown ->
-      raise
-        (deserialize_unknown_enum_value_error path "AcceptedTerm" unknown)
+  (match key with
+   | "fixedUpfrontPricingTerm" ->
+       FixedUpfrontPricingTerm
+         (fixed_upfront_pricing_term_of_yojson value_ path)
+   | "freeTrialPricingTerm" ->
+       FreeTrialPricingTerm (free_trial_pricing_term_of_yojson value_ path)
+   | "paymentScheduleTerm" ->
+       PaymentScheduleTerm (payment_schedule_term_of_yojson value_ path)
+   | "validityTerm" -> ValidityTerm (validity_term_of_yojson value_ path)
+   | "recurringPaymentTerm" ->
+       RecurringPaymentTerm (recurring_payment_term_of_yojson value_ path)
+   | "byolPricingTerm" ->
+       ByolPricingTerm (byol_pricing_term_of_yojson value_ path)
+   | "configurableUpfrontPricingTerm" ->
+       ConfigurableUpfrontPricingTerm
+         (configurable_upfront_pricing_term_of_yojson value_ path)
+   | "usageBasedPricingTerm" ->
+       UsageBasedPricingTerm (usage_based_pricing_term_of_yojson value_ path)
+   | "renewalTerm" -> RenewalTerm (renewal_term_of_yojson value_ path)
+   | "supportTerm" -> SupportTerm (support_term_of_yojson value_ path)
+   | "legalTerm" -> LegalTerm (legal_term_of_yojson value_ path)
+   | _ as unknown ->
+       raise
+         (deserialize_unknown_enum_value_error path "AcceptedTerm" unknown) : 
+    accepted_term)
 let accepted_term_list_of_yojson tree path =
   list_of_yojson accepted_term_of_yojson tree path
 let get_agreement_terms_output_of_yojson tree path =

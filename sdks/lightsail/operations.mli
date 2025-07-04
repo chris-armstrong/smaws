@@ -46,7 +46,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Attaches a block storage disk to a running or stopped Lightsail instance and exposes it to the instance with the specified disk name.\n\n The [attach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Attaches a block storage disk to a running or stopped Lightsail instance and exposes it to the instance with the specified disk name.\n\n The [attach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module AttachInstancesToLoadBalancer :
 sig
   val request :
@@ -63,7 +63,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Attaches one or more Lightsail instances to a load balancer.\n\n After some time, the instances are attached to the load balancer and the health check status is available.\n \n  The [attach instances to load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.\n  "]
+     "Attaches one or more Lightsail instances to a load balancer.\n\n After some time, the instances are attached to the load balancer and the health check status is available.\n \n  The [attach instances to load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.\n  "]
 module AttachLoadBalancerTlsCertificate :
 sig
   val request :
@@ -80,7 +80,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Attaches a Transport Layer Security (TLS) certificate to your load balancer. TLS is just an updated, more secure version of Secure Socket Layer (SSL).\n\n Once you create and validate your certificate, you can attach it to your load balancer. You can also use this API to rotate the certificates on your account. Use the [AttachLoadBalancerTlsCertificate] action with the non-attached certificate, and it will replace the existing one and become the attached certificate.\n \n  The [AttachLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Attaches a Transport Layer Security (TLS) certificate to your load balancer. TLS is just an updated, more secure version of Secure Socket Layer (SSL).\n\n Once you create and validate your certificate, you can attach it to your load balancer. You can also use this API to rotate the certificates on your account. Use the [AttachLoadBalancerTlsCertificate] action with the non-attached certificate, and it will replace the existing one and become the attached certificate.\n \n  The [AttachLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module AttachStaticIp :
 sig
   val request :
@@ -114,7 +114,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Closes ports for a specific Amazon Lightsail instance.\n\n The [CloseInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Closes ports for a specific Amazon Lightsail instance.\n\n The [CloseInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CopySnapshot :
 sig
   val request :
@@ -144,7 +144,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates an Amazon Lightsail bucket.\n\n A bucket is a cloud storage resource available in the Lightsail object storage service. Use buckets to store objects such as data and its descriptive metadata. For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
+     "Creates an Amazon Lightsail bucket.\n\n A bucket is a cloud storage resource available in the Lightsail object storage service. Use buckets to store objects such as data and its descriptive metadata. For more information about buckets, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 module CreateBucketAccessKey :
 sig
   val request :
@@ -158,7 +158,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a new access key for the specified Amazon Lightsail bucket. Access keys consist of an access key ID and corresponding secret access key.\n\n Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.html}GetBucketAccessKeys} action to get a list of current access keys for a specific bucket. For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n \n   The [secretAccessKey] value is returned only in response to the [CreateBucketAccessKey] action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.\n   \n    "]
+     "Creates a new access key for the specified Amazon Lightsail bucket. Access keys consist of an access key ID and corresponding secret access key.\n\n Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.html}GetBucketAccessKeys} action to get a list of current access keys for a specific bucket. For more information about access keys, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n \n   The [secretAccessKey] value is returned only in response to the [CreateBucketAccessKey] action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.\n   \n    "]
 module CreateCertificate :
 sig
   val request :
@@ -204,7 +204,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates an email or SMS text message contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
+     "Creates an email or SMS text message contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
 module CreateContainerService :
 sig
   val request :
@@ -218,7 +218,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates an Amazon Lightsail container service.\n\n A Lightsail container service is a compute resource to which you can deploy containers. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-container-services}Container services in Amazon Lightsail} in the {i Lightsail Dev Guide}.\n "]
+     "Creates an Amazon Lightsail container service.\n\n A Lightsail container service is a compute resource to which you can deploy containers. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-container-services}Container services in Amazon Lightsail} in the {i Lightsail Dev Guide}.\n "]
 module CreateContainerServiceDeployment :
 sig
   val request :
@@ -232,7 +232,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a deployment for your Amazon Lightsail container service.\n\n A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.\n \n  You can deploy containers to your container service using container images from a public registry such as Amazon ECR Public, or from your local machine. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-container-images}Creating container images for your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n  "]
+     "Creates a deployment for your Amazon Lightsail container service.\n\n A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.\n \n  You can deploy containers to your container service using container images from a public registry such as Amazon ECR Public, or from your local machine. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-container-images}Creating container images for your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n  "]
 module CreateContainerServiceRegistryLogin :
 sig
   val request :
@@ -246,7 +246,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a temporary set of log in credentials that you can use to log in to the Docker process on your local machine. After you're logged in, you can use the native Docker commands to push your local container images to the container image registry of your Amazon Lightsail account so that you can use them with your Lightsail container service. The log in credentials expire 12 hours after they are created, at which point you will need to create a new set of log in credentials.\n\n  You can only push container images to the container service registry of your Lightsail account. You cannot pull container images or perform any other container image management actions on the container service registry.\n  \n    After you push your container images to the container image registry of your Lightsail account, use the [RegisterContainerImage] action to register the pushed images to a specific Lightsail container service.\n    \n      This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n      \n       "]
+     "Creates a temporary set of log in credentials that you can use to log in to the Docker process on your local machine. After you're logged in, you can use the native Docker commands to push your local container images to the container image registry of your Amazon Lightsail account so that you can use them with your Lightsail container service. The log in credentials expire 12 hours after they are created, at which point you will need to create a new set of log in credentials.\n\n  You can only push container images to the container service registry of your Lightsail account. You cannot pull container images or perform any other container image management actions on the container service registry.\n  \n    After you push your container images to the container image registry of your Lightsail account, use the [RegisterContainerImage] action to register the pushed images to a specific Lightsail container service.\n    \n      This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n      \n       "]
 module CreateDisk :
 sig
   val request :
@@ -263,7 +263,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).\n\n The [create disk] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).\n\n The [create disk] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateDiskFromSnapshot :
 sig
   val request :
@@ -280,7 +280,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a block storage disk from a manual or automatic snapshot of a disk. The resulting disk can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).\n\n The [create disk from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [disk snapshot\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a block storage disk from a manual or automatic snapshot of a disk. The resulting disk can be attached to an Amazon Lightsail instance in the same Availability Zone ([us-east-2a]).\n\n The [create disk from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [disk snapshot\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateDiskSnapshot :
 sig
   val request :
@@ -297,7 +297,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a snapshot of a block storage disk. You can use snapshots for backups, to make copies of disks, and to save data before shutting down a Lightsail instance.\n\n You can take a snapshot of an attached disk that is in use; however, snapshots only capture data that has been written to your disk at the time the snapshot command is issued. This may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the disk long enough to take a snapshot, your snapshot should be complete. Nevertheless, if you cannot pause all file writes to the disk, you should unmount the disk from within the Lightsail instance, issue the create disk snapshot command, and then remount the disk to ensure a consistent and complete snapshot. You may remount and use your disk while the snapshot status is pending.\n \n  You can also use this operation to create a snapshot of an instance's system volume. You might want to do this, for example, to recover data from the system volume of a botched instance or to create a backup of the system volume like you would for a block storage disk. To create a snapshot of a system volume, just define the [instance name] parameter when issuing the snapshot command, and a snapshot of the defined instance's system volume will be created. After the snapshot is available, you can create a block storage disk from the snapshot and attach it to a running instance to access the data on the disk.\n  \n   The [create disk snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n   "]
+     "Creates a snapshot of a block storage disk. You can use snapshots for backups, to make copies of disks, and to save data before shutting down a Lightsail instance.\n\n You can take a snapshot of an attached disk that is in use; however, snapshots only capture data that has been written to your disk at the time the snapshot command is issued. This may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the disk long enough to take a snapshot, your snapshot should be complete. Nevertheless, if you cannot pause all file writes to the disk, you should unmount the disk from within the Lightsail instance, issue the create disk snapshot command, and then remount the disk to ensure a consistent and complete snapshot. You may remount and use your disk while the snapshot status is pending.\n \n  You can also use this operation to create a snapshot of an instance's system volume. You might want to do this, for example, to recover data from the system volume of a botched instance or to create a backup of the system volume like you would for a block storage disk. To create a snapshot of a system volume, just define the [instance name] parameter when issuing the snapshot command, and a snapshot of the defined instance's system volume will be created. After the snapshot is available, you can create a block storage disk from the snapshot and attach it to a running instance to access the data on the disk.\n  \n   The [create disk snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n   "]
 module CreateDistribution :
 sig
   val request :
@@ -312,7 +312,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates an Amazon Lightsail content delivery network (CDN) distribution.\n\n A distribution is a globally distributed network of caching servers that improve the performance of your website or web application hosted on a Lightsail instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-content-delivery-network-distributions}Content delivery networks in Amazon Lightsail}.\n "]
+     "Creates an Amazon Lightsail content delivery network (CDN) distribution.\n\n A distribution is a globally distributed network of caching servers that improve the performance of your website or web application hosted on a Lightsail instance. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-content-delivery-network-distributions}Content delivery networks in Amazon Lightsail}.\n "]
 module CreateDomain :
 sig
   val request :
@@ -329,7 +329,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a domain resource for the specified domain (example.com).\n\n The [create domain] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a domain resource for the specified domain (example.com).\n\n The [create domain] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateDomainEntry :
 sig
   val request :
@@ -346,7 +346,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates one of the following domain name system (DNS) records in a domain DNS zone: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).\n\n The [create domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates one of the following domain name system (DNS) records in a domain DNS zone: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).\n\n The [create domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateGUISessionAccessDetails :
 sig
   val request :
@@ -360,7 +360,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates two URLs that are used to access a virtual computer\226\128\153s graphical user interface (GUI) session. The primary URL initiates a web-based NICE DCV session to the virtual computer's application. The secondary URL initiates a web-based NICE DCV session to the virtual computer's operating session. \n\n Use [StartGUISession] to open the session.\n "]
+     "Creates two URLs that are used to access a virtual computer\226\128\153s graphical user interface (GUI) session. The primary URL initiates a web-based Amazon DCV session to the virtual computer's application. The secondary URL initiates a web-based Amazon DCV session to the virtual computer's operating session. \n\n Use [StartGUISession] to open the session.\n "]
 module CreateInstances :
 sig
   val request :
@@ -377,7 +377,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates one or more Amazon Lightsail instances.\n\n The [create instances] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.\n "]
+     "Creates one or more Amazon Lightsail instances.\n\n The [create instances] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Lightsail Developer Guide}.\n "]
 module CreateInstancesFromSnapshot :
 sig
   val request :
@@ -394,7 +394,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates one or more new instances from a manual or automatic snapshot of an instance.\n\n The [create instances from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates one or more new instances from a manual or automatic snapshot of an instance.\n\n The [create instances from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateInstanceSnapshot :
 sig
   val request :
@@ -411,7 +411,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a snapshot of a specific virtual private server, or {i instance}. You can use a snapshot to create a new instance that is based on that snapshot.\n\n The [create instance snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a snapshot of a specific virtual private server, or {i instance}. You can use a snapshot to create a new instance that is based on that snapshot.\n\n The [create instance snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateKeyPair :
 sig
   val request :
@@ -428,7 +428,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a custom SSH key pair that you can use with an Amazon Lightsail instance.\n\n  Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} action to create a Lightsail default key pair in an Amazon Web Services Region where a default key pair does not currently exist.\n  \n    The [create key pair] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
+     "Creates a custom SSH key pair that you can use with an Amazon Lightsail instance.\n\n  Use the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} action to create a Lightsail default key pair in an Amazon Web Services Region where a default key pair does not currently exist.\n  \n    The [create key pair] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
 module CreateLoadBalancer :
 sig
   val request :
@@ -445,7 +445,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a Lightsail load balancer. To learn more about deciding whether to load balance your application, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/configure-lightsail-instances-for-load-balancing}Configure your Lightsail instances for load balancing}. You can create up to 5 load balancers per AWS Region in your account.\n\n When you create a load balancer, you can specify a unique name and port settings. To change additional load balancer settings, use the [UpdateLoadBalancerAttribute] operation.\n \n  The [create load balancer] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Creates a Lightsail load balancer. To learn more about deciding whether to load balance your application, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-lightsail-instances-for-load-balancing}Configure your Lightsail instances for load balancing}. You can create up to 5 load balancers per AWS Region in your account.\n\n When you create a load balancer, you can specify a unique name and port settings. To change additional load balancer settings, use the [UpdateLoadBalancerAttribute] operation.\n \n  The [create load balancer] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module CreateLoadBalancerTlsCertificate :
 sig
   val request :
@@ -462,7 +462,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates an SSL/TLS certificate for an Amazon Lightsail load balancer.\n\n TLS is just an updated, more secure version of Secure Socket Layer (SSL).\n \n  The [CreateLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Creates an SSL/TLS certificate for an Amazon Lightsail load balancer.\n\n TLS is just an updated, more secure version of Secure Socket Layer (SSL).\n \n  The [CreateLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module CreateRelationalDatabase :
 sig
   val request :
@@ -479,7 +479,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a new database in Amazon Lightsail.\n\n The [create relational database] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a new database in Amazon Lightsail.\n\n The [create relational database] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module CreateRelationalDatabaseFromSnapshot :
 sig
   val request :
@@ -496,7 +496,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a new database from an existing database snapshot in Amazon Lightsail.\n\n You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan.\n \n  The [create relational database from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Creates a new database from an existing database snapshot in Amazon Lightsail.\n\n You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan.\n \n  The [create relational database from snapshot] operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module CreateRelationalDatabaseSnapshot :
 sig
   val request :
@@ -513,7 +513,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database.\n\n The [create relational database snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database.\n\n The [create relational database snapshot] operation supports tag-based access control via request tags. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteAlarm :
 sig
   val request :
@@ -528,7 +528,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes an alarm.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
+     "Deletes an alarm.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
 module DeleteAutoSnapshot :
 sig
   val request :
@@ -543,7 +543,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes an automatic snapshot of an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
+     "Deletes an automatic snapshot of an instance or disk. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
 module DeleteBucket :
 sig
   val request :
@@ -571,7 +571,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes an access key for the specified Amazon Lightsail bucket.\n\n We recommend that you delete an access key if the secret access key is compromised.\n \n  For more information about access keys, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n  "]
+     "Deletes an access key for the specified Amazon Lightsail bucket.\n\n We recommend that you delete an access key if the secret access key is compromised.\n \n  For more information about access keys, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-bucket-access-keys}Creating access keys for a bucket in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n  "]
 module DeleteCertificate :
 sig
   val request :
@@ -600,7 +600,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
+     "Deletes a contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
 module DeleteContainerImage :
 sig
   val request :
@@ -644,7 +644,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified block storage disk. The disk must be in the [available] state (not attached to a Lightsail instance).\n\n  The disk may remain in the [deleting] state for several minutes.\n  \n    The [delete disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
+     "Deletes the specified block storage disk. The disk must be in the [available] state (not attached to a Lightsail instance).\n\n  The disk may remain in the [deleting] state for several minutes.\n  \n    The [delete disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
 module DeleteDiskSnapshot :
 sig
   val request :
@@ -661,7 +661,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified disk snapshot.\n\n When you make periodic snapshots of a disk, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the disk.\n \n  The [delete disk snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [disk snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Deletes the specified disk snapshot.\n\n When you make periodic snapshots of a disk, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the disk.\n \n  The [delete disk snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [disk snapshot name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module DeleteDistribution :
 sig
   val request :
@@ -693,7 +693,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified domain recordset and all of its domain records.\n\n The [delete domain] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes the specified domain recordset and all of its domain records.\n\n The [delete domain] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteDomainEntry :
 sig
   val request :
@@ -710,7 +710,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a specific domain entry.\n\n The [delete domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes a specific domain entry.\n\n The [delete domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteInstance :
 sig
   val request :
@@ -727,7 +727,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes an Amazon Lightsail instance.\n\n The [delete instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes an Amazon Lightsail instance.\n\n The [delete instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteInstanceSnapshot :
 sig
   val request :
@@ -744,7 +744,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a specific snapshot of a virtual private server (or {i instance}).\n\n The [delete instance snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes a specific snapshot of a virtual private server (or {i instance}).\n\n The [delete instance snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [instance snapshot name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteKeyPair :
 sig
   val request :
@@ -761,7 +761,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified key pair by removing the public key from Amazon Lightsail.\n\n You can delete key pairs that were created using the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.html}ImportKeyPair} and {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.html}CreateKeyPair} actions, as well as the Lightsail default key pair. A new default key pair will not be created unless you launch an instance without specifying a custom key pair, or you call the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} API. \n \n  The [delete key pair] operation supports tag-based access control via resource tags applied to the resource identified by [key pair name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Deletes the specified key pair by removing the public key from Amazon Lightsail.\n\n You can delete key pairs that were created using the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.html}ImportKeyPair} and {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.html}CreateKeyPair} actions, as well as the Lightsail default key pair. A new default key pair will not be created unless you launch an instance without specifying a custom key pair, or you call the {{:https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.html}DownloadDefaultKeyPair} API. \n \n  The [delete key pair] operation supports tag-based access control via resource tags applied to the resource identified by [key pair name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module DeleteKnownHostKeys :
 sig
   val request :
@@ -778,7 +778,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance. This operation enables the Lightsail browser-based SSH or RDP clients to connect to the instance after a host key mismatch.\n\n  Perform this operation only if you were expecting the host key or certificate mismatch or if you are familiar with the new host key or certificate on the instance. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection}Troubleshooting connection issues when using the Amazon Lightsail browser-based SSH or RDP client}.\n  \n   "]
+     "Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance. This operation enables the Lightsail browser-based SSH or RDP clients to connect to the instance after a host key mismatch.\n\n  Perform this operation only if you were expecting the host key or certificate mismatch or if you are familiar with the new host key or certificate on the instance. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-troubleshooting-browser-based-ssh-rdp-client-connection}Troubleshooting connection issues when using the Amazon Lightsail browser-based SSH or RDP client}.\n  \n   "]
 module DeleteLoadBalancer :
 sig
   val request :
@@ -795,7 +795,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a Lightsail load balancer and all its associated SSL/TLS certificates. Once the load balancer is deleted, you will need to create a new load balancer, create a new certificate, and verify domain ownership again.\n\n The [delete load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes a Lightsail load balancer and all its associated SSL/TLS certificates. Once the load balancer is deleted, you will need to create a new load balancer, create a new certificate, and verify domain ownership again.\n\n The [delete load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteLoadBalancerTlsCertificate :
 sig
   val request :
@@ -812,7 +812,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes an SSL/TLS certificate associated with a Lightsail load balancer.\n\n The [DeleteLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes an SSL/TLS certificate associated with a Lightsail load balancer.\n\n The [DeleteLoadBalancerTlsCertificate] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteRelationalDatabase :
 sig
   val request :
@@ -829,7 +829,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a database in Amazon Lightsail.\n\n The [delete relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes a database in Amazon Lightsail.\n\n The [delete relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DeleteRelationalDatabaseSnapshot :
 sig
   val request :
@@ -846,7 +846,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes a database snapshot in Amazon Lightsail.\n\n The [delete relational database snapshot] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes a database snapshot in Amazon Lightsail.\n\n The [delete relational database snapshot] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DetachCertificateFromDistribution :
 sig
   val request :
@@ -878,7 +878,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Detaches a stopped block storage disk from a Lightsail instance. Make sure to unmount any file systems on the device within your operating system before stopping the instance and detaching the disk.\n\n The [detach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Detaches a stopped block storage disk from a Lightsail instance. Make sure to unmount any file systems on the device within your operating system before stopping the instance and detaching the disk.\n\n The [detach disk] operation supports tag-based access control via resource tags applied to the resource identified by [disk name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module DetachInstancesFromLoadBalancer :
 sig
   val request :
@@ -895,7 +895,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Detaches the specified instances from a Lightsail load balancer.\n\n This operation waits until the instances are no longer needed before they are detached from the load balancer.\n \n  The [detach instances from load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Detaches the specified instances from a Lightsail load balancer.\n\n This operation waits until the instances are no longer needed before they are detached from the load balancer.\n \n  The [detach instances from load balancer] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module DetachStaticIp :
 sig
   val request :
@@ -927,7 +927,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Disables an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
+     "Disables an add-on for an Amazon Lightsail resource. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
 module DownloadDefaultKeyPair :
 sig
   val request :
@@ -959,7 +959,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Enables or modifies an add-on for an Amazon Lightsail resource. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
+     "Enables or modifies an add-on for an Amazon Lightsail resource. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
 module ExportSnapshot :
 sig
   val request :
@@ -976,7 +976,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2). This operation results in an export snapshot record that can be used with the [create\n        cloud formation stack] operation to create new Amazon EC2 instances.\n\n Exported instance snapshots appear in Amazon EC2 as Amazon Machine Images (AMIs), and the instance system disk appears as an Amazon Elastic Block Store (Amazon EBS) volume. Exported disk snapshots appear in Amazon EC2 as Amazon EBS volumes. Snapshots are exported to the same Amazon Web Services Region in Amazon EC2 as the source Lightsail snapshot.\n \n  \n  \n   The [export snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [source snapshot name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n   \n     Use the [get instance snapshots] or [get disk snapshots] operations to get a list of snapshots that you can export to Amazon EC2.\n     \n      "]
+     "Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2). This operation results in an export snapshot record that can be used with the [create\n        cloud formation stack] operation to create new Amazon EC2 instances.\n\n Exported instance snapshots appear in Amazon EC2 as Amazon Machine Images (AMIs), and the instance system disk appears as an Amazon Elastic Block Store (Amazon EBS) volume. Exported disk snapshots appear in Amazon EC2 as Amazon EBS volumes. Snapshots are exported to the same Amazon Web Services Region in Amazon EC2 as the source Lightsail snapshot.\n \n  \n  \n   The [export snapshot] operation supports tag-based access control via resource tags applied to the resource identified by [source snapshot name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n   \n     Use the [get instance snapshots] or [get disk snapshots] operations to get a list of snapshots that you can export to Amazon EC2.\n     \n      "]
 module GetActiveNames :
 sig
   val request :
@@ -1007,7 +1007,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns information about the configured alarms. Specify an alarm name in your request to return information about a specific alarm, or specify a monitored resource name to return information about all alarms for a specific resource.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
+     "Returns information about the configured alarms. Specify an alarm name in your request to return information about a specific alarm, or specify a monitored resource name to return information about all alarms for a specific resource.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
 module GetAutoSnapshots :
 sig
   val request :
@@ -1022,7 +1022,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns the available automatic snapshots for an instance or disk. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
+     "Returns the available automatic snapshots for an instance or disk. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots}Amazon Lightsail Developer Guide}.\n"]
 module GetBlueprints :
 sig
   val request :
@@ -1094,7 +1094,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns information about one or more Amazon Lightsail buckets. The information returned includes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access feature for your Lightsail buckets.\n\n For more information about buckets, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
+     "Returns information about one or more Amazon Lightsail buckets. The information returned includes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access feature for your Lightsail buckets.\n\n For more information about buckets, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/buckets-in-amazon-lightsail}Buckets in Amazon Lightsail} in the {i Amazon Lightsail Developer Guide}.\n "]
 module GetBundles :
 sig
   val request :
@@ -1157,7 +1157,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns information about the configured contact methods. Specify a protocol in your request to return information about a specific contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
+     "Returns information about the configured contact methods. Specify a protocol in your request to return information about a specific contact method.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n "]
 module GetContainerAPIMetadata :
 sig
   val request :
@@ -1477,7 +1477,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns temporary SSH keys you can use to connect to a specific virtual private server, or {i instance}.\n\n The [get instance access details] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Returns temporary SSH keys you can use to connect to a specific virtual private server, or {i instance}.\n\n The [get instance access details] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module GetInstanceMetricData :
 sig
   val request :
@@ -1693,7 +1693,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Returns a list of TLS security policies that you can apply to Lightsail load balancers.\n\n For more information about load balancer TLS security policies, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configure-load-balancer-tls-security-policy}Configuring TLS security policies on your Amazon Lightsail load balancers} in the {i Amazon Lightsail Developer Guide}.\n "]
+     "Returns a list of TLS security policies that you can apply to Lightsail load balancers.\n\n For more information about load balancer TLS security policies, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configure-load-balancer-tls-security-policy}Configuring TLS security policies on your Amazon Lightsail load balancers} in the {i Amazon Lightsail Developer Guide}.\n "]
 module GetOperation :
 sig
   val request :
@@ -2062,7 +2062,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.\n\n The [OpenInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.\n\n The [OpenInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module PeerVpc :
 sig
   val request :
@@ -2093,7 +2093,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Creates or updates an alarm, and associates it with the specified metric.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n \n  When this action creates an alarm, the alarm state is immediately set to [INSUFFICIENT_DATA]. The alarm is then evaluated and its state is set appropriately. Any actions associated with the new state are then executed.\n  \n   When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. The alarm is then evaluated with the updated configuration.\n   "]
+     "Creates or updates an alarm, and associates it with the specified metric.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n \n  When this action creates an alarm, the alarm state is immediately set to [INSUFFICIENT_DATA]. The alarm is then evaluated and its state is set appropriately. Any actions associated with the new state are then executed.\n  \n   When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. The alarm is then evaluated with the updated configuration.\n   "]
 module PutInstancePublicPorts :
 sig
   val request :
@@ -2110,7 +2110,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol. This action also closes all currently open ports that are not included in the request. Include all of the ports and the protocols you want to open in your [PutInstancePublicPorts]request. Or use the [OpenInstancePublicPorts] action to open ports without closing currently open ports.\n\n The [PutInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol. This action also closes all currently open ports that are not included in the request. Include all of the ports and the protocols you want to open in your [PutInstancePublicPorts]request. Or use the [OpenInstancePublicPorts] action to open ports without closing currently open ports.\n\n The [PutInstancePublicPorts] action supports tag-based access control via resource tags applied to the resource identified by [instanceName]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module RebootInstance :
 sig
   val request :
@@ -2127,7 +2127,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Restarts a specific instance.\n\n The [reboot instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Restarts a specific instance.\n\n The [reboot instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module RebootRelationalDatabase :
 sig
   val request :
@@ -2144,7 +2144,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Restarts a specific database in Amazon Lightsail.\n\n The [reboot relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Restarts a specific database in Amazon Lightsail.\n\n The [reboot relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module RegisterContainerImage :
 sig
   val request :
@@ -2158,7 +2158,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Registers a container image to your Amazon Lightsail container service.\n\n  This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n  \n   "]
+     "Registers a container image to your Amazon Lightsail container service.\n\n  This action is not required if you install and use the Lightsail Control (lightsailctl) plugin to push container images to your Lightsail container service. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-pushing-container-images}Pushing and managing container images on your Amazon Lightsail container services} in the {i Amazon Lightsail Developer Guide}.\n  \n   "]
 module ReleaseStaticIp :
 sig
   val request :
@@ -2204,7 +2204,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Sends a verification request to an email contact method to ensure it's owned by the requester. SMS contact methods don't need to be verified.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n \n  A verification request is sent to the contact method when you initially create it. Use this action to send another verification request if a previous verification request was deleted, or has expired.\n  \n    Notifications are not sent to an email contact method until after it is verified, and confirmed as valid.\n    \n     "]
+     "Sends a verification request to an email contact method to ensure it's owned by the requester. SMS contact methods don't need to be verified.\n\n A contact method is used to send you notifications about your Amazon Lightsail resources. You can add one email address and one mobile phone number contact method in each Amazon Web Services Region. However, SMS text messaging is not supported in some Amazon Web Services Regions, and SMS text messages cannot be sent to some countries/regions. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications}Notifications in Amazon Lightsail}.\n \n  A verification request is sent to the contact method when you initially create it. Use this action to send another verification request if a previous verification request was deleted, or has expired.\n  \n    Notifications are not sent to an email contact method until after it is verified, and confirmed as valid.\n    \n     "]
 module SetIpAddressType :
 sig
   val request :
@@ -2280,7 +2280,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Starts a specific Amazon Lightsail instance from a stopped state. To restart an instance, use the [reboot instance] operation.\n\n  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.\n  \n    The [start instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
+     "Starts a specific Amazon Lightsail instance from a stopped state. To restart an instance, use the [reboot instance] operation.\n\n  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.\n  \n    The [start instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
 module StartRelationalDatabase :
 sig
   val request :
@@ -2297,7 +2297,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Starts a specific database from a stopped state in Amazon Lightsail. To restart a database, use the [reboot relational database] operation.\n\n The [start relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Starts a specific database from a stopped state in Amazon Lightsail. To restart a database, use the [reboot relational database] operation.\n\n The [start relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module StopGUISession :
 sig
   val request :
@@ -2311,7 +2311,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Terminates a web-based NICE DCV session that\226\128\153s used to access a virtual computer\226\128\153s operating system or application. The session will close and any unsaved data will be lost.\n"]
+     "Terminates a web-based Amazon DCV session that\226\128\153s used to access a virtual computer\226\128\153s operating system or application. The session will close and any unsaved data will be lost.\n"]
 module StopInstance :
 sig
   val request :
@@ -2328,7 +2328,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Stops a specific Amazon Lightsail instance that is currently running.\n\n  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.\n  \n    The [stop instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
+     "Stops a specific Amazon Lightsail instance that is currently running.\n\n  When you start a stopped instance, Lightsail assigns a new public IP address to the instance. To use the same IP address after stopping and starting an instance, create a static IP address and attach it to the instance. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-create-static-ip}Amazon Lightsail Developer Guide}.\n  \n    The [stop instance] operation supports tag-based access control via resource tags applied to the resource identified by [instance name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
 module StopRelationalDatabase :
 sig
   val request :
@@ -2345,7 +2345,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Stops a specific database that is currently running in Amazon Lightsail.\n\n The [stop relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Stops a specific database that is currently running in Amazon Lightsail.\n\n  If you don't manually start your database instance after it has been stopped for seven consecutive days, Amazon Lightsail automatically starts it for you. This action helps ensure that your database instance doesn't fall behind on any required maintenance updates.\n  \n    The [stop relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n    "]
 module TagResource :
 sig
   val request :
@@ -2362,7 +2362,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Adds one or more tags to the specified Amazon Lightsail resource. Each resource can have a maximum of 50 tags. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tags}Amazon Lightsail Developer Guide}.\n\n The [tag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Adds one or more tags to the specified Amazon Lightsail resource. Each resource can have a maximum of 50 tags. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags}Amazon Lightsail Developer Guide}.\n\n The [tag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module TestAlarm :
 sig
   val request :
@@ -2377,7 +2377,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Tests an alarm by displaying a banner on the Amazon Lightsail console. If a notification trigger is configured for the specified alarm, the test also sends a notification to the notification protocol ([Email] and/or [SMS]) configured for the alarm.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
+     "Tests an alarm by displaying a banner on the Amazon Lightsail console. If a notification trigger is configured for the specified alarm, the test also sends a notification to the notification protocol ([Email] and/or [SMS]) configured for the alarm.\n\n An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-alarms}Alarms in Amazon Lightsail}.\n "]
 module UnpeerVpc :
 sig
   val request :
@@ -2410,7 +2410,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified set of tag keys and their values from the specified Amazon Lightsail resource.\n\n The [untag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Deletes the specified set of tag keys and their values from the specified Amazon Lightsail resource.\n\n The [untag resource] operation supports tag-based access control via request tags and resource tags applied to the resource identified by [resource name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module UpdateBucket :
 sig
   val request :
@@ -2499,7 +2499,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Updates a domain recordset after it is created.\n\n The [update domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Updates a domain recordset after it is created.\n\n The [update domain entry] operation supports tag-based access control via resource tags applied to the resource identified by [domain name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module UpdateInstanceMetadataOptions :
 sig
   val request :
@@ -2516,7 +2516,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance. When you modify the parameters on a running instance, the [GetInstance] or [GetInstances] API operation initially responds with a state of [pending]. After the parameter modifications are successfully applied, the state changes to [applied] in subsequent [GetInstance] or [GetInstances] API calls. For more information, see {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-configuring-instance-metadata-service}Use IMDSv2 with an Amazon Lightsail instance} in the {i Amazon Lightsail Developer Guide}.\n"]
+     "Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance. When you modify the parameters on a running instance, the [GetInstance] or [GetInstances] API operation initially responds with a state of [pending]. After the parameter modifications are successfully applied, the state changes to [applied] in subsequent [GetInstance] or [GetInstances] API calls. For more information, see {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-instance-metadata-service}Use IMDSv2 with an Amazon Lightsail instance} in the {i Amazon Lightsail Developer Guide}.\n"]
 module UpdateLoadBalancerAttribute :
 sig
   val request :
@@ -2533,7 +2533,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Updates the specified attribute for a load balancer. You can only update one attribute at a time.\n\n The [update load balancer attribute] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
+     "Updates the specified attribute for a load balancer. You can only update one attribute at a time.\n\n The [update load balancer attribute] operation supports tag-based access control via resource tags applied to the resource identified by [load balancer\n        name]. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n "]
 module UpdateRelationalDatabase :
 sig
   val request :
@@ -2550,7 +2550,7 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Allows the update of one or more attributes of a database in Amazon Lightsail.\n\n Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window.\n \n  The [update relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Allows the update of one or more attributes of a database in Amazon Lightsail.\n\n Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window.\n \n  The [update relational database] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
 module UpdateRelationalDatabaseParameters :
 sig
   val request :
@@ -2567,4 +2567,4 @@ sig
           | `ServiceException of service_exception 
           | `UnauthenticatedException of unauthenticated_exception ]) result
 end[@@ocaml.doc
-     "Allows the update of one or more parameters of a database in Amazon Lightsail.\n\n Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: [dynamic] or [pending-reboot]. Parameters marked with a [dynamic] apply type are applied immediately. Parameters marked with a [pending-reboot] apply type are applied only after the database is rebooted using the [reboot relational database] operation.\n \n  The [update relational database parameters] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]
+     "Allows the update of one or more parameters of a database in Amazon Lightsail.\n\n Parameter updates don't cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: [dynamic] or [pending-reboot]. Parameters marked with a [dynamic] apply type are applied immediately. Parameters marked with a [pending-reboot] apply type are applied only after the database is rebooted using the [reboot relational database] operation.\n \n  The [update relational database parameters] operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Amazon Lightsail Developer Guide}.\n  "]

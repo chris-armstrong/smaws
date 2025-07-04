@@ -7,14 +7,20 @@ let service =
       version = "2014-11-06";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
+type nonrec validation_exception =
+  {
+  reason_code: string option
+    [@ocaml.doc "The reason code for the invalid request.\n"];
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The request isn't valid. Verify that you entered valid contents for the command and try again.\n"]
 type nonrec update_service_setting_request =
   {
   setting_value: string
     [@ocaml.doc
-      "The new value to specify for the service setting. The following list specifies the available values for each setting.\n\n {ul\n       {-  For [/ssm/managed-instance/default-ec2-instance-management-role], enter the name of an IAM role. \n           \n            }\n       {-  For [/ssm/automation/customer-script-log-destination], enter [CloudWatch].\n           \n            }\n       {-  For [/ssm/automation/customer-script-log-group-name], enter the name of an Amazon CloudWatch Logs log group.\n           \n            }\n       {-  For [/ssm/documents/console/public-sharing-permission], enter [Enable] or [Disable].\n           \n            }\n       {-  For [/ssm/managed-instance/activation-tier], enter [standard] or [advanced].\n           \n            }\n       {-   For [/ssm/opsinsights/opscenter], enter [Enabled] or [Disabled]. \n           \n            }\n       {-  For [/ssm/parameter-store/default-parameter-tier], enter [Standard], [Advanced], or [Intelligent-Tiering] \n           \n            }\n       {-  For [/ssm/parameter-store/high-throughput-enabled], enter [true] or [false].\n           \n            }\n       }\n  "];
+      "The new value to specify for the service setting. The following list specifies the available values for each setting.\n\n {ul\n       {-  For [/ssm/appmanager/appmanager-enabled], enter [True] or [False].\n           \n            }\n       {-  For [/ssm/automation/customer-script-log-destination], enter [CloudWatch].\n           \n            }\n       {-  For [/ssm/automation/customer-script-log-group-name], enter the name of an Amazon CloudWatch Logs log group.\n           \n            }\n       {-  For [/ssm/documents/console/public-sharing-permission], enter [Enable] or [Disable].\n           \n            }\n       {-  For [/ssm/managed-instance/activation-tier], enter [standard] or [advanced].\n           \n            }\n       {-  For [/ssm/managed-instance/default-ec2-instance-management-role], enter the name of an IAM role. \n           \n            }\n       {-   For [/ssm/opsinsights/opscenter], enter [Enabled] or [Disabled]. \n           \n            }\n       {-  For [/ssm/parameter-store/default-parameter-tier], enter [Standard], [Advanced], or [Intelligent-Tiering] \n           \n            }\n       {-  For [/ssm/parameter-store/high-throughput-enabled], enter [true] or [false].\n           \n            }\n       }\n  "];
   setting_id: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the service setting to update. For example, [arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled]. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n    Permissions to update the [/ssm/managed-instance/default-ec2-instance-management-role] setting should only be provided to administrators. Implement least privilege access when allowing individuals to configure or modify the Default Host Management Configuration.\n    \n     "]}
+      "The Amazon Resource Name (ARN) of the service setting to update. For example, [arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled]. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/appmanager/appmanager-enabled] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-  /ssm/automation/enable-adaptive-concurrency\n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n    Permissions to update the [/ssm/managed-instance/default-ec2-instance-management-role] setting should only be provided to administrators. Implement least privilege access when allowing individuals to configure or modify the Default Host Management Configuration.\n    \n     "]}
 [@@ocaml.doc "The request body of the UpdateServiceSetting API operation.\n"]
 type nonrec too_many_updates = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -152,10 +158,10 @@ type nonrec patch_rule =
       "For managed nodes identified by the approval rule filters, enables a patch baseline to apply non-security updates available in the specified repository. The default value is [false]. Applies to Linux managed nodes only.\n"];
   approve_until_date: string option
     [@ocaml.doc
-      "The cutoff date for auto approval of released patches. Any patches released on or before this date are installed automatically. Not supported on Debian Server or Ubuntu Server.\n\n Enter dates in the format [YYYY-MM-DD]. For example, [2021-12-31].\n "];
+      "The cutoff date for auto approval of released patches. Any patches released on or before this date are installed automatically.\n\n Enter dates in the format [YYYY-MM-DD]. For example, [2024-12-31].\n \n  This parameter is marked as [Required: No], but your request must include a value for either [ApproveUntilDate] or [ApproveAfterDays].\n  \n   Not supported for Debian Server or Ubuntu Server.\n   \n     Use caution when setting this value for Windows Server patch baselines. Because patch updates that are replaced by later updates are removed, setting too broad a value for this parameter can result in crucial patches not being installed. For more information, see the {b Windows Server} tab in the topic {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-selecting-patches.html}How security patches are selected} in the {i Amazon Web Services Systems Manager User Guide}.\n     \n      "];
   approve_after_days: int option
     [@ocaml.doc
-      "The number of days after the release date of each patch matched by the rule that the patch is marked as approved in the patch baseline. For example, a value of [7] means that patches are approved seven days after they are released. Not supported on Debian Server or Ubuntu Server.\n"];
+      "The number of days after the release date of each patch matched by the rule that the patch is marked as approved in the patch baseline. For example, a value of [7] means that patches are approved seven days after they are released.\n\n This parameter is marked as [Required: No], but your request must include a value for either [ApproveAfterDays] or [ApproveUntilDate].\n \n  Not supported for Debian Server or Ubuntu Server.\n  \n    Use caution when setting this value for Windows Server patch baselines. Because patch updates that are replaced by later updates are removed, setting too broad a value for this parameter can result in crucial patches not being installed. For more information, see the {b Windows Server} tab in the topic {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-selecting-patches.html}How security patches are selected} in the {i Amazon Web Services Systems Manager User Guide}.\n    \n     "];
   compliance_level: patch_compliance_level option
     [@ocaml.doc
       "A compliance severity level for all approved patches in a patch baseline.\n"];
@@ -183,8 +189,15 @@ type nonrec patch_source =
     [@ocaml.doc "The name specified to identify the patch source.\n"]}
 [@@ocaml.doc
   "Information about the patches to use to update the managed nodes, including target operating systems and source repository. Applies to Linux managed nodes only.\n"]
+type nonrec patch_compliance_status =
+  | NonCompliant [@ocaml.doc ""]
+  | Compliant [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec update_patch_baseline_result =
   {
+  available_security_updates_compliance_status:
+    patch_compliance_status option
+    [@ocaml.doc
+      "Indicates the compliance status of managed nodes for which security-related patches are available but were not approved. This preference is specified when the [CreatePatchBaseline] or [UpdatePatchBaseline] commands are run.\n\n Applies to Windows Server managed nodes only.\n "];
   sources: patch_source list option
     [@ocaml.doc
       "Information about the patches to use to update the managed nodes, including target operating systems and source repositories. Applies to Linux managed nodes only.\n"];
@@ -223,6 +236,10 @@ type nonrec update_patch_baseline_request =
   replace: bool option
     [@ocaml.doc
       "If True, then all fields that are required by the [CreatePatchBaseline] operation are also required for this API request. Optional fields that aren't specified are set to null.\n"];
+  available_security_updates_compliance_status:
+    patch_compliance_status option
+    [@ocaml.doc
+      "Indicates the status to be assigned to security patches that are available but not approved because they don't meet the installation criteria specified in the patch baseline.\n\n Example scenario: Security patches that you might want installed can be skipped if you have specified a long period to wait after a patch is released before installation. If an update to the patch is released during your specified waiting period, the waiting period for installing the patch starts over. If the waiting period is too long, multiple versions of the patch could be released but never installed.\n \n  Supported for Windows Server managed nodes only.\n  "];
   sources: patch_source list option
     [@ocaml.doc
       "Information about the patches to use to update the managed nodes, including target operating systems and source repositories. Applies to Linux managed nodes only.\n"];
@@ -230,10 +247,10 @@ type nonrec update_patch_baseline_request =
     [@ocaml.doc "A description of the patch baseline.\n"];
   rejected_patches_action: patch_action option
     [@ocaml.doc
-      "The action for Patch Manager to take on patches included in the [RejectedPackages] list.\n\n {ul\n       {-   {b  [ALLOW_AS_DEPENDENCY] }: A package in the [Rejected] patches list is installed only if it is a dependency of another package. It is considered compliant with the patch baseline, and its status is reported as [InstalledOther]. This is the default action if no option is specified.\n           \n            }\n       {-   {b BLOCK}: Packages in the {b Rejected patches} list, and packages that include them as dependencies, aren't installed by Patch Manager under any circumstances. If a package was installed before it was added to the {b Rejected patches} list, or is installed outside of Patch Manager afterward, it's considered noncompliant with the patch baseline and its status is reported as {i InstalledRejected}.\n           \n            }\n       }\n  "];
+      "The action for Patch Manager to take on patches included in the [RejectedPackages] list.\n\n  ALLOW_AS_DEPENDENCY   {b Linux and macOS}: A package in the rejected patches list is installed only if it is a dependency of another package. It is considered compliant with the patch baseline, and its status is reported as [INSTALLED_OTHER]. This is the default action if no option is specified.\n                       \n                         {b Windows Server}: Windows Server doesn't support the concept of package dependencies. If a package in the rejected patches list and already installed on the node, its status is reported as [INSTALLED_OTHER]. Any package not already installed on the node is skipped. This is the default action if no option is specified.\n                        \n                          BLOCK   {b All OSs}: Packages in the rejected patches list, and packages that include them as dependencies, aren't installed by Patch Manager under any circumstances. If a package was installed before it was added to the rejected patches list, or is installed outside of Patch Manager afterward, it's considered noncompliant with the patch baseline and its status is reported as [INSTALLED_REJECTED].\n                                 \n                                   "];
   rejected_patches: string list option
     [@ocaml.doc
-      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approved_patches_enable_non_security: bool option
     [@ocaml.doc
       "Indicates whether the list of approved patches includes non-security updates that should be applied to the managed nodes. The default value is [false]. Applies to Linux managed nodes only.\n"];
@@ -242,12 +259,12 @@ type nonrec update_patch_baseline_request =
       "Assigns a new compliance severity level to an existing patch baseline.\n"];
   approved_patches: string list option
     [@ocaml.doc
-      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approval_rules: patch_rule_group option
     [@ocaml.doc "A set of rules used to include patches in the baseline.\n"];
   global_filters: patch_filter_group option
     [@ocaml.doc
-      "A set of global filters used to include patches in the baseline.\n"];
+      "A set of global filters used to include patches in the baseline.\n\n  The [GlobalFilters] parameter can be configured only by using the CLI or an Amazon Web Services SDK. It can't be configured from the Patch Manager console, and its value isn't displayed in the console.\n  \n   "];
   name: string option [@ocaml.doc "The name of the patch baseline.\n"];
   baseline_id: string
     [@ocaml.doc "The ID of the patch baseline to update.\n"]}[@@ocaml.doc ""]
@@ -323,6 +340,7 @@ type nonrec related_ops_item =
 type nonrec ops_item_status =
   | CLOSED [@ocaml.doc ""]
   | REJECTED [@ocaml.doc ""]
+  | REVOKED [@ocaml.doc ""]
   | APPROVED [@ocaml.doc ""]
   | PENDING_APPROVAL [@ocaml.doc ""]
   | CHANGE_CALENDAR_OVERRIDE_REJECTED [@ocaml.doc ""]
@@ -366,7 +384,7 @@ type nonrec update_ops_item_request =
   ops_item_id: string [@ocaml.doc "The ID of the OpsItem.\n"];
   status: ops_item_status option
     [@ocaml.doc
-      "The OpsItem status. Status can be [Open], [In Progress], or [Resolved]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-working-with-OpsItems-editing-details.html}Editing OpsItem details} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
+      "The OpsItem status. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-working-with-OpsItems-editing-details.html}Editing OpsItem details} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   related_ops_items: related_ops_item list option
     [@ocaml.doc
       "One or more OpsItems that share something in common with the current OpsItems. For example, related OpsItems can include OpsItems with similar error messages, impacted resources, or statuses for the impacted resource.\n"];
@@ -419,7 +437,7 @@ type nonrec update_managed_instance_role_request =
   {
   iam_role: string
     [@ocaml.doc
-      "The name of the Identity and Access Management (IAM) role that you want to assign to the managed node. This IAM role must provide AssumeRole permissions for the Amazon Web Services Systems Manager service principal [ssm.amazonaws.com]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-service-role.html}Create an IAM service role for a hybrid and multicloud environment} in the {i Amazon Web Services Systems Manager User Guide}.\n\n  You can't specify an IAM service-linked role for this parameter. You must create a unique role.\n  \n   "];
+      "The name of the Identity and Access Management (IAM) role that you want to assign to the managed node. This IAM role must provide AssumeRole permissions for the Amazon Web Services Systems Manager service principal [ssm.amazonaws.com]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/hybrid-multicloud-service-role.html}Create the IAM service role required for Systems Manager in hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}.\n\n  You can't specify an IAM service-linked role for this parameter. You must create a unique role.\n  \n   "];
   instance_id: string
     [@ocaml.doc
       "The ID of the managed node where you want to update the role.\n"]}
@@ -436,7 +454,7 @@ type nonrec target =
     [@ocaml.doc
       "User-defined criteria for sending commands that target managed nodes that meet the criteria.\n"]}
 [@@ocaml.doc
-  "An array of search criteria that targets managed nodes using a key-value pair that you specify.\n\n   One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}Registering maintenance window tasks without targets} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n    Supported formats include the following.\n    \n      {b For all Systems Manager capabilities:} \n     \n      {ul\n            {-   [Key=tag-key,Values=tag-value-1,tag-value-2] \n                \n                 }\n            }\n    {b For Automation and Change Manager:} \n   \n    {ul\n          {-   [Key=tag:tag-key,Values=tag-value] \n              \n               }\n          {-   [Key=ResourceGroup,Values=resource-group-name] \n              \n               }\n          {-   [Key=ParameterValues,Values=value-1,value-2,value-3] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=AWS::EC2::Instance,Values=*] \n                         \n                          }\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For Run Command and Maintenance Windows:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-   [Key=resource-groups:Name,Values=resource-group-name] \n              \n               }\n          {-  Additionally, Maintenance Windows support targeting resource types:\n              \n               {ul\n                     {-   [Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For State Manager:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n   For more information about how to send commands that target managed nodes using [Key,Value] parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting}Targeting multiple managed nodes} in the {i Amazon Web Services Systems Manager User Guide}.\n   "]
+  "An array of search criteria that targets managed nodes using a key-value pair that you specify.\n\n   One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}Registering maintenance window tasks without targets} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n    Supported formats include the following.\n    \n      {b For all Systems Manager tools:} \n     \n      {ul\n            {-   [Key=tag-key,Values=tag-value-1,tag-value-2] \n                \n                 }\n            }\n    {b For Automation and Change Manager:} \n   \n    {ul\n          {-   [Key=tag:tag-key,Values=tag-value] \n              \n               }\n          {-   [Key=ResourceGroup,Values=resource-group-name] \n              \n               }\n          {-   [Key=ParameterValues,Values=value-1,value-2,value-3] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=AWS::EC2::Instance,Values=*] \n                         \n                          }\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For Run Command and Maintenance Windows:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-   [Key=resource-groups:Name,Values=resource-group-name] \n              \n               }\n          {-  Additionally, Maintenance Windows support targeting resource types:\n              \n               {ul\n                     {-   [Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2] \n                         \n                          }\n                     \n           }\n            }\n          }\n    {b For State Manager:} \n   \n    {ul\n          {-   [Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3] \n              \n               }\n          {-   [Key=tag:tag-key,Values=tag-value-1,tag-value-2] \n              \n               }\n          {-  To target all instances in the Amazon Web Services Region:\n              \n               {ul\n                     {-   [Key=InstanceIds,Values=*] \n                         \n                          }\n                     \n           }\n            }\n          }\n   For more information about how to send commands that target managed nodes using [Key,Value] parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting}Targeting multiple managed nodes} in the {i Amazon Web Services Systems Manager User Guide}.\n   "]
 type nonrec maintenance_window_task_parameter_value_expression =
   {
   values: string list option
@@ -489,7 +507,7 @@ type nonrec maintenance_window_run_command_parameters =
       "If this time is reached and the command hasn't already started running, it doesn't run.\n"];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for maintenance window Run Command tasks.\n"];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   parameters: parameters option
     [@ocaml.doc "The parameters for the [RUN_COMMAND] task execution.\n"];
   output_s3_key_prefix: string option
@@ -606,7 +624,7 @@ type nonrec update_maintenance_window_task_result =
       "The updated parameter values.\n\n   [TaskParameters] has been deprecated. To specify parameters to pass to a task when it runs, instead use the [Parameters] option in the [TaskInvocationParameters] structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n  \n   "];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for maintenance window Run Command tasks.\n"];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   task_arn: string option [@ocaml.doc "The updated task ARN value.\n"];
   targets: target list option [@ocaml.doc "The updated target values.\n"];
   window_task_id: string option
@@ -649,7 +667,7 @@ type nonrec update_maintenance_window_task_request =
       "The parameters to modify.\n\n   [TaskParameters] has been deprecated. To specify parameters to pass to a task when it runs, instead use the [Parameters] option in the [TaskInvocationParameters] structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n  \n    The map has the following format:\n    \n     Key: string, between 1 and 255 characters\n     \n      Value: an array of strings, each string is between 1 and 255 characters\n      "];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up maintenance windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   task_arn: string option [@ocaml.doc "The task ARN to modify.\n"];
   targets: target list option
     [@ocaml.doc
@@ -784,6 +802,8 @@ type nonrec platform_type =
   | LINUX [@ocaml.doc ""]
   | WINDOWS [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec document_type =
+  | AutoApprovalPolicy [@ocaml.doc ""]
+  | ManualApprovalPolicy [@ocaml.doc ""]
   | QuickSetup [@ocaml.doc ""]
   | ConformancePackTemplate [@ocaml.doc ""]
   | CloudFormation [@ocaml.doc ""]
@@ -928,7 +948,7 @@ type nonrec attachments_source =
     [@ocaml.doc "The name of the document attachment file.\n"];
   values: string list option
     [@ocaml.doc
-      "The value of a key-value pair that identifies the location of an attachment to a document. The format for {b Value} depends on the type of key you specify.\n\n {ul\n       {-  For the key {i SourceUrl}, the value is an S3 bucket location. For example:\n           \n             [\"Values\": \\[ \"s3://doc-example-bucket/my-folder\" \\]] \n            \n             }\n       {-  For the key {i S3FileUrl}, the value is a file in an S3 bucket. For example:\n           \n             [\"Values\": \\[ \"s3://doc-example-bucket/my-folder/my-file.py\" \\]] \n            \n             }\n       {-  For the key {i AttachmentReference}, the value is constructed from the name of another SSM document in your account, a version number of that document, and a file attached to that document version that you want to reuse. For example:\n           \n             [\"Values\": \\[ \"MyOtherDocument/3/my-other-file.py\" \\]] \n            \n             However, if the SSM document is shared with you from another account, the full SSM document ARN must be specified instead of the document name only. For example:\n             \n               [\"Values\": \\[\n      \"arn:aws:ssm:us-east-2:111122223333:document/OtherAccountDocument/3/their-file.py\"\n      \\]] \n              \n               }\n       }\n  "];
+      "The value of a key-value pair that identifies the location of an attachment to a document. The format for {b Value} depends on the type of key you specify.\n\n {ul\n       {-  For the key {i SourceUrl}, the value is an S3 bucket location. For example:\n           \n             [\"Values\": \\[ \"s3://amzn-s3-demo-bucket/my-prefix\" \\]] \n            \n             }\n       {-  For the key {i S3FileUrl}, the value is a file in an S3 bucket. For example:\n           \n             [\"Values\": \\[ \"s3://amzn-s3-demo-bucket/my-prefix/my-file.py\" \\]] \n            \n             }\n       {-  For the key {i AttachmentReference}, the value is constructed from the name of another SSM document in your account, a version number of that document, and a file attached to that document version that you want to reuse. For example:\n           \n             [\"Values\": \\[ \"MyOtherDocument/3/my-other-file.py\" \\]] \n            \n             However, if the SSM document is shared with you from another account, the full SSM document ARN must be specified instead of the document name only. For example:\n             \n               [\"Values\": \\[\n      \"arn:aws:ssm:us-east-2:111122223333:document/OtherAccountDocument/3/their-file.py\"\n      \\]] \n              \n               }\n       }\n  "];
   key: attachments_source_key option
     [@ocaml.doc
       "The key of a key-value pair that identifies the location of an attachment to a document.\n"]}
@@ -1111,6 +1131,21 @@ type nonrec association_sync_compliance =
   | Auto [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec target_location =
   {
+  targets_max_errors: string option
+    [@ocaml.doc
+      "The maximum number of errors that are allowed before the system stops running the automation on additional targets. This [TargetsMaxErrors] parameter takes precedence over the [StartAutomationExecution:MaxErrors] parameter if both are supplied.\n"];
+  targets_max_concurrency: string option
+    [@ocaml.doc
+      "The maximum number of targets allowed to run this task in parallel. This [TargetsMaxConcurrency] takes precedence over the [StartAutomationExecution:MaxConcurrency] parameter if both are supplied.\n"];
+  targets: target list option
+    [@ocaml.doc
+      "A list of key-value mappings to target resources. If you specify values for this data type, you must also specify a value for [TargetParameterName].\n\n This [Targets] parameter takes precedence over the [StartAutomationExecution:Targets] parameter if both are supplied.\n "];
+  exclude_accounts: string list option
+    [@ocaml.doc
+      "Amazon Web Services accounts or organizational units to exclude as expanded targets.\n"];
+  include_child_organization_units: bool option
+    [@ocaml.doc
+      "Indicates whether to include child organizational units (OUs) that are children of the targeted OUs. The default is [false].\n"];
   target_location_alarm_configuration: alarm_configuration option
     [@ocaml.doc ""];
   execution_role_name: string option
@@ -1160,13 +1195,13 @@ type nonrec association_description =
       "The combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association.\n"];
   calendar_names: string list option
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar}.\n"];
+      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   apply_only_at_cron_interval: bool option
     [@ocaml.doc
       "By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.\n"];
   sync_compliance: association_sync_compliance option
     [@ocaml.doc
-      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
+      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
   compliance_severity: association_compliance_severity option
     [@ocaml.doc "The severity level that is assigned to the association.\n"];
   max_concurrency: string option
@@ -1194,7 +1229,7 @@ type nonrec association_description =
     [@ocaml.doc "A description of the parameters for a document. \n"];
   automation_target_parameter_name: string option
     [@ocaml.doc
-      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.\n"];
+      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.\n"];
   document_version: string option [@ocaml.doc "The document version.\n"];
   overview: association_overview option
     [@ocaml.doc "Information about the association.\n"];
@@ -1245,13 +1280,13 @@ type nonrec update_association_request =
       "A location is a combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association. Use this action to update an association in multiple Regions and multiple accounts.\n"];
   calendar_names: string list option
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents you want to gate your associations under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar}.\n"];
+      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents you want to gate your associations under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   apply_only_at_cron_interval: bool option
     [@ocaml.doc
-      "By default, when you update an association, the system runs it immediately after it is updated and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you update it. This parameter isn't supported for rate expressions.\n\n If you chose this option when you created an association and later you edit that association or you make changes to the SSM document on which that association is based (by using the Documents page in the console), State Manager applies the association at the next specified cron interval. For example, if you chose the [Latest] version of an SSM document when you created an association and you edit the association by choosing a different document version on the Documents page, State Manager applies the association at the next specified cron interval if you previously selected this option. If this option wasn't selected, State Manager immediately runs the association.\n \n  You can reset this option. To do so, specify the [no-apply-only-at-cron-interval] parameter when you update the association from the command line. This parameter forces the association to run immediately after updating it and according to the interval specified.\n  "];
+      "By default, when you update an association, the system runs it immediately after it is updated and then according to the schedule you specified. Specify [true] for [ApplyOnlyAtCronInterval] if you want the association to run only according to the schedule you specified.\n\n If you chose this option when you created an association and later you edit that association or you make changes to the Automation runbook or SSM document on which that association is based, State Manager applies the association at the next specified cron interval. For example, if you chose the [Latest] version of an SSM document when you created an association and you edit the association by choosing a different document version on the Documents page, State Manager applies the association at the next specified cron interval if you previously set [ApplyOnlyAtCronInterval] to [true]. If this option wasn't selected, State Manager immediately runs the association.\n \n  For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#state-manager-about-scheduling}Understanding when associations are applied to resources} and {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#runbook-target-updates}About target updates with Automation runbooks} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   This parameter isn't supported for rate expressions.\n   \n    You can reset this parameter. To do so, specify the [no-apply-only-at-cron-interval] parameter when you update the association from the command line. This parameter forces the association to run immediately after updating it and according to the interval specified.\n    "];
   sync_compliance: association_sync_compliance option
     [@ocaml.doc
-      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
+      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
   compliance_severity: association_compliance_severity option
     [@ocaml.doc "The severity level to assign to the association.\n"];
   max_concurrency: string option
@@ -1262,7 +1297,7 @@ type nonrec update_association_request =
       "The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops sending requests when the fourth error is received. If you specify 0, then the system stops sending requests after the first error is returned. If you run an association on 50 managed nodes and set [MaxError] to 10%, then the system stops sending the request when the sixth error is received.\n\n Executions that are already running an association when [MaxErrors] is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set [MaxConcurrency] to 1 so that executions proceed one at a time.\n "];
   automation_target_parameter_name: string option
     [@ocaml.doc
-      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.\n"];
+      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.\n"];
   association_version: string option
     [@ocaml.doc
       "This parameter is provided for concurrency control purposes. You must specify the latest association version in the service. If you want to ensure that this request succeeds, either specify [$LATEST], or omit this parameter.\n"];
@@ -1284,7 +1319,7 @@ type nonrec update_association_request =
       "The document version you want update for the association. \n\n  State Manager doesn't support running associations that use a new version of a document if that document is shared from another account. State Manager always runs the [default] version of a document if shared from another account, even though the Systems Manager console shows that a new version was processed. If you want to run an association using a new version of a document shared form another account, you must set the document version to [default].\n  \n   "];
   parameters: parameters option
     [@ocaml.doc
-      "The parameters you want to update for the association. If you create a parameter using Parameter Store, a capability of Amazon Web Services Systems Manager, you can reference the parameter using [{{ssm:parameter-name}}].\n"];
+      "The parameters you want to update for the association. If you create a parameter using Parameter Store, a tool in Amazon Web Services Systems Manager, you can reference the parameter using [{{ssm:parameter-name}}].\n"];
   association_id: string
     [@ocaml.doc "The ID of the association you want to update. \n"]}[@@ocaml.doc
                                                                     ""]
@@ -1319,6 +1354,10 @@ type nonrec unsupported_parameter_type =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The parameter type isn't supported.\n"]
+type nonrec unsupported_operation_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "This operation is not supported for the current account. You must first enable the Systems Manager integrated experience in your account.\n"]
 type nonrec unsupported_operating_system =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -1366,11 +1405,21 @@ type nonrec parameter_version_not_found =
                                            "The specified parameter version wasn't found. Verify the parameter name and version, and try again.\n"]
 type nonrec parameter_not_found = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The parameter couldn't be found. Verify the name and try again.\n"]
+                                           "The parameter couldn't be found. Verify the name and try again.\n\n  For the [DeleteParameter] and [GetParameter] actions, if the specified parameter doesn't exist, the [ParameterNotFound] exception is {i not} recorded in CloudTrail event logs.\n  \n   "]
 type nonrec total_size_limit_exceeded_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The size of inventory data has exceeded the total size limit for the resource.\n"]
+type nonrec throttling_exception =
+  {
+  service_code: string option
+    [@ocaml.doc
+      "The code for the Amazon Web Services service that owns the quota.\n"];
+  quota_code: string option
+    [@ocaml.doc
+      "The quota code recognized by the Amazon Web Services Service Quotas service.\n"];
+  message: string [@ocaml.doc ""]}[@@ocaml.doc
+                                    "The request or operation couldn't be performed because the service is throttling requests.\n"]
 type nonrec terminate_session_response =
   {
   session_id: string option
@@ -1380,9 +1429,19 @@ type nonrec terminate_session_request =
   {
   session_id: string [@ocaml.doc "The ID of the session to terminate.\n"]}
 [@@ocaml.doc ""]
+type nonrec target_preview =
+  {
+  target_type: string option
+    [@ocaml.doc
+      "A type of resource that was included in the execution preview.\n"];
+  count: int option
+    [@ocaml.doc
+      "The number of resources of a certain type included in an execution preview.\n"]}
+[@@ocaml.doc
+  "Information about the resources that would be included in the actual runbook execution, if it were to be run.\n"]
 type nonrec target_not_connected = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The specified target managed node for the session isn't fully configured for use with Session Manager. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html}Getting started with Session Manager} in the {i Amazon Web Services Systems Manager User Guide}. This error is also returned if you attempt to start a session on a managed node that is located in a different account or Region\n"]
+                                           "The specified target managed node for the session isn't fully configured for use with Session Manager. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html}Setting up Session Manager} in the {i Amazon Web Services Systems Manager User Guide}. This error is also returned if you attempt to start a session on a managed node that is located in a different account or Region\n"]
 type nonrec target_in_use_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -1410,6 +1469,11 @@ type nonrec automation_execution_not_found_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "There is no automation execution information for the requested automation execution ID.\n"]
+type nonrec impact_type =
+  | UNDETERMINED [@ocaml.doc ""]
+  | NON_MUTATING [@ocaml.doc ""]
+  | MUTATING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec step_preview_map = (impact_type * int) list[@@ocaml.doc ""]
 type nonrec automation_execution_status =
   | EXITED [@ocaml.doc ""]
   | COMPLETED_WITH_FAILURE [@ocaml.doc ""]
@@ -1551,7 +1615,7 @@ type nonrec start_session_request =
   {
   parameters: session_manager_parameters option
     [@ocaml.doc
-      "The values you want to specify for the parameters defined in the Session document.\n"];
+      "The values you want to specify for the parameters defined in the Session document. For more information about these parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-create-preferences-cli.html}Create a Session Manager preferences document} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   reason: string option
     [@ocaml.doc
       "The reason for connecting to the instance. This value is included in the details for the Amazon CloudWatch Events event created when you start the session.\n"];
@@ -1560,6 +1624,50 @@ type nonrec start_session_request =
       "The name of the SSM document you want to use to define the type of session, input parameters, or preferences for the session. For example, [SSM-SessionManagerRunShell]. You can call the [GetDocument] API to verify the document exists before attempting to start a session. If no document name is provided, a shell to the managed node is launched by default. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html}Start a session} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   target: string
     [@ocaml.doc "The managed node to connect to for the session.\n"]}
+[@@ocaml.doc ""]
+type nonrec start_execution_preview_response =
+  {
+  execution_preview_id: string option
+    [@ocaml.doc "The ID of the execution preview generated by the system.\n"]}
+[@@ocaml.doc ""]
+type nonrec automation_execution_inputs =
+  {
+  target_locations_ur_l: string option
+    [@ocaml.doc
+      "A publicly accessible URL for a file that contains the [TargetLocations] body. Currently, only files in presigned Amazon S3 buckets are supported.\n"];
+  target_locations: target_location list option
+    [@ocaml.doc
+      "Information about the Amazon Web Services Regions and Amazon Web Services accounts targeted by the Automation execution preview operation.\n"];
+  target_maps: target_map list option
+    [@ocaml.doc
+      "A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.\n"];
+  targets: target list option
+    [@ocaml.doc
+      "Information about the resources that would be included in the actual runbook execution, if it were to be run. Both Targets and TargetMaps can't be specified together.\n"];
+  target_parameter_name: string option
+    [@ocaml.doc
+      "The name of the parameter used as the target resource for the rate-controlled execution. Required if you specify targets.\n"];
+  parameters: automation_parameter_map option
+    [@ocaml.doc
+      "Information about parameters that can be specified for the preview operation. \n"]}
+[@@ocaml.doc
+  "Information about the optional inputs that can be specified for an automation execution preview.\n"]
+type nonrec execution_inputs =
+  | Automation of automation_execution_inputs
+  [@ocaml.doc
+    "Information about the optional inputs that can be specified for an automation execution preview.\n"]
+[@@ocaml.doc "Information about the inputs for an execution preview.\n"]
+type nonrec start_execution_preview_request =
+  {
+  execution_inputs: execution_inputs option
+    [@ocaml.doc
+      "Information about the inputs that can be specified for the preview operation. \n"];
+  document_version: string option
+    [@ocaml.doc
+      "The version of the Automation runbook to run. The default value is [$DEFAULT].\n"];
+  document_name: string
+    [@ocaml.doc
+      "The name of the Automation runbook to run. The result of the execution preview indicates what the impact would be of running this runbook.\n"]}
 [@@ocaml.doc ""]
 type nonrec start_change_request_execution_result =
   {
@@ -1608,7 +1716,7 @@ type nonrec start_change_request_execution_request =
       "The time that the requester expects the runbook workflow related to the change request to complete. The time is an estimate only that the requester provides for reviewers.\n"];
   tags: tag list option
     [@ocaml.doc
-      "Optional metadata that you assign to a resource. You can specify a maximum of five tags for a change request. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a change request to identify an environment or target Amazon Web Services Region. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=Environment,Value=Production] \n           \n            }\n       {-   [Key=Region,Value=us-east-2] \n           \n            }\n       }\n  "];
+      "Optional metadata that you assign to a resource. You can specify a maximum of five tags for a change request. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a change request to identify an environment or target Amazon Web Services Region. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=Environment,Value=Production] \n           \n            }\n       {-   [Key=Region,Value=us-east-2] \n           \n            }\n       }\n    The [Array Members] maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the [StartChangeRequestExecution] action, you can specify a maximum of 5 tags. You can, however, use the [AddTagsToResource] action to add up to a total of 50 tags to an existing change request configuration.\n    \n     "];
   runbooks: runbook list
     [@ocaml.doc
       "Information about the Automation runbooks that are run during the runbook workflow.\n\n  The Automation runbooks specified for the runbook workflow can't run until all required approvals for the change request have been received.\n  \n   "];
@@ -1668,27 +1776,30 @@ type nonrec execution_mode =
   | Auto [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec start_automation_execution_request =
   {
+  target_locations_ur_l: string option
+    [@ocaml.doc
+      "Specify a publicly accessible URL for a file that contains the [TargetLocations] body. Currently, only files in presigned Amazon S3 buckets are supported. \n"];
   alarm_configuration: alarm_configuration option
     [@ocaml.doc
       "The CloudWatch alarm you want to apply to your automation.\n"];
   tags: tag list option
     [@ocaml.doc
-      "Optional metadata that you assign to a resource. You can specify a maximum of five tags for an automation. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an automation to identify an environment or operating system. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=environment,Value=test] \n           \n            }\n       {-   [Key=OS,Value=Windows] \n           \n            }\n       }\n    To add tags to an existing automation, use the [AddTagsToResource] operation.\n    \n     "];
+      "Optional metadata that you assign to a resource. You can specify a maximum of five tags for an automation. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an automation to identify an environment or operating system. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=environment,Value=test] \n           \n            }\n       {-   [Key=OS,Value=Windows] \n           \n            }\n       }\n    The [Array Members] maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the [StartAutomationExecution] action, you can specify a maximum of 5 tags. You can, however, use the [AddTagsToResource] action to add up to a total of 50 tags to an existing automation configuration.\n    \n     "];
   target_locations: target_location list option
     [@ocaml.doc
-      "A location is a combination of Amazon Web Services Regions and/or Amazon Web Services accounts where you want to run the automation. Use this operation to start an automation in multiple Amazon Web Services Regions and multiple Amazon Web Services accounts. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-automation-multiple-accounts-and-regions.html}Running Automation workflows in multiple Amazon Web Services Regions and Amazon Web Services accounts} in the {i Amazon Web Services Systems Manager User Guide}. \n"];
+      "A location is a combination of Amazon Web Services Regions and/or Amazon Web Services accounts where you want to run the automation. Use this operation to start an automation in multiple Amazon Web Services Regions and multiple Amazon Web Services accounts. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-automation-multiple-accounts-and-regions.html}Running automations in multiple Amazon Web Services Regions and accounts} in the {i Amazon Web Services Systems Manager User Guide}. \n"];
   max_errors: string option
     [@ocaml.doc
-      "The number of errors that are allowed before the system stops running the automation on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops running the automation when the fourth error is received. If you specify 0, then the system stops running the automation on additional targets after the first error result is returned. If you run an automation on 50 resources and set max-errors to 10%, then the system stops running the automation on additional targets when the sixth error is received.\n\n Executions that are already running an automation when max-errors is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set max-concurrency to 1 so the executions proceed one at a time.\n "];
+      "The number of errors that are allowed before the system stops running the automation on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops running the automation when the fourth error is received. If you specify 0, then the system stops running the automation on additional targets after the first error result is returned. If you run an automation on 50 resources and set max-errors to 10%, then the system stops running the automation on additional targets when the sixth error is received.\n\n Executions that are already running an automation when max-errors is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set max-concurrency to 1 so the executions proceed one at a time.\n \n  If this parameter and the [TargetLocation:TargetsMaxErrors] parameter are both supplied, [TargetLocation:TargetsMaxErrors] takes precedence.\n  "];
   max_concurrency: string option
     [@ocaml.doc
-      "The maximum number of targets allowed to run this task in parallel. You can specify a number, such as 10, or a percentage, such as 10%. The default value is [10].\n"];
+      "The maximum number of targets allowed to run this task in parallel. You can specify a number, such as 10, or a percentage, such as 10%. The default value is [10].\n\n If both this parameter and the [TargetLocation:TargetsMaxConcurrency] are supplied, [TargetLocation:TargetsMaxConcurrency] takes precedence.\n "];
   target_maps: target_map list option
     [@ocaml.doc
       "A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.\n"];
   targets: target list option
     [@ocaml.doc
-      "A key-value mapping to target resources. Required if you specify TargetParameterName.\n"];
+      "A key-value mapping to target resources. Required if you specify TargetParameterName.\n\n If both this parameter and the [TargetLocation:Targets] parameter are supplied, [TargetLocation:Targets] takes precedence.\n "];
   target_parameter_name: string option
     [@ocaml.doc
       "The name of the parameter used as the target resource for the rate-controlled execution. Required if you specify targets.\n"];
@@ -1717,11 +1828,50 @@ type nonrec start_associations_once_request =
 type nonrec invalid_association = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The association isn't valid or doesn't exist. \n"]
+type nonrec start_access_request_response =
+  {
+  access_request_id: string option
+    [@ocaml.doc "The ID of the access request.\n"]}[@@ocaml.doc ""]
+type nonrec start_access_request_request =
+  {
+  tags: tag list option
+    [@ocaml.doc
+      "Key-value pairs of metadata you want to assign to the access request.\n"];
+  targets: target list
+    [@ocaml.doc "The node you are requesting access to.\n"];
+  reason: string
+    [@ocaml.doc
+      "A brief description explaining why you are requesting access to the node.\n"]}
+[@@ocaml.doc ""]
+type nonrec service_quota_exceeded_exception =
+  {
+  service_code: string
+    [@ocaml.doc
+      "The code for the Amazon Web Services service that owns the quota.\n"];
+  quota_code: string
+    [@ocaml.doc
+      "The quota code recognized by the Amazon Web Services Service Quotas service.\n"];
+  resource_type: string option
+    [@ocaml.doc
+      "The resource type of the resource referenced in the failed request.\n"];
+  resource_id: string option
+    [@ocaml.doc
+      "The unique ID of the resource referenced in the failed request.\n"];
+  message: string [@ocaml.doc ""]}[@@ocaml.doc
+                                    "The request exceeds the service quota. Service quotas, also referred to as limits, are the maximum number of service resources or operations for your Amazon Web Services account.\n"]
+type nonrec resource_not_found_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The specified parameter to be shared could not be found.\n"]
+type nonrec access_denied_exception = {
+  message: string [@ocaml.doc ""]}[@@ocaml.doc
+                                    "The requester doesn't have permissions to perform the requested operation.\n"]
 type nonrec source_type =
   | AWS_SSM_MANAGEDINSTANCE [@ocaml.doc ""]
   | AWS_IOT_THING [@ocaml.doc ""]
   | AWS_EC2_INSTANCE [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec signal_type =
+  | REVOKE [@ocaml.doc ""]
   | RESUME [@ocaml.doc ""]
   | STOP_STEP [@ocaml.doc ""]
   | START_STEP [@ocaml.doc ""]
@@ -1765,8 +1915,14 @@ type nonrec session_manager_output_url =
     [@ocaml.doc "Reserved for future use.\n"];
   s3_output_url: string option [@ocaml.doc "Reserved for future use.\n"]}
 [@@ocaml.doc "Reserved for future use.\n"]
+type nonrec access_type =
+  | JUSTINTIME [@ocaml.doc ""]
+  | STANDARD [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec session =
   {
+  access_type: access_type option
+    [@ocaml.doc
+      " [Standard] access type is the default for Session Manager sessions. [JustInTime] is the access type for {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-just-in-time-node-access.html}Just-in-time node access}. \n"];
   max_session_duration: string option
     [@ocaml.doc "The maximum duration of a session before it terminates.\n"];
   output_url: session_manager_output_url option
@@ -1795,6 +1951,7 @@ type nonrec session =
   session_id: string option [@ocaml.doc "The ID of the session.\n"]}[@@ocaml.doc
                                                                     "Information about a Session Manager connection to a managed node.\n"]
 type nonrec session_filter_key =
+  | ACCESS_TYPE [@ocaml.doc ""]
   | SESSION_ID [@ocaml.doc ""]
   | STATUS [@ocaml.doc ""]
   | OWNER [@ocaml.doc ""]
@@ -1805,7 +1962,7 @@ type nonrec session_filter =
   {
   value: string
     [@ocaml.doc
-      "The filter value. Valid values for each filter key are as follows:\n\n {ul\n       {-  InvokedAfter: Specify a timestamp to limit your results. For example, specify 2018-08-29T00:00:00Z to see sessions that started August 29, 2018, and later.\n           \n            }\n       {-  InvokedBefore: Specify a timestamp to limit your results. For example, specify 2018-08-29T00:00:00Z to see sessions that started before August 29, 2018.\n           \n            }\n       {-  Target: Specify a managed node to which session connections have been made.\n           \n            }\n       {-  Owner: Specify an Amazon Web Services user to see a list of sessions started by that user.\n           \n            }\n       {-  Status: Specify a valid session status to see a list of all sessions with that status. Status values you can specify include:\n           \n            {ul\n                  {-  Connected\n                      \n                       }\n                  {-  Connecting\n                      \n                       }\n                  {-  Disconnected\n                      \n                       }\n                  {-  Terminated\n                      \n                       }\n                  {-  Terminating\n                      \n                       }\n                  {-  Failed\n                      \n                       }\n                  \n        }\n         }\n       {-  SessionId: Specify a session ID to return details about the session.\n           \n            }\n       }\n  "];
+      "The filter value. Valid values for each filter key are as follows:\n\n {ul\n       {-  InvokedAfter: Specify a timestamp to limit your results. For example, specify 2024-08-29T00:00:00Z to see sessions that started August 29, 2024, and later.\n           \n            }\n       {-  InvokedBefore: Specify a timestamp to limit your results. For example, specify 2024-08-29T00:00:00Z to see sessions that started before August 29, 2024.\n           \n            }\n       {-  Target: Specify a managed node to which session connections have been made.\n           \n            }\n       {-  Owner: Specify an Amazon Web Services user to see a list of sessions started by that user.\n           \n            }\n       {-  Status: Specify a valid session status to see a list of all sessions with that status. Status values you can specify include:\n           \n            {ul\n                  {-  Connected\n                      \n                       }\n                  {-  Connecting\n                      \n                       }\n                  {-  Disconnected\n                      \n                       }\n                  {-  Terminated\n                      \n                       }\n                  {-  Terminating\n                      \n                       }\n                  {-  Failed\n                      \n                       }\n                  \n        }\n         }\n       {-  SessionId: Specify a session ID to return details about the session.\n           \n            }\n       }\n  "];
   key: session_filter_key [@ocaml.doc "The name of the filter.\n"]}[@@ocaml.doc
                                                                     "Describes a filter for Session Manager information.\n"]
 type nonrec service_setting =
@@ -1849,7 +2006,7 @@ type nonrec command =
       "Configurations for sending notifications about command status changes. \n"];
   service_role: string option
     [@ocaml.doc
-      "The Identity and Access Management (IAM) service role that Run Command, a capability of Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes. \n"];
+      "The Identity and Access Management (IAM) service role that Run Command, a tool in Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes. \n"];
   delivery_timed_out_count: int option
     [@ocaml.doc
       "The number of targets for which the status is Delivery Timed Out.\n"];
@@ -1916,7 +2073,7 @@ type nonrec send_command_request =
     [@ocaml.doc "The CloudWatch alarm you want to apply to your command.\n"];
   cloud_watch_output_config: cloud_watch_output_config option
     [@ocaml.doc
-      "Enables Amazon Web Services Systems Manager to send Run Command output to Amazon CloudWatch Logs. Run Command is a capability of Amazon Web Services Systems Manager.\n"];
+      "Enables Amazon Web Services Systems Manager to send Run Command output to Amazon CloudWatch Logs. Run Command is a tool in Amazon Web Services Systems Manager.\n"];
   notification_config: notification_config option
     [@ocaml.doc "Configurations for sending notifications.\n"];
   service_role_arn: string option
@@ -2061,10 +2218,6 @@ type nonrec resource_policy_conflict_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The hash provided in the call doesn't match the stored hash. This exception is thrown when trying to update an obsolete policy version or when multiple requests to update a policy are sent.\n"]
-type nonrec resource_not_found_exception =
-  {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The specified parameter to be shared could not be found.\n"]
 type nonrec resource_limit_exceeded_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -2241,7 +2394,7 @@ type nonrec reset_service_setting_request =
   {
   setting_id: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the service setting to reset. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n  "]}
+      "The Amazon Resource Name (ARN) of the service setting to reset. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/appmanager/appmanager-enabled] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-  /ssm/automation/enable-adaptive-concurrency\n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n  "]}
 [@@ocaml.doc "The request body of the ResetServiceSetting API operation.\n"]
 type nonrec remove_tags_from_resource_request =
   {
@@ -2306,7 +2459,7 @@ type nonrec register_task_with_maintenance_window_request =
     [@ocaml.doc "The type of task being registered.\n"];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up maintenance windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   task_arn: string [@ocaml.doc "The ARN of the task to run.\n"];
   targets: target list option
     [@ocaml.doc
@@ -2430,7 +2583,7 @@ type nonrec put_parameter_request =
       "The data type for a [String] parameter. Supported data types include plain text and Amazon Machine Image (AMI) IDs.\n\n  {b The following data type values are supported.} \n \n  {ul\n        {-   [text] \n            \n             }\n        {-   [aws:ec2:image] \n            \n             }\n        {-   [aws:ssm:integration] \n            \n             }\n        }\n   When you create a [String] parameter and specify [aws:ec2:image], Amazon Web Services Systems Manager validates the parameter value is in the required format, such as [ami-12345abcdeEXAMPLE], and that the specified AMI is available in your Amazon Web Services account.\n   \n     If the action is successful, the service sends back an HTTP 200 response which indicates a successful [PutParameter] call for all cases except for data type [aws:ec2:image]. If you call [PutParameter] with [aws:ec2:image] data type, a successful HTTP 200 response does not guarantee that your parameter was successfully created or updated. The [aws:ec2:image] value is validated asynchronously, and the [PutParameter] call returns before the validation is complete. If you submit an invalid AMI value, the PutParameter operation will return success, but the asynchronous validation will fail and the parameter will not be created or updated. To monitor whether your [aws:ec2:image] parameters are created successfully, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-cwe.html}Setting up notifications or trigger actions based on Parameter Store events}. For more information about AMI format validation , see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-ec2-aliases.html}Native parameter support for Amazon Machine Image IDs}. \n     \n      "];
   policies: string option
     [@ocaml.doc
-      "One or more policies to apply to a parameter. This operation takes a JSON array. Parameter Store, a capability of Amazon Web Services Systems Manager supports the following policy types:\n\n Expiration: This policy deletes the parameter after it expires. When you create the policy, you specify the expiration date. You can update the expiration date and time by updating the policy. Updating the {i parameter} doesn't affect the expiration date and time. When the expiration time is reached, Parameter Store deletes the parameter.\n \n  ExpirationNotification: This policy initiates an event in Amazon CloudWatch Events that notifies you about the expiration. By using this policy, you can receive notification before or after the expiration time is reached, in units of days or hours.\n  \n   NoChangeNotification: This policy initiates a CloudWatch Events event if a parameter hasn't been modified for a specified period of time. This policy type is useful when, for example, a secret needs to be changed within a period of time, but it hasn't been changed.\n   \n    All existing policies are preserved until you send new policies or an empty policy. For more information about parameter policies, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-policies.html}Assigning parameter policies}. \n    "];
+      "One or more policies to apply to a parameter. This operation takes a JSON array. Parameter Store, a tool in Amazon Web Services Systems Manager supports the following policy types:\n\n Expiration: This policy deletes the parameter after it expires. When you create the policy, you specify the expiration date. You can update the expiration date and time by updating the policy. Updating the {i parameter} doesn't affect the expiration date and time. When the expiration time is reached, Parameter Store deletes the parameter.\n \n  ExpirationNotification: This policy initiates an event in Amazon CloudWatch Events that notifies you about the expiration. By using this policy, you can receive notification before or after the expiration time is reached, in units of days or hours.\n  \n   NoChangeNotification: This policy initiates a CloudWatch Events event if a parameter hasn't been modified for a specified period of time. This policy type is useful when, for example, a secret needs to be changed within a period of time, but it hasn't been changed.\n   \n    All existing policies are preserved until you send new policies or an empty policy. For more information about parameter policies, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-policies.html}Assigning parameter policies}. \n    "];
   tier: parameter_tier option
     [@ocaml.doc
       "The parameter tier to assign to a parameter.\n\n Parameter Store offers a standard tier and an advanced tier for parameters. Standard parameters have a content size limit of 4 KB and can't be configured to use parameter policies. You can create a maximum of 10,000 standard parameters for each Region in an Amazon Web Services account. Standard parameters are offered at no additional cost. \n \n  Advanced parameters have a content size limit of 8 KB and can be configured to use parameter policies. You can create a maximum of 100,000 advanced parameters for each Region in an Amazon Web Services account. Advanced parameters incur a charge. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html}Managing parameter tiers} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   You can change a standard parameter to an advanced parameter any time. But you can't revert an advanced parameter to a standard parameter. Reverting an advanced parameter to a standard parameter would result in data loss because the system would truncate the size of the parameter from 8 KB to 4 KB. Reverting would also remove any policies attached to the parameter. Lastly, advanced parameters use a different form of encryption than standard parameters. \n   \n    If you no longer need an advanced parameter, or if you no longer want to incur charges for an advanced parameter, you must delete it and recreate it as a new standard parameter. \n    \n      {b Using the Default Tier Configuration} \n     \n      In [PutParameter] requests, you can specify the tier to create the parameter in. Whenever you specify a tier in the request, Parameter Store creates or updates the parameter according to that request. However, if you don't specify a tier in a request, Parameter Store assigns the tier based on the current Parameter Store default tier configuration.\n      \n       The default tier when you begin using Parameter Store is the standard-parameter tier. If you use the advanced-parameter tier, you can specify one of the following as the default:\n       \n        {ul\n              {-   {b Advanced}: With this option, Parameter Store evaluates all requests as advanced parameters. \n                  \n                   }\n              {-   {b Intelligent-Tiering}: With this option, Parameter Store evaluates each request to determine if the parameter is standard or advanced. \n                  \n                   If the request doesn't include any options that require an advanced parameter, the parameter is created in the standard-parameter tier. If one or more options requiring an advanced parameter are included in the request, Parameter Store create a parameter in the advanced-parameter tier.\n                   \n                    This approach helps control your parameter-related costs by always creating standard parameters unless an advanced parameter is necessary. \n                    \n                     }\n              }\n   Options that require an advanced parameter include the following:\n   \n    {ul\n          {-  The content size of the parameter is more than 4 KB.\n              \n               }\n          {-  The parameter uses a parameter policy.\n              \n               }\n          {-  More than 10,000 parameters already exist in your Amazon Web Services account in the current Amazon Web Services Region.\n              \n               }\n          }\n   For more information about configuring the default tier option, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier}Specifying a default parameter tier} in the {i Amazon Web Services Systems Manager User Guide}.\n   "];
@@ -2445,19 +2598,19 @@ type nonrec put_parameter_request =
       "Overwrite an existing parameter. The default value is [false].\n"];
   key_id: string option
     [@ocaml.doc
-      "The Key Management Service (KMS) ID that you want to use to encrypt a parameter. Use a custom key for better security. Required for parameters that use the [SecureString] data type.\n\n If you don't specify a key ID, the system uses the default key associated with your Amazon Web Services account which is not as secure as using a custom key.\n \n  {ul\n        {-  To use a custom KMS key, choose the [SecureString] data type with the [Key ID] parameter.\n            \n             }\n        }\n  "];
+      "The Key Management Service (KMS) ID that you want to use to encrypt a parameter. Use a custom key for better security. Required for parameters that use the [SecureString] data type.\n\n If you don't specify a key ID, the system uses the default key associated with your Amazon Web Services account, which is not as secure as using a custom key.\n \n  {ul\n        {-  To use a custom KMS key, choose the [SecureString] data type with the [Key ID] parameter.\n            \n             }\n        }\n  "];
   type_: parameter_type option
     [@ocaml.doc
-      "The type of parameter that you want to add to the system.\n\n   [SecureString] isn't currently supported for CloudFormation templates.\n  \n    Items in a [StringList] must be separated by a comma (,). You can't use other punctuation or special character to escape items in the list. If you have a parameter value that requires a comma, then use the [String] data type.\n    \n      Specifying a parameter type isn't required when updating a parameter. You must specify a parameter type when creating a parameter.\n      \n       "];
+      "The type of parameter that you want to create.\n\n   [SecureString] isn't currently supported for CloudFormation templates.\n  \n    Items in a [StringList] must be separated by a comma (,). You can't use other punctuation or special character to escape items in the list. If you have a parameter value that requires a comma, then use the [String] data type.\n    \n      Specifying a parameter type isn't required when updating a parameter. You must specify a parameter type when creating a parameter.\n      \n       "];
   value: string
     [@ocaml.doc
-      "The parameter value that you want to add to the system. Standard parameters have a value limit of 4 KB. Advanced parameters have a value limit of 8 KB.\n\n  Parameters can't be referenced or nested in the values of other parameters. You can't include [{{}}] or \n  {[\n  \\{\\{ssm:{i parameter-name}\\}\\}\n  ]}\n   in a parameter value.\n  \n   "];
+      "The parameter value that you want to add to the system. Standard parameters have a value limit of 4 KB. Advanced parameters have a value limit of 8 KB.\n\n  Parameters can't be referenced or nested in the values of other parameters. You can't include values wrapped in double brackets [{{}}] or \n  {[\n  \\{\\{ssm:{i parameter-name}\\}\\}\n  ]}\n   in a parameter value.\n  \n   "];
   description: string option
     [@ocaml.doc
       "Information about the parameter that you want to add to the system. Optional but recommended.\n\n  Don't enter personally identifiable information in this field.\n  \n   "];
   name: string
     [@ocaml.doc
-      "The fully qualified name of the parameter that you want to add to the system.\n\n  You can't enter the Amazon Resource Name (ARN) for a parameter, only the parameter name itself.\n  \n    The fully qualified name includes the complete hierarchy of the parameter path and name. For parameters in a hierarchy, you must include a leading forward slash character (/) when you create or reference a parameter. For example: [/Dev/DBServer/MySQL/db-string13] \n    \n     Naming Constraints:\n     \n      {ul\n            {-  Parameter names are case sensitive.\n                \n                 }\n            {-  A parameter name must be unique within an Amazon Web Services Region\n                \n                 }\n            {-  A parameter name can't be prefixed with \"[aws]\" or \"[ssm]\" (case-insensitive).\n                \n                 }\n            {-  Parameter names can include only the following symbols and letters: [a-zA-Z0-9_.-] \n                \n                 In addition, the slash character ( / ) is used to delineate hierarchies in parameter names. For example: [/Dev/Production/East/Project-ABC/MyParameter] \n                 \n                  }\n            {-  A parameter name can't include spaces.\n                \n                 }\n            {-  Parameter hierarchies are limited to a maximum depth of fifteen levels.\n                \n                 }\n            }\n   For additional information about valid values for parameter names, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-create.html}Creating Systems Manager parameters} in the {i Amazon Web Services Systems Manager User Guide}.\n   \n     The maximum length constraint of 2048 characters listed below includes 1037 characters reserved for internal use by Systems Manager. The maximum length for a parameter name that you create is 1011 characters. This includes the characters in the ARN that precede the name you specify, such as [arn:aws:ssm:us-east-2:111122223333:parameter/].\n     \n      "]}
+      "The fully qualified name of the parameter that you want to create or update.\n\n  You can't enter the Amazon Resource Name (ARN) for a parameter, only the parameter name itself.\n  \n    The fully qualified name includes the complete hierarchy of the parameter path and name. For parameters in a hierarchy, you must include a leading forward slash character (/) when you create or reference a parameter. For example: [/Dev/DBServer/MySQL/db-string13] \n    \n     Naming Constraints:\n     \n      {ul\n            {-  Parameter names are case sensitive.\n                \n                 }\n            {-  A parameter name must be unique within an Amazon Web Services Region\n                \n                 }\n            {-  A parameter name can't be prefixed with \"[aws]\" or \"[ssm]\" (case-insensitive).\n                \n                 }\n            {-  Parameter names can include only the following symbols and letters: [a-zA-Z0-9_.-] \n                \n                 In addition, the slash character ( / ) is used to delineate hierarchies in parameter names. For example: [/Dev/Production/East/Project-ABC/MyParameter] \n                 \n                  }\n            {-  A parameter name can't include spaces.\n                \n                 }\n            {-  Parameter hierarchies are limited to a maximum depth of fifteen levels.\n                \n                 }\n            }\n   For additional information about valid values for parameter names, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-create.html}Creating Systems Manager parameters} in the {i Amazon Web Services Systems Manager User Guide}.\n   \n     The reported maximum length of 2048 characters for a parameter name includes 1037 characters that are reserved for internal use by Systems Manager. The maximum length for a parameter name that you specify is 1011 characters.\n     \n      This count of 1011 characters includes the characters in the ARN that precede the name you specify. This ARN length will vary depending on your partition and Region. For example, the following 45 characters count toward the 1011 character maximum for a parameter created in the US East (Ohio) Region: [arn:aws:ssm:us-east-2:111122223333:parameter/].\n      \n       "]}
 [@@ocaml.doc ""]
 type nonrec policies_limit_exceeded_exception =
   {
@@ -2753,7 +2906,7 @@ type nonrec patch_baseline_identity =
   {
   default_baseline: bool option
     [@ocaml.doc
-      "Whether this is the default baseline. Amazon Web Services Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.\n"];
+      "Indicates whether this is the default baseline. Amazon Web Services Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.\n"];
   baseline_description: string option
     [@ocaml.doc "The description of the patch baseline.\n"];
   operating_system: operating_system option
@@ -2773,6 +2926,7 @@ type nonrec patch_group_patch_baseline_mapping =
 [@@ocaml.doc
   "The mapping between a patch group and the patch baseline the patch group is registered with.\n"]
 type nonrec patch_compliance_data_state =
+  | AvailableSecurityUpdate [@ocaml.doc ""]
   | Failed [@ocaml.doc ""]
   | NotApplicable [@ocaml.doc ""]
   | Missing [@ocaml.doc ""]
@@ -2790,7 +2944,7 @@ type nonrec patch_compliance_data =
       "The date/time the patch was installed on the managed node. Not all operating systems provide this level of information.\n"];
   state: patch_compliance_data_state
     [@ocaml.doc
-      "The state of the patch on the managed node, such as INSTALLED or FAILED.\n\n For descriptions of each patch state, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-compliance-about.html#sysman-compliance-monitor-patch}About patch compliance} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "The state of the patch on the managed node, such as INSTALLED or FAILED.\n\n For descriptions of each patch state, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/compliance-about.html#compliance-monitor-patch}About patch compliance} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   severity: string
     [@ocaml.doc
       "The severity of the patch such as [Critical], [Important], and [Moderate].\n"];
@@ -2834,7 +2988,7 @@ type nonrec parameter_inline_policy =
       "The status of the policy. Policies report the following statuses: Pending (the policy hasn't been enforced or applied yet), Finished (the policy was applied), Failed (the policy wasn't applied), or InProgress (the policy is being applied now). \n"];
   policy_type: string option
     [@ocaml.doc
-      "The type of policy. Parameter Store, a capability of Amazon Web Services Systems Manager, supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification. \n"];
+      "The type of policy. Parameter Store, a tool in Amazon Web Services Systems Manager, supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification. \n"];
   policy_text: string option [@ocaml.doc "The JSON text of the policy.\n"]}
 [@@ocaml.doc "One or more policies assigned to a parameter.\n"]
 type nonrec parameter_metadata =
@@ -2863,7 +3017,7 @@ type nonrec parameter_metadata =
     [@ocaml.doc
       "The type of parameter. Valid parameter types include the following: [String], [StringList], and [SecureString].\n"];
   ar_n: string option
-    [@ocaml.doc "The (ARN) of the last user to update the parameter.\n"];
+    [@ocaml.doc "The Amazon Resource Name (ARN) of the parameter.\n"];
   name: string option [@ocaml.doc "The parameter name.\n"]}[@@ocaml.doc
                                                              "Metadata includes information like the Amazon Resource Name (ARN) of the last user to update the parameter and the date and time the parameter was last used.\n"]
 type nonrec parameter =
@@ -2989,9 +3143,7 @@ type nonrec ops_item_summary =
     [@ocaml.doc
       "A short heading that describes the nature of the OpsItem and the impacted resource.\n"];
   ops_item_id: string option [@ocaml.doc "The ID of the OpsItem.\n"];
-  status: ops_item_status option
-    [@ocaml.doc
-      "The OpsItem status. Status can be [Open], [In Progress], or [Resolved].\n"];
+  status: ops_item_status option [@ocaml.doc "The OpsItem status.\n"];
   source: string option
     [@ocaml.doc "The impacted Amazon Web Services resource.\n"];
   priority: int option
@@ -3067,6 +3219,15 @@ type nonrec ops_item_filter_key =
   | CHANGE_REQUEST_APPROVER_ARN [@ocaml.doc ""]
   | CHANGE_REQUEST_REQUESTER_NAME [@ocaml.doc ""]
   | CHANGE_REQUEST_REQUESTER_ARN [@ocaml.doc ""]
+  | ACCESS_REQUEST_TARGET_RESOURCE_ID [@ocaml.doc ""]
+  | ACCESS_REQUEST_IS_REPLICA [@ocaml.doc ""]
+  | ACCESS_REQUEST_SOURCE_REGION [@ocaml.doc ""]
+  | ACCESS_REQUEST_SOURCE_OPS_ITEM_ID [@ocaml.doc ""]
+  | ACCESS_REQUEST_SOURCE_ACCOUNT_ID [@ocaml.doc ""]
+  | ACCESS_REQUEST_APPROVER_ID [@ocaml.doc ""]
+  | ACCESS_REQUEST_APPROVER_ARN [@ocaml.doc ""]
+  | ACCESS_REQUEST_REQUESTER_ID [@ocaml.doc ""]
+  | ACCESS_REQUEST_REQUESTER_ARN [@ocaml.doc ""]
   | OPSITEM_TYPE [@ocaml.doc ""]
   | SEVERITY [@ocaml.doc ""]
   | CATEGORY [@ocaml.doc ""]
@@ -3169,7 +3330,7 @@ type nonrec ops_item =
   ops_item_id: string option [@ocaml.doc "The ID of the OpsItem.\n"];
   status: ops_item_status option
     [@ocaml.doc
-      "The OpsItem status. Status can be [Open], [In Progress], or [Resolved]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-working-with-OpsItems-editing-details.html}Editing OpsItem details} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
+      "The OpsItem status. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-working-with-OpsItems-editing-details.html}Editing OpsItem details} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   related_ops_items: related_ops_item list option
     [@ocaml.doc
       "One or more OpsItems that share something in common with the current OpsItem. For example, related OpsItems can include OpsItems with similar error messages, impacted resources, or statuses for the impacted resource.\n"];
@@ -3242,6 +3403,124 @@ type ops_aggregator =
       "Either a [Range] or [Count] aggregator for limiting an OpsData summary.\n"]}
 [@@ocaml.doc
   "One or more aggregators for viewing counts of OpsData using different dimensions such as [Source], [CreatedTime], or [Source and CreatedTime], to name a few.\n"]
+type nonrec node_type_name =
+  | INSTANCE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec managed_status =
+  | UNMANAGED [@ocaml.doc ""]
+  | MANAGED [@ocaml.doc ""]
+  | ALL [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec instance_info =
+  {
+  resource_type: resource_type option
+    [@ocaml.doc
+      "The type of instance, either an EC2 instance or another supported machine type in a hybrid fleet.\n"];
+  platform_version: string option
+    [@ocaml.doc
+      "The version of the OS platform running on your managed node. \n"];
+  platform_name: string option
+    [@ocaml.doc
+      "The name of the operating system platform running on your managed node.\n"];
+  platform_type: platform_type option
+    [@ocaml.doc "The operating system platform type of the managed node.\n"];
+  managed_status: managed_status option
+    [@ocaml.doc
+      "Indicates whether the node is managed by Systems Manager.\n"];
+  ip_address: string option
+    [@ocaml.doc "The IP address of the managed node.\n"];
+  instance_status: string option
+    [@ocaml.doc "The current status of the managed node.\n"];
+  computer_name: string option
+    [@ocaml.doc "The fully qualified host name of the managed node.\n"];
+  agent_version: string option
+    [@ocaml.doc "The version number of the agent installed on the node.\n"];
+  agent_type: string option
+    [@ocaml.doc "The type of agent installed on the node.\n"]}[@@ocaml.doc
+                                                                "Details about a specific managed node.\n"]
+type nonrec node_type =
+  | Instance of instance_info
+  [@ocaml.doc "Information about a specific managed node.\n"][@@ocaml.doc
+                                                               "Information about a managed node's type.\n"]
+type nonrec node_summary = (string * string) list[@@ocaml.doc ""]
+type nonrec node_owner_info =
+  {
+  organizational_unit_path: string option
+    [@ocaml.doc
+      "The path for the organizational unit (OU) that owns the managed node. The path for the OU is built using the IDs of the organization, root, and all OUs in the path down to and including the OU. For example:\n\n  [o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/] \n "];
+  organizational_unit_id: string option
+    [@ocaml.doc
+      "The ID of the organization unit (OU) that the account is part of.\n"];
+  account_id: string option
+    [@ocaml.doc
+      "The ID of the Amazon Web Services account that owns the managed node.\n"]}
+[@@ocaml.doc "Information about ownership of a managed node.\n"]
+type nonrec node =
+  {
+  node_type: node_type option
+    [@ocaml.doc "Information about the type of node.\n"];
+  region: string option
+    [@ocaml.doc
+      "The Amazon Web Services Region that a managed node was created in or assigned to.\n"];
+  owner: node_owner_info option
+    [@ocaml.doc "Information about the ownership of the managed node.\n"];
+  id: string option [@ocaml.doc "The ID of the managed node.\n"];
+  capture_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      "The UTC timestamp for when the managed node data was last captured.\n"]}
+[@@ocaml.doc "Details about an individual managed node.\n"]
+type nonrec node_filter_operator_type =
+  | BEGIN_WITH [@ocaml.doc ""]
+  | NOT_EQUAL [@ocaml.doc ""]
+  | EQUAL [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec node_filter_key =
+  | ACCOUNT_ID [@ocaml.doc ""]
+  | REGION [@ocaml.doc ""]
+  | ORGANIZATIONAL_UNIT_PATH [@ocaml.doc ""]
+  | ORGANIZATIONAL_UNIT_ID [@ocaml.doc ""]
+  | RESOURCE_TYPE [@ocaml.doc ""]
+  | PLATFORM_VERSION [@ocaml.doc ""]
+  | PLATFORM_TYPE [@ocaml.doc ""]
+  | PLATFORM_NAME [@ocaml.doc ""]
+  | MANAGED_STATUS [@ocaml.doc ""]
+  | IP_ADDRESS [@ocaml.doc ""]
+  | INSTANCE_STATUS [@ocaml.doc ""]
+  | INSTANCE_ID [@ocaml.doc ""]
+  | COMPUTER_NAME [@ocaml.doc ""]
+  | AGENT_VERSION [@ocaml.doc ""]
+  | AGENT_TYPE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec node_filter =
+  {
+  type_: node_filter_operator_type option
+    [@ocaml.doc "The type of filter operator.\n"];
+  values: string list
+    [@ocaml.doc
+      "A filter value supported by the specified key. For example, for the key [PlatformType], supported values include [Linux] and [Windows].\n"];
+  key: node_filter_key [@ocaml.doc "The name of the filter.\n"]}[@@ocaml.doc
+                                                                  "The filters for the operation.\n"]
+type nonrec node_attribute_name =
+  | RESOURCE_TYPE [@ocaml.doc ""]
+  | REGION [@ocaml.doc ""]
+  | PLATFORM_VERSION [@ocaml.doc ""]
+  | PLATFORM_TYPE [@ocaml.doc ""]
+  | PLATFORM_NAME [@ocaml.doc ""]
+  | AGENT_VERSION [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec node_aggregator_type =
+  | COUNT [@ocaml.doc ""][@@ocaml.doc ""]
+type node_aggregator =
+  {
+  aggregators: node_aggregator list option
+    [@ocaml.doc
+      "Information about aggregators used to refine a node summary.\n"];
+  attribute_name: node_attribute_name
+    [@ocaml.doc
+      "The name of a node attribute on which to limit the count of nodes.\n"];
+  type_name: node_type_name
+    [@ocaml.doc
+      "The data type name to use for viewing counts of nodes. Currently, only [Instance] is supported.\n"];
+  aggregator_type: node_aggregator_type
+    [@ocaml.doc
+      "The aggregator type for limiting a node summary. Currently, only [Count] is supported.\n"]}
+[@@ocaml.doc
+  "One or more aggregators for viewing counts of nodes using different dimensions.\n"]
 type nonrec document_permission_type =
   | SHARE [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec modify_document_permission_request =
@@ -3251,10 +3530,10 @@ type nonrec modify_document_permission_request =
       "(Optional) The version of the document to share. If it isn't specified, the system choose the [Default] version to share.\n"];
   account_ids_to_remove: string list option
     [@ocaml.doc
-      "The Amazon Web Services users that should no longer have access to the document. The Amazon Web Services user can either be a group of account IDs or {i All}. This action has a higher priority than [AccountIdsToAdd]. If you specify an ID to add and the same ID to remove, the system removes access to the document.\n"];
+      "The Amazon Web Services users that should no longer have access to the document. The Amazon Web Services user can either be a group of account IDs or {i All}. This action has a higher priority than [AccountIdsToAdd]. If you specify an ID to add and the same ID to remove, the system removes access to the document. You must specify a value for this parameter or the [AccountIdsToAdd] parameter.\n"];
   account_ids_to_add: string list option
     [@ocaml.doc
-      "The Amazon Web Services users that should have access to the document. The account IDs can either be a group of account IDs or {i All}.\n"];
+      "The Amazon Web Services users that should have access to the document. The account IDs can either be a group of account IDs or {i All}. You must specify a value for this parameter or the [AccountIdsToRemove] parameter.\n"];
   permission_type: document_permission_type
     [@ocaml.doc
       "The permission type for the document. The permission type can be {i Share}.\n"];
@@ -3297,7 +3576,7 @@ type nonrec maintenance_window_task =
       "The maximum number of targets this task can be run for, in parallel.\n\n  Although this element is listed as \"Required: No\", a value can be omitted only when you are registering or updating a {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html}targetless task} You must provide a value in all other cases.\n  \n   For maintenance window tasks without a target specified, you can't supply a value for this option. Instead, the system inserts a placeholder value of [1]. This value doesn't affect the running of your task.\n   \n    "];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for maintenance window Run Command tasks.\n"];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   logging_info: logging_info option
     [@ocaml.doc
       "Information about an S3 bucket to write task-level logs to.\n\n   [LoggingInfo] has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the [OutputS3BucketName] and [OutputS3KeyPrefix] options in the [TaskInvocationParameters] structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see [MaintenanceWindowTaskInvocationParameters].\n  \n   "];
@@ -3538,7 +3817,7 @@ type nonrec list_resource_compliance_summaries_request =
 [@@ocaml.doc ""]
 type nonrec invalid_filter = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The filter name isn't valid. Verify the you entered the correct name and try again.\n"]
+                                           "The filter name isn't valid. Verify that you entered the correct name and try again.\n"]
 type nonrec list_ops_metadata_result =
   {
   next_token: string option
@@ -3602,6 +3881,61 @@ type nonrec list_ops_item_events_request =
     [@ocaml.doc
       "One or more OpsItem filters. Use a filter to return a more specific list of results. \n"]}
 [@@ocaml.doc ""]
+type nonrec list_nodes_summary_result =
+  {
+  next_token: string option
+    [@ocaml.doc
+      "The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.\n"];
+  summary: node_summary list option
+    [@ocaml.doc
+      "A collection of objects reporting information about your managed nodes, such as the count of nodes by operating system.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_nodes_summary_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "The token for the next set of items to return. (You received this token from a previous call.) The call also returns a token that you can specify in a subsequent call to get the next set of results.\n"];
+  aggregators: node_aggregator list
+    [@ocaml.doc
+      "Specify one or more aggregators to return a count of managed nodes that match that expression. For example, a count of managed nodes by operating system.\n"];
+  filters: node_filter list option
+    [@ocaml.doc
+      "One or more filters. Use a filter to generate a summary that matches your specified filter criteria.\n"];
+  sync_name: string option
+    [@ocaml.doc
+      "The name of the Amazon Web Services managed resource data sync to retrieve information about.\n\n For cross-account/cross-Region configurations, this parameter is required, and the name of the supported resource data sync is [AWS-QuickSetup-ManagedNode].\n \n  For single account/single-Region configurations, the parameter is not required.\n  "]}
+[@@ocaml.doc ""]
+type nonrec invalid_aggregator_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The specified aggregator isn't valid for the group type. Verify that the aggregator you provided is supported.\n"]
+type nonrec list_nodes_result =
+  {
+  next_token: string option
+    [@ocaml.doc
+      "The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.\n"];
+  nodes: node list option
+    [@ocaml.doc
+      "A list of managed nodes that match the specified filter criteria.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_nodes_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "The token for the next set of items to return. (You received this token from a previous call.)\n"];
+  filters: node_filter list option
+    [@ocaml.doc
+      "One or more filters. Use a filter to return a more specific list of managed nodes.\n"];
+  sync_name: string option
+    [@ocaml.doc
+      "The name of the Amazon Web Services managed resource data sync to retrieve information about.\n\n For cross-account/cross-Region configurations, this parameter is required, and the name of the supported resource data sync is [AWS-QuickSetup-ManagedNode].\n \n  For single account/single-Region configurations, the parameter is not required.\n  "]}
+[@@ocaml.doc ""]
 type nonrec list_inventory_entries_result =
   {
   next_token: string option
@@ -3631,7 +3965,7 @@ type nonrec inventory_filter =
   {
   type_: inventory_query_operator_type option
     [@ocaml.doc
-      "The type of filter.\n\n  The [Exists] filter must be used with aggregators. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-aggregate.html}Aggregating inventory data} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   "];
+      "The type of filter.\n\n  The [Exists] filter must be used with aggregators. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-aggregate.html}Aggregating inventory data} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   "];
   values: string list
     [@ocaml.doc
       "Inventory filter values. Example: inventory filter where managed node IDs are specified as values [Key=AWS:InstanceInformation.InstanceId,Values= i-a12b3c4d5e6g,\n    i-1a2b3c4d5e6,Type=Equal]. \n"];
@@ -3936,7 +4270,7 @@ type nonrec command_filter =
   {
   value: string
     [@ocaml.doc
-      "The filter value. Valid values for each filter key are as follows:\n\n {ul\n       {-   {b InvokedAfter}: Specify a timestamp to limit your results. For example, specify [2021-07-07T00:00:00Z] to see a list of command executions occurring July 7, 2021, and later.\n           \n            }\n       {-   {b InvokedBefore}: Specify a timestamp to limit your results. For example, specify [2021-07-07T00:00:00Z] to see a list of command executions from before July 7, 2021.\n           \n            }\n       {-   {b Status}: Specify a valid command status to see a list of all command executions with that status. The status choices depend on the API you call.\n           \n            The status values you can specify for [ListCommands] are:\n            \n             {ul\n                   {-   [Pending] \n                       \n                        }\n                   {-   [InProgress] \n                       \n                        }\n                   {-   [Success] \n                       \n                        }\n                   {-   [Cancelled] \n                       \n                        }\n                   {-   [Failed] \n                       \n                        }\n                   {-   [TimedOut] (this includes both Delivery and Execution time outs) \n                       \n                        }\n                   {-   [AccessDenied] \n                       \n                        }\n                   {-   [DeliveryTimedOut] \n                       \n                        }\n                   {-   [ExecutionTimedOut] \n                       \n                        }\n                   {-   [Incomplete] \n                       \n                        }\n                   {-   [NoInstancesInTag] \n                       \n                        }\n                   {-   [LimitExceeded] \n                       \n                        }\n                   \n        }\n         The status values you can specify for [ListCommandInvocations] are:\n         \n          {ul\n                {-   [Pending] \n                    \n                     }\n                {-   [InProgress] \n                    \n                     }\n                {-   [Delayed] \n                    \n                     }\n                {-   [Success] \n                    \n                     }\n                {-   [Cancelled] \n                    \n                     }\n                {-   [Failed] \n                    \n                     }\n                {-   [TimedOut] (this includes both Delivery and Execution time outs) \n                    \n                     }\n                {-   [AccessDenied] \n                    \n                     }\n                {-   [DeliveryTimedOut] \n                    \n                     }\n                {-   [ExecutionTimedOut] \n                    \n                     }\n                {-   [Undeliverable] \n                    \n                     }\n                {-   [InvalidPlatform] \n                    \n                     }\n                {-   [Terminated] \n                    \n                     }\n                \n        }\n         }\n       {-   {b DocumentName}: Specify name of the Amazon Web Services Systems Manager document (SSM document) for which you want to see command execution results. For example, specify [AWS-RunPatchBaseline] to see command executions that used this SSM document to perform security patching operations on managed nodes. \n           \n            }\n       {-   {b ExecutionStage}: Specify one of the following values ([ListCommands] operations only):\n           \n            {ul\n                  {-   [Executing]: Returns a list of command executions that are currently still running.\n                      \n                       }\n                  {-   [Complete]: Returns a list of command executions that have already completed. \n                      \n                       }\n                  \n        }\n         }\n       }\n  "];
+      "The filter value. Valid values for each filter key are as follows:\n\n {ul\n       {-   {b InvokedAfter}: Specify a timestamp to limit your results. For example, specify [2024-07-07T00:00:00Z] to see a list of command executions occurring July 7, 2021, and later.\n           \n            }\n       {-   {b InvokedBefore}: Specify a timestamp to limit your results. For example, specify [2024-07-07T00:00:00Z] to see a list of command executions from before July 7, 2021.\n           \n            }\n       {-   {b Status}: Specify a valid command status to see a list of all command executions with that status. The status choices depend on the API you call.\n           \n            The status values you can specify for [ListCommands] are:\n            \n             {ul\n                   {-   [Pending] \n                       \n                        }\n                   {-   [InProgress] \n                       \n                        }\n                   {-   [Success] \n                       \n                        }\n                   {-   [Cancelled] \n                       \n                        }\n                   {-   [Failed] \n                       \n                        }\n                   {-   [TimedOut] (this includes both Delivery and Execution time outs) \n                       \n                        }\n                   {-   [AccessDenied] \n                       \n                        }\n                   {-   [DeliveryTimedOut] \n                       \n                        }\n                   {-   [ExecutionTimedOut] \n                       \n                        }\n                   {-   [Incomplete] \n                       \n                        }\n                   {-   [NoInstancesInTag] \n                       \n                        }\n                   {-   [LimitExceeded] \n                       \n                        }\n                   \n        }\n         The status values you can specify for [ListCommandInvocations] are:\n         \n          {ul\n                {-   [Pending] \n                    \n                     }\n                {-   [InProgress] \n                    \n                     }\n                {-   [Delayed] \n                    \n                     }\n                {-   [Success] \n                    \n                     }\n                {-   [Cancelled] \n                    \n                     }\n                {-   [Failed] \n                    \n                     }\n                {-   [TimedOut] (this includes both Delivery and Execution time outs) \n                    \n                     }\n                {-   [AccessDenied] \n                    \n                     }\n                {-   [DeliveryTimedOut] \n                    \n                     }\n                {-   [ExecutionTimedOut] \n                    \n                     }\n                {-   [Undeliverable] \n                    \n                     }\n                {-   [InvalidPlatform] \n                    \n                     }\n                {-   [Terminated] \n                    \n                     }\n                \n        }\n         }\n       {-   {b DocumentName}: Specify name of the Amazon Web Services Systems Manager document (SSM document) for which you want to see command execution results. For example, specify [AWS-RunPatchBaseline] to see command executions that used this SSM document to perform security patching operations on managed nodes. \n           \n            }\n       {-   {b ExecutionStage}: Specify one of the following values ([ListCommands] operations only):\n           \n            {ul\n                  {-   [Executing]: Returns a list of command executions that are currently still running.\n                      \n                       }\n                  {-   [Complete]: Returns a list of command executions that have already completed. \n                      \n                       }\n                  \n        }\n         }\n       }\n  "];
   key: command_filter_key
     [@ocaml.doc
       "The name of the filter.\n\n  The [ExecutionStage] filter can't be used with the [ListCommandInvocations] operation, only with [ListCommands].\n  \n   "]}
@@ -3980,10 +4314,10 @@ type nonrec command_plugin =
   {
   output_s3_key_prefix: string option
     [@ocaml.doc
-      "The S3 directory path inside the bucket where the responses to the command executions should be stored. This was requested when issuing the command. For example, in the following response:\n\n  [doc-example-bucket/ab19cb99-a030-46dd-9dfc-8eSAMPLEPre-Fix/i-02573cafcfEXAMPLE/awsrunShellScript] \n \n   [doc-example-bucket] is the name of the S3 bucket;\n  \n    [ab19cb99-a030-46dd-9dfc-8eSAMPLEPre-Fix] is the name of the S3 prefix;\n   \n     [i-02573cafcfEXAMPLE] is the managed node ID;\n    \n      [awsrunShellScript] is the name of the plugin.\n     "];
+      "The S3 directory path inside the bucket where the responses to the command executions should be stored. This was requested when issuing the command. For example, in the following response:\n\n  [amzn-s3-demo-bucket/my-prefix/i-02573cafcfEXAMPLE/awsrunShellScript] \n \n   [amzn-s3-demo-bucket] is the name of the S3 bucket;\n  \n    [my-prefix] is the name of the S3 prefix;\n   \n     [i-02573cafcfEXAMPLE] is the managed node ID;\n    \n      [awsrunShellScript] is the name of the plugin.\n     "];
   output_s3_bucket_name: string option
     [@ocaml.doc
-      "The S3 bucket where the responses to the command executions should be stored. This was requested when issuing the command. For example, in the following response:\n\n  [doc-example-bucket/ab19cb99-a030-46dd-9dfc-8eSAMPLEPre-Fix/i-02573cafcfEXAMPLE/awsrunShellScript] \n \n   [doc-example-bucket] is the name of the S3 bucket;\n  \n    [ab19cb99-a030-46dd-9dfc-8eSAMPLEPre-Fix] is the name of the S3 prefix;\n   \n     [i-02573cafcfEXAMPLE] is the managed node ID;\n    \n      [awsrunShellScript] is the name of the plugin.\n     "];
+      "The S3 bucket where the responses to the command executions should be stored. This was requested when issuing the command. For example, in the following response:\n\n  [amzn-s3-demo-bucket/my-prefix/i-02573cafcfEXAMPLE/awsrunShellScript] \n \n   [amzn-s3-demo-bucket] is the name of the S3 bucket;\n  \n    [my-prefix] is the name of the S3 prefix;\n   \n     [i-02573cafcfEXAMPLE] is the managed node ID;\n    \n      [awsrunShellScript] is the name of the plugin.\n     "];
   output_s3_region: string option
     [@ocaml.doc
       "(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Amazon Web Services Systems Manager automatically determines the S3 bucket region.\n"];
@@ -4022,7 +4356,7 @@ type nonrec command_invocation =
       "Configurations for sending notifications about command status changes on a per managed node basis.\n"];
   service_role: string option
     [@ocaml.doc
-      "The Identity and Access Management (IAM) service role that Run Command, a capability of Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes on a per managed node basis.\n"];
+      "The Identity and Access Management (IAM) service role that Run Command, a tool in Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes on a per managed node basis.\n"];
   command_plugins: command_plugin list option
     [@ocaml.doc "Plugins processed by the command.\n"];
   standard_error_url: string option
@@ -4170,13 +4504,13 @@ type nonrec association_version_info =
       "The combination of Amazon Web Services Regions and Amazon Web Services accounts where you wanted to run the association when this association version was created.\n"];
   calendar_names: string list option
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations for this version only run when that Change Calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar}.\n"];
+      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations for this version only run when that Change Calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   apply_only_at_cron_interval: bool option
     [@ocaml.doc
-      "By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.\n"];
+      "By default, when you create new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.\n"];
   sync_compliance: association_sync_compliance option
     [@ocaml.doc
-      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
+      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
   compliance_severity: association_compliance_severity option
     [@ocaml.doc "The severity level that is assigned to the association.\n"];
   max_concurrency: string option
@@ -4341,7 +4675,7 @@ type nonrec inventory_deletion_status_item =
     [@ocaml.doc "The UTC timestamp of when the last status report.\n"];
   deletion_summary: inventory_deletion_summary option
     [@ocaml.doc
-      "Information about the delete operation. For more information about this summary, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-custom.html#sysman-inventory-delete}Understanding the delete inventory summary} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
+      "Information about the delete operation. For more information about this summary, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-custom.html#delete-custom-inventory}Understanding the delete inventory summary} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   last_status_message: string option
     [@ocaml.doc "Information about the status.\n"];
   last_status: inventory_deletion_status option
@@ -4416,13 +4750,9 @@ type nonrec invalid_delete_inventory_parameters_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "One or more of the parameters specified for the delete operation isn't valid. Verify all parameters and try again.\n"]
-type nonrec invalid_aggregator_exception =
-  {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The specified aggregator isn't valid for inventory groups. Verify that the aggregator uses a valid inventory type such as [AWS:Application] or [AWS:InstanceInformation].\n"]
 type nonrec invalid_activation_id = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The activation ID isn't valid. Verify the you entered the correct ActivationId or ActivationCode and try again.\n"]
+                                           "The activation ID isn't valid. Verify that you entered the correct ActivationId or ActivationCode and try again.\n"]
 type nonrec invalid_activation = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "The activation isn't valid. The activation might have been deleted, or the ActivationId and the ActivationCode don't match.\n"]
@@ -4502,7 +4832,7 @@ type nonrec instance_property =
       "The name of the operating system platform running on your managed node.\n"];
   platform_type: platform_type option
     [@ocaml.doc
-      "The operating system platform type of the managed node. For example, Windows.\n"];
+      "The operating system platform type of the managed node. For example, Windows Server or Amazon Linux 2.\n"];
   agent_version: string option
     [@ocaml.doc "The version of SSM Agent running on your managed node.\n"];
   last_ping_date_time: CoreTypes.Timestamp.t option
@@ -4516,7 +4846,7 @@ type nonrec instance_property =
     [@ocaml.doc
       "The public IPv4 address assigned to the node. If a public IPv4 address isn't assigned to the node, this value is blank.\n"];
   architecture: string option
-    [@ocaml.doc "The CPU architecture of the node. For example, x86_64.\n"];
+    [@ocaml.doc "The CPU architecture of the node. For example, [x86_64].\n"];
   instance_state: string option
     [@ocaml.doc "The current state of the node.\n"];
   key_name: string option
@@ -4559,12 +4889,15 @@ type nonrec instance_patch_state =
   operation_start_time: CoreTypes.Timestamp.t
     [@ocaml.doc
       "The time the most recent patching operation was started on the managed node.\n"];
+  available_security_update_count: int option
+    [@ocaml.doc
+      "The number of security-related patches that are available but not approved because they didn't meet the patch baseline requirements. For example, an updated version of a patch might have been released before the specified auto-approval period was over.\n\n Applies to Windows Server managed nodes only.\n "];
   not_applicable_count: int option
     [@ocaml.doc
       "The number of patches from the patch baseline that aren't applicable for the managed node and therefore aren't installed on the node. This number may be truncated if the list of patch names is very large. The number of patches beyond this limit are reported in [UnreportedNotApplicableCount].\n"];
   unreported_not_applicable_count: int option
     [@ocaml.doc
-      "The number of patches beyond the supported limit of [NotApplicableCount] that aren't reported by name to Inventory. Inventory is a capability of Amazon Web Services Systems Manager.\n"];
+      "The number of patches beyond the supported limit of [NotApplicableCount] that aren't reported by name to Inventory. Inventory is a tool in Amazon Web Services Systems Manager.\n"];
   failed_count: int option
     [@ocaml.doc
       "The number of patches from the patch baseline that were attempted to be installed during the last patching operation, but failed to install.\n"];
@@ -4588,7 +4921,7 @@ type nonrec instance_patch_state =
       "Placeholder information. This field will always be empty in the current release of the service.\n"];
   install_override_list: string option
     [@ocaml.doc
-      "An https URL or an Amazon Simple Storage Service (Amazon S3) path-style URL to a list of patches to be installed. This patch installation list, which you maintain in an S3 bucket in YAML format and specify in the SSM document [AWS-RunPatchBaseline], overrides the patches specified by the default patch baseline.\n\n For more information about the [InstallOverrideList] parameter, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-about-aws-runpatchbaseline.html}About the [AWS-RunPatchBaseline SSM document] } in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "An https URL or an Amazon Simple Storage Service (Amazon S3) path-style URL to a list of patches to be installed. This patch installation list, which you maintain in an S3 bucket in YAML format and specify in the SSM document [AWS-RunPatchBaseline], overrides the patches specified by the default patch baseline.\n\n For more information about the [InstallOverrideList] parameter, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-about-aws-runpatchbaseline.html}SSM Command document for patching: [AWS-RunPatchBaseline] } in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   snapshot_id: string option
     [@ocaml.doc
       "The ID of the patch baseline snapshot used during the patching operation when this compliance data was collected.\n"];
@@ -4625,7 +4958,7 @@ type nonrec instance_information_string_filter =
   values: string list [@ocaml.doc "The filter values.\n"];
   key: string
     [@ocaml.doc
-      "The filter key name to describe your managed nodes.\n\n Valid filter key values: ActivationIds | AgentVersion | AssociationStatus | IamRole | InstanceIds | PingStatus | PlatformTypes | ResourceType | SourceIds | SourceTypes | \"tag-key\" | \"tag:[{keyname}] \n \n  {ul\n        {-  Valid values for the [AssociationStatus] filter key: Success | Pending | Failed\n            \n             }\n        {-  Valid values for the [PingStatus] filter key: Online | ConnectionLost | Inactive (deprecated)\n            \n             }\n        {-  Valid values for the [PlatformType] filter key: Windows | Linux | MacOS\n            \n             }\n        {-  Valid values for the [ResourceType] filter key: EC2Instance | ManagedInstance\n            \n             }\n        {-  Valid values for the [SourceType] filter key: AWS::EC2::Instance | AWS::SSM::ManagedInstance | AWS::IoT::Thing\n            \n             }\n        {-  Valid tag examples: [Key=tag-key,Values=Purpose] | [Key=tag:Purpose,Values=Test].\n            \n             }\n        }\n  "]}
+      "The filter key name to describe your managed nodes.\n\n Valid filter key values: ActivationIds | AgentVersion | AssociationStatus | IamRole | InstanceIds | PingStatus | PlatformType | ResourceType | SourceIds | SourceTypes | \"tag-key\" | \"tag:[{keyname}] \n \n  {ul\n        {-  Valid values for the [AssociationStatus] filter key: Success | Pending | Failed\n            \n             }\n        {-  Valid values for the [PingStatus] filter key: Online | ConnectionLost | Inactive (deprecated)\n            \n             }\n        {-  Valid values for the [PlatformType] filter key: Windows | Linux | MacOS\n            \n             }\n        {-  Valid values for the [ResourceType] filter key: EC2Instance | ManagedInstance\n            \n             }\n        {-  Valid values for the [SourceType] filter key: AWS::EC2::Instance | AWS::SSM::ManagedInstance | AWS::IoT::Thing\n            \n             }\n        {-  Valid tag examples: [Key=tag-key,Values=Purpose] | [Key=tag:Purpose,Values=Test].\n            \n             }\n        }\n  "]}
 [@@ocaml.doc
   "The filters to describe or get information about your managed nodes.\n"]
 type nonrec instance_information =
@@ -4650,7 +4983,7 @@ type nonrec instance_information =
     [@ocaml.doc "The IP address of the managed node.\n"];
   name: string option
     [@ocaml.doc
-      "The name assigned to an on-premises server, edge device, or virtual machine (VM) when it is activated as a Systems Manager managed node. The name is specified as the [DefaultInstanceName] property using the [CreateActivation] command. It is applied to the managed node by specifying the Activation Code and Activation ID when you install SSM Agent on the node, as explained in {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-install-managed-linux.html}Install SSM Agent for a hybrid and multicloud environment (Linux)} and {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-install-managed-win.html}Install SSM Agent for a hybrid and multicloud environment (Windows)}. To retrieve the [Name] tag of an EC2 instance, use the Amazon EC2 [DescribeInstances] operation. For information, see {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html}DescribeInstances} in the {i Amazon EC2 API Reference} or {{:https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html}describe-instances} in the {i Amazon Web Services CLI Command Reference}.\n"];
+      "The name assigned to an on-premises server, edge device, or virtual machine (VM) when it is activated as a Systems Manager managed node. The name is specified as the [DefaultInstanceName] property using the [CreateActivation] command. It is applied to the managed node by specifying the Activation Code and Activation ID when you install SSM Agent on the node, as explained in {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/hybrid-multicloud-ssm-agent-install-linux.html}How to install SSM Agent on hybrid Linux nodes} and {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/hybrid-multicloud-ssm-agent-install-windows.html}How to install SSM Agent on hybrid Windows Server nodes}. To retrieve the [Name] tag of an EC2 instance, use the Amazon EC2 [DescribeInstances] operation. For information, see {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html}DescribeInstances} in the {i Amazon EC2 API Reference} or {{:https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html}describe-instances} in the {i Amazon Web Services CLI Command Reference}.\n"];
   resource_type: resource_type option
     [@ocaml.doc
       "The type of instance. Instances are either EC2 instances or managed instances. \n"];
@@ -4659,7 +4992,7 @@ type nonrec instance_information =
       "The date the server or VM was registered with Amazon Web Services as a managed node.\n"];
   iam_role: string option
     [@ocaml.doc
-      "The Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed node. This call doesn't return the IAM role for Amazon Elastic Compute Cloud (Amazon EC2) instances. To retrieve the IAM role for an EC2 instance, use the Amazon EC2 [DescribeInstances] operation. For information, see {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html}DescribeInstances} in the {i Amazon EC2 API Reference} or {{:https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html}describe-instances} in the {i Amazon Web Services CLI Command Reference}.\n"];
+      "The role assigned to an Amazon EC2 instance configured with a Systems Manager Quick Setup host management configuration or the role assigned to an on-premises managed node.\n\n  This call doesn't return the IAM role for {i unmanaged} Amazon EC2 instances (instances not configured for Systems Manager). To retrieve the role for an unmanaged instance, use the Amazon EC2 [DescribeInstances] operation. For information, see {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html}DescribeInstances} in the {i Amazon EC2 API Reference} or {{:https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html}describe-instances} in the {i Amazon Web Services CLI Command Reference}.\n "];
   activation_id: string option
     [@ocaml.doc
       "The activation ID created by Amazon Web Services Systems Manager when the server or virtual machine (VM) was registered.\n"];
@@ -4670,7 +5003,7 @@ type nonrec instance_information =
     [@ocaml.doc
       "The name of the operating system platform running on your managed node. \n"];
   platform_type: platform_type option
-    [@ocaml.doc "The operating system platform type. \n"];
+    [@ocaml.doc "The operating system platform type.\n"];
   is_latest_version: bool option
     [@ocaml.doc
       "Indicates whether the latest version of SSM Agent is running on your Linux managed node. This field doesn't indicate whether or not the latest version is installed on Windows managed nodes, because some older versions of Windows Server use the EC2Config service to process Systems Manager requests.\n"];
@@ -4756,7 +5089,7 @@ type nonrec get_service_setting_request =
   {
   setting_id: string
     [@ocaml.doc
-      "The ID of the service setting to get. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n  "]}
+      "The ID of the service setting to get. The setting ID can be one of the following.\n\n {ul\n       {-   [/ssm/appmanager/appmanager-enabled] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-destination] \n           \n            }\n       {-   [/ssm/automation/customer-script-log-group-name] \n           \n            }\n       {-  /ssm/automation/enable-adaptive-concurrency\n           \n            }\n       {-   [/ssm/documents/console/public-sharing-permission] \n           \n            }\n       {-   [/ssm/managed-instance/activation-tier] \n           \n            }\n       {-   [/ssm/managed-instance/default-ec2-instance-management-role] \n           \n            }\n       {-   [/ssm/opsinsights/opscenter] \n           \n            }\n       {-   [/ssm/parameter-store/default-parameter-tier] \n           \n            }\n       {-   [/ssm/parameter-store/high-throughput-enabled] \n           \n            }\n       }\n  "]}
 [@@ocaml.doc "The request body of the GetServiceSetting API operation.\n"]
 type nonrec get_resource_policies_response_entry =
   {
@@ -4790,6 +5123,10 @@ type nonrec get_resource_policies_request =
 [@@ocaml.doc ""]
 type nonrec get_patch_baseline_result =
   {
+  available_security_updates_compliance_status:
+    patch_compliance_status option
+    [@ocaml.doc
+      "Indicates the compliance status of managed nodes for which security-related patches are available but were not approved. This preference is specified when the [CreatePatchBaseline] or [UpdatePatchBaseline] commands are run.\n\n Applies to Windows Server managed nodes only.\n "];
   sources: patch_source list option
     [@ocaml.doc
       "Information about the patches to use to update the managed nodes, including target operating systems and source repositories. Applies to Linux managed nodes only.\n"];
@@ -4906,7 +5243,7 @@ type nonrec get_parameter_request =
       "Return decrypted values for secure string parameters. This flag is ignored for [String] and [StringList] parameter types.\n"];
   name: string
     [@ocaml.doc
-      "The name or Amazon Resource Name (ARN) of the parameter that you want to query. For parameters shared with you from another account, you must use the full ARN.\n\n To query by parameter label, use [\"Name\": \"name:label\"]. To query by parameter version, use [\"Name\": \"name:version\"].\n \n  For more information about shared parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sharing.html}Working with shared parameters} in the {i Amazon Web Services Systems Manager User Guide}.\n  "]}
+      "The name or Amazon Resource Name (ARN) of the parameter that you want to query. For parameters shared with you from another account, you must use the full ARN.\n\n To query by parameter label, use [\"Name\": \"name:label\"]. To query by parameter version, use [\"Name\": \"name:version\"].\n \n  For more information about shared parameters, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html}Working with shared parameters} in the {i Amazon Web Services Systems Manager User Guide}.\n  "]}
 [@@ocaml.doc ""]
 type nonrec get_parameter_history_result =
   {
@@ -5022,7 +5359,7 @@ type nonrec get_maintenance_window_task_result =
     [@ocaml.doc "The type of task to run.\n"];
   service_role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for maintenance window Run Command tasks.\n"];
+      "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run [RegisterTaskWithMaintenanceWindow].\n\n However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html}Setting up Maintenance Windows} in the in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   task_arn: string option
     [@ocaml.doc
       "The resource that the task used during execution. For [RUN_COMMAND] and [AUTOMATION] task types, the value of [TaskArn] is the SSM document name/ARN. For [LAMBDA] tasks, the value is the function name/ARN. For [STEP_FUNCTIONS] tasks, the value is the state machine ARN.\n"];
@@ -5243,6 +5580,51 @@ type nonrec get_inventory_request =
     [@ocaml.doc
       "One or more filters. Use a filter to return a more specific list of results.\n"]}
 [@@ocaml.doc ""]
+type nonrec execution_preview_status =
+  | FAILED [@ocaml.doc ""]
+  | SUCCESS [@ocaml.doc ""]
+  | IN_PROGRESS [@ocaml.doc ""]
+  | PENDING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec automation_execution_preview =
+  {
+  total_accounts: int option
+    [@ocaml.doc
+      "Information about the Amazon Web Services accounts that were included in the execution preview.\n"];
+  target_previews: target_preview list option
+    [@ocaml.doc
+      "Information that provides a preview of what the impact of running the specified Automation runbook would be.\n"];
+  regions: string list option
+    [@ocaml.doc
+      "Information about the Amazon Web Services Regions targeted by the execution preview.\n"];
+  step_previews: step_preview_map option
+    [@ocaml.doc
+      "Information about the type of impact a runbook step would have on a resource.\n\n {ul\n       {-   [Mutating]: The runbook step would make changes to the targets through actions that create, modify, or delete resources.\n           \n            }\n       {-   [Non_Mutating]: The runbook step would retrieve data about resources but not make changes to them. This category generally includes [Describe*], [List*], [Get*], and similar read-only API actions.\n           \n            }\n       {-   [Undetermined]: An undetermined step invokes executions performed by another orchestration service like Lambda, Step Functions, or Amazon Web Services Systems Manager Run Command. An undetermined step might also call a third-party API. Systems Manager Automation doesn't know the outcome of the orchestration processes or third-party API executions, so the results of the steps are undetermined.\n           \n            }\n       }\n  "]}
+[@@ocaml.doc "Information about the results of the execution preview.\n"]
+type nonrec execution_preview =
+  | Automation of automation_execution_preview
+  [@ocaml.doc
+    "Information about the changes that would be made if an Automation workflow were run.\n"]
+[@@ocaml.doc
+  "Information about the changes that would be made if an execution were run.\n"]
+type nonrec get_execution_preview_response =
+  {
+  execution_preview: execution_preview option [@ocaml.doc ""];
+  status_message: string option
+    [@ocaml.doc
+      "Supplemental information about the current status of the execution preview.\n"];
+  status: execution_preview_status option
+    [@ocaml.doc "The current status of the execution preview operation.\n"];
+  ended_at: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      "A UTC timestamp indicating when the execution preview operation ended.\n"];
+  execution_preview_id: string option
+    [@ocaml.doc "The generated ID for the existing execution preview.\n"]}
+[@@ocaml.doc ""]
+type nonrec get_execution_preview_request =
+  {
+  execution_preview_id: string
+    [@ocaml.doc "The ID of the existing execution preview.\n"]}[@@ocaml.doc
+                                                                 ""]
 type nonrec attachment_hash_type =
   | SHA256 [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec attachment_content =
@@ -5313,6 +5695,10 @@ type nonrec get_deployable_patch_snapshot_for_instance_result =
                                                                     ""]
 type nonrec baseline_override =
   {
+  available_security_updates_compliance_status:
+    patch_compliance_status option
+    [@ocaml.doc
+      "Indicates whether managed nodes for which there are available security-related patches that have not been approved by the baseline are being defined as [COMPLIANT] or [NON_COMPLIANT]. This option is specified when the [CreatePatchBaseline] or [UpdatePatchBaseline] commands are run.\n\n Applies to Windows Server managed nodes only.\n "];
   sources: patch_source list option
     [@ocaml.doc
       "Information about the patches to use to update the managed nodes, including target operating systems and source repositories. Applies to Linux managed nodes only.\n"];
@@ -5324,13 +5710,13 @@ type nonrec baseline_override =
       "The action for Patch Manager to take on patches included in the [RejectedPackages] list. A patch can be allowed only if it is a dependency of another package, or blocked entirely along with packages that include it as a dependency.\n"];
   rejected_patches: string list option
     [@ocaml.doc
-      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approved_patches_compliance_level: patch_compliance_level option
     [@ocaml.doc
       "Defines the compliance level for approved patches. When an approved patch is reported as missing, this value describes the severity of the compliance violation.\n"];
   approved_patches: string list option
     [@ocaml.doc
-      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approval_rules: patch_rule_group option [@ocaml.doc ""];
   global_filters: patch_filter_group option [@ocaml.doc ""];
   operating_system: operating_system option
@@ -5459,9 +5845,10 @@ type nonrec get_calendar_state_request =
       "(Optional) The specific time for which you want to get calendar state information, in {{:https://en.wikipedia.org/wiki/ISO_8601}ISO 8601} format. If you don't specify a value or [AtTime], the current time is used.\n"];
   calendar_names: string list
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Systems Manager documents (SSM documents) that represent the calendar entries for which you want to get the state.\n"]}
+      "The names of Amazon Resource Names (ARNs) of the Systems Manager documents (SSM documents) that represent the calendar entries for which you want to get the state.\n"]}
 [@@ocaml.doc ""]
 type nonrec automation_subtype =
+  | AccessRequest [@ocaml.doc ""]
   | ChangeRequest [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec automation_execution =
   {
@@ -5484,6 +5871,9 @@ type nonrec automation_execution =
   automation_subtype: automation_subtype option
     [@ocaml.doc
       "The subtype of the Automation operation. Currently, the only supported value is [ChangeRequest].\n"];
+  target_locations_ur_l: string option
+    [@ocaml.doc
+      "A publicly accessible URL for a file that contains the [TargetLocations] body. Currently, only files in presigned Amazon S3 buckets are supported\n"];
   triggered_alarms: alarm_state_information list option
     [@ocaml.doc "The CloudWatch alarm that was invoked by the automation.\n"];
   alarm_configuration: alarm_configuration option
@@ -5561,6 +5951,39 @@ type nonrec get_automation_execution_request =
     [@ocaml.doc
       "The unique identifier for an existing automation execution to examine. The execution ID is returned by StartAutomationExecution when the execution of an Automation runbook is initiated.\n"]}
 [@@ocaml.doc ""]
+type nonrec credentials =
+  {
+  expiration_time: CoreTypes.Timestamp.t
+    [@ocaml.doc "The datetime on which the current credentials expire.\n"];
+  session_token: string
+    [@ocaml.doc
+      "The token that users must pass to the service API to use the temporary credentials.\n"];
+  secret_access_key: string
+    [@ocaml.doc "The secret access key that can be used to sign requests.\n"];
+  access_key_id: string
+    [@ocaml.doc
+      "The access key ID that identifies the temporary security credentials.\n"]}
+[@@ocaml.doc
+  "The temporary security credentials, which include an access key ID, a secret access key, and a security (or session) token.\n"]
+type nonrec access_request_status =
+  | PENDING [@ocaml.doc ""]
+  | EXPIRED [@ocaml.doc ""]
+  | REVOKED [@ocaml.doc ""]
+  | REJECTED [@ocaml.doc ""]
+  | APPROVED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec get_access_token_response =
+  {
+  access_request_status: access_request_status option
+    [@ocaml.doc "The status of the access request.\n"];
+  credentials: credentials option
+    [@ocaml.doc
+      "The temporary security credentials which can be used to start just-in-time node access sessions.\n"]}
+[@@ocaml.doc ""]
+type nonrec get_access_token_request =
+  {
+  access_request_id: string
+    [@ocaml.doc "The ID of a just-in-time node access request.\n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec fault =
   | Unknown [@ocaml.doc ""]
   | Server [@ocaml.doc ""]
@@ -5582,13 +6005,13 @@ type nonrec create_association_batch_request_entry =
       "Use this action to create an association in multiple Regions and multiple accounts.\n"];
   calendar_names: string list option
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations only run when that Change Calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar}.\n"];
+      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations only run when that Change Calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   apply_only_at_cron_interval: bool option
     [@ocaml.doc
-      "By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.\n"];
+      "By default, when you create a new association, the system runs it immediately after it is created and then according to the schedule you specified and when target changes are detected. Specify [true] for [ApplyOnlyAtCronInterval] if you want the association to run only according to the schedule you specified.\n\n For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#state-manager-about-scheduling}Understanding when associations are applied to resources} and {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#runbook-target-updates}>About target updates with Automation runbooks} in the {i Amazon Web Services Systems Manager User Guide}.\n \n  This parameter isn't supported for rate expressions.\n  "];
   sync_compliance: association_sync_compliance option
     [@ocaml.doc
-      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT]. \n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
+      "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT]. \n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
   compliance_severity: association_compliance_severity option
     [@ocaml.doc "The severity level to assign to the association.\n"];
   max_concurrency: string option
@@ -5610,7 +6033,7 @@ type nonrec create_association_batch_request_entry =
   document_version: string option [@ocaml.doc "The document version.\n"];
   automation_target_parameter_name: string option
     [@ocaml.doc
-      "Specify the target for the association. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.\n"];
+      "Specify the target for the association. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.\n"];
   parameters: parameters option
     [@ocaml.doc "A description of the parameters for a document. \n"];
   instance_id: string option
@@ -5722,6 +6145,9 @@ type nonrec describe_patch_groups_request =
 [@@ocaml.doc ""]
 type nonrec describe_patch_group_state_result =
   {
+  instances_with_available_security_updates: int option
+    [@ocaml.doc
+      "The number of managed nodes for which security-related patches are available but not approved because because they didn't meet the patch baseline requirements. For example, an updated version of a patch might have been released before the specified auto-approval period was over.\n\n Applies to Windows Server managed nodes only.\n "];
   instances_with_other_non_compliant_patches: int option
     [@ocaml.doc
       "The number of managed nodes with patches installed that are specified as other than [Critical] or [Security] but aren't compliant with the patch baseline. The status of these managed nodes is [NON_COMPLIANT].\n"];
@@ -5733,7 +6159,7 @@ type nonrec describe_patch_group_state_result =
       "The number of managed nodes where patches that are specified as [Critical] for compliance reporting in the patch baseline aren't installed. These patches might be missing, have failed installation, were rejected, or were installed but awaiting a required managed node reboot. The status of these managed nodes is [NON_COMPLIANT].\n"];
   instances_with_unreported_not_applicable_patches: int option
     [@ocaml.doc
-      "The number of managed nodes with [NotApplicable] patches beyond the supported limit, which aren't reported by name to Inventory. Inventory is a capability of Amazon Web Services Systems Manager.\n"];
+      "The number of managed nodes with [NotApplicable] patches beyond the supported limit, which aren't reported by name to Inventory. Inventory is a tool in Amazon Web Services Systems Manager.\n"];
   instances_with_not_applicable_patches: int option
     [@ocaml.doc
       "The number of managed nodes with patches that aren't applicable.\n"];
@@ -5964,7 +6390,7 @@ type nonrec describe_maintenance_window_executions_request =
       "The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.\n"];
   filters: maintenance_window_filter list option
     [@ocaml.doc
-      "Each entry in the array is a structure containing:\n\n {ul\n       {-  Key. A string between 1 and 128 characters. Supported keys include [ExecutedBefore] and [ExecutedAfter].\n           \n            }\n       {-  Values. An array of strings, each between 1 and 256 characters. Supported values are date/time strings in a valid ISO 8601 date/time format, such as [2021-11-04T05:00:00Z].\n           \n            }\n       }\n  "];
+      "Each entry in the array is a structure containing:\n\n {ul\n       {-  Key. A string between 1 and 128 characters. Supported keys include [ExecutedBefore] and [ExecutedAfter].\n           \n            }\n       {-  Values. An array of strings, each between 1 and 256 characters. Supported values are date/time strings in a valid ISO 8601 date/time format, such as [2024-11-04T05:00:00Z].\n           \n            }\n       }\n  "];
   window_id: string
     [@ocaml.doc
       "The ID of the maintenance window whose executions should be retrieved.\n"]}
@@ -6077,7 +6503,7 @@ type nonrec describe_instance_patches_request =
       "The token for the next set of items to return. (You received this token from a previous call.)\n"];
   filters: patch_orchestrator_filter list option
     [@ocaml.doc
-      "Each element in the array is a structure containing a key-value pair.\n\n Supported keys for [DescribeInstancePatches]include the following:\n \n  {ul\n        {-   {b  [Classification] } \n            \n             Sample values: [Security] | [SecurityUpdates] \n             \n              }\n        {-   {b  [KBId] } \n            \n             Sample values: [KB4480056] | [java-1.7.0-openjdk.x86_64] \n             \n              }\n        {-   {b  [Severity] } \n            \n             Sample values: [Important] | [Medium] | [Low] \n             \n              }\n        {-   {b  [State] } \n            \n             Sample values: [Installed] | [InstalledOther] | [InstalledPendingReboot] \n             \n              For lists of all [State] values, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-compliance-states.html}Understanding patch compliance state values} in the {i Amazon Web Services Systems Manager User Guide}.\n              \n               }\n        }\n  "];
+      "Each element in the array is a structure containing a key-value pair.\n\n Supported keys for [DescribeInstancePatches]include the following:\n \n  {ul\n        {-   {b  [Classification] } \n            \n             Sample values: [Security] | [SecurityUpdates] \n             \n              }\n        {-   {b  [KBId] } \n            \n             Sample values: [KB4480056] | [java-1.7.0-openjdk.x86_64] \n             \n              }\n        {-   {b  [Severity] } \n            \n             Sample values: [Important] | [Medium] | [Low] \n             \n              }\n        {-   {b  [State] } \n            \n             Sample values: [Installed] | [InstalledOther] | [InstalledPendingReboot] \n             \n              For lists of all [State] values, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-compliance-states.html}Patch compliance state values} in the {i Amazon Web Services Systems Manager User Guide}.\n              \n               }\n        }\n  "];
   instance_id: string
     [@ocaml.doc
       "The ID of the managed node whose patch state information should be retrieved.\n"]}
@@ -6219,8 +6645,10 @@ type nonrec describe_document_request =
   document_version: string option
     [@ocaml.doc
       "The document version for which you want information. Can be a specific version or the default version.\n"];
-  name: string [@ocaml.doc "The name of the SSM document.\n"]}[@@ocaml.doc
-                                                                ""]
+  name: string
+    [@ocaml.doc
+      "The name of the SSM document.\n\n  If you're calling a shared SSM document from a different Amazon Web Services account, [Name] is the full Amazon Resource Name (ARN) of the document.\n  \n   "]}
+[@@ocaml.doc ""]
 type nonrec account_sharing_info =
   {
   shared_document_version: string option
@@ -6241,7 +6669,7 @@ type nonrec describe_document_permission_response =
       "A list of Amazon Web Services accounts where the current document is shared and the version shared with each account.\n"];
   account_ids: string list option
     [@ocaml.doc
-      "The account IDs that have permission to use this document. The ID can be either an Amazon Web Services account or {i All}.\n"]}
+      "The account IDs that have permission to use this document. The ID can be either an Amazon Web Services account number or [all].\n"]}
 [@@ocaml.doc ""]
 type nonrec describe_document_permission_request =
   {
@@ -6255,7 +6683,7 @@ type nonrec describe_document_permission_request =
     [@ocaml.doc
       "The permission type for the document. The permission type can be {i Share}.\n"];
   name: string
-    [@ocaml.doc "The name of the document for which you are the owner.\n"]}
+    [@ocaml.doc "The name of the document for which you are the owner. \n"]}
 [@@ocaml.doc ""]
 type nonrec describe_available_patches_result =
   {
@@ -6326,6 +6754,9 @@ type nonrec automation_execution_metadata =
   automation_subtype: automation_subtype option
     [@ocaml.doc
       "The subtype of the Automation operation. Currently, the only supported value is [ChangeRequest].\n"];
+  target_locations_ur_l: string option
+    [@ocaml.doc
+      "A publicly accessible URL for a file that contains the [TargetLocations] body. Currently, only files in presigned Amazon S3 buckets are supported\n"];
   triggered_alarms: alarm_state_information list option
     [@ocaml.doc "The CloudWatch alarm that was invoked by the automation.\n"];
   alarm_configuration: alarm_configuration option
@@ -6333,7 +6764,7 @@ type nonrec automation_execution_metadata =
       "The details for the CloudWatch alarm applied to your automation.\n"];
   automation_type: automation_type option
     [@ocaml.doc
-      "Use this filter with [DescribeAutomationExecutions]. Specify either Local or CrossAccount. CrossAccount is an Automation that runs in multiple Amazon Web Services Regions and Amazon Web Services accounts. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-automation-multiple-accounts-and-regions.html}Running Automation workflows in multiple Amazon Web Services Regions and accounts} in the {i Amazon Web Services Systems Manager User Guide}. \n"];
+      "Use this filter with [DescribeAutomationExecutions]. Specify either Local or CrossAccount. CrossAccount is an Automation that runs in multiple Amazon Web Services Regions and Amazon Web Services accounts. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-automation-multiple-accounts-and-regions.html}Running automations in multiple Amazon Web Services Regions and accounts} in the {i Amazon Web Services Systems Manager User Guide}. \n"];
   target: string option
     [@ocaml.doc
       "The list of execution outputs as defined in the Automation runbook.\n"];
@@ -6749,7 +7180,7 @@ type nonrec delete_inventory_result =
   {
   deletion_summary: inventory_deletion_summary option
     [@ocaml.doc
-      "A summary of the delete operation. For more information about this summary, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-custom.html#sysman-inventory-delete-summary}Understanding the delete inventory summary} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
+      "A summary of the delete operation. For more information about this summary, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-custom.html#delete-custom-inventory-summary}Deleting custom inventory} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   type_name: string option
     [@ocaml.doc
       "The name of the inventory data type specified in the request.\n"];
@@ -6821,6 +7252,10 @@ type nonrec create_patch_baseline_request =
       "Optional metadata that you assign to a resource. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a patch baseline to identify the severity level of patches it specifies and the operating system family it applies to. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=PatchSeverity,Value=Critical] \n           \n            }\n       {-   [Key=OS,Value=Windows] \n           \n            }\n       }\n    To add tags to an existing patch baseline, use the [AddTagsToResource] operation.\n    \n     "];
   client_token: string option
     [@ocaml.doc "User-provided idempotency token.\n"];
+  available_security_updates_compliance_status:
+    patch_compliance_status option
+    [@ocaml.doc
+      "Indicates the status you want to assign to security patches that are available but not approved because they don't meet the installation criteria specified in the patch baseline.\n\n Example scenario: Security patches that you might want installed can be skipped if you have specified a long period to wait after a patch is released before installation. If an update to the patch is released during your specified waiting period, the waiting period for installing the patch starts over. If the waiting period is too long, multiple versions of the patch could be released but never installed.\n \n  Supported for Windows Server managed nodes only.\n  "];
   sources: patch_source list option
     [@ocaml.doc
       "Information about the patches to use to update the managed nodes, including target operating systems and source repositories. Applies to Linux managed nodes only.\n"];
@@ -6828,10 +7263,10 @@ type nonrec create_patch_baseline_request =
     [@ocaml.doc "A description of the patch baseline.\n"];
   rejected_patches_action: patch_action option
     [@ocaml.doc
-      "The action for Patch Manager to take on patches included in the [RejectedPackages] list.\n\n {ul\n       {-   {b  [ALLOW_AS_DEPENDENCY] }: A package in the [Rejected] patches list is installed only if it is a dependency of another package. It is considered compliant with the patch baseline, and its status is reported as [InstalledOther]. This is the default action if no option is specified.\n           \n            }\n       {-   {b BLOCK}: Packages in the {b Rejected patches} list, and packages that include them as dependencies, aren't installed by Patch Manager under any circumstances. If a package was installed before it was added to the {b Rejected patches} list, or is installed outside of Patch Manager afterward, it's considered noncompliant with the patch baseline and its status is reported as {i InstalledRejected}.\n           \n            }\n       }\n  "];
+      "The action for Patch Manager to take on patches included in the [RejectedPackages] list.\n\n  ALLOW_AS_DEPENDENCY   {b Linux and macOS}: A package in the rejected patches list is installed only if it is a dependency of another package. It is considered compliant with the patch baseline, and its status is reported as [INSTALLED_OTHER]. This is the default action if no option is specified.\n                       \n                         {b Windows Server}: Windows Server doesn't support the concept of package dependencies. If a package in the rejected patches list and already installed on the node, its status is reported as [INSTALLED_OTHER]. Any package not already installed on the node is skipped. This is the default action if no option is specified.\n                        \n                          BLOCK   {b All OSs}: Packages in the rejected patches list, and packages that include them as dependencies, aren't installed by Patch Manager under any circumstances. If a package was installed before it was added to the rejected patches list, or is installed outside of Patch Manager afterward, it's considered noncompliant with the patch baseline and its status is reported as [INSTALLED_REJECTED].\n                                 \n                                   "];
   rejected_patches: string list option
     [@ocaml.doc
-      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly rejected patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approved_patches_enable_non_security: bool option
     [@ocaml.doc
       "Indicates whether the list of approved patches includes non-security updates that should be applied to the managed nodes. The default value is [false]. Applies to Linux managed nodes only.\n"];
@@ -6840,12 +7275,12 @@ type nonrec create_patch_baseline_request =
       "Defines the compliance level for approved patches. When an approved patch is reported as missing, this value describes the severity of the compliance violation. The default value is [UNSPECIFIED].\n"];
   approved_patches: string list option
     [@ocaml.doc
-      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}About package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
+      "A list of explicitly approved patches for the baseline.\n\n For information about accepted formats for lists of approved patches and rejected patches, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html}Package name formats for approved and rejected patch lists} in the {i Amazon Web Services Systems Manager User Guide}.\n "];
   approval_rules: patch_rule_group option
     [@ocaml.doc "A set of rules used to include patches in the baseline.\n"];
   global_filters: patch_filter_group option
     [@ocaml.doc
-      "A set of global filters used to include patches in the baseline.\n"];
+      "A set of global filters used to include patches in the baseline.\n\n  The [GlobalFilters] parameter can be configured only by using the CLI or an Amazon Web Services SDK. It can't be configured from the Patch Manager console, and its value isn't displayed in the console.\n  \n   "];
   name: string [@ocaml.doc "The name of the patch baseline.\n"];
   operating_system: operating_system option
     [@ocaml.doc
@@ -7023,10 +7458,10 @@ type nonrec create_association_request =
       "A location is a combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association. Use this action to create an association in multiple Regions and multiple accounts.\n"];
   calendar_names: string list option
     [@ocaml.doc
-      "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents you want to gate your associations under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar}.\n"];
+      "The names of Amazon Resource Names (ARNs) of the Change Calendar type documents you want to gate your associations under. The associations only run when that change calendar is open. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   apply_only_at_cron_interval: bool option
     [@ocaml.doc
-      "By default, when you create a new association, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.\n"];
+      "By default, when you create a new association, the system runs it immediately after it is created and then according to the schedule you specified and when target changes are detected. Specify [true] for [ApplyOnlyAtCronInterval]if you want the association to run only according to the schedule you specified.\n\n For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#state-manager-about-scheduling}Understanding when associations are applied to resources} and {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html#runbook-target-updates}>About target updates with Automation runbooks} in the {i Amazon Web Services Systems Manager User Guide}.\n \n  This parameter isn't supported for rate expressions.\n  "];
   sync_compliance: association_sync_compliance option
     [@ocaml.doc
       "The mode for generating association compliance. You can specify [AUTO] or [MANUAL]. In [AUTO] mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is [COMPLIANT]. If the association execution doesn't run successfully, the association is [NON-COMPLIANT].\n\n In [MANUAL] mode, you must specify the [AssociationId] as a parameter for the [PutComplianceItems] API operation. In this case, compliance data isn't managed by State Manager. It is managed by your direct call to the [PutComplianceItems] API operation.\n \n  By default, all associations use [AUTO] mode.\n  "];
@@ -7040,7 +7475,7 @@ type nonrec create_association_request =
       "The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops sending requests when the fourth error is received. If you specify 0, then the system stops sending requests after the first error is returned. If you run an association on 50 managed nodes and set [MaxError] to 10%, then the system stops sending the request when the sixth error is received.\n\n Executions that are already running an association when [MaxErrors] is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set [MaxConcurrency] to 1 so that executions proceed one at a time.\n "];
   automation_target_parameter_name: string option
     [@ocaml.doc
-      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.\n"];
+      "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.\n"];
   association_name: string option
     [@ocaml.doc "Specify a descriptive name for the association.\n"];
   output_location: instance_association_output_location option
@@ -7051,7 +7486,7 @@ type nonrec create_association_request =
       "A cron expression when the association will be applied to the targets.\n"];
   targets: target list option
     [@ocaml.doc
-      "The targets for the association. You can target managed nodes by using tags, Amazon Web Services resource groups, all managed nodes in an Amazon Web Services account, or individual managed node IDs. You can target all managed nodes in an Amazon Web Services account by specifying the [InstanceIds] key with a value of [*]. For more information about choosing targets for an association, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state-manager-targets-and-rate-controls.html}About targets and rate controls in State Manager associations} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
+      "The targets for the association. You can target managed nodes by using tags, Amazon Web Services resource groups, all managed nodes in an Amazon Web Services account, or individual managed node IDs. You can target all managed nodes in an Amazon Web Services account by specifying the [InstanceIds] key with a value of [*]. For more information about choosing targets for an association, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state-manager-targets-and-rate-controls.html}Understanding targets and rate controls in State Manager associations} in the {i Amazon Web Services Systems Manager User Guide}.\n"];
   parameters: parameters option
     [@ocaml.doc
       "The parameters for the runtime configuration of the document.\n"];
@@ -7094,13 +7529,13 @@ type nonrec create_activation_request =
       "Optional metadata that you assign to a resource. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an activation to identify which servers or virtual machines (VMs) in your on-premises environment you intend to activate. In this case, you could specify the following key-value pairs:\n\n {ul\n       {-   [Key=OS,Value=Windows] \n           \n            }\n       {-   [Key=Environment,Value=Production] \n           \n            }\n       }\n    When you install SSM Agent on your on-premises servers and VMs, you specify an activation ID and code. When you specify the activation ID and code, tags assigned to the activation are automatically applied to the on-premises servers or VMs.\n    \n      You can't add tags to or delete tags from an existing activation. You can tag your on-premises servers, edge devices, and VMs after they connect to Systems Manager for the first time and are assigned a managed node ID. This means they are listed in the Amazon Web Services Systems Manager console with an ID that is prefixed with \"mi-\". For information about how to add tags to your managed nodes, see [AddTagsToResource]. For information about how to remove tags from your managed nodes, see [RemoveTagsFromResource].\n      "];
   expiration_date: CoreTypes.Timestamp.t option
     [@ocaml.doc
-      "The date by which this activation request should expire, in timestamp format, such as \"2021-07-07T00:00:00\". You can specify a date up to 30 days in advance. If you don't provide an expiration date, the activation code expires in 24 hours.\n"];
+      "The date by which this activation request should expire, in timestamp format, such as \"2024-07-07T00:00:00\". You can specify a date up to 30 days in advance. If you don't provide an expiration date, the activation code expires in 24 hours.\n"];
   registration_limit: int option
     [@ocaml.doc
       "Specify the maximum number of managed nodes you want to register. The default value is [1].\n"];
   iam_role: string
     [@ocaml.doc
-      "The name of the Identity and Access Management (IAM) role that you want to assign to the managed node. This IAM role must provide AssumeRole permissions for the Amazon Web Services Systems Manager service principal [ssm.amazonaws.com]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-service-role.html}Create an IAM service role for a hybrid and multicloud environment} in the {i Amazon Web Services Systems Manager User Guide}.\n\n  You can't specify an IAM service-linked role for this parameter. You must create a unique role.\n  \n   "];
+      "The name of the Identity and Access Management (IAM) role that you want to assign to the managed node. This IAM role must provide AssumeRole permissions for the Amazon Web Services Systems Manager service principal [ssm.amazonaws.com]. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/hybrid-multicloud-service-role.html}Create the IAM service role required for Systems Manager in a hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}.\n\n  You can't specify an IAM service-linked role for this parameter. You must create a unique role.\n  \n   "];
   default_instance_name: string option
     [@ocaml.doc
       "The name of the registered, managed node as it will appear in the Amazon Web Services Systems Manager console or when you use the Amazon Web Services command line tools to list Systems Manager resources.\n\n  Don't enter personally identifiable information in this field.\n  \n   "];

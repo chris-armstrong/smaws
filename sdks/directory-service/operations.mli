@@ -388,6 +388,22 @@ sig
           | `ServiceException of service_exception ]) result
 end[@@ocaml.doc
      "Obtains information about the directories that belong to this account.\n\n You can retrieve information about specific directories by passing the directory identifiers in the [DirectoryIds] parameter. Otherwise, all directories that belong to the current account are returned.\n \n  This operation supports pagination with the use of the [NextToken] request and response parameters. If more results are available, the [DescribeDirectoriesResult.NextToken] member contains a token that you pass in the next call to [DescribeDirectories] to retrieve the next set of items.\n  \n   You can also specify a maximum number of return results with the [Limit] parameter.\n   "]
+module DescribeDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_directory_data_access_request ->
+        (describe_directory_data_access_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Obtains status of directory data access enablement through the Directory Service Data API for the specified directory.\n"]
 module DescribeDomainControllers :
 sig
   val request :
@@ -548,6 +564,25 @@ sig
           result
 end[@@ocaml.doc
      "Disables alternative client authentication methods for the specified directory. \n"]
+module DisableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disable_directory_data_access_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Deactivates access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module DisableLDAPS :
 sig
   val request :
@@ -612,6 +647,25 @@ sig
           result
 end[@@ocaml.doc
      "Enables alternative client authentication methods for the specified directory.\n"]
+module EnableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      enable_directory_data_access_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Enables access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module EnableLDAPS :
 sig
   val request :
@@ -862,7 +916,7 @@ sig
           | `UserDoesNotExistException of user_does_not_exist_exception ])
           result
 end[@@ocaml.doc
-     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
+     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory. Disabled users will become enabled and can be authenticated following the API call.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
 module RestoreFromSnapshot :
 sig
   val request :

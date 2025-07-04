@@ -93,33 +93,34 @@ val make_multi_region_configuration :
       ?multi_region_key_type:multi_region_key_type ->
         unit -> multi_region_configuration
 val make_key_metadata :
-  ?xks_key_configuration:xks_key_configuration_type ->
-    ?mac_algorithms:mac_algorithm_spec list ->
-      ?pending_deletion_window_in_days:int ->
-        ?multi_region_configuration:multi_region_configuration ->
-          ?multi_region:bool ->
-            ?key_agreement_algorithms:key_agreement_algorithm_spec list ->
-              ?signing_algorithms:signing_algorithm_spec list ->
-                ?encryption_algorithms:encryption_algorithm_spec list ->
-                  ?key_spec:key_spec ->
-                    ?customer_master_key_spec:customer_master_key_spec ->
-                      ?key_manager:key_manager_type ->
-                        ?expiration_model:expiration_model_type ->
-                          ?cloud_hsm_cluster_id:string ->
-                            ?custom_key_store_id:string ->
-                              ?origin:origin_type ->
-                                ?valid_to:CoreTypes.Timestamp.t ->
-                                  ?deletion_date:CoreTypes.Timestamp.t ->
-                                    ?key_state:key_state ->
-                                      ?key_usage:key_usage_type ->
-                                        ?description:string ->
-                                          ?enabled:bool ->
-                                            ?creation_date:CoreTypes.Timestamp.t
-                                              ->
-                                              ?arn:string ->
-                                                ?aws_account_id:string ->
-                                                  key_id:string ->
-                                                    unit -> key_metadata
+  ?current_key_material_id:string ->
+    ?xks_key_configuration:xks_key_configuration_type ->
+      ?mac_algorithms:mac_algorithm_spec list ->
+        ?pending_deletion_window_in_days:int ->
+          ?multi_region_configuration:multi_region_configuration ->
+            ?multi_region:bool ->
+              ?key_agreement_algorithms:key_agreement_algorithm_spec list ->
+                ?signing_algorithms:signing_algorithm_spec list ->
+                  ?encryption_algorithms:encryption_algorithm_spec list ->
+                    ?key_spec:key_spec ->
+                      ?customer_master_key_spec:customer_master_key_spec ->
+                        ?key_manager:key_manager_type ->
+                          ?expiration_model:expiration_model_type ->
+                            ?cloud_hsm_cluster_id:string ->
+                              ?custom_key_store_id:string ->
+                                ?origin:origin_type ->
+                                  ?valid_to:CoreTypes.Timestamp.t ->
+                                    ?deletion_date:CoreTypes.Timestamp.t ->
+                                      ?key_state:key_state ->
+                                        ?key_usage:key_usage_type ->
+                                          ?description:string ->
+                                            ?enabled:bool ->
+                                              ?creation_date:CoreTypes.Timestamp.t
+                                                ->
+                                                ?arn:string ->
+                                                  ?aws_account_id:string ->
+                                                    key_id:string ->
+                                                      unit -> key_metadata
 val make_replicate_key_response :
   ?replica_tags:tag list ->
     ?replica_policy:string ->
@@ -132,11 +133,13 @@ val make_replicate_key_request :
           replica_region:string ->
             key_id:string -> unit -> replicate_key_request
 val make_re_encrypt_response :
-  ?destination_encryption_algorithm:encryption_algorithm_spec ->
-    ?source_encryption_algorithm:encryption_algorithm_spec ->
-      ?key_id:string ->
-        ?source_key_id:string ->
-          ?ciphertext_blob:bytes -> unit -> re_encrypt_response
+  ?destination_key_material_id:string ->
+    ?source_key_material_id:string ->
+      ?destination_encryption_algorithm:encryption_algorithm_spec ->
+        ?source_encryption_algorithm:encryption_algorithm_spec ->
+          ?key_id:string ->
+            ?source_key_id:string ->
+              ?ciphertext_blob:bytes -> unit -> re_encrypt_response
 val make_re_encrypt_request :
   ?dry_run:bool ->
     ?grant_tokens:string list ->
@@ -191,7 +194,13 @@ val make_list_keys_request :
 val make_rotations_list_entry :
   ?rotation_type:rotation_type ->
     ?rotation_date:CoreTypes.Timestamp.t ->
-      ?key_id:string -> unit -> rotations_list_entry
+      ?valid_to:CoreTypes.Timestamp.t ->
+        ?expiration_model:expiration_model_type ->
+          ?key_material_state:key_material_state ->
+            ?import_state:import_state ->
+              ?key_material_description:string ->
+                ?key_material_id:string ->
+                  ?key_id:string -> unit -> rotations_list_entry
 val make_list_key_rotations_response :
   ?truncated:bool ->
     ?next_marker:string ->
@@ -199,7 +208,9 @@ val make_list_key_rotations_response :
         unit -> list_key_rotations_response
 val make_list_key_rotations_request :
   ?marker:string ->
-    ?limit:int -> key_id:string -> unit -> list_key_rotations_request
+    ?limit:int ->
+      ?include_key_material:include_key_material ->
+        key_id:string -> unit -> list_key_rotations_request
 val make_list_key_policies_response :
   ?truncated:bool ->
     ?next_marker:string ->
@@ -224,13 +235,18 @@ val make_list_aliases_response :
 val make_list_aliases_request :
   ?marker:string ->
     ?limit:int -> ?key_id:string -> unit -> list_aliases_request
-val make_import_key_material_response : unit -> unit
+val make_import_key_material_response :
+  ?key_material_id:string ->
+    ?key_id:string -> unit -> import_key_material_response
 val make_import_key_material_request :
-  ?expiration_model:expiration_model_type ->
-    ?valid_to:CoreTypes.Timestamp.t ->
-      encrypted_key_material:bytes ->
-        import_token:bytes ->
-          key_id:string -> unit -> import_key_material_request
+  ?key_material_id:string ->
+    ?key_material_description:string ->
+      ?import_type:import_type ->
+        ?expiration_model:expiration_model_type ->
+          ?valid_to:CoreTypes.Timestamp.t ->
+            encrypted_key_material:bytes ->
+              import_token:bytes ->
+                key_id:string -> unit -> import_key_material_request
 val make_get_public_key_response :
   ?key_agreement_algorithms:key_agreement_algorithm_spec list ->
     ?signing_algorithms:signing_algorithm_spec list ->
@@ -286,9 +302,10 @@ val make_generate_mac_request :
       mac_algorithm:mac_algorithm_spec ->
         key_id:string -> message:bytes -> unit -> generate_mac_request
 val make_generate_data_key_without_plaintext_response :
-  ?key_id:string ->
-    ?ciphertext_blob:bytes ->
-      unit -> generate_data_key_without_plaintext_response
+  ?key_material_id:string ->
+    ?key_id:string ->
+      ?ciphertext_blob:bytes ->
+        unit -> generate_data_key_without_plaintext_response
 val make_generate_data_key_without_plaintext_request :
   ?dry_run:bool ->
     ?grant_tokens:string list ->
@@ -298,11 +315,12 @@ val make_generate_data_key_without_plaintext_request :
             key_id:string ->
               unit -> generate_data_key_without_plaintext_request
 val make_generate_data_key_pair_without_plaintext_response :
-  ?key_pair_spec:data_key_pair_spec ->
-    ?key_id:string ->
-      ?public_key:bytes ->
-        ?private_key_ciphertext_blob:bytes ->
-          unit -> generate_data_key_pair_without_plaintext_response
+  ?key_material_id:string ->
+    ?key_pair_spec:data_key_pair_spec ->
+      ?key_id:string ->
+        ?public_key:bytes ->
+          ?private_key_ciphertext_blob:bytes ->
+            unit -> generate_data_key_pair_without_plaintext_response
 val make_generate_data_key_pair_without_plaintext_request :
   ?dry_run:bool ->
     ?grant_tokens:string list ->
@@ -311,13 +329,14 @@ val make_generate_data_key_pair_without_plaintext_request :
           key_id:string ->
             unit -> generate_data_key_pair_without_plaintext_request
 val make_generate_data_key_pair_response :
-  ?ciphertext_for_recipient:bytes ->
-    ?key_pair_spec:data_key_pair_spec ->
-      ?key_id:string ->
-        ?public_key:bytes ->
-          ?private_key_plaintext:bytes ->
-            ?private_key_ciphertext_blob:bytes ->
-              unit -> generate_data_key_pair_response
+  ?key_material_id:string ->
+    ?ciphertext_for_recipient:bytes ->
+      ?key_pair_spec:data_key_pair_spec ->
+        ?key_id:string ->
+          ?public_key:bytes ->
+            ?private_key_plaintext:bytes ->
+              ?private_key_ciphertext_blob:bytes ->
+                unit -> generate_data_key_pair_response
 val make_generate_data_key_pair_request :
   ?dry_run:bool ->
     ?recipient:recipient_info ->
@@ -326,10 +345,11 @@ val make_generate_data_key_pair_request :
           key_pair_spec:data_key_pair_spec ->
             key_id:string -> unit -> generate_data_key_pair_request
 val make_generate_data_key_response :
-  ?ciphertext_for_recipient:bytes ->
-    ?key_id:string ->
-      ?plaintext:bytes ->
-        ?ciphertext_blob:bytes -> unit -> generate_data_key_response
+  ?key_material_id:string ->
+    ?ciphertext_for_recipient:bytes ->
+      ?key_id:string ->
+        ?plaintext:bytes ->
+          ?ciphertext_blob:bytes -> unit -> generate_data_key_response
 val make_generate_data_key_request :
   ?dry_run:bool ->
     ?recipient:recipient_info ->
@@ -396,17 +416,22 @@ val make_derive_shared_secret_request :
         public_key:bytes ->
           key_agreement_algorithm:key_agreement_algorithm_spec ->
             key_id:string -> unit -> derive_shared_secret_request
+val make_delete_imported_key_material_response :
+  ?key_material_id:string ->
+    ?key_id:string -> unit -> delete_imported_key_material_response
 val make_delete_imported_key_material_request :
-  key_id:string -> unit -> delete_imported_key_material_request
+  ?key_material_id:string ->
+    key_id:string -> unit -> delete_imported_key_material_request
 val make_delete_custom_key_store_response : unit -> unit
 val make_delete_custom_key_store_request :
   custom_key_store_id:string -> unit -> delete_custom_key_store_request
 val make_delete_alias_request :
   alias_name:string -> unit -> delete_alias_request
 val make_decrypt_response :
-  ?ciphertext_for_recipient:bytes ->
-    ?encryption_algorithm:encryption_algorithm_spec ->
-      ?plaintext:bytes -> ?key_id:string -> unit -> decrypt_response
+  ?key_material_id:string ->
+    ?ciphertext_for_recipient:bytes ->
+      ?encryption_algorithm:encryption_algorithm_spec ->
+        ?plaintext:bytes -> ?key_id:string -> unit -> decrypt_response
 val make_decrypt_request :
   ?dry_run:bool ->
     ?recipient:recipient_info ->

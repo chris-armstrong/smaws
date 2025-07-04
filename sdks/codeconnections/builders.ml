@@ -11,6 +11,7 @@ let make_vpc_configuration
      vpc_id = vpc_id_
    } : vpc_configuration)
 let make_sync_configuration
+  ?pull_request_comment:(pull_request_comment_ : pull_request_comment option)
   ?trigger_resource_update_on:(trigger_resource_update_on_ :
                                 trigger_resource_update_on option)
   ?publish_deployment_status:(publish_deployment_status_ :
@@ -23,6 +24,7 @@ let make_sync_configuration
   ~provider_type:(provider_type_ : provider_type)
   ~owner_id:(owner_id_ : string) ~branch:(branch_ : string) () =
   ({
+     pull_request_comment = pull_request_comment_;
      trigger_resource_update_on = trigger_resource_update_on_;
      publish_deployment_status = publish_deployment_status_;
      sync_type = sync_type_;
@@ -39,6 +41,7 @@ let make_update_sync_configuration_output
   ~sync_configuration:(sync_configuration_ : sync_configuration) () =
   ({ sync_configuration = sync_configuration_ } : update_sync_configuration_output)
 let make_update_sync_configuration_input
+  ?pull_request_comment:(pull_request_comment_ : pull_request_comment option)
   ?trigger_resource_update_on:(trigger_resource_update_on_ :
                                 trigger_resource_update_on option)
   ?publish_deployment_status:(publish_deployment_status_ :
@@ -50,6 +53,7 @@ let make_update_sync_configuration_input
   ~sync_type:(sync_type_ : sync_configuration_type)
   ~resource_name:(resource_name_ : string) () =
   ({
+     pull_request_comment = pull_request_comment_;
      trigger_resource_update_on = trigger_resource_update_on_;
      publish_deployment_status = publish_deployment_status_;
      sync_type = sync_type_;
@@ -381,6 +385,7 @@ let make_create_sync_configuration_output
   ~sync_configuration:(sync_configuration_ : sync_configuration) () =
   ({ sync_configuration = sync_configuration_ } : create_sync_configuration_output)
 let make_create_sync_configuration_input
+  ?pull_request_comment:(pull_request_comment_ : pull_request_comment option)
   ?trigger_resource_update_on:(trigger_resource_update_on_ :
                                 trigger_resource_update_on option)
   ?publish_deployment_status:(publish_deployment_status_ :
@@ -390,6 +395,7 @@ let make_create_sync_configuration_input
   ~repository_link_id:(repository_link_id_ : string)
   ~config_file:(config_file_ : string) ~branch:(branch_ : string) () =
   ({
+     pull_request_comment = pull_request_comment_;
      trigger_resource_update_on = trigger_resource_update_on_;
      publish_deployment_status = publish_deployment_status_;
      sync_type = sync_type_;

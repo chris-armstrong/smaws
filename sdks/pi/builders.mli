@@ -114,9 +114,10 @@ val make_get_resource_metadata_request :
     service_type:service_type -> unit -> get_resource_metadata_request
 val make_performance_insights_metric :
   ?value:float ->
-    ?dimensions:descriptive_map ->
-      ?display_name:string ->
-        ?metric:string -> unit -> performance_insights_metric
+    ?filter:descriptive_map ->
+      ?dimensions:descriptive_map ->
+        ?display_name:string ->
+          ?metric:string -> unit -> performance_insights_metric
 val make_data :
   ?performance_insights_metric:performance_insights_metric -> unit -> data
 val make_insight :

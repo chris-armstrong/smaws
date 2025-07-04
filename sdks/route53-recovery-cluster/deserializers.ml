@@ -2,18 +2,19 @@ open Smaws_Lib.Json.DeserializeHelpers
 open Types
 let base_unit_of_yojson = unit_of_yojson
 let validation_exception_reason_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OTHER" -> OTHER
-   | `String "FIELD_VALIDATION_FAILED" -> FIELD_VALIDATION_FAILED
-   | `String "CANNOT_PARSE" -> CANNOT_PARSE
-   | `String "UNKNOWN_OPERATION" -> UNKNOWN_OPERATION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ValidationExceptionReason" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ValidationExceptionReason") : 
-  validation_exception_reason)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OTHER" -> OTHER
+    | `String "FIELD_VALIDATION_FAILED" -> FIELD_VALIDATION_FAILED
+    | `String "CANNOT_PARSE" -> CANNOT_PARSE
+    | `String "UNKNOWN_OPERATION" -> UNKNOWN_OPERATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ValidationExceptionReason" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ValidationExceptionReason") : 
+     validation_exception_reason) : validation_exception_reason)
 let string__of_yojson = string_of_yojson
 let validation_exception_field_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -40,15 +41,16 @@ let update_routing_control_states_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let arn_of_yojson = string_of_yojson
 let routing_control_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Off" -> Off
-   | `String "On" -> On
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RoutingControlState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RoutingControlState") : 
-  routing_control_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Off" -> Off
+    | `String "On" -> On
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RoutingControlState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RoutingControlState") : 
+     routing_control_state) : routing_control_state)
 let update_routing_control_state_entry_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({

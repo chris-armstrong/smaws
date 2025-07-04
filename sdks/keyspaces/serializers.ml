@@ -7,6 +7,12 @@ let rs_to_yojson (x : rs) =
   | MULTI_REGION -> `String "MULTI_REGION"
 let region_to_yojson = string_to_yojson
 let kms_key_ar_n_to_yojson = string_to_yojson
+let view_type_to_yojson (x : view_type) =
+  match x with
+  | NEW_IMAGE -> `String "NEW_IMAGE"
+  | OLD_IMAGE -> `String "OLD_IMAGE"
+  | KEYS_ONLY -> `String "KEYS_ONLY"
+  | NEW_AND_OLD_IMAGES -> `String "NEW_AND_OLD_IMAGES"
 let base_string_to_yojson = string_to_yojson
 let validation_exception_to_yojson (x : validation_exception) =
   assoc_to_yojson
@@ -111,11 +117,35 @@ let replica_specification_to_yojson (x : replica_specification) =
     ("region", (Some (region_to_yojson x.region)))]
 let replica_specification_list_to_yojson tree =
   list_to_yojson replica_specification_to_yojson tree
+let cdc_status_to_yojson (x : cdc_status) =
+  match x with
+  | ENABLED -> `String "ENABLED"
+  | ENABLING -> `String "ENABLING"
+  | DISABLED -> `String "DISABLED"
+  | DISABLING -> `String "DISABLING"
+let tag_key_to_yojson = string_to_yojson
+let tag_value_to_yojson = string_to_yojson
+let tag_to_yojson (x : tag) =
+  assoc_to_yojson
+    [("value", (Some (tag_value_to_yojson x.value)));
+    ("key", (Some (tag_key_to_yojson x.key)))]
+let tag_list_to_yojson tree = list_to_yojson tag_to_yojson tree
+let cdc_propagate_tags_to_yojson (x : cdc_propagate_tags) =
+  match x with | TABLE -> `String "TABLE" | NONE -> `String "NONE"
+let cdc_specification_to_yojson (x : cdc_specification) =
+  assoc_to_yojson
+    [("propagateTags",
+       (option_to_yojson cdc_propagate_tags_to_yojson x.propagate_tags));
+    ("tags", (option_to_yojson tag_list_to_yojson x.tags));
+    ("viewType", (option_to_yojson view_type_to_yojson x.view_type));
+    ("status", (Some (cdc_status_to_yojson x.status)))]
 let update_table_request_to_yojson (x : update_table_request) =
   assoc_to_yojson
-    [("replicaSpecifications",
-       (option_to_yojson replica_specification_list_to_yojson
-          x.replica_specifications));
+    [("cdcSpecification",
+       (option_to_yojson cdc_specification_to_yojson x.cdc_specification));
+    ("replicaSpecifications",
+      (option_to_yojson replica_specification_list_to_yojson
+         x.replica_specifications));
     ("autoScalingSpecification",
       (option_to_yojson auto_scaling_specification_to_yojson
          x.auto_scaling_specification));
@@ -156,24 +186,41 @@ let conflict_exception_to_yojson (x : conflict_exception) =
 let access_denied_exception_to_yojson (x : access_denied_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson base_string_to_yojson x.message))]
-let untag_resource_response_to_yojson = unit_to_yojson
-let tag_key_to_yojson = string_to_yojson
-let tag_value_to_yojson = string_to_yojson
-let tag_to_yojson (x : tag) =
+let update_keyspace_response_to_yojson (x : update_keyspace_response) =
+  assoc_to_yojson [("resourceArn", (Some (ar_n_to_yojson x.resource_arn)))]
+let region_list_to_yojson tree = list_to_yojson region_to_yojson tree
+let replication_specification_to_yojson (x : replication_specification) =
   assoc_to_yojson
-    [("value", (Some (tag_value_to_yojson x.value)));
-    ("key", (Some (tag_key_to_yojson x.key)))]
-let tag_list_to_yojson tree = list_to_yojson tag_to_yojson tree
+    [("regionList", (option_to_yojson region_list_to_yojson x.region_list));
+    ("replicationStrategy", (Some (rs_to_yojson x.replication_strategy)))]
+let update_keyspace_request_to_yojson (x : update_keyspace_request) =
+  assoc_to_yojson
+    [("clientSideTimestamps",
+       (option_to_yojson client_side_timestamps_to_yojson
+          x.client_side_timestamps));
+    ("replicationSpecification",
+      (Some (replication_specification_to_yojson x.replication_specification)));
+    ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
+let untag_resource_response_to_yojson = unit_to_yojson
 let untag_resource_request_to_yojson (x : untag_resource_request) =
   assoc_to_yojson
     [("tags", (Some (tag_list_to_yojson x.tags)));
     ("resourceArn", (Some (ar_n_to_yojson x.resource_arn)))]
+let type_status_to_yojson (x : type_status) =
+  match x with
+  | ACTIVE -> `String "ACTIVE"
+  | CREATING -> `String "CREATING"
+  | DELETING -> `String "DELETING"
+  | RESTORING -> `String "RESTORING"
+let type_name_to_yojson = string_to_yojson
+let type_name_list_to_yojson tree = list_to_yojson type_name_to_yojson tree
 let timestamp__to_yojson = timestamp_to_yojson
 let tag_resource_response_to_yojson = unit_to_yojson
 let tag_resource_request_to_yojson (x : tag_resource_request) =
   assoc_to_yojson
     [("tags", (Some (tag_list_to_yojson x.tags)));
     ("resourceArn", (Some (ar_n_to_yojson x.resource_arn)))]
+let tables_replication_progress_to_yojson = string_to_yojson
 let table_summary_to_yojson (x : table_summary) =
   assoc_to_yojson
     [("resourceArn", (Some (ar_n_to_yojson x.resource_arn)));
@@ -191,6 +238,8 @@ let table_status_to_yojson (x : table_status) =
   | RESTORING -> `String "RESTORING"
   | INACCESSIBLE_ENCRYPTION_CREDENTIALS ->
       `String "INACCESSIBLE_ENCRYPTION_CREDENTIALS"
+let table_name_list_to_yojson tree = list_to_yojson table_name_to_yojson tree
+let stream_arn_to_yojson = string_to_yojson
 let static_column_to_yojson (x : static_column) =
   assoc_to_yojson [("name", (Some (generic_string_to_yojson x.name)))]
 let static_column_list_to_yojson tree =
@@ -244,11 +293,21 @@ let restore_table_request_to_yojson (x : restore_table_request) =
     ("sourceTableName", (Some (table_name_to_yojson x.source_table_name)));
     ("sourceKeyspaceName",
       (Some (keyspace_name_to_yojson x.source_keyspace_name)))]
-let region_list_to_yojson tree = list_to_yojson region_to_yojson tree
-let replication_specification_to_yojson (x : replication_specification) =
+let keyspace_status_to_yojson (x : keyspace_status) =
+  match x with
+  | ACTIVE -> `String "ACTIVE"
+  | CREATING -> `String "CREATING"
+  | UPDATING -> `String "UPDATING"
+  | DELETING -> `String "DELETING"
+let replication_group_status_to_yojson (x : replication_group_status) =
   assoc_to_yojson
-    [("regionList", (option_to_yojson region_list_to_yojson x.region_list));
-    ("replicationStrategy", (Some (rs_to_yojson x.replication_strategy)))]
+    [("tablesReplicationProgress",
+       (option_to_yojson tables_replication_progress_to_yojson
+          x.tables_replication_progress));
+    ("keyspaceStatus", (Some (keyspace_status_to_yojson x.keyspace_status)));
+    ("region", (Some (region_to_yojson x.region)))]
+let replication_group_status_list_to_yojson tree =
+  list_to_yojson replication_group_status_to_yojson tree
 let capacity_specification_summary_to_yojson
   (x : capacity_specification_summary) =
   assoc_to_yojson
@@ -287,6 +346,15 @@ let point_in_time_recovery_summary_to_yojson
     ("status", (Some (point_in_time_recovery_status_to_yojson x.status)))]
 let next_token_to_yojson = string_to_yojson
 let max_results_to_yojson = int_to_yojson
+let list_types_response_to_yojson (x : list_types_response) =
+  assoc_to_yojson
+    [("types", (Some (type_name_list_to_yojson x.types)));
+    ("nextToken", (option_to_yojson next_token_to_yojson x.next_token))]
+let list_types_request_to_yojson (x : list_types_request) =
+  assoc_to_yojson
+    [("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)));
+    ("maxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("nextToken", (option_to_yojson next_token_to_yojson x.next_token))]
 let list_tags_for_resource_response_to_yojson
   (x : list_tags_for_resource_response) =
   assoc_to_yojson
@@ -324,6 +392,33 @@ let list_keyspaces_request_to_yojson (x : list_keyspaces_request) =
   assoc_to_yojson
     [("maxResults", (option_to_yojson max_results_to_yojson x.max_results));
     ("nextToken", (option_to_yojson next_token_to_yojson x.next_token))]
+let field_definition_to_yojson (x : field_definition) =
+  assoc_to_yojson
+    [("type", (Some (generic_string_to_yojson x.type_)));
+    ("name", (Some (generic_string_to_yojson x.name)))]
+let field_list_to_yojson tree =
+  list_to_yojson field_definition_to_yojson tree
+let depth_to_yojson = int_to_yojson
+let get_type_response_to_yojson (x : get_type_response) =
+  assoc_to_yojson
+    [("keyspaceArn", (Some (ar_n_to_yojson x.keyspace_arn)));
+    ("maxNestingDepth",
+      (option_to_yojson depth_to_yojson x.max_nesting_depth));
+    ("directParentTypes",
+      (option_to_yojson type_name_list_to_yojson x.direct_parent_types));
+    ("directReferringTables",
+      (option_to_yojson table_name_list_to_yojson x.direct_referring_tables));
+    ("status", (option_to_yojson type_status_to_yojson x.status));
+    ("lastModifiedTimestamp",
+      (option_to_yojson timestamp__to_yojson x.last_modified_timestamp));
+    ("fieldDefinitions",
+      (option_to_yojson field_list_to_yojson x.field_definitions));
+    ("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
+let get_type_request_to_yojson (x : get_type_request) =
+  assoc_to_yojson
+    [("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let get_table_auto_scaling_settings_response_to_yojson
   (x : get_table_auto_scaling_settings_response) =
   assoc_to_yojson
@@ -343,11 +438,20 @@ let get_table_auto_scaling_settings_request_to_yojson
     ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let comment_to_yojson (x : comment) =
   assoc_to_yojson [("message", (Some (base_string_to_yojson x.message)))]
+let cdc_specification_summary_to_yojson (x : cdc_specification_summary) =
+  assoc_to_yojson
+    [("viewType", (option_to_yojson view_type_to_yojson x.view_type));
+    ("status", (Some (cdc_status_to_yojson x.status)))]
 let get_table_response_to_yojson (x : get_table_response) =
   assoc_to_yojson
-    [("replicaSpecifications",
-       (option_to_yojson replica_specification_summary_list_to_yojson
-          x.replica_specifications));
+    [("cdcSpecification",
+       (option_to_yojson cdc_specification_summary_to_yojson
+          x.cdc_specification));
+    ("latestStreamArn",
+      (option_to_yojson stream_arn_to_yojson x.latest_stream_arn));
+    ("replicaSpecifications",
+      (option_to_yojson replica_specification_summary_list_to_yojson
+         x.replica_specifications));
     ("clientSideTimestamps",
       (option_to_yojson client_side_timestamps_to_yojson
          x.client_side_timestamps));
@@ -378,14 +482,25 @@ let get_table_request_to_yojson (x : get_table_request) =
     ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let get_keyspace_response_to_yojson (x : get_keyspace_response) =
   assoc_to_yojson
-    [("replicationRegions",
-       (option_to_yojson region_list_to_yojson x.replication_regions));
+    [("replicationGroupStatuses",
+       (option_to_yojson replication_group_status_list_to_yojson
+          x.replication_group_statuses));
+    ("replicationRegions",
+      (option_to_yojson region_list_to_yojson x.replication_regions));
     ("replicationStrategy", (Some (rs_to_yojson x.replication_strategy)));
     ("resourceArn", (Some (ar_n_to_yojson x.resource_arn)));
     ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let get_keyspace_request_to_yojson (x : get_keyspace_request) =
   assoc_to_yojson
     [("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
+let delete_type_response_to_yojson (x : delete_type_response) =
+  assoc_to_yojson
+    [("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceArn", (Some (ar_n_to_yojson x.keyspace_arn)))]
+let delete_type_request_to_yojson (x : delete_type_request) =
+  assoc_to_yojson
+    [("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let delete_table_response_to_yojson = unit_to_yojson
 let delete_table_request_to_yojson (x : delete_table_request) =
   assoc_to_yojson
@@ -395,13 +510,24 @@ let delete_keyspace_response_to_yojson = unit_to_yojson
 let delete_keyspace_request_to_yojson (x : delete_keyspace_request) =
   assoc_to_yojson
     [("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
+let create_type_response_to_yojson (x : create_type_response) =
+  assoc_to_yojson
+    [("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceArn", (Some (ar_n_to_yojson x.keyspace_arn)))]
+let create_type_request_to_yojson (x : create_type_request) =
+  assoc_to_yojson
+    [("fieldDefinitions", (Some (field_list_to_yojson x.field_definitions)));
+    ("typeName", (Some (type_name_to_yojson x.type_name)));
+    ("keyspaceName", (Some (keyspace_name_to_yojson x.keyspace_name)))]
 let create_table_response_to_yojson (x : create_table_response) =
   assoc_to_yojson [("resourceArn", (Some (ar_n_to_yojson x.resource_arn)))]
 let create_table_request_to_yojson (x : create_table_request) =
   assoc_to_yojson
-    [("replicaSpecifications",
-       (option_to_yojson replica_specification_list_to_yojson
-          x.replica_specifications));
+    [("cdcSpecification",
+       (option_to_yojson cdc_specification_to_yojson x.cdc_specification));
+    ("replicaSpecifications",
+      (option_to_yojson replica_specification_list_to_yojson
+         x.replica_specifications));
     ("autoScalingSpecification",
       (option_to_yojson auto_scaling_specification_to_yojson
          x.auto_scaling_specification));

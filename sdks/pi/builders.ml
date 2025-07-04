@@ -186,11 +186,13 @@ let make_get_resource_metadata_request ~identifier:(identifier_ : string)
   ~service_type:(service_type_ : service_type) () =
   ({ identifier = identifier_; service_type = service_type_ } : get_resource_metadata_request)
 let make_performance_insights_metric ?value:(value_ : float option)
+  ?filter:(filter_ : descriptive_map option)
   ?dimensions:(dimensions_ : descriptive_map option)
   ?display_name:(display_name_ : string option)
   ?metric:(metric_ : string option) () =
   ({
      value = value_;
+     filter = filter_;
      dimensions = dimensions_;
      display_name = display_name_;
      metric = metric_

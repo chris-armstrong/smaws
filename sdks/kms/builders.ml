@@ -179,6 +179,7 @@ let make_multi_region_configuration
      multi_region_key_type = multi_region_key_type_
    } : multi_region_configuration)
 let make_key_metadata
+  ?current_key_material_id:(current_key_material_id_ : string option)
   ?xks_key_configuration:(xks_key_configuration_ :
                            xks_key_configuration_type option)
   ?mac_algorithms:(mac_algorithms_ : mac_algorithm_spec list option)
@@ -212,6 +213,7 @@ let make_key_metadata
   ?aws_account_id:(aws_account_id_ : string option)
   ~key_id:(key_id_ : string) () =
   ({
+     current_key_material_id = current_key_material_id_;
      xks_key_configuration = xks_key_configuration_;
      mac_algorithms = mac_algorithms_;
      pending_deletion_window_in_days = pending_deletion_window_in_days_;
@@ -262,6 +264,8 @@ let make_replicate_key_request ?tags:(tags_ : tag list option)
      key_id = key_id_
    } : replicate_key_request)
 let make_re_encrypt_response
+  ?destination_key_material_id:(destination_key_material_id_ : string option)
+  ?source_key_material_id:(source_key_material_id_ : string option)
   ?destination_encryption_algorithm:(destination_encryption_algorithm_ :
                                       encryption_algorithm_spec option)
   ?source_encryption_algorithm:(source_encryption_algorithm_ :
@@ -270,6 +274,8 @@ let make_re_encrypt_response
   ?source_key_id:(source_key_id_ : string option)
   ?ciphertext_blob:(ciphertext_blob_ : bytes option) () =
   ({
+     destination_key_material_id = destination_key_material_id_;
+     source_key_material_id = source_key_material_id_;
      destination_encryption_algorithm = destination_encryption_algorithm_;
      source_encryption_algorithm = source_encryption_algorithm_;
      key_id = key_id_;
@@ -376,10 +382,22 @@ let make_list_keys_request ?marker:(marker_ : string option)
 let make_rotations_list_entry
   ?rotation_type:(rotation_type_ : rotation_type option)
   ?rotation_date:(rotation_date_ : CoreTypes.Timestamp.t option)
+  ?valid_to:(valid_to_ : CoreTypes.Timestamp.t option)
+  ?expiration_model:(expiration_model_ : expiration_model_type option)
+  ?key_material_state:(key_material_state_ : key_material_state option)
+  ?import_state:(import_state_ : import_state option)
+  ?key_material_description:(key_material_description_ : string option)
+  ?key_material_id:(key_material_id_ : string option)
   ?key_id:(key_id_ : string option) () =
   ({
      rotation_type = rotation_type_;
      rotation_date = rotation_date_;
+     valid_to = valid_to_;
+     expiration_model = expiration_model_;
+     key_material_state = key_material_state_;
+     import_state = import_state_;
+     key_material_description = key_material_description_;
+     key_material_id = key_material_id_;
      key_id = key_id_
    } : rotations_list_entry)
 let make_list_key_rotations_response ?truncated:(truncated_ : bool option)
@@ -391,8 +409,15 @@ let make_list_key_rotations_response ?truncated:(truncated_ : bool option)
      rotations = rotations_
    } : list_key_rotations_response)
 let make_list_key_rotations_request ?marker:(marker_ : string option)
-  ?limit:(limit_ : int option) ~key_id:(key_id_ : string) () =
-  ({ marker = marker_; limit = limit_; key_id = key_id_ } : list_key_rotations_request)
+  ?limit:(limit_ : int option)
+  ?include_key_material:(include_key_material_ : include_key_material option)
+  ~key_id:(key_id_ : string) () =
+  ({
+     marker = marker_;
+     limit = limit_;
+     include_key_material = include_key_material_;
+     key_id = key_id_
+   } : list_key_rotations_request)
 let make_list_key_policies_response ?truncated:(truncated_ : bool option)
   ?next_marker:(next_marker_ : string option)
   ?policy_names:(policy_names_ : string list option) () =
@@ -436,13 +461,22 @@ let make_list_aliases_response ?truncated:(truncated_ : bool option)
 let make_list_aliases_request ?marker:(marker_ : string option)
   ?limit:(limit_ : int option) ?key_id:(key_id_ : string option) () =
   ({ marker = marker_; limit = limit_; key_id = key_id_ } : list_aliases_request)
-let make_import_key_material_response () = (() : unit)
+let make_import_key_material_response
+  ?key_material_id:(key_material_id_ : string option)
+  ?key_id:(key_id_ : string option) () =
+  ({ key_material_id = key_material_id_; key_id = key_id_ } : import_key_material_response)
 let make_import_key_material_request
+  ?key_material_id:(key_material_id_ : string option)
+  ?key_material_description:(key_material_description_ : string option)
+  ?import_type:(import_type_ : import_type option)
   ?expiration_model:(expiration_model_ : expiration_model_type option)
   ?valid_to:(valid_to_ : CoreTypes.Timestamp.t option)
   ~encrypted_key_material:(encrypted_key_material_ : bytes)
   ~import_token:(import_token_ : bytes) ~key_id:(key_id_ : string) () =
   ({
+     key_material_id = key_material_id_;
+     key_material_description = key_material_description_;
+     import_type = import_type_;
      expiration_model = expiration_model_;
      valid_to = valid_to_;
      encrypted_key_material = encrypted_key_material_;
@@ -560,9 +594,14 @@ let make_generate_mac_request ?dry_run:(dry_run_ : bool option)
      message = message_
    } : generate_mac_request)
 let make_generate_data_key_without_plaintext_response
+  ?key_material_id:(key_material_id_ : string option)
   ?key_id:(key_id_ : string option)
   ?ciphertext_blob:(ciphertext_blob_ : bytes option) () =
-  ({ key_id = key_id_; ciphertext_blob = ciphertext_blob_ } : generate_data_key_without_plaintext_response)
+  ({
+     key_material_id = key_material_id_;
+     key_id = key_id_;
+     ciphertext_blob = ciphertext_blob_
+   } : generate_data_key_without_plaintext_response)
 let make_generate_data_key_without_plaintext_request
   ?dry_run:(dry_run_ : bool option)
   ?grant_tokens:(grant_tokens_ : string list option)
@@ -579,11 +618,13 @@ let make_generate_data_key_without_plaintext_request
      key_id = key_id_
    } : generate_data_key_without_plaintext_request)
 let make_generate_data_key_pair_without_plaintext_response
+  ?key_material_id:(key_material_id_ : string option)
   ?key_pair_spec:(key_pair_spec_ : data_key_pair_spec option)
   ?key_id:(key_id_ : string option) ?public_key:(public_key_ : bytes option)
   ?private_key_ciphertext_blob:(private_key_ciphertext_blob_ : bytes option)
   () =
   ({
+     key_material_id = key_material_id_;
      key_pair_spec = key_pair_spec_;
      key_id = key_id_;
      public_key = public_key_;
@@ -603,6 +644,7 @@ let make_generate_data_key_pair_without_plaintext_request
      encryption_context = encryption_context_
    } : generate_data_key_pair_without_plaintext_request)
 let make_generate_data_key_pair_response
+  ?key_material_id:(key_material_id_ : string option)
   ?ciphertext_for_recipient:(ciphertext_for_recipient_ : bytes option)
   ?key_pair_spec:(key_pair_spec_ : data_key_pair_spec option)
   ?key_id:(key_id_ : string option) ?public_key:(public_key_ : bytes option)
@@ -610,6 +652,7 @@ let make_generate_data_key_pair_response
   ?private_key_ciphertext_blob:(private_key_ciphertext_blob_ : bytes option)
   () =
   ({
+     key_material_id = key_material_id_;
      ciphertext_for_recipient = ciphertext_for_recipient_;
      key_pair_spec = key_pair_spec_;
      key_id = key_id_;
@@ -632,10 +675,12 @@ let make_generate_data_key_pair_request ?dry_run:(dry_run_ : bool option)
      encryption_context = encryption_context_
    } : generate_data_key_pair_request)
 let make_generate_data_key_response
+  ?key_material_id:(key_material_id_ : string option)
   ?ciphertext_for_recipient:(ciphertext_for_recipient_ : bytes option)
   ?key_id:(key_id_ : string option) ?plaintext:(plaintext_ : bytes option)
   ?ciphertext_blob:(ciphertext_blob_ : bytes option) () =
   ({
+     key_material_id = key_material_id_;
      ciphertext_for_recipient = ciphertext_for_recipient_;
      key_id = key_id_;
      plaintext = plaintext_;
@@ -778,21 +823,28 @@ let make_derive_shared_secret_request
      key_agreement_algorithm = key_agreement_algorithm_;
      key_id = key_id_
    } : derive_shared_secret_request)
-let make_delete_imported_key_material_request ~key_id:(key_id_ : string) () =
-  ({ key_id = key_id_ } : delete_imported_key_material_request)
+let make_delete_imported_key_material_response
+  ?key_material_id:(key_material_id_ : string option)
+  ?key_id:(key_id_ : string option) () =
+  ({ key_material_id = key_material_id_; key_id = key_id_ } : delete_imported_key_material_response)
+let make_delete_imported_key_material_request
+  ?key_material_id:(key_material_id_ : string option)
+  ~key_id:(key_id_ : string) () =
+  ({ key_material_id = key_material_id_; key_id = key_id_ } : delete_imported_key_material_request)
 let make_delete_custom_key_store_response () = (() : unit)
 let make_delete_custom_key_store_request
   ~custom_key_store_id:(custom_key_store_id_ : string) () =
   ({ custom_key_store_id = custom_key_store_id_ } : delete_custom_key_store_request)
 let make_delete_alias_request ~alias_name:(alias_name_ : string) () =
   ({ alias_name = alias_name_ } : delete_alias_request)
-let make_decrypt_response
+let make_decrypt_response ?key_material_id:(key_material_id_ : string option)
   ?ciphertext_for_recipient:(ciphertext_for_recipient_ : bytes option)
   ?encryption_algorithm:(encryption_algorithm_ :
                           encryption_algorithm_spec option)
   ?plaintext:(plaintext_ : bytes option) ?key_id:(key_id_ : string option) ()
   =
   ({
+     key_material_id = key_material_id_;
      ciphertext_for_recipient = ciphertext_for_recipient_;
      encryption_algorithm = encryption_algorithm_;
      plaintext = plaintext_;

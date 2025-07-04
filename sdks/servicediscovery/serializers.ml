@@ -49,8 +49,23 @@ let update_service_request_to_yojson (x : update_service_request) =
   assoc_to_yojson
     [("Service", (Some (service_change_to_yojson x.service)));
     ("Id", (Some (resource_id_to_yojson x.id)))]
+let update_service_attributes_response_to_yojson = unit_to_yojson
+let service_attribute_value_to_yojson = string_to_yojson
+let service_attribute_key_to_yojson = string_to_yojson
+let service_attributes_map_to_yojson tree =
+  map_to_yojson service_attribute_key_to_yojson
+    service_attribute_value_to_yojson tree
+let update_service_attributes_request_to_yojson
+  (x : update_service_attributes_request) =
+  assoc_to_yojson
+    [("Attributes", (Some (service_attributes_map_to_yojson x.attributes)));
+    ("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
 let error_message_to_yojson = string_to_yojson
 let service_not_found_to_yojson (x : service_not_found) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson error_message_to_yojson x.message))]
+let service_attributes_limit_exceeded_exception_to_yojson
+  (x : service_attributes_limit_exceeded_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let invalid_input_to_yojson (x : invalid_input) =
@@ -248,6 +263,13 @@ let service_filter_to_yojson (x : service_filter) =
     ("Name", (Some (service_filter_name_to_yojson x.name)))]
 let service_filters_to_yojson tree =
   list_to_yojson service_filter_to_yojson tree
+let service_attributes_to_yojson (x : service_attributes) =
+  assoc_to_yojson
+    [("Attributes",
+       (option_to_yojson service_attributes_map_to_yojson x.attributes));
+    ("ServiceArn", (option_to_yojson arn_to_yojson x.service_arn))]
+let service_attribute_key_list_to_yojson tree =
+  list_to_yojson service_attribute_key_to_yojson tree
 let service_already_exists_to_yojson (x : service_already_exists) =
   assoc_to_yojson
     [("ServiceId", (option_to_yojson resource_id_to_yojson x.service_id));
@@ -423,6 +445,15 @@ let list_instances_request_to_yojson (x : list_instances_request) =
     [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
     ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
     ("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
+let get_service_attributes_response_to_yojson
+  (x : get_service_attributes_response) =
+  assoc_to_yojson
+    [("ServiceAttributes",
+       (option_to_yojson service_attributes_to_yojson x.service_attributes))]
+let get_service_attributes_request_to_yojson
+  (x : get_service_attributes_request) =
+  assoc_to_yojson
+    [("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
 let get_service_response_to_yojson (x : get_service_response) =
   assoc_to_yojson
     [("Service", (option_to_yojson service_to_yojson x.service))]
@@ -579,6 +610,13 @@ let deregister_instance_response_to_yojson (x : deregister_instance_response)
 let deregister_instance_request_to_yojson (x : deregister_instance_request) =
   assoc_to_yojson
     [("InstanceId", (Some (resource_id_to_yojson x.instance_id)));
+    ("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
+let delete_service_attributes_response_to_yojson = unit_to_yojson
+let delete_service_attributes_request_to_yojson
+  (x : delete_service_attributes_request) =
+  assoc_to_yojson
+    [("Attributes",
+       (Some (service_attribute_key_list_to_yojson x.attributes)));
     ("ServiceId", (Some (resource_id_to_yojson x.service_id)))]
 let delete_service_response_to_yojson = unit_to_yojson
 let delete_service_request_to_yojson (x : delete_service_request) =

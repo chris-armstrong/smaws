@@ -5,30 +5,32 @@ val make_vpc_configuration :
     security_group_ids:string list ->
       subnet_ids:string list -> vpc_id:string -> unit -> vpc_configuration
 val make_sync_configuration :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      ?config_file:string ->
-        sync_type:sync_configuration_type ->
-          role_arn:string ->
-            resource_name:string ->
-              repository_name:string ->
-                repository_link_id:string ->
-                  provider_type:provider_type ->
-                    owner_id:string ->
-                      branch:string -> unit -> sync_configuration
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        ?config_file:string ->
+          sync_type:sync_configuration_type ->
+            role_arn:string ->
+              resource_name:string ->
+                repository_name:string ->
+                  repository_link_id:string ->
+                    provider_type:provider_type ->
+                      owner_id:string ->
+                        branch:string -> unit -> sync_configuration
 val make_update_sync_configuration_output :
   sync_configuration:sync_configuration ->
     unit -> update_sync_configuration_output
 val make_update_sync_configuration_input :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      ?role_arn:string ->
-        ?repository_link_id:string ->
-          ?config_file:string ->
-            ?branch:string ->
-              sync_type:sync_configuration_type ->
-                resource_name:string ->
-                  unit -> update_sync_configuration_input
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        ?role_arn:string ->
+          ?repository_link_id:string ->
+            ?config_file:string ->
+              ?branch:string ->
+                sync_type:sync_configuration_type ->
+                  resource_name:string ->
+                    unit -> update_sync_configuration_input
 val make_sync_blocker_context :
   value:string -> key:string -> unit -> sync_blocker_context
 val make_sync_blocker :
@@ -223,14 +225,15 @@ val make_create_sync_configuration_output :
   sync_configuration:sync_configuration ->
     unit -> create_sync_configuration_output
 val make_create_sync_configuration_input :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      sync_type:sync_configuration_type ->
-        role_arn:string ->
-          resource_name:string ->
-            repository_link_id:string ->
-              config_file:string ->
-                branch:string -> unit -> create_sync_configuration_input
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        sync_type:sync_configuration_type ->
+          role_arn:string ->
+            resource_name:string ->
+              repository_link_id:string ->
+                config_file:string ->
+                  branch:string -> unit -> create_sync_configuration_input
 val make_create_repository_link_output :
   repository_link_info:repository_link_info ->
     unit -> create_repository_link_output

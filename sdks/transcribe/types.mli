@@ -6,6 +6,7 @@ type nonrec vocabulary_state =
   | PENDING [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec language_code =
   | ZU_ZA [@ocaml.doc ""]
+  | ZH_HK [@ocaml.doc ""]
   | WO_SN [@ocaml.doc ""]
   | UZ_UZ [@ocaml.doc ""]
   | UK_UA [@ocaml.doc ""]
@@ -55,6 +56,7 @@ type nonrec language_code =
   | FI_FI [@ocaml.doc ""]
   | EU_ES [@ocaml.doc ""]
   | ET_ET [@ocaml.doc ""]
+  | ET_EE [@ocaml.doc ""]
   | EL_GR [@ocaml.doc ""]
   | CY_WL [@ocaml.doc ""]
   | CS_CZ [@ocaml.doc ""]
@@ -372,6 +374,16 @@ type nonrec rule =
     "Flag the presence or absence of periods of silence in your Call Analytics transcription output. Refer to for more detail.\n"]
 [@@ocaml.doc
   "A rule is a set of criteria that you can specify to flag an attribute in your Call Analytics output. Rules define a Call Analytics category.\n\n Rules can include these parameters: , , , and .\n \n  To learn more about Call Analytics rules and categories, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html}Creating categories for post-call transcriptions} and {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html}Creating categories for real-time transcriptions}.\n  \n   To learn more about Call Analytics, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html}Analyzing call center audio with Call Analytics}.\n   "]
+type nonrec tag =
+  {
+  value: string
+    [@ocaml.doc
+      "The second part of a key:value pair that forms a tag associated with a given resource. For example, in the tag [Department:Sales], the value is 'Sales'.\n\n Note that you can set the value of a tag to an empty string, but you can't set the value of a tag to null. Omitting the tag value is the same as using an empty string.\n "];
+  key: string
+    [@ocaml.doc
+      "The first part of a key:value pair that forms a tag associated with a given resource. For example, in the tag [Department:Sales], the key is 'Department'.\n"]}
+[@@ocaml.doc
+  "Adds metadata, in the form of a key:value pair, to the specified resource.\n\n For example, you could add the tag [Department:Sales] to a resource to indicate that it pertains to your organization's sales department. You can also use tags for tag-based access control.\n \n  To learn more about tagging, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n  "]
 type nonrec input_type =
   | POST_CALL [@ocaml.doc ""]
   | REAL_TIME [@ocaml.doc ""][@@ocaml.doc ""]
@@ -380,6 +392,9 @@ type nonrec category_properties =
   input_type: input_type option
     [@ocaml.doc
       "The input type associated with the specified category. [POST_CALL] refers to a category that is applied to batch transcriptions; [REAL_TIME] refers to a category that is applied to streaming transcriptions.\n"];
+  tags: tag list option
+    [@ocaml.doc
+      "The tags, each in the form of a key:value pair, assigned to the specified call analytics category.\n"];
   last_update_time: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "The date and time the specified Call Analytics category was last updated.\n\n Timestamps are in the format [YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC]. For example, [2022-05-05T12:45:32.691000-07:00] represents 12:45 PM UTC-7 on May 5, 2022.\n "];
@@ -601,16 +616,6 @@ type nonrec job_execution_settings =
       "Makes it possible to enable job queuing when your concurrent request limit is exceeded. When [AllowDeferredExecution] is set to [true], transcription job requests are placed in a queue until the number of jobs falls below the concurrent request limit. If [AllowDeferredExecution] is set to [false] and the number of transcription job requests exceed the concurrent request limit, you get a [LimitExceededException] error.\n\n If you include [AllowDeferredExecution] in your request, you must also include [DataAccessRoleArn].\n "]}
 [@@ocaml.doc
   "Makes it possible to control how your transcription job is processed. Currently, the only [JobExecutionSettings] modification you can choose is enabling job queueing using the [AllowDeferredExecution] sub-parameter.\n\n If you include [JobExecutionSettings] in your request, you must also include the sub-parameters: [AllowDeferredExecution] and [DataAccessRoleArn].\n "]
-type nonrec tag =
-  {
-  value: string
-    [@ocaml.doc
-      "The second part of a key:value pair that forms a tag associated with a given resource. For example, in the tag [Department:Sales], the value is 'Sales'.\n\n Note that you can set the value of a tag to an empty string, but you can't set the value of a tag to null. Omitting the tag value is the same as using an empty string.\n "];
-  key: string
-    [@ocaml.doc
-      "The first part of a key:value pair that forms a tag associated with a given resource. For example, in the tag [Department:Sales], the key is 'Department'.\n"]}
-[@@ocaml.doc
-  "Adds metadata, in the form of a key:value pair, to the specified resource.\n\n For example, you could add the tag [Department:Sales] to a resource to indicate that it pertains to your organization's sales department. You can also use tags for tag-based access control.\n \n  To learn more about tagging, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n  "]
 type nonrec subtitle_format =
   | SRT [@ocaml.doc ""]
   | VTT [@ocaml.doc ""][@@ocaml.doc ""]
@@ -760,7 +765,7 @@ type nonrec start_transcription_job_request =
       "Produces subtitle files for your input media. You can specify WebVTT (*.vtt) and SubRip (*.srt) formats.\n"];
   language_options: language_code list option
     [@ocaml.doc
-      "You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.\n\n If you include [LanguageOptions] in your request, you must also include [IdentifyLanguage].\n \n  For more information, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages}.\n  \n   To transcribe speech in Modern Standard Arabic ([ar-SA]), your media file must be encoded at a sample rate of 16,000 Hz or higher.\n   "];
+      "You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.\n\n If you include [LanguageOptions] in your request, you must also include [IdentifyLanguage].\n \n  For more information, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages}.\n  \n   To transcribe speech in Modern Standard Arabic ([ar-SA])in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), in Canada (Calgary) ca-west-1 and Africa (Cape Town) af-south-1, your media file must be encoded at a sample rate of 16,000 Hz or higher.\n   "];
   identify_multiple_languages: bool option
     [@ocaml.doc
       "Enables automatic multi-language identification in your transcription job request. Use this parameter if your media file contains more than one language. If your media contains only one language, use [IdentifyLanguage] instead.\n\n If you include [IdentifyMultipleLanguages], you can optionally include a list of language codes, using [LanguageOptions], that you think may be present in your media file. Including [LanguageOptions] restricts [IdentifyLanguage] to only the language options that you specify, which can improve transcription accuracy.\n \n  If you want to apply a custom vocabulary or a custom vocabulary filter to your automatic language identification request, include [LanguageIdSettings] with the relevant sub-parameters ([VocabularyName] and [VocabularyFilterName]). If you include [LanguageIdSettings], also include [LanguageOptions].\n  \n   Note that you must include one of [LanguageCode], [IdentifyLanguage], or [IdentifyMultipleLanguages] in your request. If you include more than one of these parameters, your transcription job fails.\n   "];
@@ -801,7 +806,7 @@ type nonrec start_transcription_job_request =
       "The sample rate, in hertz, of the audio track in your input media file.\n\n If you do not specify the media sample rate, Amazon Transcribe determines it for you. If you specify the sample rate, it must match the rate detected by Amazon Transcribe. If there's a mismatch between the value that you specify and the value detected, your job fails. In most cases, you can omit [MediaSampleRateHertz] and let Amazon Transcribe determine the sample rate.\n "];
   language_code: language_code option
     [@ocaml.doc
-      "The language code that represents the language spoken in the input media file.\n\n If you're unsure of the language spoken in your media file, consider using [IdentifyLanguage] or [IdentifyMultipleLanguages] to enable automatic language identification.\n \n  Note that you must include one of [LanguageCode], [IdentifyLanguage], or [IdentifyMultipleLanguages] in your request. If you include more than one of these parameters, your transcription job fails.\n  \n   For a list of supported languages and their associated language codes, refer to the {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages} table.\n   \n     To transcribe speech in Modern Standard Arabic ([ar-SA]), your media file must be encoded at a sample rate of 16,000 Hz or higher.\n     \n      "];
+      "The language code that represents the language spoken in the input media file.\n\n If you're unsure of the language spoken in your media file, consider using [IdentifyLanguage] or [IdentifyMultipleLanguages] to enable automatic language identification.\n \n  Note that you must include one of [LanguageCode], [IdentifyLanguage], or [IdentifyMultipleLanguages] in your request. If you include more than one of these parameters, your transcription job fails.\n  \n   For a list of supported languages and their associated language codes, refer to the {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages} table.\n   \n     To transcribe speech in Modern Standard Arabic ([ar-SA]) in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary, ca-west-1) and Africa (Cape Town, af-south-1), your media file must be encoded at a sample rate of 16,000 Hz or higher.\n     \n      "];
   transcription_job_name: string
     [@ocaml.doc
       "A unique name, chosen by you, for your transcription job. The name that you specify is also used as the default name of your transcription output file. If you want to specify a different name for your transcription output, use the [OutputKey] parameter.\n\n This name is case sensitive, cannot contain spaces, and must be unique within an Amazon Web Services account. If you try to create a new job with the same name as an existing job, you get a [ConflictException] error.\n "]}
@@ -950,8 +955,24 @@ type nonrec medical_scribe_output =
   transcript_file_uri: string
     [@ocaml.doc "Holds the Amazon S3 URI for the Transcript.\n"]}[@@ocaml.doc
                                                                    "The location of the output of your Medical Scribe job. [ClinicalDocumentUri] holds the Amazon S3 URI for the Clinical Document and [TranscriptFileUri] holds the Amazon S3 URI for the Transcript.\n"]
+type nonrec medical_scribe_note_template =
+  | PHYSICAL_SOAP [@ocaml.doc ""]
+  | BEHAVIORAL_SOAP [@ocaml.doc ""]
+  | DAP [@ocaml.doc ""]
+  | SIRP [@ocaml.doc ""]
+  | BIRP [@ocaml.doc ""]
+  | GIRPP [@ocaml.doc ""]
+  | HISTORY_AND_PHYSICAL [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec clinical_note_generation_settings =
+  {
+  note_template: medical_scribe_note_template option
+    [@ocaml.doc
+      "Specify one of the following templates to use for the clinical note summary. The default is [HISTORY_AND_PHYSICAL].\n\n {ul\n       {-  HISTORY_AND_PHYSICAL: Provides summaries for key sections of the clinical documentation. Examples of sections include Chief Complaint, History of Present Illness, Review of Systems, Past Medical History, Assessment, and Plan. \n           \n            }\n       {-  GIRPP: Provides summaries based on the patients progress toward goals. Examples of sections include Goal, Intervention, Response, Progress, and Plan.\n           \n            }\n       {-  BIRP: Focuses on the patient's behavioral patterns and responses. Examples of sections include Behavior, Intervention, Response, and Plan.\n           \n            }\n       {-  SIRP: Emphasizes the situational context of therapy. Examples of sections include Situation, Intervention, Response, and Plan.\n           \n            }\n       {-  DAP: Provides a simplified format for clinical documentation. Examples of sections include Data, Assessment, and Plan.\n           \n            }\n       {-  BEHAVIORAL_SOAP: Behavioral health focused documentation format. Examples of sections include Subjective, Objective, Assessment, and Plan.\n           \n            }\n       {-  PHYSICAL_SOAP: Physical health focused documentation format. Examples of sections include Subjective, Objective, Assessment, and Plan.\n           \n            }\n       }\n  "]}
+[@@ocaml.doc "The output configuration for clinical note generation.\n"]
 type nonrec medical_scribe_settings =
   {
+  clinical_note_generation_settings: clinical_note_generation_settings option
+    [@ocaml.doc "Specify settings for the clinical note generation.\n"];
   vocabulary_filter_method: vocabulary_filter_method option
     [@ocaml.doc
       "Specify how you want your custom vocabulary filter applied to your transcript.\n\n To replace words with [***], choose [mask].\n \n  To delete words, choose [remove].\n  \n   To flag words without changing them, choose [tag].\n   "];
@@ -1105,7 +1126,7 @@ type nonrec call_analytics_job_settings =
       "If using automatic language identification in your request and you want to apply a custom language model, a custom vocabulary, or a custom vocabulary filter, include [LanguageIdSettings] with the relevant sub-parameters ([VocabularyName], [LanguageModelName], and [VocabularyFilterName]).\n\n  [LanguageIdSettings] supports two to five language codes. Each language code you include can have an associated custom language model, custom vocabulary, and custom vocabulary filter. The language codes that you specify must match the languages of the associated custom language models, custom vocabularies, and custom vocabulary filters.\n \n  It's recommended that you include [LanguageOptions] when using [LanguageIdSettings] to ensure that the correct language dialect is identified. For example, if you specify a custom vocabulary that is in [en-US] but Amazon Transcribe determines that the language spoken in your media is [en-AU], your custom vocabulary {i is not} applied to your transcription. If you include [LanguageOptions] and include [en-US] as the only English language dialect, your custom vocabulary {i is} applied to your transcription.\n  \n   If you want to include a custom language model, custom vocabulary, or custom vocabulary filter with your request but {b do not} want to use automatic language identification, use instead the  parameter with the [LanguageModelName], [VocabularyName], or [VocabularyFilterName] sub-parameters.\n   \n    For a list of languages supported with Call Analytics, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages and language-specific features}.\n    "];
   language_options: language_code list option
     [@ocaml.doc
-      "You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.\n\n Including language options can improve the accuracy of language identification.\n \n  For a list of languages supported with Call Analytics, refer to the {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages} table.\n  \n   To transcribe speech in Modern Standard Arabic ([ar-SA]), your media file must be encoded at a sample rate of 16,000 Hz or higher.\n   "];
+      "You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.\n\n Including language options can improve the accuracy of language identification.\n \n  For a list of languages supported with Call Analytics, refer to the {{:https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html}Supported languages} table.\n  \n   To transcribe speech in Modern Standard Arabic ([ar-SA]) in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary) ca-west-1 and Africa (Cape Town) af-south-1, your media file must be encoded at a sample rate of 16,000 Hz or higher.\n   "];
   content_redaction: content_redaction option [@ocaml.doc ""];
   language_model_name: string option
     [@ocaml.doc
@@ -1131,6 +1152,9 @@ type nonrec channel_definition =
                                                                     "Makes it possible to specify which speaker is on which channel. For example, if your agent is the first participant to speak, you would set [ChannelId] to [0] (to indicate the first channel) and [ParticipantRole] to [AGENT] (to indicate that it's the agent speaking).\n"]
 type nonrec call_analytics_job =
   {
+  tags: tag list option
+    [@ocaml.doc
+      "The tags, each in the form of a key:value pair, assigned to the specified call analytics job.\n"];
   channel_definitions: channel_definition list option
     [@ocaml.doc "Indicates which speaker is on which channel.\n"];
   settings: call_analytics_job_settings option
@@ -1188,6 +1212,9 @@ type nonrec start_call_analytics_job_request =
   channel_definitions: channel_definition list option
     [@ocaml.doc
       "Makes it possible to specify which speaker is on which channel. For example, if your agent is the first participant to speak, you would set [ChannelId] to [0] (to indicate the first channel) and [ParticipantRole] to [AGENT] (to indicate that it's the agent speaking).\n"];
+  tags: tag list option
+    [@ocaml.doc
+      "Adds one or more custom tags, each in the form of a key:value pair, to a new call analytics job at the time you start this new job.\n\n To learn more about using tags with Amazon Transcribe, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n "];
   settings: call_analytics_job_settings option
     [@ocaml.doc
       "Specify additional optional settings in your request, including content redaction; allows you to apply custom language models, vocabulary filters, and custom vocabularies to your Call Analytics job.\n"];
@@ -1942,6 +1969,9 @@ type nonrec create_call_analytics_category_request =
   input_type: input_type option
     [@ocaml.doc
       "Choose whether you want to create a real-time or a post-call category for your Call Analytics transcription.\n\n Specifying [POST_CALL] assigns your category to post-call transcriptions; categories with this input type cannot be applied to streaming (real-time) transcriptions.\n \n  Specifying [REAL_TIME] assigns your category to streaming transcriptions; categories with this input type cannot be applied to post-call transcriptions.\n  \n   If you do not include [InputType], your category is created as a post-call category by default.\n   "];
+  tags: tag list option
+    [@ocaml.doc
+      "Adds one or more custom tags, each in the form of a key:value pair, to a new call analytics category at the time you start this new job.\n\n To learn more about using tags with Amazon Transcribe, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n "];
   rules: rule list
     [@ocaml.doc
       "Rules define a Call Analytics category. When creating a new category, you must create between 1 and 20 rules for that category. For each rule, you specify a filter you want applied to the attributes of a call. For example, you can choose a sentiment filter that detects if a customer's sentiment was positive during the last 30 seconds of the call.\n"];

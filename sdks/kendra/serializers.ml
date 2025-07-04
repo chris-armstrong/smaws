@@ -2229,6 +2229,7 @@ let list_of_group_summaries_to_yojson tree =
   list_to_yojson group_summary_to_yojson tree
 let index_edition_to_yojson (x : index_edition) =
   match x with
+  | GEN_AI_ENTERPRISE_EDITION -> `String "GEN_AI_ENTERPRISE_EDITION"
   | ENTERPRISE_EDITION -> `String "ENTERPRISE_EDITION"
   | DEVELOPER_EDITION -> `String "DEVELOPER_EDITION"
 let index_status_to_yojson (x : index_status) =
@@ -3217,6 +3218,8 @@ let batch_put_document_response_failed_document_to_yojson
     [("ErrorMessage",
        (option_to_yojson error_message_to_yojson x.error_message));
     ("ErrorCode", (option_to_yojson error_code_to_yojson x.error_code));
+    ("DataSourceId",
+      (option_to_yojson data_source_id_to_yojson x.data_source_id));
     ("Id", (option_to_yojson document_id_to_yojson x.id))]
 let batch_put_document_response_failed_documents_to_yojson tree =
   list_to_yojson batch_put_document_response_failed_document_to_yojson tree
@@ -3240,6 +3243,8 @@ let batch_get_document_status_response_error_to_yojson
     [("ErrorMessage",
        (option_to_yojson error_message_to_yojson x.error_message));
     ("ErrorCode", (option_to_yojson error_code_to_yojson x.error_code));
+    ("DataSourceId",
+      (option_to_yojson data_source_id_to_yojson x.data_source_id));
     ("DocumentId", (option_to_yojson document_id_to_yojson x.document_id))]
 let batch_get_document_status_response_errors_to_yojson tree =
   list_to_yojson batch_get_document_status_response_error_to_yojson tree
@@ -3284,6 +3289,8 @@ let batch_delete_document_response_failed_document_to_yojson
     [("ErrorMessage",
        (option_to_yojson error_message_to_yojson x.error_message));
     ("ErrorCode", (option_to_yojson error_code_to_yojson x.error_code));
+    ("DataSourceId",
+      (option_to_yojson data_source_id_to_yojson x.data_source_id));
     ("Id", (option_to_yojson document_id_to_yojson x.id))]
 let batch_delete_document_response_failed_documents_to_yojson tree =
   list_to_yojson batch_delete_document_response_failed_document_to_yojson

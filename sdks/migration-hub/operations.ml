@@ -97,6 +97,50 @@ module AssociateDiscoveredResource =
             ~output_deserializer:associate_discovered_resource_result_of_yojson
             ~error_deserializer
   end
+module AssociateSourceResource =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "DryRunOperation") ->
+              `DryRunOperation (dry_run_operation_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidInputException") ->
+              `InvalidInputException
+                (invalid_input_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceUnavailableException") ->
+              `ServiceUnavailableException
+                (service_unavailable_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | (_, "UnauthorizedOperation") ->
+              `UnauthorizedOperation
+                (unauthorized_operation_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : associate_source_resource_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.associate_source_resource_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AWSMigrationHubAssociateSourceResource" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:associate_source_resource_result_of_yojson
+            ~error_deserializer
+  end
 module CreateProgressUpdateStream =
   struct
     let error_deserializer tree path =
@@ -374,6 +418,51 @@ module DisassociateDiscoveredResource =
             ~output_deserializer:disassociate_discovered_resource_result_of_yojson
             ~error_deserializer
   end
+module DisassociateSourceResource =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "DryRunOperation") ->
+              `DryRunOperation (dry_run_operation_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidInputException") ->
+              `InvalidInputException
+                (invalid_input_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceUnavailableException") ->
+              `ServiceUnavailableException
+                (service_unavailable_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | (_, "UnauthorizedOperation") ->
+              `UnauthorizedOperation
+                (unauthorized_operation_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : disassociate_source_resource_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.disassociate_source_resource_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AWSMigrationHubDisassociateSourceResource" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:disassociate_source_resource_result_of_yojson
+            ~error_deserializer
+  end
 module ImportMigrationTask =
   struct
     let error_deserializer tree path =
@@ -544,6 +633,45 @@ module ListDiscoveredResources =
             ~output_deserializer:list_discovered_resources_result_of_yojson
             ~error_deserializer
   end
+module ListMigrationTaskUpdates =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidInputException") ->
+              `InvalidInputException
+                (invalid_input_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceUnavailableException") ->
+              `ServiceUnavailableException
+                (service_unavailable_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_migration_task_updates_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_migration_task_updates_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AWSMigrationHubListMigrationTaskUpdates" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_migration_task_updates_result_of_yojson
+            ~error_deserializer
+  end
 module ListMigrationTasks =
   struct
     let error_deserializer tree path =
@@ -627,6 +755,45 @@ module ListProgressUpdateStreams =
             ~shape_name:"AWSMigrationHubListProgressUpdateStreams" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:list_progress_update_streams_result_of_yojson
+            ~error_deserializer
+  end
+module ListSourceResources =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "InternalServerError") ->
+              `InternalServerError
+                (internal_server_error_of_yojson tree path)
+          | (_, "InvalidInputException") ->
+              `InvalidInputException
+                (invalid_input_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "ServiceUnavailableException") ->
+              `ServiceUnavailableException
+                (service_unavailable_exception_of_yojson tree path)
+          | (_, "ThrottlingException") ->
+              `ThrottlingException (throttling_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_source_resources_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_source_resources_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"AWSMigrationHubListSourceResources" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_source_resources_result_of_yojson
             ~error_deserializer
   end
 module NotifyApplicationState =

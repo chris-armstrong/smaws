@@ -2669,10 +2669,15 @@ let make_clear_query_suggestions_request ~index_id:(index_id_ : string) () =
   ({ index_id = index_id_ } : clear_query_suggestions_request)
 let make_batch_put_document_response_failed_document
   ?error_message:(error_message_ : string option)
-  ?error_code:(error_code_ : error_code option) ?id:(id_ : string option) ()
-  =
-  ({ error_message = error_message_; error_code = error_code_; id = id_ } : 
-  batch_put_document_response_failed_document)
+  ?error_code:(error_code_ : error_code option)
+  ?data_source_id:(data_source_id_ : string option) ?id:(id_ : string option)
+  () =
+  ({
+     error_message = error_message_;
+     error_code = error_code_;
+     data_source_id = data_source_id_;
+     id = id_
+   } : batch_put_document_response_failed_document)
 let make_batch_put_document_response
   ?failed_documents:(failed_documents_ :
                       batch_put_document_response_failed_document list option)
@@ -2695,10 +2700,12 @@ let make_batch_put_document_request
 let make_batch_get_document_status_response_error
   ?error_message:(error_message_ : string option)
   ?error_code:(error_code_ : error_code option)
+  ?data_source_id:(data_source_id_ : string option)
   ?document_id:(document_id_ : string option) () =
   ({
      error_message = error_message_;
      error_code = error_code_;
+     data_source_id = data_source_id_;
      document_id = document_id_
    } : batch_get_document_status_response_error)
 let make_batch_get_document_status_response
@@ -2729,10 +2736,15 @@ let make_batch_delete_featured_results_set_request
    } : batch_delete_featured_results_set_request)
 let make_batch_delete_document_response_failed_document
   ?error_message:(error_message_ : string option)
-  ?error_code:(error_code_ : error_code option) ?id:(id_ : string option) ()
-  =
-  ({ error_message = error_message_; error_code = error_code_; id = id_ } : 
-  batch_delete_document_response_failed_document)
+  ?error_code:(error_code_ : error_code option)
+  ?data_source_id:(data_source_id_ : string option) ?id:(id_ : string option)
+  () =
+  ({
+     error_message = error_message_;
+     error_code = error_code_;
+     data_source_id = data_source_id_;
+     id = id_
+   } : batch_delete_document_response_failed_document)
 let make_batch_delete_document_response
   ?failed_documents:(failed_documents_ :
                       batch_delete_document_response_failed_document list

@@ -195,6 +195,32 @@ module DeleteService =
             ~output_deserializer:delete_service_response_of_yojson
             ~error_deserializer
   end
+module DeleteServiceAttributes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidInput") ->
+              `InvalidInput (invalid_input_of_yojson tree path)
+          | (_, "ServiceNotFound") ->
+              `ServiceNotFound (service_not_found_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : delete_service_attributes_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.delete_service_attributes_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Route53AutoNaming_v20170314DeleteServiceAttributes"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_service_attributes_response_of_yojson
+            ~error_deserializer
+  end
 module DeregisterInstance =
   struct
     let error_deserializer tree path =
@@ -417,6 +443,32 @@ module GetService =
             ~shape_name:"Route53AutoNaming_v20170314GetService" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:get_service_response_of_yojson
+            ~error_deserializer
+  end
+module GetServiceAttributes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidInput") ->
+              `InvalidInput (invalid_input_of_yojson tree path)
+          | (_, "ServiceNotFound") ->
+              `ServiceNotFound (service_not_found_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : get_service_attributes_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.get_service_attributes_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Route53AutoNaming_v20170314GetServiceAttributes"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:get_service_attributes_response_of_yojson
             ~error_deserializer
   end
 module ListInstances =
@@ -775,5 +827,35 @@ module UpdateService =
             ~shape_name:"Route53AutoNaming_v20170314UpdateService" ~service
             ~config:context.config ~http:context.http ~input
             ~output_deserializer:update_service_response_of_yojson
+            ~error_deserializer
+  end
+module UpdateServiceAttributes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidInput") ->
+              `InvalidInput (invalid_input_of_yojson tree path)
+          | (_, "ServiceAttributesLimitExceededException") ->
+              `ServiceAttributesLimitExceededException
+                (service_attributes_limit_exceeded_exception_of_yojson tree
+                   path)
+          | (_, "ServiceNotFound") ->
+              `ServiceNotFound (service_not_found_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : update_service_attributes_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.update_service_attributes_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"Route53AutoNaming_v20170314UpdateServiceAttributes"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:update_service_attributes_response_of_yojson
             ~error_deserializer
   end

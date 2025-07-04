@@ -245,6 +245,9 @@ module Deserialiser = struct
       ]
     in
     let match_exp = B.pexp_match (exp_ident "key") (cases @ failure_cases) in
+    let type_name_s = SafeNames.safeTypeName name in
+
+    let type_name = B.ptyp_constr (lident_noloc type_name_s) [] in
     let forecode =
       [%expr
         let _list = assoc_of_yojson tree path in
@@ -253,7 +256,7 @@ module Deserialiser = struct
           | (key, value_) :: _ -> (key, value_)
           | _ -> raise (deserialize_wrong_type_error path "union")
         in
-        [%e match_exp]]
+        ([%e match_exp] : [%t type_name])]
     in
     exp_fun "tree" "t" (exp_fun_untyped "path" forecode)
 
@@ -281,10 +284,17 @@ module Deserialiser = struct
       ]
     in
     let match_exp = B.pexp_match (exp_ident "tree") (cases @ failure_cases) in
-    let type_name = SafeNames.safeTypeName name in
+    let type_name_s = SafeNames.safeTypeName name in
+
+    let type_name = B.ptyp_constr (lident_noloc type_name_s) [] in
+    let typed_match_exp =
+      [%expr
+        let _list = assoc_of_yojson tree path in
+        ([%e match_exp] : [%t type_name])]
+    in
     exp_fun "tree" "t"
       (exp_fun_untyped "path"
-         (B.pexp_constraint match_exp (B.ptyp_constr (lident_noloc type_name) [])))
+         (B.pexp_constraint typed_match_exp (B.ptyp_constr (lident_noloc type_name_s) [])))
 
   let structure_func_body name (descriptor : Shape.structureShapeDetails) =
     let type_name = Types.type_name ~is_exception_type:false name in

@@ -670,6 +670,38 @@ module DescribeApplication =
             ~output_deserializer:describe_application_response_of_yojson
             ~error_deserializer
   end
+module DescribeApplicationOperation =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidArgumentException") ->
+              `InvalidArgumentException
+                (invalid_argument_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : describe_application_operation_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.describe_application_operation_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KinesisAnalytics_20180523DescribeApplicationOperation"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:describe_application_operation_response_of_yojson
+            ~error_deserializer
+  end
 module DescribeApplicationSnapshot =
   struct
     let error_deserializer tree path =
@@ -773,6 +805,37 @@ module DiscoverInputSchema =
             ~shape_name:"KinesisAnalytics_20180523DiscoverInputSchema"
             ~service ~config:context.config ~http:context.http ~input
             ~output_deserializer:discover_input_schema_response_of_yojson
+            ~error_deserializer
+  end
+module ListApplicationOperations =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "InvalidArgumentException") ->
+              `InvalidArgumentException
+                (invalid_argument_exception_of_yojson tree path)
+          | (_, "ResourceNotFoundException") ->
+              `ResourceNotFoundException
+                (resource_not_found_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_application_operations_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_application_operations_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"KinesisAnalytics_20180523ListApplicationOperations"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_application_operations_response_of_yojson
             ~error_deserializer
   end
 module ListApplicationSnapshots =

@@ -9,6 +9,13 @@ let make_write_request
   ?put_request:(put_request_ : put_request option) () =
   ({ delete_request = delete_request_; put_request = put_request_ } : 
   write_request)
+let make_warm_throughput
+  ?write_units_per_second:(write_units_per_second_ : int option)
+  ?read_units_per_second:(read_units_per_second_ : int option) () =
+  ({
+     write_units_per_second = write_units_per_second_;
+     read_units_per_second = read_units_per_second_
+   } : warm_throughput)
 let make_time_to_live_specification
   ~attribute_name:(attribute_name_ : string) ~enabled:(enabled_ : bool) () =
   ({ attribute_name = attribute_name_; enabled = enabled_ } : time_to_live_specification)
@@ -273,7 +280,19 @@ let make_on_demand_throughput
      max_write_request_units = max_write_request_units_;
      max_read_request_units = max_read_request_units_
    } : on_demand_throughput)
+let make_global_secondary_index_warm_throughput_description
+  ?status:(status_ : index_status option)
+  ?write_units_per_second:(write_units_per_second_ : int option)
+  ?read_units_per_second:(read_units_per_second_ : int option) () =
+  ({
+     status = status_;
+     write_units_per_second = write_units_per_second_;
+     read_units_per_second = read_units_per_second_
+   } : global_secondary_index_warm_throughput_description)
 let make_global_secondary_index_description
+  ?warm_throughput:(warm_throughput_ :
+                     global_secondary_index_warm_throughput_description
+                       option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?index_arn:(index_arn_ : string option)
   ?item_count:(item_count_ : int option)
@@ -286,6 +305,7 @@ let make_global_secondary_index_description
   ?key_schema:(key_schema_ : key_schema_element list option)
   ?index_name:(index_name_ : string option) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      index_arn = index_arn_;
      item_count = item_count_;
@@ -308,13 +328,26 @@ let make_provisioned_throughput_override
 let make_on_demand_throughput_override
   ?max_read_request_units:(max_read_request_units_ : int option) () =
   ({ max_read_request_units = max_read_request_units_ } : on_demand_throughput_override)
+let make_table_warm_throughput_description
+  ?status:(status_ : table_status option)
+  ?write_units_per_second:(write_units_per_second_ : int option)
+  ?read_units_per_second:(read_units_per_second_ : int option) () =
+  ({
+     status = status_;
+     write_units_per_second = write_units_per_second_;
+     read_units_per_second = read_units_per_second_
+   } : table_warm_throughput_description)
 let make_replica_global_secondary_index_description
+  ?warm_throughput:(warm_throughput_ :
+                     global_secondary_index_warm_throughput_description
+                       option)
   ?on_demand_throughput_override:(on_demand_throughput_override_ :
                                    on_demand_throughput_override option)
   ?provisioned_throughput_override:(provisioned_throughput_override_ :
                                      provisioned_throughput_override option)
   ?index_name:(index_name_ : string option) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput_override = on_demand_throughput_override_;
      provisioned_throughput_override = provisioned_throughput_override_;
      index_name = index_name_
@@ -335,6 +368,8 @@ let make_replica_description
   ?global_secondary_indexes:(global_secondary_indexes_ :
                               replica_global_secondary_index_description list
                                 option)
+  ?warm_throughput:(warm_throughput_ :
+                     table_warm_throughput_description option)
   ?on_demand_throughput_override:(on_demand_throughput_override_ :
                                    on_demand_throughput_override option)
   ?provisioned_throughput_override:(provisioned_throughput_override_ :
@@ -349,6 +384,7 @@ let make_replica_description
      replica_table_class_summary = replica_table_class_summary_;
      replica_inaccessible_date_time = replica_inaccessible_date_time_;
      global_secondary_indexes = global_secondary_indexes_;
+     warm_throughput = warm_throughput_;
      on_demand_throughput_override = on_demand_throughput_override_;
      provisioned_throughput_override = provisioned_throughput_override_;
      kms_master_key_id = kms_master_key_id_;
@@ -357,6 +393,11 @@ let make_replica_description
      replica_status = replica_status_;
      region_name = region_name_
    } : replica_description)
+let make_global_table_witness_description
+  ?witness_status:(witness_status_ : witness_status option)
+  ?region_name:(region_name_ : string option) () =
+  ({ witness_status = witness_status_; region_name = region_name_ } : 
+  global_table_witness_description)
 let make_restore_summary
   ?source_table_arn:(source_table_arn_ : string option)
   ?source_backup_arn:(source_backup_arn_ : string option)
@@ -391,12 +432,18 @@ let make_archival_summary
      archival_date_time = archival_date_time_
    } : archival_summary)
 let make_table_description
+  ?multi_region_consistency:(multi_region_consistency_ :
+                              multi_region_consistency option)
+  ?warm_throughput:(warm_throughput_ :
+                     table_warm_throughput_description option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?deletion_protection_enabled:(deletion_protection_enabled_ : bool option)
   ?table_class_summary:(table_class_summary_ : table_class_summary option)
   ?archival_summary:(archival_summary_ : archival_summary option)
   ?sse_description:(sse_description_ : sse_description option)
   ?restore_summary:(restore_summary_ : restore_summary option)
+  ?global_table_witnesses:(global_table_witnesses_ :
+                            global_table_witness_description list option)
   ?replicas:(replicas_ : replica_description list option)
   ?global_table_version:(global_table_version_ : string option)
   ?latest_stream_arn:(latest_stream_arn_ : string option)
@@ -421,12 +468,15 @@ let make_table_description
                            attribute_definition list option)
   () =
   ({
+     multi_region_consistency = multi_region_consistency_;
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      deletion_protection_enabled = deletion_protection_enabled_;
      table_class_summary = table_class_summary_;
      archival_summary = archival_summary_;
      sse_description = sse_description_;
      restore_summary = restore_summary_;
+     global_table_witnesses = global_table_witnesses_;
      replicas = replicas_;
      global_table_version = global_table_version_;
      latest_stream_arn = latest_stream_arn_;
@@ -457,16 +507,19 @@ let make_provisioned_throughput
      read_capacity_units = read_capacity_units_
    } : provisioned_throughput)
 let make_update_global_secondary_index_action
+  ?warm_throughput:(warm_throughput_ : warm_throughput option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?provisioned_throughput:(provisioned_throughput_ :
                             provisioned_throughput option)
   ~index_name:(index_name_ : string) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      provisioned_throughput = provisioned_throughput_;
      index_name = index_name_
    } : update_global_secondary_index_action)
 let make_create_global_secondary_index_action
+  ?warm_throughput:(warm_throughput_ : warm_throughput option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?provisioned_throughput:(provisioned_throughput_ :
                             provisioned_throughput option)
@@ -474,6 +527,7 @@ let make_create_global_secondary_index_action
   ~key_schema:(key_schema_ : key_schema_element list)
   ~index_name:(index_name_ : string) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      provisioned_throughput = provisioned_throughput_;
      projection = projection_;
@@ -552,8 +606,25 @@ let make_replication_group_update
   ?update:(update_ : update_replication_group_member_action option)
   ?create:(create_ : create_replication_group_member_action option) () =
   ({ delete = delete_; update = update_; create = create_ } : replication_group_update)
+let make_create_global_table_witness_group_member_action
+  ~region_name:(region_name_ : string) () =
+  ({ region_name = region_name_ } : create_global_table_witness_group_member_action)
+let make_delete_global_table_witness_group_member_action
+  ~region_name:(region_name_ : string) () =
+  ({ region_name = region_name_ } : delete_global_table_witness_group_member_action)
+let make_global_table_witness_group_update
+  ?delete:(delete_ : delete_global_table_witness_group_member_action option)
+  ?create:(create_ : create_global_table_witness_group_member_action option)
+  () =
+  ({ delete = delete_; create = create_ } : global_table_witness_group_update)
 let make_update_table_input
+  ?warm_throughput:(warm_throughput_ : warm_throughput option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
+  ?global_table_witness_updates:(global_table_witness_updates_ :
+                                  global_table_witness_group_update list
+                                    option)
+  ?multi_region_consistency:(multi_region_consistency_ :
+                              multi_region_consistency option)
   ?deletion_protection_enabled:(deletion_protection_enabled_ : bool option)
   ?table_class:(table_class_ : table_class option)
   ?replica_updates:(replica_updates_ : replication_group_update list option)
@@ -568,7 +639,10 @@ let make_update_table_input
                            attribute_definition list option)
   ~table_name:(table_name_ : string) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
+     global_table_witness_updates = global_table_witness_updates_;
+     multi_region_consistency = multi_region_consistency_;
      deletion_protection_enabled = deletion_protection_enabled_;
      table_class = table_class_;
      replica_updates = replica_updates_;
@@ -920,12 +994,14 @@ let make_point_in_time_recovery_description
                                  CoreTypes.Timestamp.t option)
   ?earliest_restorable_date_time:(earliest_restorable_date_time_ :
                                    CoreTypes.Timestamp.t option)
+  ?recovery_period_in_days:(recovery_period_in_days_ : int option)
   ?point_in_time_recovery_status:(point_in_time_recovery_status_ :
                                    point_in_time_recovery_status option)
   () =
   ({
      latest_restorable_date_time = latest_restorable_date_time_;
      earliest_restorable_date_time = earliest_restorable_date_time_;
+     recovery_period_in_days = recovery_period_in_days_;
      point_in_time_recovery_status = point_in_time_recovery_status_
    } : point_in_time_recovery_description)
 let make_continuous_backups_description
@@ -946,10 +1022,13 @@ let make_update_continuous_backups_output
   ({ continuous_backups_description = continuous_backups_description_ } : 
   update_continuous_backups_output)
 let make_point_in_time_recovery_specification
+  ?recovery_period_in_days:(recovery_period_in_days_ : int option)
   ~point_in_time_recovery_enabled:(point_in_time_recovery_enabled_ : bool) ()
   =
-  ({ point_in_time_recovery_enabled = point_in_time_recovery_enabled_ } : 
-  point_in_time_recovery_specification)
+  ({
+     recovery_period_in_days = recovery_period_in_days_;
+     point_in_time_recovery_enabled = point_in_time_recovery_enabled_
+   } : point_in_time_recovery_specification)
 let make_update_continuous_backups_input
   ~point_in_time_recovery_specification:(point_in_time_recovery_specification_
                                           :
@@ -1123,6 +1202,7 @@ let make_tag_resource_input ~tags:(tags_ : tag list)
   ~resource_arn:(resource_arn_ : string) () =
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_input)
 let make_global_secondary_index
+  ?warm_throughput:(warm_throughput_ : warm_throughput option)
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?provisioned_throughput:(provisioned_throughput_ :
                             provisioned_throughput option)
@@ -1130,6 +1210,7 @@ let make_global_secondary_index
   ~key_schema:(key_schema_ : key_schema_element list)
   ~index_name:(index_name_ : string) () =
   ({
+     warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      provisioned_throughput = provisioned_throughput_;
      projection = projection_;
@@ -2189,6 +2270,7 @@ let make_create_table_output
 let make_create_table_input
   ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
   ?resource_policy:(resource_policy_ : string option)
+  ?warm_throughput:(warm_throughput_ : warm_throughput option)
   ?deletion_protection_enabled:(deletion_protection_enabled_ : bool option)
   ?table_class:(table_class_ : table_class option)
   ?tags:(tags_ : tag list option)
@@ -2208,6 +2290,7 @@ let make_create_table_input
   ({
      on_demand_throughput = on_demand_throughput_;
      resource_policy = resource_policy_;
+     warm_throughput = warm_throughput_;
      deletion_protection_enabled = deletion_protection_enabled_;
      table_class = table_class_;
      tags = tags_;

@@ -7,6 +7,8 @@ let service =
       version = "2017-05-31";
       protocol = Smaws_Lib.Service.AwsJson_1_1
     }
+type nonrec update_type =
+  | MigrationTaskStateUpdated [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec unauthorized_operation = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Exception raised to indicate a request was not authorized when the [DryRun] flag is set to \"true\".\n"]
@@ -33,6 +35,18 @@ type nonrec task =
   status: status
     [@ocaml.doc "Status of the task - Not Started, In-Progress, Complete.\n"]}
 [@@ocaml.doc "Task object encapsulating task information.\n"]
+type nonrec source_resource =
+  {
+  status_detail: string option
+    [@ocaml.doc "A free-form description of the status of the resource.\n"];
+  description: string option
+    [@ocaml.doc
+      "A description that can be free-form text to record additional detail about the resource for clarity or later reference.\n"];
+  name: string
+    [@ocaml.doc
+      "This is the name that you want to use to identify the resource. If the resource is an AWS resource, we recommend that you set this parameter to the ARN of the resource.\n"]}
+[@@ocaml.doc
+  "A source resource can be a source server, a migration wave, an application, or any other resource that you track.\n"]
 type nonrec service_unavailable_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
@@ -133,6 +147,13 @@ type nonrec notify_application_state_request =
     [@ocaml.doc
       "The configurationId in Application Discovery Service that uniquely identifies the grouped application.\n"]}
 [@@ocaml.doc ""]
+type nonrec migration_task_update =
+  {
+  migration_task_state: task option [@ocaml.doc ""];
+  update_type: update_type option [@ocaml.doc "The type of the update.\n"];
+  update_date_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc "The timestamp for the update.\n"]}[@@ocaml.doc
+                                                     "A migration-task progress update.\n"]
 type nonrec migration_task_summary =
   {
   update_date_time: CoreTypes.Timestamp.t option
@@ -167,6 +188,29 @@ type nonrec migration_task =
     [@ocaml.doc
       "A name that identifies the vendor of the migration tool being used.\n"]}
 [@@ocaml.doc "Represents a migration task in a migration tool.\n"]
+type nonrec list_source_resources_result =
+  {
+  source_resource_list: source_resource list option
+    [@ocaml.doc "The list of source resources.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "If the response includes a [NextToken] value, that means that there are more results available. The value of [NextToken] is a unique pagination token for each page. To retrieve the next page of results, call this API again and specify this [NextToken] value in the request. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_source_resources_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of results to include in the response. If more results exist than the value that you specify here for [MaxResults], the response will include a token that you can use to retrieve the next set of results.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "If [NextToken] was returned by a previous call, there are more results available. The value of [NextToken] is a unique pagination token for each page. To retrieve the next page of results, specify the [NextToken] value that the previous call returned. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"];
+  migration_task_name: string
+    [@ocaml.doc
+      "A unique identifier that references the migration task. {i Do not store confidential data in this field.} \n"];
+  progress_update_stream: string
+    [@ocaml.doc
+      "The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.\n"]}
+[@@ocaml.doc ""]
 type nonrec list_progress_update_streams_result =
   {
   next_token: string option
@@ -204,6 +248,29 @@ type nonrec list_migration_tasks_request =
   next_token: string option
     [@ocaml.doc
       "If a [NextToken] was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in [NextToken].\n"]}
+[@@ocaml.doc ""]
+type nonrec list_migration_task_updates_result =
+  {
+  migration_task_update_list: migration_task_update list option
+    [@ocaml.doc "The list of migration-task updates.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "If the response includes a [NextToken] value, that means that there are more results available. The value of [NextToken] is a unique pagination token for each page. To retrieve the next page of results, call this API again and specify this [NextToken] value in the request. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_migration_task_updates_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      "The maximum number of results to include in the response. If more results exist than the value that you specify here for [MaxResults], the response will include a token that you can use to retrieve the next set of results.\n"];
+  next_token: string option
+    [@ocaml.doc
+      "If [NextToken] was returned by a previous call, there are more results available. The value of [NextToken] is a unique pagination token for each page. To retrieve the next page of results, specify the [NextToken] value that the previous call returned. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.\n"];
+  migration_task_name: string
+    [@ocaml.doc
+      "A unique identifier that references the migration task. {i Do not include sensitive data in this field.} \n"];
+  progress_update_stream: string
+    [@ocaml.doc
+      "The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.\n"]}
 [@@ocaml.doc ""]
 type nonrec discovered_resource =
   {
@@ -309,6 +376,20 @@ type nonrec import_migration_task_request =
       "Unique identifier that references the migration task. {i Do not store personal data in this field.} \n"];
   progress_update_stream: string
     [@ocaml.doc "The name of the ProgressUpdateStream. >\n"]}[@@ocaml.doc ""]
+type nonrec disassociate_source_resource_request =
+  {
+  dry_run: bool option
+    [@ocaml.doc
+      "This is an optional parameter that you can use to test whether the call will succeed. Set this parameter to [true] to verify that you have the permissions that are required to make the call, and that you have specified the other parameters in the call correctly.\n"];
+  source_resource_name: string
+    [@ocaml.doc "The name that was specified for the source resource.\n"];
+  migration_task_name: string
+    [@ocaml.doc
+      "A unique identifier that references the migration task. {i Do not include sensitive data in this field.} \n"];
+  progress_update_stream: string
+    [@ocaml.doc
+      "The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.\n"]}
+[@@ocaml.doc ""]
 type nonrec disassociate_discovered_resource_request =
   {
   dry_run: bool option
@@ -380,6 +461,20 @@ type nonrec create_progress_update_stream_request =
   progress_update_stream_name: string
     [@ocaml.doc
       "The name of the ProgressUpdateStream. {i Do not store personal data in this field.} \n"]}
+[@@ocaml.doc ""]
+type nonrec associate_source_resource_request =
+  {
+  dry_run: bool option
+    [@ocaml.doc
+      "This is an optional parameter that you can use to test whether the call will succeed. Set this parameter to [true] to verify that you have the permissions that are required to make the call, and that you have specified the other parameters in the call correctly.\n"];
+  source_resource: source_resource
+    [@ocaml.doc "The source resource that you want to associate.\n"];
+  migration_task_name: string
+    [@ocaml.doc
+      "A unique identifier that references the migration task. {i Do not include sensitive data in this field.} \n"];
+  progress_update_stream: string
+    [@ocaml.doc
+      "The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.\n"]}
 [@@ocaml.doc ""]
 type nonrec associate_discovered_resource_request =
   {

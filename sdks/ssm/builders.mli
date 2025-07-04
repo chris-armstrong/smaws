@@ -38,18 +38,19 @@ val make_patch_source :
     products:string list -> name:string -> unit -> patch_source
 val make_update_patch_baseline_request :
   ?replace:bool ->
-    ?sources:patch_source list ->
-      ?description:string ->
-        ?rejected_patches_action:patch_action ->
-          ?rejected_patches:string list ->
-            ?approved_patches_enable_non_security:bool ->
-              ?approved_patches_compliance_level:patch_compliance_level ->
-                ?approved_patches:string list ->
-                  ?approval_rules:patch_rule_group ->
-                    ?global_filters:patch_filter_group ->
-                      ?name:string ->
-                        baseline_id:string ->
-                          unit -> update_patch_baseline_request
+    ?available_security_updates_compliance_status:patch_compliance_status ->
+      ?sources:patch_source list ->
+        ?description:string ->
+          ?rejected_patches_action:patch_action ->
+            ?rejected_patches:string list ->
+              ?approved_patches_enable_non_security:bool ->
+                ?approved_patches_compliance_level:patch_compliance_level ->
+                  ?approved_patches:string list ->
+                    ?approval_rules:patch_rule_group ->
+                      ?global_filters:patch_filter_group ->
+                        ?name:string ->
+                          baseline_id:string ->
+                            unit -> update_patch_baseline_request
 val make_metadata_value : ?value:string -> unit -> metadata_value
 val make_update_ops_metadata_request :
   ?keys_to_delete:string list ->
@@ -272,12 +273,17 @@ val make_instance_association_output_location :
   ?s3_location:s3_output_location ->
     unit -> instance_association_output_location
 val make_target_location :
-  ?target_location_alarm_configuration:alarm_configuration ->
-    ?execution_role_name:string ->
-      ?target_location_max_errors:string ->
-        ?target_location_max_concurrency:string ->
-          ?regions:string list ->
-            ?accounts:string list -> unit -> target_location
+  ?targets_max_errors:string ->
+    ?targets_max_concurrency:string ->
+      ?targets:target list ->
+        ?exclude_accounts:string list ->
+          ?include_child_organization_units:bool ->
+            ?target_location_alarm_configuration:alarm_configuration ->
+              ?execution_role_name:string ->
+                ?target_location_max_errors:string ->
+                  ?target_location_max_concurrency:string ->
+                    ?regions:string list ->
+                      ?accounts:string list -> unit -> target_location
 val make_alarm_state_information :
   state:external_alarm_state ->
     name:string -> unit -> alarm_state_information
@@ -358,6 +364,8 @@ val make_terminate_session_response :
   ?session_id:string -> unit -> terminate_session_response
 val make_terminate_session_request :
   session_id:string -> unit -> terminate_session_request
+val make_target_preview :
+  ?target_type:string -> ?count:int -> unit -> target_preview
 val make_stop_automation_execution_request :
   ?type_:stop_type ->
     automation_execution_id:string ->
@@ -410,6 +418,20 @@ val make_start_session_request :
   ?parameters:session_manager_parameters ->
     ?reason:string ->
       ?document_name:string -> target:string -> unit -> start_session_request
+val make_start_execution_preview_response :
+  ?execution_preview_id:string -> unit -> start_execution_preview_response
+val make_automation_execution_inputs :
+  ?target_locations_ur_l:string ->
+    ?target_locations:target_location list ->
+      ?target_maps:target_map list ->
+        ?targets:target list ->
+          ?target_parameter_name:string ->
+            ?parameters:automation_parameter_map ->
+              unit -> automation_execution_inputs
+val make_start_execution_preview_request :
+  ?execution_inputs:execution_inputs ->
+    ?document_version:string ->
+      document_name:string -> unit -> start_execution_preview_request
 val make_runbook :
   ?target_locations:target_location list ->
     ?max_errors:string ->
@@ -434,22 +456,29 @@ val make_start_change_request_execution_request :
                       document_name:string ->
                         unit -> start_change_request_execution_request
 val make_start_automation_execution_request :
-  ?alarm_configuration:alarm_configuration ->
-    ?tags:tag list ->
-      ?target_locations:target_location list ->
-        ?max_errors:string ->
-          ?max_concurrency:string ->
-            ?target_maps:target_map list ->
-              ?targets:target list ->
-                ?target_parameter_name:string ->
-                  ?mode:execution_mode ->
-                    ?client_token:string ->
-                      ?parameters:automation_parameter_map ->
-                        ?document_version:string ->
-                          document_name:string ->
-                            unit -> start_automation_execution_request
+  ?target_locations_ur_l:string ->
+    ?alarm_configuration:alarm_configuration ->
+      ?tags:tag list ->
+        ?target_locations:target_location list ->
+          ?max_errors:string ->
+            ?max_concurrency:string ->
+              ?target_maps:target_map list ->
+                ?targets:target list ->
+                  ?target_parameter_name:string ->
+                    ?mode:execution_mode ->
+                      ?client_token:string ->
+                        ?parameters:automation_parameter_map ->
+                          ?document_version:string ->
+                            document_name:string ->
+                              unit -> start_automation_execution_request
 val make_start_associations_once_request :
   association_ids:string list -> unit -> start_associations_once_request
+val make_start_access_request_response :
+  ?access_request_id:string -> unit -> start_access_request_response
+val make_start_access_request_request :
+  ?tags:tag list ->
+    targets:target list ->
+      reason:string -> unit -> start_access_request_request
 val make_severity_summary :
   ?unspecified_count:int ->
     ?informational_count:int ->
@@ -460,16 +489,17 @@ val make_session_manager_output_url :
   ?cloud_watch_output_url:string ->
     ?s3_output_url:string -> unit -> session_manager_output_url
 val make_session :
-  ?max_session_duration:string ->
-    ?output_url:session_manager_output_url ->
-      ?details:string ->
-        ?reason:string ->
-          ?owner:string ->
-            ?document_name:string ->
-              ?end_date:CoreTypes.Timestamp.t ->
-                ?start_date:CoreTypes.Timestamp.t ->
-                  ?status:session_status ->
-                    ?target:string -> ?session_id:string -> unit -> session
+  ?access_type:access_type ->
+    ?max_session_duration:string ->
+      ?output_url:session_manager_output_url ->
+        ?details:string ->
+          ?reason:string ->
+            ?owner:string ->
+              ?document_name:string ->
+                ?end_date:CoreTypes.Timestamp.t ->
+                  ?start_date:CoreTypes.Timestamp.t ->
+                    ?status:session_status ->
+                      ?target:string -> ?session_id:string -> unit -> session
 val make_session_filter :
   value:string -> key:session_filter_key -> unit -> session_filter
 val make_service_setting :
@@ -888,6 +918,34 @@ val make_ops_aggregator :
         ?attribute_name:string ->
           ?type_name:string ->
             ?aggregator_type:string -> unit -> ops_aggregator
+val make_instance_info :
+  ?resource_type:resource_type ->
+    ?platform_version:string ->
+      ?platform_name:string ->
+        ?platform_type:platform_type ->
+          ?managed_status:managed_status ->
+            ?ip_address:string ->
+              ?instance_status:string ->
+                ?computer_name:string ->
+                  ?agent_version:string ->
+                    ?agent_type:string -> unit -> instance_info
+val make_node_owner_info :
+  ?organizational_unit_path:string ->
+    ?organizational_unit_id:string ->
+      ?account_id:string -> unit -> node_owner_info
+val make_node :
+  ?node_type:node_type ->
+    ?region:string ->
+      ?owner:node_owner_info ->
+        ?id:string -> ?capture_time:CoreTypes.Timestamp.t -> unit -> node
+val make_node_filter :
+  ?type_:node_filter_operator_type ->
+    values:string list -> key:node_filter_key -> unit -> node_filter
+val make_node_aggregator :
+  ?aggregators:node_aggregator list ->
+    attribute_name:node_attribute_name ->
+      type_name:node_type_name ->
+        aggregator_type:node_aggregator_type -> unit -> node_aggregator
 val make_modify_document_permission_response : unit -> unit
 val make_modify_document_permission_request :
   ?shared_document_version:string ->
@@ -1009,6 +1067,18 @@ val make_list_ops_item_events_request :
     ?max_results:int ->
       ?filters:ops_item_event_filter list ->
         unit -> list_ops_item_events_request
+val make_list_nodes_summary_request :
+  ?max_results:int ->
+    ?next_token:string ->
+      ?filters:node_filter list ->
+        ?sync_name:string ->
+          aggregators:node_aggregator list ->
+            unit -> list_nodes_summary_request
+val make_list_nodes_request :
+  ?max_results:int ->
+    ?next_token:string ->
+      ?filters:node_filter list ->
+        ?sync_name:string -> unit -> list_nodes_request
 val make_inventory_filter :
   ?type_:inventory_query_operator_type ->
     values:string list -> key:string -> unit -> inventory_filter
@@ -1289,26 +1359,27 @@ val make_instance_patch_state :
       ?critical_non_compliant_count:int ->
         ?reboot_option:reboot_option ->
           ?last_no_reboot_install_operation_time:CoreTypes.Timestamp.t ->
-            ?not_applicable_count:int ->
-              ?unreported_not_applicable_count:int ->
-                ?failed_count:int ->
-                  ?missing_count:int ->
-                    ?installed_rejected_count:int ->
-                      ?installed_pending_reboot_count:int ->
-                        ?installed_other_count:int ->
-                          ?installed_count:int ->
-                            ?owner_information:string ->
-                              ?install_override_list:string ->
-                                ?snapshot_id:string ->
-                                  operation:patch_operation_type ->
-                                    operation_end_time:CoreTypes.Timestamp.t
-                                      ->
-                                      operation_start_time:CoreTypes.Timestamp.t
+            ?available_security_update_count:int ->
+              ?not_applicable_count:int ->
+                ?unreported_not_applicable_count:int ->
+                  ?failed_count:int ->
+                    ?missing_count:int ->
+                      ?installed_rejected_count:int ->
+                        ?installed_pending_reboot_count:int ->
+                          ?installed_other_count:int ->
+                            ?installed_count:int ->
+                              ?owner_information:string ->
+                                ?install_override_list:string ->
+                                  ?snapshot_id:string ->
+                                    operation:patch_operation_type ->
+                                      operation_end_time:CoreTypes.Timestamp.t
                                         ->
-                                        baseline_id:string ->
-                                          patch_group:string ->
-                                            instance_id:string ->
-                                              unit -> instance_patch_state
+                                        operation_start_time:CoreTypes.Timestamp.t
+                                          ->
+                                          baseline_id:string ->
+                                            patch_group:string ->
+                                              instance_id:string ->
+                                                unit -> instance_patch_state
 val make_instance_patch_state_filter :
   type_:instance_patch_state_operator_type ->
     values:string list -> key:string -> unit -> instance_patch_state_filter
@@ -1443,6 +1514,21 @@ val make_get_inventory_request :
       ?result_attributes:result_attribute list ->
         ?aggregators:inventory_aggregator list ->
           ?filters:inventory_filter list -> unit -> get_inventory_request
+val make_automation_execution_preview :
+  ?total_accounts:int ->
+    ?target_previews:target_preview list ->
+      ?regions:string list ->
+        ?step_previews:step_preview_map ->
+          unit -> automation_execution_preview
+val make_get_execution_preview_response :
+  ?execution_preview:execution_preview ->
+    ?status_message:string ->
+      ?status:execution_preview_status ->
+        ?ended_at:CoreTypes.Timestamp.t ->
+          ?execution_preview_id:string ->
+            unit -> get_execution_preview_response
+val make_get_execution_preview_request :
+  execution_preview_id:string -> unit -> get_execution_preview_request
 val make_attachment_content :
   ?url:string ->
     ?hash_type:attachment_hash_type ->
@@ -1452,16 +1538,17 @@ val make_get_document_request :
     ?document_version:string ->
       ?version_name:string -> name:string -> unit -> get_document_request
 val make_baseline_override :
-  ?sources:patch_source list ->
-    ?approved_patches_enable_non_security:bool ->
-      ?rejected_patches_action:patch_action ->
-        ?rejected_patches:string list ->
-          ?approved_patches_compliance_level:patch_compliance_level ->
-            ?approved_patches:string list ->
-              ?approval_rules:patch_rule_group ->
-                ?global_filters:patch_filter_group ->
-                  ?operating_system:operating_system ->
-                    unit -> baseline_override
+  ?available_security_updates_compliance_status:patch_compliance_status ->
+    ?sources:patch_source list ->
+      ?approved_patches_enable_non_security:bool ->
+        ?rejected_patches_action:patch_action ->
+          ?rejected_patches:string list ->
+            ?approved_patches_compliance_level:patch_compliance_level ->
+              ?approved_patches:string list ->
+                ?approval_rules:patch_rule_group ->
+                  ?global_filters:patch_filter_group ->
+                    ?operating_system:operating_system ->
+                      unit -> baseline_override
 val make_get_deployable_patch_snapshot_for_instance_request :
   ?baseline_override:baseline_override ->
     snapshot_id:string ->
@@ -1494,41 +1581,42 @@ val make_automation_execution :
           ?runbooks:runbook list ->
             ?scheduled_time:CoreTypes.Timestamp.t ->
               ?automation_subtype:automation_subtype ->
-                ?triggered_alarms:alarm_state_information list ->
-                  ?alarm_configuration:alarm_configuration ->
-                    ?progress_counters:progress_counters ->
-                      ?target_locations:target_location list ->
-                        ?target:string ->
-                          ?max_errors:string ->
-                            ?max_concurrency:string ->
-                              ?resolved_targets:resolved_targets ->
-                                ?target_maps:target_map list ->
-                                  ?targets:target list ->
-                                    ?target_parameter_name:string ->
-                                      ?current_action:string ->
-                                        ?current_step_name:string ->
-                                          ?executed_by:string ->
-                                            ?parent_automation_execution_id:string
-                                              ->
-                                              ?mode:execution_mode ->
-                                                ?failure_message:string ->
-                                                  ?outputs:automation_parameter_map
-                                                    ->
-                                                    ?parameters:automation_parameter_map
+                ?target_locations_ur_l:string ->
+                  ?triggered_alarms:alarm_state_information list ->
+                    ?alarm_configuration:alarm_configuration ->
+                      ?progress_counters:progress_counters ->
+                        ?target_locations:target_location list ->
+                          ?target:string ->
+                            ?max_errors:string ->
+                              ?max_concurrency:string ->
+                                ?resolved_targets:resolved_targets ->
+                                  ?target_maps:target_map list ->
+                                    ?targets:target list ->
+                                      ?target_parameter_name:string ->
+                                        ?current_action:string ->
+                                          ?current_step_name:string ->
+                                            ?executed_by:string ->
+                                              ?parent_automation_execution_id:string
+                                                ->
+                                                ?mode:execution_mode ->
+                                                  ?failure_message:string ->
+                                                    ?outputs:automation_parameter_map
                                                       ->
-                                                      ?step_executions_truncated:bool
+                                                      ?parameters:automation_parameter_map
                                                         ->
-                                                        ?step_executions:step_execution
-                                                          list ->
-                                                          ?automation_execution_status:automation_execution_status
-                                                            ->
-                                                            ?execution_end_time:CoreTypes.Timestamp.t
+                                                        ?step_executions_truncated:bool
+                                                          ->
+                                                          ?step_executions:step_execution
+                                                            list ->
+                                                            ?automation_execution_status:automation_execution_status
                                                               ->
-                                                              ?execution_start_time:CoreTypes.Timestamp.t
+                                                              ?execution_end_time:CoreTypes.Timestamp.t
                                                                 ->
-                                                                ?document_version:string
+                                                                ?execution_start_time:CoreTypes.Timestamp.t
                                                                   ->
-                                                                  ?document_name:string
+                                                                  ?document_version:string
+                                                                    ->
+                                                                    ?document_name:string
                                                                     ->
                                                                     ?automation_execution_id:string
                                                                     ->
@@ -1536,6 +1624,15 @@ val make_automation_execution :
                                                                     automation_execution
 val make_get_automation_execution_request :
   automation_execution_id:string -> unit -> get_automation_execution_request
+val make_credentials :
+  expiration_time:CoreTypes.Timestamp.t ->
+    session_token:string ->
+      secret_access_key:string -> access_key_id:string -> unit -> credentials
+val make_get_access_token_response :
+  ?access_request_status:access_request_status ->
+    ?credentials:credentials -> unit -> get_access_token_response
+val make_get_access_token_request :
+  access_request_id:string -> unit -> get_access_token_request
 val make_create_association_batch_request_entry :
   ?alarm_configuration:alarm_configuration ->
     ?target_maps:target_map list ->
@@ -1745,40 +1842,41 @@ val make_automation_execution_metadata :
         ?runbooks:runbook list ->
           ?scheduled_time:CoreTypes.Timestamp.t ->
             ?automation_subtype:automation_subtype ->
-              ?triggered_alarms:alarm_state_information list ->
-                ?alarm_configuration:alarm_configuration ->
-                  ?automation_type:automation_type ->
-                    ?target:string ->
-                      ?max_errors:string ->
-                        ?max_concurrency:string ->
-                          ?resolved_targets:resolved_targets ->
-                            ?target_maps:target_map list ->
-                              ?targets:target list ->
-                                ?target_parameter_name:string ->
-                                  ?failure_message:string ->
-                                    ?current_action:string ->
-                                      ?current_step_name:string ->
-                                        ?parent_automation_execution_id:string
-                                          ->
-                                          ?mode:execution_mode ->
-                                            ?outputs:automation_parameter_map
-                                              ->
-                                              ?log_file:string ->
-                                                ?executed_by:string ->
-                                                  ?execution_end_time:CoreTypes.Timestamp.t
-                                                    ->
-                                                    ?execution_start_time:CoreTypes.Timestamp.t
+              ?target_locations_ur_l:string ->
+                ?triggered_alarms:alarm_state_information list ->
+                  ?alarm_configuration:alarm_configuration ->
+                    ?automation_type:automation_type ->
+                      ?target:string ->
+                        ?max_errors:string ->
+                          ?max_concurrency:string ->
+                            ?resolved_targets:resolved_targets ->
+                              ?target_maps:target_map list ->
+                                ?targets:target list ->
+                                  ?target_parameter_name:string ->
+                                    ?failure_message:string ->
+                                      ?current_action:string ->
+                                        ?current_step_name:string ->
+                                          ?parent_automation_execution_id:string
+                                            ->
+                                            ?mode:execution_mode ->
+                                              ?outputs:automation_parameter_map
+                                                ->
+                                                ?log_file:string ->
+                                                  ?executed_by:string ->
+                                                    ?execution_end_time:CoreTypes.Timestamp.t
                                                       ->
-                                                      ?automation_execution_status:automation_execution_status
+                                                      ?execution_start_time:CoreTypes.Timestamp.t
                                                         ->
-                                                        ?document_version:string
+                                                        ?automation_execution_status:automation_execution_status
                                                           ->
-                                                          ?document_name:string
+                                                          ?document_version:string
                                                             ->
-                                                            ?automation_execution_id:string
+                                                            ?document_name:string
                                                               ->
-                                                              unit ->
-                                                                automation_execution_metadata
+                                                              ?automation_execution_id:string
+                                                                ->
+                                                                unit ->
+                                                                  automation_execution_metadata
 val make_automation_execution_filter :
   values:string list ->
     key:automation_execution_filter_key ->
@@ -1916,18 +2014,21 @@ val make_create_resource_data_sync_request :
 val make_create_patch_baseline_request :
   ?tags:tag list ->
     ?client_token:string ->
-      ?sources:patch_source list ->
-        ?description:string ->
-          ?rejected_patches_action:patch_action ->
-            ?rejected_patches:string list ->
-              ?approved_patches_enable_non_security:bool ->
-                ?approved_patches_compliance_level:patch_compliance_level ->
-                  ?approved_patches:string list ->
-                    ?approval_rules:patch_rule_group ->
-                      ?global_filters:patch_filter_group ->
-                        ?operating_system:operating_system ->
-                          name:string ->
-                            unit -> create_patch_baseline_request
+      ?available_security_updates_compliance_status:patch_compliance_status
+        ->
+        ?sources:patch_source list ->
+          ?description:string ->
+            ?rejected_patches_action:patch_action ->
+              ?rejected_patches:string list ->
+                ?approved_patches_enable_non_security:bool ->
+                  ?approved_patches_compliance_level:patch_compliance_level
+                    ->
+                    ?approved_patches:string list ->
+                      ?approval_rules:patch_rule_group ->
+                        ?global_filters:patch_filter_group ->
+                          ?operating_system:operating_system ->
+                            name:string ->
+                              unit -> create_patch_baseline_request
 val make_create_ops_metadata_request :
   ?tags:tag list ->
     ?metadata:metadata_map ->

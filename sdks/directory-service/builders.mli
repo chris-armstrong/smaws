@@ -238,6 +238,8 @@ val make_enable_radius_request :
     directory_id:string -> unit -> enable_radius_request
 val make_enable_ldaps_request :
   type_:ldaps_type -> directory_id:string -> unit -> enable_ldaps_request
+val make_enable_directory_data_access_request :
+  directory_id:string -> unit -> enable_directory_data_access_request
 val make_enable_client_authentication_request :
   type_:client_authentication_type ->
     directory_id:string -> unit -> enable_client_authentication_request
@@ -259,6 +261,8 @@ val make_disable_radius_request :
   directory_id:string -> unit -> disable_radius_request
 val make_disable_ldaps_request :
   type_:ldaps_type -> directory_id:string -> unit -> disable_ldaps_request
+val make_disable_directory_data_access_request :
+  directory_id:string -> unit -> disable_directory_data_access_request
 val make_disable_client_authentication_request :
   type_:client_authentication_type ->
     directory_id:string -> unit -> disable_client_authentication_request
@@ -304,6 +308,8 @@ val make_describe_domain_controllers_request :
     ?next_token:string ->
       ?domain_controller_ids:string list ->
         directory_id:string -> unit -> describe_domain_controllers_request
+val make_describe_directory_data_access_request :
+  directory_id:string -> unit -> describe_directory_data_access_request
 val make_directory_connect_settings_description :
   ?connect_ips:string list ->
     ?availability_zones:string list ->

@@ -35,6 +35,10 @@ type nonrec vpc_endpoint_error_detail =
                                                                   "Error information for a failed [BatchGetVpcEndpoint] request.\n"]
 type nonrec vpc_endpoint_detail =
   {
+  failure_message: string option
+    [@ocaml.doc "A message associated with the failure code.\n"];
+  failure_code: string option
+    [@ocaml.doc "A failure code associated with the request.\n"];
   created_date: int option
     [@ocaml.doc "The date the endpoint was created.\n"];
   status: vpc_endpoint_status option
@@ -157,12 +161,16 @@ type nonrec resource_not_found_exception =
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Thrown when accessing or deleting a resource that does not exist.\n"]
 type nonrec security_config_type =
-  | Saml [@ocaml.doc ""][@@ocaml.doc ""]
+  | Saml [@ocaml.doc ""]
+  | Iamidentitycenter [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec saml_config_options =
   {
   session_timeout: int option
     [@ocaml.doc
       "The session timeout, in minutes. Default is 60 minutes (12 hours).\n"];
+  open_search_serverless_entity_id: string option
+    [@ocaml.doc
+      "Custom entity id attribute to override default entity id for this saml integration.\n"];
   group_attribute: string option
     [@ocaml.doc "The group attribute for this SAML integration.\n"];
   user_attribute: string option
@@ -172,6 +180,35 @@ type nonrec saml_config_options =
       "The XML IdP metadata file generated from your identity provider.\n"]}
 [@@ocaml.doc
   "Describes SAML options for an OpenSearch Serverless security configuration in the form of a key-value map.\n"]
+type nonrec iam_identity_center_user_attribute =
+  | UserId [@ocaml.doc ""]
+  | UserName [@ocaml.doc ""]
+  | Email [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec iam_identity_center_group_attribute =
+  | GroupId [@ocaml.doc ""]
+  | GroupName [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec iam_identity_center_config_options =
+  {
+  group_attribute: iam_identity_center_group_attribute option
+    [@ocaml.doc
+      "The group attribute for this IAM Identity Center integration. Defaults to [GroupId].\n"];
+  user_attribute: iam_identity_center_user_attribute option
+    [@ocaml.doc
+      "The user attribute for this IAM Identity Center integration. Defaults to [UserId] \n"];
+  application_description: string option
+    [@ocaml.doc
+      "The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.\n"];
+  application_name: string option
+    [@ocaml.doc
+      "The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.\n"];
+  application_arn: string option
+    [@ocaml.doc
+      "The ARN of the IAM Identity Center application used to integrate with OpenSearch Serverless.\n"];
+  instance_arn: string option
+    [@ocaml.doc
+      "The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.\n"]}
+[@@ocaml.doc
+  "Describes IAM Identity Center options for an OpenSearch Serverless security configuration in the form of a key-value map.\n"]
 type nonrec security_config_detail =
   {
   last_modified_date: int option
@@ -179,6 +216,9 @@ type nonrec security_config_detail =
       "The timestamp of when the configuration was last modified.\n"];
   created_date: int option
     [@ocaml.doc "The date the configuration was created.\n"];
+  iam_identity_center_options: iam_identity_center_config_options option
+    [@ocaml.doc
+      "Describes IAM Identity Center options in the form of a key-value map.\n"];
   saml_options: saml_config_options option
     [@ocaml.doc
       "SAML options for the security configuration in the form of a key-value map.\n"];
@@ -197,11 +237,25 @@ type nonrec update_security_config_response =
   security_config_detail: security_config_detail option
     [@ocaml.doc "Details about the updated security configuration. \n"]}
 [@@ocaml.doc ""]
+type nonrec update_iam_identity_center_config_options =
+  {
+  group_attribute: iam_identity_center_group_attribute option
+    [@ocaml.doc
+      "The group attribute for this IAM Identity Center integration. Defaults to [GroupId].\n"];
+  user_attribute: iam_identity_center_user_attribute option
+    [@ocaml.doc
+      "The user attribute for this IAM Identity Center integration. Defaults to [UserId].\n"]}
+[@@ocaml.doc
+  "Describes IAM Identity Center options for updating an OpenSearch Serverless security configuration in the form of a key-value map.\n"]
 type nonrec update_security_config_request =
   {
   client_token: string option
     [@ocaml.doc
       "Unique, case-sensitive identifier to ensure idempotency of the request.\n"];
+  iam_identity_center_options_updates:
+    update_iam_identity_center_config_options option
+    [@ocaml.doc
+      "Describes IAM Identity Center options in the form of a key-value map.\n"];
   saml_options: saml_config_options option
     [@ocaml.doc "SAML options in in the form of a key-value map.\n"];
   description: string option
@@ -596,6 +650,10 @@ type nonrec batch_get_effective_lifecycle_policy_request =
 [@@ocaml.doc ""]
 type nonrec collection_detail =
   {
+  failure_message: string option
+    [@ocaml.doc "A message associated with the failure code.\n"];
+  failure_code: string option
+    [@ocaml.doc "A failure code associated with the request.\n"];
   dashboard_endpoint: string option
     [@ocaml.doc
       "Collection-specific endpoint used to access OpenSearch Dashboards.\n"];
@@ -959,11 +1017,28 @@ type nonrec create_security_config_response =
   security_config_detail: security_config_detail option
     [@ocaml.doc "Details about the created security configuration. \n"]}
 [@@ocaml.doc ""]
+type nonrec create_iam_identity_center_config_options =
+  {
+  group_attribute: iam_identity_center_group_attribute option
+    [@ocaml.doc
+      "The group attribute for this IAM Identity Center integration. Defaults to [GroupId].\n"];
+  user_attribute: iam_identity_center_user_attribute option
+    [@ocaml.doc
+      "The user attribute for this IAM Identity Center integration. Defaults to [UserId].\n"];
+  instance_arn: string
+    [@ocaml.doc
+      "The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.\n"]}
+[@@ocaml.doc
+  "Describes IAM Identity Center options for creating an OpenSearch Serverless security configuration in the form of a key-value map.\n"]
 type nonrec create_security_config_request =
   {
   client_token: string option
     [@ocaml.doc
       "Unique, case-sensitive identifier to ensure idempotency of the request.\n"];
+  iam_identity_center_options:
+    create_iam_identity_center_config_options option
+    [@ocaml.doc
+      "Describes IAM Identity Center options in the form of a key-value map. This field is required if you specify iamidentitycenter for the type parameter.\n"];
   saml_options: saml_config_options option
     [@ocaml.doc
       "Describes SAML options in in the form of a key-value map. This field is required if you specify [saml] for the [type] parameter.\n"];

@@ -66,6 +66,20 @@ type nonrec write_request =
   put_request: put_request option
     [@ocaml.doc "A request to perform a [PutItem] operation.\n"]}[@@ocaml.doc
                                                                    "Represents an operation to perform - either [DeleteItem] or [PutItem]. You can only request one of these operations, not both, in a single [WriteRequest]. If you do need to perform both of these operations, you need to provide two separate [WriteRequest] objects.\n"]
+type nonrec witness_status =
+  | ACTIVE [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec warm_throughput =
+  {
+  write_units_per_second: int option
+    [@ocaml.doc
+      "Represents the number of write operations your base table can instantaneously support.\n"];
+  read_units_per_second: int option
+    [@ocaml.doc
+      "Represents the number of read operations your base table can instantaneously support.\n"]}
+[@@ocaml.doc
+  "Provides visibility into the number of read and write operations your table or secondary index can instantaneously support. The settings can be modified using the [UpdateTable] operation to meet the throughput requirements of an upcoming peak event.\n"]
 type nonrec time_to_live_specification =
   {
   attribute_name: string
@@ -103,7 +117,7 @@ type nonrec resource_in_use_exception =
     [@ocaml.doc
       "The resource which is being attempted to be changed is in use.\n"]}
 [@@ocaml.doc
-  "The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the [CREATING] state.\n"]
+  "The operation conflicts with the resource's availability. For example:\n\n {ul\n       {-  You attempted to recreate an existing table.\n           \n            }\n       {-  You tried to delete a table currently in the [CREATING] state.\n           \n            }\n       {-  You tried to update a resource that was already being updated.\n           \n            }\n       }\n   When appropriate, wait for the ongoing update to complete and attempt the request again.\n   "]
 type nonrec limit_exceeded_exception =
   {
   message: string option
@@ -119,6 +133,7 @@ type nonrec internal_server_error =
       "The server encountered an internal error trying to fulfill the request.\n"]}
 [@@ocaml.doc "An error occurred on the server side.\n"]
 type nonrec table_status =
+  | REPLICATION_NOT_AUTHORIZED [@ocaml.doc ""]
   | ARCHIVED [@ocaml.doc ""]
   | ARCHIVING [@ocaml.doc ""]
   | INACCESSIBLE_ENCRYPTION_CREDENTIALS [@ocaml.doc ""]
@@ -186,6 +201,9 @@ type nonrec replica_global_secondary_index_auto_scaling_description =
     [@ocaml.doc "The name of the global secondary index.\n"]}[@@ocaml.doc
                                                                "Represents the auto scaling configuration for a replica global secondary index.\n"]
 type nonrec replica_status =
+  | REPLICATION_NOT_AUTHORIZED [@ocaml.doc ""]
+  | ARCHIVED [@ocaml.doc ""]
+  | ARCHIVING [@ocaml.doc ""]
   | INACCESSIBLE_ENCRYPTION_CREDENTIALS [@ocaml.doc ""]
   | REGION_DISABLED [@ocaml.doc ""]
   | ACTIVE [@ocaml.doc ""]
@@ -368,7 +386,7 @@ type nonrec projection =
   {
   non_key_attributes: string list option
     [@ocaml.doc
-      "Represents the non-key attribute names which will be projected into the index.\n\n For local secondary indexes, the total count of [NonKeyAttributes] summed across all of the local secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.\n "];
+      "Represents the non-key attribute names which will be projected into the index.\n\n For global and local secondary indexes, the total count of [NonKeyAttributes] summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of [INCLUDE]. You still can specify the ProjectionType of [ALL] to project all attributes from the source table, even if the table has more than 100 attributes.\n "];
   projection_type: projection_type option
     [@ocaml.doc
       "The set of attributes that are projected into the index:\n\n {ul\n       {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n           \n            }\n       {-   [INCLUDE] - In addition to the attributes described in [KEYS_ONLY], the secondary index will include other non-key attributes that you specify.\n           \n            }\n       {-   [ALL] - All of the table attributes are projected into the index.\n           \n            }\n       }\n   When using the DynamoDB console, [ALL] is selected by default.\n   "]}
@@ -404,8 +422,24 @@ type nonrec on_demand_throughput =
       "Maximum number of read request units for the specified table.\n\n To specify a maximum [OnDemandThroughput] on your table, set the value of [MaxReadRequestUnits] as greater than or equal to 1. To remove the maximum [OnDemandThroughput] that is currently set on your table, set the value of [MaxReadRequestUnits] to -1.\n "]}
 [@@ocaml.doc
   "Sets the maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"]
+type nonrec global_secondary_index_warm_throughput_description =
+  {
+  status: index_status option
+    [@ocaml.doc
+      "Represents the warm throughput status being created or updated on a global secondary index. The status can only be [UPDATING] or [ACTIVE].\n"];
+  write_units_per_second: int option
+    [@ocaml.doc
+      "Represents warm throughput write units per second value for a global secondary index.\n"];
+  read_units_per_second: int option
+    [@ocaml.doc
+      "Represents warm throughput read units per second value for a global secondary index.\n"]}
+[@@ocaml.doc
+  "The description of the warm throughput value on a global secondary index.\n"]
 type nonrec global_secondary_index_description =
   {
+  warm_throughput: global_secondary_index_warm_throughput_description option
+    [@ocaml.doc
+      "Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
       "The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
@@ -465,8 +499,23 @@ type nonrec on_demand_throughput_override =
       "Maximum number of read request units for the specified replica table.\n"]}
 [@@ocaml.doc
   "Overrides the on-demand throughput settings for this replica table. If you don't specify a value for this parameter, it uses the source table's on-demand throughput settings.\n"]
+type nonrec table_warm_throughput_description =
+  {
+  status: table_status option
+    [@ocaml.doc "Represents warm throughput value of the base table.\n"];
+  write_units_per_second: int option
+    [@ocaml.doc
+      "Represents the base table's warm throughput value in write units per second.\n"];
+  read_units_per_second: int option
+    [@ocaml.doc
+      "Represents the base table's warm throughput value in read units per second.\n"]}
+[@@ocaml.doc
+  "Represents the warm throughput value (in read units per second and write units per second) of the table. Warm throughput is applicable for DynamoDB Standard-IA tables and specifies the minimum provisioned capacity maintained for immediate data access.\n"]
 type nonrec replica_global_secondary_index_description =
   {
+  warm_throughput: global_secondary_index_warm_throughput_description option
+    [@ocaml.doc
+      "Represents the warm throughput of the global secondary index for this replica.\n"];
   on_demand_throughput_override: on_demand_throughput_override option
     [@ocaml.doc
       "Overrides the maximum on-demand throughput for the specified global secondary index in the specified replica table.\n"];
@@ -497,6 +546,8 @@ type nonrec replica_description =
   global_secondary_indexes:
     replica_global_secondary_index_description list option
     [@ocaml.doc "Replica-specific global secondary index settings.\n"];
+  warm_throughput: table_warm_throughput_description option
+    [@ocaml.doc "Represents the warm throughput value for this replica.\n"];
   on_demand_throughput_override: on_demand_throughput_override option
     [@ocaml.doc
       "Overrides the maximum on-demand throughput settings for the specified replica table.\n"];
@@ -516,6 +567,16 @@ type nonrec replica_description =
       "The current state of the replica:\n\n {ul\n       {-   [CREATING] - The replica is being created.\n           \n            }\n       {-   [UPDATING] - The replica is being updated.\n           \n            }\n       {-   [DELETING] - The replica is being deleted.\n           \n            }\n       {-   [ACTIVE] - The replica is ready for use.\n           \n            }\n       {-   [REGION_DISABLED] - The replica is inaccessible because the Amazon Web Services Region has been disabled.\n           \n             If the Amazon Web Services Region remains inaccessible for more than 20 hours, DynamoDB will remove this replica from the replication group. The replica will not be deleted and replication will stop from and to this region.\n             \n               }\n       {-   [INACCESSIBLE_ENCRYPTION_CREDENTIALS ] - The KMS key used to encrypt the table is inaccessible.\n           \n             If the KMS key remains inaccessible for more than 20 hours, DynamoDB will remove this replica from the replication group. The replica will not be deleted and replication will stop from and to this region.\n             \n               }\n       }\n  "];
   region_name: string option [@ocaml.doc "The name of the Region.\n"]}
 [@@ocaml.doc "Contains the details of the replica.\n"]
+type nonrec global_table_witness_description =
+  {
+  witness_status: witness_status option
+    [@ocaml.doc
+      "The current status of the witness Region in the MRSC global table.\n"];
+  region_name: string option
+    [@ocaml.doc
+      "The name of the Amazon Web Services Region that serves as a witness for the MRSC global table.\n"]}
+[@@ocaml.doc
+  "Represents the properties of a witness Region in a MRSC global table. \n"]
 type nonrec restore_summary =
   {
   restore_in_progress: bool
@@ -565,8 +626,16 @@ type nonrec archival_summary =
     [@ocaml.doc
       "The date and time when table archival was initiated by DynamoDB, in UNIX epoch time format.\n"]}
 [@@ocaml.doc "Contains details of a table archival operation.\n"]
+type nonrec multi_region_consistency =
+  | STRONG [@ocaml.doc ""]
+  | EVENTUAL [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec table_description =
   {
+  multi_region_consistency: multi_region_consistency option
+    [@ocaml.doc
+      "Indicates one of the following consistency modes for a global table:\n\n {ul\n       {-   [EVENTUAL]: Indicates that the global table is configured for multi-Region eventual consistency (MREC).\n           \n            }\n       {-   [STRONG]: Indicates that the global table is configured for multi-Region strong consistency (MRSC).\n           \n            }\n       }\n   If you don't specify this field, the global table consistency mode defaults to [EVENTUAL]. For more information about global tables consistency modes, see {{:https://docs.aws.amazon.com/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes} Consistency modes} in DynamoDB developer guide. \n   "];
+  warm_throughput: table_warm_throughput_description option
+    [@ocaml.doc "Describes the warm throughput value of the base table.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
       "The maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
@@ -582,6 +651,9 @@ type nonrec table_description =
       "The description of the server-side encryption status on the specified table.\n"];
   restore_summary: restore_summary option
     [@ocaml.doc "Contains details for the restore.\n"];
+  global_table_witnesses: global_table_witness_description list option
+    [@ocaml.doc
+      "The witness Region and its current status in the MRSC global table. Only one witness Region can be configured per MRSC global table.\n"];
   replicas: replica_description list option
     [@ocaml.doc "Represents replicas of the table.\n"];
   global_table_version: string option
@@ -598,10 +670,10 @@ type nonrec table_description =
       "The current DynamoDB Streams configuration for the table.\n"];
   global_secondary_indexes: global_secondary_index_description list option
     [@ocaml.doc
-      "The global secondary indexes, if any, on the table. Each index is scoped to a given partition key value. Each element is composed of:\n\n {ul\n       {-   [Backfilling] - If true, then the index is currently in the backfilling phase. Backfilling occurs only when a new global secondary index is added to the table. It is the process by which DynamoDB populates the new index with data from the table. (This attribute does not appear for indexes that were created during a [CreateTable] operation.) \n           \n             You can delete an index that is being created during the [Backfilling] phase when [IndexStatus] is set to CREATING and [Backfilling] is true. You can't delete the index that is being created when [IndexStatus] is set to CREATING and [Backfilling] is false. (This attribute does not appear for indexes that were created during a [CreateTable] operation.)\n            \n             }\n       {-   [IndexName] - The name of the global secondary index.\n           \n            }\n       {-   [IndexSizeBytes] - The total size of the global secondary index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. \n           \n            }\n       {-   [IndexStatus] - The current status of the global secondary index:\n           \n            {ul\n                  {-   [CREATING] - The index is being created.\n                      \n                       }\n                  {-   [UPDATING] - The index is being updated.\n                      \n                       }\n                  {-   [DELETING] - The index is being deleted.\n                      \n                       }\n                  {-   [ACTIVE] - The index is ready for use.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ItemCount] - The number of items in the global secondary index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. \n           \n            }\n       {-   [KeySchema] - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - In addition to the attributes described in [KEYS_ONLY], the secondary index will include other non-key attributes that you specify.\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ProvisionedThroughput] - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units, along with data about increases and decreases. \n           \n            }\n       }\n   If the table is in the [DELETING] state, no information about indexes will be returned.\n   "];
+      "The global secondary indexes, if any, on the table. Each index is scoped to a given partition key value. Each element is composed of:\n\n {ul\n       {-   [Backfilling] - If true, then the index is currently in the backfilling phase. Backfilling occurs only when a new global secondary index is added to the table. It is the process by which DynamoDB populates the new index with data from the table. (This attribute does not appear for indexes that were created during a [CreateTable] operation.) \n           \n             You can delete an index that is being created during the [Backfilling] phase when [IndexStatus] is set to CREATING and [Backfilling] is true. You can't delete the index that is being created when [IndexStatus] is set to CREATING and [Backfilling] is false. (This attribute does not appear for indexes that were created during a [CreateTable] operation.)\n            \n             }\n       {-   [IndexName] - The name of the global secondary index.\n           \n            }\n       {-   [IndexSizeBytes] - The total size of the global secondary index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. \n           \n            }\n       {-   [IndexStatus] - The current status of the global secondary index:\n           \n            {ul\n                  {-   [CREATING] - The index is being created.\n                      \n                       }\n                  {-   [UPDATING] - The index is being updated.\n                      \n                       }\n                  {-   [DELETING] - The index is being deleted.\n                      \n                       }\n                  {-   [ACTIVE] - The index is ready for use.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ItemCount] - The number of items in the global secondary index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. \n           \n            }\n       {-   [KeySchema] - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - In addition to the attributes described in [KEYS_ONLY], the secondary index will include other non-key attributes that you specify.\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of [INCLUDE]. You still can specify the ProjectionType of [ALL] to project all attributes from the source table, even if the table has more than 100 attributes.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ProvisionedThroughput] - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units, along with data about increases and decreases. \n           \n            }\n       }\n   If the table is in the [DELETING] state, no information about indexes will be returned.\n   "];
   local_secondary_indexes: local_secondary_index_description list option
     [@ocaml.doc
-      "Represents one or more local secondary indexes on the table. Each index is scoped to a given partition key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:\n\n {ul\n       {-   [IndexName] - The name of the local secondary index.\n           \n            }\n       {-   [KeySchema] - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.\n                      \n                       }\n                  \n        }\n         }\n       {-   [IndexSizeBytes] - Represents the total size of the index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.\n           \n            }\n       {-   [ItemCount] - Represents the number of items in the index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.\n           \n            }\n       }\n   If the table is in the [DELETING] state, no information about indexes will be returned.\n   "];
+      "Represents one or more local secondary indexes on the table. Each index is scoped to a given partition key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:\n\n {ul\n       {-   [IndexName] - The name of the local secondary index.\n           \n            }\n       {-   [KeySchema] - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of [INCLUDE]. You still can specify the ProjectionType of [ALL] to project all attributes from the source table, even if the table has more than 100 attributes.\n                      \n                       }\n                  \n        }\n         }\n       {-   [IndexSizeBytes] - Represents the total size of the index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.\n           \n            }\n       {-   [ItemCount] - Represents the number of items in the index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.\n           \n            }\n       }\n   If the table is in the [DELETING] state, no information about indexes will be returned.\n   "];
   billing_mode_summary: billing_mode_summary option
     [@ocaml.doc "Contains the details for the read/write capacity mode.\n"];
   table_id: string option
@@ -647,9 +719,12 @@ type nonrec provisioned_throughput =
     [@ocaml.doc
       "The maximum number of strongly consistent reads consumed per second before DynamoDB returns a [ThrottlingException]. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html}Specifying Read and Write Requirements} in the {i Amazon DynamoDB Developer Guide}.\n\n If read/write capacity mode is [PAY_PER_REQUEST] the value is set to 0.\n "]}
 [@@ocaml.doc
-  "Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the [UpdateTable] operation.\n\n For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n "]
+  "Represents the provisioned throughput settings for the specified global secondary index. You must use [ProvisionedThroughput] or [OnDemandThroughput] based on your table\226\128\153s capacity mode.\n\n For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n "]
 type nonrec update_global_secondary_index_action =
   {
+  warm_throughput: warm_throughput option
+    [@ocaml.doc
+      "Represents the warm throughput value of the new provisioned throughput settings to be applied to a global secondary index.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
       "Updates the maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
@@ -662,9 +737,12 @@ type nonrec update_global_secondary_index_action =
   "Represents the new provisioned throughput settings to be applied to a global secondary index.\n"]
 type nonrec create_global_secondary_index_action =
   {
+  warm_throughput: warm_throughput option
+    [@ocaml.doc
+      "Represents the warm throughput value (in read units per second and write units per second) when creating a secondary index.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
-      "The maximum number of read and write units for the global secondary index being created. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
+      "The maximum number of read and write units for the global secondary index being created. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both. You must use either [OnDemand\n                Throughput] or [ProvisionedThroughput] based on your table's capacity mode.\n"];
   provisioned_throughput: provisioned_throughput option
     [@ocaml.doc
       "Represents the provisioned throughput settings for the specified global secondary index.\n\n For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n "];
@@ -774,11 +852,44 @@ type nonrec replication_group_update =
       "The parameters required for creating a replica for the table.\n"]}
 [@@ocaml.doc
   "Represents one of the following:\n\n {ul\n       {-  A new replica to be added to an existing regional table or global table. This request invokes the [CreateTableReplica] action in the destination Region.\n           \n            }\n       {-  New parameters for an existing replica. This request invokes the [UpdateTable] action in the destination Region.\n           \n            }\n       {-  An existing replica to be deleted. The request invokes the [DeleteTableReplica] action in the destination Region, deleting the replica and all if its items in the destination Region.\n           \n            }\n       }\n    When you manually remove a table or global table replica, you do not automatically remove any associated scalable targets, scaling policies, or CloudWatch alarms.\n    \n     "]
+type nonrec create_global_table_witness_group_member_action =
+  {
+  region_name: string
+    [@ocaml.doc
+      "The Amazon Web Services Region name to be added as a witness Region for the MRSC global table. The witness must be in a different Region than the replicas and within the same Region set:\n\n {ul\n       {-  US Region set: US East (N. Virginia), US East (Ohio), US West (Oregon)\n           \n            }\n       {-  EU Region set: Europe (Ireland), Europe (London), Europe (Paris), Europe (Frankfurt)\n           \n            }\n       {-  AP Region set: Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Osaka)\n           \n            }\n       }\n  "]}
+[@@ocaml.doc
+  "Specifies the action to add a new witness Region to a MRSC global table. A MRSC global table can be configured with either three replicas, or with two replicas and one witness.\n"]
+type nonrec delete_global_table_witness_group_member_action =
+  {
+  region_name: string
+    [@ocaml.doc
+      "The witness Region name to be removed from the MRSC global table.\n"]}
+[@@ocaml.doc
+  "Specifies the action to remove a witness Region from a MRSC global table. You cannot delete a single witness from a MRSC global table - you must delete both a replica and the witness together. The deletion of both a witness and replica converts the remaining replica to a single-Region DynamoDB table. \n"]
+type nonrec global_table_witness_group_update =
+  {
+  delete: delete_global_table_witness_group_member_action option
+    [@ocaml.doc
+      "Specifies a witness Region to be removed from an existing global table. Must be done in conjunction with removing a replica. The deletion of both a witness and replica converts the remaining replica to a single-Region DynamoDB table.\n"];
+  create: create_global_table_witness_group_member_action option
+    [@ocaml.doc
+      "Specifies a witness Region to be added to a new MRSC global table. The witness must be added when creating the MRSC global table.\n"]}
+[@@ocaml.doc
+  "Represents one of the following:\n\n {ul\n       {-  A new witness to be added to a new global table.\n           \n            }\n       {-  An existing witness to be removed from an existing global table.\n           \n            }\n       }\n   You can configure one witness per MRSC global table.\n   "]
 type nonrec update_table_input =
   {
+  warm_throughput: warm_throughput option
+    [@ocaml.doc
+      "Represents the warm throughput (in read units per second and write units per second) for updating a table.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
       "Updates the maximum number of read and write units for the specified table in on-demand capacity mode. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
+  global_table_witness_updates: global_table_witness_group_update list option
+    [@ocaml.doc
+      "A list of witness updates for a MRSC global table. A witness provides a cost-effective alternative to a full replica in a MRSC global table by maintaining replicated change data written to global table replicas. You cannot perform read or write operations on a witness. For each witness, you can request one action:\n\n {ul\n       {-   [Create] - add a new witness to the global table.\n           \n            }\n       {-   [Delete] - remove a witness from the global table.\n           \n            }\n       }\n   You can create or delete only one witness per [UpdateTable] operation.\n   \n    For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes}Multi-Region strong consistency (MRSC)} in the Amazon DynamoDB Developer Guide\n    "];
+  multi_region_consistency: multi_region_consistency option
+    [@ocaml.doc
+      "Specifies the consistency mode for a new global table. This parameter is only valid when you create a global table by specifying one or more {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create}Create} actions in the {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates}ReplicaUpdates} action list.\n\n You can specify one of the following consistency modes:\n \n  {ul\n        {-   [EVENTUAL]: Configures a new global table for multi-Region eventual consistency (MREC). This is the default consistency mode for global tables.\n            \n             }\n        {-   [STRONG]: Configures a new global table for multi-Region strong consistency (MRSC).\n            \n             }\n        }\n   If you don't specify this field, the global table consistency mode defaults to [EVENTUAL]. For more information about global tables consistency modes, see {{:https://docs.aws.amazon.com/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes} Consistency modes} in DynamoDB developer guide. \n   "];
   deletion_protection_enabled: bool option
     [@ocaml.doc
       "Indicates whether deletion protection is to be enabled (true) or disabled (false) on the table.\n"];
@@ -787,7 +898,7 @@ type nonrec update_table_input =
       "The table class of the table to be updated. Valid values are [STANDARD] and [STANDARD_INFREQUENT_ACCESS].\n"];
   replica_updates: replication_group_update list option
     [@ocaml.doc
-      "A list of replica update actions (create, delete, or update) for the table.\n\n  For global tables, this property only applies to global tables using Version 2019.11.21 (Current version). \n  \n   "];
+      "A list of replica update actions (create, delete, or update) for the table.\n"];
   sse_specification: sse_specification option
     [@ocaml.doc
       "The new server-side encryption settings for the specified table.\n"];
@@ -802,7 +913,7 @@ type nonrec update_table_input =
       "The new provisioned throughput settings for the specified table or index.\n"];
   billing_mode: billing_mode option
     [@ocaml.doc
-      "Controls how you are charged for read and write throughput and how you manage capacity. When switching from pay-per-request to provisioned capacity, initial provisioned capacity values must be set. The initial provisioned capacity values are estimated based on the consumed read and write capacity of your table and global secondary indexes over the past 30 minutes.\n\n {ul\n       {-   [PROVISIONED] - We recommend using [PROVISIONED] for predictable workloads. [PROVISIONED] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html}Provisioned capacity mode}.\n           \n            }\n       {-   [PAY_PER_REQUEST] - We recommend using [PAY_PER_REQUEST] for unpredictable workloads. [PAY_PER_REQUEST] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html}On-demand capacity mode}. \n           \n            }\n       }\n  "];
+      "Controls how you are charged for read and write throughput and how you manage capacity. When switching from pay-per-request to provisioned capacity, initial provisioned capacity values must be set. The initial provisioned capacity values are estimated based on the consumed read and write capacity of your table and global secondary indexes over the past 30 minutes.\n\n {ul\n       {-   [PAY_PER_REQUEST] - We recommend using [PAY_PER_REQUEST] for most DynamoDB workloads. [PAY_PER_REQUEST] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html}On-demand capacity mode}. \n           \n            }\n       {-   [PROVISIONED] - We recommend using [PROVISIONED] for steady workloads with predictable growth where capacity requirements can be reliably forecasted. [PROVISIONED] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html}Provisioned capacity mode}.\n           \n            }\n       }\n  "];
   table_name: string
     [@ocaml.doc
       "The name of the table to be updated. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.\n"];
@@ -1038,7 +1149,11 @@ type nonrec transaction_conflict_exception =
                                            "Operation was rejected because there is an ongoing transaction for the item.\n"]
 type nonrec request_limit_exceeded = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Throughput exceeds the current throughput quota for your account. Please contact {{:https://aws.amazon.com/support}Amazon Web Services Support} to request a quota increase.\n"]
+                                           "Throughput exceeds the current throughput quota for your account. Please contact {{:https://aws.amazon.com/support}Amazon Web ServicesSupport} to request a quota increase.\n"]
+type nonrec replicated_write_conflict_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The request was rejected because one or more items in the request are being modified by a request in another Region. \n"]
 type nonrec provisioned_throughput_exceeded_exception =
   {
   message: string option
@@ -1059,7 +1174,7 @@ type nonrec conditional_check_failed_exception =
     [@ocaml.doc "Item which caused the [ConditionalCheckFailedException].\n"];
   message: string option [@ocaml.doc "The conditional request failed.\n"]}
 [@@ocaml.doc
-  "A condition specified in the operation could not be evaluated.\n"]
+  "A condition specified in the operation failed to be evaluated.\n"]
 type nonrec replica_global_secondary_index_settings_description =
   {
   provisioned_write_capacity_auto_scaling_settings:
@@ -1294,6 +1409,9 @@ type nonrec point_in_time_recovery_description =
   earliest_restorable_date_time: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "Specifies the earliest point in time you can restore your table to. You can restore your table to any point in time during the last 35 days. \n"];
+  recovery_period_in_days: int option
+    [@ocaml.doc
+      "The number of preceding days for which continuous backups are taken and maintained. Your table data is only recoverable to any point-in-time from within the configured recovery period. This parameter is optional.\n"];
   point_in_time_recovery_status: point_in_time_recovery_status option
     [@ocaml.doc
       "The current state of point in time recovery:\n\n {ul\n       {-   [ENABLED] - Point in time recovery is enabled.\n           \n            }\n       {-   [DISABLED] - Point in time recovery is disabled.\n           \n            }\n       }\n  "]}
@@ -1318,6 +1436,9 @@ type nonrec update_continuous_backups_output =
 [@@ocaml.doc ""]
 type nonrec point_in_time_recovery_specification =
   {
+  recovery_period_in_days: int option
+    [@ocaml.doc
+      "The number of preceding days for which continuous backups are taken and maintained. Your table data is only recoverable to any point-in-time from within the configured recovery period. This parameter is optional. If no value is provided, the value will default to 35.\n"];
   point_in_time_recovery_enabled: bool
     [@ocaml.doc
       "Indicates whether point in time recovery is enabled (true) or disabled (false) on the table.\n"]}
@@ -1579,12 +1700,15 @@ type nonrec table_in_use_exception = {
                                            "A target table with the specified name is either being created or deleted. \n"]
 type nonrec global_secondary_index =
   {
+  warm_throughput: warm_throughput option
+    [@ocaml.doc
+      "Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index. If you use this parameter, you must specify [ReadUnitsPerSecond], [WriteUnitsPerSecond], or both.\n"];
   on_demand_throughput: on_demand_throughput option
     [@ocaml.doc
-      "The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both.\n"];
+      "The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify [MaxReadRequestUnits], [MaxWriteRequestUnits], or both. You must use either [OnDemandThroughput] or [ProvisionedThroughput] based on your table's capacity mode.\n"];
   provisioned_throughput: provisioned_throughput option
     [@ocaml.doc
-      "Represents the provisioned throughput settings for the specified global secondary index.\n\n For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n "];
+      "Represents the provisioned throughput settings for the specified global secondary index. You must use either [OnDemandThroughput] or [ProvisionedThroughput] based on your table's capacity mode.\n\n For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n "];
   projection: projection
     [@ocaml.doc
       "Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. \n"];
@@ -1897,7 +2021,7 @@ type nonrec query_output =
       "The primary key of the item where the operation stopped, inclusive of the previous result set. Use this value to start a new operation, excluding this value in the new request.\n\n If [LastEvaluatedKey] is empty, then the \"last page\" of results has been processed and there is no more data to be retrieved.\n \n  If [LastEvaluatedKey] is not empty, it does not necessarily mean that there is more data in the result set. The only way to know when you have reached the end of the result set is when [LastEvaluatedKey] is empty.\n  "];
   scanned_count: int option
     [@ocaml.doc
-      "The number of items evaluated, before any [QueryFilter] is applied. A high [ScannedCount] value with few, or no, [Count] results indicates an inefficient [Query] operation. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Count}Count and ScannedCount} in the {i Amazon DynamoDB Developer Guide}.\n\n If you did not use a filter in the request, then [ScannedCount] is the same as [Count].\n "];
+      "The number of items evaluated, before any [QueryFilter] is applied. A high [ScannedCount] value with few, or no, [Count] results indicates an inefficient [Query] operation. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Count}Count and ScannedCount} in the {i Amazon DynamoDB Developer Guide}.\n\n If you did not use a filter in the request, then [ScannedCount] is the same as [Count].\n "];
   count: int option
     [@ocaml.doc
       "The number of items in the response.\n\n If you used a [QueryFilter] in the request, then [Count] is the number of items returned after the filter was applied, and [ScannedCount] is the number of matching items before the filter was applied.\n \n  If you did not use a filter in the request, then [Count] and [ScannedCount] are the same.\n  "];
@@ -3032,6 +3156,9 @@ type nonrec create_table_input =
   resource_policy: string option
     [@ocaml.doc
       "An Amazon Web Services resource-based policy document in JSON format that will be attached to the table.\n\n When you attach a resource-based policy while creating a table, the policy application is {i strongly consistent}.\n \n  The maximum size supported for a resource-based policy document is 20 KB. DynamoDB counts whitespaces when calculating the size of a policy against this limit. For a full list of all considerations that apply for resource-based policies, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/rbac-considerations.html}Resource-based policy considerations}.\n  \n    You need to specify the [CreateTable] and [PutResourcePolicy] IAM actions for authorizing a user to create a table with a resource-based policy.\n    \n     "];
+  warm_throughput: warm_throughput option
+    [@ocaml.doc
+      "Represents the warm throughput (in read units per second and write units per second) for creating a table.\n"];
   deletion_protection_enabled: bool option
     [@ocaml.doc
       "Indicates whether deletion protection is to be enabled (true) or disabled (false) on the table.\n"];
@@ -3052,13 +3179,13 @@ type nonrec create_table_input =
       "Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the [UpdateTable] operation.\n\n  If you set BillingMode as [PROVISIONED], you must specify this property. If you set BillingMode as [PAY_PER_REQUEST], you cannot specify this property.\n \n  For current minimum and maximum provisioned throughput values, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html}Service, Account, and Table Quotas} in the {i Amazon DynamoDB Developer Guide}.\n  "];
   billing_mode: billing_mode option
     [@ocaml.doc
-      "Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.\n\n {ul\n       {-   [PROVISIONED] - We recommend using [PROVISIONED] for predictable workloads. [PROVISIONED] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html}Provisioned capacity mode}.\n           \n            }\n       {-   [PAY_PER_REQUEST] - We recommend using [PAY_PER_REQUEST] for unpredictable workloads. [PAY_PER_REQUEST] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html}On-demand capacity mode}. \n           \n            }\n       }\n  "];
+      "Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.\n\n {ul\n       {-   [PAY_PER_REQUEST] - We recommend using [PAY_PER_REQUEST] for most DynamoDB workloads. [PAY_PER_REQUEST] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html}On-demand capacity mode}. \n           \n            }\n       {-   [PROVISIONED] - We recommend using [PROVISIONED] for steady workloads with predictable growth where capacity requirements can be reliably forecasted. [PROVISIONED] sets the billing mode to {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html}Provisioned capacity mode}.\n           \n            }\n       }\n  "];
   global_secondary_indexes: global_secondary_index list option
     [@ocaml.doc
-      "One or more global secondary indexes (the maximum is 20) to be created on the table. Each global secondary index in the array includes the following:\n\n {ul\n       {-   [IndexName] - The name of the global secondary index. Must be unique only for this table.\n           \n            \n            \n             }\n       {-   [KeySchema] - Specifies the key schema for the global secondary index.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ProvisionedThroughput] - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units.\n           \n            }\n       }\n  "];
+      "One or more global secondary indexes (the maximum is 20) to be created on the table. Each global secondary index in the array includes the following:\n\n {ul\n       {-   [IndexName] - The name of the global secondary index. Must be unique only for this table.\n           \n            \n            \n             }\n       {-   [KeySchema] - Specifies the key schema for the global secondary index.\n           \n            }\n       {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n           \n            {ul\n                  {-   [ProjectionType] - One of the following:\n                      \n                       {ul\n                             {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                 \n                                  }\n                             {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                 \n                                  }\n                             {-   [ALL] - All of the table attributes are projected into the index.\n                                 \n                                  }\n                             \n                   }\n                    }\n                  {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of [INCLUDE]. You still can specify the ProjectionType of [ALL] to project all attributes from the source table, even if the table has more than 100 attributes.\n                      \n                       }\n                  \n        }\n         }\n       {-   [ProvisionedThroughput] - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units.\n           \n            }\n       }\n  "];
   local_secondary_indexes: local_secondary_index list option
     [@ocaml.doc
-      "One or more local secondary indexes (the maximum is 5) to be created on the table. Each index is scoped to a given partition key value. There is a 10 GB size limit per partition key value; otherwise, the size of a local secondary index is unconstrained.\n\n Each local secondary index in the array includes the following:\n \n  {ul\n        {-   [IndexName] - The name of the local secondary index. Must be unique only for this table.\n            \n             \n             \n              }\n        {-   [KeySchema] - Specifies the key schema for the local secondary index. The key schema must begin with the same partition key as the table.\n            \n             }\n        {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n            \n             {ul\n                   {-   [ProjectionType] - One of the following:\n                       \n                        {ul\n                              {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                  \n                                   }\n                              {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                  \n                                   }\n                              {-   [ALL] - All of the table attributes are projected into the index.\n                                  \n                                   }\n                              \n                    }\n                     }\n                   {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.\n                       \n                        }\n                   \n         }\n          }\n        }\n  "];
+      "One or more local secondary indexes (the maximum is 5) to be created on the table. Each index is scoped to a given partition key value. There is a 10 GB size limit per partition key value; otherwise, the size of a local secondary index is unconstrained.\n\n Each local secondary index in the array includes the following:\n \n  {ul\n        {-   [IndexName] - The name of the local secondary index. Must be unique only for this table.\n            \n             \n             \n              }\n        {-   [KeySchema] - Specifies the key schema for the local secondary index. The key schema must begin with the same partition key as the table.\n            \n             }\n        {-   [Projection] - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:\n            \n             {ul\n                   {-   [ProjectionType] - One of the following:\n                       \n                        {ul\n                              {-   [KEYS_ONLY] - Only the index and primary keys are projected into the index.\n                                  \n                                   }\n                              {-   [INCLUDE] - Only the specified table attributes are projected into the index. The list of projected attributes is in [NonKeyAttributes].\n                                  \n                                   }\n                              {-   [ALL] - All of the table attributes are projected into the index.\n                                  \n                                   }\n                              \n                    }\n                     }\n                   {-   [NonKeyAttributes] - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in [NonKeyAttributes], summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of [INCLUDE]. You still can specify the ProjectionType of [ALL] to project all attributes from the source table, even if the table has more than 100 attributes.\n                       \n                        }\n                   \n         }\n          }\n        }\n  "];
   key_schema: key_schema_element list
     [@ocaml.doc
       "Specifies the attributes that make up the primary key for a table or an index. The attributes in [KeySchema] must also be defined in the [AttributeDefinitions] array. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataModel.html}Data Model} in the {i Amazon DynamoDB Developer Guide}.\n\n Each [KeySchemaElement] in the array is composed of:\n \n  {ul\n        {-   [AttributeName] - The name of this key attribute.\n            \n             }\n        {-   [KeyType] - The role that the key attribute will assume:\n            \n             {ul\n                   {-   [HASH] - partition key\n                       \n                        }\n                   {-   [RANGE] - sort key\n                       \n                        }\n                   \n         }\n          }\n        }\n    The partition key of an item is also known as its {i hash attribute}. The term \"hash attribute\" derives from the DynamoDB usage of an internal hash function to evenly distribute data items across partitions, based on their partition key values.\n    \n     The sort key of an item is also known as its {i range attribute}. The term \"range attribute\" derives from the way DynamoDB stores items with the same partition key physically close together, in sorted order by the sort key value.\n     \n       For a simple primary key (partition key), you must provide exactly one element with a [KeyType] of [HASH].\n       \n        For a composite primary key (partition key and sort key), you must provide exactly two elements, in this order: The first element must have a [KeyType] of [HASH], and the second element must have a [KeyType] of [RANGE].\n        \n         For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#WorkingWithTables.primary.key}Working with Tables} in the {i Amazon DynamoDB Developer Guide}.\n         "];
@@ -3163,6 +3290,9 @@ val make_delete_request : key:key -> unit -> delete_request
 val make_write_request :
   ?delete_request:delete_request ->
     ?put_request:put_request -> unit -> write_request
+val make_warm_throughput :
+  ?write_units_per_second:int ->
+    ?read_units_per_second:int -> unit -> warm_throughput
 val make_time_to_live_specification :
   attribute_name:string -> enabled:bool -> unit -> time_to_live_specification
 val make_update_time_to_live_output :
@@ -3279,18 +3409,24 @@ val make_local_secondary_index_description :
 val make_on_demand_throughput :
   ?max_write_request_units:int ->
     ?max_read_request_units:int -> unit -> on_demand_throughput
+val make_global_secondary_index_warm_throughput_description :
+  ?status:index_status ->
+    ?write_units_per_second:int ->
+      ?read_units_per_second:int ->
+        unit -> global_secondary_index_warm_throughput_description
 val make_global_secondary_index_description :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?index_arn:string ->
-      ?item_count:int ->
-        ?index_size_bytes:int ->
-          ?provisioned_throughput:provisioned_throughput_description ->
-            ?backfilling:bool ->
-              ?index_status:index_status ->
-                ?projection:projection ->
-                  ?key_schema:key_schema_element list ->
-                    ?index_name:string ->
-                      unit -> global_secondary_index_description
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?index_arn:string ->
+        ?item_count:int ->
+          ?index_size_bytes:int ->
+            ?provisioned_throughput:provisioned_throughput_description ->
+              ?backfilling:bool ->
+                ?index_status:index_status ->
+                  ?projection:projection ->
+                    ?key_schema:key_schema_element list ->
+                      ?index_name:string ->
+                        unit -> global_secondary_index_description
 val make_stream_specification :
   ?stream_view_type:stream_view_type ->
     stream_enabled:bool -> unit -> stream_specification
@@ -3298,11 +3434,16 @@ val make_provisioned_throughput_override :
   ?read_capacity_units:int -> unit -> provisioned_throughput_override
 val make_on_demand_throughput_override :
   ?max_read_request_units:int -> unit -> on_demand_throughput_override
+val make_table_warm_throughput_description :
+  ?status:table_status ->
+    ?write_units_per_second:int ->
+      ?read_units_per_second:int -> unit -> table_warm_throughput_description
 val make_replica_global_secondary_index_description :
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-    ?provisioned_throughput_override:provisioned_throughput_override ->
-      ?index_name:string ->
-        unit -> replica_global_secondary_index_description
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
+    ?on_demand_throughput_override:on_demand_throughput_override ->
+      ?provisioned_throughput_override:provisioned_throughput_override ->
+        ?index_name:string ->
+          unit -> replica_global_secondary_index_description
 val make_table_class_summary :
   ?last_update_date_time:CoreTypes.Timestamp.t ->
     ?table_class:table_class -> unit -> table_class_summary
@@ -3311,13 +3452,18 @@ val make_replica_description :
     ?replica_inaccessible_date_time:CoreTypes.Timestamp.t ->
       ?global_secondary_indexes:replica_global_secondary_index_description
         list ->
-        ?on_demand_throughput_override:on_demand_throughput_override ->
-          ?provisioned_throughput_override:provisioned_throughput_override ->
-            ?kms_master_key_id:string ->
-              ?replica_status_percent_progress:string ->
-                ?replica_status_description:string ->
-                  ?replica_status:replica_status ->
-                    ?region_name:string -> unit -> replica_description
+        ?warm_throughput:table_warm_throughput_description ->
+          ?on_demand_throughput_override:on_demand_throughput_override ->
+            ?provisioned_throughput_override:provisioned_throughput_override
+              ->
+              ?kms_master_key_id:string ->
+                ?replica_status_percent_progress:string ->
+                  ?replica_status_description:string ->
+                    ?replica_status:replica_status ->
+                      ?region_name:string -> unit -> replica_description
+val make_global_table_witness_description :
+  ?witness_status:witness_status ->
+    ?region_name:string -> unit -> global_table_witness_description
 val make_restore_summary :
   ?source_table_arn:string ->
     ?source_backup_arn:string ->
@@ -3332,52 +3478,60 @@ val make_archival_summary :
     ?archival_reason:string ->
       ?archival_date_time:CoreTypes.Timestamp.t -> unit -> archival_summary
 val make_table_description :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?deletion_protection_enabled:bool ->
-      ?table_class_summary:table_class_summary ->
-        ?archival_summary:archival_summary ->
-          ?sse_description:sse_description ->
-            ?restore_summary:restore_summary ->
-              ?replicas:replica_description list ->
-                ?global_table_version:string ->
-                  ?latest_stream_arn:string ->
-                    ?latest_stream_label:string ->
-                      ?stream_specification:stream_specification ->
-                        ?global_secondary_indexes:global_secondary_index_description
-                          list ->
-                          ?local_secondary_indexes:local_secondary_index_description
-                            list ->
-                            ?billing_mode_summary:billing_mode_summary ->
-                              ?table_id:string ->
-                                ?table_arn:string ->
-                                  ?item_count:int ->
-                                    ?table_size_bytes:int ->
-                                      ?provisioned_throughput:provisioned_throughput_description
-                                        ->
-                                        ?creation_date_time:CoreTypes.Timestamp.t
-                                          ->
-                                          ?table_status:table_status ->
-                                            ?key_schema:key_schema_element
-                                              list ->
-                                              ?table_name:string ->
-                                                ?attribute_definitions:attribute_definition
-                                                  list ->
-                                                  unit -> table_description
+  ?multi_region_consistency:multi_region_consistency ->
+    ?warm_throughput:table_warm_throughput_description ->
+      ?on_demand_throughput:on_demand_throughput ->
+        ?deletion_protection_enabled:bool ->
+          ?table_class_summary:table_class_summary ->
+            ?archival_summary:archival_summary ->
+              ?sse_description:sse_description ->
+                ?restore_summary:restore_summary ->
+                  ?global_table_witnesses:global_table_witness_description
+                    list ->
+                    ?replicas:replica_description list ->
+                      ?global_table_version:string ->
+                        ?latest_stream_arn:string ->
+                          ?latest_stream_label:string ->
+                            ?stream_specification:stream_specification ->
+                              ?global_secondary_indexes:global_secondary_index_description
+                                list ->
+                                ?local_secondary_indexes:local_secondary_index_description
+                                  list ->
+                                  ?billing_mode_summary:billing_mode_summary
+                                    ->
+                                    ?table_id:string ->
+                                      ?table_arn:string ->
+                                        ?item_count:int ->
+                                          ?table_size_bytes:int ->
+                                            ?provisioned_throughput:provisioned_throughput_description
+                                              ->
+                                              ?creation_date_time:CoreTypes.Timestamp.t
+                                                ->
+                                                ?table_status:table_status ->
+                                                  ?key_schema:key_schema_element
+                                                    list ->
+                                                    ?table_name:string ->
+                                                      ?attribute_definitions:attribute_definition
+                                                        list ->
+                                                        unit ->
+                                                          table_description
 val make_update_table_output :
   ?table_description:table_description -> unit -> update_table_output
 val make_provisioned_throughput :
   write_capacity_units:int ->
     read_capacity_units:int -> unit -> provisioned_throughput
 val make_update_global_secondary_index_action :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      index_name:string -> unit -> update_global_secondary_index_action
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        index_name:string -> unit -> update_global_secondary_index_action
 val make_create_global_secondary_index_action :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      projection:projection ->
-        key_schema:key_schema_element list ->
-          index_name:string -> unit -> create_global_secondary_index_action
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        projection:projection ->
+          key_schema:key_schema_element list ->
+            index_name:string -> unit -> create_global_secondary_index_action
 val make_delete_global_secondary_index_action :
   index_name:string -> unit -> delete_global_secondary_index_action
 val make_global_secondary_index_update :
@@ -3415,19 +3569,32 @@ val make_replication_group_update :
     ?update:update_replication_group_member_action ->
       ?create:create_replication_group_member_action ->
         unit -> replication_group_update
+val make_create_global_table_witness_group_member_action :
+  region_name:string ->
+    unit -> create_global_table_witness_group_member_action
+val make_delete_global_table_witness_group_member_action :
+  region_name:string ->
+    unit -> delete_global_table_witness_group_member_action
+val make_global_table_witness_group_update :
+  ?delete:delete_global_table_witness_group_member_action ->
+    ?create:create_global_table_witness_group_member_action ->
+      unit -> global_table_witness_group_update
 val make_update_table_input :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?deletion_protection_enabled:bool ->
-      ?table_class:table_class ->
-        ?replica_updates:replication_group_update list ->
-          ?sse_specification:sse_specification ->
-            ?stream_specification:stream_specification ->
-              ?global_secondary_index_updates:global_secondary_index_update
-                list ->
-                ?provisioned_throughput:provisioned_throughput ->
-                  ?billing_mode:billing_mode ->
-                    ?attribute_definitions:attribute_definition list ->
-                      table_name:string -> unit -> update_table_input
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?global_table_witness_updates:global_table_witness_group_update list ->
+        ?multi_region_consistency:multi_region_consistency ->
+          ?deletion_protection_enabled:bool ->
+            ?table_class:table_class ->
+              ?replica_updates:replication_group_update list ->
+                ?sse_specification:sse_specification ->
+                  ?stream_specification:stream_specification ->
+                    ?global_secondary_index_updates:global_secondary_index_update
+                      list ->
+                      ?provisioned_throughput:provisioned_throughput ->
+                        ?billing_mode:billing_mode ->
+                          ?attribute_definitions:attribute_definition list ->
+                            table_name:string -> unit -> update_table_input
 val make_update_kinesis_streaming_configuration :
   ?approximate_creation_date_time_precision:approximate_creation_date_time_precision
     -> unit -> update_kinesis_streaming_configuration
@@ -3573,8 +3740,9 @@ val make_update_contributor_insights_input :
 val make_point_in_time_recovery_description :
   ?latest_restorable_date_time:CoreTypes.Timestamp.t ->
     ?earliest_restorable_date_time:CoreTypes.Timestamp.t ->
-      ?point_in_time_recovery_status:point_in_time_recovery_status ->
-        unit -> point_in_time_recovery_description
+      ?recovery_period_in_days:int ->
+        ?point_in_time_recovery_status:point_in_time_recovery_status ->
+          unit -> point_in_time_recovery_description
 val make_continuous_backups_description :
   ?point_in_time_recovery_description:point_in_time_recovery_description ->
     continuous_backups_status:continuous_backups_status ->
@@ -3583,8 +3751,9 @@ val make_update_continuous_backups_output :
   ?continuous_backups_description:continuous_backups_description ->
     unit -> update_continuous_backups_output
 val make_point_in_time_recovery_specification :
-  point_in_time_recovery_enabled:bool ->
-    unit -> point_in_time_recovery_specification
+  ?recovery_period_in_days:int ->
+    point_in_time_recovery_enabled:bool ->
+      unit -> point_in_time_recovery_specification
 val make_update_continuous_backups_input :
   point_in_time_recovery_specification:point_in_time_recovery_specification
     -> table_name:string -> unit -> update_continuous_backups_input
@@ -3659,11 +3828,12 @@ val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_input :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_input
 val make_global_secondary_index :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      projection:projection ->
-        key_schema:key_schema_element list ->
-          index_name:string -> unit -> global_secondary_index
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        projection:projection ->
+          key_schema:key_schema_element list ->
+            index_name:string -> unit -> global_secondary_index
 val make_table_creation_parameters :
   ?global_secondary_indexes:global_secondary_index list ->
     ?sse_specification:sse_specification ->
@@ -4169,19 +4339,22 @@ val make_create_table_output :
 val make_create_table_input :
   ?on_demand_throughput:on_demand_throughput ->
     ?resource_policy:string ->
-      ?deletion_protection_enabled:bool ->
-        ?table_class:table_class ->
-          ?tags:tag list ->
-            ?sse_specification:sse_specification ->
-              ?stream_specification:stream_specification ->
-                ?provisioned_throughput:provisioned_throughput ->
-                  ?billing_mode:billing_mode ->
-                    ?global_secondary_indexes:global_secondary_index list ->
-                      ?local_secondary_indexes:local_secondary_index list ->
-                        key_schema:key_schema_element list ->
-                          table_name:string ->
-                            attribute_definitions:attribute_definition list
-                              -> unit -> create_table_input
+      ?warm_throughput:warm_throughput ->
+        ?deletion_protection_enabled:bool ->
+          ?table_class:table_class ->
+            ?tags:tag list ->
+              ?sse_specification:sse_specification ->
+                ?stream_specification:stream_specification ->
+                  ?provisioned_throughput:provisioned_throughput ->
+                    ?billing_mode:billing_mode ->
+                      ?global_secondary_indexes:global_secondary_index list
+                        ->
+                        ?local_secondary_indexes:local_secondary_index list
+                          ->
+                          key_schema:key_schema_element list ->
+                            table_name:string ->
+                              attribute_definitions:attribute_definition list
+                                -> unit -> create_table_input
 val make_create_global_table_output :
   ?global_table_description:global_table_description ->
     unit -> create_global_table_output
@@ -4228,7 +4401,7 @@ sig
           | `InternalServerError of internal_server_error 
           | `RequestLimitExceeded of request_limit_exceeded ]) result
 end[@@ocaml.doc
-     "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on all key attributes. This enforces that each [SELECT] statement in a batch returns at most a single item.\n\n  The entire batch must consist of either read statements or write statements, you cannot mix both in one batch.\n  \n     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement succeeded. Error details for individual statements can be found under the {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} field of the [BatchStatementResponse] for each statement.\n     \n      "]
+     "This operation allows you to perform batch reads or writes on data stored in DynamoDB, using PartiQL. Each read statement in a [BatchExecuteStatement] must specify an equality condition on all key attributes. This enforces that each [SELECT] statement in a batch returns at most a single item. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html}Running batch operations with PartiQL for DynamoDB }.\n\n  The entire batch must consist of either read statements or write statements, you cannot mix both in one batch.\n  \n     A HTTP 200 response does not mean that all statements in the BatchExecuteStatement succeeded. Error details for individual statements can be found under the {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error}Error} field of the [BatchStatementResponse] for each statement.\n     \n      "]
 module BatchGetItem :
 sig
   val request :
@@ -4244,7 +4417,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "The [BatchGetItem] operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.\n\n A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to get.\n \n   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the message \"Too many items requested for the BatchGetItem call.\"\n   \n     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.\n     \n      If {i none} of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then [BatchGetItem] returns a [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully processed, then [BatchGetItem] completes successfully, while returning the keys of the unread items in [UnprocessedKeys].\n      \n        If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.\n        \n         For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n         \n           By default, [BatchGetItem] performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to [true] for any or all tables.\n           \n            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n            \n             When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the [ProjectionExpression] parameter.\n             \n              If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working with Tables} in the {i Amazon DynamoDB Developer Guide}.\n              "]
+     "The [BatchGetItem] operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.\n\n A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. [BatchGetItem] returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for [UnprocessedKeys]. You can use this value to retry the operation starting with the next item to get.\n \n   If you request more than 100 items, [BatchGetItem] returns a [ValidationException] with the message \"Too many items requested for the BatchGetItem call.\"\n   \n     For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate [UnprocessedKeys] value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.\n     \n      If {i none} of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then [BatchGetItem] returns a [ProvisionedThroughputExceededException]. If {i at least one} of the items is successfully processed, then [BatchGetItem] completes successfully, while returning the keys of the unread items in [UnprocessedKeys].\n      \n        If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.\n        \n         For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations}Batch Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n         \n           By default, [BatchGetItem] performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set [ConsistentRead] to [true] for any or all tables.\n           \n            In order to minimize response latency, [BatchGetItem] may retrieve items in parallel.\n            \n             When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the [ProjectionExpression] parameter.\n             \n              If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations}Working with Tables} in the {i Amazon DynamoDB Developer Guide}.\n              \n                 [BatchGetItem] will result in a [ValidationException] if the same key is specified multiple times.\n                \n                 "]
 module BatchWriteItem :
 sig
   val request :
@@ -4258,11 +4431,13 @@ sig
               item_collection_size_limit_exceeded_exception 
           | `ProvisionedThroughputExceededException of
               provisioned_throughput_exceeded_exception 
+          | `ReplicatedWriteConflictException of
+              replicated_write_conflict_exception 
           | `RequestLimitExceeded of request_limit_exceeded 
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations. While individual items can be up to 400 KB once stored, it's important to note that an item's representation might be greater than 400KB while being sent in DynamoDB's JSON format for the API call. For more details on this distinction, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming Rules and Data Types}.\n\n   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an existing item, that item's values will be overwritten by the operation and it will appear like it was updated. To update items, we recommend you use the [UpdateItem] action.\n  \n    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because the table's provisioned throughput is exceeded or an internal processing failure occurs, the failed operations are returned in the [UnprocessedItems] response parameter. You can investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] request with those unprocessed items until all items have been processed.\n    \n     If {i none} of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then [BatchWriteItem] returns a [ProvisionedThroughputExceededException].\n     \n       If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.\n       \n        For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n        \n          With [BatchWriteItem], you can efficiently write or delete large amounts of data, such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve performance with these large-scale operations, [BatchWriteItem] does not behave in the same way as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted items in the response.\n          \n           If you use a programming language that supports concurrency, you can use threads to write items in parallel. Your application must include the necessary logic to manage the threads. With languages that don't support threading, you must update or delete the specified items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete operations in parallel, giving you the power of the thread pool approach without having to introduce complexity into your application.\n           \n            Parallel processing reduces latency, but each specified put and delete request consumes the same number of write capacity units whether it is processed in parallel or not. Delete operations on nonexistent items consume one write capacity unit.\n            \n             If one or more of the following is true, DynamoDB rejects the entire batch write operation:\n             \n              {ul\n                    {-  One or more tables specified in the [BatchWriteItem] request does not exist.\n                        \n                         }\n                    {-  Primary key attributes specified on an item in the request do not match those in the corresponding table's primary key schema.\n                        \n                         }\n                    {-  You try to perform multiple operations on the same item in the same [BatchWriteItem] request. For example, you cannot put and delete the same item in the same [BatchWriteItem] request. \n                        \n                         }\n                    {-   Your request contains at least two items with identical hash and range keys (which essentially is two put operations). \n                        \n                         }\n                    {-  There are more than 25 requests in the batch.\n                        \n                         }\n                    {-  Any individual item in a batch exceeds 400 KB.\n                        \n                         }\n                    {-  The total request size exceeds 16 MB.\n                        \n                         }\n                    {-  Any individual items with keys exceeding the key length limits. For a partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n                        \n                         }\n                    }\n  "]
+     "The [BatchWriteItem] operation puts or deletes multiple items in one or more tables. A single call to [BatchWriteItem] can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations. While individual items can be up to 400 KB once stored, it's important to note that an item's representation might be greater than 400KB while being sent in DynamoDB's JSON format for the API call. For more details on this distinction, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html}Naming Rules and Data Types}.\n\n   [BatchWriteItem] cannot update items. If you perform a [BatchWriteItem] operation on an existing item, that item's values will be overwritten by the operation and it will appear like it was updated. To update items, we recommend you use the [UpdateItem] action.\n  \n    The individual [PutItem] and [DeleteItem] operations specified in [BatchWriteItem] are atomic; however [BatchWriteItem] as a whole is not. If any requested operations fail because the table's provisioned throughput is exceeded or an internal processing failure occurs, the failed operations are returned in the [UnprocessedItems] response parameter. You can investigate and optionally resend the requests. Typically, you would call [BatchWriteItem] in a loop. Each iteration would check for unprocessed items and submit a new [BatchWriteItem] request with those unprocessed items until all items have been processed.\n    \n     For tables and indexes with provisioned capacity, if none of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then [BatchWriteItem] returns a [ProvisionedThroughputExceededException]. For all tables and indexes, if none of the items can be processed due to other throttling scenarios (such as exceeding partition level limits), then [BatchWriteItem] returns a [ThrottlingException].\n     \n       If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, {i we strongly recommend that you use an exponential backoff algorithm}. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.\n       \n        For more information, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations}Batch Operations and Error Handling} in the {i Amazon DynamoDB Developer Guide}.\n        \n          With [BatchWriteItem], you can efficiently write or delete large amounts of data, such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve performance with these large-scale operations, [BatchWriteItem] does not behave in the same way as individual [PutItem] and [DeleteItem] calls would. For example, you cannot specify conditions on individual put and delete requests, and [BatchWriteItem] does not return deleted items in the response.\n          \n           If you use a programming language that supports concurrency, you can use threads to write items in parallel. Your application must include the necessary logic to manage the threads. With languages that don't support threading, you must update or delete the specified items one at a time. In both situations, [BatchWriteItem] performs the specified put and delete operations in parallel, giving you the power of the thread pool approach without having to introduce complexity into your application.\n           \n            Parallel processing reduces latency, but each specified put and delete request consumes the same number of write capacity units whether it is processed in parallel or not. Delete operations on nonexistent items consume one write capacity unit.\n            \n             If one or more of the following is true, DynamoDB rejects the entire batch write operation:\n             \n              {ul\n                    {-  One or more tables specified in the [BatchWriteItem] request does not exist.\n                        \n                         }\n                    {-  Primary key attributes specified on an item in the request do not match those in the corresponding table's primary key schema.\n                        \n                         }\n                    {-  You try to perform multiple operations on the same item in the same [BatchWriteItem] request. For example, you cannot put and delete the same item in the same [BatchWriteItem] request. \n                        \n                         }\n                    {-   Your request contains at least two items with identical hash and range keys (which essentially is two put operations). \n                        \n                         }\n                    {-  There are more than 25 requests in the batch.\n                        \n                         }\n                    {-  Any individual item in a batch exceeds 400 KB.\n                        \n                         }\n                    {-  The total request size exceeds 16 MB.\n                        \n                         }\n                    {-  Any individual items with keys exceeding the key length limits. For a partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.\n                        \n                         }\n                    }\n  "]
 module CreateBackup :
 sig
   val request :
@@ -4337,6 +4512,8 @@ sig
               item_collection_size_limit_exceeded_exception 
           | `ProvisionedThroughputExceededException of
               provisioned_throughput_exceeded_exception 
+          | `ReplicatedWriteConflictException of
+              replicated_write_conflict_exception 
           | `RequestLimitExceeded of request_limit_exceeded 
           | `ResourceNotFoundException of resource_not_found_exception 
           | `TransactionConflictException of transaction_conflict_exception ])
@@ -4373,7 +4550,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the [DELETING] state, no error is returned. \n\n  For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). \n  \n     DynamoDB might continue to accept data read and write operations, such as [GetItem] and [PutItem], on a table in the [DELETING] state until the table deletion is complete.\n     \n       When you delete a table, any indexes on that table are also deleted.\n       \n        If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n        \n         Use the [DescribeTable] action to check the status of the table. \n         "]
+     "The [DeleteTable] operation deletes a table and all of its items. After a [DeleteTable] request, the specified table is in the [DELETING] state until DynamoDB completes the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is in [CREATING] or [UPDATING] states, then DynamoDB returns a [ResourceInUseException]. If the specified table does not exist, DynamoDB returns a [ResourceNotFoundException]. If table is already in the [DELETING] state, no error is returned. \n\n  DynamoDB might continue to accept data read and write operations, such as [GetItem] and [PutItem], on a table in the [DELETING] state until the table deletion is complete. For the full list of table states, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus}TableStatus}.\n  \n    When you delete a table, any indexes on that table are also deleted.\n    \n     If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the [DISABLED] state, and the stream is automatically deleted after 24 hours.\n     \n      Use the [DescribeTable] action to check the status of the table. \n      "]
 module DescribeBackup :
 sig
   val request :
@@ -4397,7 +4574,7 @@ sig
           | `InvalidEndpointException of invalid_endpoint_exception 
           | `TableNotFoundException of table_not_found_exception ]) result
 end[@@ocaml.doc
-     "Checks the status of continuous backups and point in time recovery on the specified table. Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n  After continuous backups and point in time recovery are enabled, you can restore to any point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n \n   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore your table to any point in time during the last 35 days. \n  \n   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n   "]
+     "Checks the status of continuous backups and point in time recovery on the specified table. Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n  After continuous backups and point in time recovery are enabled, you can restore to any point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n \n   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. \n  \n   You can call [DescribeContinuousBackups] at a maximum rate of 10 times per second.\n   "]
 module DescribeContributorInsights :
 sig
   val request :
@@ -4499,7 +4676,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.\n\n  For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). \n  \n     If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually consistent query, and the metadata for your table might not be available at that moment. Wait for a few seconds, and then try the [DescribeTable] request again.\n     \n      "]
+     "Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.\n\n  If you issue a [DescribeTable] request immediately after a [CreateTable] request, DynamoDB might return a [ResourceNotFoundException]. This is because [DescribeTable] uses an eventually consistent query, and the metadata for your table might not be available at that moment. Wait for a few seconds, and then try the [DescribeTable] request again.\n  \n   "]
 module DescribeTableReplicaAutoScaling :
 sig
   val request :
@@ -4511,7 +4688,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Describes auto scaling settings across replicas of the global table at once.\n\n  For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version).\n  \n   "]
+     "Describes auto scaling settings across replicas of the global table at once.\n"]
 module DescribeTimeToLive :
 sig
   val request :
@@ -4745,6 +4922,8 @@ sig
               item_collection_size_limit_exceeded_exception 
           | `ProvisionedThroughputExceededException of
               provisioned_throughput_exceeded_exception 
+          | `ReplicatedWriteConflictException of
+              replicated_write_conflict_exception 
           | `RequestLimitExceeded of request_limit_exceeded 
           | `ResourceNotFoundException of resource_not_found_exception 
           | `TransactionConflictException of transaction_conflict_exception ])
@@ -4816,7 +4995,7 @@ sig
           | `TableInUseException of table_in_use_exception 
           | `TableNotFoundException of table_not_found_exception ]) result
 end[@@ocaml.doc
-     "Restores the specified table to the specified point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. You can restore your table to any point in time during the last 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. \n\n When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. \n \n  Along with data, the following are also included on the new restored table using point in time recovery: \n  \n   {ul\n         {-  Global secondary indexes (GSIs)\n             \n              }\n         {-  Local secondary indexes (LSIs)\n             \n              }\n         {-  Provisioned read and write capacity\n             \n              }\n         {-  Encryption settings\n             \n                All these settings come from the current settings of the source table at the time of restore. \n               \n                 }\n         }\n   You must manually set up the following on the restored table:\n   \n    {ul\n          {-  Auto scaling policies\n              \n               }\n          {-  IAM policies\n              \n               }\n          {-  Amazon CloudWatch metrics and alarms\n              \n               }\n          {-  Tags\n              \n               }\n          {-  Stream settings\n              \n               }\n          {-  Time to Live (TTL) settings\n              \n               }\n          {-  Point in time recovery settings\n              \n               }\n          }\n  "]
+     "Restores the specified table to the specified point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. \n\n When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. \n \n  Along with data, the following are also included on the new restored table using point in time recovery: \n  \n   {ul\n         {-  Global secondary indexes (GSIs)\n             \n              }\n         {-  Local secondary indexes (LSIs)\n             \n              }\n         {-  Provisioned read and write capacity\n             \n              }\n         {-  Encryption settings\n             \n                All these settings come from the current settings of the source table at the time of restore. \n               \n                 }\n         }\n   You must manually set up the following on the restored table:\n   \n    {ul\n          {-  Auto scaling policies\n              \n               }\n          {-  IAM policies\n              \n               }\n          {-  Amazon CloudWatch metrics and alarms\n              \n               }\n          {-  Tags\n              \n               }\n          {-  Stream settings\n              \n               }\n          {-  Time to Live (TTL) settings\n              \n               }\n          {-  Point in time recovery settings\n              \n               }\n          }\n  "]
 module Scan :
 sig
   val request :
@@ -4847,7 +5026,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Associate a set of tags with an Amazon DynamoDB resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. You can call TagResource up to five times per second, per account. \n\n For an overview on tagging DynamoDB resources, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html}Tagging for DynamoDB} in the {i Amazon DynamoDB Developer Guide}.\n "]
+     "Associate a set of tags with an Amazon DynamoDB resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. You can call TagResource up to five times per second, per account. \n\n {ul\n       {-   [TagResource] is an asynchronous operation. If you issue a [ListTagsOfResource] request immediately after a [TagResource] request, DynamoDB might return your previous tag set, if there was one, or an empty tag set. This is because [ListTagsOfResource] uses an eventually consistent query, and the metadata for your tags or table might not be available at that moment. Wait for a few seconds, and then try the [ListTagsOfResource] request again.\n           \n            }\n       {-  The application or removal of tags using [TagResource] and [UntagResource] APIs is eventually consistent. [ListTagsOfResource] API will only reflect the changes after a few seconds.\n           \n            }\n       }\n   For an overview on tagging DynamoDB resources, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html}Tagging for DynamoDB} in the {i Amazon DynamoDB Developer Guide}.\n   "]
 module TransactGetItems :
 sig
   val request :
@@ -4900,7 +5079,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Removes the association of tags from an Amazon DynamoDB resource. You can call [UntagResource] up to five times per second, per account. \n\n For an overview on tagging DynamoDB resources, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html}Tagging for DynamoDB} in the {i Amazon DynamoDB Developer Guide}.\n "]
+     "Removes the association of tags from an Amazon DynamoDB resource. You can call [UntagResource] up to five times per second, per account. \n\n {ul\n       {-   [UntagResource] is an asynchronous operation. If you issue a [ListTagsOfResource] request immediately after an [UntagResource] request, DynamoDB might return your previous tag set, if there was one, or an empty tag set. This is because [ListTagsOfResource] uses an eventually consistent query, and the metadata for your tags or table might not be available at that moment. Wait for a few seconds, and then try the [ListTagsOfResource] request again.\n           \n            }\n       {-  The application or removal of tags using [TagResource] and [UntagResource] APIs is eventually consistent. [ListTagsOfResource] API will only reflect the changes after a few seconds.\n           \n            }\n       }\n   For an overview on tagging DynamoDB resources, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html}Tagging for DynamoDB} in the {i Amazon DynamoDB Developer Guide}.\n   "]
 module UpdateContinuousBackups :
 sig
   val request :
@@ -4914,7 +5093,7 @@ sig
           | `InvalidEndpointException of invalid_endpoint_exception 
           | `TableNotFoundException of table_not_found_exception ]) result
 end[@@ocaml.doc
-     " [UpdateContinuousBackups] enables or disables point in time recovery for the specified table. A successful [UpdateContinuousBackups] call returns the current [ContinuousBackupsDescription]. Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n  Once continuous backups and point in time recovery are enabled, you can restore to any point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n \n   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore your table to any point in time during the last 35 days. \n  "]
+     " [UpdateContinuousBackups] enables or disables point in time recovery for the specified table. A successful [UpdateContinuousBackups] call returns the current [ContinuousBackupsDescription]. Continuous backups are [ENABLED] on all tables at table creation. If point in time recovery is enabled, [PointInTimeRecoveryStatus] will be set to ENABLED.\n\n  Once continuous backups and point in time recovery are enabled, you can restore to any point in time within [EarliestRestorableDateTime] and [LatestRestorableDateTime]. \n \n   [LatestRestorableDateTime] is typically 5 minutes before the current time. You can restore your table to any point in time in the last 35 days. You can set the [RecoveryPeriodInDays] to any value between 1 and 35 days.\n  "]
 module UpdateContributorInsights :
 sig
   val request :
@@ -4942,7 +5121,7 @@ sig
           | `ReplicaNotFoundException of replica_not_found_exception 
           | `TableNotFoundException of table_not_found_exception ]) result
 end[@@ocaml.doc
-     "Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.\n\n  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n  \n   To determine which version you're using, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining the global table version you are using}. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading global tables}.\n   \n       For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). If you are using global tables {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Version 2019.11.21} you can use {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html}UpdateTable} instead. \n      \n        Although you can use [UpdateGlobalTable] to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. \n       \n          If global secondary indexes are specified, then the following conditions must also be met: \n         \n          {ul\n                {-   The global secondary indexes must have the same name. \n                    \n                     }\n                {-   The global secondary indexes must have the same hash key and sort key (if present). \n                    \n                     }\n                {-   The global secondary indexes must have the same provisioned and maximum write capacity units. \n                    \n                     }\n                }\n  "]
+     "Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.\n\n  This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Global Tables version 2019.11.21 (Current)} when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).\n  \n   To determine which version you're using, see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html}Determining the global table version you are using}. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html}Upgrading global tables}.\n   \n       If you are using global tables {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html}Version 2019.11.21} (Current) you can use {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html}UpdateTable} instead. \n      \n        Although you can use [UpdateGlobalTable] to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. \n       \n          If global secondary indexes are specified, then the following conditions must also be met: \n         \n          {ul\n                {-   The global secondary indexes must have the same name. \n                    \n                     }\n                {-   The global secondary indexes must have the same hash key and sort key (if present). \n                    \n                     }\n                {-   The global secondary indexes must have the same provisioned and maximum write capacity units. \n                    \n                     }\n                }\n  "]
 module UpdateGlobalTableSettings :
 sig
   val request :
@@ -4974,6 +5153,8 @@ sig
               item_collection_size_limit_exceeded_exception 
           | `ProvisionedThroughputExceededException of
               provisioned_throughput_exceeded_exception 
+          | `ReplicatedWriteConflictException of
+              replicated_write_conflict_exception 
           | `RequestLimitExceeded of request_limit_exceeded 
           | `ResourceNotFoundException of resource_not_found_exception 
           | `TransactionConflictException of transaction_conflict_exception ])
@@ -5008,7 +5189,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.\n\n  For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). \n  \n    You can only perform one of the following operations at once:\n    \n     {ul\n           {-  Modify the provisioned throughput settings of the table.\n               \n                }\n           {-  Remove a global secondary index from the table.\n               \n                }\n           {-  Create a new global secondary index on the table. After the index begins backfilling, you can use [UpdateTable] to perform other operations.\n               \n                }\n           }\n    [UpdateTable] is an asynchronous operation; while it's executing, the table status changes from [ACTIVE] to [UPDATING]. While it's [UPDATING], you can't issue another [UpdateTable] request. When the table returns to the [ACTIVE] state, the [UpdateTable] operation is complete.\n   "]
+     "Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.\n\n You can only perform one of the following operations at once:\n \n  {ul\n        {-  Modify the provisioned throughput settings of the table.\n            \n             }\n        {-  Remove a global secondary index from the table.\n            \n             }\n        {-  Create a new global secondary index on the table. After the index begins backfilling, you can use [UpdateTable] to perform other operations.\n            \n             }\n        }\n    [UpdateTable] is an asynchronous operation; while it's executing, the table status changes from [ACTIVE] to [UPDATING]. While it's [UPDATING], you can't issue another [UpdateTable] request. When the table returns to the [ACTIVE] state, the [UpdateTable] operation is complete.\n   "]
 module UpdateTableReplicaAutoScaling :
 sig
   val request :
@@ -5022,7 +5203,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Updates auto scaling settings on your global tables at once.\n\n  For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). \n  \n   "]
+     "Updates auto scaling settings on your global tables at once.\n"]
 module UpdateTimeToLive :
 sig
   val request :

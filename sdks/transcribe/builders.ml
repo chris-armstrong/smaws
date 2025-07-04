@@ -151,13 +151,17 @@ let make_sentiment_filter ?negate:(negate_ : bool option)
      absolute_time_range = absolute_time_range_;
      sentiments = sentiments_
    } : sentiment_filter)
+let make_tag ~value:(value_ : string) ~key:(key_ : string) () =
+  ({ value = value_; key = key_ } : tag)
 let make_category_properties ?input_type:(input_type_ : input_type option)
+  ?tags:(tags_ : tag list option)
   ?last_update_time:(last_update_time_ : CoreTypes.Timestamp.t option)
   ?create_time:(create_time_ : CoreTypes.Timestamp.t option)
   ?rules:(rules_ : rule list option)
   ?category_name:(category_name_ : string option) () =
   ({
      input_type = input_type_;
+     tags = tags_;
      last_update_time = last_update_time_;
      create_time = create_time_;
      rules = rules_;
@@ -275,8 +279,6 @@ let make_job_execution_settings
      data_access_role_arn = data_access_role_arn_;
      allow_deferred_execution = allow_deferred_execution_
    } : job_execution_settings)
-let make_tag ~value:(value_ : string) ~key:(key_ : string) () =
-  ({ value = value_; key = key_ } : tag)
 let make_subtitles_output
   ?output_start_index:(output_start_index_ : int option)
   ?subtitle_file_uris:(subtitle_file_uris_ : string list option)
@@ -508,7 +510,13 @@ let make_medical_scribe_output
      clinical_document_uri = clinical_document_uri_;
      transcript_file_uri = transcript_file_uri_
    } : medical_scribe_output)
+let make_clinical_note_generation_settings
+  ?note_template:(note_template_ : medical_scribe_note_template option) () =
+  ({ note_template = note_template_ } : clinical_note_generation_settings)
 let make_medical_scribe_settings
+  ?clinical_note_generation_settings:(clinical_note_generation_settings_ :
+                                       clinical_note_generation_settings
+                                         option)
   ?vocabulary_filter_method:(vocabulary_filter_method_ :
                               vocabulary_filter_method option)
   ?vocabulary_filter_name:(vocabulary_filter_name_ : string option)
@@ -517,6 +525,7 @@ let make_medical_scribe_settings
   ?max_speaker_labels:(max_speaker_labels_ : int option)
   ?show_speaker_labels:(show_speaker_labels_ : bool option) () =
   ({
+     clinical_note_generation_settings = clinical_note_generation_settings_;
      vocabulary_filter_method = vocabulary_filter_method_;
      vocabulary_filter_name = vocabulary_filter_name_;
      vocabulary_name = vocabulary_name_;
@@ -623,7 +632,7 @@ let make_channel_definition
   ?channel_id:(channel_id_ : int option) () =
   ({ participant_role = participant_role_; channel_id = channel_id_ } : 
   channel_definition)
-let make_call_analytics_job
+let make_call_analytics_job ?tags:(tags_ : tag list option)
   ?channel_definitions:(channel_definitions_ :
                          channel_definition list option)
   ?settings:(settings_ : call_analytics_job_settings option)
@@ -644,6 +653,7 @@ let make_call_analytics_job
                                call_analytics_job_status option)
   ?call_analytics_job_name:(call_analytics_job_name_ : string option) () =
   ({
+     tags = tags_;
      channel_definitions = channel_definitions_;
      settings = settings_;
      identified_language_score = identified_language_score_;
@@ -667,6 +677,7 @@ let make_start_call_analytics_job_response
 let make_start_call_analytics_job_request
   ?channel_definitions:(channel_definitions_ :
                          channel_definition list option)
+  ?tags:(tags_ : tag list option)
   ?settings:(settings_ : call_analytics_job_settings option)
   ?data_access_role_arn:(data_access_role_arn_ : string option)
   ?output_encryption_kms_key_id:(output_encryption_kms_key_id_ :
@@ -675,6 +686,7 @@ let make_start_call_analytics_job_request
   ~call_analytics_job_name:(call_analytics_job_name_ : string) () =
   ({
      channel_definitions = channel_definitions_;
+     tags = tags_;
      settings = settings_;
      data_access_role_arn = data_access_role_arn_;
      output_encryption_kms_key_id = output_encryption_kms_key_id_;
@@ -1168,7 +1180,12 @@ let make_create_call_analytics_category_response
   =
   ({ category_properties = category_properties_ } : create_call_analytics_category_response)
 let make_create_call_analytics_category_request
-  ?input_type:(input_type_ : input_type option) ~rules:(rules_ : rule list)
+  ?input_type:(input_type_ : input_type option)
+  ?tags:(tags_ : tag list option) ~rules:(rules_ : rule list)
   ~category_name:(category_name_ : string) () =
-  ({ input_type = input_type_; rules = rules_; category_name = category_name_
+  ({
+     input_type = input_type_;
+     tags = tags_;
+     rules = rules_;
+     category_name = category_name_
    } : create_call_analytics_category_request)

@@ -58,6 +58,19 @@ let write_request_to_yojson (x : write_request) =
     ("PutRequest", (option_to_yojson put_request_to_yojson x.put_request))]
 let write_requests_to_yojson tree =
   list_to_yojson write_request_to_yojson tree
+let base_unit_to_yojson = unit_to_yojson
+let witness_status_to_yojson (x : witness_status) =
+  match x with
+  | ACTIVE -> `String "ACTIVE"
+  | DELETING -> `String "DELETING"
+  | CREATING -> `String "CREATING"
+let long_object_to_yojson = long_to_yojson
+let warm_throughput_to_yojson (x : warm_throughput) =
+  assoc_to_yojson
+    [("WriteUnitsPerSecond",
+       (option_to_yojson long_object_to_yojson x.write_units_per_second));
+    ("ReadUnitsPerSecond",
+      (option_to_yojson long_object_to_yojson x.read_units_per_second))]
 let time_to_live_enabled_to_yojson = bool_to_yojson
 let time_to_live_attribute_name_to_yojson = string_to_yojson
 let time_to_live_specification_to_yojson (x : time_to_live_specification) =
@@ -96,9 +109,9 @@ let internal_server_error_to_yojson (x : internal_server_error) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let table_name_to_yojson = string_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let table_status_to_yojson (x : table_status) =
   match x with
+  | REPLICATION_NOT_AUTHORIZED -> `String "REPLICATION_NOT_AUTHORIZED"
   | ARCHIVED -> `String "ARCHIVED"
   | ARCHIVING -> `String "ARCHIVING"
   | INACCESSIBLE_ENCRYPTION_CREDENTIALS ->
@@ -173,6 +186,9 @@ let replica_global_secondary_index_auto_scaling_description_list_to_yojson
     replica_global_secondary_index_auto_scaling_description_to_yojson tree
 let replica_status_to_yojson (x : replica_status) =
   match x with
+  | REPLICATION_NOT_AUTHORIZED -> `String "REPLICATION_NOT_AUTHORIZED"
+  | ARCHIVED -> `String "ARCHIVED"
+  | ARCHIVING -> `String "ARCHIVING"
   | INACCESSIBLE_ENCRYPTION_CREDENTIALS ->
       `String "INACCESSIBLE_ENCRYPTION_CREDENTIALS"
   | REGION_DISABLED -> `String "REGION_DISABLED"
@@ -330,7 +346,6 @@ let provisioned_throughput_description_to_yojson
       (option_to_yojson date_to_yojson x.last_decrease_date_time));
     ("LastIncreaseDateTime",
       (option_to_yojson date_to_yojson x.last_increase_date_time))]
-let long_object_to_yojson = long_to_yojson
 let table_id_to_yojson = string_to_yojson
 let billing_mode_to_yojson (x : billing_mode) =
   match x with
@@ -376,12 +391,25 @@ let on_demand_throughput_to_yojson (x : on_demand_throughput) =
        (option_to_yojson long_object_to_yojson x.max_write_request_units));
     ("MaxReadRequestUnits",
       (option_to_yojson long_object_to_yojson x.max_read_request_units))]
+let global_secondary_index_warm_throughput_description_to_yojson
+  (x : global_secondary_index_warm_throughput_description) =
+  assoc_to_yojson
+    [("Status", (option_to_yojson index_status_to_yojson x.status));
+    ("WriteUnitsPerSecond",
+      (option_to_yojson positive_long_object_to_yojson
+         x.write_units_per_second));
+    ("ReadUnitsPerSecond",
+      (option_to_yojson positive_long_object_to_yojson
+         x.read_units_per_second))]
 let global_secondary_index_description_to_yojson
   (x : global_secondary_index_description) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("WarmThroughput",
+       (option_to_yojson
+          global_secondary_index_warm_throughput_description_to_yojson
+          x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
     ("IndexArn", (option_to_yojson string__to_yojson x.index_arn));
     ("ItemCount", (option_to_yojson long_object_to_yojson x.item_count));
     ("IndexSizeBytes",
@@ -422,12 +450,26 @@ let on_demand_throughput_override_to_yojson
   assoc_to_yojson
     [("MaxReadRequestUnits",
        (option_to_yojson long_object_to_yojson x.max_read_request_units))]
+let table_warm_throughput_description_to_yojson
+  (x : table_warm_throughput_description) =
+  assoc_to_yojson
+    [("Status", (option_to_yojson table_status_to_yojson x.status));
+    ("WriteUnitsPerSecond",
+      (option_to_yojson positive_long_object_to_yojson
+         x.write_units_per_second));
+    ("ReadUnitsPerSecond",
+      (option_to_yojson positive_long_object_to_yojson
+         x.read_units_per_second))]
 let replica_global_secondary_index_description_to_yojson
   (x : replica_global_secondary_index_description) =
   assoc_to_yojson
-    [("OnDemandThroughputOverride",
-       (option_to_yojson on_demand_throughput_override_to_yojson
-          x.on_demand_throughput_override));
+    [("WarmThroughput",
+       (option_to_yojson
+          global_secondary_index_warm_throughput_description_to_yojson
+          x.warm_throughput));
+    ("OnDemandThroughputOverride",
+      (option_to_yojson on_demand_throughput_override_to_yojson
+         x.on_demand_throughput_override));
     ("ProvisionedThroughputOverride",
       (option_to_yojson provisioned_throughput_override_to_yojson
          x.provisioned_throughput_override));
@@ -454,6 +496,9 @@ let replica_description_to_yojson (x : replica_description) =
       (option_to_yojson
          replica_global_secondary_index_description_list_to_yojson
          x.global_secondary_indexes));
+    ("WarmThroughput",
+      (option_to_yojson table_warm_throughput_description_to_yojson
+         x.warm_throughput));
     ("OnDemandThroughputOverride",
       (option_to_yojson on_demand_throughput_override_to_yojson
          x.on_demand_throughput_override));
@@ -473,6 +518,14 @@ let replica_description_to_yojson (x : replica_description) =
     ("RegionName", (option_to_yojson region_name_to_yojson x.region_name))]
 let replica_description_list_to_yojson tree =
   list_to_yojson replica_description_to_yojson tree
+let global_table_witness_description_to_yojson
+  (x : global_table_witness_description) =
+  assoc_to_yojson
+    [("WitnessStatus",
+       (option_to_yojson witness_status_to_yojson x.witness_status));
+    ("RegionName", (option_to_yojson region_name_to_yojson x.region_name))]
+let global_table_witness_description_list_to_yojson tree =
+  list_to_yojson global_table_witness_description_to_yojson tree
 let backup_arn_to_yojson = string_to_yojson
 let restore_in_progress_to_yojson = bool_to_yojson
 let restore_summary_to_yojson (x : restore_summary) =
@@ -512,11 +565,18 @@ let archival_summary_to_yojson (x : archival_summary) =
     ("ArchivalDateTime",
       (option_to_yojson date_to_yojson x.archival_date_time))]
 let deletion_protection_enabled_to_yojson = bool_to_yojson
+let multi_region_consistency_to_yojson (x : multi_region_consistency) =
+  match x with | STRONG -> `String "STRONG" | EVENTUAL -> `String "EVENTUAL"
 let table_description_to_yojson (x : table_description) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("MultiRegionConsistency",
+       (option_to_yojson multi_region_consistency_to_yojson
+          x.multi_region_consistency));
+    ("WarmThroughput",
+      (option_to_yojson table_warm_throughput_description_to_yojson
+         x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
     ("DeletionProtectionEnabled",
       (option_to_yojson deletion_protection_enabled_to_yojson
          x.deletion_protection_enabled));
@@ -528,6 +588,9 @@ let table_description_to_yojson (x : table_description) =
       (option_to_yojson sse_description_to_yojson x.sse_description));
     ("RestoreSummary",
       (option_to_yojson restore_summary_to_yojson x.restore_summary));
+    ("GlobalTableWitnesses",
+      (option_to_yojson global_table_witness_description_list_to_yojson
+         x.global_table_witnesses));
     ("Replicas",
       (option_to_yojson replica_description_list_to_yojson x.replicas));
     ("GlobalTableVersion",
@@ -575,9 +638,10 @@ let provisioned_throughput_to_yojson (x : provisioned_throughput) =
 let update_global_secondary_index_action_to_yojson
   (x : update_global_secondary_index_action) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("WarmThroughput",
+       (option_to_yojson warm_throughput_to_yojson x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
     ("ProvisionedThroughput",
       (option_to_yojson provisioned_throughput_to_yojson
          x.provisioned_throughput));
@@ -585,9 +649,10 @@ let update_global_secondary_index_action_to_yojson
 let create_global_secondary_index_action_to_yojson
   (x : create_global_secondary_index_action) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("WarmThroughput",
+       (option_to_yojson warm_throughput_to_yojson x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
     ("ProvisionedThroughput",
       (option_to_yojson provisioned_throughput_to_yojson
          x.provisioned_throughput));
@@ -681,11 +746,37 @@ let replication_group_update_to_yojson (x : replication_group_update) =
          x.create))]
 let replication_group_update_list_to_yojson tree =
   list_to_yojson replication_group_update_to_yojson tree
+let create_global_table_witness_group_member_action_to_yojson
+  (x : create_global_table_witness_group_member_action) =
+  assoc_to_yojson
+    [("RegionName", (Some (region_name_to_yojson x.region_name)))]
+let delete_global_table_witness_group_member_action_to_yojson
+  (x : delete_global_table_witness_group_member_action) =
+  assoc_to_yojson
+    [("RegionName", (Some (region_name_to_yojson x.region_name)))]
+let global_table_witness_group_update_to_yojson
+  (x : global_table_witness_group_update) =
+  assoc_to_yojson
+    [("Delete",
+       (option_to_yojson
+          delete_global_table_witness_group_member_action_to_yojson x.delete));
+    ("Create",
+      (option_to_yojson
+         create_global_table_witness_group_member_action_to_yojson x.create))]
+let global_table_witness_group_update_list_to_yojson tree =
+  list_to_yojson global_table_witness_group_update_to_yojson tree
 let update_table_input_to_yojson (x : update_table_input) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("WarmThroughput",
+       (option_to_yojson warm_throughput_to_yojson x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
+    ("GlobalTableWitnessUpdates",
+      (option_to_yojson global_table_witness_group_update_list_to_yojson
+         x.global_table_witness_updates));
+    ("MultiRegionConsistency",
+      (option_to_yojson multi_region_consistency_to_yojson
+         x.multi_region_consistency));
     ("DeletionProtectionEnabled",
       (option_to_yojson deletion_protection_enabled_to_yojson
          x.deletion_protection_enabled));
@@ -906,6 +997,10 @@ let transaction_conflict_exception_to_yojson
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let request_limit_exceeded_to_yojson (x : request_limit_exceeded) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let replicated_write_conflict_exception_to_yojson
+  (x : replicated_write_conflict_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let provisioned_throughput_exceeded_exception_to_yojson
@@ -1135,6 +1230,7 @@ let point_in_time_recovery_status_to_yojson
   match x with
   | DISABLED -> `String "DISABLED"
   | ENABLED -> `String "ENABLED"
+let recovery_period_in_days_to_yojson = int_to_yojson
 let point_in_time_recovery_description_to_yojson
   (x : point_in_time_recovery_description) =
   assoc_to_yojson
@@ -1142,6 +1238,9 @@ let point_in_time_recovery_description_to_yojson
        (option_to_yojson date_to_yojson x.latest_restorable_date_time));
     ("EarliestRestorableDateTime",
       (option_to_yojson date_to_yojson x.earliest_restorable_date_time));
+    ("RecoveryPeriodInDays",
+      (option_to_yojson recovery_period_in_days_to_yojson
+         x.recovery_period_in_days));
     ("PointInTimeRecoveryStatus",
       (option_to_yojson point_in_time_recovery_status_to_yojson
          x.point_in_time_recovery_status))]
@@ -1162,8 +1261,11 @@ let update_continuous_backups_output_to_yojson
 let point_in_time_recovery_specification_to_yojson
   (x : point_in_time_recovery_specification) =
   assoc_to_yojson
-    [("PointInTimeRecoveryEnabled",
-       (Some (boolean_object_to_yojson x.point_in_time_recovery_enabled)))]
+    [("RecoveryPeriodInDays",
+       (option_to_yojson recovery_period_in_days_to_yojson
+          x.recovery_period_in_days));
+    ("PointInTimeRecoveryEnabled",
+      (Some (boolean_object_to_yojson x.point_in_time_recovery_enabled)))]
 let update_continuous_backups_input_to_yojson
   (x : update_continuous_backups_input) =
   assoc_to_yojson
@@ -1372,9 +1474,10 @@ let table_in_use_exception_to_yojson (x : table_in_use_exception) =
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let global_secondary_index_to_yojson (x : global_secondary_index) =
   assoc_to_yojson
-    [("OnDemandThroughput",
-       (option_to_yojson on_demand_throughput_to_yojson
-          x.on_demand_throughput));
+    [("WarmThroughput",
+       (option_to_yojson warm_throughput_to_yojson x.warm_throughput));
+    ("OnDemandThroughput",
+      (option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput));
     ("ProvisionedThroughput",
       (option_to_yojson provisioned_throughput_to_yojson
          x.provisioned_throughput));
@@ -2522,6 +2625,8 @@ let create_table_input_to_yojson (x : create_table_input) =
           x.on_demand_throughput));
     ("ResourcePolicy",
       (option_to_yojson resource_policy_to_yojson x.resource_policy));
+    ("WarmThroughput",
+      (option_to_yojson warm_throughput_to_yojson x.warm_throughput));
     ("DeletionProtectionEnabled",
       (option_to_yojson deletion_protection_enabled_to_yojson
          x.deletion_protection_enabled));

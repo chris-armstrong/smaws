@@ -10,13 +10,18 @@ let make_vpc_endpoint_error_detail ?error_code:(error_code_ : string option)
   () =
   ({ error_code = error_code_; error_message = error_message_; id = id_ } : 
   vpc_endpoint_error_detail)
-let make_vpc_endpoint_detail ?created_date:(created_date_ : int option)
+let make_vpc_endpoint_detail
+  ?failure_message:(failure_message_ : string option)
+  ?failure_code:(failure_code_ : string option)
+  ?created_date:(created_date_ : int option)
   ?status:(status_ : vpc_endpoint_status option)
   ?security_group_ids:(security_group_ids_ : string list option)
   ?subnet_ids:(subnet_ids_ : string list option)
   ?vpc_id:(vpc_id_ : string option) ?name:(name_ : string option)
   ?id:(id_ : string option) () =
   ({
+     failure_message = failure_message_;
+     failure_code = failure_code_;
      created_date = created_date_;
      status = status_;
      security_group_ids = security_group_ids_;
@@ -97,18 +102,40 @@ let make_update_security_policy_request
      type_ = type__
    } : update_security_policy_request)
 let make_saml_config_options ?session_timeout:(session_timeout_ : int option)
+  ?open_search_serverless_entity_id:(open_search_serverless_entity_id_ :
+                                      string option)
   ?group_attribute:(group_attribute_ : string option)
   ?user_attribute:(user_attribute_ : string option)
   ~metadata:(metadata_ : string) () =
   ({
      session_timeout = session_timeout_;
+     open_search_serverless_entity_id = open_search_serverless_entity_id_;
      group_attribute = group_attribute_;
      user_attribute = user_attribute_;
      metadata = metadata_
    } : saml_config_options)
+let make_iam_identity_center_config_options
+  ?group_attribute:(group_attribute_ :
+                     iam_identity_center_group_attribute option)
+  ?user_attribute:(user_attribute_ :
+                    iam_identity_center_user_attribute option)
+  ?application_description:(application_description_ : string option)
+  ?application_name:(application_name_ : string option)
+  ?application_arn:(application_arn_ : string option)
+  ?instance_arn:(instance_arn_ : string option) () =
+  ({
+     group_attribute = group_attribute_;
+     user_attribute = user_attribute_;
+     application_description = application_description_;
+     application_name = application_name_;
+     application_arn = application_arn_;
+     instance_arn = instance_arn_
+   } : iam_identity_center_config_options)
 let make_security_config_detail
   ?last_modified_date:(last_modified_date_ : int option)
   ?created_date:(created_date_ : int option)
+  ?iam_identity_center_options:(iam_identity_center_options_ :
+                                 iam_identity_center_config_options option)
   ?saml_options:(saml_options_ : saml_config_options option)
   ?description:(description_ : string option)
   ?config_version:(config_version_ : string option)
@@ -117,6 +144,7 @@ let make_security_config_detail
   ({
      last_modified_date = last_modified_date_;
      created_date = created_date_;
+     iam_identity_center_options = iam_identity_center_options_;
      saml_options = saml_options_;
      description = description_;
      config_version = config_version_;
@@ -128,13 +156,27 @@ let make_update_security_config_response
                             security_config_detail option)
   () =
   ({ security_config_detail = security_config_detail_ } : update_security_config_response)
+let make_update_iam_identity_center_config_options
+  ?group_attribute:(group_attribute_ :
+                     iam_identity_center_group_attribute option)
+  ?user_attribute:(user_attribute_ :
+                    iam_identity_center_user_attribute option)
+  () =
+  ({ group_attribute = group_attribute_; user_attribute = user_attribute_ } : 
+  update_iam_identity_center_config_options)
 let make_update_security_config_request
   ?client_token:(client_token_ : string option)
+  ?iam_identity_center_options_updates:(iam_identity_center_options_updates_
+                                         :
+                                         update_iam_identity_center_config_options
+                                           option)
   ?saml_options:(saml_options_ : saml_config_options option)
   ?description:(description_ : string option)
   ~config_version:(config_version_ : string) ~id:(id_ : string) () =
   ({
      client_token = client_token_;
+     iam_identity_center_options_updates =
+       iam_identity_center_options_updates_;
      saml_options = saml_options_;
      description = description_;
      config_version = config_version_;
@@ -463,6 +505,8 @@ let make_batch_get_effective_lifecycle_policy_request
   () =
   ({ resource_identifiers = resource_identifiers_ } : batch_get_effective_lifecycle_policy_request)
 let make_collection_detail
+  ?failure_message:(failure_message_ : string option)
+  ?failure_code:(failure_code_ : string option)
   ?dashboard_endpoint:(dashboard_endpoint_ : string option)
   ?collection_endpoint:(collection_endpoint_ : string option)
   ?last_modified_date:(last_modified_date_ : int option)
@@ -474,6 +518,8 @@ let make_collection_detail
   ?status:(status_ : collection_status option) ?name:(name_ : string option)
   ?id:(id_ : string option) () =
   ({
+     failure_message = failure_message_;
+     failure_code = failure_code_;
      dashboard_endpoint = dashboard_endpoint_;
      collection_endpoint = collection_endpoint_;
      last_modified_date = last_modified_date_;
@@ -743,13 +789,28 @@ let make_create_security_config_response
                             security_config_detail option)
   () =
   ({ security_config_detail = security_config_detail_ } : create_security_config_response)
+let make_create_iam_identity_center_config_options
+  ?group_attribute:(group_attribute_ :
+                     iam_identity_center_group_attribute option)
+  ?user_attribute:(user_attribute_ :
+                    iam_identity_center_user_attribute option)
+  ~instance_arn:(instance_arn_ : string) () =
+  ({
+     group_attribute = group_attribute_;
+     user_attribute = user_attribute_;
+     instance_arn = instance_arn_
+   } : create_iam_identity_center_config_options)
 let make_create_security_config_request
   ?client_token:(client_token_ : string option)
+  ?iam_identity_center_options:(iam_identity_center_options_ :
+                                 create_iam_identity_center_config_options
+                                   option)
   ?saml_options:(saml_options_ : saml_config_options option)
   ?description:(description_ : string option) ~name:(name_ : string)
   ~type_:(type__ : security_config_type) () =
   ({
      client_token = client_token_;
+     iam_identity_center_options = iam_identity_center_options_;
      saml_options = saml_options_;
      description = description_;
      name = name_;

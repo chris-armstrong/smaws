@@ -59,7 +59,7 @@ type nonrec cognito_identity_provider =
   {
   server_side_token_check: bool option
     [@ocaml.doc
-      "TRUE if server-side token validation is enabled for the identity provider\226\128\153s token.\n\n Once you set [ServerSideTokenCheck] to TRUE for an identity pool, that identity pool will check with the integrated user pools to make sure that the user has not been globally signed out or deleted before the identity pool provides an OIDC token or AWS credentials for the user.\n \n  If the user is signed out or deleted, the identity pool will return a 400 Not Authorized error.\n  "];
+      "TRUE if server-side token validation is enabled for the identity provider\226\128\153s token.\n\n Once you set [ServerSideTokenCheck] to TRUE for an identity pool, that identity pool will check with the integrated user pools to make sure that the user has not been globally signed out or deleted before the identity pool provides an OIDC token or Amazon Web Services credentials for the user.\n \n  If the user is signed out or deleted, the identity pool will return a 400 Not Authorized error.\n  "];
   client_id: string option
     [@ocaml.doc "The client ID for the Amazon Cognito user pool.\n"];
   provider_name: string option
@@ -231,7 +231,7 @@ type nonrec set_identity_pool_roles_input =
   {
   role_mappings: role_mapping_map option
     [@ocaml.doc
-      "How users for a specific identity provider are to mapped to roles. This is a string to [RoleMapping] object map. The string identifies the identity provider, for example, \"graph.facebook.com\" or \"cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id\".\n\n Up to 25 rules can be specified per identity provider.\n "];
+      "How users for a specific identity provider are to mapped to roles. This is a string to [RoleMapping] object map. The string identifies the identity provider, for example, [graph.facebook.com] or [cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id].\n\n Up to 25 rules can be specified per identity provider.\n "];
   roles: roles_map
     [@ocaml.doc
       "The map of roles associated with this pool. For a given role, the key will be either \"authenticated\" or \"unauthenticated\" and the value will be the Role ARN.\n"];
@@ -350,7 +350,7 @@ type nonrec invalid_identity_pool_configuration_exception =
     [@ocaml.doc
       "The message returned for an [InvalidIdentityPoolConfigurationException] \n"]}
 [@@ocaml.doc
-  "Thrown if the identity pool has no role associated for the given auth type (auth/unauth) or if the AssumeRole fails.\n"]
+  "If you provided authentication information in the request, the identity pool has no authenticated role configured, or STS returned an error response to the request to assume the authenticated role from the identity pool. If you provided no authentication information in the request, the identity pool has no unauthenticated role configured, or STS returned an error response to the request to assume the unauthenticated role from the identity pool.\n\n Your role trust policy must grant [AssumeRoleWithWebIdentity] permissions to [cognito-identity.amazonaws.com].\n "]
 type nonrec get_principal_tag_attribute_map_response =
   {
   principal_tags: principal_tags option
@@ -399,7 +399,7 @@ type nonrec get_open_id_token_for_developer_identity_input =
   {
   token_duration: int option
     [@ocaml.doc
-      "The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary AWS credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your AWS resources for the token's duration.\n\n  Please provide for a small grace period, usually no more than 5 minutes, to account for clock skew.\n  \n   "];
+      "The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary Amazon Web Services credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your Amazon Web Services resources for the token's duration.\n\n  Please provide for a small grace period, usually no more than 5 minutes, to account for clock skew.\n  \n   "];
   principal_tags: principal_tags option
     [@ocaml.doc
       "Use this operation to configure attribute mappings for custom providers. \n"];
@@ -422,7 +422,7 @@ type nonrec get_identity_pool_roles_response =
   {
   role_mappings: role_mapping_map option
     [@ocaml.doc
-      "How users for a specific identity provider are to mapped to roles. This is a String-to-[RoleMapping] object map. The string identifies the identity provider, for example, \"graph.facebook.com\" or \"cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id\".\n"];
+      "How users for a specific identity provider are to mapped to roles. This is a String-to-[RoleMapping] object map. The string identifies the identity provider, for example, [graph.facebook.com] or [cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id].\n"];
   roles: roles_map option
     [@ocaml.doc
       "The map of roles associated with this pool. Currently only authenticated and unauthenticated roles are supported.\n"];
@@ -447,8 +447,8 @@ type nonrec get_id_input =
   identity_pool_id: string
     [@ocaml.doc "An identity pool ID in the format REGION:GUID.\n"];
   account_id: string option
-    [@ocaml.doc "A standard AWS account ID (9+ digits).\n"]}[@@ocaml.doc
-                                                              "Input to the GetId action.\n"]
+    [@ocaml.doc "A standard Amazon Web Services account ID (9+ digits).\n"]}
+[@@ocaml.doc "Input to the GetId action.\n"]
 type nonrec credentials =
   {
   expiration: CoreTypes.Timestamp.t option
@@ -722,7 +722,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Creates a new identity pool. The identity pool is a store of user identity information that is specific to your AWS account. The keys for [SupportedLoginProviders] are as follows:\n\n {ul\n       {-  Facebook: [graph.facebook.com] \n           \n            }\n       {-  Google: [accounts.google.com] \n           \n            }\n       {-  Amazon: [www.amazon.com] \n           \n            }\n       {-  Twitter: [api.twitter.com] \n           \n            }\n       {-  Digits: [www.digits.com] \n           \n            }\n       }\n   You must use AWS Developer credentials to call this API.\n   "]
+     "Creates a new identity pool. The identity pool is a store of user identity information that is specific to your Amazon Web Services account. The keys for [SupportedLoginProviders] are as follows:\n\n {ul\n       {-  Facebook: [graph.facebook.com] \n           \n            }\n       {-  Google: [accounts.google.com] \n           \n            }\n       {-  Sign in With Apple: [appleid.apple.com] \n           \n            }\n       {-  Amazon: [www.amazon.com] \n           \n            }\n       {-  Twitter: [api.twitter.com] \n           \n            }\n       {-  Digits: [www.digits.com] \n           \n            }\n       }\n    If you don't provide a value for a parameter, Amazon Cognito sets it to its default value. \n    \n      You must use Amazon Web Services developer credentials to call this operation.\n      "]
 module DeleteIdentities :
 sig
   val request :
@@ -735,7 +735,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Deletes identities from an identity pool. You can specify a list of 1-60 identities that you want to delete.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Deletes identities from an identity pool. You can specify a list of 1-60 identities that you want to delete.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module DeleteIdentityPool :
 sig
   val request :
@@ -750,7 +750,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Deletes an identity pool. Once a pool is deleted, users will not be able to authenticate with the pool.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Deletes an identity pool. Once a pool is deleted, users will not be able to authenticate with the pool.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module DescribeIdentity :
 sig
   val request :
@@ -765,7 +765,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Returns metadata related to the given identity, including when the identity was created and any associated linked logins.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Returns metadata related to the given identity, including when the identity was created and any associated linked logins.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module DescribeIdentityPool :
 sig
   val request :
@@ -780,7 +780,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Gets details about a particular identity pool, including the pool name, ID description, creation date, and current number of users.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Gets details about a particular identity pool, including the pool name, ID description, creation date, and current number of users.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module GetCredentialsForIdentity :
 sig
   val request :
@@ -799,7 +799,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Returns credentials for the provided identity ID. Any provided logins will be validated against supported login providers. If the token is for cognito-identity.amazonaws.com, it will be passed through to AWS Security Token Service with the appropriate role for the token.\n\n This is a public API. You do not need any credentials to call this API.\n "]
+     "Returns credentials for the provided identity ID. Any provided logins will be validated against supported login providers. If the token is for [cognito-identity.amazonaws.com], it will be passed through to Security Token Service with the appropriate role for the token.\n\n This is a public API. You do not need any credentials to call this API.\n "]
 module GetId :
 sig
   val request :
@@ -817,7 +817,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Generates (or retrieves) a Cognito ID. Supplying multiple logins will create an implicit linked account.\n\n This is a public API. You do not need any credentials to call this API.\n "]
+     "Generates (or retrieves) IdentityID. Supplying multiple logins will create an implicit linked account.\n\n This is a public API. You do not need any credentials to call this API.\n "]
 module GetIdentityPoolRoles :
 sig
   val request :
@@ -833,7 +833,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Gets the roles for an identity pool.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Gets the roles for an identity pool.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module GetOpenIdToken :
 sig
   val request :
@@ -868,7 +868,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Registers (or retrieves) a Cognito [IdentityId] and an OpenID Connect token for a user authenticated by your backend authentication process. Supplying multiple logins will create an implicit linked account. You can only specify one developer provider as part of the [Logins] map, which is linked to the identity pool. The developer provider is the \"domain\" by which Cognito will refer to your users.\n\n You can use [GetOpenIdTokenForDeveloperIdentity] to create a new identity and to link new logins (that is, user credentials issued by a public provider or developer provider) to an existing identity. When you want to create a new identity, the [IdentityId] should be null. When you want to associate a new login with an existing authenticated/unauthenticated identity, you can do so by providing the existing [IdentityId]. This API will create the identity in the specified [IdentityPoolId].\n \n  You must use AWS Developer credentials to call this API.\n  "]
+     "Registers (or retrieves) a Cognito [IdentityId] and an OpenID Connect token for a user authenticated by your backend authentication process. Supplying multiple logins will create an implicit linked account. You can only specify one developer provider as part of the [Logins] map, which is linked to the identity pool. The developer provider is the \"domain\" by which Cognito will refer to your users.\n\n You can use [GetOpenIdTokenForDeveloperIdentity] to create a new identity and to link new logins (that is, user credentials issued by a public provider or developer provider) to an existing identity. When you want to create a new identity, the [IdentityId] should be null. When you want to associate a new login with an existing authenticated/unauthenticated identity, you can do so by providing the existing [IdentityId]. This API will create the identity in the specified [IdentityPoolId].\n \n  You must use Amazon Web Services developer credentials to call this operation.\n  "]
 module GetPrincipalTagAttributeMap :
 sig
   val request :
@@ -898,7 +898,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Lists the identities in an identity pool.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Lists the identities in an identity pool.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module ListIdentityPools :
 sig
   val request :
@@ -913,7 +913,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Lists all of the Cognito identity pools registered for your account.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Lists all of the Cognito identity pools registered for your account.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module ListTagsForResource :
 sig
   val request :
@@ -944,7 +944,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Retrieves the [IdentityID] associated with a [DeveloperUserIdentifier] or the list of [DeveloperUserIdentifier] values associated with an [IdentityId] for an existing identity. Either [IdentityID] or [DeveloperUserIdentifier] must not be null. If you supply only one of these values, the other value will be searched in the database and returned as a part of the response. If you supply both, [DeveloperUserIdentifier] will be matched against [IdentityID]. If the values are verified against the database, the response returns both values and is the same as the request. Otherwise a [ResourceConflictException] is thrown.\n\n  [LookupDeveloperIdentity] is intended for low-throughput control plane operations: for example, to enable customer service to locate an identity ID by username. If you are using it for higher-volume operations such as user authentication, your requests are likely to be throttled. [GetOpenIdTokenForDeveloperIdentity] is a better option for higher-volume operations for user authentication.\n \n  You must use AWS Developer credentials to call this API.\n  "]
+     "Retrieves the [IdentityID] associated with a [DeveloperUserIdentifier] or the list of [DeveloperUserIdentifier] values associated with an [IdentityId] for an existing identity. Either [IdentityID] or [DeveloperUserIdentifier] must not be null. If you supply only one of these values, the other value will be searched in the database and returned as a part of the response. If you supply both, [DeveloperUserIdentifier] will be matched against [IdentityID]. If the values are verified against the database, the response returns both values and is the same as the request. Otherwise, a [ResourceConflictException] is thrown.\n\n  [LookupDeveloperIdentity] is intended for low-throughput control plane operations: for example, to enable customer service to locate an identity ID by username. If you are using it for higher-volume operations such as user authentication, your requests are likely to be throttled. [GetOpenIdTokenForDeveloperIdentity] is a better option for higher-volume operations for user authentication.\n \n  You must use Amazon Web Services developer credentials to call this operation.\n  "]
 module MergeDeveloperIdentities :
 sig
   val request :
@@ -960,7 +960,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Merges two users having different [IdentityId]s, existing in the same identity pool, and identified by the same developer provider. You can use this action to request that discrete users be merged and identified as a single user in the Cognito environment. Cognito associates the given source user ([SourceUserIdentifier]) with the [IdentityId] of the [DestinationUserIdentifier]. Only developer-authenticated users can be merged. If the users to be merged are associated with the same public provider, but as two different users, an exception will be thrown.\n\n The number of linked logins is limited to 20. So, the number of linked logins for the source user, [SourceUserIdentifier], and the destination user, [DestinationUserIdentifier], together should not be larger than 20. Otherwise, an exception will be thrown.\n \n  You must use AWS Developer credentials to call this API.\n  "]
+     "Merges two users having different [IdentityId]s, existing in the same identity pool, and identified by the same developer provider. You can use this action to request that discrete users be merged and identified as a single user in the Cognito environment. Cognito associates the given source user ([SourceUserIdentifier]) with the [IdentityId] of the [DestinationUserIdentifier]. Only developer-authenticated users can be merged. If the users to be merged are associated with the same public provider, but as two different users, an exception will be thrown.\n\n The number of linked logins is limited to 20. So, the number of linked logins for the source user, [SourceUserIdentifier], and the destination user, [DestinationUserIdentifier], together should not be larger than 20. Otherwise, an exception will be thrown.\n \n  You must use Amazon Web Services developer credentials to call this operation.\n  "]
 module SetIdentityPoolRoles :
 sig
   val request :
@@ -978,7 +978,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Sets the roles for an identity pool. These roles are used when making calls to [GetCredentialsForIdentity] action.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Sets the roles for an identity pool. These roles are used when making calls to [GetCredentialsForIdentity] action.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module SetPrincipalTagAttributeMap :
 sig
   val request :
@@ -1024,7 +1024,7 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Unlinks a [DeveloperUserIdentifier] from an existing identity. Unlinked developer users will be considered new identities next time they are seen. If, for a given Cognito identity, you remove all federated identities as well as the developer user identifier, the Cognito identity becomes inaccessible.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Unlinks a [DeveloperUserIdentifier] from an existing identity. Unlinked developer users will be considered new identities next time they are seen. If, for a given Cognito identity, you remove all federated identities as well as the developer user identifier, the Cognito identity becomes inaccessible.\n\n You must use Amazon Web Services developer credentials to call this operation.\n "]
 module UnlinkIdentity :
 sig
   val request :
@@ -1075,4 +1075,4 @@ sig
           | `TooManyRequestsException of too_many_requests_exception ])
           result
 end[@@ocaml.doc
-     "Updates an identity pool.\n\n You must use AWS Developer credentials to call this API.\n "]
+     "Updates the configuration of an identity pool.\n\n  If you don't provide a value for a parameter, Amazon Cognito sets it to its default value. \n  \n    You must use Amazon Web Services developer credentials to call this operation.\n    "]

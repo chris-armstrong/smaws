@@ -6,6 +6,9 @@ val make_delete_request : key:key -> unit -> delete_request
 val make_write_request :
   ?delete_request:delete_request ->
     ?put_request:put_request -> unit -> write_request
+val make_warm_throughput :
+  ?write_units_per_second:int ->
+    ?read_units_per_second:int -> unit -> warm_throughput
 val make_time_to_live_specification :
   attribute_name:string -> enabled:bool -> unit -> time_to_live_specification
 val make_update_time_to_live_output :
@@ -122,18 +125,24 @@ val make_local_secondary_index_description :
 val make_on_demand_throughput :
   ?max_write_request_units:int ->
     ?max_read_request_units:int -> unit -> on_demand_throughput
+val make_global_secondary_index_warm_throughput_description :
+  ?status:index_status ->
+    ?write_units_per_second:int ->
+      ?read_units_per_second:int ->
+        unit -> global_secondary_index_warm_throughput_description
 val make_global_secondary_index_description :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?index_arn:string ->
-      ?item_count:int ->
-        ?index_size_bytes:int ->
-          ?provisioned_throughput:provisioned_throughput_description ->
-            ?backfilling:bool ->
-              ?index_status:index_status ->
-                ?projection:projection ->
-                  ?key_schema:key_schema_element list ->
-                    ?index_name:string ->
-                      unit -> global_secondary_index_description
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?index_arn:string ->
+        ?item_count:int ->
+          ?index_size_bytes:int ->
+            ?provisioned_throughput:provisioned_throughput_description ->
+              ?backfilling:bool ->
+                ?index_status:index_status ->
+                  ?projection:projection ->
+                    ?key_schema:key_schema_element list ->
+                      ?index_name:string ->
+                        unit -> global_secondary_index_description
 val make_stream_specification :
   ?stream_view_type:stream_view_type ->
     stream_enabled:bool -> unit -> stream_specification
@@ -141,11 +150,16 @@ val make_provisioned_throughput_override :
   ?read_capacity_units:int -> unit -> provisioned_throughput_override
 val make_on_demand_throughput_override :
   ?max_read_request_units:int -> unit -> on_demand_throughput_override
+val make_table_warm_throughput_description :
+  ?status:table_status ->
+    ?write_units_per_second:int ->
+      ?read_units_per_second:int -> unit -> table_warm_throughput_description
 val make_replica_global_secondary_index_description :
-  ?on_demand_throughput_override:on_demand_throughput_override ->
-    ?provisioned_throughput_override:provisioned_throughput_override ->
-      ?index_name:string ->
-        unit -> replica_global_secondary_index_description
+  ?warm_throughput:global_secondary_index_warm_throughput_description ->
+    ?on_demand_throughput_override:on_demand_throughput_override ->
+      ?provisioned_throughput_override:provisioned_throughput_override ->
+        ?index_name:string ->
+          unit -> replica_global_secondary_index_description
 val make_table_class_summary :
   ?last_update_date_time:CoreTypes.Timestamp.t ->
     ?table_class:table_class -> unit -> table_class_summary
@@ -154,13 +168,18 @@ val make_replica_description :
     ?replica_inaccessible_date_time:CoreTypes.Timestamp.t ->
       ?global_secondary_indexes:replica_global_secondary_index_description
         list ->
-        ?on_demand_throughput_override:on_demand_throughput_override ->
-          ?provisioned_throughput_override:provisioned_throughput_override ->
-            ?kms_master_key_id:string ->
-              ?replica_status_percent_progress:string ->
-                ?replica_status_description:string ->
-                  ?replica_status:replica_status ->
-                    ?region_name:string -> unit -> replica_description
+        ?warm_throughput:table_warm_throughput_description ->
+          ?on_demand_throughput_override:on_demand_throughput_override ->
+            ?provisioned_throughput_override:provisioned_throughput_override
+              ->
+              ?kms_master_key_id:string ->
+                ?replica_status_percent_progress:string ->
+                  ?replica_status_description:string ->
+                    ?replica_status:replica_status ->
+                      ?region_name:string -> unit -> replica_description
+val make_global_table_witness_description :
+  ?witness_status:witness_status ->
+    ?region_name:string -> unit -> global_table_witness_description
 val make_restore_summary :
   ?source_table_arn:string ->
     ?source_backup_arn:string ->
@@ -175,52 +194,60 @@ val make_archival_summary :
     ?archival_reason:string ->
       ?archival_date_time:CoreTypes.Timestamp.t -> unit -> archival_summary
 val make_table_description :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?deletion_protection_enabled:bool ->
-      ?table_class_summary:table_class_summary ->
-        ?archival_summary:archival_summary ->
-          ?sse_description:sse_description ->
-            ?restore_summary:restore_summary ->
-              ?replicas:replica_description list ->
-                ?global_table_version:string ->
-                  ?latest_stream_arn:string ->
-                    ?latest_stream_label:string ->
-                      ?stream_specification:stream_specification ->
-                        ?global_secondary_indexes:global_secondary_index_description
-                          list ->
-                          ?local_secondary_indexes:local_secondary_index_description
-                            list ->
-                            ?billing_mode_summary:billing_mode_summary ->
-                              ?table_id:string ->
-                                ?table_arn:string ->
-                                  ?item_count:int ->
-                                    ?table_size_bytes:int ->
-                                      ?provisioned_throughput:provisioned_throughput_description
-                                        ->
-                                        ?creation_date_time:CoreTypes.Timestamp.t
-                                          ->
-                                          ?table_status:table_status ->
-                                            ?key_schema:key_schema_element
-                                              list ->
-                                              ?table_name:string ->
-                                                ?attribute_definitions:attribute_definition
-                                                  list ->
-                                                  unit -> table_description
+  ?multi_region_consistency:multi_region_consistency ->
+    ?warm_throughput:table_warm_throughput_description ->
+      ?on_demand_throughput:on_demand_throughput ->
+        ?deletion_protection_enabled:bool ->
+          ?table_class_summary:table_class_summary ->
+            ?archival_summary:archival_summary ->
+              ?sse_description:sse_description ->
+                ?restore_summary:restore_summary ->
+                  ?global_table_witnesses:global_table_witness_description
+                    list ->
+                    ?replicas:replica_description list ->
+                      ?global_table_version:string ->
+                        ?latest_stream_arn:string ->
+                          ?latest_stream_label:string ->
+                            ?stream_specification:stream_specification ->
+                              ?global_secondary_indexes:global_secondary_index_description
+                                list ->
+                                ?local_secondary_indexes:local_secondary_index_description
+                                  list ->
+                                  ?billing_mode_summary:billing_mode_summary
+                                    ->
+                                    ?table_id:string ->
+                                      ?table_arn:string ->
+                                        ?item_count:int ->
+                                          ?table_size_bytes:int ->
+                                            ?provisioned_throughput:provisioned_throughput_description
+                                              ->
+                                              ?creation_date_time:CoreTypes.Timestamp.t
+                                                ->
+                                                ?table_status:table_status ->
+                                                  ?key_schema:key_schema_element
+                                                    list ->
+                                                    ?table_name:string ->
+                                                      ?attribute_definitions:attribute_definition
+                                                        list ->
+                                                        unit ->
+                                                          table_description
 val make_update_table_output :
   ?table_description:table_description -> unit -> update_table_output
 val make_provisioned_throughput :
   write_capacity_units:int ->
     read_capacity_units:int -> unit -> provisioned_throughput
 val make_update_global_secondary_index_action :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      index_name:string -> unit -> update_global_secondary_index_action
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        index_name:string -> unit -> update_global_secondary_index_action
 val make_create_global_secondary_index_action :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      projection:projection ->
-        key_schema:key_schema_element list ->
-          index_name:string -> unit -> create_global_secondary_index_action
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        projection:projection ->
+          key_schema:key_schema_element list ->
+            index_name:string -> unit -> create_global_secondary_index_action
 val make_delete_global_secondary_index_action :
   index_name:string -> unit -> delete_global_secondary_index_action
 val make_global_secondary_index_update :
@@ -258,19 +285,32 @@ val make_replication_group_update :
     ?update:update_replication_group_member_action ->
       ?create:create_replication_group_member_action ->
         unit -> replication_group_update
+val make_create_global_table_witness_group_member_action :
+  region_name:string ->
+    unit -> create_global_table_witness_group_member_action
+val make_delete_global_table_witness_group_member_action :
+  region_name:string ->
+    unit -> delete_global_table_witness_group_member_action
+val make_global_table_witness_group_update :
+  ?delete:delete_global_table_witness_group_member_action ->
+    ?create:create_global_table_witness_group_member_action ->
+      unit -> global_table_witness_group_update
 val make_update_table_input :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?deletion_protection_enabled:bool ->
-      ?table_class:table_class ->
-        ?replica_updates:replication_group_update list ->
-          ?sse_specification:sse_specification ->
-            ?stream_specification:stream_specification ->
-              ?global_secondary_index_updates:global_secondary_index_update
-                list ->
-                ?provisioned_throughput:provisioned_throughput ->
-                  ?billing_mode:billing_mode ->
-                    ?attribute_definitions:attribute_definition list ->
-                      table_name:string -> unit -> update_table_input
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?global_table_witness_updates:global_table_witness_group_update list ->
+        ?multi_region_consistency:multi_region_consistency ->
+          ?deletion_protection_enabled:bool ->
+            ?table_class:table_class ->
+              ?replica_updates:replication_group_update list ->
+                ?sse_specification:sse_specification ->
+                  ?stream_specification:stream_specification ->
+                    ?global_secondary_index_updates:global_secondary_index_update
+                      list ->
+                      ?provisioned_throughput:provisioned_throughput ->
+                        ?billing_mode:billing_mode ->
+                          ?attribute_definitions:attribute_definition list ->
+                            table_name:string -> unit -> update_table_input
 val make_update_kinesis_streaming_configuration :
   ?approximate_creation_date_time_precision:approximate_creation_date_time_precision
     -> unit -> update_kinesis_streaming_configuration
@@ -416,8 +456,9 @@ val make_update_contributor_insights_input :
 val make_point_in_time_recovery_description :
   ?latest_restorable_date_time:CoreTypes.Timestamp.t ->
     ?earliest_restorable_date_time:CoreTypes.Timestamp.t ->
-      ?point_in_time_recovery_status:point_in_time_recovery_status ->
-        unit -> point_in_time_recovery_description
+      ?recovery_period_in_days:int ->
+        ?point_in_time_recovery_status:point_in_time_recovery_status ->
+          unit -> point_in_time_recovery_description
 val make_continuous_backups_description :
   ?point_in_time_recovery_description:point_in_time_recovery_description ->
     continuous_backups_status:continuous_backups_status ->
@@ -426,8 +467,9 @@ val make_update_continuous_backups_output :
   ?continuous_backups_description:continuous_backups_description ->
     unit -> update_continuous_backups_output
 val make_point_in_time_recovery_specification :
-  point_in_time_recovery_enabled:bool ->
-    unit -> point_in_time_recovery_specification
+  ?recovery_period_in_days:int ->
+    point_in_time_recovery_enabled:bool ->
+      unit -> point_in_time_recovery_specification
 val make_update_continuous_backups_input :
   point_in_time_recovery_specification:point_in_time_recovery_specification
     -> table_name:string -> unit -> update_continuous_backups_input
@@ -502,11 +544,12 @@ val make_tag : value:string -> key:string -> unit -> tag
 val make_tag_resource_input :
   tags:tag list -> resource_arn:string -> unit -> tag_resource_input
 val make_global_secondary_index :
-  ?on_demand_throughput:on_demand_throughput ->
-    ?provisioned_throughput:provisioned_throughput ->
-      projection:projection ->
-        key_schema:key_schema_element list ->
-          index_name:string -> unit -> global_secondary_index
+  ?warm_throughput:warm_throughput ->
+    ?on_demand_throughput:on_demand_throughput ->
+      ?provisioned_throughput:provisioned_throughput ->
+        projection:projection ->
+          key_schema:key_schema_element list ->
+            index_name:string -> unit -> global_secondary_index
 val make_table_creation_parameters :
   ?global_secondary_indexes:global_secondary_index list ->
     ?sse_specification:sse_specification ->
@@ -1012,19 +1055,22 @@ val make_create_table_output :
 val make_create_table_input :
   ?on_demand_throughput:on_demand_throughput ->
     ?resource_policy:string ->
-      ?deletion_protection_enabled:bool ->
-        ?table_class:table_class ->
-          ?tags:tag list ->
-            ?sse_specification:sse_specification ->
-              ?stream_specification:stream_specification ->
-                ?provisioned_throughput:provisioned_throughput ->
-                  ?billing_mode:billing_mode ->
-                    ?global_secondary_indexes:global_secondary_index list ->
-                      ?local_secondary_indexes:local_secondary_index list ->
-                        key_schema:key_schema_element list ->
-                          table_name:string ->
-                            attribute_definitions:attribute_definition list
-                              -> unit -> create_table_input
+      ?warm_throughput:warm_throughput ->
+        ?deletion_protection_enabled:bool ->
+          ?table_class:table_class ->
+            ?tags:tag list ->
+              ?sse_specification:sse_specification ->
+                ?stream_specification:stream_specification ->
+                  ?provisioned_throughput:provisioned_throughput ->
+                    ?billing_mode:billing_mode ->
+                      ?global_secondary_indexes:global_secondary_index list
+                        ->
+                        ?local_secondary_indexes:local_secondary_index list
+                          ->
+                          key_schema:key_schema_element list ->
+                            table_name:string ->
+                              attribute_definitions:attribute_definition list
+                                -> unit -> create_table_input
 val make_create_global_table_output :
   ?global_table_description:global_table_description ->
     unit -> create_global_table_output

@@ -2,24 +2,25 @@ open Smaws_Lib
 open Types
 val make_update_user_response : unit -> unit
 val make_update_user_request :
-  ?office:string ->
-    ?country:string ->
-      ?department:string ->
-        ?zip_code:string ->
-          ?company:string ->
-            ?city:string ->
-              ?job_title:string ->
-                ?street:string ->
-                  ?telephone:string ->
-                    ?initials:string ->
-                      ?hidden_from_global_address_list:bool ->
-                        ?last_name:string ->
-                          ?first_name:string ->
-                            ?display_name:string ->
-                              ?role:user_role ->
-                                user_id:string ->
-                                  organization_id:string ->
-                                    unit -> update_user_request
+  ?identity_provider_user_id:string ->
+    ?office:string ->
+      ?country:string ->
+        ?department:string ->
+          ?zip_code:string ->
+            ?company:string ->
+              ?city:string ->
+                ?job_title:string ->
+                  ?street:string ->
+                    ?telephone:string ->
+                      ?initials:string ->
+                        ?hidden_from_global_address_list:bool ->
+                          ?last_name:string ->
+                            ?first_name:string ->
+                              ?display_name:string ->
+                                ?role:user_role ->
+                                  user_id:string ->
+                                    organization_id:string ->
+                                      unit -> update_user_request
 val make_update_resource_response : unit -> unit
 val make_booking_options :
   ?auto_decline_conflicting_requests:bool ->
@@ -169,6 +170,20 @@ val make_put_inbound_dmarc_settings_response : unit -> unit
 val make_put_inbound_dmarc_settings_request :
   enforced:bool ->
     organization_id:string -> unit -> put_inbound_dmarc_settings_request
+val make_put_identity_provider_configuration_response : unit -> unit
+val make_identity_center_configuration :
+  application_arn:string ->
+    instance_arn:string -> unit -> identity_center_configuration
+val make_personal_access_token_configuration :
+  ?lifetime_in_days:int ->
+    status:personal_access_token_configuration_status ->
+      unit -> personal_access_token_configuration
+val make_put_identity_provider_configuration_request :
+  personal_access_token_configuration:personal_access_token_configuration ->
+    identity_center_configuration:identity_center_configuration ->
+      authentication_mode:identity_provider_authentication_mode ->
+        organization_id:string ->
+          unit -> put_identity_provider_configuration_request
 val make_put_email_monitoring_configuration_response : unit -> unit
 val make_put_email_monitoring_configuration_request :
   log_group_arn:string ->
@@ -191,19 +206,22 @@ val make_put_access_control_rule_request :
                         name:string ->
                           unit -> put_access_control_rule_request
 val make_user :
-  ?disabled_date:CoreTypes.Timestamp.t ->
-    ?enabled_date:CoreTypes.Timestamp.t ->
-      ?user_role:user_role ->
-        ?state:entity_state ->
-          ?display_name:string ->
-            ?name:string -> ?email:string -> ?id:string -> unit -> user
+  ?identity_provider_identity_store_id:string ->
+    ?identity_provider_user_id:string ->
+      ?disabled_date:CoreTypes.Timestamp.t ->
+        ?enabled_date:CoreTypes.Timestamp.t ->
+          ?user_role:user_role ->
+            ?state:entity_state ->
+              ?display_name:string ->
+                ?name:string -> ?email:string -> ?id:string -> unit -> user
 val make_list_users_response :
   ?next_token:string -> ?users:user list -> unit -> list_users_response
 val make_list_users_filters :
-  ?state:entity_state ->
-    ?primary_email_prefix:string ->
-      ?display_name_prefix:string ->
-        ?username_prefix:string -> unit -> list_users_filters
+  ?identity_provider_user_id_prefix:string ->
+    ?state:entity_state ->
+      ?primary_email_prefix:string ->
+        ?display_name_prefix:string ->
+          ?username_prefix:string -> unit -> list_users_filters
 val make_list_users_request :
   ?filters:list_users_filters ->
     ?max_results:int ->
@@ -241,6 +259,23 @@ val make_list_resource_delegates_request :
     ?next_token:string ->
       resource_id:string ->
         organization_id:string -> unit -> list_resource_delegates_request
+val make_personal_access_token_summary :
+  ?scopes:string list ->
+    ?expires_time:CoreTypes.Timestamp.t ->
+      ?date_last_used:CoreTypes.Timestamp.t ->
+        ?date_created:CoreTypes.Timestamp.t ->
+          ?name:string ->
+            ?user_id:string ->
+              ?personal_access_token_id:string ->
+                unit -> personal_access_token_summary
+val make_list_personal_access_tokens_response :
+  ?personal_access_token_summaries:personal_access_token_summary list ->
+    ?next_token:string -> unit -> list_personal_access_tokens_response
+val make_list_personal_access_tokens_request :
+  ?max_results:int ->
+    ?next_token:string ->
+      ?user_id:string ->
+        organization_id:string -> unit -> list_personal_access_tokens_request
 val make_organization_summary :
   ?state:string ->
     ?error_message:string ->
@@ -433,6 +468,19 @@ val make_list_access_control_rules_response :
     unit -> list_access_control_rules_response
 val make_list_access_control_rules_request :
   organization_id:string -> unit -> list_access_control_rules_request
+val make_get_personal_access_token_metadata_response :
+  ?scopes:string list ->
+    ?expires_time:CoreTypes.Timestamp.t ->
+      ?date_last_used:CoreTypes.Timestamp.t ->
+        ?date_created:CoreTypes.Timestamp.t ->
+          ?name:string ->
+            ?user_id:string ->
+              ?personal_access_token_id:string ->
+                unit -> get_personal_access_token_metadata_response
+val make_get_personal_access_token_metadata_request :
+  personal_access_token_id:string ->
+    organization_id:string ->
+      unit -> get_personal_access_token_metadata_request
 val make_get_mobile_device_access_override_response :
   ?date_modified:CoreTypes.Timestamp.t ->
     ?date_created:CoreTypes.Timestamp.t ->
@@ -532,33 +580,35 @@ val make_disassociate_delegate_from_resource_request :
       organization_id:string ->
         unit -> disassociate_delegate_from_resource_request
 val make_describe_user_response :
-  ?office:string ->
-    ?country:string ->
-      ?department:string ->
-        ?zip_code:string ->
-          ?company:string ->
-            ?city:string ->
-              ?job_title:string ->
-                ?street:string ->
-                  ?telephone:string ->
-                    ?initials:string ->
-                      ?hidden_from_global_address_list:bool ->
-                        ?last_name:string ->
-                          ?first_name:string ->
-                            ?mailbox_deprovisioned_date:CoreTypes.Timestamp.t
-                              ->
-                              ?mailbox_provisioned_date:CoreTypes.Timestamp.t
-                                ->
-                                ?disabled_date:CoreTypes.Timestamp.t ->
-                                  ?enabled_date:CoreTypes.Timestamp.t ->
-                                    ?user_role:user_role ->
-                                      ?state:entity_state ->
-                                        ?display_name:string ->
-                                          ?email:string ->
-                                            ?name:string ->
-                                              ?user_id:string ->
-                                                unit ->
-                                                  describe_user_response
+  ?identity_provider_identity_store_id:string ->
+    ?identity_provider_user_id:string ->
+      ?office:string ->
+        ?country:string ->
+          ?department:string ->
+            ?zip_code:string ->
+              ?company:string ->
+                ?city:string ->
+                  ?job_title:string ->
+                    ?street:string ->
+                      ?telephone:string ->
+                        ?initials:string ->
+                          ?hidden_from_global_address_list:bool ->
+                            ?last_name:string ->
+                              ?first_name:string ->
+                                ?mailbox_deprovisioned_date:CoreTypes.Timestamp.t
+                                  ->
+                                  ?mailbox_provisioned_date:CoreTypes.Timestamp.t
+                                    ->
+                                    ?disabled_date:CoreTypes.Timestamp.t ->
+                                      ?enabled_date:CoreTypes.Timestamp.t ->
+                                        ?user_role:user_role ->
+                                          ?state:entity_state ->
+                                            ?display_name:string ->
+                                              ?email:string ->
+                                                ?name:string ->
+                                                  ?user_id:string ->
+                                                    unit ->
+                                                      describe_user_response
 val make_describe_user_request :
   user_id:string -> organization_id:string -> unit -> describe_user_request
 val make_describe_resource_response :
@@ -611,6 +661,14 @@ val make_describe_inbound_dmarc_settings_response :
   ?enforced:bool -> unit -> describe_inbound_dmarc_settings_response
 val make_describe_inbound_dmarc_settings_request :
   organization_id:string -> unit -> describe_inbound_dmarc_settings_request
+val make_describe_identity_provider_configuration_response :
+  ?personal_access_token_configuration:personal_access_token_configuration ->
+    ?identity_center_configuration:identity_center_configuration ->
+      ?authentication_mode:identity_provider_authentication_mode ->
+        unit -> describe_identity_provider_configuration_response
+val make_describe_identity_provider_configuration_request :
+  organization_id:string ->
+    unit -> describe_identity_provider_configuration_request
 val make_describe_group_response :
   ?hidden_from_global_address_list:bool ->
     ?disabled_date:CoreTypes.Timestamp.t ->
@@ -652,14 +710,19 @@ val make_delete_resource_response : unit -> unit
 val make_delete_resource_request :
   resource_id:string ->
     organization_id:string -> unit -> delete_resource_request
+val make_delete_personal_access_token_response : unit -> unit
+val make_delete_personal_access_token_request :
+  personal_access_token_id:string ->
+    organization_id:string -> unit -> delete_personal_access_token_request
 val make_delete_organization_response :
   ?state:string ->
     ?organization_id:string -> unit -> delete_organization_response
 val make_delete_organization_request :
-  ?force_delete:bool ->
-    ?client_token:string ->
-      delete_directory:bool ->
-        organization_id:string -> unit -> delete_organization_request
+  ?delete_identity_center_application:bool ->
+    ?force_delete:bool ->
+      ?client_token:string ->
+        delete_directory:bool ->
+          organization_id:string -> unit -> delete_organization_request
 val make_delete_mobile_device_access_rule_response : unit -> unit
 val make_delete_mobile_device_access_rule_request :
   mobile_device_access_rule_id:string ->
@@ -680,6 +743,14 @@ val make_delete_impersonation_role_response : unit -> unit
 val make_delete_impersonation_role_request :
   impersonation_role_id:string ->
     organization_id:string -> unit -> delete_impersonation_role_request
+val make_delete_identity_provider_configuration_response : unit -> unit
+val make_delete_identity_provider_configuration_request :
+  organization_id:string ->
+    unit -> delete_identity_provider_configuration_request
+val make_delete_identity_center_application_response : unit -> unit
+val make_delete_identity_center_application_request :
+  application_arn:string ->
+    unit -> delete_identity_center_application_request
 val make_delete_group_response : unit -> unit
 val make_delete_group_request :
   group_id:string -> organization_id:string -> unit -> delete_group_request
@@ -704,14 +775,15 @@ val make_delete_access_control_rule_request :
 val make_create_user_response :
   ?user_id:string -> unit -> create_user_response
 val make_create_user_request :
-  ?hidden_from_global_address_list:bool ->
-    ?last_name:string ->
-      ?first_name:string ->
-        ?role:user_role ->
-          ?password:string ->
-            display_name:string ->
-              name:string ->
-                organization_id:string -> unit -> create_user_request
+  ?identity_provider_user_id:string ->
+    ?hidden_from_global_address_list:bool ->
+      ?last_name:string ->
+        ?first_name:string ->
+          ?role:user_role ->
+            ?password:string ->
+              display_name:string ->
+                name:string ->
+                  organization_id:string -> unit -> create_user_request
 val make_create_resource_response :
   ?resource_id:string -> unit -> create_resource_response
 val make_create_resource_request :
@@ -759,6 +831,13 @@ val make_create_impersonation_role_request :
           name:string ->
             organization_id:string ->
               unit -> create_impersonation_role_request
+val make_create_identity_center_application_response :
+  ?application_arn:string ->
+    unit -> create_identity_center_application_response
+val make_create_identity_center_application_request :
+  ?client_token:string ->
+    instance_arn:string ->
+      name:string -> unit -> create_identity_center_application_request
 val make_create_group_response :
   ?group_id:string -> unit -> create_group_response
 val make_create_group_request :

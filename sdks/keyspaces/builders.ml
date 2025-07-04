@@ -77,7 +77,20 @@ let make_replica_specification
      read_capacity_units = read_capacity_units_;
      region = region_
    } : replica_specification)
+let make_tag ~value:(value_ : string) ~key:(key_ : string) () =
+  ({ value = value_; key = key_ } : tag)
+let make_cdc_specification
+  ?propagate_tags:(propagate_tags_ : cdc_propagate_tags option)
+  ?tags:(tags_ : tag list option) ?view_type:(view_type_ : view_type option)
+  ~status:(status_ : cdc_status) () =
+  ({
+     propagate_tags = propagate_tags_;
+     tags = tags_;
+     view_type = view_type_;
+     status = status_
+   } : cdc_specification)
 let make_update_table_request
+  ?cdc_specification:(cdc_specification_ : cdc_specification option)
   ?replica_specifications:(replica_specifications_ :
                             replica_specification list option)
   ?auto_scaling_specification:(auto_scaling_specification_ :
@@ -96,6 +109,7 @@ let make_update_table_request
   ~table_name:(table_name_ : string) ~keyspace_name:(keyspace_name_ : string)
   () =
   ({
+     cdc_specification = cdc_specification_;
      replica_specifications = replica_specifications_;
      auto_scaling_specification = auto_scaling_specification_;
      client_side_timestamps = client_side_timestamps_;
@@ -108,9 +122,25 @@ let make_update_table_request
      table_name = table_name_;
      keyspace_name = keyspace_name_
    } : update_table_request)
+let make_update_keyspace_response ~resource_arn:(resource_arn_ : string) () =
+  ({ resource_arn = resource_arn_ } : update_keyspace_response)
+let make_replication_specification
+  ?region_list:(region_list_ : string list option)
+  ~replication_strategy:(replication_strategy_ : rs) () =
+  ({ region_list = region_list_; replication_strategy = replication_strategy_
+   } : replication_specification)
+let make_update_keyspace_request
+  ?client_side_timestamps:(client_side_timestamps_ :
+                            client_side_timestamps option)
+  ~replication_specification:(replication_specification_ :
+                               replication_specification)
+  ~keyspace_name:(keyspace_name_ : string) () =
+  ({
+     client_side_timestamps = client_side_timestamps_;
+     replication_specification = replication_specification_;
+     keyspace_name = keyspace_name_
+   } : update_keyspace_request)
 let make_untag_resource_response () = (() : unit)
-let make_tag ~value:(value_ : string) ~key:(key_ : string) () =
-  ({ value = value_; key = key_ } : tag)
 let make_untag_resource_request ~tags:(tags_ : tag list)
   ~resource_arn:(resource_arn_ : string) () =
   ({ tags = tags_; resource_arn = resource_arn_ } : untag_resource_request)
@@ -177,11 +207,15 @@ let make_restore_table_request
      source_table_name = source_table_name_;
      source_keyspace_name = source_keyspace_name_
    } : restore_table_request)
-let make_replication_specification
-  ?region_list:(region_list_ : string list option)
-  ~replication_strategy:(replication_strategy_ : rs) () =
-  ({ region_list = region_list_; replication_strategy = replication_strategy_
-   } : replication_specification)
+let make_replication_group_status
+  ?tables_replication_progress:(tables_replication_progress_ : string option)
+  ~keyspace_status:(keyspace_status_ : keyspace_status)
+  ~region:(region_ : string) () =
+  ({
+     tables_replication_progress = tables_replication_progress_;
+     keyspace_status = keyspace_status_;
+     region = region_
+   } : replication_group_status)
 let make_capacity_specification_summary
   ?last_update_to_pay_per_request_timestamp:(last_update_to_pay_per_request_timestamp_
                                               : CoreTypes.Timestamp.t option)
@@ -221,6 +255,17 @@ let make_point_in_time_recovery_summary
      earliest_restorable_timestamp = earliest_restorable_timestamp_;
      status = status_
    } : point_in_time_recovery_summary)
+let make_list_types_response ?next_token:(next_token_ : string option)
+  ~types:(types_ : string list) () =
+  ({ types = types_; next_token = next_token_ } : list_types_response)
+let make_list_types_request ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ~keyspace_name:(keyspace_name_ : string) () =
+  ({
+     keyspace_name = keyspace_name_;
+     max_results = max_results_;
+     next_token = next_token_
+   } : list_types_request)
 let make_list_tags_for_resource_response ?tags:(tags_ : tag list option)
   ?next_token:(next_token_ : string option) () =
   ({ tags = tags_; next_token = next_token_ } : list_tags_for_resource_response)
@@ -261,6 +306,32 @@ let make_list_keyspaces_response ?next_token:(next_token_ : string option)
 let make_list_keyspaces_request ?max_results:(max_results_ : int option)
   ?next_token:(next_token_ : string option) () =
   ({ max_results = max_results_; next_token = next_token_ } : list_keyspaces_request)
+let make_field_definition ~type_:(type__ : string) ~name:(name_ : string) ()
+  = ({ type_ = type__; name = name_ } : field_definition)
+let make_get_type_response
+  ?max_nesting_depth:(max_nesting_depth_ : int option)
+  ?direct_parent_types:(direct_parent_types_ : string list option)
+  ?direct_referring_tables:(direct_referring_tables_ : string list option)
+  ?status:(status_ : type_status option)
+  ?last_modified_timestamp:(last_modified_timestamp_ :
+                             CoreTypes.Timestamp.t option)
+  ?field_definitions:(field_definitions_ : field_definition list option)
+  ~keyspace_arn:(keyspace_arn_ : string) ~type_name:(type_name_ : string)
+  ~keyspace_name:(keyspace_name_ : string) () =
+  ({
+     keyspace_arn = keyspace_arn_;
+     max_nesting_depth = max_nesting_depth_;
+     direct_parent_types = direct_parent_types_;
+     direct_referring_tables = direct_referring_tables_;
+     status = status_;
+     last_modified_timestamp = last_modified_timestamp_;
+     field_definitions = field_definitions_;
+     type_name = type_name_;
+     keyspace_name = keyspace_name_
+   } : get_type_response)
+let make_get_type_request ~type_name:(type_name_ : string)
+  ~keyspace_name:(keyspace_name_ : string) () =
+  ({ type_name = type_name_; keyspace_name = keyspace_name_ } : get_type_request)
 let make_get_table_auto_scaling_settings_response
   ?replica_specifications:(replica_specifications_ :
                             replica_auto_scaling_specification list option)
@@ -281,7 +352,12 @@ let make_get_table_auto_scaling_settings_request
   ({ table_name = table_name_; keyspace_name = keyspace_name_ } : get_table_auto_scaling_settings_request)
 let make_comment ~message:(message_ : string) () =
   ({ message = message_ } : comment)
+let make_cdc_specification_summary ?view_type:(view_type_ : view_type option)
+  ~status:(status_ : cdc_status) () =
+  ({ view_type = view_type_; status = status_ } : cdc_specification_summary)
 let make_get_table_response
+  ?cdc_specification:(cdc_specification_ : cdc_specification_summary option)
+  ?latest_stream_arn:(latest_stream_arn_ : string option)
   ?replica_specifications:(replica_specifications_ :
                             replica_specification_summary list option)
   ?client_side_timestamps:(client_side_timestamps_ :
@@ -301,6 +377,8 @@ let make_get_table_response
   ~resource_arn:(resource_arn_ : string) ~table_name:(table_name_ : string)
   ~keyspace_name:(keyspace_name_ : string) () =
   ({
+     cdc_specification = cdc_specification_;
+     latest_stream_arn = latest_stream_arn_;
      replica_specifications = replica_specifications_;
      client_side_timestamps = client_side_timestamps_;
      comment = comment_;
@@ -320,11 +398,14 @@ let make_get_table_request ~table_name:(table_name_ : string)
   ~keyspace_name:(keyspace_name_ : string) () =
   ({ table_name = table_name_; keyspace_name = keyspace_name_ } : get_table_request)
 let make_get_keyspace_response
+  ?replication_group_statuses:(replication_group_statuses_ :
+                                replication_group_status list option)
   ?replication_regions:(replication_regions_ : string list option)
   ~replication_strategy:(replication_strategy_ : rs)
   ~resource_arn:(resource_arn_ : string)
   ~keyspace_name:(keyspace_name_ : string) () =
   ({
+     replication_group_statuses = replication_group_statuses_;
      replication_regions = replication_regions_;
      replication_strategy = replication_strategy_;
      resource_arn = resource_arn_;
@@ -332,6 +413,12 @@ let make_get_keyspace_response
    } : get_keyspace_response)
 let make_get_keyspace_request ~keyspace_name:(keyspace_name_ : string) () =
   ({ keyspace_name = keyspace_name_ } : get_keyspace_request)
+let make_delete_type_response ~type_name:(type_name_ : string)
+  ~keyspace_arn:(keyspace_arn_ : string) () =
+  ({ type_name = type_name_; keyspace_arn = keyspace_arn_ } : delete_type_response)
+let make_delete_type_request ~type_name:(type_name_ : string)
+  ~keyspace_name:(keyspace_name_ : string) () =
+  ({ type_name = type_name_; keyspace_name = keyspace_name_ } : delete_type_request)
 let make_delete_table_response () = (() : unit)
 let make_delete_table_request ~table_name:(table_name_ : string)
   ~keyspace_name:(keyspace_name_ : string) () =
@@ -339,9 +426,22 @@ let make_delete_table_request ~table_name:(table_name_ : string)
 let make_delete_keyspace_response () = (() : unit)
 let make_delete_keyspace_request ~keyspace_name:(keyspace_name_ : string) ()
   = ({ keyspace_name = keyspace_name_ } : delete_keyspace_request)
+let make_create_type_response ~type_name:(type_name_ : string)
+  ~keyspace_arn:(keyspace_arn_ : string) () =
+  ({ type_name = type_name_; keyspace_arn = keyspace_arn_ } : create_type_response)
+let make_create_type_request
+  ~field_definitions:(field_definitions_ : field_definition list)
+  ~type_name:(type_name_ : string) ~keyspace_name:(keyspace_name_ : string)
+  () =
+  ({
+     field_definitions = field_definitions_;
+     type_name = type_name_;
+     keyspace_name = keyspace_name_
+   } : create_type_request)
 let make_create_table_response ~resource_arn:(resource_arn_ : string) () =
   ({ resource_arn = resource_arn_ } : create_table_response)
 let make_create_table_request
+  ?cdc_specification:(cdc_specification_ : cdc_specification option)
   ?replica_specifications:(replica_specifications_ :
                             replica_specification list option)
   ?auto_scaling_specification:(auto_scaling_specification_ :
@@ -362,6 +462,7 @@ let make_create_table_request
   ~table_name:(table_name_ : string) ~keyspace_name:(keyspace_name_ : string)
   () =
   ({
+     cdc_specification = cdc_specification_;
      replica_specifications = replica_specifications_;
      auto_scaling_specification = auto_scaling_specification_;
      client_side_timestamps = client_side_timestamps_;

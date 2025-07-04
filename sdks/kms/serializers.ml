@@ -98,6 +98,7 @@ let key_id_type_to_yojson = string_to_yojson
 let boolean_type_to_yojson = bool_to_yojson
 let signing_algorithm_spec_to_yojson (x : signing_algorithm_spec) =
   match x with
+  | ML_DSA_SHAKE_256 -> `String "ML_DSA_SHAKE_256"
   | SM2DSA -> `String "SM2DSA"
   | ECDSA_SHA_512 -> `String "ECDSA_SHA_512"
   | ECDSA_SHA_384 -> `String "ECDSA_SHA_384"
@@ -117,7 +118,10 @@ let verify_response_to_yojson (x : verify_response) =
     ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id))]
 let plaintext_type_to_yojson = blob_to_yojson
 let message_type_to_yojson (x : message_type) =
-  match x with | DIGEST -> `String "DIGEST" | RAW -> `String "RAW"
+  match x with
+  | EXTERNAL_MU -> `String "EXTERNAL_MU"
+  | DIGEST -> `String "DIGEST"
+  | RAW -> `String "RAW"
 let ciphertext_type_to_yojson = blob_to_yojson
 let grant_token_type_to_yojson = string_to_yojson
 let grant_token_list_to_yojson tree =
@@ -413,6 +417,9 @@ let customer_master_key_spec_to_yojson (x : customer_master_key_spec) =
   | RSA_2048 -> `String "RSA_2048"
 let key_spec_to_yojson (x : key_spec) =
   match x with
+  | ML_DSA_87 -> `String "ML_DSA_87"
+  | ML_DSA_65 -> `String "ML_DSA_65"
+  | ML_DSA_44 -> `String "ML_DSA_44"
   | SM2 -> `String "SM2"
   | HMAC_512 -> `String "HMAC_512"
   | HMAC_384 -> `String "HMAC_384"
@@ -459,11 +466,15 @@ let multi_region_configuration_to_yojson (x : multi_region_configuration) =
          x.multi_region_key_type))]
 let mac_algorithm_spec_list_to_yojson tree =
   list_to_yojson mac_algorithm_spec_to_yojson tree
+let backing_key_id_type_to_yojson = string_to_yojson
 let key_metadata_to_yojson (x : key_metadata) =
   assoc_to_yojson
-    [("XksKeyConfiguration",
-       (option_to_yojson xks_key_configuration_type_to_yojson
-          x.xks_key_configuration));
+    [("CurrentKeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson
+          x.current_key_material_id));
+    ("XksKeyConfiguration",
+      (option_to_yojson xks_key_configuration_type_to_yojson
+         x.xks_key_configuration));
     ("MacAlgorithms",
       (option_to_yojson mac_algorithm_spec_list_to_yojson x.mac_algorithms));
     ("PendingDeletionWindowInDays",
@@ -538,9 +549,15 @@ let incorrect_key_exception_to_yojson (x : incorrect_key_exception) =
     [("message", (option_to_yojson error_message_type_to_yojson x.message))]
 let re_encrypt_response_to_yojson (x : re_encrypt_response) =
   assoc_to_yojson
-    [("DestinationEncryptionAlgorithm",
-       (option_to_yojson encryption_algorithm_spec_to_yojson
-          x.destination_encryption_algorithm));
+    [("DestinationKeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson
+          x.destination_key_material_id));
+    ("SourceKeyMaterialId",
+      (option_to_yojson backing_key_id_type_to_yojson
+         x.source_key_material_id));
+    ("DestinationEncryptionAlgorithm",
+      (option_to_yojson encryption_algorithm_spec_to_yojson
+         x.destination_encryption_algorithm));
     ("SourceEncryptionAlgorithm",
       (option_to_yojson encryption_algorithm_spec_to_yojson
          x.source_encryption_algorithm));
@@ -675,6 +692,16 @@ let list_keys_request_to_yojson (x : list_keys_request) =
   assoc_to_yojson
     [("Marker", (option_to_yojson marker_type_to_yojson x.marker));
     ("Limit", (option_to_yojson limit_type_to_yojson x.limit))]
+let key_material_description_type_to_yojson = string_to_yojson
+let import_state_to_yojson (x : import_state) =
+  match x with
+  | PENDING_IMPORT -> `String "PENDING_IMPORT"
+  | IMPORTED -> `String "IMPORTED"
+let key_material_state_to_yojson (x : key_material_state) =
+  match x with
+  | PENDING_ROTATION -> `String "PENDING_ROTATION"
+  | CURRENT -> `String "CURRENT"
+  | NON_CURRENT -> `String "NON_CURRENT"
 let rotation_type_to_yojson (x : rotation_type) =
   match x with
   | ON_DEMAND -> `String "ON_DEMAND"
@@ -684,6 +711,17 @@ let rotations_list_entry_to_yojson (x : rotations_list_entry) =
     [("RotationType",
        (option_to_yojson rotation_type_to_yojson x.rotation_type));
     ("RotationDate", (option_to_yojson date_type_to_yojson x.rotation_date));
+    ("ValidTo", (option_to_yojson date_type_to_yojson x.valid_to));
+    ("ExpirationModel",
+      (option_to_yojson expiration_model_type_to_yojson x.expiration_model));
+    ("KeyMaterialState",
+      (option_to_yojson key_material_state_to_yojson x.key_material_state));
+    ("ImportState", (option_to_yojson import_state_to_yojson x.import_state));
+    ("KeyMaterialDescription",
+      (option_to_yojson key_material_description_type_to_yojson
+         x.key_material_description));
+    ("KeyMaterialId",
+      (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
     ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id))]
 let rotations_list_to_yojson tree =
   list_to_yojson rotations_list_entry_to_yojson tree
@@ -692,10 +730,16 @@ let list_key_rotations_response_to_yojson (x : list_key_rotations_response) =
     [("Truncated", (option_to_yojson boolean_type_to_yojson x.truncated));
     ("NextMarker", (option_to_yojson marker_type_to_yojson x.next_marker));
     ("Rotations", (option_to_yojson rotations_list_to_yojson x.rotations))]
+let include_key_material_to_yojson (x : include_key_material) =
+  match x with
+  | ROTATIONS_ONLY -> `String "ROTATIONS_ONLY"
+  | ALL_KEY_MATERIAL -> `String "ALL_KEY_MATERIAL"
 let list_key_rotations_request_to_yojson (x : list_key_rotations_request) =
   assoc_to_yojson
     [("Marker", (option_to_yojson marker_type_to_yojson x.marker));
     ("Limit", (option_to_yojson limit_type_to_yojson x.limit));
+    ("IncludeKeyMaterial",
+      (option_to_yojson include_key_material_to_yojson x.include_key_material));
     ("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
 let policy_name_list_to_yojson tree =
   list_to_yojson policy_name_type_to_yojson tree
@@ -750,11 +794,26 @@ let expired_import_token_exception_to_yojson
   (x : expired_import_token_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_type_to_yojson x.message))]
-let import_key_material_response_to_yojson = unit_to_yojson
+let import_key_material_response_to_yojson (x : import_key_material_response)
+  =
+  assoc_to_yojson
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id))]
+let import_type_to_yojson (x : import_type) =
+  match x with
+  | EXISTING_KEY_MATERIAL -> `String "EXISTING_KEY_MATERIAL"
+  | NEW_KEY_MATERIAL -> `String "NEW_KEY_MATERIAL"
 let import_key_material_request_to_yojson (x : import_key_material_request) =
   assoc_to_yojson
-    [("ExpirationModel",
-       (option_to_yojson expiration_model_type_to_yojson x.expiration_model));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("KeyMaterialDescription",
+      (option_to_yojson key_material_description_type_to_yojson
+         x.key_material_description));
+    ("ImportType", (option_to_yojson import_type_to_yojson x.import_type));
+    ("ExpirationModel",
+      (option_to_yojson expiration_model_type_to_yojson x.expiration_model));
     ("ValidTo", (option_to_yojson date_type_to_yojson x.valid_to));
     ("EncryptedKeyMaterial",
       (Some (ciphertext_type_to_yojson x.encrypted_key_material)));
@@ -878,7 +937,9 @@ let generate_mac_request_to_yojson (x : generate_mac_request) =
 let generate_data_key_without_plaintext_response_to_yojson
   (x : generate_data_key_without_plaintext_response) =
   assoc_to_yojson
-    [("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id));
     ("CiphertextBlob",
       (option_to_yojson ciphertext_type_to_yojson x.ciphertext_blob))]
 let data_key_spec_to_yojson (x : data_key_spec) =
@@ -909,8 +970,10 @@ let data_key_pair_spec_to_yojson (x : data_key_pair_spec) =
 let generate_data_key_pair_without_plaintext_response_to_yojson
   (x : generate_data_key_pair_without_plaintext_response) =
   assoc_to_yojson
-    [("KeyPairSpec",
-       (option_to_yojson data_key_pair_spec_to_yojson x.key_pair_spec));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("KeyPairSpec",
+      (option_to_yojson data_key_pair_spec_to_yojson x.key_pair_spec));
     ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id));
     ("PublicKey", (option_to_yojson public_key_type_to_yojson x.public_key));
     ("PrivateKeyCiphertextBlob",
@@ -930,8 +993,10 @@ let generate_data_key_pair_without_plaintext_request_to_yojson
 let generate_data_key_pair_response_to_yojson
   (x : generate_data_key_pair_response) =
   assoc_to_yojson
-    [("CiphertextForRecipient",
-       (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("CiphertextForRecipient",
+      (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
     ("KeyPairSpec",
       (option_to_yojson data_key_pair_spec_to_yojson x.key_pair_spec));
     ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id));
@@ -955,8 +1020,10 @@ let generate_data_key_pair_request_to_yojson
          x.encryption_context))]
 let generate_data_key_response_to_yojson (x : generate_data_key_response) =
   assoc_to_yojson
-    [("CiphertextForRecipient",
-       (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("CiphertextForRecipient",
+      (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
     ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id));
     ("Plaintext", (option_to_yojson plaintext_type_to_yojson x.plaintext));
     ("CiphertextBlob",
@@ -1129,9 +1196,20 @@ let derive_shared_secret_request_to_yojson (x : derive_shared_secret_request)
       (Some
          (key_agreement_algorithm_spec_to_yojson x.key_agreement_algorithm)));
     ("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
+let backing_key_id_response_type_to_yojson = string_to_yojson
+let delete_imported_key_material_response_to_yojson
+  (x : delete_imported_key_material_response) =
+  assoc_to_yojson
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_response_type_to_yojson
+          x.key_material_id));
+    ("KeyId", (option_to_yojson key_id_type_to_yojson x.key_id))]
 let delete_imported_key_material_request_to_yojson
   (x : delete_imported_key_material_request) =
-  assoc_to_yojson [("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
+  assoc_to_yojson
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("KeyId", (Some (key_id_type_to_yojson x.key_id)))]
 let custom_key_store_has_cm_ks_exception_to_yojson
   (x : custom_key_store_has_cm_ks_exception) =
   assoc_to_yojson
@@ -1147,8 +1225,10 @@ let delete_alias_request_to_yojson (x : delete_alias_request) =
     [("AliasName", (Some (alias_name_type_to_yojson x.alias_name)))]
 let decrypt_response_to_yojson (x : decrypt_response) =
   assoc_to_yojson
-    [("CiphertextForRecipient",
-       (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
+    [("KeyMaterialId",
+       (option_to_yojson backing_key_id_type_to_yojson x.key_material_id));
+    ("CiphertextForRecipient",
+      (option_to_yojson ciphertext_type_to_yojson x.ciphertext_for_recipient));
     ("EncryptionAlgorithm",
       (option_to_yojson encryption_algorithm_spec_to_yojson
          x.encryption_algorithm));

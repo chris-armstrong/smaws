@@ -79,7 +79,25 @@ type nonrec access_denied_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Specifies that you do not have the permissions required to perform this operation.\n"]
+type nonrec untag_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource from which to remove tags.\n"];
+  tag_keys: string list
+    [@ocaml.doc
+      "A list of tag key-value pairs. Existing tags of the resource whose keys are members of this list will be removed from the Kinesis resource.\n"]}
+[@@ocaml.doc ""]
 type nonrec tag_map = (string * string) list[@@ocaml.doc ""]
+type nonrec tag_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource to which to add tags.\n"];
+  tags: tag_map
+    [@ocaml.doc
+      "An array of tags to be added to the Kinesis resource. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.\n\n Tags may only contain Unicode letters, digits, white space, or these symbols: _ . : / = + - \\@.\n "]}
+[@@ocaml.doc ""]
 type nonrec tag =
   {
   value: string option
@@ -89,7 +107,7 @@ type nonrec tag =
     [@ocaml.doc
       "A unique identifier for the tag. Maximum length: 128 characters. Valid characters: Unicode letters, digits, white space, _ . / = + - % \\@\n"]}
 [@@ocaml.doc
-  "Metadata assigned to the stream, consisting of a key-value pair.\n"]
+  "Metadata assigned to the stream or consumer, consisting of a key-value pair.\n"]
 type nonrec encryption_type =
   | KMS [@ocaml.doc ""]
   | NONE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -443,6 +461,9 @@ type nonrec register_stream_consumer_output =
 [@@ocaml.doc ""]
 type nonrec register_stream_consumer_input =
   {
+  tags: tag_map option
+    [@ocaml.doc
+      "A set of up to 50 key-value pairs. A tag consists of a required key and an optional value.\n"];
   consumer_name: string
     [@ocaml.doc
       "For a given Kinesis data stream, each consumer must have a unique name. However, consumer names don't have to be unique across data streams.\n"];
@@ -572,6 +593,18 @@ type nonrec list_tags_for_stream_input =
       "The key to use as the starting point for the list of tags. If this parameter is set, [ListTagsForStream] gets all tags that occur after [ExclusiveStartTagKey]. \n"];
   stream_name: string option [@ocaml.doc "The name of the stream.\n"]}
 [@@ocaml.doc "Represents the input for [ListTagsForStream].\n"]
+type nonrec list_tags_for_resource_output =
+  {
+  tags: tag list option
+    [@ocaml.doc
+      "An array of tags associated with the specified Kinesis resource.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_tags_for_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource for which to list tags.\n"]}
+[@@ocaml.doc ""]
 type nonrec list_streams_output =
   {
   stream_summaries: stream_summary list option [@ocaml.doc "\n"];
@@ -867,6 +900,9 @@ type nonrec decrease_stream_retention_period_input =
                                                          "Represents the input for [DecreaseStreamRetentionPeriod].\n"]
 type nonrec create_stream_input =
   {
+  tags: tag_map option
+    [@ocaml.doc
+      "A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value.\n"];
   stream_mode_details: stream_mode_details option
     [@ocaml.doc
       " Indicates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b provisioned} capacity mode for your data streams.\n"];
@@ -882,6 +918,6 @@ type nonrec add_tags_to_stream_input =
   stream_ar_n: string option [@ocaml.doc "The ARN of the stream.\n"];
   tags: tag_map
     [@ocaml.doc
-      "A set of up to 10 key-value pairs to use to create the tags.\n"];
+      "A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.\n"];
   stream_name: string option [@ocaml.doc "The name of the stream.\n"]}
 [@@ocaml.doc "Represents the input for [AddTagsToStream].\n"]

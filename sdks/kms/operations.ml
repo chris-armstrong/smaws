@@ -452,7 +452,8 @@ module DeleteImportedKeyMaterial =
           Smaws_Lib.Protocols.AwsJson.request
             ~shape_name:"TrentServiceDeleteImportedKeyMaterial" ~service
             ~config:context.config ~http:context.http ~input
-            ~output_deserializer:base_unit_of_yojson ~error_deserializer
+            ~output_deserializer:delete_imported_key_material_response_of_yojson
+            ~error_deserializer
   end
 module DeriveSharedSecret =
   struct

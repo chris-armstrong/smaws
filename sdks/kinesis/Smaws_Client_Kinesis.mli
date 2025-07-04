@@ -80,7 +80,25 @@ type nonrec access_denied_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Specifies that you do not have the permissions required to perform this operation.\n"]
+type nonrec untag_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource from which to remove tags.\n"];
+  tag_keys: string list
+    [@ocaml.doc
+      "A list of tag key-value pairs. Existing tags of the resource whose keys are members of this list will be removed from the Kinesis resource.\n"]}
+[@@ocaml.doc ""]
 type nonrec tag_map = (string * string) list[@@ocaml.doc ""]
+type nonrec tag_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource to which to add tags.\n"];
+  tags: tag_map
+    [@ocaml.doc
+      "An array of tags to be added to the Kinesis resource. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.\n\n Tags may only contain Unicode letters, digits, white space, or these symbols: _ . : / = + - \\@.\n "]}
+[@@ocaml.doc ""]
 type nonrec tag =
   {
   value: string option
@@ -90,7 +108,7 @@ type nonrec tag =
     [@ocaml.doc
       "A unique identifier for the tag. Maximum length: 128 characters. Valid characters: Unicode letters, digits, white space, _ . / = + - % \\@\n"]}
 [@@ocaml.doc
-  "Metadata assigned to the stream, consisting of a key-value pair.\n"]
+  "Metadata assigned to the stream or consumer, consisting of a key-value pair.\n"]
 type nonrec encryption_type =
   | KMS [@ocaml.doc ""]
   | NONE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -444,6 +462,9 @@ type nonrec register_stream_consumer_output =
 [@@ocaml.doc ""]
 type nonrec register_stream_consumer_input =
   {
+  tags: tag_map option
+    [@ocaml.doc
+      "A set of up to 50 key-value pairs. A tag consists of a required key and an optional value.\n"];
   consumer_name: string
     [@ocaml.doc
       "For a given Kinesis data stream, each consumer must have a unique name. However, consumer names don't have to be unique across data streams.\n"];
@@ -573,6 +594,18 @@ type nonrec list_tags_for_stream_input =
       "The key to use as the starting point for the list of tags. If this parameter is set, [ListTagsForStream] gets all tags that occur after [ExclusiveStartTagKey]. \n"];
   stream_name: string option [@ocaml.doc "The name of the stream.\n"]}
 [@@ocaml.doc "Represents the input for [ListTagsForStream].\n"]
+type nonrec list_tags_for_resource_output =
+  {
+  tags: tag list option
+    [@ocaml.doc
+      "An array of tags associated with the specified Kinesis resource.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_tags_for_resource_input =
+  {
+  resource_ar_n: string
+    [@ocaml.doc
+      "The Amazon Resource Name (ARN) of the Kinesis resource for which to list tags.\n"]}
+[@@ocaml.doc ""]
 type nonrec list_streams_output =
   {
   stream_summaries: stream_summary list option [@ocaml.doc "\n"];
@@ -868,6 +901,9 @@ type nonrec decrease_stream_retention_period_input =
                                                          "Represents the input for [DecreaseStreamRetentionPeriod].\n"]
 type nonrec create_stream_input =
   {
+  tags: tag_map option
+    [@ocaml.doc
+      "A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value.\n"];
   stream_mode_details: stream_mode_details option
     [@ocaml.doc
       " Indicates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b provisioned} capacity mode for your data streams.\n"];
@@ -883,7 +919,7 @@ type nonrec add_tags_to_stream_input =
   stream_ar_n: string option [@ocaml.doc "The ARN of the stream.\n"];
   tags: tag_map
     [@ocaml.doc
-      "A set of up to 10 key-value pairs to use to create the tags.\n"];
+      "A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required key and an optional value. You can add up to 50 tags per resource.\n"];
   stream_name: string option [@ocaml.doc "The name of the stream.\n"]}
 [@@ocaml.doc "Represents the input for [AddTagsToStream].\n"](** {1:builders Builders} *)
 
@@ -902,6 +938,11 @@ val make_update_shard_count_input :
     ?stream_name:string ->
       scaling_type:scaling_type ->
         target_shard_count:int -> unit -> update_shard_count_input
+val make_untag_resource_input :
+  resource_ar_n:string ->
+    tag_keys:string list -> unit -> untag_resource_input
+val make_tag_resource_input :
+  resource_ar_n:string -> tags:tag_map -> unit -> tag_resource_input
 val make_tag : ?value:string -> key:string -> unit -> tag
 val make_record :
   ?encryption_type:encryption_type ->
@@ -1001,8 +1042,9 @@ val make_consumer :
 val make_register_stream_consumer_output :
   consumer:consumer -> unit -> register_stream_consumer_output
 val make_register_stream_consumer_input :
-  consumer_name:string ->
-    stream_ar_n:string -> unit -> register_stream_consumer_input
+  ?tags:tag_map ->
+    consumer_name:string ->
+      stream_ar_n:string -> unit -> register_stream_consumer_input
 val make_put_resource_policy_input :
   policy:string -> resource_ar_n:string -> unit -> put_resource_policy_input
 val make_put_records_result_entry :
@@ -1042,6 +1084,10 @@ val make_list_tags_for_stream_input :
     ?limit:int ->
       ?exclusive_start_tag_key:string ->
         ?stream_name:string -> unit -> list_tags_for_stream_input
+val make_list_tags_for_resource_output :
+  ?tags:tag list -> unit -> list_tags_for_resource_output
+val make_list_tags_for_resource_input :
+  resource_ar_n:string -> unit -> list_tags_for_resource_input
 val make_list_streams_output :
   ?stream_summaries:stream_summary list ->
     ?next_token:string ->
@@ -1157,8 +1203,9 @@ val make_decrease_stream_retention_period_input :
       retention_period_hours:int ->
         unit -> decrease_stream_retention_period_input
 val make_create_stream_input :
-  ?stream_mode_details:stream_mode_details ->
-    ?shard_count:int -> stream_name:string -> unit -> create_stream_input
+  ?tags:tag_map ->
+    ?stream_mode_details:stream_mode_details ->
+      ?shard_count:int -> stream_name:string -> unit -> create_stream_input
 val make_add_tags_to_stream_input :
   ?stream_ar_n:string ->
     ?stream_name:string -> tags:tag_map -> unit -> add_tags_to_stream_input(** {1:operations Operations} *)
@@ -1189,7 +1236,7 @@ sig
           | `LimitExceededException of limit_exceeded_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
 end[@@ocaml.doc
-     "Creates a Kinesis data stream. A stream captures and transports data records that are continuously emitted from different data sources or {i producers}. Scale-out within a stream is explicitly supported by means of shards, which are uniquely identified groups of data records in a stream.\n\n You can create your data stream using either on-demand or provisioned capacity mode. Data streams with an on-demand mode require no capacity planning and automatically scale to handle gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data Streams automatically manages the shards in order to provide the necessary throughput. For the data streams with a provisioned mode, you must specify the number of shards for the data stream. Each shard can support reads up to five transactions per second, up to a maximum data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 MiB per second. If the amount of data input increases or decreases, you can add or remove shards.\n \n  The stream name identifies the stream. The name is scoped to the Amazon Web Services account used by the application. It is also scoped by Amazon Web Services Region. That is, two streams in two different accounts can have the same name, and two streams in the same account, but in two different Regions, can have the same name.\n  \n    [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform read and write operations only on an [ACTIVE] stream. \n   \n    You receive a [LimitExceededException] when making a [CreateStream] request when you try to do one of the following:\n    \n     {ul\n           {-  Have more than five streams in the [CREATING] state at any point in time.\n               \n                }\n           {-  Create more shards than are authorized for your account.\n               \n                }\n           }\n   For the default shard limit for an Amazon Web Services account, see {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon Web Services Support}.\n   \n    You can use [DescribeStreamSummary] to check the stream status, which is returned in [StreamStatus].\n    \n      [CreateStream] has a limit of five transactions per second per account.\n     "]
+     "Creates a Kinesis data stream. A stream captures and transports data records that are continuously emitted from different data sources or {i producers}. Scale-out within a stream is explicitly supported by means of shards, which are uniquely identified groups of data records in a stream.\n\n You can create your data stream using either on-demand or provisioned capacity mode. Data streams with an on-demand mode require no capacity planning and automatically scale to handle gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data Streams automatically manages the shards in order to provide the necessary throughput. For the data streams with a provisioned mode, you must specify the number of shards for the data stream. Each shard can support reads up to five transactions per second, up to a maximum data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 MiB per second. If the amount of data input increases or decreases, you can add or remove shards.\n \n  The stream name identifies the stream. The name is scoped to the Amazon Web Services account used by the application. It is also scoped by Amazon Web Services Region. That is, two streams in two different accounts can have the same name, and two streams in the same account, but in two different Regions, can have the same name.\n  \n    [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform read and write operations only on an [ACTIVE] stream. \n   \n    You receive a [LimitExceededException] when making a [CreateStream] request when you try to do one of the following:\n    \n     {ul\n           {-  Have more than five streams in the [CREATING] state at any point in time.\n               \n                }\n           {-  Create more shards than are authorized for your account.\n               \n                }\n           }\n   For the default shard limit for an Amazon Web Services account, see {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon Web Services Support}.\n   \n    You can use [DescribeStreamSummary] to check the stream status, which is returned in [StreamStatus].\n    \n      [CreateStream] has a limit of five transactions per second per account.\n     \n      You can add tags to the stream when making a [CreateStream] request by setting the [Tags] parameter. If you pass the [Tags] parameter, in addition to having the [kinesis:CreateStream] permission, you must also have the [kinesis:AddTagsToStream] permission for the stream that will be created. The [kinesis:TagResource] permission won\226\128\153t work to tag streams on creation. Tags will take effect from the [CREATING] status of the stream, but you can't make any updates to the tags until the stream is in [ACTIVE] state.\n      "]
 module DecreaseStreamRetentionPeriod :
 sig
   val request :
@@ -1338,6 +1385,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ExpiredIteratorException of expired_iterator_exception 
+          | `InternalFailureException of internal_failure_exception 
           | `InvalidArgumentException of invalid_argument_exception 
           | `KMSAccessDeniedException of kms_access_denied_exception 
           | `KMSDisabledException of kms_disabled_exception 
@@ -1361,6 +1409,7 @@ sig
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
           | `LimitExceededException of limit_exceeded_exception 
+          | `ResourceInUseException of resource_in_use_exception 
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
@@ -1373,6 +1422,7 @@ sig
         (get_shard_iterator_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
+          | `InternalFailureException of internal_failure_exception 
           | `InvalidArgumentException of invalid_argument_exception 
           | `ProvisionedThroughputExceededException of
               provisioned_throughput_exceeded_exception 
@@ -1438,6 +1488,21 @@ sig
           | `LimitExceededException of limit_exceeded_exception ]) result
 end[@@ocaml.doc
      "Lists your Kinesis data streams.\n\n The number of streams may be too large to return from a single call to [ListStreams]. You can limit the number of returned streams using the [Limit] parameter. If you do not specify a value for the [Limit] parameter, Kinesis Data Streams uses the default limit, which is currently 100.\n \n  You can detect if there are more streams available to list by using the [HasMoreStreams] flag from the returned output. If there are more streams available, you can request more streams by using the name of the last stream returned by the [ListStreams] request in the [ExclusiveStartStreamName] parameter in a subsequent request to [ListStreams]. The group of stream names returned by the subsequent request is then added to the list. You can continue this process until all the stream names have been collected in the list. \n  \n    [ListStreams] has a limit of five transactions per second per account.\n   "]
+module ListTagsForResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_tags_for_resource_input ->
+        (list_tags_for_resource_output,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `LimitExceededException of limit_exceeded_exception 
+          | `ResourceInUseException of resource_in_use_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     "List all tags added to the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.\n\n For more information about tagging Kinesis resources, see {{:https://docs.aws.amazon.com/streams/latest/dev/tagging.html}Tag your Amazon Kinesis Data Streams resources}.\n "]
 module ListTagsForStream :
 sig
   val request :
@@ -1475,6 +1540,7 @@ sig
         (put_record_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
+          | `InternalFailureException of internal_failure_exception 
           | `InvalidArgumentException of invalid_argument_exception 
           | `KMSAccessDeniedException of kms_access_denied_exception 
           | `KMSDisabledException of kms_disabled_exception 
@@ -1496,6 +1562,7 @@ sig
         (put_records_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
+          | `InternalFailureException of internal_failure_exception 
           | `InvalidArgumentException of invalid_argument_exception 
           | `KMSAccessDeniedException of kms_access_denied_exception 
           | `KMSDisabledException of kms_disabled_exception 
@@ -1537,7 +1604,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Registers a consumer with a Kinesis data stream. When you use this operation, the consumer you register can then call [SubscribeToShard] to receive data from the stream using enhanced fan-out, at a rate of up to 2 MiB per second for every shard you subscribe to. This rate is unaffected by the total number of consumers that read from the same stream.\n\n You can register up to 20 consumers per stream. A given consumer can only be registered with one stream at a time.\n \n  For an example of how to use this operations, see {{:/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced Fan-Out Using the Kinesis Data Streams API}.\n  \n   The use of this operation has a limit of five transactions per second per account. Also, only 5 consumers can be created simultaneously. In other words, you cannot have more than 5 consumers in a [CREATING] status at the same time. Registering a 6th consumer while there are 5 in a [CREATING] status results in a [LimitExceededException].\n   "]
+     "Registers a consumer with a Kinesis data stream. When you use this operation, the consumer you register can then call [SubscribeToShard] to receive data from the stream using enhanced fan-out, at a rate of up to 2 MiB per second for every shard you subscribe to. This rate is unaffected by the total number of consumers that read from the same stream.\n\n You can add tags to the registered consumer when making a [RegisterStreamConsumer] request by setting the [Tags] parameter. If you pass the [Tags] parameter, in addition to having the [kinesis:RegisterStreamConsumer] permission, you must also have the [kinesis:TagResource] permission for the consumer that will be registered. Tags will take effect from the [CREATING] status of the consumer.\n \n  You can register up to 20 consumers per stream. A given consumer can only be registered with one stream at a time.\n  \n   For an example of how to use this operation, see {{:https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced Fan-Out Using the Kinesis Data Streams API}.\n   \n    The use of this operation has a limit of five transactions per second per account. Also, only 5 consumers can be created simultaneously. In other words, you cannot have more than 5 consumers in a [CREATING] status at the same time. Registering a 6th consumer while there are 5 in a [CREATING] status results in a [LimitExceededException].\n    "]
 module RemoveTagsFromStream :
 sig
   val request :
@@ -1618,7 +1685,37 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "This operation establishes an HTTP/2 connection between the consumer you specify in the [ConsumerARN] parameter and the shard you specify in the [ShardId] parameter. After the connection is successfully established, Kinesis Data Streams pushes records from the shard to the consumer over this connection. Before you call this operation, call [RegisterStreamConsumer] to register the consumer with Kinesis Data Streams.\n\n When the [SubscribeToShard] call succeeds, your consumer starts receiving events of type [SubscribeToShardEvent] over the HTTP/2 connection for up to 5 minutes, after which time you need to call [SubscribeToShard] again to renew the subscription if you want to continue to receive records.\n \n  You can make one call to [SubscribeToShard] per second per registered consumer per shard. For example, if you have a 4000 shard stream and two registered stream consumers, you can make one [SubscribeToShard] request per second for each combination of shard and registered consumer, allowing you to subscribe both consumers to all 4000 shards in one second. \n  \n   If you call [SubscribeToShard] again with the same [ConsumerARN] and [ShardId] within 5 seconds of a successful call, you'll get a [ResourceInUseException]. If you call [SubscribeToShard] 5 seconds or more after a successful call, the second call takes over the subscription and the previous connection expires or fails with a [ResourceInUseException].\n   \n    For an example of how to use this operations, see {{:/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced Fan-Out Using the Kinesis Data Streams API}.\n    "]
+     "This operation establishes an HTTP/2 connection between the consumer you specify in the [ConsumerARN] parameter and the shard you specify in the [ShardId] parameter. After the connection is successfully established, Kinesis Data Streams pushes records from the shard to the consumer over this connection. Before you call this operation, call [RegisterStreamConsumer] to register the consumer with Kinesis Data Streams.\n\n When the [SubscribeToShard] call succeeds, your consumer starts receiving events of type [SubscribeToShardEvent] over the HTTP/2 connection for up to 5 minutes, after which time you need to call [SubscribeToShard] again to renew the subscription if you want to continue to receive records.\n \n  You can make one call to [SubscribeToShard] per second per registered consumer per shard. For example, if you have a 4000 shard stream and two registered stream consumers, you can make one [SubscribeToShard] request per second for each combination of shard and registered consumer, allowing you to subscribe both consumers to all 4000 shards in one second. \n  \n   If you call [SubscribeToShard] again with the same [ConsumerARN] and [ShardId] within 5 seconds of a successful call, you'll get a [ResourceInUseException]. If you call [SubscribeToShard] 5 seconds or more after a successful call, the second call takes over the subscription and the previous connection expires or fails with a [ResourceInUseException].\n   \n    For an example of how to use this operation, see {{:https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced Fan-Out Using the Kinesis Data Streams API}.\n    "]
+module TagResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      tag_resource_input ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `LimitExceededException of limit_exceeded_exception 
+          | `ResourceInUseException of resource_in_use_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     "Adds or updates tags for the specified Kinesis resource. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. You can assign up to 50 tags to a Kinesis resource.\n"]
+module UntagResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      untag_resource_input ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `LimitExceededException of limit_exceeded_exception 
+          | `ResourceInUseException of resource_in_use_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     "Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be recovered after this operation completes successfully.\n"]
 module UpdateShardCount :
 sig
   val request :

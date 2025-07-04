@@ -634,6 +634,7 @@ let region_type_to_yojson (x : region_type) =
   | PRIMARY -> `String "Primary"
 let directory_stage_to_yojson (x : directory_stage) =
   match x with
+  | UPDATING -> `String "Updating"
   | FAILED -> `String "Failed"
   | DELETED -> `String "Deleted"
   | DELETING -> `String "Deleting"
@@ -952,6 +953,11 @@ let enable_ldaps_request_to_yojson (x : enable_ldaps_request) =
   assoc_to_yojson
     [("Type", (Some (ldaps_type_to_yojson x.type_)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
+let enable_directory_data_access_result_to_yojson = unit_to_yojson
+let enable_directory_data_access_request_to_yojson
+  (x : enable_directory_data_access_request) =
+  assoc_to_yojson
+    [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
 let enable_client_authentication_result_to_yojson = unit_to_yojson
 let client_authentication_type_to_yojson (x : client_authentication_type) =
   match x with
@@ -965,6 +971,7 @@ let enable_client_authentication_request_to_yojson
 let domain_controller_id_to_yojson = string_to_yojson
 let domain_controller_status_to_yojson (x : domain_controller_status) =
   match x with
+  | UPDATING -> `String "Updating"
   | FAILED -> `String "Failed"
   | DELETED -> `String "Deleted"
   | DELETING -> `String "Deleting"
@@ -1011,6 +1018,11 @@ let disable_ldaps_request_to_yojson (x : disable_ldaps_request) =
   assoc_to_yojson
     [("Type", (Some (ldaps_type_to_yojson x.type_)));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
+let disable_directory_data_access_result_to_yojson = unit_to_yojson
+let disable_directory_data_access_request_to_yojson
+  (x : disable_directory_data_access_request) =
+  assoc_to_yojson
+    [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
 let disable_client_authentication_result_to_yojson = unit_to_yojson
 let disable_client_authentication_request_to_yojson
   (x : disable_client_authentication_request) =
@@ -1135,6 +1147,22 @@ let describe_domain_controllers_request_to_yojson
       (option_to_yojson domain_controller_ids_to_yojson
          x.domain_controller_ids));
     ("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
+let data_access_status_to_yojson (x : data_access_status) =
+  match x with
+  | FAILED -> `String "Failed"
+  | ENABLING -> `String "Enabling"
+  | ENABLED -> `String "Enabled"
+  | DISABLING -> `String "Disabling"
+  | DISABLED -> `String "Disabled"
+let describe_directory_data_access_result_to_yojson
+  (x : describe_directory_data_access_result) =
+  assoc_to_yojson
+    [("DataAccessStatus",
+       (option_to_yojson data_access_status_to_yojson x.data_access_status))]
+let describe_directory_data_access_request_to_yojson
+  (x : describe_directory_data_access_request) =
+  assoc_to_yojson
+    [("DirectoryId", (Some (directory_id_to_yojson x.directory_id)))]
 let directory_name_to_yojson = string_to_yojson
 let directory_edition_to_yojson (x : directory_edition) =
   match x with

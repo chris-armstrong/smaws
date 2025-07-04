@@ -1,4 +1,33 @@
 open Types
+module AssociateResourceTypes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "NoSuchConfigurationRecorderException") ->
+              `NoSuchConfigurationRecorderException
+                (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : associate_resource_types_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.associate_resource_types_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"StarlingDoveServiceAssociateResourceTypes" ~service
+            ~config:context.config ~http:context.http ~input
+            ~output_deserializer:associate_resource_types_response_of_yojson
+            ~error_deserializer
+  end
 module BatchGetAggregateResourceConfig =
   struct
     let error_deserializer tree path =
@@ -145,6 +174,9 @@ module DeleteConfigurationRecorder =
           | (_, "NoSuchConfigurationRecorderException") ->
               `NoSuchConfigurationRecorderException
                 (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "UnmodifiableEntityException") ->
+              `UnmodifiableEntityException
+                (unmodifiable_entity_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -453,6 +485,37 @@ module DeleteRetentionConfiguration =
             ~shape_name:"StarlingDoveServiceDeleteRetentionConfiguration"
             ~service ~config:context.config ~http:context.http ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
+  end
+module DeleteServiceLinkedConfigurationRecorder =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "NoSuchConfigurationRecorderException") ->
+              `NoSuchConfigurationRecorderException
+                (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : delete_service_linked_configuration_recorder_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.delete_service_linked_configuration_recorder_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"StarlingDoveServiceDeleteServiceLinkedConfigurationRecorder"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:delete_service_linked_configuration_recorder_response_of_yojson
+            ~error_deserializer
   end
 module DeleteStoredQuery =
   struct
@@ -829,6 +892,8 @@ module DescribeConfigurationRecorders =
           | (_, "NoSuchConfigurationRecorderException") ->
               `NoSuchConfigurationRecorderException
                 (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -856,6 +921,8 @@ module DescribeConfigurationRecorderStatus =
           | (_, "NoSuchConfigurationRecorderException") ->
               `NoSuchConfigurationRecorderException
                 (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -1330,6 +1397,35 @@ module DescribeRetentionConfigurations =
             ~shape_name:"StarlingDoveServiceDescribeRetentionConfigurations"
             ~service ~config:context.config ~http:context.http ~input
             ~output_deserializer:describe_retention_configurations_response_of_yojson
+            ~error_deserializer
+  end
+module DisassociateResourceTypes =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "NoSuchConfigurationRecorderException") ->
+              `NoSuchConfigurationRecorderException
+                (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : disassociate_resource_types_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.disassociate_resource_types_request_to_yojson request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"StarlingDoveServiceDisassociateResourceTypes"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:disassociate_resource_types_response_of_yojson
             ~error_deserializer
   end
 module GetAggregateComplianceDetailsByConfigRule =
@@ -1978,6 +2074,31 @@ module ListAggregateDiscoveredResources =
             ~output_deserializer:list_aggregate_discovered_resources_response_of_yojson
             ~error_deserializer
   end
+module ListConfigurationRecorders =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : list_configuration_recorders_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.list_configuration_recorders_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"StarlingDoveServiceListConfigurationRecorders"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:list_configuration_recorders_response_of_yojson
+            ~error_deserializer
+  end
 module ListConformancePackComplianceScores =
   struct
     let error_deserializer tree path =
@@ -2261,6 +2382,9 @@ module PutConfigurationRecorder =
               `MaxNumberOfConfigurationRecordersExceededException
                 (max_number_of_configuration_recorders_exceeded_exception_of_yojson
                    tree path)
+          | (_, "UnmodifiableEntityException") ->
+              `UnmodifiableEntityException
+                (unmodifiable_entity_exception_of_yojson tree path)
           | (_, "ValidationException") ->
               `ValidationException (validation_exception_of_yojson tree path)
           | _type -> handler tree path _type in
@@ -2640,6 +2764,40 @@ module PutRetentionConfiguration =
             ~output_deserializer:put_retention_configuration_response_of_yojson
             ~error_deserializer
   end
+module PutServiceLinkedConfigurationRecorder =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "ConflictException") ->
+              `ConflictException (conflict_exception_of_yojson tree path)
+          | (_, "InsufficientPermissionsException") ->
+              `InsufficientPermissionsException
+                (insufficient_permissions_exception_of_yojson tree path)
+          | (_, "LimitExceededException") ->
+              `LimitExceededException
+                (limit_exceeded_exception_of_yojson tree path)
+          | (_, "ValidationException") ->
+              `ValidationException (validation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context
+      (request : put_service_linked_configuration_recorder_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.put_service_linked_configuration_recorder_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"StarlingDoveServicePutServiceLinkedConfigurationRecorder"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:put_service_linked_configuration_recorder_response_of_yojson
+            ~error_deserializer
+  end
 module PutStoredQuery =
   struct
     let error_deserializer tree path =
@@ -2785,6 +2943,9 @@ module StartConfigurationRecorder =
           | (_, "NoSuchConfigurationRecorderException") ->
               `NoSuchConfigurationRecorderException
                 (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "UnmodifiableEntityException") ->
+              `UnmodifiableEntityException
+                (unmodifiable_entity_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -2870,6 +3031,9 @@ module StopConfigurationRecorder =
           | (_, "NoSuchConfigurationRecorderException") ->
               `NoSuchConfigurationRecorderException
                 (no_such_configuration_recorder_exception_of_yojson tree path)
+          | (_, "UnmodifiableEntityException") ->
+              `UnmodifiableEntityException
+                (unmodifiable_entity_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler

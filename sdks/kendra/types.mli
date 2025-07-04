@@ -70,7 +70,7 @@ type nonrec proxy_configuration =
   {
   credentials: string option
     [@ocaml.doc
-      "Your secret ARN, which you can create in {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html}Secrets Manager} \n\n The credentials are optional. You use a secret if web proxy credentials are required to connect to a website host. Amazon Kendra currently support basic authentication to connect to a web proxy server. The secret stores your credentials.\n "];
+      "The Amazon Resource Name (ARN) of an Secrets Manager secret. You create a secret to store your credentials in {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html}Secrets Manager} \n\n The credentials are optional. You use a secret if web proxy credentials are required to connect to a website host. Amazon Kendra currently support basic authentication to connect to a web proxy server. The secret stores your credentials.\n "];
   port: int
     [@ocaml.doc
       "The port number of the website host you want to connect to via a web proxy server. \n\n For example, the port for https://a.example.com/page1.html is 443, the standard port for HTTPS.\n "];
@@ -83,7 +83,7 @@ type nonrec basic_authentication_configuration =
   {
   credentials: string
     [@ocaml.doc
-      "Your secret ARN, which you can create in {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html}Secrets Manager} \n\n You use a secret if basic authentication credentials are required to connect to a website. The secret stores your credentials of user name and password.\n "];
+      "The Amazon Resource Name (ARN) of an Secrets Manager secret. You create a secret to store your credentials in {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html}Secrets Manager} \n\n You use a secret if basic authentication credentials are required to connect to a website. The secret stores your credentials of user name and password.\n "];
   port: int
     [@ocaml.doc
       "The port number of the website host you want to connect to using authentication credentials.\n\n For example, the port for https://a.example.com/page1.html is 443, the standard port for HTTPS.\n "];
@@ -174,7 +174,8 @@ type nonrec user_token_configuration =
     [@ocaml.doc "Information about the JSON token type configuration.\n"];
   jwt_token_type_configuration: jwt_token_type_configuration option
     [@ocaml.doc "Information about the JWT token type configuration.\n"]}
-[@@ocaml.doc "Provides the configuration information for a token.\n"]
+[@@ocaml.doc
+  "Provides the configuration information for a token.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use [UserTokenConfigurations] to configure user context policy, Amazon Kendra returns a [ValidationException] error.\n  \n   "]
 type nonrec user_identity_configuration =
   {
   identity_attribute_name: string option
@@ -191,7 +192,7 @@ type nonrec user_group_resolution_configuration =
     [@ocaml.doc
       "The identity store provider (mode) you want to use to get users and groups. IAM Identity Center is currently the only available mode. Your users and groups must exist in an IAM Identity Center identity source in order to use this mode.\n"]}
 [@@ocaml.doc
-  "Provides the configuration information to get users and groups from an IAM Identity Center identity source. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. You can also use the {{:https://docs.aws.amazon.com/kendra/latest/dg/API_PutPrincipalMapping.html}PutPrincipalMapping} API to map users to their groups so that you only need to provide the user ID when you issue the query.\n\n To set up an IAM Identity Center identity source in the console to use with Amazon Kendra, see {{:https://docs.aws.amazon.com/kendra/latest/dg/getting-started-aws-sso.html}Getting started with an IAM Identity Center identity source}. You must also grant the required permissions to use IAM Identity Center with Amazon Kendra. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-aws-sso}IAM roles for IAM Identity Center}.\n \n  Amazon Kendra currently does not support using [UserGroupResolutionConfiguration] with an Amazon Web Services organization member account for your IAM Identity Center identify source. You must create your index in the management account for the organization in order to use [UserGroupResolutionConfiguration].\n  "]
+  "Provides the configuration information to get users and groups from an IAM Identity Center identity source. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. You can also use the {{:https://docs.aws.amazon.com/kendra/latest/dg/API_PutPrincipalMapping.html}PutPrincipalMapping} API to map users to their groups so that you only need to provide the user ID when you issue the query.\n\n To set up an IAM Identity Center identity source in the console to use with Amazon Kendra, see {{:https://docs.aws.amazon.com/kendra/latest/dg/getting-started-aws-sso.html}Getting started with an IAM Identity Center identity source}. You must also grant the required permissions to use IAM Identity Center with Amazon Kendra. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-aws-sso}IAM roles for IAM Identity Center}.\n \n  Amazon Kendra currently does not support using [UserGroupResolutionConfiguration] with an Amazon Web Services organization member account for your IAM Identity Center identify source. You must create your index in the management account for the organization in order to use [UserGroupResolutionConfiguration].\n  \n    If you're using an Amazon Kendra Gen AI Enterprise Edition index, [UserGroupResolutionConfiguration] isn't supported.\n    \n     "]
 type nonrec user_context_policy =
   | USER_TOKEN [@ocaml.doc ""]
   | ATTRIBUTE_FILTER [@ocaml.doc ""][@@ocaml.doc ""]
@@ -219,7 +220,7 @@ type nonrec user_context =
     [@ocaml.doc
       "The user context token for filtering search results for a user. It must be a JWT or a JSON token.\n"]}
 [@@ocaml.doc
-  "Provides information about the user context for an Amazon Kendra index.\n\n User context filtering is a kind of personalized search with the benefit of controlling access to documents. For example, not all teams that search the company portal for information should access top-secret company documents, nor are these documents relevant to all users. Only specific users or groups of teams given access to top-secret documents should see these documents in their search results.\n \n  You provide one of the following:\n  \n   {ul\n         {-  User token\n             \n              }\n         {-  User ID, the groups the user belongs to, and any data sources the groups can access.\n             \n              }\n         }\n   If you provide both, an exception is thrown.\n   "]
+  "Provides information about the user context for an Amazon Kendra index.\n\n User context filtering is a kind of personalized search with the benefit of controlling access to documents. For example, not all teams that search the company portal for information should access top-secret company documents, nor are these documents relevant to all users. Only specific users or groups of teams given access to top-secret documents should see these documents in their search results.\n \n  You provide one of the following:\n  \n   {ul\n         {-  User token\n             \n              }\n         {-  User ID, the groups the user belongs to, and any data sources the groups can access.\n             \n              }\n         }\n   If you provide both, an exception is thrown.\n   \n     If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can use [UserId], [Groups], and [DataSourceGroups] to filter content. If you set the [UserId] to a particular user ID, it also includes all public documents.\n     \n      Amazon Kendra Gen AI Enterprise Edition indices don't support token based document filtering. If you're using an Amazon Kendra Gen AI Enterprise Edition index, Amazon Kendra returns a [ValidationException] error if the [Token] field has a non-null value.\n      \n       "]
 type nonrec s3_path =
   {
   key: string [@ocaml.doc "The name of the file.\n"];
@@ -393,11 +394,13 @@ type nonrec update_index_request =
   user_group_resolution_configuration:
     user_group_resolution_configuration option
     [@ocaml.doc
-      "Gets users and groups from IAM Identity Center identity source. To configure this, see {{:https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html}UserGroupResolutionConfiguration}. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n"];
+      "Gets users and groups from IAM Identity Center identity source. To configure this, see {{:https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html}UserGroupResolutionConfiguration}. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index, [UserGroupResolutionConfiguration] isn't supported.\n  \n   "];
   user_context_policy: user_context_policy option
-    [@ocaml.doc "The user context policy.\n"];
+    [@ocaml.doc
+      "The user context policy.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use [ATTRIBUTE_FILTER] to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use [USER_TOKEN] to configure user context policy, Amazon Kendra returns a [ValidationException] error.\n  \n   "];
   user_token_configurations: user_token_configuration list option
-    [@ocaml.doc "The user token configuration.\n"];
+    [@ocaml.doc
+      "The user token configuration.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use [UserTokenConfigurations] to configure user context policy, Amazon Kendra returns a [ValidationException] error.\n  \n   "];
   capacity_units: capacity_units_configuration option
     [@ocaml.doc
       "Sets the number of additional document storage and query capacity units that should be used by the index. You can change the capacity of the index up to 5 times per day, or make 5 API calls.\n\n If you are using extra storage units, you can't reduce the storage capacity below what is required to meet the storage needs for your index.\n "];
@@ -529,7 +532,7 @@ type nonrec update_experience_request =
       "Configuration information you want to update for your Amazon Kendra experience.\n"];
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of a role with permission to access [Query] API, [QuerySuggestions] API, [SubmitFeedback] API, and IAM Identity Center that stores your user and group information. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
+      "The Amazon Resource Name (ARN) of an IAM role with permission to access the [Query] API, [QuerySuggestions] API, [SubmitFeedback] API, and IAM Identity Center that stores your users and groups information. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
   index_id: string
     [@ocaml.doc
       "The identifier of the index for your Amazon Kendra experience.\n"];
@@ -643,7 +646,7 @@ type nonrec connection_configuration =
   {
   secret_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of credentials stored in Secrets Manager. The credentials should be a user/password pair. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html}Using a Database Data Source}. For more information about Secrets Manager, see {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html} What Is Secrets Manager} in the {i  Secrets Manager } user guide.\n"];
+      "The Amazon Resource Name (ARN) of an Secrets Manager secret that stores the credentials. The credentials should be a user-password pair. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html}Using a Database Data Source}. For more information about Secrets Manager, see {{:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html} What Is Secrets Manager} in the {i Secrets Manager} user guide.\n"];
   table_name: string
     [@ocaml.doc "The name of the table that contains the document data.\n"];
   database_name: string
@@ -853,7 +856,7 @@ type nonrec one_drive_users =
       "The S3 bucket location of a file containing a list of users whose documents should be indexed.\n"];
   one_drive_user_list: string list option
     [@ocaml.doc
-      "A list of users whose documents should be indexed. Specify the user names in email format, for example, [username@tenantdomain]. If you need to index the documents of more than 100 users, use the [OneDriveUserS3Path] field to specify the location of a file containing a list of users.\n"]}
+      "A list of users whose documents should be indexed. Specify the user names in email format, for example, [username@tenantdomain]. If you need to index the documents of more than 10 users, use the [OneDriveUserS3Path] field to specify the location of a file containing a list of users.\n"]}
 [@@ocaml.doc "User accounts whose documents should be indexed.\n"]
 type nonrec one_drive_configuration =
   {
@@ -1657,7 +1660,7 @@ type nonrec hook_configuration =
       "Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/custom-document-enrichment.html#cde-data-contracts-lambda}Data contracts for Lambda functions}.\n"];
   lambda_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of a role with permission to run a Lambda function during ingestion. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
+      "The Amazon Resource Name (ARN) of an IAM role with permission to run a Lambda function during ingestion. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}an IAM roles for Amazon Kendra}.\n"];
   invocation_condition: document_attribute_condition option
     [@ocaml.doc
       "The condition used for when a Lambda function should be invoked.\n\n For example, you can specify a condition that if there are empty date-time values, then Amazon Kendra should invoke a function that inserts the current date-time.\n "]}
@@ -1667,7 +1670,7 @@ type nonrec custom_document_enrichment_configuration =
   {
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of a role with permission to run [PreExtractionHookConfiguration] and [PostExtractionHookConfiguration] for altering document metadata and content during the document ingestion process. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
+      "The Amazon Resource Name (ARN) of an IAM role with permission to run [PreExtractionHookConfiguration] and [PostExtractionHookConfiguration] for altering document metadata and content during the document ingestion process. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}an IAM roles for Amazon Kendra}.\n"];
   post_extraction_hook_configuration: hook_configuration option
     [@ocaml.doc
       "Configuration information for invoking a Lambda function in Lambda on the structured documents with their metadata and text extracted. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/custom-document-enrichment.html#advanced-data-manipulation}Advanced data manipulation}.\n"];
@@ -1691,7 +1694,7 @@ type nonrec update_data_source_request =
       "The code for a language you want to update for the data source connector. This allows you to support a language for all documents when updating the data source. English is supported by default. For more information on supported languages, including their codes, see {{:https://docs.aws.amazon.com/kendra/latest/dg/in-adding-languages.html}Adding documents in languages other than English}.\n"];
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of a role with permission to access the data source and required resources. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
+      "The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM roles for Amazon Kendra}.\n"];
   schedule: string option
     [@ocaml.doc
       "The sync schedule you want to update for the data source connector.\n"];
@@ -1759,10 +1762,10 @@ type nonrec untag_resource_request =
   {
   tag_keys: string list
     [@ocaml.doc
-      "A list of tag keys to remove from the index, FAQ, or data source. If a tag key does not exist on the resource, it is ignored.\n"];
+      "A list of tag keys to remove from the index, FAQ, data source, or other resource. If a tag key doesn't exist for the resource, it is ignored.\n"];
   resource_ar_n: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the index, FAQ, or data source to remove the tag from.\n"]}
+      "The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to remove a tag. For example, the ARN of an index is constructed as follows: {i arn:aws:kendra:your-region:your-account-id:index/index-id} For information on how to construct an ARN for all types of Amazon Kendra resources, see {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies}Resource types}.\n"]}
 [@@ocaml.doc ""]
 type nonrec resource_unavailable_exception =
   {
@@ -1833,17 +1836,17 @@ type nonrec tag =
       "The value associated with the tag. The value may be an empty string but it can't be null.\n"];
   key: string
     [@ocaml.doc
-      "The key for the tag. Keys are not case sensitive and must be unique for the index, FAQ, or data source.\n"]}
+      "The key for the tag. Keys are not case sensitive and must be unique for the index, FAQ, data source, or other resource.\n"]}
 [@@ocaml.doc
-  "A list of key/value pairs that identify an index, FAQ, or data source. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - \\@.\n"]
+  "A key-value pair that identifies or categorizes an index, FAQ, data source, or other resource. TA tag key and value can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - \\@.\n"]
 type nonrec tag_resource_request =
   {
   tags: tag list
     [@ocaml.doc
-      "A list of tag keys to add to the index, FAQ, or data source. If a tag already exists, the existing value is replaced with the new value.\n"];
+      "A list of tag keys to add to the index, FAQ, data source, or other resource. If a tag already exists, the existing value is replaced with the new value.\n"];
   resource_ar_n: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the index, FAQ, or data source to tag.\n"]}
+      "The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to add a tag. For example, the ARN of an index is constructed as follows: {i arn:aws:kendra:your-region:your-account-id:index/index-id} For information on how to construct an ARN for all types of Amazon Kendra resources, see {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies}Resource types}.\n"]}
 [@@ocaml.doc ""]
 type nonrec table_cell =
   {
@@ -2133,7 +2136,7 @@ type attribute_filter =
     [@ocaml.doc
       "Performs a logical [AND] operation on all filters that you specify.\n"]}
 [@@ocaml.doc
-  "Filters the search results based on document attributes or fields.\n\n You can filter results using attributes for your particular documents. The attributes must exist in your index. For example, if your documents include the custom attribute \"Department\", you can filter documents that belong to the \"HR\" department. You would use the [EqualsTo] operation to filter results or documents with \"Department\" equals to \"HR\".\n \n  You can use [AndAllFilters] and [AndOrFilters] in combination with each other or with other operations such as [EqualsTo]. For example:\n  \n    [AndAllFilters] \n   \n    {ul\n          {-   [EqualsTo]: \"Department\", \"HR\"\n              \n               }\n          {-   [AndOrFilters] \n              \n               {ul\n                     {-   [ContainsAny]: \"Project Name\", \\[\"new hires\", \"new hiring\"\\]\n                         \n                          }\n                     \n           }\n            }\n          }\n   This example filters results or documents that belong to the HR department {i and} belong to projects that contain \"new hires\" {i or} \"new hiring\" in the project name (must use [ContainAny] with [StringListValue]). This example is filtering with a depth of 2.\n   \n    You cannot filter more than a depth of 2, otherwise you receive a [ValidationException] exception with the message \"AttributeFilter cannot have a depth of more than 2.\" Also, if you use more than 10 attribute filters in a given list for [AndAllFilters] or [OrAllFilters], you receive a [ValidationException] with the message \"AttributeFilter cannot have a length of more than 10\".\n    \n     For examples of using [AttributeFilter], see {{:https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering}Using document attributes to filter search results}.\n     "]
+  "Filters the search results based on document attributes or fields.\n\n You can filter results using attributes for your particular documents. The attributes must exist in your index. For example, if your documents include the custom attribute \"Department\", you can filter documents that belong to the \"HR\" department. You would use the [EqualsTo] operation to filter results or documents with \"Department\" equals to \"HR\".\n \n  You can use [AndAllFilters] and [OrAllFilters] in combination with each other or with other operations such as [EqualsTo]. For example:\n  \n    [AndAllFilters] \n   \n    {ul\n          {-   [EqualsTo]: \"Department\", \"HR\"\n              \n               }\n          {-   [OrAllFilters] \n              \n               {ul\n                     {-   [ContainsAny]: \"Project Name\", \\[\"new hires\", \"new hiring\"\\]\n                         \n                          }\n                     \n           }\n            }\n          }\n   This example filters results or documents that belong to the HR department [AND] belong to projects that contain \"new hires\" [OR] \"new hiring\" in the project name (must use [ContainAny] with [StringListValue]). This example is filtering with a depth of 2.\n   \n    You cannot filter more than a depth of 2, otherwise you receive a [ValidationException] exception with the message \"AttributeFilter cannot have a depth of more than 2.\" Also, if you use more than 10 attribute filters in a given list for [AndAllFilters] or [OrAllFilters], you receive a [ValidationException] with the message \"AttributeFilter cannot have a length of more than 10\".\n    \n     For examples of using [AttributeFilter], see {{:https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering}Using document attributes to filter search results}.\n     "]
 type nonrec document_relevance_configuration =
   {
   relevance: relevance
@@ -2160,7 +2163,7 @@ type nonrec retrieve_request =
       "A list of document fields/attributes to include in the response. You can limit the response to include certain document fields. By default, all document fields are included in the response.\n"];
   attribute_filter: attribute_filter option
     [@ocaml.doc
-      "Filters search results by document fields/attributes. You can only provide one attribute filter; however, the [AndAllFilters], [NotFilter], and [OrAllFilters] parameters contain a list of other filters.\n\n The [AttributeFilter] parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.\n "];
+      "Filters search results by document fields/attributes. You can only provide one attribute filter; however, the [AndAllFilters], [NotFilter], and [OrAllFilters] parameters contain a list of other filters.\n\n The [AttributeFilter] parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.\n \n   For Amazon Kendra Gen AI Enterprise Edition indices use [AttributeFilter] to enable document filtering for end users using [_email_id] or include public documents ([_email_id=null]).\n   \n    "];
   query_text: string
     [@ocaml.doc
       "The input query text to retrieve relevant passages for the search. Amazon Kendra truncates queries at 30 token words, which excludes punctuation and stop words. Truncation still applies if you use Boolean or more advanced, complex queries. For example, [Timeoff AND October AND Category:HR] is counted as 3 tokens: [timeoff], [october], [hr]. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/searching-example.html#searching-index-query-syntax}Searching with advanced query syntax} in the Amazon Kendra Developer Guide. \n"];
@@ -2434,7 +2437,7 @@ type nonrec query_request =
       "An array of documents fields/attributes for faceted search. Amazon Kendra returns a count for each field key specified. This helps your users narrow their search.\n"];
   attribute_filter: attribute_filter option
     [@ocaml.doc
-      "Filters search results by document fields/attributes. You can only provide one attribute filter; however, the [AndAllFilters], [NotFilter], and [OrAllFilters] parameters contain a list of other filters.\n\n The [AttributeFilter] parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.\n "];
+      "Filters search results by document fields/attributes. You can only provide one attribute filter; however, the [AndAllFilters], [NotFilter], and [OrAllFilters] parameters contain a list of other filters.\n\n The [AttributeFilter] parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.\n \n   For Amazon Kendra Gen AI Enterprise Edition indices use [AttributeFilter] to enable document filtering for end users using [_email_id] or include public documents ([_email_id=null]).\n   \n    "];
   query_text: string option
     [@ocaml.doc
       "The input query text for the search. Amazon Kendra truncates queries at 30 token words, which excludes punctuation and stop words. Truncation still applies if you use Boolean or more advanced, complex queries. For example, [Timeoff AND October AND\n            Category:HR] is counted as 3 tokens: [timeoff], [october], [hr]. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/searching-example.html#searching-index-query-syntax}Searching with advanced query syntax} in the Amazon Kendra Developer Guide. \n"];
@@ -2465,20 +2468,20 @@ type nonrec group_members =
       "A list of users that belong to a group. For example, a list of interns all belong to the \"Interns\" group.\n"];
   member_groups: member_group list option
     [@ocaml.doc
-      "A list of sub groups that belong to a group. For example, the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\" all belong to the group \"Company\".\n"]}
+      "A list of users that belong to a group. This can also include sub groups. For example, the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\" all belong to the group \"Company A\".\n"]}
 [@@ocaml.doc
-  "A list of users or sub groups that belong to a group. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n"]
+  "A list of users that belong to a group. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n"]
 type nonrec put_principal_mapping_request =
   {
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of a role that has access to the S3 file that contains your list of users or sub groups that belong to a group.\n\n For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-ds}IAM roles for Amazon Kendra}.\n "];
+      "The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.\n\n For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-ds}IAM roles for Amazon Kendra}.\n "];
   ordering_id: int option
     [@ocaml.doc
-      "The timestamp identifier you specify to ensure Amazon Kendra does not override the latest [PUT] action with previous actions. The highest number ID, which is the ordering ID, is the latest action you want to process and apply on top of other actions with lower number IDs. This prevents previous actions with lower number IDs from possibly overriding the latest action.\n\n The ordering ID can be the Unix time of the last update you made to a group members list. You would then provide this list when calling [PutPrincipalMapping]. This ensures your [PUT] action for that updated group with the latest members list doesn't get overwritten by earlier [PUT] actions for the same group which are yet to be processed.\n \n  The default ordering ID is the current Unix time in milliseconds that the action was received by Amazon Kendra.\n  "];
+      "The timestamp identifier you specify to ensure Amazon Kendra doesn't override the latest [PUT] action with previous actions. The highest number ID, which is the ordering ID, is the latest action you want to process and apply on top of other actions with lower number IDs. This prevents previous actions with lower number IDs from possibly overriding the latest action.\n\n The ordering ID can be the Unix time of the last update you made to a group members list. You would then provide this list when calling [PutPrincipalMapping]. This ensures your [PUT] action for that updated group with the latest members list doesn't get overwritten by earlier [PUT] actions for the same group which are yet to be processed.\n \n  The default ordering ID is the current Unix time in milliseconds that the action was received by Amazon Kendra.\n  "];
   group_members: group_members
     [@ocaml.doc
-      "The list that contains your users or sub groups that belong the same group.\n\n For example, the group \"Company\" includes the user \"CEO\" and the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\".\n \n  If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000.\n  "];
+      "The list that contains your users that belong the same group. This can include sub groups that belong to a group.\n\n For example, the group \"Company A\" includes the user \"CEO\" and the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\".\n \n  If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000.\n  "];
   group_id: string
     [@ocaml.doc
       "The identifier of the group you want to map its users to.\n"];
@@ -2544,13 +2547,13 @@ type nonrec list_tags_for_resource_response =
   {
   tags: tag list option
     [@ocaml.doc
-      "A list of tags associated with the index, FAQ, or data source.\n"]}
+      "A list of tags associated with the index, FAQ, data source, or other resource.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_tags_for_resource_request =
   {
   resource_ar_n: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the index, FAQ, or data source to get a list of tags for.\n"]}
+      "The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to get a list of tags for. For example, the ARN of an index is constructed as follows: {i arn:aws:kendra:your-region:your-account-id:index/index-id} For information on how to construct an ARN for all types of Amazon Kendra resources, see {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies}Resource types}.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_query_suggestions_block_lists_response =
   {
@@ -2582,6 +2585,7 @@ type nonrec group_summary =
       "The identifier of the group you want group summary information on.\n"]}
 [@@ocaml.doc "Summary information for groups.\n"]
 type nonrec index_edition =
+  | GEN_AI_ENTERPRISE_EDITION [@ocaml.doc ""]
   | ENTERPRISE_EDITION [@ocaml.doc ""]
   | DEVELOPER_EDITION [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec index_status =
@@ -2721,7 +2725,7 @@ type nonrec list_faqs_response =
   {
   faq_summary_items: faq_summary list option
     [@ocaml.doc
-      "information about the FAQs associated with the specified index.\n"];
+      "Summary information about the FAQs for a specified index.\n"];
   next_token: string option
     [@ocaml.doc
       "If the response is truncated, Amazon Kendra returns this token that you can use in the subsequent request to retrieve the next set of FAQs.\n"]}
@@ -2734,8 +2738,7 @@ type nonrec list_faqs_request =
   next_token: string option
     [@ocaml.doc
       "If the previous response was incomplete (because there is more data to retrieve), Amazon Kendra returns a pagination token in the response. You can use this pagination token to retrieve the next set of FAQs.\n"];
-  index_id: string [@ocaml.doc "The index that contains the FAQ lists.\n"]}
-[@@ocaml.doc ""]
+  index_id: string [@ocaml.doc "The index for the FAQs.\n"]}[@@ocaml.doc ""]
 type nonrec experience_status =
   | FAILED [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""]
@@ -3042,9 +3045,9 @@ type nonrec faq_statistics =
   {
   indexed_question_answers_count: int
     [@ocaml.doc
-      "The total number of FAQ questions and answers contained in the index.\n"]}
+      "The total number of FAQ questions and answers for an index.\n"]}
 [@@ocaml.doc
-  "Provides statistical information about the FAQ questions and answers contained in an index.\n"]
+  "Provides statistical information about the FAQ questions and answers for an index.\n"]
 type nonrec index_statistics =
   {
   text_document_statistics: text_document_statistics
@@ -3519,13 +3522,13 @@ type nonrec describe_faq_response =
     [@ocaml.doc
       "The code for a language. This shows a supported language for the FAQ document. English is supported by default. For more information on supported languages, including their codes, see {{:https://docs.aws.amazon.com/kendra/latest/dg/in-adding-languages.html}Adding documents in languages other than English}.\n"];
   file_format: faq_file_format option
-    [@ocaml.doc "The file format used by the input files for the FAQ.\n"];
+    [@ocaml.doc "The file format used for the FAQ file.\n"];
   error_message: string option
     [@ocaml.doc
       "If the [Status] field is [FAILED], the [ErrorMessage] field contains the reason why the FAQ failed.\n"];
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the role that provides access to the S3 bucket containing the input files for the FAQ.\n"];
+      "The Amazon Resource Name (ARN) of the IAM role that provides access to the S3 bucket containing the FAQ file.\n"];
   status: faq_status option
     [@ocaml.doc
       "The status of the FAQ. It is ready to use when the status is [ACTIVE].\n"];
@@ -3557,7 +3560,7 @@ type nonrec describe_experience_response =
       "The reason your Amazon Kendra experience could not properly process.\n"];
   role_arn: string option
     [@ocaml.doc
-      "Shows the Amazon Resource Name (ARN) of a role with permission to access [Query] API, [QuerySuggestions] API, [SubmitFeedback] API, and IAM Identity Center that stores your user and group information.\n"];
+      "The Amazon Resource Name (ARN) of the IAM role with permission to access the [Query] API, [QuerySuggestions] API, [SubmitFeedback] API, and IAM Identity Center that stores your users and groups information.\n"];
   status: experience_status option
     [@ocaml.doc
       "The current processing status of your Amazon Kendra experience. When the status is [ACTIVE], your Amazon Kendra experience is ready to use. When the status is [FAILED], the [ErrorMessage] field contains the reason that this failed.\n"];
@@ -3606,7 +3609,7 @@ type nonrec describe_data_source_response =
       "When the [Status] field value is [FAILED], the [ErrorMessage] field contains a description of the error that caused the data source to fail.\n"];
   role_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the role with permission to access the data source and required resources.\n"];
+      "The Amazon Resource Name (ARN) of the IAM role with permission to access the data source and required resources.\n"];
   schedule: string option
     [@ocaml.doc "The schedule for Amazon Kendra to update the index.\n"];
   status: data_source_status option
@@ -3803,12 +3806,13 @@ type nonrec create_index_request =
   user_group_resolution_configuration:
     user_group_resolution_configuration option
     [@ocaml.doc
-      "Gets users and groups from IAM Identity Center identity source. To configure this, see {{:https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html}UserGroupResolutionConfiguration}. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n"];
+      "Gets users and groups from IAM Identity Center identity source. To configure this, see {{:https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html}UserGroupResolutionConfiguration}. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index, [UserGroupResolutionConfiguration] isn't supported.\n  \n   "];
   user_context_policy: user_context_policy option
     [@ocaml.doc
-      "The user context policy.\n\n  ATTRIBUTE_FILTER  All indexed content is searchable and displayable for all users. If you want to filter search results on user context, you can use the attribute filters of [_user_id] and [_group_ids] or you can provide user and group information in [UserContext]. \n                    \n                      USER_TOKEN  Enables token-based user access control to filter search results on user context. All documents with no access control and all documents accessible to the user will be searchable and displayable. \n                                  \n                                    "];
+      "The user context policy.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use [ATTRIBUTE_FILTER] to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use [USER_TOKEN] to configure user context policy, Amazon Kendra returns a [ValidationException] error.\n  \n     ATTRIBUTE_FILTER  All indexed content is searchable and displayable for all users. If you want to filter search results on user context, you can use the attribute filters of [_user_id] and [_group_ids] or you can provide user and group information in [UserContext]. \n                       \n                         USER_TOKEN  Enables token-based user access control to filter search results on user context. All documents with no access control and all documents accessible to the user will be searchable and displayable. \n                                     \n                                       "];
   user_token_configurations: user_token_configuration list option
-    [@ocaml.doc "The user token configuration.\n"];
+    [@ocaml.doc
+      "The user token configuration.\n\n  If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use [UserTokenConfigurations] to configure user context policy, Amazon Kendra returns a [ValidationException] error.\n  \n   "];
   tags: tag list option
     [@ocaml.doc
       "A list of key-value pairs that identify or categorize the index. You can also use tags to help control access to the index. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - \\@.\n"];
@@ -3825,7 +3829,7 @@ type nonrec create_index_request =
       "The Amazon Resource Name (ARN) of an IAM role with permission to access your Amazon CloudWatch logs and metrics. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM access roles for Amazon Kendra}.\n"];
   edition: index_edition option
     [@ocaml.doc
-      "The Amazon Kendra edition to use for the index. Choose [DEVELOPER_EDITION] for indexes intended for development, testing, or proof of concept. Use [ENTERPRISE_EDITION] for production. Once you set the edition for an index, it can't be changed.\n\n The [Edition] parameter is optional. If you don't supply a value, the default is [ENTERPRISE_EDITION].\n \n  For more information on quota limits for Enterprise and Developer editions, see {{:https://docs.aws.amazon.com/kendra/latest/dg/quotas.html}Quotas}.\n  "];
+      "The Amazon Kendra edition to use for the index. Choose [DEVELOPER_EDITION] for indexes intended for development, testing, or proof of concept. Use [ENTERPRISE_EDITION] for production. Use [GEN_AI_ENTERPRISE_EDITION] for creating generative AI applications. Once you set the edition for an index, it can't be changed. \n\n The [Edition] parameter is optional. If you don't supply a value, the default is [ENTERPRISE_EDITION].\n \n  For more information on quota limits for Gen AI Enterprise Edition, Enterprise Edition, and Developer Edition indices, see {{:https://docs.aws.amazon.com/kendra/latest/dg/quotas.html}Quotas}.\n  "];
   name: string [@ocaml.doc "A name for the index.\n"]}[@@ocaml.doc ""]
 type nonrec create_featured_results_set_response =
   {
@@ -3878,7 +3882,7 @@ type nonrec create_faq_request =
       "A list of key-value pairs that identify the FAQ. You can use the tags to identify and organize your resources and to control access to resources.\n"];
   role_arn: string
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of an IAM role with permission to access the S3 bucket that contains the FAQs. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM access roles for Amazon Kendra}.\n"];
+      "The Amazon Resource Name (ARN) of an IAM role with permission to access the S3 bucket that contains the FAQ file. For more information, see {{:https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html}IAM access roles for Amazon Kendra}.\n"];
   s3_path: s3_path [@ocaml.doc "The path to the FAQ file in S3.\n"];
   description: string option [@ocaml.doc "A description for the FAQ.\n"];
   name: string [@ocaml.doc "A name for the FAQ.\n"];
@@ -3986,6 +3990,9 @@ type nonrec batch_put_document_response_failed_document =
   error_code: error_code option
     [@ocaml.doc
       "The type of error that caused the document to fail to be indexed.\n"];
+  data_source_id: string option
+    [@ocaml.doc
+      " The identifier of the data source connector that the failed document belongs to. \n"];
   id: string option [@ocaml.doc "The identifier of the document.\n"]}
 [@@ocaml.doc
   "Provides information about a document that could not be indexed.\n"]
@@ -4018,6 +4025,9 @@ type nonrec batch_get_document_status_response_error =
       "States that the API could not get the status of a document. This could be because the request is not valid or there is a system error.\n"];
   error_code: error_code option
     [@ocaml.doc "Indicates the source of the error.\n"];
+  data_source_id: string option
+    [@ocaml.doc
+      " The identifier of the data source connector that the failed document belongs to. \n"];
   document_id: string option
     [@ocaml.doc
       "The identifier of the document whose status could not be retrieved.\n"]}
@@ -4076,6 +4086,9 @@ type nonrec batch_delete_document_response_failed_document =
   error_code: error_code option
     [@ocaml.doc
       "The error code for why the document couldn't be removed from the index.\n"];
+  data_source_id: string option
+    [@ocaml.doc
+      " The identifier of the data source connector that the document belongs to. \n"];
   id: string option
     [@ocaml.doc
       "The identifier of the document that couldn't be removed from the index.\n"]}

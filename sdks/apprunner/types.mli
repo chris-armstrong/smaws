@@ -152,6 +152,7 @@ type nonrec configuration_source =
   | API [@ocaml.doc ""]
   | REPOSITORY [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec runtime =
+  | NODEJS_22 [@ocaml.doc ""]
   | NODEJS_18 [@ocaml.doc ""]
   | PYTHON_311 [@ocaml.doc ""]
   | RUBY_31 [@ocaml.doc ""]

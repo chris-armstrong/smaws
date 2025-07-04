@@ -28,6 +28,12 @@ let make_update_shard_count_input ?stream_ar_n:(stream_ar_n_ : string option)
      target_shard_count = target_shard_count_;
      stream_name = stream_name_
    } : update_shard_count_input)
+let make_untag_resource_input ~resource_ar_n:(resource_ar_n_ : string)
+  ~tag_keys:(tag_keys_ : string list) () =
+  ({ resource_ar_n = resource_ar_n_; tag_keys = tag_keys_ } : untag_resource_input)
+let make_tag_resource_input ~resource_ar_n:(resource_ar_n_ : string)
+  ~tags:(tags_ : tag_map) () =
+  ({ resource_ar_n = resource_ar_n_; tags = tags_ } : tag_resource_input)
 let make_tag ?value:(value_ : string option) ~key:(key_ : string) () =
   ({ value = value_; key = key_ } : tag)
 let make_record ?encryption_type:(encryption_type_ : encryption_type option)
@@ -234,10 +240,11 @@ let make_consumer
    } : consumer)
 let make_register_stream_consumer_output ~consumer:(consumer_ : consumer) ()
   = ({ consumer = consumer_ } : register_stream_consumer_output)
-let make_register_stream_consumer_input
+let make_register_stream_consumer_input ?tags:(tags_ : tag_map option)
   ~consumer_name:(consumer_name_ : string)
   ~stream_ar_n:(stream_ar_n_ : string) () =
-  ({ consumer_name = consumer_name_; stream_ar_n = stream_ar_n_ } : register_stream_consumer_input)
+  ({ tags = tags_; consumer_name = consumer_name_; stream_ar_n = stream_ar_n_
+   } : register_stream_consumer_input)
 let make_put_resource_policy_input ~policy:(policy_ : string)
   ~resource_ar_n:(resource_ar_n_ : string) () =
   ({ policy = policy_; resource_ar_n = resource_ar_n_ } : put_resource_policy_input)
@@ -323,6 +330,11 @@ let make_list_tags_for_stream_input
      exclusive_start_tag_key = exclusive_start_tag_key_;
      stream_name = stream_name_
    } : list_tags_for_stream_input)
+let make_list_tags_for_resource_output ?tags:(tags_ : tag list option) () =
+  ({ tags = tags_ } : list_tags_for_resource_output)
+let make_list_tags_for_resource_input
+  ~resource_ar_n:(resource_ar_n_ : string) () =
+  ({ resource_ar_n = resource_ar_n_ } : list_tags_for_resource_input)
 let make_list_streams_output
   ?stream_summaries:(stream_summaries_ : stream_summary list option)
   ?next_token:(next_token_ : string option)
@@ -546,11 +558,12 @@ let make_decrease_stream_retention_period_input
      retention_period_hours = retention_period_hours_;
      stream_name = stream_name_
    } : decrease_stream_retention_period_input)
-let make_create_stream_input
+let make_create_stream_input ?tags:(tags_ : tag_map option)
   ?stream_mode_details:(stream_mode_details_ : stream_mode_details option)
   ?shard_count:(shard_count_ : int option)
   ~stream_name:(stream_name_ : string) () =
   ({
+     tags = tags_;
      stream_mode_details = stream_mode_details_;
      shard_count = shard_count_;
      stream_name = stream_name_

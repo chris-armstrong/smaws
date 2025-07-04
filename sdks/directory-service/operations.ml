@@ -904,6 +904,42 @@ module DescribeDirectories =
             ~output_deserializer:describe_directories_result_of_yojson
             ~error_deserializer
   end
+module DescribeDirectoryDataAccess =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ClientException") ->
+              `ClientException (client_exception_of_yojson tree path)
+          | (_, "DirectoryDoesNotExistException") ->
+              `DirectoryDoesNotExistException
+                (directory_does_not_exist_exception_of_yojson tree path)
+          | (_, "ServiceException") ->
+              `ServiceException (service_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : describe_directory_data_access_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.describe_directory_data_access_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"DirectoryService_20150416DescribeDirectoryDataAccess"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:describe_directory_data_access_result_of_yojson
+            ~error_deserializer
+  end
 module DescribeDomainControllers =
   struct
     let error_deserializer tree path =
@@ -1276,6 +1312,48 @@ module DisableClientAuthentication =
             ~output_deserializer:disable_client_authentication_result_of_yojson
             ~error_deserializer
   end
+module DisableDirectoryDataAccess =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ClientException") ->
+              `ClientException (client_exception_of_yojson tree path)
+          | (_, "DirectoryDoesNotExistException") ->
+              `DirectoryDoesNotExistException
+                (directory_does_not_exist_exception_of_yojson tree path)
+          | (_, "DirectoryInDesiredStateException") ->
+              `DirectoryInDesiredStateException
+                (directory_in_desired_state_exception_of_yojson tree path)
+          | (_, "DirectoryUnavailableException") ->
+              `DirectoryUnavailableException
+                (directory_unavailable_exception_of_yojson tree path)
+          | (_, "ServiceException") ->
+              `ServiceException (service_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : disable_directory_data_access_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.disable_directory_data_access_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"DirectoryService_20150416DisableDirectoryDataAccess"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:disable_directory_data_access_result_of_yojson
+            ~error_deserializer
+  end
 module DisableLDAPS =
   struct
     let error_deserializer tree path =
@@ -1418,6 +1496,48 @@ module EnableClientAuthentication =
             ~shape_name:"DirectoryService_20150416EnableClientAuthentication"
             ~service ~config:context.config ~http:context.http ~input
             ~output_deserializer:enable_client_authentication_result_of_yojson
+            ~error_deserializer
+  end
+module EnableDirectoryDataAccess =
+  struct
+    let error_deserializer tree path =
+      let open Deserializers in
+        let handler handler tree path =
+          function
+          | (_, "AccessDeniedException") ->
+              `AccessDeniedException
+                (access_denied_exception_of_yojson tree path)
+          | (_, "ClientException") ->
+              `ClientException (client_exception_of_yojson tree path)
+          | (_, "DirectoryDoesNotExistException") ->
+              `DirectoryDoesNotExistException
+                (directory_does_not_exist_exception_of_yojson tree path)
+          | (_, "DirectoryInDesiredStateException") ->
+              `DirectoryInDesiredStateException
+                (directory_in_desired_state_exception_of_yojson tree path)
+          | (_, "DirectoryUnavailableException") ->
+              `DirectoryUnavailableException
+                (directory_unavailable_exception_of_yojson tree path)
+          | (_, "ServiceException") ->
+              `ServiceException (service_exception_of_yojson tree path)
+          | (_, "UnsupportedOperationException") ->
+              `UnsupportedOperationException
+                (unsupported_operation_exception_of_yojson tree path)
+          | _type -> handler tree path _type in
+        Smaws_Lib.Protocols.AwsJson.(error_deserializer
+                                       (handler
+                                          Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
+                                       tree path)
+    let request context (request : enable_directory_data_access_request) =
+      let open Smaws_Lib.Context in
+        let open Deserializers in
+          let input =
+            Serializers.enable_directory_data_access_request_to_yojson
+              request in
+          Smaws_Lib.Protocols.AwsJson.request
+            ~shape_name:"DirectoryService_20150416EnableDirectoryDataAccess"
+            ~service ~config:context.config ~http:context.http ~input
+            ~output_deserializer:enable_directory_data_access_result_of_yojson
             ~error_deserializer
   end
 module EnableLDAPS =

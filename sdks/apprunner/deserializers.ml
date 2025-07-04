@@ -17,22 +17,24 @@ let vpc_ingress_connection_summary_list_of_yojson tree path =
   list_of_yojson vpc_ingress_connection_summary_of_yojson tree path
 let base_unit_of_yojson = unit_of_yojson
 let vpc_ingress_connection_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DELETED" -> DELETED
-   | `String "FAILED_DELETION" -> FAILED_DELETION
-   | `String "FAILED_UPDATE" -> FAILED_UPDATE
-   | `String "FAILED_CREATION" -> FAILED_CREATION
-   | `String "PENDING_DELETION" -> PENDING_DELETION
-   | `String "PENDING_UPDATE" -> PENDING_UPDATE
-   | `String "PENDING_CREATION" -> PENDING_CREATION
-   | `String "AVAILABLE" -> AVAILABLE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "VpcIngressConnectionStatus" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "VpcIngressConnectionStatus") : 
-  vpc_ingress_connection_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DELETED" -> DELETED
+    | `String "FAILED_DELETION" -> FAILED_DELETION
+    | `String "FAILED_UPDATE" -> FAILED_UPDATE
+    | `String "FAILED_CREATION" -> FAILED_CREATION
+    | `String "PENDING_DELETION" -> PENDING_DELETION
+    | `String "PENDING_UPDATE" -> PENDING_UPDATE
+    | `String "PENDING_CREATION" -> PENDING_CREATION
+    | `String "AVAILABLE" -> AVAILABLE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "VpcIngressConnectionStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "VpcIngressConnectionStatus") : 
+     vpc_ingress_connection_status) : vpc_ingress_connection_status)
 let vpc_ingress_connection_name_of_yojson = string_of_yojson
 let customer_account_id_of_yojson = string_of_yojson
 let domain_name_of_yojson = string_of_yojson
@@ -104,15 +106,16 @@ let integer__of_yojson = int_of_yojson
 let string_list_of_yojson tree path =
   list_of_yojson string__of_yojson tree path
 let vpc_connector_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INACTIVE" -> INACTIVE
-   | `String "ACTIVE" -> ACTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "VpcConnectorStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "VpcConnectorStatus") : 
-  vpc_connector_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INACTIVE" -> INACTIVE
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "VpcConnectorStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "VpcConnectorStatus") : 
+     vpc_connector_status) : vpc_connector_status)
 let vpc_connector_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -195,27 +198,29 @@ let internal_service_error_exception_of_yojson tree path =
 let service_name_of_yojson = string_of_yojson
 let service_id_of_yojson = string_of_yojson
 let service_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_IN_PROGRESS" -> OPERATION_IN_PROGRESS
-   | `String "PAUSED" -> PAUSED
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETED" -> DELETED
-   | `String "RUNNING" -> RUNNING
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ServiceStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ServiceStatus") : 
-  service_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_IN_PROGRESS" -> OPERATION_IN_PROGRESS
+    | `String "PAUSED" -> PAUSED
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETED" -> DELETED
+    | `String "RUNNING" -> RUNNING
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ServiceStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ServiceStatus") : 
+     service_status) : service_status)
 let source_code_version_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "BRANCH" -> BRANCH
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SourceCodeVersionType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "SourceCodeVersionType") : 
-  source_code_version_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "BRANCH" -> BRANCH
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SourceCodeVersionType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "SourceCodeVersionType") : 
+     source_code_version_type) : source_code_version_type)
 let source_code_version_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -224,32 +229,36 @@ let source_code_version_of_yojson tree path =
        (value_for_key source_code_version_type_of_yojson "Type" _list path)
    } : source_code_version)
 let configuration_source_of_yojson (tree : t) path =
-  (match tree with
-   | `String "API" -> API
-   | `String "REPOSITORY" -> REPOSITORY
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConfigurationSource"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ConfigurationSource") : 
-  configuration_source)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "API" -> API
+    | `String "REPOSITORY" -> REPOSITORY
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConfigurationSource"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ConfigurationSource") : 
+     configuration_source) : configuration_source)
 let runtime_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NODEJS_18" -> NODEJS_18
-   | `String "PYTHON_311" -> PYTHON_311
-   | `String "RUBY_31" -> RUBY_31
-   | `String "PHP_81" -> PHP_81
-   | `String "DOTNET_6" -> DOTNET_6
-   | `String "GO_1" -> GO_1
-   | `String "NODEJS_16" -> NODEJS_16
-   | `String "CORRETTO_11" -> CORRETTO_11
-   | `String "CORRETTO_8" -> CORRETTO_8
-   | `String "NODEJS_14" -> NODEJS_14
-   | `String "NODEJS_12" -> NODEJS_12
-   | `String "PYTHON_3" -> PYTHON_3
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Runtime" value)
-   | _ -> raise (deserialize_wrong_type_error path "Runtime") : runtime)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NODEJS_22" -> NODEJS_22
+    | `String "NODEJS_18" -> NODEJS_18
+    | `String "PYTHON_311" -> PYTHON_311
+    | `String "RUBY_31" -> RUBY_31
+    | `String "PHP_81" -> PHP_81
+    | `String "DOTNET_6" -> DOTNET_6
+    | `String "GO_1" -> GO_1
+    | `String "NODEJS_16" -> NODEJS_16
+    | `String "CORRETTO_11" -> CORRETTO_11
+    | `String "CORRETTO_8" -> CORRETTO_8
+    | `String "NODEJS_14" -> NODEJS_14
+    | `String "NODEJS_12" -> NODEJS_12
+    | `String "PYTHON_3" -> PYTHON_3
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Runtime" value)
+    | _ -> raise (deserialize_wrong_type_error path "Runtime") : runtime) : 
+  runtime)
 let build_command_of_yojson = string_of_yojson
 let start_command_of_yojson = string_of_yojson
 let runtime_environment_variables_value_of_yojson = string_of_yojson
@@ -331,15 +340,16 @@ let image_configuration_of_yojson tree path =
              "RuntimeEnvironmentVariables") _list path)
    } : image_configuration)
 let image_repository_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ECR_PUBLIC" -> ECR_PUBLIC
-   | `String "ECR" -> ECR
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ImageRepositoryType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ImageRepositoryType") : 
-  image_repository_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ECR_PUBLIC" -> ECR_PUBLIC
+    | `String "ECR" -> ECR
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ImageRepositoryType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ImageRepositoryType") : 
+     image_repository_type) : image_repository_type)
 let image_repository_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -404,15 +414,16 @@ let encryption_configuration_of_yojson tree path =
   ({ kms_key = (value_for_key kms_key_arn_of_yojson "KmsKey" _list path) } : 
     encryption_configuration)
 let health_check_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "HTTP" -> HTTP
-   | `String "TCP" -> TCP
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "HealthCheckProtocol"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "HealthCheckProtocol") : 
-  health_check_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "HTTP" -> HTTP
+    | `String "TCP" -> TCP
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "HealthCheckProtocol"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "HealthCheckProtocol") : 
+     health_check_protocol) : health_check_protocol)
 let health_check_path_of_yojson = string_of_yojson
 let health_check_interval_of_yojson = int_of_yojson
 let health_check_timeout_of_yojson = int_of_yojson
@@ -446,17 +457,18 @@ let health_check_configuration_of_yojson tree path =
    } : health_check_configuration)
 let auto_scaling_configuration_name_of_yojson = string_of_yojson
 let auto_scaling_configuration_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INACTIVE" -> INACTIVE
-   | `String "ACTIVE" -> ACTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AutoScalingConfigurationStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "AutoScalingConfigurationStatus") : 
-  auto_scaling_configuration_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INACTIVE" -> INACTIVE
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AutoScalingConfigurationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "AutoScalingConfigurationStatus") : 
+     auto_scaling_configuration_status) : auto_scaling_configuration_status)
 let has_associated_service_of_yojson = bool_of_yojson
 let is_default_of_yojson = bool_of_yojson
 let auto_scaling_configuration_summary_of_yojson tree path =
@@ -490,12 +502,14 @@ let auto_scaling_configuration_summary_of_yojson tree path =
              "AutoScalingConfigurationArn") _list path)
    } : auto_scaling_configuration_summary)
 let egress_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "VPC" -> VPC
-   | `String "DEFAULT" -> DEFAULT
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "EgressType" value)
-   | _ -> raise (deserialize_wrong_type_error path "EgressType") : egress_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "VPC" -> VPC
+    | `String "DEFAULT" -> DEFAULT
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EgressType" value)
+    | _ -> raise (deserialize_wrong_type_error path "EgressType") : egress_type) : 
+  egress_type)
 let egress_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -517,14 +531,15 @@ let ingress_configuration_of_yojson tree path =
           path)
    } : ingress_configuration)
 let ip_address_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DUAL_STACK" -> DUAL_STACK
-   | `String "IPV4" -> IPV4
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "IpAddressType" value)
-   | _ -> raise (deserialize_wrong_type_error path "IpAddressType") : 
-  ip_address_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DUAL_STACK" -> DUAL_STACK
+    | `String "IPV4" -> IPV4
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "IpAddressType" value)
+    | _ -> raise (deserialize_wrong_type_error path "IpAddressType") : 
+     ip_address_type) : ip_address_type)
 let network_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -710,13 +725,14 @@ let untag_resource_request_of_yojson tree path =
           path)
    } : untag_resource_request)
 let tracing_vendor_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AWSXRAY" -> AWSXRAY
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "TracingVendor" value)
-   | _ -> raise (deserialize_wrong_type_error path "TracingVendor") : 
-  tracing_vendor)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWSXRAY" -> AWSXRAY
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "TracingVendor" value)
+    | _ -> raise (deserialize_wrong_type_error path "TracingVendor") : 
+     tracing_vendor) : tracing_vendor)
 let trace_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ vendor = (value_for_key tracing_vendor_of_yojson "Vendor" _list path) } : 
@@ -807,13 +823,15 @@ let resume_service_request_of_yojson tree path =
           path)
    } : resume_service_request)
 let provider_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "BITBUCKET" -> BITBUCKET
-   | `String "GITHUB" -> GITHUB
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ProviderType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ProviderType") : 
-  provider_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "BITBUCKET" -> BITBUCKET
+    | `String "GITHUB" -> GITHUB
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ProviderType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ProviderType") : 
+     provider_type) : provider_type)
 let pause_service_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -830,32 +848,34 @@ let pause_service_request_of_yojson tree path =
           path)
    } : pause_service_request)
 let operation_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATE_SERVICE" -> UPDATE_SERVICE
-   | `String "DELETE_SERVICE" -> DELETE_SERVICE
-   | `String "RESUME_SERVICE" -> RESUME_SERVICE
-   | `String "PAUSE_SERVICE" -> PAUSE_SERVICE
-   | `String "CREATE_SERVICE" -> CREATE_SERVICE
-   | `String "START_DEPLOYMENT" -> START_DEPLOYMENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OperationType" value)
-   | _ -> raise (deserialize_wrong_type_error path "OperationType") : 
-  operation_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATE_SERVICE" -> UPDATE_SERVICE
+    | `String "DELETE_SERVICE" -> DELETE_SERVICE
+    | `String "RESUME_SERVICE" -> RESUME_SERVICE
+    | `String "PAUSE_SERVICE" -> PAUSE_SERVICE
+    | `String "CREATE_SERVICE" -> CREATE_SERVICE
+    | `String "START_DEPLOYMENT" -> START_DEPLOYMENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OperationType" value)
+    | _ -> raise (deserialize_wrong_type_error path "OperationType") : 
+     operation_type) : operation_type)
 let operation_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ROLLBACK_SUCCEEDED" -> ROLLBACK_SUCCEEDED
-   | `String "ROLLBACK_FAILED" -> ROLLBACK_FAILED
-   | `String "ROLLBACK_IN_PROGRESS" -> ROLLBACK_IN_PROGRESS
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "PENDING" -> PENDING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OperationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "OperationStatus") : 
-  operation_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ROLLBACK_SUCCEEDED" -> ROLLBACK_SUCCEEDED
+    | `String "ROLLBACK_FAILED" -> ROLLBACK_FAILED
+    | `String "ROLLBACK_IN_PROGRESS" -> ROLLBACK_IN_PROGRESS
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "PENDING" -> PENDING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OperationStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "OperationStatus") : 
+     operation_status) : operation_status)
 let operation_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -902,17 +922,19 @@ let observability_configuration_summary_of_yojson tree path =
 let observability_configuration_summary_list_of_yojson tree path =
   list_of_yojson observability_configuration_summary_of_yojson tree path
 let observability_configuration_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INACTIVE" -> INACTIVE
-   | `String "ACTIVE" -> ACTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ObservabilityConfigurationStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ObservabilityConfigurationStatus") : observability_configuration_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INACTIVE" -> INACTIVE
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ObservabilityConfigurationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ObservabilityConfigurationStatus") : observability_configuration_status) : 
+  observability_configuration_status)
 let observability_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1115,16 +1137,17 @@ let list_observability_configurations_request_of_yojson tree path =
    } : list_observability_configurations_request)
 let connection_name_of_yojson = string_of_yojson
 let connection_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DELETED" -> DELETED
-   | `String "ERROR" -> ERROR
-   | `String "AVAILABLE" -> AVAILABLE
-   | `String "PENDING_HANDSHAKE" -> PENDING_HANDSHAKE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConnectionStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ConnectionStatus") : 
-  connection_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DELETED" -> DELETED
+    | `String "ERROR" -> ERROR
+    | `String "AVAILABLE" -> AVAILABLE
+    | `String "PENDING_HANDSHAKE" -> PENDING_HANDSHAKE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConnectionStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ConnectionStatus") : 
+     connection_status) : connection_status)
 let connection_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1202,18 +1225,20 @@ let list_auto_scaling_configurations_request_of_yojson tree path =
              "AutoScalingConfigurationName") _list path)
    } : list_auto_scaling_configurations_request)
 let certificate_validation_record_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "SUCCESS" -> SUCCESS
-   | `String "PENDING_VALIDATION" -> PENDING_VALIDATION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CertificateValidationRecordStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "CertificateValidationRecordStatus") : certificate_validation_record_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "SUCCESS" -> SUCCESS
+    | `String "PENDING_VALIDATION" -> PENDING_VALIDATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CertificateValidationRecordStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "CertificateValidationRecordStatus") : certificate_validation_record_status) : 
+  certificate_validation_record_status)
 let certificate_validation_record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1231,23 +1256,24 @@ let certificate_validation_record_of_yojson tree path =
 let certificate_validation_record_list_of_yojson tree path =
   list_of_yojson certificate_validation_record_of_yojson tree path
 let custom_domain_association_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "BINDING_CERTIFICATE" -> BINDING_CERTIFICATE
-   | `String "PENDING_CERTIFICATE_DNS_VALIDATION" ->
-       PENDING_CERTIFICATE_DNS_VALIDATION
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETING" -> DELETING
-   | `String "ACTIVE" -> ACTIVE
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATING" -> CREATING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CustomDomainAssociationStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "CustomDomainAssociationStatus") : 
-  custom_domain_association_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "BINDING_CERTIFICATE" -> BINDING_CERTIFICATE
+    | `String "PENDING_CERTIFICATE_DNS_VALIDATION" ->
+        PENDING_CERTIFICATE_DNS_VALIDATION
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETING" -> DELETING
+    | `String "ACTIVE" -> ACTIVE
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATING" -> CREATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CustomDomainAssociationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "CustomDomainAssociationStatus") : 
+     custom_domain_association_status) : custom_domain_association_status)
 let custom_domain_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({

@@ -1,5 +1,13 @@
 open Smaws_Lib
 open Types
+val make_web_acl_has_out_of_scope_resources_violation :
+  ?out_of_scope_resource_list:string list ->
+    ?web_acl_arn:string ->
+      unit -> web_acl_has_out_of_scope_resources_violation
+val make_web_acl_has_incompatible_configuration_violation :
+  ?description:string ->
+    ?web_acl_arn:string ->
+      unit -> web_acl_has_incompatible_configuration_violation
 val make_partial_match :
   ?target_violation_reasons:string list ->
     ?reference:string -> unit -> partial_match
@@ -335,54 +343,59 @@ val make_possible_remediation_actions :
   ?actions:possible_remediation_action list ->
     ?description:string -> unit -> possible_remediation_actions
 val make_resource_violation :
-  ?possible_remediation_actions:possible_remediation_actions ->
-    ?invalid_network_acl_entries_violation:invalid_network_acl_entries_violation
+  ?web_acl_has_out_of_scope_resources_violation:web_acl_has_out_of_scope_resources_violation
+    ->
+    ?web_acl_has_incompatible_configuration_violation:web_acl_has_incompatible_configuration_violation
       ->
-      ?firewall_subnet_missing_vpc_endpoint_violation:firewall_subnet_missing_vpc_endpoint_violation
-        ->
-        ?third_party_firewall_missing_expected_route_table_violation:third_party_firewall_missing_expected_route_table_violation
+      ?possible_remediation_actions:possible_remediation_actions ->
+        ?invalid_network_acl_entries_violation:invalid_network_acl_entries_violation
           ->
-          ?third_party_firewall_missing_subnet_violation:third_party_firewall_missing_subnet_violation
+          ?firewall_subnet_missing_vpc_endpoint_violation:firewall_subnet_missing_vpc_endpoint_violation
             ->
-            ?third_party_firewall_missing_firewall_violation:third_party_firewall_missing_firewall_violation
+            ?third_party_firewall_missing_expected_route_table_violation:third_party_firewall_missing_expected_route_table_violation
               ->
-              ?route_has_out_of_scope_endpoint_violation:route_has_out_of_scope_endpoint_violation
+              ?third_party_firewall_missing_subnet_violation:third_party_firewall_missing_subnet_violation
                 ->
-                ?firewall_subnet_is_out_of_scope_violation:firewall_subnet_is_out_of_scope_violation
+                ?third_party_firewall_missing_firewall_violation:third_party_firewall_missing_firewall_violation
                   ->
-                  ?dns_rule_group_limit_exceeded_violation:dns_rule_group_limit_exceeded_violation
+                  ?route_has_out_of_scope_endpoint_violation:route_has_out_of_scope_endpoint_violation
                     ->
-                    ?dns_duplicate_rule_group_violation:dns_duplicate_rule_group_violation
+                    ?firewall_subnet_is_out_of_scope_violation:firewall_subnet_is_out_of_scope_violation
                       ->
-                      ?dns_rule_group_priority_conflict_violation:dns_rule_group_priority_conflict_violation
+                      ?dns_rule_group_limit_exceeded_violation:dns_rule_group_limit_exceeded_violation
                         ->
-                        ?network_firewall_missing_expected_routes_violation:network_firewall_missing_expected_routes_violation
+                        ?dns_duplicate_rule_group_violation:dns_duplicate_rule_group_violation
                           ->
-                          ?network_firewall_unexpected_gateway_routes_violation:network_firewall_unexpected_gateway_routes_violation
+                          ?dns_rule_group_priority_conflict_violation:dns_rule_group_priority_conflict_violation
                             ->
-                            ?network_firewall_unexpected_firewall_routes_violation:network_firewall_unexpected_firewall_routes_violation
+                            ?network_firewall_missing_expected_routes_violation:network_firewall_missing_expected_routes_violation
                               ->
-                              ?network_firewall_black_hole_route_detected_violation:network_firewall_black_hole_route_detected_violation
+                              ?network_firewall_unexpected_gateway_routes_violation:network_firewall_unexpected_gateway_routes_violation
                                 ->
-                                ?network_firewall_invalid_route_configuration_violation:network_firewall_invalid_route_configuration_violation
+                                ?network_firewall_unexpected_firewall_routes_violation:network_firewall_unexpected_firewall_routes_violation
                                   ->
-                                  ?network_firewall_internet_traffic_not_inspected_violation:network_firewall_internet_traffic_not_inspected_violation
+                                  ?network_firewall_black_hole_route_detected_violation:network_firewall_black_hole_route_detected_violation
                                     ->
-                                    ?network_firewall_policy_modified_violation:network_firewall_policy_modified_violation
+                                    ?network_firewall_invalid_route_configuration_violation:network_firewall_invalid_route_configuration_violation
                                       ->
-                                      ?network_firewall_missing_expected_rt_violation:network_firewall_missing_expected_rt_violation
+                                      ?network_firewall_internet_traffic_not_inspected_violation:network_firewall_internet_traffic_not_inspected_violation
                                         ->
-                                        ?network_firewall_missing_subnet_violation:network_firewall_missing_subnet_violation
+                                        ?network_firewall_policy_modified_violation:network_firewall_policy_modified_violation
                                           ->
-                                          ?network_firewall_missing_firewall_violation:network_firewall_missing_firewall_violation
+                                          ?network_firewall_missing_expected_rt_violation:network_firewall_missing_expected_rt_violation
                                             ->
-                                            ?aws_ec2_instance_violation:aws_ec2_instance_violation
+                                            ?network_firewall_missing_subnet_violation:network_firewall_missing_subnet_violation
                                               ->
-                                              ?aws_ec2_network_interface_violation:aws_ec2_network_interface_violation
+                                              ?network_firewall_missing_firewall_violation:network_firewall_missing_firewall_violation
                                                 ->
-                                                ?aws_vpc_security_group_violation:aws_vpc_security_group_violation
+                                                ?aws_ec2_instance_violation:aws_ec2_instance_violation
                                                   ->
-                                                  unit -> resource_violation
+                                                  ?aws_ec2_network_interface_violation:aws_ec2_network_interface_violation
+                                                    ->
+                                                    ?aws_vpc_security_group_violation:aws_vpc_security_group_violation
+                                                      ->
+                                                      unit ->
+                                                        resource_violation
 val make_tag : value:string -> key:string -> unit -> tag
 val make_violation_detail :
   ?resource_description:string ->
@@ -466,21 +479,22 @@ val make_put_protocols_list_request :
   ?tag_list:tag list ->
     protocols_list:protocols_list_data -> unit -> put_protocols_list_request
 val make_policy :
-  ?policy_status:customer_policy_status ->
-    ?policy_description:string ->
-      ?resource_set_ids:string list ->
-        ?exclude_map:customer_policy_scope_map ->
-          ?include_map:customer_policy_scope_map ->
-            ?delete_unused_fm_managed_resources:bool ->
-              ?resource_tags:resource_tag list ->
-                ?resource_type_list:string list ->
-                  ?policy_update_token:string ->
-                    ?policy_id:string ->
-                      remediation_enabled:bool ->
-                        exclude_resource_tags:bool ->
-                          resource_type:string ->
-                            security_service_policy_data:security_service_policy_data
-                              -> policy_name:string -> unit -> policy
+  ?resource_tag_logical_operator:resource_tag_logical_operator ->
+    ?policy_status:customer_policy_status ->
+      ?policy_description:string ->
+        ?resource_set_ids:string list ->
+          ?exclude_map:customer_policy_scope_map ->
+            ?include_map:customer_policy_scope_map ->
+              ?delete_unused_fm_managed_resources:bool ->
+                ?resource_tags:resource_tag list ->
+                  ?resource_type_list:string list ->
+                    ?policy_update_token:string ->
+                      ?policy_id:string ->
+                        remediation_enabled:bool ->
+                          exclude_resource_tags:bool ->
+                            resource_type:string ->
+                              security_service_policy_data:security_service_policy_data
+                                -> policy_name:string -> unit -> policy
 val make_put_policy_response :
   ?policy_arn:string -> ?policy:policy -> unit -> put_policy_response
 val make_put_policy_request :

@@ -15,6 +15,11 @@ val make_update_shard_count_input :
     ?stream_name:string ->
       scaling_type:scaling_type ->
         target_shard_count:int -> unit -> update_shard_count_input
+val make_untag_resource_input :
+  resource_ar_n:string ->
+    tag_keys:string list -> unit -> untag_resource_input
+val make_tag_resource_input :
+  resource_ar_n:string -> tags:tag_map -> unit -> tag_resource_input
 val make_tag : ?value:string -> key:string -> unit -> tag
 val make_record :
   ?encryption_type:encryption_type ->
@@ -114,8 +119,9 @@ val make_consumer :
 val make_register_stream_consumer_output :
   consumer:consumer -> unit -> register_stream_consumer_output
 val make_register_stream_consumer_input :
-  consumer_name:string ->
-    stream_ar_n:string -> unit -> register_stream_consumer_input
+  ?tags:tag_map ->
+    consumer_name:string ->
+      stream_ar_n:string -> unit -> register_stream_consumer_input
 val make_put_resource_policy_input :
   policy:string -> resource_ar_n:string -> unit -> put_resource_policy_input
 val make_put_records_result_entry :
@@ -155,6 +161,10 @@ val make_list_tags_for_stream_input :
     ?limit:int ->
       ?exclusive_start_tag_key:string ->
         ?stream_name:string -> unit -> list_tags_for_stream_input
+val make_list_tags_for_resource_output :
+  ?tags:tag list -> unit -> list_tags_for_resource_output
+val make_list_tags_for_resource_input :
+  resource_ar_n:string -> unit -> list_tags_for_resource_input
 val make_list_streams_output :
   ?stream_summaries:stream_summary list ->
     ?next_token:string ->
@@ -270,8 +280,9 @@ val make_decrease_stream_retention_period_input :
       retention_period_hours:int ->
         unit -> decrease_stream_retention_period_input
 val make_create_stream_input :
-  ?stream_mode_details:stream_mode_details ->
-    ?shard_count:int -> stream_name:string -> unit -> create_stream_input
+  ?tags:tag_map ->
+    ?stream_mode_details:stream_mode_details ->
+      ?shard_count:int -> stream_name:string -> unit -> create_stream_input
 val make_add_tags_to_stream_input :
   ?stream_ar_n:string ->
     ?stream_name:string -> tags:tag_map -> unit -> add_tags_to_stream_input

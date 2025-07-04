@@ -12,6 +12,7 @@ let vocabulary_name_to_yojson = string_to_yojson
 let language_code_to_yojson (x : language_code) =
   match x with
   | ZU_ZA -> `String "zu-ZA"
+  | ZH_HK -> `String "zh-HK"
   | WO_SN -> `String "wo-SN"
   | UZ_UZ -> `String "uz-UZ"
   | UK_UA -> `String "uk-UA"
@@ -61,6 +62,7 @@ let language_code_to_yojson (x : language_code) =
   | FI_FI -> `String "fi-FI"
   | EU_ES -> `String "eu-ES"
   | ET_ET -> `String "et-ET"
+  | ET_EE -> `String "et-EE"
   | EL_GR -> `String "el-GR"
   | CY_WL -> `String "cy-WL"
   | CS_CZ -> `String "cs-CZ"
@@ -315,6 +317,13 @@ let rule_to_yojson (x : rule) =
       assoc_to_yojson
         [("NonTalkTimeFilter", (Some (non_talk_time_filter_to_yojson arg)))]
 let rule_list_to_yojson tree = list_to_yojson rule_to_yojson tree
+let tag_key_to_yojson = string_to_yojson
+let tag_value_to_yojson = string_to_yojson
+let tag_to_yojson (x : tag) =
+  assoc_to_yojson
+    [("Value", (Some (tag_value_to_yojson x.value)));
+    ("Key", (Some (tag_key_to_yojson x.key)))]
+let tag_list_to_yojson tree = list_to_yojson tag_to_yojson tree
 let input_type_to_yojson (x : input_type) =
   match x with
   | POST_CALL -> `String "POST_CALL"
@@ -322,6 +331,7 @@ let input_type_to_yojson (x : input_type) =
 let category_properties_to_yojson (x : category_properties) =
   assoc_to_yojson
     [("InputType", (option_to_yojson input_type_to_yojson x.input_type));
+    ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("LastUpdateTime",
       (option_to_yojson date_time_to_yojson x.last_update_time));
     ("CreateTime", (option_to_yojson date_time_to_yojson x.create_time));
@@ -341,7 +351,6 @@ let update_call_analytics_category_request_to_yojson
     ("CategoryName", (Some (category_name_to_yojson x.category_name)))]
 let untag_resource_response_to_yojson = unit_to_yojson
 let transcribe_arn_to_yojson = string_to_yojson
-let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
 let untag_resource_request_to_yojson (x : untag_resource_request) =
   assoc_to_yojson
@@ -504,12 +513,6 @@ let job_execution_settings_to_yojson (x : job_execution_settings) =
       (option_to_yojson boolean__to_yojson x.allow_deferred_execution))]
 let language_options_to_yojson tree =
   list_to_yojson language_code_to_yojson tree
-let tag_value_to_yojson = string_to_yojson
-let tag_to_yojson (x : tag) =
-  assoc_to_yojson
-    [("Value", (Some (tag_value_to_yojson x.value)));
-    ("Key", (Some (tag_key_to_yojson x.key)))]
-let tag_list_to_yojson tree = list_to_yojson tag_to_yojson tree
 let subtitle_format_to_yojson (x : subtitle_format) =
   match x with | SRT -> `String "srt" | VTT -> `String "vtt"
 let subtitle_formats_to_yojson tree =
@@ -747,11 +750,30 @@ let medical_scribe_output_to_yojson (x : medical_scribe_output) =
   assoc_to_yojson
     [("ClinicalDocumentUri", (Some (uri_to_yojson x.clinical_document_uri)));
     ("TranscriptFileUri", (Some (uri_to_yojson x.transcript_file_uri)))]
+let medical_scribe_note_template_to_yojson (x : medical_scribe_note_template)
+  =
+  match x with
+  | PHYSICAL_SOAP -> `String "PHYSICAL_SOAP"
+  | BEHAVIORAL_SOAP -> `String "BEHAVIORAL_SOAP"
+  | DAP -> `String "DAP"
+  | SIRP -> `String "SIRP"
+  | BIRP -> `String "BIRP"
+  | GIRPP -> `String "GIRPP"
+  | HISTORY_AND_PHYSICAL -> `String "HISTORY_AND_PHYSICAL"
+let clinical_note_generation_settings_to_yojson
+  (x : clinical_note_generation_settings) =
+  assoc_to_yojson
+    [("NoteTemplate",
+       (option_to_yojson medical_scribe_note_template_to_yojson
+          x.note_template))]
 let medical_scribe_settings_to_yojson (x : medical_scribe_settings) =
   assoc_to_yojson
-    [("VocabularyFilterMethod",
-       (option_to_yojson vocabulary_filter_method_to_yojson
-          x.vocabulary_filter_method));
+    [("ClinicalNoteGenerationSettings",
+       (option_to_yojson clinical_note_generation_settings_to_yojson
+          x.clinical_note_generation_settings));
+    ("VocabularyFilterMethod",
+      (option_to_yojson vocabulary_filter_method_to_yojson
+         x.vocabulary_filter_method));
     ("VocabularyFilterName",
       (option_to_yojson vocabulary_filter_name_to_yojson
          x.vocabulary_filter_name));
@@ -898,8 +920,9 @@ let channel_definitions_to_yojson tree =
   list_to_yojson channel_definition_to_yojson tree
 let call_analytics_job_to_yojson (x : call_analytics_job) =
   assoc_to_yojson
-    [("ChannelDefinitions",
-       (option_to_yojson channel_definitions_to_yojson x.channel_definitions));
+    [("Tags", (option_to_yojson tag_list_to_yojson x.tags));
+    ("ChannelDefinitions",
+      (option_to_yojson channel_definitions_to_yojson x.channel_definitions));
     ("Settings",
       (option_to_yojson call_analytics_job_settings_to_yojson x.settings));
     ("IdentifiedLanguageScore",
@@ -940,6 +963,7 @@ let start_call_analytics_job_request_to_yojson
   assoc_to_yojson
     [("ChannelDefinitions",
        (option_to_yojson channel_definitions_to_yojson x.channel_definitions));
+    ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("Settings",
       (option_to_yojson call_analytics_job_settings_to_yojson x.settings));
     ("DataAccessRoleArn",
@@ -1459,6 +1483,7 @@ let create_call_analytics_category_request_to_yojson
   (x : create_call_analytics_category_request) =
   assoc_to_yojson
     [("InputType", (option_to_yojson input_type_to_yojson x.input_type));
+    ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("Rules", (Some (rule_list_to_yojson x.rules)));
     ("CategoryName", (Some (category_name_to_yojson x.category_name)))]
 let base_string_to_yojson = string_to_yojson

@@ -1311,7 +1311,8 @@ val make_clear_query_suggestions_request :
 val make_batch_put_document_response_failed_document :
   ?error_message:string ->
     ?error_code:error_code ->
-      ?id:string -> unit -> batch_put_document_response_failed_document
+      ?data_source_id:string ->
+        ?id:string -> unit -> batch_put_document_response_failed_document
 val make_batch_put_document_response :
   ?failed_documents:batch_put_document_response_failed_document list ->
     unit -> batch_put_document_response
@@ -1324,7 +1325,9 @@ val make_batch_put_document_request :
 val make_batch_get_document_status_response_error :
   ?error_message:string ->
     ?error_code:error_code ->
-      ?document_id:string -> unit -> batch_get_document_status_response_error
+      ?data_source_id:string ->
+        ?document_id:string ->
+          unit -> batch_get_document_status_response_error
 val make_batch_get_document_status_response :
   ?document_status_list:status list ->
     ?errors:batch_get_document_status_response_error list ->
@@ -1345,7 +1348,8 @@ val make_batch_delete_featured_results_set_request :
 val make_batch_delete_document_response_failed_document :
   ?error_message:string ->
     ?error_code:error_code ->
-      ?id:string -> unit -> batch_delete_document_response_failed_document
+      ?data_source_id:string ->
+        ?id:string -> unit -> batch_delete_document_response_failed_document
 val make_batch_delete_document_response :
   ?failed_documents:batch_delete_document_response_failed_document list ->
     unit -> batch_delete_document_response

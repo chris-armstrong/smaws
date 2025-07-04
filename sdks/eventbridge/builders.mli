@@ -76,27 +76,38 @@ val make_update_connection_api_key_auth_request_parameters :
   ?api_key_value:string ->
     ?api_key_name:string ->
       unit -> update_connection_api_key_auth_request_parameters
+val make_connectivity_resource_configuration_arn :
+  resource_configuration_arn:string ->
+    unit -> connectivity_resource_configuration_arn
+val make_connectivity_resource_parameters :
+  resource_parameters:connectivity_resource_configuration_arn ->
+    unit -> connectivity_resource_parameters
 val make_update_connection_auth_request_parameters :
-  ?invocation_http_parameters:connection_http_parameters ->
-    ?api_key_auth_parameters:update_connection_api_key_auth_request_parameters
-      ->
-      ?o_auth_parameters:update_connection_o_auth_request_parameters ->
-        ?basic_auth_parameters:update_connection_basic_auth_request_parameters
-          -> unit -> update_connection_auth_request_parameters
+  ?connectivity_parameters:connectivity_resource_parameters ->
+    ?invocation_http_parameters:connection_http_parameters ->
+      ?api_key_auth_parameters:update_connection_api_key_auth_request_parameters
+        ->
+        ?o_auth_parameters:update_connection_o_auth_request_parameters ->
+          ?basic_auth_parameters:update_connection_basic_auth_request_parameters
+            -> unit -> update_connection_auth_request_parameters
 val make_update_connection_request :
-  ?auth_parameters:update_connection_auth_request_parameters ->
-    ?authorization_type:connection_authorization_type ->
-      ?description:string -> name:string -> unit -> update_connection_request
+  ?kms_key_identifier:string ->
+    ?invocation_connectivity_parameters:connectivity_resource_parameters ->
+      ?auth_parameters:update_connection_auth_request_parameters ->
+        ?authorization_type:connection_authorization_type ->
+          ?description:string ->
+            name:string -> unit -> update_connection_request
 val make_update_archive_response :
   ?creation_time:CoreTypes.Timestamp.t ->
     ?state_reason:string ->
       ?state:archive_state ->
         ?archive_arn:string -> unit -> update_archive_response
 val make_update_archive_request :
-  ?retention_days:int ->
-    ?event_pattern:string ->
-      ?description:string ->
-        archive_name:string -> unit -> update_archive_request
+  ?kms_key_identifier:string ->
+    ?retention_days:int ->
+      ?event_pattern:string ->
+        ?description:string ->
+          archive_name:string -> unit -> update_archive_request
 val make_update_api_destination_response :
   ?last_modified_time:CoreTypes.Timestamp.t ->
     ?creation_time:CoreTypes.Timestamp.t ->
@@ -557,6 +568,13 @@ val make_describe_endpoint_response :
                           ?name:string -> unit -> describe_endpoint_response
 val make_describe_endpoint_request :
   ?home_region:string -> name:string -> unit -> describe_endpoint_request
+val make_describe_connection_resource_parameters :
+  resource_association_arn:string ->
+    resource_configuration_arn:string ->
+      unit -> describe_connection_resource_parameters
+val make_describe_connection_connectivity_parameters :
+  resource_parameters:describe_connection_resource_parameters ->
+    unit -> describe_connection_connectivity_parameters
 val make_connection_basic_auth_response_parameters :
   ?username:string -> unit -> connection_basic_auth_response_parameters
 val make_connection_o_auth_client_response_parameters :
@@ -570,24 +588,28 @@ val make_connection_o_auth_response_parameters :
 val make_connection_api_key_auth_response_parameters :
   ?api_key_name:string -> unit -> connection_api_key_auth_response_parameters
 val make_connection_auth_response_parameters :
-  ?invocation_http_parameters:connection_http_parameters ->
-    ?api_key_auth_parameters:connection_api_key_auth_response_parameters ->
-      ?o_auth_parameters:connection_o_auth_response_parameters ->
-        ?basic_auth_parameters:connection_basic_auth_response_parameters ->
-          unit -> connection_auth_response_parameters
+  ?connectivity_parameters:describe_connection_connectivity_parameters ->
+    ?invocation_http_parameters:connection_http_parameters ->
+      ?api_key_auth_parameters:connection_api_key_auth_response_parameters ->
+        ?o_auth_parameters:connection_o_auth_response_parameters ->
+          ?basic_auth_parameters:connection_basic_auth_response_parameters ->
+            unit -> connection_auth_response_parameters
 val make_describe_connection_response :
   ?last_authorized_time:CoreTypes.Timestamp.t ->
     ?last_modified_time:CoreTypes.Timestamp.t ->
       ?creation_time:CoreTypes.Timestamp.t ->
         ?auth_parameters:connection_auth_response_parameters ->
-          ?secret_arn:string ->
-            ?authorization_type:connection_authorization_type ->
-              ?state_reason:string ->
-                ?connection_state:connection_state ->
-                  ?description:string ->
-                    ?name:string ->
-                      ?connection_arn:string ->
-                        unit -> describe_connection_response
+          ?kms_key_identifier:string ->
+            ?secret_arn:string ->
+              ?authorization_type:connection_authorization_type ->
+                ?state_reason:string ->
+                  ?connection_state:connection_state ->
+                    ?invocation_connectivity_parameters:describe_connection_connectivity_parameters
+                      ->
+                      ?description:string ->
+                        ?name:string ->
+                          ?connection_arn:string ->
+                            unit -> describe_connection_response
 val make_describe_connection_request :
   name:string -> unit -> describe_connection_request
 val make_describe_archive_response :
@@ -595,14 +617,15 @@ val make_describe_archive_response :
     ?event_count:int ->
       ?size_bytes:int ->
         ?retention_days:int ->
-          ?state_reason:string ->
-            ?state:archive_state ->
-              ?event_pattern:string ->
-                ?description:string ->
-                  ?event_source_arn:string ->
-                    ?archive_name:string ->
-                      ?archive_arn:string ->
-                        unit -> describe_archive_response
+          ?kms_key_identifier:string ->
+            ?state_reason:string ->
+              ?state:archive_state ->
+                ?event_pattern:string ->
+                  ?description:string ->
+                    ?event_source_arn:string ->
+                      ?archive_name:string ->
+                        ?archive_arn:string ->
+                          unit -> describe_archive_response
 val make_describe_archive_request :
   archive_name:string -> unit -> describe_archive_request
 val make_describe_api_destination_response :
@@ -709,28 +732,32 @@ val make_create_connection_api_key_auth_request_parameters :
     api_key_name:string ->
       unit -> create_connection_api_key_auth_request_parameters
 val make_create_connection_auth_request_parameters :
-  ?invocation_http_parameters:connection_http_parameters ->
-    ?api_key_auth_parameters:create_connection_api_key_auth_request_parameters
-      ->
-      ?o_auth_parameters:create_connection_o_auth_request_parameters ->
-        ?basic_auth_parameters:create_connection_basic_auth_request_parameters
-          -> unit -> create_connection_auth_request_parameters
+  ?connectivity_parameters:connectivity_resource_parameters ->
+    ?invocation_http_parameters:connection_http_parameters ->
+      ?api_key_auth_parameters:create_connection_api_key_auth_request_parameters
+        ->
+        ?o_auth_parameters:create_connection_o_auth_request_parameters ->
+          ?basic_auth_parameters:create_connection_basic_auth_request_parameters
+            -> unit -> create_connection_auth_request_parameters
 val make_create_connection_request :
-  ?description:string ->
-    auth_parameters:create_connection_auth_request_parameters ->
-      authorization_type:connection_authorization_type ->
-        name:string -> unit -> create_connection_request
+  ?kms_key_identifier:string ->
+    ?invocation_connectivity_parameters:connectivity_resource_parameters ->
+      ?description:string ->
+        auth_parameters:create_connection_auth_request_parameters ->
+          authorization_type:connection_authorization_type ->
+            name:string -> unit -> create_connection_request
 val make_create_archive_response :
   ?creation_time:CoreTypes.Timestamp.t ->
     ?state_reason:string ->
       ?state:archive_state ->
         ?archive_arn:string -> unit -> create_archive_response
 val make_create_archive_request :
-  ?retention_days:int ->
-    ?event_pattern:string ->
-      ?description:string ->
-        event_source_arn:string ->
-          archive_name:string -> unit -> create_archive_request
+  ?kms_key_identifier:string ->
+    ?retention_days:int ->
+      ?event_pattern:string ->
+        ?description:string ->
+          event_source_arn:string ->
+            archive_name:string -> unit -> create_archive_request
 val make_create_api_destination_response :
   ?last_modified_time:CoreTypes.Timestamp.t ->
     ?creation_time:CoreTypes.Timestamp.t ->

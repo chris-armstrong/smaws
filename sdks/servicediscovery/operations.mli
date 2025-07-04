@@ -79,7 +79,17 @@ sig
           | `ResourceInUse of resource_in_use 
           | `ServiceNotFound of service_not_found ]) result
 end[@@ocaml.doc
-     "Deletes a specified service. If the service still contains one or more registered instances, the request fails.\n"]
+     "Deletes a specified service and all associated service attributes. If the service still contains one or more registered instances, the request fails.\n"]
+module DeleteServiceAttributes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_service_attributes_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidInput of invalid_input 
+          | `ServiceNotFound of service_not_found ]) result
+end[@@ocaml.doc "Deletes specific attributes associated with a service.\n"]
 module DeregisterInstance :
 sig
   val request :
@@ -174,6 +184,17 @@ sig
           | `InvalidInput of invalid_input 
           | `ServiceNotFound of service_not_found ]) result
 end[@@ocaml.doc "Gets the settings for a specified service.\n"]
+module GetServiceAttributes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_service_attributes_request ->
+        (get_service_attributes_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidInput of invalid_input 
+          | `ServiceNotFound of service_not_found ]) result
+end[@@ocaml.doc
+     "Returns the attributes associated with a specified service.\n"]
 module ListInstances :
 sig
   val request :
@@ -323,3 +344,16 @@ sig
           | `ServiceNotFound of service_not_found ]) result
 end[@@ocaml.doc
      "Submits a request to perform the following operations:\n\n {ul\n       {-  Update the TTL setting for existing [DnsRecords] configurations\n           \n            }\n       {-  Add, update, or delete [HealthCheckConfig] for a specified service\n           \n             You can't add, update, or delete a [HealthCheckCustomConfig] configuration.\n             \n               }\n       }\n   For public and private DNS namespaces, note the following:\n   \n    {ul\n          {-  If you omit any existing [DnsRecords] or [HealthCheckConfig] configurations from an [UpdateService] request, the configurations are deleted from the service.\n              \n               }\n          {-  If you omit an existing [HealthCheckCustomConfig] configuration from an [UpdateService] request, the configuration isn't deleted from the service.\n              \n               }\n          }\n   When you update settings for a service, Cloud Map also updates the corresponding settings in all the records and health checks that were created by using the specified service.\n   "]
+module UpdateServiceAttributes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      update_service_attributes_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidInput of invalid_input 
+          | `ServiceAttributesLimitExceededException of
+              service_attributes_limit_exceeded_exception 
+          | `ServiceNotFound of service_not_found ]) result
+end[@@ocaml.doc
+     "Submits a request to update a specified service to add service-level attributes.\n"]

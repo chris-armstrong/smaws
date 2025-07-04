@@ -487,6 +487,9 @@ let make_environment_property_descriptions
 let make_application_snapshot_configuration_description
   ~snapshots_enabled:(snapshots_enabled_ : bool) () =
   ({ snapshots_enabled = snapshots_enabled_ } : application_snapshot_configuration_description)
+let make_application_system_rollback_configuration_description
+  ~rollback_enabled:(rollback_enabled_ : bool) () =
+  ({ rollback_enabled = rollback_enabled_ } : application_system_rollback_configuration_description)
 let make_application_configuration_description
   ?zeppelin_application_configuration_description:(zeppelin_application_configuration_description_
                                                     :
@@ -494,6 +497,10 @@ let make_application_configuration_description
                                                       option)
   ?vpc_configuration_descriptions:(vpc_configuration_descriptions_ :
                                     vpc_configuration_description list option)
+  ?application_system_rollback_configuration_description:(application_system_rollback_configuration_description_
+                                                           :
+                                                           application_system_rollback_configuration_description
+                                                             option)
   ?application_snapshot_configuration_description:(application_snapshot_configuration_description_
                                                     :
                                                     application_snapshot_configuration_description
@@ -520,6 +527,8 @@ let make_application_configuration_description
      zeppelin_application_configuration_description =
        zeppelin_application_configuration_description_;
      vpc_configuration_descriptions = vpc_configuration_descriptions_;
+     application_system_rollback_configuration_description =
+       application_system_rollback_configuration_description_;
      application_snapshot_configuration_description =
        application_snapshot_configuration_description_;
      environment_property_descriptions = environment_property_descriptions_;
@@ -558,6 +567,8 @@ let make_application_detail
   ?application_version_rolled_back_to:(application_version_rolled_back_to_ :
                                         int option)
   ?conditional_token:(conditional_token_ : string option)
+  ?application_version_create_timestamp:(application_version_create_timestamp_
+                                          : CoreTypes.Timestamp.t option)
   ?application_version_rolled_back_from:(application_version_rolled_back_from_
                                           : int option)
   ?application_version_updated_from:(application_version_updated_from_ :
@@ -588,6 +599,8 @@ let make_application_detail
      application_mode = application_mode_;
      application_version_rolled_back_to = application_version_rolled_back_to_;
      conditional_token = conditional_token_;
+     application_version_create_timestamp =
+       application_version_create_timestamp_;
      application_version_rolled_back_from =
        application_version_rolled_back_from_;
      application_version_updated_from = application_version_updated_from_;
@@ -608,8 +621,10 @@ let make_application_detail
      application_ar_n = application_ar_n_
    } : application_detail)
 let make_update_application_response
+  ?operation_id:(operation_id_ : string option)
   ~application_detail:(application_detail_ : application_detail) () =
-  ({ application_detail = application_detail_ } : update_application_response)
+  ({ operation_id = operation_id_; application_detail = application_detail_ } : 
+  update_application_response)
 let make_input_lambda_processor_update
   ~resource_arn_update:(resource_arn_update_ : string) () =
   ({ resource_arn_update = resource_arn_update_ } : input_lambda_processor_update)
@@ -802,6 +817,9 @@ let make_environment_property_updates
 let make_application_snapshot_configuration_update
   ~snapshots_enabled_update:(snapshots_enabled_update_ : bool) () =
   ({ snapshots_enabled_update = snapshots_enabled_update_ } : application_snapshot_configuration_update)
+let make_application_system_rollback_configuration_update
+  ~rollback_enabled_update:(rollback_enabled_update_ : bool) () =
+  ({ rollback_enabled_update = rollback_enabled_update_ } : application_system_rollback_configuration_update)
 let make_application_configuration_update
   ?zeppelin_application_configuration_update:(zeppelin_application_configuration_update_
                                                :
@@ -809,6 +827,10 @@ let make_application_configuration_update
                                                  option)
   ?vpc_configuration_updates:(vpc_configuration_updates_ :
                                vpc_configuration_update list option)
+  ?application_system_rollback_configuration_update:(application_system_rollback_configuration_update_
+                                                      :
+                                                      application_system_rollback_configuration_update
+                                                        option)
   ?application_snapshot_configuration_update:(application_snapshot_configuration_update_
                                                :
                                                application_snapshot_configuration_update
@@ -832,6 +854,8 @@ let make_application_configuration_update
      zeppelin_application_configuration_update =
        zeppelin_application_configuration_update_;
      vpc_configuration_updates = vpc_configuration_updates_;
+     application_system_rollback_configuration_update =
+       application_system_rollback_configuration_update_;
      application_snapshot_configuration_update =
        application_snapshot_configuration_update_;
      environment_property_updates = environment_property_updates_;
@@ -926,11 +950,15 @@ let make_tag_resource_response () = (() : unit)
 let make_tag_resource_request ~tags:(tags_ : tag list)
   ~resource_ar_n:(resource_ar_n_ : string) () =
   ({ tags = tags_; resource_ar_n = resource_ar_n_ } : tag_resource_request)
-let make_stop_application_response () = (() : unit)
+let make_stop_application_response
+  ?operation_id:(operation_id_ : string option) () =
+  ({ operation_id = operation_id_ } : stop_application_response)
 let make_stop_application_request ?force:(force_ : bool option)
   ~application_name:(application_name_ : string) () =
   ({ force = force_; application_name = application_name_ } : stop_application_request)
-let make_start_application_response () = (() : unit)
+let make_start_application_response
+  ?operation_id:(operation_id_ : string option) () =
+  ({ operation_id = operation_id_ } : start_application_response)
 let make_sql_run_configuration
   ~input_starting_position_configuration:(input_starting_position_configuration_
                                            :
@@ -1051,8 +1079,10 @@ let make_s3_configuration ~file_key:(file_key_ : string)
   ~bucket_ar_n:(bucket_ar_n_ : string) () =
   ({ file_key = file_key_; bucket_ar_n = bucket_ar_n_ } : s3_configuration)
 let make_rollback_application_response
+  ?operation_id:(operation_id_ : string option)
   ~application_detail:(application_detail_ : application_detail) () =
-  ({ application_detail = application_detail_ } : rollback_application_response)
+  ({ operation_id = operation_id_; application_detail = application_detail_ } : 
+  rollback_application_response)
 let make_rollback_application_request
   ~current_application_version_id:(current_application_version_id_ : int)
   ~application_name:(application_name_ : string) () =
@@ -1071,6 +1101,13 @@ let make_parallelism_configuration
      parallelism = parallelism_;
      configuration_type = configuration_type_
    } : parallelism_configuration)
+let make_error_info ?error_string:(error_string_ : string option) () =
+  ({ error_string = error_string_ } : error_info)
+let make_operation_failure_details
+  ?error_info:(error_info_ : error_info option)
+  ?rollback_operation_id:(rollback_operation_id_ : string option) () =
+  ({ error_info = error_info_; rollback_operation_id = rollback_operation_id_
+   } : operation_failure_details)
 let make_monitoring_configuration ?log_level:(log_level_ : log_level option)
   ?metrics_level:(metrics_level_ : metrics_level option)
   ~configuration_type:(configuration_type_ : configuration_type) () =
@@ -1145,6 +1182,40 @@ let make_list_application_snapshots_request
      limit = limit_;
      application_name = application_name_
    } : list_application_snapshots_request)
+let make_application_operation_info
+  ?operation_status:(operation_status_ : operation_status option)
+  ?end_time:(end_time_ : CoreTypes.Timestamp.t option)
+  ?start_time:(start_time_ : CoreTypes.Timestamp.t option)
+  ?operation_id:(operation_id_ : string option)
+  ?operation:(operation_ : string option) () =
+  ({
+     operation_status = operation_status_;
+     end_time = end_time_;
+     start_time = start_time_;
+     operation_id = operation_id_;
+     operation = operation_
+   } : application_operation_info)
+let make_list_application_operations_response
+  ?next_token:(next_token_ : string option)
+  ?application_operation_info_list:(application_operation_info_list_ :
+                                     application_operation_info list option)
+  () =
+  ({
+     next_token = next_token_;
+     application_operation_info_list = application_operation_info_list_
+   } : list_application_operations_response)
+let make_list_application_operations_request
+  ?operation_status:(operation_status_ : operation_status option)
+  ?operation:(operation_ : string option)
+  ?next_token:(next_token_ : string option) ?limit:(limit_ : int option)
+  ~application_name:(application_name_ : string) () =
+  ({
+     operation_status = operation_status_;
+     operation = operation_;
+     next_token = next_token_;
+     limit = limit_;
+     application_name = application_name_
+   } : list_application_operations_request)
 let make_discover_input_schema_response
   ?raw_input_records:(raw_input_records_ : string list option)
   ?processed_input_records:(processed_input_records_ : string list option)
@@ -1194,6 +1265,44 @@ let make_describe_application_snapshot_request
   ~application_name:(application_name_ : string) () =
   ({ snapshot_name = snapshot_name_; application_name = application_name_ } : 
   describe_application_snapshot_request)
+let make_application_version_change_details
+  ~application_version_updated_to:(application_version_updated_to_ : int)
+  ~application_version_updated_from:(application_version_updated_from_ : int)
+  () =
+  ({
+     application_version_updated_to = application_version_updated_to_;
+     application_version_updated_from = application_version_updated_from_
+   } : application_version_change_details)
+let make_application_operation_info_details
+  ?operation_failure_details:(operation_failure_details_ :
+                               operation_failure_details option)
+  ?application_version_change_details:(application_version_change_details_ :
+                                        application_version_change_details
+                                          option)
+  ~operation_status:(operation_status_ : operation_status)
+  ~end_time:(end_time_ : CoreTypes.Timestamp.t)
+  ~start_time:(start_time_ : CoreTypes.Timestamp.t)
+  ~operation:(operation_ : string) () =
+  ({
+     operation_failure_details = operation_failure_details_;
+     application_version_change_details = application_version_change_details_;
+     operation_status = operation_status_;
+     end_time = end_time_;
+     start_time = start_time_;
+     operation = operation_
+   } : application_operation_info_details)
+let make_describe_application_operation_response
+  ?application_operation_info_details:(application_operation_info_details_ :
+                                        application_operation_info_details
+                                          option)
+  () =
+  ({ application_operation_info_details = application_operation_info_details_
+   } : describe_application_operation_response)
+let make_describe_application_operation_request
+  ~operation_id:(operation_id_ : string)
+  ~application_name:(application_name_ : string) () =
+  ({ operation_id = operation_id_; application_name = application_name_ } : 
+  describe_application_operation_request)
 let make_describe_application_response
   ~application_detail:(application_detail_ : application_detail) () =
   ({ application_detail = application_detail_ } : describe_application_response)
@@ -1205,9 +1314,11 @@ let make_describe_application_request
      application_name = application_name_
    } : describe_application_request)
 let make_delete_application_vpc_configuration_response
+  ?operation_id:(operation_id_ : string option)
   ?application_version_id:(application_version_id_ : int option)
   ?application_ar_n:(application_ar_n_ : string option) () =
   ({
+     operation_id = operation_id_;
      application_version_id = application_version_id_;
      application_ar_n = application_ar_n_
    } : delete_application_vpc_configuration_response)
@@ -1282,6 +1393,7 @@ let make_delete_application_input_processing_configuration_request
      application_name = application_name_
    } : delete_application_input_processing_configuration_request)
 let make_delete_application_cloud_watch_logging_option_response
+  ?operation_id:(operation_id_ : string option)
   ?cloud_watch_logging_option_descriptions:(cloud_watch_logging_option_descriptions_
                                              :
                                              cloud_watch_logging_option_description
@@ -1289,6 +1401,7 @@ let make_delete_application_cloud_watch_logging_option_response
   ?application_version_id:(application_version_id_ : int option)
   ?application_ar_n:(application_ar_n_ : string option) () =
   ({
+     operation_id = operation_id_;
      cloud_watch_logging_option_descriptions =
        cloud_watch_logging_option_descriptions_;
      application_version_id = application_version_id_;
@@ -1382,11 +1495,18 @@ let make_application_code_configuration
 let make_application_snapshot_configuration
   ~snapshots_enabled:(snapshots_enabled_ : bool) () =
   ({ snapshots_enabled = snapshots_enabled_ } : application_snapshot_configuration)
+let make_application_system_rollback_configuration
+  ~rollback_enabled:(rollback_enabled_ : bool) () =
+  ({ rollback_enabled = rollback_enabled_ } : application_system_rollback_configuration)
 let make_application_configuration
   ?zeppelin_application_configuration:(zeppelin_application_configuration_ :
                                         zeppelin_application_configuration
                                           option)
   ?vpc_configurations:(vpc_configurations_ : vpc_configuration list option)
+  ?application_system_rollback_configuration:(application_system_rollback_configuration_
+                                               :
+                                               application_system_rollback_configuration
+                                                 option)
   ?application_snapshot_configuration:(application_snapshot_configuration_ :
                                         application_snapshot_configuration
                                           option)
@@ -1402,6 +1522,8 @@ let make_application_configuration
   ({
      zeppelin_application_configuration = zeppelin_application_configuration_;
      vpc_configurations = vpc_configurations_;
+     application_system_rollback_configuration =
+       application_system_rollback_configuration_;
      application_snapshot_configuration = application_snapshot_configuration_;
      application_code_configuration = application_code_configuration_;
      environment_properties = environment_properties_;
@@ -1433,11 +1555,13 @@ let make_create_application_request
      application_name = application_name_
    } : create_application_request)
 let make_add_application_vpc_configuration_response
+  ?operation_id:(operation_id_ : string option)
   ?vpc_configuration_description:(vpc_configuration_description_ :
                                    vpc_configuration_description option)
   ?application_version_id:(application_version_id_ : int option)
   ?application_ar_n:(application_ar_n_ : string option) () =
   ({
+     operation_id = operation_id_;
      vpc_configuration_description = vpc_configuration_description_;
      application_version_id = application_version_id_;
      application_ar_n = application_ar_n_
@@ -1537,6 +1661,7 @@ let make_add_application_input_request ~input:(input_ : input)
      application_name = application_name_
    } : add_application_input_request)
 let make_add_application_cloud_watch_logging_option_response
+  ?operation_id:(operation_id_ : string option)
   ?cloud_watch_logging_option_descriptions:(cloud_watch_logging_option_descriptions_
                                              :
                                              cloud_watch_logging_option_description
@@ -1544,6 +1669,7 @@ let make_add_application_cloud_watch_logging_option_response
   ?application_version_id:(application_version_id_ : int option)
   ?application_ar_n:(application_ar_n_ : string option) () =
   ({
+     operation_id = operation_id_;
      cloud_watch_logging_option_descriptions =
        cloud_watch_logging_option_descriptions_;
      application_version_id = application_version_id_;

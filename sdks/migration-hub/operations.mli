@@ -36,6 +36,23 @@ sig
           | `UnauthorizedOperation of unauthorized_operation ]) result
 end[@@ocaml.doc
      "Associates a discovered resource ID from Application Discovery Service with a migration task.\n"]
+module AssociateSourceResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      associate_source_resource_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `DryRunOperation of dry_run_operation 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception 
+          | `UnauthorizedOperation of unauthorized_operation ]) result
+end[@@ocaml.doc
+     "Associates a source resource with a migration task. For example, the source resource can be a source server, an application, or a migration wave.\n"]
 module CreateProgressUpdateStream :
 sig
   val request :
@@ -139,6 +156,23 @@ sig
           | `UnauthorizedOperation of unauthorized_operation ]) result
 end[@@ocaml.doc
      "Disassociate an Application Discovery Service discovered resource from a migration task.\n"]
+module DisassociateSourceResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disassociate_source_resource_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `DryRunOperation of dry_run_operation 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception 
+          | `UnauthorizedOperation of unauthorized_operation ]) result
+end[@@ocaml.doc
+     "Removes the association between a source resource and a migration task.\n"]
 module ImportMigrationTask :
 sig
   val request :
@@ -204,6 +238,21 @@ sig
           | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc
      "Lists discovered resources associated with the given [MigrationTask].\n"]
+module ListMigrationTaskUpdates :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_migration_task_updates_request ->
+        (list_migration_task_updates_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception ]) result
+end[@@ocaml.doc
+     "This is a paginated API that returns all the migration-task states for the specified [MigrationTaskName] and [ProgressUpdateStream].\n"]
 module ListMigrationTasks :
 sig
   val request :
@@ -236,6 +285,21 @@ sig
           | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc
      "Lists progress update streams associated with the user account making this call.\n"]
+module ListSourceResources :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_source_resources_request ->
+        (list_source_resources_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception ]) result
+end[@@ocaml.doc
+     "Lists all the source resource that are associated with the specified [MigrationTaskName] and [ProgressUpdateStream].\n"]
 module NotifyApplicationState :
 sig
   val request :

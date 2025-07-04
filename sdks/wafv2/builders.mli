@@ -35,20 +35,26 @@ val make_header_order :
   oversize_handling:oversize_handling -> unit -> header_order
 val make_ja3_fingerprint :
   fallback_behavior:fallback_behavior -> unit -> ja3_fingerprint
+val make_ja4_fingerprint :
+  fallback_behavior:fallback_behavior -> unit -> ja4_fingerprint
+val make_uri_fragment :
+  ?fallback_behavior:fallback_behavior -> unit -> uri_fragment
 val make_field_to_match :
-  ?ja3_fingerprint:ja3_fingerprint ->
-    ?header_order:header_order ->
-      ?cookies:cookies ->
-        ?headers:headers ->
-          ?json_body:json_body ->
-            ?method_:unit ->
-              ?body:body ->
-                ?query_string:unit ->
-                  ?uri_path:unit ->
-                    ?all_query_arguments:unit ->
-                      ?single_query_argument:single_query_argument ->
-                        ?single_header:single_header ->
-                          unit -> field_to_match
+  ?uri_fragment:uri_fragment ->
+    ?ja4_fingerprint:ja4_fingerprint ->
+      ?ja3_fingerprint:ja3_fingerprint ->
+        ?header_order:header_order ->
+          ?cookies:cookies ->
+            ?headers:headers ->
+              ?json_body:json_body ->
+                ?method_:unit ->
+                  ?body:body ->
+                    ?query_string:unit ->
+                      ?uri_path:unit ->
+                        ?all_query_arguments:unit ->
+                          ?single_query_argument:single_query_argument ->
+                            ?single_header:single_header ->
+                              unit -> field_to_match
 val make_text_transformation :
   type_:text_transformation_type ->
     priority:int -> unit -> text_transformation
@@ -144,17 +150,25 @@ val make_rate_limit_label_namespace :
 val make_rate_limit_uri_path :
   text_transformations:text_transformation list ->
     unit -> rate_limit_uri_path
+val make_rate_limit_ja3_fingerprint :
+  fallback_behavior:fallback_behavior -> unit -> rate_limit_ja3_fingerprint
+val make_rate_limit_ja4_fingerprint :
+  fallback_behavior:fallback_behavior -> unit -> rate_limit_ja4_fingerprint
+val make_rate_limit_asn : unit -> unit
 val make_rate_based_statement_custom_key :
-  ?uri_path:rate_limit_uri_path ->
-    ?label_namespace:rate_limit_label_namespace ->
-      ?i_p:unit ->
-        ?forwarded_i_p:unit ->
-          ?http_method:unit ->
-            ?query_string:rate_limit_query_string ->
-              ?query_argument:rate_limit_query_argument ->
-                ?cookie:rate_limit_cookie ->
-                  ?header:rate_limit_header ->
-                    unit -> rate_based_statement_custom_key
+  ?as_n:unit ->
+    ?ja4_fingerprint:rate_limit_ja4_fingerprint ->
+      ?ja3_fingerprint:rate_limit_ja3_fingerprint ->
+        ?uri_path:rate_limit_uri_path ->
+          ?label_namespace:rate_limit_label_namespace ->
+            ?i_p:unit ->
+              ?forwarded_i_p:unit ->
+                ?http_method:unit ->
+                  ?query_string:rate_limit_query_string ->
+                    ?query_argument:rate_limit_query_argument ->
+                      ?cookie:rate_limit_cookie ->
+                        ?header:rate_limit_header ->
+                          unit -> rate_based_statement_custom_key
 val make_username_field : identifier:string -> unit -> username_field
 val make_password_field : identifier:string -> unit -> password_field
 val make_aws_managed_rules_bot_control_rule_set :
@@ -206,21 +220,37 @@ val make_aws_managed_rules_acfp_rule_set :
       request_inspection:request_inspection_acf_p ->
         registration_page_path:string ->
           creation_path:string -> unit -> aws_managed_rules_acfp_rule_set
+val make_regex : ?regex_string:string -> unit -> regex
+val make_client_side_action :
+  ?exempt_uri_regular_expressions:regex list ->
+    ?sensitivity:sensitivity_to_act ->
+      usage_of_action:usage_of_action -> unit -> client_side_action
+val make_client_side_action_config :
+  challenge:client_side_action -> unit -> client_side_action_config
+val make_aws_managed_rules_anti_d_do_s_rule_set :
+  ?sensitivity_to_block:sensitivity_to_act ->
+    client_side_action_config:client_side_action_config ->
+      unit -> aws_managed_rules_anti_d_do_s_rule_set
 val make_managed_rule_group_config :
-  ?aws_managed_rules_acfp_rule_set:aws_managed_rules_acfp_rule_set ->
-    ?aws_managed_rules_atp_rule_set:aws_managed_rules_atp_rule_set ->
-      ?aws_managed_rules_bot_control_rule_set:aws_managed_rules_bot_control_rule_set
-        ->
-        ?password_field:password_field ->
-          ?username_field:username_field ->
-            ?payload_type:payload_type ->
-              ?login_path:string -> unit -> managed_rule_group_config
+  ?aws_managed_rules_anti_d_do_s_rule_set:aws_managed_rules_anti_d_do_s_rule_set
+    ->
+    ?aws_managed_rules_acfp_rule_set:aws_managed_rules_acfp_rule_set ->
+      ?aws_managed_rules_atp_rule_set:aws_managed_rules_atp_rule_set ->
+        ?aws_managed_rules_bot_control_rule_set:aws_managed_rules_bot_control_rule_set
+          ->
+          ?password_field:password_field ->
+            ?username_field:username_field ->
+              ?payload_type:payload_type ->
+                ?login_path:string -> unit -> managed_rule_group_config
 val make_label_match_statement :
   key:string -> scope:label_match_scope -> unit -> label_match_statement
 val make_regex_match_statement :
   text_transformations:text_transformation list ->
     field_to_match:field_to_match ->
       regex_string:string -> unit -> regex_match_statement
+val make_asn_match_statement :
+  ?forwarded_ip_config:forwarded_ip_config ->
+    asn_list:int list -> unit -> asn_match_statement
 val make_and_statement : statements:statement list -> unit -> and_statement
 val make_managed_rule_group_statement :
   ?rule_action_overrides:rule_action_override list ->
@@ -240,25 +270,26 @@ val make_rate_based_statement :
           aggregate_key_type:rate_based_statement_aggregate_key_type ->
             limit:int -> unit -> rate_based_statement
 val make_statement :
-  ?regex_match_statement:regex_match_statement ->
-    ?label_match_statement:label_match_statement ->
-      ?managed_rule_group_statement:managed_rule_group_statement ->
-        ?not_statement:not_statement ->
-          ?or_statement:or_statement ->
-            ?and_statement:and_statement ->
-              ?rate_based_statement:rate_based_statement ->
-                ?regex_pattern_set_reference_statement:regex_pattern_set_reference_statement
-                  ->
-                  ?ip_set_reference_statement:ip_set_reference_statement ->
-                    ?rule_group_reference_statement:rule_group_reference_statement
-                      ->
-                      ?geo_match_statement:geo_match_statement ->
-                        ?size_constraint_statement:size_constraint_statement
-                          ->
-                          ?xss_match_statement:xss_match_statement ->
-                            ?sqli_match_statement:sqli_match_statement ->
-                              ?byte_match_statement:byte_match_statement ->
-                                unit -> statement
+  ?asn_match_statement:asn_match_statement ->
+    ?regex_match_statement:regex_match_statement ->
+      ?label_match_statement:label_match_statement ->
+        ?managed_rule_group_statement:managed_rule_group_statement ->
+          ?not_statement:not_statement ->
+            ?or_statement:or_statement ->
+              ?and_statement:and_statement ->
+                ?rate_based_statement:rate_based_statement ->
+                  ?regex_pattern_set_reference_statement:regex_pattern_set_reference_statement
+                    ->
+                    ?ip_set_reference_statement:ip_set_reference_statement ->
+                      ?rule_group_reference_statement:rule_group_reference_statement
+                        ->
+                        ?geo_match_statement:geo_match_statement ->
+                          ?size_constraint_statement:size_constraint_statement
+                            ->
+                            ?xss_match_statement:xss_match_statement ->
+                              ?sqli_match_statement:sqli_match_statement ->
+                                ?byte_match_statement:byte_match_statement ->
+                                  unit -> statement
 val make_none_action : unit -> unit
 val make_override_action :
   ?none:unit -> ?count:count_action -> unit -> override_action
@@ -282,6 +313,16 @@ val make_rule :
             visibility_config:visibility_config ->
               statement:statement ->
                 priority:int -> name:string -> unit -> rule
+val make_field_to_protect :
+  ?field_keys:string list ->
+    field_type:field_to_protect_type -> unit -> field_to_protect
+val make_data_protection :
+  ?exclude_rate_based_details:bool ->
+    ?exclude_rule_match_details:bool ->
+      action:data_protection_action ->
+        field:field_to_protect -> unit -> data_protection
+val make_data_protection_config :
+  data_protections:data_protection list -> unit -> data_protection_config
 val make_firewall_manager_statement :
   ?rule_group_reference_statement:rule_group_reference_statement ->
     ?managed_rule_group_statement:managed_rule_group_statement ->
@@ -299,44 +340,58 @@ val make_request_body_associated_resource_type_config :
     unit -> request_body_associated_resource_type_config
 val make_association_config :
   ?request_body:request_body -> unit -> association_config
+val make_on_source_d_do_s_protection_config :
+  alb_low_reputation_mode:low_reputation_mode ->
+    unit -> on_source_d_do_s_protection_config
+val make_application_attribute :
+  ?values:string list -> ?name:string -> unit -> application_attribute
+val make_application_config :
+  ?attributes:application_attribute list -> unit -> application_config
 val make_web_ac_l :
-  ?association_config:association_config ->
-    ?token_domains:string list ->
-      ?challenge_config:challenge_config ->
-        ?captcha_config:captcha_config ->
-          ?custom_response_bodies:custom_response_bodies ->
-            ?label_namespace:string ->
-              ?managed_by_firewall_manager:bool ->
-                ?post_process_firewall_manager_rule_groups:firewall_manager_rule_group
-                  list ->
-                  ?pre_process_firewall_manager_rule_groups:firewall_manager_rule_group
-                    list ->
-                    ?capacity:int ->
-                      ?rules:rule list ->
-                        ?description:string ->
-                          visibility_config:visibility_config ->
-                            default_action:default_action ->
-                              ar_n:string ->
-                                id:string -> name:string -> unit -> web_ac_l
+  ?application_config:application_config ->
+    ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
+      ?retrofitted_by_firewall_manager:bool ->
+        ?association_config:association_config ->
+          ?token_domains:string list ->
+            ?challenge_config:challenge_config ->
+              ?captcha_config:captcha_config ->
+                ?custom_response_bodies:custom_response_bodies ->
+                  ?label_namespace:string ->
+                    ?managed_by_firewall_manager:bool ->
+                      ?post_process_firewall_manager_rule_groups:firewall_manager_rule_group
+                        list ->
+                        ?pre_process_firewall_manager_rule_groups:firewall_manager_rule_group
+                          list ->
+                          ?capacity:int ->
+                            ?data_protection_config:data_protection_config ->
+                              ?rules:rule list ->
+                                ?description:string ->
+                                  visibility_config:visibility_config ->
+                                    default_action:default_action ->
+                                      ar_n:string ->
+                                        id:string ->
+                                          name:string -> unit -> web_ac_l
 val make_version_to_publish :
   ?forecasted_lifetime:int ->
     ?associated_rule_group_arn:string -> unit -> version_to_publish
 val make_update_web_acl_response :
   ?next_lock_token:string -> unit -> update_web_acl_response
 val make_update_web_acl_request :
-  ?association_config:association_config ->
-    ?token_domains:string list ->
-      ?challenge_config:challenge_config ->
-        ?captcha_config:captcha_config ->
-          ?custom_response_bodies:custom_response_bodies ->
-            ?rules:rule list ->
-              ?description:string ->
-                lock_token:string ->
-                  visibility_config:visibility_config ->
-                    default_action:default_action ->
-                      id:string ->
-                        scope:scope ->
-                          name:string -> unit -> update_web_acl_request
+  ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
+    ?association_config:association_config ->
+      ?token_domains:string list ->
+        ?challenge_config:challenge_config ->
+          ?captcha_config:captcha_config ->
+            ?custom_response_bodies:custom_response_bodies ->
+              ?data_protection_config:data_protection_config ->
+                ?rules:rule list ->
+                  ?description:string ->
+                    lock_token:string ->
+                      visibility_config:visibility_config ->
+                        default_action:default_action ->
+                          id:string ->
+                            scope:scope ->
+                              name:string -> unit -> update_web_acl_request
 val make_update_rule_group_response :
   ?next_lock_token:string -> unit -> update_rule_group_response
 val make_update_rule_group_request :
@@ -349,7 +404,6 @@ val make_update_rule_group_request :
               scope:scope -> name:string -> unit -> update_rule_group_request
 val make_update_regex_pattern_set_response :
   ?next_lock_token:string -> unit -> update_regex_pattern_set_response
-val make_regex : ?regex_string:string -> unit -> regex
 val make_update_regex_pattern_set_request :
   ?description:string ->
     lock_token:string ->
@@ -642,7 +696,8 @@ val make_get_web_acl_response :
   ?application_integration_ur_l:string ->
     ?lock_token:string -> ?web_ac_l:web_ac_l -> unit -> get_web_acl_response
 val make_get_web_acl_request :
-  id:string -> scope:scope -> name:string -> unit -> get_web_acl_request
+  ?ar_n:string ->
+    ?id:string -> ?scope:scope -> ?name:string -> unit -> get_web_acl_request
 val make_get_web_acl_for_resource_response :
   ?web_ac_l:web_ac_l -> unit -> get_web_acl_for_resource_response
 val make_get_web_acl_for_resource_request :
@@ -787,18 +842,21 @@ val make_delete_api_key_request :
 val make_create_web_acl_response :
   ?summary:web_acl_summary -> unit -> create_web_acl_response
 val make_create_web_acl_request :
-  ?association_config:association_config ->
-    ?token_domains:string list ->
-      ?challenge_config:challenge_config ->
-        ?captcha_config:captcha_config ->
-          ?custom_response_bodies:custom_response_bodies ->
-            ?tags:tag list ->
-              ?rules:rule list ->
-                ?description:string ->
-                  visibility_config:visibility_config ->
-                    default_action:default_action ->
-                      scope:scope ->
-                        name:string -> unit -> create_web_acl_request
+  ?application_config:application_config ->
+    ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
+      ?association_config:association_config ->
+        ?token_domains:string list ->
+          ?challenge_config:challenge_config ->
+            ?captcha_config:captcha_config ->
+              ?custom_response_bodies:custom_response_bodies ->
+                ?tags:tag list ->
+                  ?data_protection_config:data_protection_config ->
+                    ?rules:rule list ->
+                      ?description:string ->
+                        visibility_config:visibility_config ->
+                          default_action:default_action ->
+                            scope:scope ->
+                              name:string -> unit -> create_web_acl_request
 val make_create_rule_group_response :
   ?summary:rule_group_summary -> unit -> create_rule_group_response
 val make_create_rule_group_request :

@@ -252,6 +252,8 @@ type nonrec url_type =
   | ZEPPELIN_UI_URL [@ocaml.doc ""]
   | FLINK_DASHBOARD_URL [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec runtime_environment =
+  | FLINK_1_20 [@ocaml.doc ""]
+  | FLINK_1_19 [@ocaml.doc ""]
   | FLINK_1_18 [@ocaml.doc ""]
   | ZEPPELIN_FLINK_3_0 [@ocaml.doc ""]
   | FLINK_1_15 [@ocaml.doc ""]
@@ -578,7 +580,7 @@ type nonrec flink_run_configuration =
   {
   allow_non_restored_state: bool option
     [@ocaml.doc
-      "When restoring from a snapshot, specifies whether the runtime is allowed to skip a state that cannot be mapped to the new program. This will happen if the program is updated between snapshots to remove stateful parameters, and state data in the snapshot no longer corresponds to valid application data. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/ops/state/savepoints/#allowing-non-restored-state} Allowing Non-Restored State} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink documentation}.\n\n  This value defaults to [false]. If you update your application without specifying this parameter, [AllowNonRestoredState] will be set to [false], even if it was previously set to [true].\n  \n   "]}
+      "When restoring from a snapshot, specifies whether the runtime is allowed to skip a state that cannot be mapped to the new program. This will happen if the program is updated between snapshots to remove stateful parameters, and state data in the snapshot no longer corresponds to valid application data. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/savepoints/#allowing-non-restored-state} Allowing Non-Restored State} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink documentation}.\n\n  This value defaults to [false]. If you update your application without specifying this parameter, [AllowNonRestoredState] will be set to [false], even if it was previously set to [true].\n  \n   "]}
 [@@ocaml.doc
   "Describes the starting parameters for a Managed Service for Apache Flink application.\n"]
 type nonrec run_configuration_description =
@@ -651,7 +653,7 @@ type nonrec flink_application_configuration_description =
   {
   job_plan_description: string option
     [@ocaml.doc
-      "The job plan for an application. For more information about the job plan, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/internals/job_scheduling.html}Jobs and Scheduling} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink Documentation}. To retrieve the job plan for the application, use the [DescribeApplicationRequest$IncludeAdditionalDetails] parameter of the [DescribeApplication] operation.\n"];
+      "The job plan for an application. For more information about the job plan, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/internals/job_scheduling.html}Jobs and Scheduling} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}. To retrieve the job plan for the application, use the [DescribeApplicationRequest$IncludeAdditionalDetails] parameter of the [DescribeApplication] operation.\n"];
   parallelism_configuration_description:
     parallelism_configuration_description option
     [@ocaml.doc
@@ -688,6 +690,13 @@ type nonrec application_snapshot_configuration_description =
       "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc
   "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
+type nonrec application_system_rollback_configuration_description =
+  {
+  rollback_enabled: bool
+    [@ocaml.doc
+      "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
+[@@ocaml.doc
+  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
 type nonrec application_configuration_description =
   {
   zeppelin_application_configuration_description:
@@ -697,6 +706,9 @@ type nonrec application_configuration_description =
   vpc_configuration_descriptions: vpc_configuration_description list option
     [@ocaml.doc
       "The array of descriptions of VPC configurations available to the application.\n"];
+  application_system_rollback_configuration_description:
+    application_system_rollback_configuration_description option
+    [@ocaml.doc ""];
   application_snapshot_configuration_description:
     application_snapshot_configuration_description option
     [@ocaml.doc
@@ -753,6 +765,9 @@ type nonrec application_detail =
   conditional_token: string option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates.\n"];
+  application_version_create_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      "The current timestamp when the application version was created."];
   application_version_rolled_back_from: int option
     [@ocaml.doc
       "If you reverted the application using [RollbackApplication], the application version when [RollbackApplication] was called.\n"];
@@ -794,6 +809,8 @@ type nonrec application_detail =
   "Describes the application, including the application Amazon Resource Name (ARN), status, latest version, and input and output configurations.\n"]
 type nonrec update_application_response =
   {
+  operation_id: string option
+    [@ocaml.doc "Operation ID for tracking UpdateApplication request"];
   application_detail: application_detail
     [@ocaml.doc "Describes application updates.\n"]}[@@ocaml.doc ""]
 type nonrec input_lambda_processor_update =
@@ -1050,6 +1067,13 @@ type nonrec application_snapshot_configuration_update =
       "Describes updates to whether snapshots are enabled for an application.\n"]}
 [@@ocaml.doc
   "Describes updates to whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
+type nonrec application_system_rollback_configuration_update =
+  {
+  rollback_enabled_update: bool
+    [@ocaml.doc
+      "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
+[@@ocaml.doc
+  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
 type nonrec application_configuration_update =
   {
   zeppelin_application_configuration_update:
@@ -1059,6 +1083,8 @@ type nonrec application_configuration_update =
   vpc_configuration_updates: vpc_configuration_update list option
     [@ocaml.doc
       "Updates to the array of descriptions of VPC configurations available to the application.\n"];
+  application_system_rollback_configuration_update:
+    application_system_rollback_configuration_update option [@ocaml.doc ""];
   application_snapshot_configuration_update:
     application_snapshot_configuration_update option
     [@ocaml.doc
@@ -1217,6 +1243,11 @@ type nonrec tag_resource_request =
   resource_ar_n: string
     [@ocaml.doc "The ARN of the application to assign the tags.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec stop_application_response =
+  {
+  operation_id: string option
+    [@ocaml.doc "Operation ID for tracking StopApplication request"]}
+[@@ocaml.doc ""]
 type nonrec stop_application_request =
   {
   force: bool option
@@ -1225,6 +1256,11 @@ type nonrec stop_application_request =
   application_name: string
     [@ocaml.doc "The name of the running application to stop.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec start_application_response =
+  {
+  operation_id: string option
+    [@ocaml.doc "Operation ID for tracking StartApplication request"]}
+[@@ocaml.doc ""]
 type nonrec sql_run_configuration =
   {
   input_starting_position_configuration:
@@ -1405,6 +1441,8 @@ type nonrec s3_configuration =
   "For a SQL-based Kinesis Data Analytics application, provides a description of an Amazon S3 data source, including the Amazon Resource Name (ARN) of the S3 bucket and the name of the Amazon S3 object that contains the data.\n"]
 type nonrec rollback_application_response =
   {
+  operation_id: string option
+    [@ocaml.doc "Operation ID for tracking RollbackApplication request"];
   application_detail: application_detail [@ocaml.doc ""]}[@@ocaml.doc ""]
 type nonrec rollback_application_request =
   {
@@ -1432,7 +1470,23 @@ type nonrec parallelism_configuration =
     [@ocaml.doc
       "Describes whether the application uses the default parallelism for the Managed Service for Apache Flink service. You must set this property to [CUSTOM] in order to change your application's [AutoScalingEnabled], [Parallelism], or [ParallelismPerKPU] properties.\n"]}
 [@@ocaml.doc
-  "Describes parameters for how a Managed Service for Apache Flink application executes multiple tasks simultaneously. For more information about parallelism, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/dev/parallel.html}Parallel Execution} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink Documentation}.\n"]
+  "Describes parameters for how a Managed Service for Apache Flink application executes multiple tasks simultaneously. For more information about parallelism, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/dev/parallel.html}Parallel Execution} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}.\n"]
+type nonrec operation_status =
+  | FAILED [@ocaml.doc ""]
+  | SUCCESSFUL [@ocaml.doc ""]
+  | CANCELLED [@ocaml.doc ""]
+  | IN_PROGRESS [@ocaml.doc ""][@@ocaml.doc
+                                 "Status of the operation performed on an application"]
+type nonrec error_info = {
+  error_string: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                                "Provides a description of the operation failure error"]
+type nonrec operation_failure_details =
+  {
+  error_info: error_info option [@ocaml.doc ""];
+  rollback_operation_id: string option
+    [@ocaml.doc
+      "Provides the operation ID of a system-rollback operation executed due to failure in the current operation"]}
+[@@ocaml.doc "Provides a description of the operation failure"]
 type nonrec monitoring_configuration =
   {
   log_level: log_level option
@@ -1533,6 +1587,31 @@ type nonrec list_application_snapshots_request =
     [@ocaml.doc "The maximum number of application snapshots to list.\n"];
   application_name: string
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
+type nonrec application_operation_info =
+  {
+  operation_status: operation_status option [@ocaml.doc ""];
+  end_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      "The timestamp at which the operation finished for the application"];
+  start_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc "The timestamp at which the operation was created"];
+  operation_id: string option [@ocaml.doc ""];
+  operation: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                             "Provides a description of the operation, such as the type and status of operation"]
+type nonrec list_application_operations_response =
+  {
+  next_token: string option [@ocaml.doc ""];
+  application_operation_info_list: application_operation_info list option
+    [@ocaml.doc ""]}[@@ocaml.doc
+                      "Response with the list of operations for an application"]
+type nonrec list_application_operations_request =
+  {
+  operation_status: operation_status option [@ocaml.doc ""];
+  operation: string option [@ocaml.doc ""];
+  next_token: string option [@ocaml.doc ""];
+  limit: int option [@ocaml.doc ""];
+  application_name: string [@ocaml.doc ""]}[@@ocaml.doc
+                                             "Request to list operations performed on an application"]
 type nonrec discover_input_schema_response =
   {
   raw_input_records: string list option
@@ -1592,6 +1671,39 @@ type nonrec describe_application_snapshot_request =
       "The identifier of an application snapshot. You can retrieve this value using .\n"];
   application_name: string
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
+type nonrec application_version_change_details =
+  {
+  application_version_updated_to: int
+    [@ocaml.doc
+      "The operation execution resulted in the transition to the following version of the application"];
+  application_version_updated_from: int
+    [@ocaml.doc
+      "The operation was performed on this version of the application"]}
+[@@ocaml.doc
+  "Contains information about the application version changes due to an operation"]
+type nonrec application_operation_info_details =
+  {
+  operation_failure_details: operation_failure_details option [@ocaml.doc ""];
+  application_version_change_details:
+    application_version_change_details option [@ocaml.doc ""];
+  operation_status: operation_status [@ocaml.doc ""];
+  end_time: CoreTypes.Timestamp.t
+    [@ocaml.doc
+      "The timestamp at which the operation finished for the application"];
+  start_time: CoreTypes.Timestamp.t
+    [@ocaml.doc "The timestamp at which the operation was created"];
+  operation: string [@ocaml.doc ""]}[@@ocaml.doc
+                                      "Provides a description of the operation, such as the operation-type and status"]
+type nonrec describe_application_operation_response =
+  {
+  application_operation_info_details:
+    application_operation_info_details option [@ocaml.doc ""]}[@@ocaml.doc
+                                                                "Provides details of the operation corresponding to the operation-ID on a Managed Service for Apache Flink application"]
+type nonrec describe_application_operation_request =
+  {
+  operation_id: string [@ocaml.doc ""];
+  application_name: string [@ocaml.doc ""]}[@@ocaml.doc
+                                             "Request for information about a specific operation performed on a Managed Service for Apache Flink application"]
 type nonrec describe_application_response =
   {
   application_detail: application_detail
@@ -1607,6 +1719,9 @@ type nonrec describe_application_request =
 [@@ocaml.doc ""]
 type nonrec delete_application_vpc_configuration_response =
   {
+  operation_id: string option
+    [@ocaml.doc
+      "Operation ID for tracking DeleteApplicationVpcConfiguration request"];
   application_version_id: int option
     [@ocaml.doc "The updated version ID of the application.\n"];
   application_ar_n: string option
@@ -1687,6 +1802,9 @@ type nonrec delete_application_input_processing_configuration_request =
 [@@ocaml.doc ""]
 type nonrec delete_application_cloud_watch_logging_option_response =
   {
+  operation_id: string option
+    [@ocaml.doc
+      "Operation ID for tracking DeleteApplicationCloudWatchLoggingOption request"];
   cloud_watch_logging_option_descriptions:
     cloud_watch_logging_option_description list option
     [@ocaml.doc
@@ -1747,7 +1865,7 @@ type nonrec checkpoint_configuration =
   {
   min_pause_between_checkpoints: int option
     [@ocaml.doc
-      "Describes the minimum time in milliseconds after a checkpoint operation completes that a new checkpoint operation can start. If a checkpoint operation takes longer than the [CheckpointInterval], the application otherwise performs continual checkpoint operations. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/ops/state/large_state_tuning/#tuning-checkpointing} Tuning Checkpointing} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink Documentation}.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or in application code.\n  \n   "];
+      "Describes the minimum time in milliseconds after a checkpoint operation completes that a new checkpoint operation can start. If a checkpoint operation takes longer than the [CheckpointInterval], the application otherwise performs continual checkpoint operations. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/large_state_tuning/#tuning-checkpointing} Tuning Checkpointing} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or in application code.\n  \n   "];
   checkpoint_interval: int option
     [@ocaml.doc
       "Describes the interval in milliseconds between checkpoint operations. \n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointInterval] value of 60000, even if this value is set to another value using this API or in application code.\n  \n   "];
@@ -1758,7 +1876,7 @@ type nonrec checkpoint_configuration =
     [@ocaml.doc
       "Describes whether the application uses Managed Service for Apache Flink' default checkpointing behavior. You must set this property to [CUSTOM] in order to set the [CheckpointingEnabled], [CheckpointInterval], or [MinPauseBetweenCheckpoints] parameters.\n\n  If this value is set to [DEFAULT], the application will use the following values, even if they are set to other values using APIs or application code:\n  \n   {ul\n         {-   {b CheckpointingEnabled:} true\n             \n              }\n         {-   {b CheckpointInterval:} 60000\n             \n              }\n         {-   {b MinPauseBetweenCheckpoints:} 5000\n             \n              }\n         }\n   "]}
 [@@ocaml.doc
-  "Describes an application's checkpointing configuration. Checkpointing is the process of persisting application state for fault tolerance. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} Checkpoints for Fault Tolerance} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink Documentation}.\n"]
+  "Describes an application's checkpointing configuration. Checkpointing is the process of persisting application state for fault tolerance. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} Checkpoints for Fault Tolerance} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}.\n"]
 type nonrec flink_application_configuration =
   {
   parallelism_configuration: parallelism_configuration option
@@ -1769,7 +1887,7 @@ type nonrec flink_application_configuration =
       "Describes configuration parameters for Amazon CloudWatch logging for an application.\n"];
   checkpoint_configuration: checkpoint_configuration option
     [@ocaml.doc
-      "Describes an application's checkpointing configuration. Checkpointing is the process of persisting application state for fault tolerance. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} Checkpoints for Fault Tolerance} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.18/}Apache Flink Documentation}. \n"]}
+      "Describes an application's checkpointing configuration. Checkpointing is the process of persisting application state for fault tolerance. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} Checkpoints for Fault Tolerance} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}. \n"]}
 [@@ocaml.doc
   "Describes configuration parameters for a Managed Service for Apache Flink application or a Studio notebook.\n"]
 type nonrec environment_properties =
@@ -1805,6 +1923,13 @@ type nonrec application_snapshot_configuration =
       "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc
   "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
+type nonrec application_system_rollback_configuration =
+  {
+  rollback_enabled: bool
+    [@ocaml.doc
+      "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
+[@@ocaml.doc
+  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
 type nonrec application_configuration =
   {
   zeppelin_application_configuration:
@@ -1814,6 +1939,8 @@ type nonrec application_configuration =
   vpc_configurations: vpc_configuration list option
     [@ocaml.doc
       "The array of descriptions of VPC configurations available to the application.\n"];
+  application_system_rollback_configuration:
+    application_system_rollback_configuration option [@ocaml.doc ""];
   application_snapshot_configuration:
     application_snapshot_configuration option
     [@ocaml.doc
@@ -1865,6 +1992,9 @@ type nonrec create_application_request =
 [@@ocaml.doc ""]
 type nonrec add_application_vpc_configuration_response =
   {
+  operation_id: string option
+    [@ocaml.doc
+      "Operation ID for tracking AddApplicationVpcConfiguration request"];
   vpc_configuration_description: vpc_configuration_description option
     [@ocaml.doc "The parameters of the new VPC configuration.\n"];
   application_version_id: int option
@@ -1979,6 +2109,9 @@ type nonrec add_application_input_request =
 [@@ocaml.doc ""]
 type nonrec add_application_cloud_watch_logging_option_response =
   {
+  operation_id: string option
+    [@ocaml.doc
+      "Operation ID for tracking AddApplicationCloudWatchLoggingOption request"];
   cloud_watch_logging_option_descriptions:
     cloud_watch_logging_option_description list option
     [@ocaml.doc
@@ -2235,21 +2368,26 @@ val make_environment_property_descriptions :
 val make_application_snapshot_configuration_description :
   snapshots_enabled:bool ->
     unit -> application_snapshot_configuration_description
+val make_application_system_rollback_configuration_description :
+  rollback_enabled:bool ->
+    unit -> application_system_rollback_configuration_description
 val make_application_configuration_description :
   ?zeppelin_application_configuration_description:zeppelin_application_configuration_description
     ->
     ?vpc_configuration_descriptions:vpc_configuration_description list ->
-      ?application_snapshot_configuration_description:application_snapshot_configuration_description
+      ?application_system_rollback_configuration_description:application_system_rollback_configuration_description
         ->
-        ?environment_property_descriptions:environment_property_descriptions
+        ?application_snapshot_configuration_description:application_snapshot_configuration_description
           ->
-          ?flink_application_configuration_description:flink_application_configuration_description
+          ?environment_property_descriptions:environment_property_descriptions
             ->
-            ?run_configuration_description:run_configuration_description ->
-              ?application_code_configuration_description:application_code_configuration_description
-                ->
-                ?sql_application_configuration_description:sql_application_configuration_description
-                  -> unit -> application_configuration_description
+            ?flink_application_configuration_description:flink_application_configuration_description
+              ->
+              ?run_configuration_description:run_configuration_description ->
+                ?application_code_configuration_description:application_code_configuration_description
+                  ->
+                  ?sql_application_configuration_description:sql_application_configuration_description
+                    -> unit -> application_configuration_description
 val make_cloud_watch_logging_option_description :
   ?role_ar_n:string ->
     ?cloud_watch_logging_option_id:string ->
@@ -2263,27 +2401,29 @@ val make_application_detail :
   ?application_mode:application_mode ->
     ?application_version_rolled_back_to:int ->
       ?conditional_token:string ->
-        ?application_version_rolled_back_from:int ->
-          ?application_version_updated_from:int ->
-            ?application_maintenance_configuration_description:application_maintenance_configuration_description
-              ->
-              ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-                list ->
-                ?application_configuration_description:application_configuration_description
-                  ->
-                  ?last_update_timestamp:CoreTypes.Timestamp.t ->
-                    ?create_timestamp:CoreTypes.Timestamp.t ->
-                      ?service_execution_role:string ->
-                        ?application_description:string ->
-                          application_version_id:int ->
-                            application_status:application_status ->
-                              runtime_environment:runtime_environment ->
-                                application_name:string ->
-                                  application_ar_n:string ->
-                                    unit -> application_detail
+        ?application_version_create_timestamp:CoreTypes.Timestamp.t ->
+          ?application_version_rolled_back_from:int ->
+            ?application_version_updated_from:int ->
+              ?application_maintenance_configuration_description:application_maintenance_configuration_description
+                ->
+                ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+                  list ->
+                  ?application_configuration_description:application_configuration_description
+                    ->
+                    ?last_update_timestamp:CoreTypes.Timestamp.t ->
+                      ?create_timestamp:CoreTypes.Timestamp.t ->
+                        ?service_execution_role:string ->
+                          ?application_description:string ->
+                            application_version_id:int ->
+                              application_status:application_status ->
+                                runtime_environment:runtime_environment ->
+                                  application_name:string ->
+                                    application_ar_n:string ->
+                                      unit -> application_detail
 val make_update_application_response :
-  application_detail:application_detail ->
-    unit -> update_application_response
+  ?operation_id:string ->
+    application_detail:application_detail ->
+      unit -> update_application_response
 val make_input_lambda_processor_update :
   resource_arn_update:string -> unit -> input_lambda_processor_update
 val make_input_processing_configuration_update :
@@ -2372,19 +2512,24 @@ val make_environment_property_updates :
 val make_application_snapshot_configuration_update :
   snapshots_enabled_update:bool ->
     unit -> application_snapshot_configuration_update
+val make_application_system_rollback_configuration_update :
+  rollback_enabled_update:bool ->
+    unit -> application_system_rollback_configuration_update
 val make_application_configuration_update :
   ?zeppelin_application_configuration_update:zeppelin_application_configuration_update
     ->
     ?vpc_configuration_updates:vpc_configuration_update list ->
-      ?application_snapshot_configuration_update:application_snapshot_configuration_update
+      ?application_system_rollback_configuration_update:application_system_rollback_configuration_update
         ->
-        ?environment_property_updates:environment_property_updates ->
-          ?flink_application_configuration_update:flink_application_configuration_update
-            ->
-            ?application_code_configuration_update:application_code_configuration_update
+        ?application_snapshot_configuration_update:application_snapshot_configuration_update
+          ->
+          ?environment_property_updates:environment_property_updates ->
+            ?flink_application_configuration_update:flink_application_configuration_update
               ->
-              ?sql_application_configuration_update:sql_application_configuration_update
-                -> unit -> application_configuration_update
+              ?application_code_configuration_update:application_code_configuration_update
+                ->
+                ?sql_application_configuration_update:sql_application_configuration_update
+                  -> unit -> application_configuration_update
 val make_run_configuration_update :
   ?application_restore_configuration:application_restore_configuration ->
     ?flink_run_configuration:flink_run_configuration ->
@@ -2425,10 +2570,12 @@ val make_tag : ?value:string -> key:string -> unit -> tag
 val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
-val make_stop_application_response : unit -> unit
+val make_stop_application_response :
+  ?operation_id:string -> unit -> stop_application_response
 val make_stop_application_request :
   ?force:bool -> application_name:string -> unit -> stop_application_request
-val make_start_application_response : unit -> unit
+val make_start_application_response :
+  ?operation_id:string -> unit -> start_application_response
 val make_sql_run_configuration :
   input_starting_position_configuration:input_starting_position_configuration
     -> input_id:string -> unit -> sql_run_configuration
@@ -2485,8 +2632,9 @@ val make_snapshot_details :
 val make_s3_configuration :
   file_key:string -> bucket_ar_n:string -> unit -> s3_configuration
 val make_rollback_application_response :
-  application_detail:application_detail ->
-    unit -> rollback_application_response
+  ?operation_id:string ->
+    application_detail:application_detail ->
+      unit -> rollback_application_response
 val make_rollback_application_request :
   current_application_version_id:int ->
     application_name:string -> unit -> rollback_application_request
@@ -2496,6 +2644,10 @@ val make_parallelism_configuration :
       ?parallelism:int ->
         configuration_type:configuration_type ->
           unit -> parallelism_configuration
+val make_error_info : ?error_string:string -> unit -> error_info
+val make_operation_failure_details :
+  ?error_info:error_info ->
+    ?rollback_operation_id:string -> unit -> operation_failure_details
 val make_monitoring_configuration :
   ?log_level:log_level ->
     ?metrics_level:metrics_level ->
@@ -2537,6 +2689,23 @@ val make_list_application_snapshots_request :
   ?next_token:string ->
     ?limit:int ->
       application_name:string -> unit -> list_application_snapshots_request
+val make_application_operation_info :
+  ?operation_status:operation_status ->
+    ?end_time:CoreTypes.Timestamp.t ->
+      ?start_time:CoreTypes.Timestamp.t ->
+        ?operation_id:string ->
+          ?operation:string -> unit -> application_operation_info
+val make_list_application_operations_response :
+  ?next_token:string ->
+    ?application_operation_info_list:application_operation_info list ->
+      unit -> list_application_operations_response
+val make_list_application_operations_request :
+  ?operation_status:operation_status ->
+    ?operation:string ->
+      ?next_token:string ->
+        ?limit:int ->
+          application_name:string ->
+            unit -> list_application_operations_request
 val make_discover_input_schema_response :
   ?raw_input_records:string list ->
     ?processed_input_records:string list ->
@@ -2562,6 +2731,23 @@ val make_describe_application_snapshot_response :
 val make_describe_application_snapshot_request :
   snapshot_name:string ->
     application_name:string -> unit -> describe_application_snapshot_request
+val make_application_version_change_details :
+  application_version_updated_to:int ->
+    application_version_updated_from:int ->
+      unit -> application_version_change_details
+val make_application_operation_info_details :
+  ?operation_failure_details:operation_failure_details ->
+    ?application_version_change_details:application_version_change_details ->
+      operation_status:operation_status ->
+        end_time:CoreTypes.Timestamp.t ->
+          start_time:CoreTypes.Timestamp.t ->
+            operation:string -> unit -> application_operation_info_details
+val make_describe_application_operation_response :
+  ?application_operation_info_details:application_operation_info_details ->
+    unit -> describe_application_operation_response
+val make_describe_application_operation_request :
+  operation_id:string ->
+    application_name:string -> unit -> describe_application_operation_request
 val make_describe_application_response :
   application_detail:application_detail ->
     unit -> describe_application_response
@@ -2569,9 +2755,10 @@ val make_describe_application_request :
   ?include_additional_details:bool ->
     application_name:string -> unit -> describe_application_request
 val make_delete_application_vpc_configuration_response :
-  ?application_version_id:int ->
-    ?application_ar_n:string ->
-      unit -> delete_application_vpc_configuration_response
+  ?operation_id:string ->
+    ?application_version_id:int ->
+      ?application_ar_n:string ->
+        unit -> delete_application_vpc_configuration_response
 val make_delete_application_vpc_configuration_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -2609,11 +2796,12 @@ val make_delete_application_input_processing_configuration_request :
       application_name:string ->
         unit -> delete_application_input_processing_configuration_request
 val make_delete_application_cloud_watch_logging_option_response :
-  ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-    list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> delete_application_cloud_watch_logging_option_response
+  ?operation_id:string ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+      list ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> delete_application_cloud_watch_logging_option_response
 val make_delete_application_cloud_watch_logging_option_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -2660,17 +2848,21 @@ val make_application_code_configuration :
       unit -> application_code_configuration
 val make_application_snapshot_configuration :
   snapshots_enabled:bool -> unit -> application_snapshot_configuration
+val make_application_system_rollback_configuration :
+  rollback_enabled:bool -> unit -> application_system_rollback_configuration
 val make_application_configuration :
   ?zeppelin_application_configuration:zeppelin_application_configuration ->
     ?vpc_configurations:vpc_configuration list ->
-      ?application_snapshot_configuration:application_snapshot_configuration
+      ?application_system_rollback_configuration:application_system_rollback_configuration
         ->
-        ?application_code_configuration:application_code_configuration ->
-          ?environment_properties:environment_properties ->
-            ?flink_application_configuration:flink_application_configuration
-              ->
-              ?sql_application_configuration:sql_application_configuration ->
-                unit -> application_configuration
+        ?application_snapshot_configuration:application_snapshot_configuration
+          ->
+          ?application_code_configuration:application_code_configuration ->
+            ?environment_properties:environment_properties ->
+              ?flink_application_configuration:flink_application_configuration
+                ->
+                ?sql_application_configuration:sql_application_configuration
+                  -> unit -> application_configuration
 val make_cloud_watch_logging_option :
   log_stream_ar_n:string -> unit -> cloud_watch_logging_option
 val make_create_application_request :
@@ -2683,10 +2875,11 @@ val make_create_application_request :
               runtime_environment:runtime_environment ->
                 application_name:string -> unit -> create_application_request
 val make_add_application_vpc_configuration_response :
-  ?vpc_configuration_description:vpc_configuration_description ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> add_application_vpc_configuration_response
+  ?operation_id:string ->
+    ?vpc_configuration_description:vpc_configuration_description ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> add_application_vpc_configuration_response
 val make_add_application_vpc_configuration_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -2734,11 +2927,12 @@ val make_add_application_input_request :
     current_application_version_id:int ->
       application_name:string -> unit -> add_application_input_request
 val make_add_application_cloud_watch_logging_option_response :
-  ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-    list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> add_application_cloud_watch_logging_option_response
+  ?operation_id:string ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+      list ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> add_application_cloud_watch_logging_option_response
 val make_add_application_cloud_watch_logging_option_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -3024,6 +3218,19 @@ sig
           result
 end[@@ocaml.doc
      "Returns information about a specific Managed Service for Apache Flink application.\n\n If you want to retrieve a list of all applications in your account, use the [ListApplications] operation.\n "]
+module DescribeApplicationOperation :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_application_operation_request ->
+        (describe_application_operation_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Returns information about a specific operation performed on a Managed Service for Apache Flink application"]
 module DescribeApplicationSnapshot :
 sig
   val request :
@@ -3068,6 +3275,19 @@ sig
           result
 end[@@ocaml.doc
      "Infers a schema for a SQL-based Kinesis Data Analytics application by evaluating sample records on the specified streaming source (Kinesis data stream or Kinesis Data Firehose delivery stream) or Amazon S3 object. In the response, the operation returns the inferred schema and also the sample records that the operation used to infer the schema.\n\n  You can use the inferred schema when configuring a streaming source for your application. When you create an application using the Kinesis Data Analytics console, the console uses this operation to infer a schema and show it in the console user interface. \n "]
+module ListApplicationOperations :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_application_operations_request ->
+        (list_application_operations_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Lists information about operations performed on a Managed Service for Apache Flink application"]
 module ListApplicationSnapshots :
 sig
   val request :
@@ -3133,13 +3353,13 @@ sig
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
 end[@@ocaml.doc
-     "Reverts the application to the previous running version. You can roll back an application if you suspect it is stuck in a transient status. \n\n You can roll back an application only if it is in the [UPDATING] or [AUTOSCALING] status.\n \n  When you rollback an application, it loads state data from the last successful snapshot. If the application has no snapshots, Managed Service for Apache Flink rejects the rollback request.\n  \n   This action is not supported for Managed Service for Apache Flink for SQL applications.\n   "]
+     "Reverts the application to the previous running version. You can roll back an application if you suspect it is stuck in a transient status or in the running status. \n\n You can roll back an application only if it is in the [UPDATING], [AUTOSCALING], or [RUNNING] statuses.\n \n  When you rollback an application, it loads state data from the last successful snapshot. If the application has no snapshots, Managed Service for Apache Flink rejects the rollback request.\n  "]
 module StartApplication :
 sig
   val request :
     Smaws_Lib.Context.t ->
       start_application_request ->
-        (unit,
+        (start_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -3155,7 +3375,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_application_request ->
-        (unit,
+        (stop_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

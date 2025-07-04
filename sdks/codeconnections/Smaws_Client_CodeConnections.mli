@@ -37,8 +37,14 @@ type nonrec publish_deployment_status =
 type nonrec trigger_resource_update_on =
   | FILE_CHANGE [@ocaml.doc ""]
   | ANY_CHANGE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec pull_request_comment =
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec sync_configuration =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "A toggle that specifies whether to enable or disable pull request comments for the sync configuration to be created.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option
@@ -80,6 +86,9 @@ type nonrec update_sync_configuration_output =
 [@@ocaml.doc ""]
 type nonrec update_sync_configuration_input =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "TA toggle that specifies whether to enable or disable pull request comments for the sync configuration to be updated.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option
@@ -515,7 +524,7 @@ type nonrec connection =
       "The name of the external provider where your third-party code repository is configured.\n"];
   connection_arn: string option
     [@ocaml.doc
-      "The Amazon Resource Name (ARN) of the connection. The ARN is used as the connection reference when the connection is shared between Amazon Web Services.\n\n  The ARN is never reused if the connection is deleted.\n  \n   "];
+      "The Amazon Resource Name (ARN) of the connection. The ARN is used as the connection reference when the connection is shared between Amazon Web Servicesservices.\n\n  The ARN is never reused if the connection is deleted.\n  \n   "];
   connection_name: string option
     [@ocaml.doc
       "The name of the connection. Connection names must be unique in an Amazon Web Services account.\n"]}
@@ -683,6 +692,9 @@ type nonrec create_sync_configuration_output =
 [@@ocaml.doc ""]
 type nonrec create_sync_configuration_input =
   {
+  pull_request_comment: pull_request_comment option
+    [@ocaml.doc
+      "A toggle that specifies whether to enable or disable pull request comments for the sync configuration to be created.\n"];
   trigger_resource_update_on: trigger_resource_update_on option
     [@ocaml.doc "When to trigger Git sync to begin the stack update.\n"];
   publish_deployment_status: publish_deployment_status option
@@ -778,30 +790,32 @@ val make_vpc_configuration :
     security_group_ids:string list ->
       subnet_ids:string list -> vpc_id:string -> unit -> vpc_configuration
 val make_sync_configuration :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      ?config_file:string ->
-        sync_type:sync_configuration_type ->
-          role_arn:string ->
-            resource_name:string ->
-              repository_name:string ->
-                repository_link_id:string ->
-                  provider_type:provider_type ->
-                    owner_id:string ->
-                      branch:string -> unit -> sync_configuration
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        ?config_file:string ->
+          sync_type:sync_configuration_type ->
+            role_arn:string ->
+              resource_name:string ->
+                repository_name:string ->
+                  repository_link_id:string ->
+                    provider_type:provider_type ->
+                      owner_id:string ->
+                        branch:string -> unit -> sync_configuration
 val make_update_sync_configuration_output :
   sync_configuration:sync_configuration ->
     unit -> update_sync_configuration_output
 val make_update_sync_configuration_input :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      ?role_arn:string ->
-        ?repository_link_id:string ->
-          ?config_file:string ->
-            ?branch:string ->
-              sync_type:sync_configuration_type ->
-                resource_name:string ->
-                  unit -> update_sync_configuration_input
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        ?role_arn:string ->
+          ?repository_link_id:string ->
+            ?config_file:string ->
+              ?branch:string ->
+                sync_type:sync_configuration_type ->
+                  resource_name:string ->
+                    unit -> update_sync_configuration_input
 val make_sync_blocker_context :
   value:string -> key:string -> unit -> sync_blocker_context
 val make_sync_blocker :
@@ -996,14 +1010,15 @@ val make_create_sync_configuration_output :
   sync_configuration:sync_configuration ->
     unit -> create_sync_configuration_output
 val make_create_sync_configuration_input :
-  ?trigger_resource_update_on:trigger_resource_update_on ->
-    ?publish_deployment_status:publish_deployment_status ->
-      sync_type:sync_configuration_type ->
-        role_arn:string ->
-          resource_name:string ->
-            repository_link_id:string ->
-              config_file:string ->
-                branch:string -> unit -> create_sync_configuration_input
+  ?pull_request_comment:pull_request_comment ->
+    ?trigger_resource_update_on:trigger_resource_update_on ->
+      ?publish_deployment_status:publish_deployment_status ->
+        sync_type:sync_configuration_type ->
+          role_arn:string ->
+            resource_name:string ->
+              repository_link_id:string ->
+                config_file:string ->
+                  branch:string -> unit -> create_sync_configuration_input
 val make_create_repository_link_output :
   repository_link_info:repository_link_info ->
     unit -> create_repository_link_output

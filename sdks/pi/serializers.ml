@@ -282,6 +282,7 @@ let descriptive_map_to_yojson tree =
 let performance_insights_metric_to_yojson (x : performance_insights_metric) =
   assoc_to_yojson
     [("Value", (option_to_yojson double_to_yojson x.value));
+    ("Filter", (option_to_yojson descriptive_map_to_yojson x.filter));
     ("Dimensions", (option_to_yojson descriptive_map_to_yojson x.dimensions));
     ("DisplayName",
       (option_to_yojson descriptive_string_to_yojson x.display_name));

@@ -131,6 +131,7 @@ let configuration_source_to_yojson (x : configuration_source) =
   match x with | API -> `String "API" | REPOSITORY -> `String "REPOSITORY"
 let runtime_to_yojson (x : runtime) =
   match x with
+  | NODEJS_22 -> `String "NODEJS_22"
   | NODEJS_18 -> `String "NODEJS_18"
   | PYTHON_311 -> `String "PYTHON_311"
   | RUBY_31 -> `String "RUBY_31"

@@ -46,10 +46,13 @@ type nonrec user_role =
   | USER [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec update_user_request =
   {
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   office: string option [@ocaml.doc "Updates the user's office.\n"];
   country: string option [@ocaml.doc "Updates the user's country.\n"];
   department: string option [@ocaml.doc "Updates the user's department.\n"];
-  zip_code: string option [@ocaml.doc "Updates the user's zipcode.\n"];
+  zip_code: string option [@ocaml.doc "Updates the user's zip code.\n"];
   company: string option [@ocaml.doc "Updates the user's company.\n"];
   city: string option [@ocaml.doc "Updates the user's city.\n"];
   job_title: string option [@ocaml.doc "Updates the user's job title.\n"];
@@ -455,6 +458,41 @@ type nonrec put_inbound_dmarc_settings_request =
     [@ocaml.doc
       "The ID of the organization that you are applying the DMARC policy to.\n"]}
 [@@ocaml.doc ""]
+type nonrec identity_provider_authentication_mode =
+  | IDENTITY_PROVIDER_AND_DIRECTORY [@ocaml.doc ""]
+  | IDENTITY_PROVIDER_ONLY [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec identity_center_configuration =
+  {
+  application_arn: string
+    [@ocaml.doc
+      " The Amazon Resource Name (ARN) of IAMIdentity Center Application for WorkMail. Must be created by the WorkMail API, see CreateIdentityCenterApplication.\n"];
+  instance_arn: string
+    [@ocaml.doc
+      " The Amazon Resource Name (ARN) of the of IAM Identity Center instance. Must be in the same AWS account and region as WorkMail organization.\n"]}
+[@@ocaml.doc " The IAM Identity Center configuration. \n"]
+type nonrec personal_access_token_configuration_status =
+  | INACTIVE [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec personal_access_token_configuration =
+  {
+  lifetime_in_days: int option
+    [@ocaml.doc
+      " The validity of the Personal Access Token status in days. \n"];
+  status: personal_access_token_configuration_status
+    [@ocaml.doc
+      " The status of the Personal Access Token allowed for the organization. \n\n {ul\n       {-   {i Active} - Mailbox users can login to the web application and choose {i Settings} to see the new {i Personal Access Tokens} page to create and delete the Personal Access Tokens. Mailbox users can use the Personal Access Tokens to set up mailbox connection from desktop or mobile email clients.\n           \n            }\n       {-   {i Inactive} - Personal Access Tokens are disabled for your organization. Mailbox users can\226\128\153t create, list, or delete Personal Access Tokens and can\226\128\153t use them to connect to their mailboxes from desktop or mobile email clients.\n           \n            }\n       }\n  "]}
+[@@ocaml.doc " Displays the Personal Access Token status. \n"]
+type nonrec put_identity_provider_configuration_request =
+  {
+  personal_access_token_configuration: personal_access_token_configuration
+    [@ocaml.doc
+      " The details of the Personal Access Token configuration. \n"];
+  identity_center_configuration: identity_center_configuration
+    [@ocaml.doc " The details of the IAM Identity Center configuration.\n"];
+  authentication_mode: identity_provider_authentication_mode
+    [@ocaml.doc " The authentication mode used in WorkMail.\n"];
+  organization_id: string
+    [@ocaml.doc " The ID of the WorkMail Organization. \n"]}[@@ocaml.doc ""]
 type nonrec put_email_monitoring_configuration_request =
   {
   log_group_arn: string
@@ -501,6 +539,12 @@ type nonrec entity_state =
   | ENABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec user =
   {
+  identity_provider_identity_store_id: string option
+    [@ocaml.doc
+      "Identity store ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   disabled_date: CoreTypes.Timestamp.t option
     [@ocaml.doc
       "The date indicating when the user was disabled from WorkMail use.\n"];
@@ -526,6 +570,9 @@ type nonrec list_users_response =
                                                                   ""]
 type nonrec list_users_filters =
   {
+  identity_provider_user_id_prefix: string option
+    [@ocaml.doc
+      "Filters only users with the ID from the IAM Identity Center.\n"];
   state: entity_state option
     [@ocaml.doc "Filters only users with the provided state.\n"];
   primary_email_prefix: string option
@@ -645,6 +692,45 @@ type nonrec list_resource_delegates_request =
     [@ocaml.doc
       "The identifier for the organization that contains the resource for which delegates are listed.\n"]}
 [@@ocaml.doc ""]
+type nonrec personal_access_token_summary =
+  {
+  scopes: string list option
+    [@ocaml.doc
+      " Lists all the Personal Access Token permissions for a mailbox. \n"];
+  expires_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token will expire. \n"];
+  date_last_used: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token was last used. \n"];
+  date_created: CoreTypes.Timestamp.t option
+    [@ocaml.doc " The date when the Personal Access Token was created. \n"];
+  name: string option
+    [@ocaml.doc " The name of the Personal Access Token. \n"];
+  user_id: string option
+    [@ocaml.doc
+      " The user ID of the WorkMail user associated with the Personal Access Token. \n"];
+  personal_access_token_id: string option
+    [@ocaml.doc " The ID of the Personal Access Token. \n"]}[@@ocaml.doc
+                                                              " The summary of the Personal Access Token. \n"]
+type nonrec list_personal_access_tokens_response =
+  {
+  personal_access_token_summaries: personal_access_token_summary list option
+    [@ocaml.doc
+      " Lists all the personal tokens in an organization or user, if user ID is provided. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The token from the previous response to query the next page.\n"]}
+[@@ocaml.doc ""]
+type nonrec list_personal_access_tokens_request =
+  {
+  max_results: int option
+    [@ocaml.doc
+      " The maximum amount of items that should be returned in a response. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The token from the previous response to query the next page.\n"];
+  user_id: string option [@ocaml.doc " The WorkMail User ID. \n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec organization_summary =
   {
   state: string option
@@ -1137,6 +1223,30 @@ type nonrec list_access_control_rules_request =
   {
   organization_id: string
     [@ocaml.doc "The identifier for the organization.\n"]}[@@ocaml.doc ""]
+type nonrec get_personal_access_token_metadata_response =
+  {
+  scopes: string list option
+    [@ocaml.doc
+      " Lists all the Personal Access Token permissions for a mailbox. \n"];
+  expires_time: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The time when the Personal Access Token ID will expire. \n"];
+  date_last_used: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The date when the Personal Access Token ID was last used. \n"];
+  date_created: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The date when the Personal Access Token ID was created. \n"];
+  name: string option [@ocaml.doc " The Personal Access Token name. \n"];
+  user_id: string option [@ocaml.doc " The WorkMail User ID. \n"];
+  personal_access_token_id: string option
+    [@ocaml.doc " The Personal Access Token ID.\n"]}[@@ocaml.doc ""]
+type nonrec get_personal_access_token_metadata_request =
+  {
+  personal_access_token_id: string
+    [@ocaml.doc " The Personal Access Token ID.\n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec get_mobile_device_access_override_response =
   {
   date_modified: CoreTypes.Timestamp.t option
@@ -1358,6 +1468,12 @@ type nonrec disassociate_delegate_from_resource_request =
 [@@ocaml.doc ""]
 type nonrec describe_user_response =
   {
+  identity_provider_identity_store_id: string option
+    [@ocaml.doc
+      " Identity Store ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail. \n"];
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   office: string option [@ocaml.doc "Office where the user is located.\n"];
   country: string option [@ocaml.doc "Country where the user is located.\n"];
   department: string option [@ocaml.doc "Department of the user.\n"];
@@ -1513,6 +1629,21 @@ type nonrec describe_inbound_dmarc_settings_request =
   {
   organization_id: string
     [@ocaml.doc "Lists the ID of the given organization.\n"]}[@@ocaml.doc ""]
+type nonrec describe_identity_provider_configuration_response =
+  {
+  personal_access_token_configuration:
+    personal_access_token_configuration option
+    [@ocaml.doc
+      " The details of the Personal Access Token configuration. \n"];
+  identity_center_configuration: identity_center_configuration option
+    [@ocaml.doc " The details of the IAM Identity Center configuration. \n"];
+  authentication_mode: identity_provider_authentication_mode option
+    [@ocaml.doc " The authentication mode used in WorkMail.\n"]}[@@ocaml.doc
+                                                                  ""]
+type nonrec describe_identity_provider_configuration_request =
+  {
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec describe_group_response =
   {
   hidden_from_global_address_list: bool option
@@ -1618,6 +1749,12 @@ type nonrec delete_resource_request =
     [@ocaml.doc
       "The identifier associated with the organization from which the resource is deleted.\n"]}
 [@@ocaml.doc ""]
+type nonrec delete_personal_access_token_request =
+  {
+  personal_access_token_id: string
+    [@ocaml.doc " The Personal Access Token ID.\n"];
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec delete_organization_response =
   {
   state: string option [@ocaml.doc "The state of the organization.\n"];
@@ -1625,6 +1762,9 @@ type nonrec delete_organization_response =
 [@@ocaml.doc ""]
 type nonrec delete_organization_request =
   {
+  delete_identity_center_application: bool option
+    [@ocaml.doc
+      "Deletes IAM Identity Center application for WorkMail. This action does not affect authentication settings for any organization.\n"];
   force_delete: bool option
     [@ocaml.doc
       "Deletes a WorkMail organization even if the organization has enabled users.\n"];
@@ -1674,6 +1814,15 @@ type nonrec delete_impersonation_role_request =
   organization_id: string
     [@ocaml.doc
       "The WorkMail organization from which to delete the impersonation role.\n"]}
+[@@ocaml.doc ""]
+type nonrec delete_identity_provider_configuration_request =
+  {
+  organization_id: string [@ocaml.doc " The Organization ID. \n"]}[@@ocaml.doc
+                                                                    ""]
+type nonrec delete_identity_center_application_request =
+  {
+  application_arn: string
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the application. \n"]}
 [@@ocaml.doc ""]
 type nonrec delete_group_request =
   {
@@ -1725,6 +1874,9 @@ type nonrec create_user_response =
 [@@ocaml.doc ""]
 type nonrec create_user_request =
   {
+  identity_provider_user_id: string option
+    [@ocaml.doc
+      "User ID from the IAM Identity Center. If this parameter is empty it will be updated automatically when the user logs in for the first time to the mailbox associated with WorkMail.\n"];
   hidden_from_global_address_list: bool option
     [@ocaml.doc
       "If this parameter is enabled, the user will be hidden from the address book.\n"];
@@ -1850,6 +2002,20 @@ type nonrec create_impersonation_role_request =
   client_token: string option
     [@ocaml.doc "The idempotency token for the client request.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec create_identity_center_application_response =
+  {
+  application_arn: string option
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the application. \n"]}
+[@@ocaml.doc ""]
+type nonrec create_identity_center_application_request =
+  {
+  client_token: string option
+    [@ocaml.doc " The idempotency token associated with the request. \n"];
+  instance_arn: string
+    [@ocaml.doc " The Amazon Resource Name (ARN) of the instance. \n"];
+  name: string
+    [@ocaml.doc " The name of the IAM Identity Center application. \n"]}
+[@@ocaml.doc ""]
 type nonrec create_group_response =
   {
   group_id: string option [@ocaml.doc "The identifier of the group.\n"]}
@@ -1936,24 +2102,25 @@ type nonrec associate_delegate_to_resource_request =
 
 val make_update_user_response : unit -> unit
 val make_update_user_request :
-  ?office:string ->
-    ?country:string ->
-      ?department:string ->
-        ?zip_code:string ->
-          ?company:string ->
-            ?city:string ->
-              ?job_title:string ->
-                ?street:string ->
-                  ?telephone:string ->
-                    ?initials:string ->
-                      ?hidden_from_global_address_list:bool ->
-                        ?last_name:string ->
-                          ?first_name:string ->
-                            ?display_name:string ->
-                              ?role:user_role ->
-                                user_id:string ->
-                                  organization_id:string ->
-                                    unit -> update_user_request
+  ?identity_provider_user_id:string ->
+    ?office:string ->
+      ?country:string ->
+        ?department:string ->
+          ?zip_code:string ->
+            ?company:string ->
+              ?city:string ->
+                ?job_title:string ->
+                  ?street:string ->
+                    ?telephone:string ->
+                      ?initials:string ->
+                        ?hidden_from_global_address_list:bool ->
+                          ?last_name:string ->
+                            ?first_name:string ->
+                              ?display_name:string ->
+                                ?role:user_role ->
+                                  user_id:string ->
+                                    organization_id:string ->
+                                      unit -> update_user_request
 val make_update_resource_response : unit -> unit
 val make_booking_options :
   ?auto_decline_conflicting_requests:bool ->
@@ -2103,6 +2270,20 @@ val make_put_inbound_dmarc_settings_response : unit -> unit
 val make_put_inbound_dmarc_settings_request :
   enforced:bool ->
     organization_id:string -> unit -> put_inbound_dmarc_settings_request
+val make_put_identity_provider_configuration_response : unit -> unit
+val make_identity_center_configuration :
+  application_arn:string ->
+    instance_arn:string -> unit -> identity_center_configuration
+val make_personal_access_token_configuration :
+  ?lifetime_in_days:int ->
+    status:personal_access_token_configuration_status ->
+      unit -> personal_access_token_configuration
+val make_put_identity_provider_configuration_request :
+  personal_access_token_configuration:personal_access_token_configuration ->
+    identity_center_configuration:identity_center_configuration ->
+      authentication_mode:identity_provider_authentication_mode ->
+        organization_id:string ->
+          unit -> put_identity_provider_configuration_request
 val make_put_email_monitoring_configuration_response : unit -> unit
 val make_put_email_monitoring_configuration_request :
   log_group_arn:string ->
@@ -2125,19 +2306,22 @@ val make_put_access_control_rule_request :
                         name:string ->
                           unit -> put_access_control_rule_request
 val make_user :
-  ?disabled_date:CoreTypes.Timestamp.t ->
-    ?enabled_date:CoreTypes.Timestamp.t ->
-      ?user_role:user_role ->
-        ?state:entity_state ->
-          ?display_name:string ->
-            ?name:string -> ?email:string -> ?id:string -> unit -> user
+  ?identity_provider_identity_store_id:string ->
+    ?identity_provider_user_id:string ->
+      ?disabled_date:CoreTypes.Timestamp.t ->
+        ?enabled_date:CoreTypes.Timestamp.t ->
+          ?user_role:user_role ->
+            ?state:entity_state ->
+              ?display_name:string ->
+                ?name:string -> ?email:string -> ?id:string -> unit -> user
 val make_list_users_response :
   ?next_token:string -> ?users:user list -> unit -> list_users_response
 val make_list_users_filters :
-  ?state:entity_state ->
-    ?primary_email_prefix:string ->
-      ?display_name_prefix:string ->
-        ?username_prefix:string -> unit -> list_users_filters
+  ?identity_provider_user_id_prefix:string ->
+    ?state:entity_state ->
+      ?primary_email_prefix:string ->
+        ?display_name_prefix:string ->
+          ?username_prefix:string -> unit -> list_users_filters
 val make_list_users_request :
   ?filters:list_users_filters ->
     ?max_results:int ->
@@ -2175,6 +2359,23 @@ val make_list_resource_delegates_request :
     ?next_token:string ->
       resource_id:string ->
         organization_id:string -> unit -> list_resource_delegates_request
+val make_personal_access_token_summary :
+  ?scopes:string list ->
+    ?expires_time:CoreTypes.Timestamp.t ->
+      ?date_last_used:CoreTypes.Timestamp.t ->
+        ?date_created:CoreTypes.Timestamp.t ->
+          ?name:string ->
+            ?user_id:string ->
+              ?personal_access_token_id:string ->
+                unit -> personal_access_token_summary
+val make_list_personal_access_tokens_response :
+  ?personal_access_token_summaries:personal_access_token_summary list ->
+    ?next_token:string -> unit -> list_personal_access_tokens_response
+val make_list_personal_access_tokens_request :
+  ?max_results:int ->
+    ?next_token:string ->
+      ?user_id:string ->
+        organization_id:string -> unit -> list_personal_access_tokens_request
 val make_organization_summary :
   ?state:string ->
     ?error_message:string ->
@@ -2367,6 +2568,19 @@ val make_list_access_control_rules_response :
     unit -> list_access_control_rules_response
 val make_list_access_control_rules_request :
   organization_id:string -> unit -> list_access_control_rules_request
+val make_get_personal_access_token_metadata_response :
+  ?scopes:string list ->
+    ?expires_time:CoreTypes.Timestamp.t ->
+      ?date_last_used:CoreTypes.Timestamp.t ->
+        ?date_created:CoreTypes.Timestamp.t ->
+          ?name:string ->
+            ?user_id:string ->
+              ?personal_access_token_id:string ->
+                unit -> get_personal_access_token_metadata_response
+val make_get_personal_access_token_metadata_request :
+  personal_access_token_id:string ->
+    organization_id:string ->
+      unit -> get_personal_access_token_metadata_request
 val make_get_mobile_device_access_override_response :
   ?date_modified:CoreTypes.Timestamp.t ->
     ?date_created:CoreTypes.Timestamp.t ->
@@ -2466,33 +2680,35 @@ val make_disassociate_delegate_from_resource_request :
       organization_id:string ->
         unit -> disassociate_delegate_from_resource_request
 val make_describe_user_response :
-  ?office:string ->
-    ?country:string ->
-      ?department:string ->
-        ?zip_code:string ->
-          ?company:string ->
-            ?city:string ->
-              ?job_title:string ->
-                ?street:string ->
-                  ?telephone:string ->
-                    ?initials:string ->
-                      ?hidden_from_global_address_list:bool ->
-                        ?last_name:string ->
-                          ?first_name:string ->
-                            ?mailbox_deprovisioned_date:CoreTypes.Timestamp.t
-                              ->
-                              ?mailbox_provisioned_date:CoreTypes.Timestamp.t
-                                ->
-                                ?disabled_date:CoreTypes.Timestamp.t ->
-                                  ?enabled_date:CoreTypes.Timestamp.t ->
-                                    ?user_role:user_role ->
-                                      ?state:entity_state ->
-                                        ?display_name:string ->
-                                          ?email:string ->
-                                            ?name:string ->
-                                              ?user_id:string ->
-                                                unit ->
-                                                  describe_user_response
+  ?identity_provider_identity_store_id:string ->
+    ?identity_provider_user_id:string ->
+      ?office:string ->
+        ?country:string ->
+          ?department:string ->
+            ?zip_code:string ->
+              ?company:string ->
+                ?city:string ->
+                  ?job_title:string ->
+                    ?street:string ->
+                      ?telephone:string ->
+                        ?initials:string ->
+                          ?hidden_from_global_address_list:bool ->
+                            ?last_name:string ->
+                              ?first_name:string ->
+                                ?mailbox_deprovisioned_date:CoreTypes.Timestamp.t
+                                  ->
+                                  ?mailbox_provisioned_date:CoreTypes.Timestamp.t
+                                    ->
+                                    ?disabled_date:CoreTypes.Timestamp.t ->
+                                      ?enabled_date:CoreTypes.Timestamp.t ->
+                                        ?user_role:user_role ->
+                                          ?state:entity_state ->
+                                            ?display_name:string ->
+                                              ?email:string ->
+                                                ?name:string ->
+                                                  ?user_id:string ->
+                                                    unit ->
+                                                      describe_user_response
 val make_describe_user_request :
   user_id:string -> organization_id:string -> unit -> describe_user_request
 val make_describe_resource_response :
@@ -2545,6 +2761,14 @@ val make_describe_inbound_dmarc_settings_response :
   ?enforced:bool -> unit -> describe_inbound_dmarc_settings_response
 val make_describe_inbound_dmarc_settings_request :
   organization_id:string -> unit -> describe_inbound_dmarc_settings_request
+val make_describe_identity_provider_configuration_response :
+  ?personal_access_token_configuration:personal_access_token_configuration ->
+    ?identity_center_configuration:identity_center_configuration ->
+      ?authentication_mode:identity_provider_authentication_mode ->
+        unit -> describe_identity_provider_configuration_response
+val make_describe_identity_provider_configuration_request :
+  organization_id:string ->
+    unit -> describe_identity_provider_configuration_request
 val make_describe_group_response :
   ?hidden_from_global_address_list:bool ->
     ?disabled_date:CoreTypes.Timestamp.t ->
@@ -2586,14 +2810,19 @@ val make_delete_resource_response : unit -> unit
 val make_delete_resource_request :
   resource_id:string ->
     organization_id:string -> unit -> delete_resource_request
+val make_delete_personal_access_token_response : unit -> unit
+val make_delete_personal_access_token_request :
+  personal_access_token_id:string ->
+    organization_id:string -> unit -> delete_personal_access_token_request
 val make_delete_organization_response :
   ?state:string ->
     ?organization_id:string -> unit -> delete_organization_response
 val make_delete_organization_request :
-  ?force_delete:bool ->
-    ?client_token:string ->
-      delete_directory:bool ->
-        organization_id:string -> unit -> delete_organization_request
+  ?delete_identity_center_application:bool ->
+    ?force_delete:bool ->
+      ?client_token:string ->
+        delete_directory:bool ->
+          organization_id:string -> unit -> delete_organization_request
 val make_delete_mobile_device_access_rule_response : unit -> unit
 val make_delete_mobile_device_access_rule_request :
   mobile_device_access_rule_id:string ->
@@ -2614,6 +2843,14 @@ val make_delete_impersonation_role_response : unit -> unit
 val make_delete_impersonation_role_request :
   impersonation_role_id:string ->
     organization_id:string -> unit -> delete_impersonation_role_request
+val make_delete_identity_provider_configuration_response : unit -> unit
+val make_delete_identity_provider_configuration_request :
+  organization_id:string ->
+    unit -> delete_identity_provider_configuration_request
+val make_delete_identity_center_application_response : unit -> unit
+val make_delete_identity_center_application_request :
+  application_arn:string ->
+    unit -> delete_identity_center_application_request
 val make_delete_group_response : unit -> unit
 val make_delete_group_request :
   group_id:string -> organization_id:string -> unit -> delete_group_request
@@ -2638,14 +2875,15 @@ val make_delete_access_control_rule_request :
 val make_create_user_response :
   ?user_id:string -> unit -> create_user_response
 val make_create_user_request :
-  ?hidden_from_global_address_list:bool ->
-    ?last_name:string ->
-      ?first_name:string ->
-        ?role:user_role ->
-          ?password:string ->
-            display_name:string ->
-              name:string ->
-                organization_id:string -> unit -> create_user_request
+  ?identity_provider_user_id:string ->
+    ?hidden_from_global_address_list:bool ->
+      ?last_name:string ->
+        ?first_name:string ->
+          ?role:user_role ->
+            ?password:string ->
+              display_name:string ->
+                name:string ->
+                  organization_id:string -> unit -> create_user_request
 val make_create_resource_response :
   ?resource_id:string -> unit -> create_resource_response
 val make_create_resource_request :
@@ -2693,6 +2931,13 @@ val make_create_impersonation_role_request :
           name:string ->
             organization_id:string ->
               unit -> create_impersonation_role_request
+val make_create_identity_center_application_response :
+  ?application_arn:string ->
+    unit -> create_identity_center_application_response
+val make_create_identity_center_application_request :
+  ?client_token:string ->
+    instance_arn:string ->
+      name:string -> unit -> create_identity_center_application_request
 val make_create_group_response :
   ?group_id:string -> unit -> create_group_response
 val make_create_group_request :
@@ -2856,6 +3101,17 @@ sig
           result
 end[@@ocaml.doc
      "Creates a group that can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
+module CreateIdentityCenterApplication :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      create_identity_center_application_request ->
+        (create_identity_center_application_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception ])
+          result
+end[@@ocaml.doc
+     " Creates the WorkMail application in IAM Identity Center that can be used later in the WorkMail - IdC integration. For more information, see PutIdentityProviderConfiguration. This action does not affect the authentication settings for any WorkMail organizations. \n"]
 module CreateImpersonationRole :
 sig
   val request :
@@ -3017,6 +3273,32 @@ sig
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
 end[@@ocaml.doc "Deletes a group from WorkMail.\n"]
+module DeleteIdentityCenterApplication :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_identity_center_application_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Deletes the IAM Identity Center application from WorkMail. This action does not affect the authentication settings for any WorkMail organizations. \n"]
+module DeleteIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_identity_provider_configuration_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Disables the integration between IdC and WorkMail. Authentication will continue with the directory as it was before the IdC integration. You might have to reset your directory passwords and reconfigure your desktop and mobile email clients. \n"]
 module DeleteImpersonationRole :
 sig
   val request :
@@ -3089,6 +3371,20 @@ sig
           result
 end[@@ocaml.doc
      "Deletes an WorkMail organization and all underlying AWS resources managed by WorkMail as part of the organization. You can choose whether to delete the associated directory. For more information, see {{:https://docs.aws.amazon.com/workmail/latest/adminguide/remove_organization.html}Removing an organization} in the {i WorkMail Administrator Guide}.\n"]
+module DeletePersonalAccessToken :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_personal_access_token_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Deletes the Personal Access Token from the provided WorkMail Organization. \n"]
 module DeleteResource :
 sig
   val request :
@@ -3213,6 +3509,21 @@ sig
           | `OrganizationStateException of organization_state_exception ])
           result
 end[@@ocaml.doc "Returns the data available for the group.\n"]
+module DescribeIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_identity_provider_configuration_request ->
+        (describe_identity_provider_configuration_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Returns detailed information on the current IdC setup for the WorkMail organization. \n"]
 module DescribeInboundDmarcSettings :
 sig
   val request :
@@ -3275,6 +3586,9 @@ sig
       describe_user_request ->
         (describe_user_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `DirectoryServiceAuthenticationFailedException of
+              directory_service_authentication_failed_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -3440,6 +3754,21 @@ sig
           result
 end[@@ocaml.doc
      "Gets the mobile device access override for the given WorkMail organization, user, and device.\n"]
+module GetPersonalAccessTokenMetadata :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_personal_access_token_metadata_request ->
+        (get_personal_access_token_metadata_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Requests details of a specific Personal Access Token within the WorkMail organization. \n"]
 module ListAccessControlRules :
 sig
   val request :
@@ -3476,6 +3805,7 @@ sig
       list_availability_configurations_request ->
         (list_availability_configurations_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
               organization_not_found_exception 
           | `OrganizationStateException of organization_state_exception ])
@@ -3622,6 +3952,21 @@ sig
           | `InvalidParameterException of invalid_parameter_exception ])
           result
 end[@@ocaml.doc "Returns summaries of the customer's organizations.\n"]
+module ListPersonalAccessTokens :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_personal_access_tokens_request ->
+        (list_personal_access_tokens_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `EntityNotFoundException of entity_not_found_exception 
+          | `EntityStateException of entity_state_exception 
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc " Returns a summary of your Personal Access Tokens. \n"]
 module ListResourceDelegates :
 sig
   val request :
@@ -3709,6 +4054,21 @@ sig
           result
 end[@@ocaml.doc
      "Creates or updates the email monitoring configuration for a specified organization.\n"]
+module PutIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      put_identity_provider_configuration_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Enables integration between IAM Identity Center (IdC) and WorkMail to proxy authentication requests for mailbox users. You can connect your IdC directory or your external directory to WorkMail through IdC and manage access to WorkMail mailboxes in a single place. For enhanced protection, you could enable Multifactor Authentication (MFA) and Personal Access Tokens. \n"]
 module PutInboundDmarcSettings :
 sig
   val request :
@@ -3930,7 +4290,7 @@ sig
           | `OrganizationStateException of organization_state_exception 
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
-end[@@ocaml.doc "Updates attibutes in a group.\n"]
+end[@@ocaml.doc "Updates attributes in a group.\n"]
 module UpdateImpersonationRole :
 sig
   val request :

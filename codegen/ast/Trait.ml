@@ -34,6 +34,8 @@ type staticContextParamValue =
 [@@deriving show, equal]
 
 type staticContextParams = (string * staticContextParamValue) list [@@deriving show, equal]
+type operationContextParam = { path : string } [@@deriving show, equal]
+type operationContextParams = (string * operationContextParam) list [@@deriving show, equal]
 
 type t =
   | ApiTitleTrait of string
@@ -106,6 +108,7 @@ type t =
   | RulesEndpointTests
   | RulesContextParam of string
   | RulesStaticContextParams of staticContextParams
+  | RulesOperationContextParams of operationContextParams
   | SensitiveTrait
   | ServiceTrait of serviceDetails
   | SparseTrait

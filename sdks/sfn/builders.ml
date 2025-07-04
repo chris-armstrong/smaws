@@ -11,14 +11,23 @@ let make_validate_state_machine_definition_diagnostic
      severity = severity_
    } : validate_state_machine_definition_diagnostic)
 let make_validate_state_machine_definition_output
+  ?truncated:(truncated_ : bool option)
   ~diagnostics:(diagnostics_ :
                  validate_state_machine_definition_diagnostic list)
   ~result:(result_ : validate_state_machine_definition_result_code) () =
-  ({ diagnostics = diagnostics_; result = result_ } : validate_state_machine_definition_output)
+  ({ truncated = truncated_; diagnostics = diagnostics_; result = result_ } : 
+  validate_state_machine_definition_output)
 let make_validate_state_machine_definition_input
+  ?max_results:(max_results_ : int option)
+  ?severity:(severity_ : validate_state_machine_definition_severity option)
   ?type_:(type__ : state_machine_type option)
   ~definition:(definition_ : string) () =
-  ({ type_ = type__; definition = definition_ } : validate_state_machine_definition_input)
+  ({
+     max_results = max_results_;
+     severity = severity_;
+     type_ = type__;
+     definition = definition_
+   } : validate_state_machine_definition_input)
 let make_update_state_machine_output
   ?state_machine_version_arn:(state_machine_version_arn_ : string option)
   ?revision_id:(revision_id_ : string option)
@@ -47,7 +56,19 @@ let make_logging_configuration
    } : logging_configuration)
 let make_tracing_configuration ?enabled:(enabled_ : bool option) () =
   ({ enabled = enabled_ } : tracing_configuration)
+let make_encryption_configuration
+  ?kms_data_key_reuse_period_seconds:(kms_data_key_reuse_period_seconds_ :
+                                       int option)
+  ?kms_key_id:(kms_key_id_ : string option) ~type_:(type__ : encryption_type)
+  () =
+  ({
+     type_ = type__;
+     kms_data_key_reuse_period_seconds = kms_data_key_reuse_period_seconds_;
+     kms_key_id = kms_key_id_
+   } : encryption_configuration)
 let make_update_state_machine_input
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
   ?version_description:(version_description_ : string option)
   ?publish:(publish_ : bool option)
   ?tracing_configuration:(tracing_configuration_ :
@@ -58,6 +79,7 @@ let make_update_state_machine_input
   ?definition:(definition_ : string option)
   ~state_machine_arn:(state_machine_arn_ : string) () =
   ({
+     encryption_configuration = encryption_configuration_;
      version_description = version_description_;
      publish = publish_;
      tracing_configuration = tracing_configuration_;
@@ -123,7 +145,7 @@ let make_inspection_data_response ?body:(body_ : string option)
      status_code = status_code_;
      protocol = protocol_
    } : inspection_data_response)
-let make_inspection_data
+let make_inspection_data ?variables:(variables_ : string option)
   ?response:(response_ : inspection_data_response option)
   ?request:(request_ : inspection_data_request option)
   ?after_result_path:(after_result_path_ : string option)
@@ -131,8 +153,10 @@ let make_inspection_data
   ?result:(result_ : string option)
   ?after_parameters:(after_parameters_ : string option)
   ?after_input_path:(after_input_path_ : string option)
+  ?after_arguments:(after_arguments_ : string option)
   ?input:(input_ : string option) () =
   ({
+     variables = variables_;
      response = response_;
      request = request_;
      after_result_path = after_result_path_;
@@ -140,6 +164,7 @@ let make_inspection_data
      result = result_;
      after_parameters = after_parameters_;
      after_input_path = after_input_path_;
+     after_arguments = after_arguments_;
      input = input_
    } : inspection_data)
 let make_test_state_output ?status:(status_ : test_execution_status option)
@@ -155,11 +180,13 @@ let make_test_state_output ?status:(status_ : test_execution_status option)
      error = error_;
      output = output_
    } : test_state_output)
-let make_test_state_input ?reveal_secrets:(reveal_secrets_ : bool option)
+let make_test_state_input ?variables:(variables_ : string option)
+  ?reveal_secrets:(reveal_secrets_ : bool option)
   ?inspection_level:(inspection_level_ : inspection_level option)
-  ?input:(input_ : string option) ~role_arn:(role_arn_ : string)
+  ?input:(input_ : string option) ?role_arn:(role_arn_ : string option)
   ~definition:(definition_ : string) () =
   ({
+     variables = variables_;
      reveal_secrets = reveal_secrets_;
      inspection_level = inspection_level_;
      input = input_;
@@ -286,12 +313,22 @@ let make_state_machine_alias_list_item
      creation_date = creation_date_;
      state_machine_alias_arn = state_machine_alias_arn_
    } : state_machine_alias_list_item)
+let make_assigned_variables_details ?truncated:(truncated_ : bool option) ()
+  = ({ truncated = truncated_ } : assigned_variables_details)
 let make_state_exited_event_details
+  ?assigned_variables_details:(assigned_variables_details_ :
+                                assigned_variables_details option)
+  ?assigned_variables:(assigned_variables_ : assigned_variables option)
   ?output_details:(output_details_ :
                     history_event_execution_data_details option)
   ?output:(output_ : string option) ~name:(name_ : string) () =
-  ({ output_details = output_details_; output = output_; name = name_ } : 
-  state_exited_event_details)
+  ({
+     assigned_variables_details = assigned_variables_details_;
+     assigned_variables = assigned_variables_;
+     output_details = output_details_;
+     output = output_;
+     name = name_
+   } : state_exited_event_details)
 let make_state_entered_event_details
   ?input_details:(input_details_ :
                    history_event_execution_data_details option)
@@ -341,10 +378,12 @@ let make_start_sync_execution_output
      execution_arn = execution_arn_
    } : start_sync_execution_output)
 let make_start_sync_execution_input
+  ?included_data:(included_data_ : included_data option)
   ?trace_header:(trace_header_ : string option)
   ?input:(input_ : string option) ?name:(name_ : string option)
   ~state_machine_arn:(state_machine_arn_ : string) () =
   ({
+     included_data = included_data_;
      trace_header = trace_header_;
      input = input_;
      name = name_;
@@ -667,7 +706,14 @@ let make_execution_timed_out_event_details ?cause:(cause_ : string option)
 let make_execution_redriven_event_details
   ?redrive_count:(redrive_count_ : int option) () =
   ({ redrive_count = redrive_count_ } : execution_redriven_event_details)
+let make_evaluation_failed_event_details
+  ?location:(location_ : string option) ?cause:(cause_ : string option)
+  ?error:(error_ : string option) ~state:(state_ : string) () =
+  ({ state = state_; location = location_; cause = cause_; error = error_ } : 
+  evaluation_failed_event_details)
 let make_history_event
+  ?evaluation_failed_event_details:(evaluation_failed_event_details_ :
+                                     evaluation_failed_event_details option)
   ?map_run_redriven_event_details:(map_run_redriven_event_details_ :
                                     map_run_redriven_event_details option)
   ?map_run_failed_event_details:(map_run_failed_event_details_ :
@@ -763,6 +809,7 @@ let make_history_event
   ~type_:(type__ : history_event_type)
   ~timestamp_:(timestamp__ : CoreTypes.Timestamp.t) () =
   ({
+     evaluation_failed_event_details = evaluation_failed_event_details_;
      map_run_redriven_event_details = map_run_redriven_event_details_;
      map_run_failed_event_details = map_run_failed_event_details_;
      map_run_started_event_details = map_run_started_event_details_;
@@ -838,6 +885,9 @@ let make_get_activity_task_input ?worker_name:(worker_name_ : string option)
   ~activity_arn:(activity_arn_ : string) () =
   ({ worker_name = worker_name_; activity_arn = activity_arn_ } : get_activity_task_input)
 let make_describe_state_machine_output
+  ?variable_references:(variable_references_ : variable_references option)
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
   ?description:(description_ : string option)
   ?revision_id:(revision_id_ : string option) ?label:(label_ : string option)
   ?tracing_configuration:(tracing_configuration_ :
@@ -850,6 +900,8 @@ let make_describe_state_machine_output
   ~definition:(definition_ : string) ~name:(name_ : string)
   ~state_machine_arn:(state_machine_arn_ : string) () =
   ({
+     variable_references = variable_references_;
+     encryption_configuration = encryption_configuration_;
      description = description_;
      revision_id = revision_id_;
      label = label_;
@@ -864,9 +916,14 @@ let make_describe_state_machine_output
      state_machine_arn = state_machine_arn_
    } : describe_state_machine_output)
 let make_describe_state_machine_input
+  ?included_data:(included_data_ : included_data option)
   ~state_machine_arn:(state_machine_arn_ : string) () =
-  ({ state_machine_arn = state_machine_arn_ } : describe_state_machine_input)
+  ({ included_data = included_data_; state_machine_arn = state_machine_arn_ } : 
+  describe_state_machine_input)
 let make_describe_state_machine_for_execution_output
+  ?variable_references:(variable_references_ : variable_references option)
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
   ?revision_id:(revision_id_ : string option) ?label:(label_ : string option)
   ?map_run_arn:(map_run_arn_ : string option)
   ?tracing_configuration:(tracing_configuration_ :
@@ -878,6 +935,8 @@ let make_describe_state_machine_for_execution_output
   ~name:(name_ : string) ~state_machine_arn:(state_machine_arn_ : string) ()
   =
   ({
+     variable_references = variable_references_;
+     encryption_configuration = encryption_configuration_;
      revision_id = revision_id_;
      label = label_;
      map_run_arn = map_run_arn_;
@@ -890,8 +949,10 @@ let make_describe_state_machine_for_execution_output
      state_machine_arn = state_machine_arn_
    } : describe_state_machine_for_execution_output)
 let make_describe_state_machine_for_execution_input
+  ?included_data:(included_data_ : included_data option)
   ~execution_arn:(execution_arn_ : string) () =
-  ({ execution_arn = execution_arn_ } : describe_state_machine_for_execution_input)
+  ({ included_data = included_data_; execution_arn = execution_arn_ } : 
+  describe_state_machine_for_execution_input)
 let make_describe_state_machine_alias_output
   ?update_date:(update_date_ : CoreTypes.Timestamp.t option)
   ?creation_date:(creation_date_ : CoreTypes.Timestamp.t option)
@@ -982,12 +1043,18 @@ let make_describe_execution_output
      state_machine_arn = state_machine_arn_;
      execution_arn = execution_arn_
    } : describe_execution_output)
-let make_describe_execution_input ~execution_arn:(execution_arn_ : string) ()
-  = ({ execution_arn = execution_arn_ } : describe_execution_input)
+let make_describe_execution_input
+  ?included_data:(included_data_ : included_data option)
+  ~execution_arn:(execution_arn_ : string) () =
+  ({ included_data = included_data_; execution_arn = execution_arn_ } : 
+  describe_execution_input)
 let make_describe_activity_output
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
   ~creation_date:(creation_date_ : CoreTypes.Timestamp.t)
   ~name:(name_ : string) ~activity_arn:(activity_arn_ : string) () =
   ({
+     encryption_configuration = encryption_configuration_;
      creation_date = creation_date_;
      name = name_;
      activity_arn = activity_arn_
@@ -1019,6 +1086,8 @@ let make_create_state_machine_output
      state_machine_arn = state_machine_arn_
    } : create_state_machine_output)
 let make_create_state_machine_input
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
   ?version_description:(version_description_ : string option)
   ?publish:(publish_ : bool option)
   ?tracing_configuration:(tracing_configuration_ :
@@ -1029,6 +1098,7 @@ let make_create_state_machine_input
   ?type_:(type__ : state_machine_type option) ~role_arn:(role_arn_ : string)
   ~definition:(definition_ : string) ~name:(name_ : string) () =
   ({
+     encryption_configuration = encryption_configuration_;
      version_description = version_description_;
      publish = publish_;
      tracing_configuration = tracing_configuration_;
@@ -1061,6 +1131,12 @@ let make_create_activity_output
   ~activity_arn:(activity_arn_ : string) () =
   ({ creation_date = creation_date_; activity_arn = activity_arn_ } : 
   create_activity_output)
-let make_create_activity_input ?tags:(tags_ : tag list option)
-  ~name:(name_ : string) () =
-  ({ tags = tags_; name = name_ } : create_activity_input)
+let make_create_activity_input
+  ?encryption_configuration:(encryption_configuration_ :
+                              encryption_configuration option)
+  ?tags:(tags_ : tag list option) ~name:(name_ : string) () =
+  ({
+     encryption_configuration = encryption_configuration_;
+     tags = tags_;
+     name = name_
+   } : create_activity_input)

@@ -91,6 +91,13 @@ val make_put_stored_query_response :
 val make_put_stored_query_request :
   ?tags:tag list ->
     stored_query:stored_query -> unit -> put_stored_query_request
+val make_put_service_linked_configuration_recorder_response :
+  ?name:string ->
+    ?arn:string -> unit -> put_service_linked_configuration_recorder_response
+val make_put_service_linked_configuration_recorder_request :
+  ?tags:tag list ->
+    service_principal:string ->
+      unit -> put_service_linked_configuration_recorder_request
 val make_retention_configuration :
   retention_period_in_days:int ->
     name:string -> unit -> retention_configuration
@@ -285,12 +292,16 @@ val make_recording_mode :
   ?recording_mode_overrides:recording_mode_override list ->
     recording_frequency:recording_frequency -> unit -> recording_mode
 val make_configuration_recorder :
-  ?recording_mode:recording_mode ->
-    ?recording_group:recording_group ->
-      ?role_ar_n:string -> ?name:string -> unit -> configuration_recorder
+  ?service_principal:string ->
+    ?recording_scope:recording_scope ->
+      ?recording_mode:recording_mode ->
+        ?recording_group:recording_group ->
+          ?role_ar_n:string ->
+            ?name:string -> ?arn:string -> unit -> configuration_recorder
 val make_put_configuration_recorder_request :
-  configuration_recorder:configuration_recorder ->
-    unit -> put_configuration_recorder_request
+  ?tags:tag list ->
+    configuration_recorder:configuration_recorder ->
+      unit -> put_configuration_recorder_request
 val make_account_aggregation_source :
   ?aws_regions:string list ->
     ?all_aws_regions:bool ->
@@ -299,24 +310,37 @@ val make_organization_aggregation_source :
   ?all_aws_regions:bool ->
     ?aws_regions:string list ->
       role_arn:string -> unit -> organization_aggregation_source
+val make_aggregator_filter_resource_type :
+  ?value:string list ->
+    ?type_:aggregator_filter_type -> unit -> aggregator_filter_resource_type
+val make_aggregator_filter_service_principal :
+  ?value:string list ->
+    ?type_:aggregator_filter_type ->
+      unit -> aggregator_filter_service_principal
+val make_aggregator_filters :
+  ?service_principal:aggregator_filter_service_principal ->
+    ?resource_type:aggregator_filter_resource_type ->
+      unit -> aggregator_filters
 val make_configuration_aggregator :
-  ?created_by:string ->
-    ?last_updated_time:CoreTypes.Timestamp.t ->
-      ?creation_time:CoreTypes.Timestamp.t ->
-        ?organization_aggregation_source:organization_aggregation_source ->
-          ?account_aggregation_sources:account_aggregation_source list ->
-            ?configuration_aggregator_arn:string ->
-              ?configuration_aggregator_name:string ->
-                unit -> configuration_aggregator
+  ?aggregator_filters:aggregator_filters ->
+    ?created_by:string ->
+      ?last_updated_time:CoreTypes.Timestamp.t ->
+        ?creation_time:CoreTypes.Timestamp.t ->
+          ?organization_aggregation_source:organization_aggregation_source ->
+            ?account_aggregation_sources:account_aggregation_source list ->
+              ?configuration_aggregator_arn:string ->
+                ?configuration_aggregator_name:string ->
+                  unit -> configuration_aggregator
 val make_put_configuration_aggregator_response :
   ?configuration_aggregator:configuration_aggregator ->
     unit -> put_configuration_aggregator_response
 val make_put_configuration_aggregator_request :
-  ?tags:tag list ->
-    ?organization_aggregation_source:organization_aggregation_source ->
-      ?account_aggregation_sources:account_aggregation_source list ->
-        configuration_aggregator_name:string ->
-          unit -> put_configuration_aggregator_request
+  ?aggregator_filters:aggregator_filters ->
+    ?tags:tag list ->
+      ?organization_aggregation_source:organization_aggregation_source ->
+        ?account_aggregation_sources:account_aggregation_source list ->
+          configuration_aggregator_name:string ->
+            unit -> put_configuration_aggregator_request
 val make_scope :
   ?compliance_resource_id:string ->
     ?tag_value:string ->
@@ -431,6 +455,23 @@ val make_list_conformance_pack_compliance_scores_request :
         ?sort_order:sort_order ->
           ?filters:conformance_pack_compliance_scores_filters ->
             unit -> list_conformance_pack_compliance_scores_request
+val make_configuration_recorder_summary :
+  ?service_principal:string ->
+    recording_scope:recording_scope ->
+      name:string -> arn:string -> unit -> configuration_recorder_summary
+val make_list_configuration_recorders_response :
+  ?next_token:string ->
+    configuration_recorder_summaries:configuration_recorder_summary list ->
+      unit -> list_configuration_recorders_response
+val make_configuration_recorder_filter :
+  ?filter_value:string list ->
+    ?filter_name:configuration_recorder_filter_name ->
+      unit -> configuration_recorder_filter
+val make_list_configuration_recorders_request :
+  ?next_token:string ->
+    ?max_results:int ->
+      ?filters:configuration_recorder_filter list ->
+        unit -> list_configuration_recorders_request
 val make_list_aggregate_discovered_resources_response :
   ?next_token:string ->
     ?resource_identifiers:aggregate_resource_identifier list ->
@@ -734,6 +775,13 @@ val make_get_aggregate_compliance_details_by_config_rule_request :
               configuration_aggregator_name:string ->
                 unit ->
                   get_aggregate_compliance_details_by_config_rule_request
+val make_disassociate_resource_types_response :
+  configuration_recorder:configuration_recorder ->
+    unit -> disassociate_resource_types_response
+val make_disassociate_resource_types_request :
+  resource_types:resource_type list ->
+    configuration_recorder_arn:string ->
+      unit -> disassociate_resource_types_request
 val make_describe_retention_configurations_response :
   ?next_token:string ->
     ?retention_configurations:retention_configuration list ->
@@ -968,26 +1016,32 @@ val make_describe_conformance_pack_compliance_request :
         conformance_pack_name:string ->
           unit -> describe_conformance_pack_compliance_request
 val make_configuration_recorder_status :
-  ?last_status_change_time:CoreTypes.Timestamp.t ->
-    ?last_error_message:string ->
-      ?last_error_code:string ->
-        ?last_status:recorder_status ->
-          ?recording:bool ->
-            ?last_stop_time:CoreTypes.Timestamp.t ->
-              ?last_start_time:CoreTypes.Timestamp.t ->
-                ?name:string -> unit -> configuration_recorder_status
+  ?service_principal:string ->
+    ?last_status_change_time:CoreTypes.Timestamp.t ->
+      ?last_error_message:string ->
+        ?last_error_code:string ->
+          ?last_status:recorder_status ->
+            ?recording:bool ->
+              ?last_stop_time:CoreTypes.Timestamp.t ->
+                ?last_start_time:CoreTypes.Timestamp.t ->
+                  ?name:string ->
+                    ?arn:string -> unit -> configuration_recorder_status
 val make_describe_configuration_recorder_status_response :
   ?configuration_recorders_status:configuration_recorder_status list ->
     unit -> describe_configuration_recorder_status_response
 val make_describe_configuration_recorder_status_request :
-  ?configuration_recorder_names:string list ->
-    unit -> describe_configuration_recorder_status_request
+  ?arn:string ->
+    ?service_principal:string ->
+      ?configuration_recorder_names:string list ->
+        unit -> describe_configuration_recorder_status_request
 val make_describe_configuration_recorders_response :
   ?configuration_recorders:configuration_recorder list ->
     unit -> describe_configuration_recorders_response
 val make_describe_configuration_recorders_request :
-  ?configuration_recorder_names:string list ->
-    unit -> describe_configuration_recorders_request
+  ?arn:string ->
+    ?service_principal:string ->
+      ?configuration_recorder_names:string list ->
+        unit -> describe_configuration_recorders_request
 val make_aggregated_source_status :
   ?last_error_message:string ->
     ?last_error_code:string ->
@@ -1145,6 +1199,13 @@ val make_deliver_config_snapshot_request :
 val make_delete_stored_query_response : unit -> unit
 val make_delete_stored_query_request :
   query_name:string -> unit -> delete_stored_query_request
+val make_delete_service_linked_configuration_recorder_response :
+  name:string ->
+    arn:string ->
+      unit -> delete_service_linked_configuration_recorder_response
+val make_delete_service_linked_configuration_recorder_request :
+  service_principal:string ->
+    unit -> delete_service_linked_configuration_recorder_request
 val make_delete_retention_configuration_request :
   retention_configuration_name:string ->
     unit -> delete_retention_configuration_request
@@ -1230,3 +1291,10 @@ val make_batch_get_aggregate_resource_config_request :
   resource_identifiers:aggregate_resource_identifier list ->
     configuration_aggregator_name:string ->
       unit -> batch_get_aggregate_resource_config_request
+val make_associate_resource_types_response :
+  configuration_recorder:configuration_recorder ->
+    unit -> associate_resource_types_response
+val make_associate_resource_types_request :
+  resource_types:resource_type list ->
+    configuration_recorder_arn:string ->
+      unit -> associate_resource_types_request

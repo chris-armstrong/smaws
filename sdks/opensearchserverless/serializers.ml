@@ -3,6 +3,7 @@ open Types
 let saml_user_attribute_to_yojson = string_to_yojson
 let saml_metadata_to_yojson = string_to_yojson
 let saml_group_attribute_to_yojson = string_to_yojson
+let open_search_serverless_entity_id_to_yojson = string_to_yojson
 let vpc_id_to_yojson = string_to_yojson
 let vpc_endpoint_id_to_yojson = string_to_yojson
 let vpc_endpoint_name_to_yojson = string_to_yojson
@@ -42,7 +43,10 @@ let security_group_ids_to_yojson tree =
 let base_long_to_yojson = long_to_yojson
 let vpc_endpoint_detail_to_yojson (x : vpc_endpoint_detail) =
   assoc_to_yojson
-    [("createdDate", (option_to_yojson base_long_to_yojson x.created_date));
+    [("failureMessage",
+       (option_to_yojson base_string_to_yojson x.failure_message));
+    ("failureCode", (option_to_yojson base_string_to_yojson x.failure_code));
+    ("createdDate", (option_to_yojson base_long_to_yojson x.created_date));
     ("status", (option_to_yojson vpc_endpoint_status_to_yojson x.status));
     ("securityGroupIds",
       (option_to_yojson security_group_ids_to_yojson x.security_group_ids));
@@ -145,23 +149,63 @@ let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
     [("message", (option_to_yojson base_string_to_yojson x.message))]
 let security_config_id_to_yojson = string_to_yojson
 let security_config_type_to_yojson (x : security_config_type) =
-  match x with | Saml -> `String "saml"
+  match x with
+  | Saml -> `String "saml"
+  | Iamidentitycenter -> `String "iamidentitycenter"
 let config_description_to_yojson = string_to_yojson
 let base_integer_to_yojson = int_to_yojson
 let saml_config_options_to_yojson (x : saml_config_options) =
   assoc_to_yojson
     [("sessionTimeout",
        (option_to_yojson base_integer_to_yojson x.session_timeout));
+    ("openSearchServerlessEntityId",
+      (option_to_yojson open_search_serverless_entity_id_to_yojson
+         x.open_search_serverless_entity_id));
     ("groupAttribute",
       (option_to_yojson saml_group_attribute_to_yojson x.group_attribute));
     ("userAttribute",
       (option_to_yojson saml_user_attribute_to_yojson x.user_attribute));
     ("metadata", (Some (saml_metadata_to_yojson x.metadata)))]
+let iam_identity_center_instance_arn_to_yojson = string_to_yojson
+let iam_identity_center_application_arn_to_yojson = string_to_yojson
+let iam_identity_center_user_attribute_to_yojson
+  (x : iam_identity_center_user_attribute) =
+  match x with
+  | UserId -> `String "UserId"
+  | UserName -> `String "UserName"
+  | Email -> `String "Email"
+let iam_identity_center_group_attribute_to_yojson
+  (x : iam_identity_center_group_attribute) =
+  match x with
+  | GroupId -> `String "GroupId"
+  | GroupName -> `String "GroupName"
+let iam_identity_center_config_options_to_yojson
+  (x : iam_identity_center_config_options) =
+  assoc_to_yojson
+    [("groupAttribute",
+       (option_to_yojson iam_identity_center_group_attribute_to_yojson
+          x.group_attribute));
+    ("userAttribute",
+      (option_to_yojson iam_identity_center_user_attribute_to_yojson
+         x.user_attribute));
+    ("applicationDescription",
+      (option_to_yojson base_string_to_yojson x.application_description));
+    ("applicationName",
+      (option_to_yojson base_string_to_yojson x.application_name));
+    ("applicationArn",
+      (option_to_yojson iam_identity_center_application_arn_to_yojson
+         x.application_arn));
+    ("instanceArn",
+      (option_to_yojson iam_identity_center_instance_arn_to_yojson
+         x.instance_arn))]
 let security_config_detail_to_yojson (x : security_config_detail) =
   assoc_to_yojson
     [("lastModifiedDate",
        (option_to_yojson base_long_to_yojson x.last_modified_date));
     ("createdDate", (option_to_yojson base_long_to_yojson x.created_date));
+    ("iamIdentityCenterOptions",
+      (option_to_yojson iam_identity_center_config_options_to_yojson
+         x.iam_identity_center_options));
     ("samlOptions",
       (option_to_yojson saml_config_options_to_yojson x.saml_options));
     ("description",
@@ -176,11 +220,23 @@ let update_security_config_response_to_yojson
     [("securityConfigDetail",
        (option_to_yojson security_config_detail_to_yojson
           x.security_config_detail))]
+let update_iam_identity_center_config_options_to_yojson
+  (x : update_iam_identity_center_config_options) =
+  assoc_to_yojson
+    [("groupAttribute",
+       (option_to_yojson iam_identity_center_group_attribute_to_yojson
+          x.group_attribute));
+    ("userAttribute",
+      (option_to_yojson iam_identity_center_user_attribute_to_yojson
+         x.user_attribute))]
 let update_security_config_request_to_yojson
   (x : update_security_config_request) =
   assoc_to_yojson
     [("clientToken",
        (option_to_yojson client_token_to_yojson x.client_token));
+    ("iamIdentityCenterOptionsUpdates",
+      (option_to_yojson update_iam_identity_center_config_options_to_yojson
+         x.iam_identity_center_options_updates));
     ("samlOptions",
       (option_to_yojson saml_config_options_to_yojson x.saml_options));
     ("description",
@@ -535,8 +591,11 @@ let batch_get_effective_lifecycle_policy_request_to_yojson
              x.resource_identifiers)))]
 let collection_detail_to_yojson (x : collection_detail) =
   assoc_to_yojson
-    [("dashboardEndpoint",
-       (option_to_yojson base_string_to_yojson x.dashboard_endpoint));
+    [("failureMessage",
+       (option_to_yojson base_string_to_yojson x.failure_message));
+    ("failureCode", (option_to_yojson base_string_to_yojson x.failure_code));
+    ("dashboardEndpoint",
+      (option_to_yojson base_string_to_yojson x.dashboard_endpoint));
     ("collectionEndpoint",
       (option_to_yojson base_string_to_yojson x.collection_endpoint));
     ("lastModifiedDate",
@@ -817,11 +876,25 @@ let create_security_config_response_to_yojson
        (option_to_yojson security_config_detail_to_yojson
           x.security_config_detail))]
 let config_name_to_yojson = string_to_yojson
+let create_iam_identity_center_config_options_to_yojson
+  (x : create_iam_identity_center_config_options) =
+  assoc_to_yojson
+    [("groupAttribute",
+       (option_to_yojson iam_identity_center_group_attribute_to_yojson
+          x.group_attribute));
+    ("userAttribute",
+      (option_to_yojson iam_identity_center_user_attribute_to_yojson
+         x.user_attribute));
+    ("instanceArn",
+      (Some (iam_identity_center_instance_arn_to_yojson x.instance_arn)))]
 let create_security_config_request_to_yojson
   (x : create_security_config_request) =
   assoc_to_yojson
     [("clientToken",
        (option_to_yojson client_token_to_yojson x.client_token));
+    ("iamIdentityCenterOptions",
+      (option_to_yojson create_iam_identity_center_config_options_to_yojson
+         x.iam_identity_center_options));
     ("samlOptions",
       (option_to_yojson saml_config_options_to_yojson x.saml_options));
     ("description",

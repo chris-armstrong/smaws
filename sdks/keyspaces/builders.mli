@@ -38,20 +38,34 @@ val make_replica_specification :
   ?read_capacity_auto_scaling:auto_scaling_settings ->
     ?read_capacity_units:int ->
       region:string -> unit -> replica_specification
-val make_update_table_request :
-  ?replica_specifications:replica_specification list ->
-    ?auto_scaling_specification:auto_scaling_specification ->
-      ?client_side_timestamps:client_side_timestamps ->
-        ?default_time_to_live:int ->
-          ?ttl:time_to_live ->
-            ?point_in_time_recovery:point_in_time_recovery ->
-              ?encryption_specification:encryption_specification ->
-                ?capacity_specification:capacity_specification ->
-                  ?add_columns:column_definition list ->
-                    table_name:string ->
-                      keyspace_name:string -> unit -> update_table_request
-val make_untag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
+val make_cdc_specification :
+  ?propagate_tags:cdc_propagate_tags ->
+    ?tags:tag list ->
+      ?view_type:view_type -> status:cdc_status -> unit -> cdc_specification
+val make_update_table_request :
+  ?cdc_specification:cdc_specification ->
+    ?replica_specifications:replica_specification list ->
+      ?auto_scaling_specification:auto_scaling_specification ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?default_time_to_live:int ->
+            ?ttl:time_to_live ->
+              ?point_in_time_recovery:point_in_time_recovery ->
+                ?encryption_specification:encryption_specification ->
+                  ?capacity_specification:capacity_specification ->
+                    ?add_columns:column_definition list ->
+                      table_name:string ->
+                        keyspace_name:string -> unit -> update_table_request
+val make_update_keyspace_response :
+  resource_arn:string -> unit -> update_keyspace_response
+val make_replication_specification :
+  ?region_list:string list ->
+    replication_strategy:rs -> unit -> replication_specification
+val make_update_keyspace_request :
+  ?client_side_timestamps:client_side_timestamps ->
+    replication_specification:replication_specification ->
+      keyspace_name:string -> unit -> update_keyspace_request
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> untag_resource_request
 val make_tag_resource_response : unit -> unit
@@ -84,9 +98,10 @@ val make_restore_table_request :
                     source_table_name:string ->
                       source_keyspace_name:string ->
                         unit -> restore_table_request
-val make_replication_specification :
-  ?region_list:string list ->
-    replication_strategy:rs -> unit -> replication_specification
+val make_replication_group_status :
+  ?tables_replication_progress:string ->
+    keyspace_status:keyspace_status ->
+      region:string -> unit -> replication_group_status
 val make_capacity_specification_summary :
   ?last_update_to_pay_per_request_timestamp:CoreTypes.Timestamp.t ->
     ?write_capacity_units:int ->
@@ -104,6 +119,11 @@ val make_point_in_time_recovery_summary :
   ?earliest_restorable_timestamp:CoreTypes.Timestamp.t ->
     status:point_in_time_recovery_status ->
       unit -> point_in_time_recovery_summary
+val make_list_types_response :
+  ?next_token:string -> types:string list -> unit -> list_types_response
+val make_list_types_request :
+  ?max_results:int ->
+    ?next_token:string -> keyspace_name:string -> unit -> list_types_request
 val make_list_tags_for_resource_response :
   ?tags:tag list ->
     ?next_token:string -> unit -> list_tags_for_resource_response
@@ -126,6 +146,20 @@ val make_list_keyspaces_response :
     keyspaces:keyspace_summary list -> unit -> list_keyspaces_response
 val make_list_keyspaces_request :
   ?max_results:int -> ?next_token:string -> unit -> list_keyspaces_request
+val make_field_definition :
+  type_:string -> name:string -> unit -> field_definition
+val make_get_type_response :
+  ?max_nesting_depth:int ->
+    ?direct_parent_types:string list ->
+      ?direct_referring_tables:string list ->
+        ?status:type_status ->
+          ?last_modified_timestamp:CoreTypes.Timestamp.t ->
+            ?field_definitions:field_definition list ->
+              keyspace_arn:string ->
+                type_name:string ->
+                  keyspace_name:string -> unit -> get_type_response
+val make_get_type_request :
+  type_name:string -> keyspace_name:string -> unit -> get_type_request
 val make_get_table_auto_scaling_settings_response :
   ?replica_specifications:replica_auto_scaling_specification list ->
     ?auto_scaling_specification:auto_scaling_specification ->
@@ -137,54 +171,70 @@ val make_get_table_auto_scaling_settings_request :
   table_name:string ->
     keyspace_name:string -> unit -> get_table_auto_scaling_settings_request
 val make_comment : message:string -> unit -> comment
+val make_cdc_specification_summary :
+  ?view_type:view_type ->
+    status:cdc_status -> unit -> cdc_specification_summary
 val make_get_table_response :
-  ?replica_specifications:replica_specification_summary list ->
-    ?client_side_timestamps:client_side_timestamps ->
-      ?comment:comment ->
-        ?default_time_to_live:int ->
-          ?ttl:time_to_live ->
-            ?point_in_time_recovery:point_in_time_recovery_summary ->
-              ?encryption_specification:encryption_specification ->
-                ?capacity_specification:capacity_specification_summary ->
-                  ?schema_definition:schema_definition ->
-                    ?status:table_status ->
-                      ?creation_timestamp:CoreTypes.Timestamp.t ->
-                        resource_arn:string ->
-                          table_name:string ->
-                            keyspace_name:string ->
-                              unit -> get_table_response
+  ?cdc_specification:cdc_specification_summary ->
+    ?latest_stream_arn:string ->
+      ?replica_specifications:replica_specification_summary list ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?comment:comment ->
+            ?default_time_to_live:int ->
+              ?ttl:time_to_live ->
+                ?point_in_time_recovery:point_in_time_recovery_summary ->
+                  ?encryption_specification:encryption_specification ->
+                    ?capacity_specification:capacity_specification_summary ->
+                      ?schema_definition:schema_definition ->
+                        ?status:table_status ->
+                          ?creation_timestamp:CoreTypes.Timestamp.t ->
+                            resource_arn:string ->
+                              table_name:string ->
+                                keyspace_name:string ->
+                                  unit -> get_table_response
 val make_get_table_request :
   table_name:string -> keyspace_name:string -> unit -> get_table_request
 val make_get_keyspace_response :
-  ?replication_regions:string list ->
-    replication_strategy:rs ->
-      resource_arn:string ->
-        keyspace_name:string -> unit -> get_keyspace_response
+  ?replication_group_statuses:replication_group_status list ->
+    ?replication_regions:string list ->
+      replication_strategy:rs ->
+        resource_arn:string ->
+          keyspace_name:string -> unit -> get_keyspace_response
 val make_get_keyspace_request :
   keyspace_name:string -> unit -> get_keyspace_request
+val make_delete_type_response :
+  type_name:string -> keyspace_arn:string -> unit -> delete_type_response
+val make_delete_type_request :
+  type_name:string -> keyspace_name:string -> unit -> delete_type_request
 val make_delete_table_response : unit -> unit
 val make_delete_table_request :
   table_name:string -> keyspace_name:string -> unit -> delete_table_request
 val make_delete_keyspace_response : unit -> unit
 val make_delete_keyspace_request :
   keyspace_name:string -> unit -> delete_keyspace_request
+val make_create_type_response :
+  type_name:string -> keyspace_arn:string -> unit -> create_type_response
+val make_create_type_request :
+  field_definitions:field_definition list ->
+    type_name:string -> keyspace_name:string -> unit -> create_type_request
 val make_create_table_response :
   resource_arn:string -> unit -> create_table_response
 val make_create_table_request :
-  ?replica_specifications:replica_specification list ->
-    ?auto_scaling_specification:auto_scaling_specification ->
-      ?client_side_timestamps:client_side_timestamps ->
-        ?tags:tag list ->
-          ?default_time_to_live:int ->
-            ?ttl:time_to_live ->
-              ?point_in_time_recovery:point_in_time_recovery ->
-                ?encryption_specification:encryption_specification ->
-                  ?capacity_specification:capacity_specification ->
-                    ?comment:comment ->
-                      schema_definition:schema_definition ->
-                        table_name:string ->
-                          keyspace_name:string ->
-                            unit -> create_table_request
+  ?cdc_specification:cdc_specification ->
+    ?replica_specifications:replica_specification list ->
+      ?auto_scaling_specification:auto_scaling_specification ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?tags:tag list ->
+            ?default_time_to_live:int ->
+              ?ttl:time_to_live ->
+                ?point_in_time_recovery:point_in_time_recovery ->
+                  ?encryption_specification:encryption_specification ->
+                    ?capacity_specification:capacity_specification ->
+                      ?comment:comment ->
+                        schema_definition:schema_definition ->
+                          table_name:string ->
+                            keyspace_name:string ->
+                              unit -> create_table_request
 val make_create_keyspace_response :
   resource_arn:string -> unit -> create_keyspace_response
 val make_create_keyspace_request :

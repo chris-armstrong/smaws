@@ -1,5 +1,9 @@
 open Smaws_Lib
 open Types
+val make_widget :
+  ?view_properties:view_properties_map ->
+    ?query_parameters:string list ->
+      ?query_statement:string -> ?query_alias:string -> unit -> widget
 val make_update_trail_response :
   ?is_organization_trail:bool ->
     ?kms_key_id:string ->
@@ -66,6 +70,32 @@ val make_update_event_data_store_request :
                 ?name:string ->
                   event_data_store:string ->
                     unit -> update_event_data_store_request
+val make_refresh_schedule_frequency :
+  ?value:int ->
+    ?unit_:refresh_schedule_frequency_unit ->
+      unit -> refresh_schedule_frequency
+val make_refresh_schedule :
+  ?time_of_day:string ->
+    ?status:refresh_schedule_status ->
+      ?frequency:refresh_schedule_frequency -> unit -> refresh_schedule
+val make_update_dashboard_response :
+  ?updated_timestamp:CoreTypes.Timestamp.t ->
+    ?created_timestamp:CoreTypes.Timestamp.t ->
+      ?termination_protection_enabled:bool ->
+        ?refresh_schedule:refresh_schedule ->
+          ?widgets:widget list ->
+            ?type_:dashboard_type ->
+              ?name:string ->
+                ?dashboard_arn:string -> unit -> update_dashboard_response
+val make_request_widget :
+  ?query_parameters:string list ->
+    view_properties:view_properties_map ->
+      query_statement:string -> unit -> request_widget
+val make_update_dashboard_request :
+  ?termination_protection_enabled:bool ->
+    ?refresh_schedule:refresh_schedule ->
+      ?widgets:request_widget list ->
+        dashboard_id:string -> unit -> update_dashboard_request
 val make_destination :
   location:string -> type_:destination_type -> unit -> destination
 val make_update_channel_response :
@@ -126,12 +156,14 @@ val make_stop_event_data_store_ingestion_response : unit -> unit
 val make_stop_event_data_store_ingestion_request :
   event_data_store:string -> unit -> stop_event_data_store_ingestion_request
 val make_start_query_response :
-  ?query_id:string -> unit -> start_query_response
+  ?event_data_store_owner_account_id:string ->
+    ?query_id:string -> unit -> start_query_response
 val make_start_query_request :
-  ?query_parameters:string list ->
-    ?query_alias:string ->
-      ?delivery_s3_uri:string ->
-        ?query_statement:string -> unit -> start_query_request
+  ?event_data_store_owner_account_id:string ->
+    ?query_parameters:string list ->
+      ?query_alias:string ->
+        ?delivery_s3_uri:string ->
+          ?query_statement:string -> unit -> start_query_request
 val make_start_logging_response : unit -> unit
 val make_start_logging_request : name:string -> unit -> start_logging_request
 val make_start_import_response :
@@ -152,9 +184,22 @@ val make_start_import_request :
 val make_start_event_data_store_ingestion_response : unit -> unit
 val make_start_event_data_store_ingestion_request :
   event_data_store:string -> unit -> start_event_data_store_ingestion_request
+val make_start_dashboard_refresh_response :
+  ?refresh_id:string -> unit -> start_dashboard_refresh_response
+val make_start_dashboard_refresh_request :
+  ?query_parameter_values:query_parameter_values ->
+    dashboard_id:string -> unit -> start_dashboard_refresh_request
 val make_source_config :
   ?advanced_event_selectors:advanced_event_selector list ->
     ?apply_to_all_regions:bool -> unit -> source_config
+val make_search_sample_queries_response :
+  ?next_token:string ->
+    ?search_results:search_sample_queries_search_result list ->
+      unit -> search_sample_queries_response
+val make_search_sample_queries_request :
+  ?next_token:string ->
+    ?max_results:int ->
+      search_phrase:string -> unit -> search_sample_queries_request
 val make_restore_event_data_store_response :
   ?billing_mode:billing_mode ->
     ?kms_key_id:string ->
@@ -196,8 +241,9 @@ val make_query :
   ?creation_time:CoreTypes.Timestamp.t ->
     ?query_status:query_status -> ?query_id:string -> unit -> query
 val make_put_resource_policy_response :
-  ?resource_policy:string ->
-    ?resource_arn:string -> unit -> put_resource_policy_response
+  ?delegated_admin_resource_policy:string ->
+    ?resource_policy:string ->
+      ?resource_arn:string -> unit -> put_resource_policy_response
 val make_put_resource_policy_request :
   resource_policy:string ->
     resource_arn:string -> unit -> put_resource_policy_request
@@ -229,6 +275,18 @@ val make_put_event_selectors_request :
   ?advanced_event_selectors:advanced_event_selector list ->
     ?event_selectors:event_selector list ->
       trail_name:string -> unit -> put_event_selectors_request
+val make_context_key_selector :
+  equals:string list -> type_:type_ -> unit -> context_key_selector
+val make_put_event_configuration_response :
+  ?context_key_selectors:context_key_selector list ->
+    ?max_event_size:max_event_size ->
+      ?event_data_store_arn:string ->
+        unit -> put_event_configuration_response
+val make_put_event_configuration_request :
+  ?event_data_store:string ->
+    context_key_selectors:context_key_selector list ->
+      max_event_size:max_event_size ->
+        unit -> put_event_configuration_request
 val make_public_key :
   ?fingerprint:string ->
     ?validity_end_time:CoreTypes.Timestamp.t ->
@@ -350,6 +408,16 @@ val make_list_event_data_stores_response :
 val make_list_event_data_stores_request :
   ?max_results:int ->
     ?next_token:string -> unit -> list_event_data_stores_request
+val make_dashboard_detail :
+  ?type_:dashboard_type -> ?dashboard_arn:string -> unit -> dashboard_detail
+val make_list_dashboards_response :
+  ?next_token:string ->
+    ?dashboards:dashboard_detail list -> unit -> list_dashboards_response
+val make_list_dashboards_request :
+  ?max_results:int ->
+    ?next_token:string ->
+      ?type_:dashboard_type ->
+        ?name_prefix:string -> unit -> list_dashboards_request
 val make_channel : ?name:string -> ?channel_arn:string -> unit -> channel
 val make_list_channels_response :
   ?next_token:string ->
@@ -388,8 +456,9 @@ val make_get_trail_status_request :
 val make_get_trail_response : ?trail:trail -> unit -> get_trail_response
 val make_get_trail_request : name:string -> unit -> get_trail_request
 val make_get_resource_policy_response :
-  ?resource_policy:string ->
-    ?resource_arn:string -> unit -> get_resource_policy_response
+  ?delegated_admin_resource_policy:string ->
+    ?resource_policy:string ->
+      ?resource_arn:string -> unit -> get_resource_policy_response
 val make_get_resource_policy_request :
   resource_arn:string -> unit -> get_resource_policy_request
 val make_get_query_results_response :
@@ -399,10 +468,11 @@ val make_get_query_results_response :
         ?query_statistics:query_statistics ->
           ?query_status:query_status -> unit -> get_query_results_response
 val make_get_query_results_request :
-  ?max_query_results:int ->
-    ?next_token:string ->
-      ?event_data_store:string ->
-        query_id:string -> unit -> get_query_results_request
+  ?event_data_store_owner_account_id:string ->
+    ?max_query_results:int ->
+      ?next_token:string ->
+        ?event_data_store:string ->
+          query_id:string -> unit -> get_query_results_request
 val make_get_insight_selectors_response :
   ?insights_destination:string ->
     ?event_data_store_arn:string ->
@@ -448,6 +518,26 @@ val make_get_event_data_store_response :
                                 unit -> get_event_data_store_response
 val make_get_event_data_store_request :
   event_data_store:string -> unit -> get_event_data_store_request
+val make_get_event_configuration_response :
+  ?context_key_selectors:context_key_selector list ->
+    ?max_event_size:max_event_size ->
+      ?event_data_store_arn:string ->
+        unit -> get_event_configuration_response
+val make_get_event_configuration_request :
+  ?event_data_store:string -> unit -> get_event_configuration_request
+val make_get_dashboard_response :
+  ?termination_protection_enabled:bool ->
+    ?last_refresh_failure_reason:string ->
+      ?last_refresh_id:string ->
+        ?updated_timestamp:CoreTypes.Timestamp.t ->
+          ?created_timestamp:CoreTypes.Timestamp.t ->
+            ?refresh_schedule:refresh_schedule ->
+              ?widgets:widget list ->
+                ?status:dashboard_status ->
+                  ?type_:dashboard_type ->
+                    ?dashboard_arn:string -> unit -> get_dashboard_response
+val make_get_dashboard_request :
+  dashboard_id:string -> unit -> get_dashboard_request
 val make_get_channel_response :
   ?ingestion_status:ingestion_status ->
     ?destinations:destination list ->
@@ -455,6 +545,13 @@ val make_get_channel_response :
         ?source:string ->
           ?name:string -> ?channel_arn:string -> unit -> get_channel_response
 val make_get_channel_request : channel:string -> unit -> get_channel_request
+val make_generate_query_response :
+  ?event_data_store_owner_account_id:string ->
+    ?query_alias:string ->
+      ?query_statement:string -> unit -> generate_query_response
+val make_generate_query_request :
+  prompt:string ->
+    event_data_stores:string list -> unit -> generate_query_request
 val make_enable_federation_response :
   ?federation_role_arn:string ->
     ?federation_status:federation_status ->
@@ -473,17 +570,21 @@ val make_describe_trails_request :
   ?include_shadow_trails:bool ->
     ?trail_name_list:string list -> unit -> describe_trails_request
 val make_describe_query_response :
-  ?delivery_status:delivery_status ->
-    ?delivery_s3_uri:string ->
-      ?error_message:string ->
-        ?query_statistics:query_statistics_for_describe_query ->
-          ?query_status:query_status ->
-            ?query_string:string ->
-              ?query_id:string -> unit -> describe_query_response
+  ?event_data_store_owner_account_id:string ->
+    ?prompt:string ->
+      ?delivery_status:delivery_status ->
+        ?delivery_s3_uri:string ->
+          ?error_message:string ->
+            ?query_statistics:query_statistics_for_describe_query ->
+              ?query_status:query_status ->
+                ?query_string:string ->
+                  ?query_id:string -> unit -> describe_query_response
 val make_describe_query_request :
-  ?query_alias:string ->
-    ?query_id:string ->
-      ?event_data_store:string -> unit -> describe_query_request
+  ?event_data_store_owner_account_id:string ->
+    ?refresh_id:string ->
+      ?query_alias:string ->
+        ?query_id:string ->
+          ?event_data_store:string -> unit -> describe_query_request
 val make_deregister_organization_delegated_admin_response : unit -> unit
 val make_deregister_organization_delegated_admin_request :
   delegated_admin_account_id:string ->
@@ -496,6 +597,9 @@ val make_delete_resource_policy_request :
 val make_delete_event_data_store_response : unit -> unit
 val make_delete_event_data_store_request :
   event_data_store:string -> unit -> delete_event_data_store_request
+val make_delete_dashboard_response : unit -> unit
+val make_delete_dashboard_request :
+  dashboard_id:string -> unit -> delete_dashboard_request
 val make_delete_channel_response : unit -> unit
 val make_delete_channel_request :
   channel:string -> unit -> delete_channel_request
@@ -552,6 +656,20 @@ val make_create_event_data_store_request :
                 ?multi_region_enabled:bool ->
                   ?advanced_event_selectors:advanced_event_selector list ->
                     name:string -> unit -> create_event_data_store_request
+val make_create_dashboard_response :
+  ?termination_protection_enabled:bool ->
+    ?refresh_schedule:refresh_schedule ->
+      ?tags_list:tag list ->
+        ?widgets:widget list ->
+          ?type_:dashboard_type ->
+            ?name:string ->
+              ?dashboard_arn:string -> unit -> create_dashboard_response
+val make_create_dashboard_request :
+  ?widgets:request_widget list ->
+    ?termination_protection_enabled:bool ->
+      ?tags_list:tag list ->
+        ?refresh_schedule:refresh_schedule ->
+          name:string -> unit -> create_dashboard_request
 val make_create_channel_response :
   ?tags:tag list ->
     ?destinations:destination list ->
@@ -563,10 +681,13 @@ val make_create_channel_request :
     destinations:destination list ->
       source:string -> name:string -> unit -> create_channel_request
 val make_cancel_query_response :
-  query_status:query_status ->
-    query_id:string -> unit -> cancel_query_response
+  ?event_data_store_owner_account_id:string ->
+    query_status:query_status ->
+      query_id:string -> unit -> cancel_query_response
 val make_cancel_query_request :
-  ?event_data_store:string -> query_id:string -> unit -> cancel_query_request
+  ?event_data_store_owner_account_id:string ->
+    ?event_data_store:string ->
+      query_id:string -> unit -> cancel_query_request
 val make_add_tags_response : unit -> unit
 val make_add_tags_request :
   tags_list:tag list -> resource_id:string -> unit -> add_tags_request

@@ -51,7 +51,7 @@ type nonrec cognito_identity_provider =
   {
   server_side_token_check: bool option
     [@ocaml.doc
-      "TRUE if server-side token validation is enabled for the identity provider\226\128\153s token.\n\n Once you set [ServerSideTokenCheck] to TRUE for an identity pool, that identity pool will check with the integrated user pools to make sure that the user has not been globally signed out or deleted before the identity pool provides an OIDC token or AWS credentials for the user.\n \n  If the user is signed out or deleted, the identity pool will return a 400 Not Authorized error.\n  "];
+      "TRUE if server-side token validation is enabled for the identity provider\226\128\153s token.\n\n Once you set [ServerSideTokenCheck] to TRUE for an identity pool, that identity pool will check with the integrated user pools to make sure that the user has not been globally signed out or deleted before the identity pool provides an OIDC token or Amazon Web Services credentials for the user.\n \n  If the user is signed out or deleted, the identity pool will return a 400 Not Authorized error.\n  "];
   client_id: string option
     [@ocaml.doc "The client ID for the Amazon Cognito user pool.\n"];
   provider_name: string option
@@ -223,7 +223,7 @@ type nonrec set_identity_pool_roles_input =
   {
   role_mappings: role_mapping_map option
     [@ocaml.doc
-      "How users for a specific identity provider are to mapped to roles. This is a string to [RoleMapping] object map. The string identifies the identity provider, for example, \"graph.facebook.com\" or \"cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id\".\n\n Up to 25 rules can be specified per identity provider.\n "];
+      "How users for a specific identity provider are to mapped to roles. This is a string to [RoleMapping] object map. The string identifies the identity provider, for example, [graph.facebook.com] or [cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id].\n\n Up to 25 rules can be specified per identity provider.\n "];
   roles: roles_map
     [@ocaml.doc
       "The map of roles associated with this pool. For a given role, the key will be either \"authenticated\" or \"unauthenticated\" and the value will be the Role ARN.\n"];
@@ -342,7 +342,7 @@ type nonrec invalid_identity_pool_configuration_exception =
     [@ocaml.doc
       "The message returned for an [InvalidIdentityPoolConfigurationException] \n"]}
 [@@ocaml.doc
-  "Thrown if the identity pool has no role associated for the given auth type (auth/unauth) or if the AssumeRole fails.\n"]
+  "If you provided authentication information in the request, the identity pool has no authenticated role configured, or STS returned an error response to the request to assume the authenticated role from the identity pool. If you provided no authentication information in the request, the identity pool has no unauthenticated role configured, or STS returned an error response to the request to assume the unauthenticated role from the identity pool.\n\n Your role trust policy must grant [AssumeRoleWithWebIdentity] permissions to [cognito-identity.amazonaws.com].\n "]
 type nonrec get_principal_tag_attribute_map_response =
   {
   principal_tags: principal_tags option
@@ -391,7 +391,7 @@ type nonrec get_open_id_token_for_developer_identity_input =
   {
   token_duration: int option
     [@ocaml.doc
-      "The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary AWS credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your AWS resources for the token's duration.\n\n  Please provide for a small grace period, usually no more than 5 minutes, to account for clock skew.\n  \n   "];
+      "The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary Amazon Web Services credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your Amazon Web Services resources for the token's duration.\n\n  Please provide for a small grace period, usually no more than 5 minutes, to account for clock skew.\n  \n   "];
   principal_tags: principal_tags option
     [@ocaml.doc
       "Use this operation to configure attribute mappings for custom providers. \n"];
@@ -414,7 +414,7 @@ type nonrec get_identity_pool_roles_response =
   {
   role_mappings: role_mapping_map option
     [@ocaml.doc
-      "How users for a specific identity provider are to mapped to roles. This is a String-to-[RoleMapping] object map. The string identifies the identity provider, for example, \"graph.facebook.com\" or \"cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id\".\n"];
+      "How users for a specific identity provider are to mapped to roles. This is a String-to-[RoleMapping] object map. The string identifies the identity provider, for example, [graph.facebook.com] or [cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id].\n"];
   roles: roles_map option
     [@ocaml.doc
       "The map of roles associated with this pool. Currently only authenticated and unauthenticated roles are supported.\n"];
@@ -439,8 +439,8 @@ type nonrec get_id_input =
   identity_pool_id: string
     [@ocaml.doc "An identity pool ID in the format REGION:GUID.\n"];
   account_id: string option
-    [@ocaml.doc "A standard AWS account ID (9+ digits).\n"]}[@@ocaml.doc
-                                                              "Input to the GetId action.\n"]
+    [@ocaml.doc "A standard Amazon Web Services account ID (9+ digits).\n"]}
+[@@ocaml.doc "Input to the GetId action.\n"]
 type nonrec credentials =
   {
   expiration: CoreTypes.Timestamp.t option

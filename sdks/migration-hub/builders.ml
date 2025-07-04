@@ -8,6 +8,10 @@ let make_task ?progress_percent:(progress_percent_ : int option)
      status_detail = status_detail_;
      status = status_
    } : task)
+let make_source_resource ?status_detail:(status_detail_ : string option)
+  ?description:(description_ : string option) ~name:(name_ : string) () =
+  ({ status_detail = status_detail_; description = description_; name = name_
+   } : source_resource)
 let make_resource_attribute ~value:(value_ : string)
   ~type_:(type__ : resource_attribute_type) () =
   ({ value = value_; type_ = type__ } : resource_attribute)
@@ -50,6 +54,15 @@ let make_notify_application_state_request ?dry_run:(dry_run_ : bool option)
      status = status_;
      application_id = application_id_
    } : notify_application_state_request)
+let make_migration_task_update
+  ?migration_task_state:(migration_task_state_ : task option)
+  ?update_type:(update_type_ : update_type option)
+  ?update_date_time:(update_date_time_ : CoreTypes.Timestamp.t option) () =
+  ({
+     migration_task_state = migration_task_state_;
+     update_type = update_type_;
+     update_date_time = update_date_time_
+   } : migration_task_update)
 let make_migration_task_summary
   ?update_date_time:(update_date_time_ : CoreTypes.Timestamp.t option)
   ?status_detail:(status_detail_ : string option)
@@ -79,6 +92,17 @@ let make_migration_task
      migration_task_name = migration_task_name_;
      progress_update_stream = progress_update_stream_
    } : migration_task)
+let make_list_source_resources_request
+  ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ~migration_task_name:(migration_task_name_ : string)
+  ~progress_update_stream:(progress_update_stream_ : string) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     migration_task_name = migration_task_name_;
+     progress_update_stream = progress_update_stream_
+   } : list_source_resources_request)
 let make_list_progress_update_streams_request
   ?max_results:(max_results_ : int option)
   ?next_token:(next_token_ : string option) () =
@@ -92,6 +116,17 @@ let make_list_migration_tasks_request
      max_results = max_results_;
      next_token = next_token_
    } : list_migration_tasks_request)
+let make_list_migration_task_updates_request
+  ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ~migration_task_name:(migration_task_name_ : string)
+  ~progress_update_stream:(progress_update_stream_ : string) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     migration_task_name = migration_task_name_;
+     progress_update_stream = progress_update_stream_
+   } : list_migration_task_updates_request)
 let make_discovered_resource ?description:(description_ : string option)
   ~configuration_id:(configuration_id_ : string) () =
   ({ description = description_; configuration_id = configuration_id_ } : 
@@ -147,6 +182,17 @@ let make_import_migration_task_request ?dry_run:(dry_run_ : bool option)
      migration_task_name = migration_task_name_;
      progress_update_stream = progress_update_stream_
    } : import_migration_task_request)
+let make_disassociate_source_resource_request
+  ?dry_run:(dry_run_ : bool option)
+  ~source_resource_name:(source_resource_name_ : string)
+  ~migration_task_name:(migration_task_name_ : string)
+  ~progress_update_stream:(progress_update_stream_ : string) () =
+  ({
+     dry_run = dry_run_;
+     source_resource_name = source_resource_name_;
+     migration_task_name = migration_task_name_;
+     progress_update_stream = progress_update_stream_
+   } : disassociate_source_resource_request)
 let make_disassociate_discovered_resource_request
   ?dry_run:(dry_run_ : bool option)
   ~configuration_id:(configuration_id_ : string)
@@ -193,6 +239,16 @@ let make_create_progress_update_stream_request
      dry_run = dry_run_;
      progress_update_stream_name = progress_update_stream_name_
    } : create_progress_update_stream_request)
+let make_associate_source_resource_request ?dry_run:(dry_run_ : bool option)
+  ~source_resource:(source_resource_ : source_resource)
+  ~migration_task_name:(migration_task_name_ : string)
+  ~progress_update_stream:(progress_update_stream_ : string) () =
+  ({
+     dry_run = dry_run_;
+     source_resource = source_resource_;
+     migration_task_name = migration_task_name_;
+     progress_update_stream = progress_update_stream_
+   } : associate_source_resource_request)
 let make_associate_discovered_resource_request
   ?dry_run:(dry_run_ : bool option)
   ~discovered_resource:(discovered_resource_ : discovered_resource)

@@ -139,7 +139,17 @@ let make_update_connection_api_key_auth_request_parameters
   ?api_key_name:(api_key_name_ : string option) () =
   ({ api_key_value = api_key_value_; api_key_name = api_key_name_ } : 
   update_connection_api_key_auth_request_parameters)
+let make_connectivity_resource_configuration_arn
+  ~resource_configuration_arn:(resource_configuration_arn_ : string) () =
+  ({ resource_configuration_arn = resource_configuration_arn_ } : connectivity_resource_configuration_arn)
+let make_connectivity_resource_parameters
+  ~resource_parameters:(resource_parameters_ :
+                         connectivity_resource_configuration_arn)
+  () =
+  ({ resource_parameters = resource_parameters_ } : connectivity_resource_parameters)
 let make_update_connection_auth_request_parameters
+  ?connectivity_parameters:(connectivity_parameters_ :
+                             connectivity_resource_parameters option)
   ?invocation_http_parameters:(invocation_http_parameters_ :
                                 connection_http_parameters option)
   ?api_key_auth_parameters:(api_key_auth_parameters_ :
@@ -152,18 +162,25 @@ let make_update_connection_auth_request_parameters
                              option)
   () =
   ({
+     connectivity_parameters = connectivity_parameters_;
      invocation_http_parameters = invocation_http_parameters_;
      api_key_auth_parameters = api_key_auth_parameters_;
      o_auth_parameters = o_auth_parameters_;
      basic_auth_parameters = basic_auth_parameters_
    } : update_connection_auth_request_parameters)
 let make_update_connection_request
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
+  ?invocation_connectivity_parameters:(invocation_connectivity_parameters_ :
+                                        connectivity_resource_parameters
+                                          option)
   ?auth_parameters:(auth_parameters_ :
                      update_connection_auth_request_parameters option)
   ?authorization_type:(authorization_type_ :
                         connection_authorization_type option)
   ?description:(description_ : string option) ~name:(name_ : string) () =
   ({
+     kms_key_identifier = kms_key_identifier_;
+     invocation_connectivity_parameters = invocation_connectivity_parameters_;
      auth_parameters = auth_parameters_;
      authorization_type = authorization_type_;
      description = description_;
@@ -181,11 +198,13 @@ let make_update_archive_response
      archive_arn = archive_arn_
    } : update_archive_response)
 let make_update_archive_request
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
   ?retention_days:(retention_days_ : int option)
   ?event_pattern:(event_pattern_ : string option)
   ?description:(description_ : string option)
   ~archive_name:(archive_name_ : string) () =
   ({
+     kms_key_identifier = kms_key_identifier_;
      retention_days = retention_days_;
      event_pattern = event_pattern_;
      description = description_;
@@ -1054,6 +1073,18 @@ let make_describe_endpoint_response
 let make_describe_endpoint_request
   ?home_region:(home_region_ : string option) ~name:(name_ : string) () =
   ({ home_region = home_region_; name = name_ } : describe_endpoint_request)
+let make_describe_connection_resource_parameters
+  ~resource_association_arn:(resource_association_arn_ : string)
+  ~resource_configuration_arn:(resource_configuration_arn_ : string) () =
+  ({
+     resource_association_arn = resource_association_arn_;
+     resource_configuration_arn = resource_configuration_arn_
+   } : describe_connection_resource_parameters)
+let make_describe_connection_connectivity_parameters
+  ~resource_parameters:(resource_parameters_ :
+                         describe_connection_resource_parameters)
+  () =
+  ({ resource_parameters = resource_parameters_ } : describe_connection_connectivity_parameters)
 let make_connection_basic_auth_response_parameters
   ?username:(username_ : string option) () =
   ({ username = username_ } : connection_basic_auth_response_parameters)
@@ -1078,6 +1109,9 @@ let make_connection_api_key_auth_response_parameters
   ?api_key_name:(api_key_name_ : string option) () =
   ({ api_key_name = api_key_name_ } : connection_api_key_auth_response_parameters)
 let make_connection_auth_response_parameters
+  ?connectivity_parameters:(connectivity_parameters_ :
+                             describe_connection_connectivity_parameters
+                               option)
   ?invocation_http_parameters:(invocation_http_parameters_ :
                                 connection_http_parameters option)
   ?api_key_auth_parameters:(api_key_auth_parameters_ :
@@ -1089,6 +1123,7 @@ let make_connection_auth_response_parameters
                            connection_basic_auth_response_parameters option)
   () =
   ({
+     connectivity_parameters = connectivity_parameters_;
      invocation_http_parameters = invocation_http_parameters_;
      api_key_auth_parameters = api_key_auth_parameters_;
      o_auth_parameters = o_auth_parameters_;
@@ -1101,11 +1136,15 @@ let make_describe_connection_response
   ?creation_time:(creation_time_ : CoreTypes.Timestamp.t option)
   ?auth_parameters:(auth_parameters_ :
                      connection_auth_response_parameters option)
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
   ?secret_arn:(secret_arn_ : string option)
   ?authorization_type:(authorization_type_ :
                         connection_authorization_type option)
   ?state_reason:(state_reason_ : string option)
   ?connection_state:(connection_state_ : connection_state option)
+  ?invocation_connectivity_parameters:(invocation_connectivity_parameters_ :
+                                        describe_connection_connectivity_parameters
+                                          option)
   ?description:(description_ : string option) ?name:(name_ : string option)
   ?connection_arn:(connection_arn_ : string option) () =
   ({
@@ -1113,10 +1152,12 @@ let make_describe_connection_response
      last_modified_time = last_modified_time_;
      creation_time = creation_time_;
      auth_parameters = auth_parameters_;
+     kms_key_identifier = kms_key_identifier_;
      secret_arn = secret_arn_;
      authorization_type = authorization_type_;
      state_reason = state_reason_;
      connection_state = connection_state_;
+     invocation_connectivity_parameters = invocation_connectivity_parameters_;
      description = description_;
      name = name_;
      connection_arn = connection_arn_
@@ -1128,6 +1169,7 @@ let make_describe_archive_response
   ?event_count:(event_count_ : int option)
   ?size_bytes:(size_bytes_ : int option)
   ?retention_days:(retention_days_ : int option)
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
   ?state_reason:(state_reason_ : string option)
   ?state:(state_ : archive_state option)
   ?event_pattern:(event_pattern_ : string option)
@@ -1140,6 +1182,7 @@ let make_describe_archive_response
      event_count = event_count_;
      size_bytes = size_bytes_;
      retention_days = retention_days_;
+     kms_key_identifier = kms_key_identifier_;
      state_reason = state_reason_;
      state = state_;
      event_pattern = event_pattern_;
@@ -1327,6 +1370,8 @@ let make_create_connection_api_key_auth_request_parameters
   ({ api_key_value = api_key_value_; api_key_name = api_key_name_ } : 
   create_connection_api_key_auth_request_parameters)
 let make_create_connection_auth_request_parameters
+  ?connectivity_parameters:(connectivity_parameters_ :
+                             connectivity_resource_parameters option)
   ?invocation_http_parameters:(invocation_http_parameters_ :
                                 connection_http_parameters option)
   ?api_key_auth_parameters:(api_key_auth_parameters_ :
@@ -1339,18 +1384,25 @@ let make_create_connection_auth_request_parameters
                              option)
   () =
   ({
+     connectivity_parameters = connectivity_parameters_;
      invocation_http_parameters = invocation_http_parameters_;
      api_key_auth_parameters = api_key_auth_parameters_;
      o_auth_parameters = o_auth_parameters_;
      basic_auth_parameters = basic_auth_parameters_
    } : create_connection_auth_request_parameters)
 let make_create_connection_request
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
+  ?invocation_connectivity_parameters:(invocation_connectivity_parameters_ :
+                                        connectivity_resource_parameters
+                                          option)
   ?description:(description_ : string option)
   ~auth_parameters:(auth_parameters_ :
                      create_connection_auth_request_parameters)
   ~authorization_type:(authorization_type_ : connection_authorization_type)
   ~name:(name_ : string) () =
   ({
+     kms_key_identifier = kms_key_identifier_;
+     invocation_connectivity_parameters = invocation_connectivity_parameters_;
      auth_parameters = auth_parameters_;
      authorization_type = authorization_type_;
      description = description_;
@@ -1368,12 +1420,14 @@ let make_create_archive_response
      archive_arn = archive_arn_
    } : create_archive_response)
 let make_create_archive_request
+  ?kms_key_identifier:(kms_key_identifier_ : string option)
   ?retention_days:(retention_days_ : int option)
   ?event_pattern:(event_pattern_ : string option)
   ?description:(description_ : string option)
   ~event_source_arn:(event_source_arn_ : string)
   ~archive_name:(archive_name_ : string) () =
   ({
+     kms_key_identifier = kms_key_identifier_;
      retention_days = retention_days_;
      event_pattern = event_pattern_;
      description = description_;

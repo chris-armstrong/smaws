@@ -156,6 +156,13 @@ let make_put_stored_query_response ?query_arn:(query_arn_ : string option) ()
 let make_put_stored_query_request ?tags:(tags_ : tag list option)
   ~stored_query:(stored_query_ : stored_query) () =
   ({ tags = tags_; stored_query = stored_query_ } : put_stored_query_request)
+let make_put_service_linked_configuration_recorder_response
+  ?name:(name_ : string option) ?arn:(arn_ : string option) () =
+  ({ name = name_; arn = arn_ } : put_service_linked_configuration_recorder_response)
+let make_put_service_linked_configuration_recorder_request
+  ?tags:(tags_ : tag list option)
+  ~service_principal:(service_principal_ : string) () =
+  ({ tags = tags_; service_principal = service_principal_ } : put_service_linked_configuration_recorder_request)
 let make_retention_configuration
   ~retention_period_in_days:(retention_period_in_days_ : int)
   ~name:(name_ : string) () =
@@ -548,19 +555,26 @@ let make_recording_mode
      recording_frequency = recording_frequency_
    } : recording_mode)
 let make_configuration_recorder
+  ?service_principal:(service_principal_ : string option)
+  ?recording_scope:(recording_scope_ : recording_scope option)
   ?recording_mode:(recording_mode_ : recording_mode option)
   ?recording_group:(recording_group_ : recording_group option)
-  ?role_ar_n:(role_ar_n_ : string option) ?name:(name_ : string option) () =
+  ?role_ar_n:(role_ar_n_ : string option) ?name:(name_ : string option)
+  ?arn:(arn_ : string option) () =
   ({
+     service_principal = service_principal_;
+     recording_scope = recording_scope_;
      recording_mode = recording_mode_;
      recording_group = recording_group_;
      role_ar_n = role_ar_n_;
-     name = name_
+     name = name_;
+     arn = arn_
    } : configuration_recorder)
-let make_put_configuration_recorder_request
+let make_put_configuration_recorder_request ?tags:(tags_ : tag list option)
   ~configuration_recorder:(configuration_recorder_ : configuration_recorder)
   () =
-  ({ configuration_recorder = configuration_recorder_ } : put_configuration_recorder_request)
+  ({ tags = tags_; configuration_recorder = configuration_recorder_ } : 
+  put_configuration_recorder_request)
 let make_account_aggregation_source
   ?aws_regions:(aws_regions_ : string list option)
   ?all_aws_regions:(all_aws_regions_ : bool option)
@@ -579,7 +593,23 @@ let make_organization_aggregation_source
      aws_regions = aws_regions_;
      role_arn = role_arn_
    } : organization_aggregation_source)
-let make_configuration_aggregator ?created_by:(created_by_ : string option)
+let make_aggregator_filter_resource_type ?value:(value_ : string list option)
+  ?type_:(type__ : aggregator_filter_type option) () =
+  ({ value = value_; type_ = type__ } : aggregator_filter_resource_type)
+let make_aggregator_filter_service_principal
+  ?value:(value_ : string list option)
+  ?type_:(type__ : aggregator_filter_type option) () =
+  ({ value = value_; type_ = type__ } : aggregator_filter_service_principal)
+let make_aggregator_filters
+  ?service_principal:(service_principal_ :
+                       aggregator_filter_service_principal option)
+  ?resource_type:(resource_type_ : aggregator_filter_resource_type option) ()
+  =
+  ({ service_principal = service_principal_; resource_type = resource_type_ } : 
+  aggregator_filters)
+let make_configuration_aggregator
+  ?aggregator_filters:(aggregator_filters_ : aggregator_filters option)
+  ?created_by:(created_by_ : string option)
   ?last_updated_time:(last_updated_time_ : CoreTypes.Timestamp.t option)
   ?creation_time:(creation_time_ : CoreTypes.Timestamp.t option)
   ?organization_aggregation_source:(organization_aggregation_source_ :
@@ -592,6 +622,7 @@ let make_configuration_aggregator ?created_by:(created_by_ : string option)
                                    string option)
   () =
   ({
+     aggregator_filters = aggregator_filters_;
      created_by = created_by_;
      last_updated_time = last_updated_time_;
      creation_time = creation_time_;
@@ -605,7 +636,9 @@ let make_put_configuration_aggregator_response
                               configuration_aggregator option)
   () =
   ({ configuration_aggregator = configuration_aggregator_ } : put_configuration_aggregator_response)
-let make_put_configuration_aggregator_request ?tags:(tags_ : tag list option)
+let make_put_configuration_aggregator_request
+  ?aggregator_filters:(aggregator_filters_ : aggregator_filters option)
+  ?tags:(tags_ : tag list option)
   ?organization_aggregation_source:(organization_aggregation_source_ :
                                      organization_aggregation_source option)
   ?account_aggregation_sources:(account_aggregation_sources_ :
@@ -613,6 +646,7 @@ let make_put_configuration_aggregator_request ?tags:(tags_ : tag list option)
   ~configuration_aggregator_name:(configuration_aggregator_name_ : string) ()
   =
   ({
+     aggregator_filters = aggregator_filters_;
      tags = tags_;
      organization_aggregation_source = organization_aggregation_source_;
      account_aggregation_sources = account_aggregation_sources_;
@@ -839,6 +873,36 @@ let make_list_conformance_pack_compliance_scores_request
      sort_order = sort_order_;
      filters = filters_
    } : list_conformance_pack_compliance_scores_request)
+let make_configuration_recorder_summary
+  ?service_principal:(service_principal_ : string option)
+  ~recording_scope:(recording_scope_ : recording_scope)
+  ~name:(name_ : string) ~arn:(arn_ : string) () =
+  ({
+     recording_scope = recording_scope_;
+     service_principal = service_principal_;
+     name = name_;
+     arn = arn_
+   } : configuration_recorder_summary)
+let make_list_configuration_recorders_response
+  ?next_token:(next_token_ : string option)
+  ~configuration_recorder_summaries:(configuration_recorder_summaries_ :
+                                      configuration_recorder_summary list)
+  () =
+  ({
+     next_token = next_token_;
+     configuration_recorder_summaries = configuration_recorder_summaries_
+   } : list_configuration_recorders_response)
+let make_configuration_recorder_filter
+  ?filter_value:(filter_value_ : string list option)
+  ?filter_name:(filter_name_ : configuration_recorder_filter_name option) ()
+  =
+  ({ filter_value = filter_value_; filter_name = filter_name_ } : configuration_recorder_filter)
+let make_list_configuration_recorders_request
+  ?next_token:(next_token_ : string option)
+  ?max_results:(max_results_ : int option)
+  ?filters:(filters_ : configuration_recorder_filter list option) () =
+  ({ next_token = next_token_; max_results = max_results_; filters = filters_
+   } : list_configuration_recorders_request)
 let make_list_aggregate_discovered_resources_response
   ?next_token:(next_token_ : string option)
   ?resource_identifiers:(resource_identifiers_ :
@@ -1410,6 +1474,17 @@ let make_get_aggregate_compliance_details_by_config_rule_request
      config_rule_name = config_rule_name_;
      configuration_aggregator_name = configuration_aggregator_name_
    } : get_aggregate_compliance_details_by_config_rule_request)
+let make_disassociate_resource_types_response
+  ~configuration_recorder:(configuration_recorder_ : configuration_recorder)
+  () =
+  ({ configuration_recorder = configuration_recorder_ } : disassociate_resource_types_response)
+let make_disassociate_resource_types_request
+  ~resource_types:(resource_types_ : resource_type list)
+  ~configuration_recorder_arn:(configuration_recorder_arn_ : string) () =
+  ({
+     resource_types = resource_types_;
+     configuration_recorder_arn = configuration_recorder_arn_
+   } : disassociate_resource_types_request)
 let make_describe_retention_configurations_response
   ?next_token:(next_token_ : string option)
   ?retention_configurations:(retention_configurations_ :
@@ -1889,6 +1964,7 @@ let make_describe_conformance_pack_compliance_request
      conformance_pack_name = conformance_pack_name_
    } : describe_conformance_pack_compliance_request)
 let make_configuration_recorder_status
+  ?service_principal:(service_principal_ : string option)
   ?last_status_change_time:(last_status_change_time_ :
                              CoreTypes.Timestamp.t option)
   ?last_error_message:(last_error_message_ : string option)
@@ -1897,8 +1973,9 @@ let make_configuration_recorder_status
   ?recording:(recording_ : bool option)
   ?last_stop_time:(last_stop_time_ : CoreTypes.Timestamp.t option)
   ?last_start_time:(last_start_time_ : CoreTypes.Timestamp.t option)
-  ?name:(name_ : string option) () =
+  ?name:(name_ : string option) ?arn:(arn_ : string option) () =
   ({
+     service_principal = service_principal_;
      last_status_change_time = last_status_change_time_;
      last_error_message = last_error_message_;
      last_error_code = last_error_code_;
@@ -1906,7 +1983,8 @@ let make_configuration_recorder_status
      recording = recording_;
      last_stop_time = last_stop_time_;
      last_start_time = last_start_time_;
-     name = name_
+     name = name_;
+     arn = arn_
    } : configuration_recorder_status)
 let make_describe_configuration_recorder_status_response
   ?configuration_recorders_status:(configuration_recorders_status_ :
@@ -1915,22 +1993,31 @@ let make_describe_configuration_recorder_status_response
   ({ configuration_recorders_status = configuration_recorders_status_ } : 
   describe_configuration_recorder_status_response)
 let make_describe_configuration_recorder_status_request
+  ?arn:(arn_ : string option)
+  ?service_principal:(service_principal_ : string option)
   ?configuration_recorder_names:(configuration_recorder_names_ :
                                   string list option)
   () =
-  ({ configuration_recorder_names = configuration_recorder_names_ } : 
-  describe_configuration_recorder_status_request)
+  ({
+     arn = arn_;
+     service_principal = service_principal_;
+     configuration_recorder_names = configuration_recorder_names_
+   } : describe_configuration_recorder_status_request)
 let make_describe_configuration_recorders_response
   ?configuration_recorders:(configuration_recorders_ :
                              configuration_recorder list option)
   () =
   ({ configuration_recorders = configuration_recorders_ } : describe_configuration_recorders_response)
-let make_describe_configuration_recorders_request
+let make_describe_configuration_recorders_request ?arn:(arn_ : string option)
+  ?service_principal:(service_principal_ : string option)
   ?configuration_recorder_names:(configuration_recorder_names_ :
                                   string list option)
   () =
-  ({ configuration_recorder_names = configuration_recorder_names_ } : 
-  describe_configuration_recorders_request)
+  ({
+     arn = arn_;
+     service_principal = service_principal_;
+     configuration_recorder_names = configuration_recorder_names_
+   } : describe_configuration_recorders_request)
 let make_aggregated_source_status
   ?last_error_message:(last_error_message_ : string option)
   ?last_error_code:(last_error_code_ : string option)
@@ -2249,6 +2336,12 @@ let make_deliver_config_snapshot_request
 let make_delete_stored_query_response () = (() : unit)
 let make_delete_stored_query_request ~query_name:(query_name_ : string) () =
   ({ query_name = query_name_ } : delete_stored_query_request)
+let make_delete_service_linked_configuration_recorder_response
+  ~name:(name_ : string) ~arn:(arn_ : string) () =
+  ({ name = name_; arn = arn_ } : delete_service_linked_configuration_recorder_response)
+let make_delete_service_linked_configuration_recorder_request
+  ~service_principal:(service_principal_ : string) () =
+  ({ service_principal = service_principal_ } : delete_service_linked_configuration_recorder_request)
 let make_delete_retention_configuration_request
   ~retention_configuration_name:(retention_configuration_name_ : string) () =
   ({ retention_configuration_name = retention_configuration_name_ } : 
@@ -2397,3 +2490,14 @@ let make_batch_get_aggregate_resource_config_request
      resource_identifiers = resource_identifiers_;
      configuration_aggregator_name = configuration_aggregator_name_
    } : batch_get_aggregate_resource_config_request)
+let make_associate_resource_types_response
+  ~configuration_recorder:(configuration_recorder_ : configuration_recorder)
+  () =
+  ({ configuration_recorder = configuration_recorder_ } : associate_resource_types_response)
+let make_associate_resource_types_request
+  ~resource_types:(resource_types_ : resource_type list)
+  ~configuration_recorder_arn:(configuration_recorder_arn_ : string) () =
+  ({
+     resource_types = resource_types_;
+     configuration_recorder_arn = configuration_recorder_arn_
+   } : associate_resource_types_request)

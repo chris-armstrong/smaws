@@ -5,11 +5,23 @@ module CreateActivity =
       let open Deserializers in
         let handler handler tree path =
           function
+          | (_, "ActivityAlreadyExists") ->
+              `ActivityAlreadyExists
+                (activity_already_exists_of_yojson tree path)
           | (_, "ActivityLimitExceeded") ->
               `ActivityLimitExceeded
                 (activity_limit_exceeded_of_yojson tree path)
+          | (_, "InvalidEncryptionConfiguration") ->
+              `InvalidEncryptionConfiguration
+                (invalid_encryption_configuration_of_yojson tree path)
           | (_, "InvalidName") ->
               `InvalidName (invalid_name_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "TooManyTags") ->
               `TooManyTags (too_many_tags_of_yojson tree path)
           | _type -> handler tree path _type in
@@ -39,6 +51,9 @@ module CreateStateMachine =
               `InvalidArn (invalid_arn_of_yojson tree path)
           | (_, "InvalidDefinition") ->
               `InvalidDefinition (invalid_definition_of_yojson tree path)
+          | (_, "InvalidEncryptionConfiguration") ->
+              `InvalidEncryptionConfiguration
+                (invalid_encryption_configuration_of_yojson tree path)
           | (_, "InvalidLoggingConfiguration") ->
               `InvalidLoggingConfiguration
                 (invalid_logging_configuration_of_yojson tree path)
@@ -47,6 +62,12 @@ module CreateStateMachine =
           | (_, "InvalidTracingConfiguration") ->
               `InvalidTracingConfiguration
                 (invalid_tracing_configuration_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "StateMachineAlreadyExists") ->
               `StateMachineAlreadyExists
                 (state_machine_already_exists_of_yojson tree path)
@@ -261,6 +282,15 @@ module DescribeExecution =
                 (execution_does_not_exist_of_yojson tree path)
           | (_, "InvalidArn") ->
               `InvalidArn (invalid_arn_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -309,6 +339,15 @@ module DescribeStateMachine =
           function
           | (_, "InvalidArn") ->
               `InvalidArn (invalid_arn_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "StateMachineDoesNotExist") ->
               `StateMachineDoesNotExist
                 (state_machine_does_not_exist_of_yojson tree path)
@@ -367,6 +406,15 @@ module DescribeStateMachineForExecution =
                 (execution_does_not_exist_of_yojson tree path)
           | (_, "InvalidArn") ->
               `InvalidArn (invalid_arn_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -399,6 +447,15 @@ module GetActivityTask =
                 (activity_worker_limit_exceeded_of_yojson tree path)
           | (_, "InvalidArn") ->
               `InvalidArn (invalid_arn_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -427,6 +484,15 @@ module GetExecutionHistory =
               `InvalidArn (invalid_arn_of_yojson tree path)
           | (_, "InvalidToken") ->
               `InvalidToken (invalid_token_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | _type -> handler tree path _type in
         Smaws_Lib.Protocols.AwsJson.(error_deserializer
                                        (handler
@@ -719,6 +785,15 @@ module SendTaskFailure =
           function
           | (_, "InvalidToken") ->
               `InvalidToken (invalid_token_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "TaskDoesNotExist") ->
               `TaskDoesNotExist (task_does_not_exist_of_yojson tree path)
           | (_, "TaskTimedOut") ->
@@ -775,6 +850,15 @@ module SendTaskSuccess =
               `InvalidOutput (invalid_output_of_yojson tree path)
           | (_, "InvalidToken") ->
               `InvalidToken (invalid_token_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "TaskDoesNotExist") ->
               `TaskDoesNotExist (task_does_not_exist_of_yojson tree path)
           | (_, "TaskTimedOut") ->
@@ -813,6 +897,15 @@ module StartExecution =
                 (invalid_execution_input_of_yojson tree path)
           | (_, "InvalidName") ->
               `InvalidName (invalid_name_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "StateMachineDeleting") ->
               `StateMachineDeleting
                 (state_machine_deleting_of_yojson tree path)
@@ -849,6 +942,15 @@ module StartSyncExecution =
                 (invalid_execution_input_of_yojson tree path)
           | (_, "InvalidName") ->
               `InvalidName (invalid_name_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "StateMachineDeleting") ->
               `StateMachineDeleting
                 (state_machine_deleting_of_yojson tree path)
@@ -885,6 +987,15 @@ module StopExecution =
                 (execution_does_not_exist_of_yojson tree path)
           | (_, "InvalidArn") ->
               `InvalidArn (invalid_arn_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsInvalidStateException") ->
+              `KmsInvalidStateException
+                (kms_invalid_state_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "ValidationException") ->
               `ValidationException (validation_exception_of_yojson tree path)
           | _type -> handler tree path _type in
@@ -1023,12 +1134,21 @@ module UpdateStateMachine =
               `InvalidArn (invalid_arn_of_yojson tree path)
           | (_, "InvalidDefinition") ->
               `InvalidDefinition (invalid_definition_of_yojson tree path)
+          | (_, "InvalidEncryptionConfiguration") ->
+              `InvalidEncryptionConfiguration
+                (invalid_encryption_configuration_of_yojson tree path)
           | (_, "InvalidLoggingConfiguration") ->
               `InvalidLoggingConfiguration
                 (invalid_logging_configuration_of_yojson tree path)
           | (_, "InvalidTracingConfiguration") ->
               `InvalidTracingConfiguration
                 (invalid_tracing_configuration_of_yojson tree path)
+          | (_, "KmsAccessDeniedException") ->
+              `KmsAccessDeniedException
+                (kms_access_denied_exception_of_yojson tree path)
+          | (_, "KmsThrottlingException") ->
+              `KmsThrottlingException
+                (kms_throttling_exception_of_yojson tree path)
           | (_, "MissingRequiredParameter") ->
               `MissingRequiredParameter
                 (missing_required_parameter_of_yojson tree path)

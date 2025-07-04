@@ -1,6 +1,11 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
 let version_to_yojson = string_to_yojson
+let string__to_yojson = string_to_yojson
+let validation_exception_to_yojson (x : validation_exception) =
+  assoc_to_yojson
+    [("ReasonCode", (option_to_yojson string__to_yojson x.reason_code));
+    ("Message", (option_to_yojson string__to_yojson x.message))]
 let valid_next_step_to_yojson = string_to_yojson
 let valid_next_step_list_to_yojson tree =
   list_to_yojson valid_next_step_to_yojson tree
@@ -14,7 +19,6 @@ let update_service_setting_request_to_yojson
     [("SettingValue",
        (Some (service_setting_value_to_yojson x.setting_value)));
     ("SettingId", (Some (service_setting_id_to_yojson x.setting_id)))]
-let string__to_yojson = string_to_yojson
 let too_many_updates_to_yojson (x : too_many_updates) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -195,10 +199,17 @@ let patch_source_to_yojson (x : patch_source) =
     ("Name", (Some (patch_source_name_to_yojson x.name)))]
 let patch_source_list_to_yojson tree =
   list_to_yojson patch_source_to_yojson tree
+let patch_compliance_status_to_yojson (x : patch_compliance_status) =
+  match x with
+  | NonCompliant -> `String "NON_COMPLIANT"
+  | Compliant -> `String "COMPLIANT"
 let update_patch_baseline_result_to_yojson (x : update_patch_baseline_result)
   =
   assoc_to_yojson
-    [("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
+    [("AvailableSecurityUpdatesComplianceStatus",
+       (option_to_yojson patch_compliance_status_to_yojson
+          x.available_security_updates_compliance_status));
+    ("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
     ("Description",
       (option_to_yojson baseline_description_to_yojson x.description));
     ("ModifiedDate", (option_to_yojson date_time_to_yojson x.modified_date));
@@ -227,6 +238,9 @@ let update_patch_baseline_request_to_yojson
   (x : update_patch_baseline_request) =
   assoc_to_yojson
     [("Replace", (option_to_yojson boolean__to_yojson x.replace));
+    ("AvailableSecurityUpdatesComplianceStatus",
+      (option_to_yojson patch_compliance_status_to_yojson
+         x.available_security_updates_compliance_status));
     ("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
     ("Description",
       (option_to_yojson baseline_description_to_yojson x.description));
@@ -321,6 +335,7 @@ let ops_item_status_to_yojson (x : ops_item_status) =
   match x with
   | CLOSED -> `String "Closed"
   | REJECTED -> `String "Rejected"
+  | REVOKED -> `String "Revoked"
   | APPROVED -> `String "Approved"
   | PENDING_APPROVAL -> `String "PendingApproval"
   | CHANGE_CALENDAR_OVERRIDE_REJECTED ->
@@ -814,6 +829,8 @@ let platform_type_list_to_yojson tree =
   list_to_yojson platform_type_to_yojson tree
 let document_type_to_yojson (x : document_type) =
   match x with
+  | AutoApprovalPolicy -> `String "AutoApprovalPolicy"
+  | ManualApprovalPolicy -> `String "ManualApprovalPolicy"
   | QuickSetup -> `String "QuickSetup"
   | ConformancePackTemplate -> `String "ConformancePackTemplate"
   | CloudFormation -> `String "CloudFormation"
@@ -1120,11 +1137,23 @@ let accounts_to_yojson tree = list_to_yojson account_to_yojson tree
 let region_to_yojson = string_to_yojson
 let regions_to_yojson tree = list_to_yojson region_to_yojson tree
 let execution_role_name_to_yojson = string_to_yojson
+let exclude_account_to_yojson = string_to_yojson
+let exclude_accounts_to_yojson tree =
+  list_to_yojson exclude_account_to_yojson tree
 let target_location_to_yojson (x : target_location) =
   assoc_to_yojson
-    [("TargetLocationAlarmConfiguration",
-       (option_to_yojson alarm_configuration_to_yojson
-          x.target_location_alarm_configuration));
+    [("TargetsMaxErrors",
+       (option_to_yojson max_errors_to_yojson x.targets_max_errors));
+    ("TargetsMaxConcurrency",
+      (option_to_yojson max_concurrency_to_yojson x.targets_max_concurrency));
+    ("Targets", (option_to_yojson targets_to_yojson x.targets));
+    ("ExcludeAccounts",
+      (option_to_yojson exclude_accounts_to_yojson x.exclude_accounts));
+    ("IncludeChildOrganizationUnits",
+      (option_to_yojson boolean__to_yojson x.include_child_organization_units));
+    ("TargetLocationAlarmConfiguration",
+      (option_to_yojson alarm_configuration_to_yojson
+         x.target_location_alarm_configuration));
     ("ExecutionRoleName",
       (option_to_yojson execution_role_name_to_yojson x.execution_role_name));
     ("TargetLocationMaxErrors",
@@ -1303,6 +1332,10 @@ let unsupported_platform_type_to_yojson (x : unsupported_platform_type) =
 let unsupported_parameter_type_to_yojson (x : unsupported_parameter_type) =
   assoc_to_yojson
     [("message", (option_to_yojson string__to_yojson x.message))]
+let unsupported_operation_exception_to_yojson
+  (x : unsupported_operation_exception) =
+  assoc_to_yojson
+    [("Message", (option_to_yojson string__to_yojson x.message))]
 let unsupported_operating_system_to_yojson (x : unsupported_operating_system)
   =
   assoc_to_yojson
@@ -1359,17 +1392,29 @@ let total_size_limit_exceeded_exception_to_yojson
 let total_count_to_yojson = int_to_yojson
 let too_many_tags_error_to_yojson = unit_to_yojson
 let token_value_to_yojson = string_to_yojson
+let throttling_exception_to_yojson (x : throttling_exception) =
+  assoc_to_yojson
+    [("ServiceCode", (option_to_yojson string__to_yojson x.service_code));
+    ("QuotaCode", (option_to_yojson string__to_yojson x.quota_code));
+    ("Message", (Some (string__to_yojson x.message)))]
 let session_id_to_yojson = string_to_yojson
 let terminate_session_response_to_yojson (x : terminate_session_response) =
   assoc_to_yojson
     [("SessionId", (option_to_yojson session_id_to_yojson x.session_id))]
 let terminate_session_request_to_yojson (x : terminate_session_request) =
   assoc_to_yojson [("SessionId", (Some (session_id_to_yojson x.session_id)))]
+let target_preview_to_yojson (x : target_preview) =
+  assoc_to_yojson
+    [("TargetType", (option_to_yojson string__to_yojson x.target_type));
+    ("Count", (option_to_yojson integer__to_yojson x.count))]
+let target_preview_list_to_yojson tree =
+  list_to_yojson target_preview_to_yojson tree
 let target_parameter_list_to_yojson tree =
   list_to_yojson parameter_value_to_yojson tree
 let target_not_connected_to_yojson (x : target_not_connected) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
+let target_locations_ur_l_to_yojson = string_to_yojson
 let target_in_use_exception_to_yojson (x : target_in_use_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -1380,6 +1425,7 @@ let sub_type_count_limit_exceeded_exception_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
 let string_list_to_yojson tree = list_to_yojson string__to_yojson tree
 let string_date_time_to_yojson = string_to_yojson
+let string1to256_to_yojson = string_to_yojson
 let stream_url_to_yojson = string_to_yojson
 let stop_type_to_yojson (x : stop_type) =
   match x with | CANCEL -> `String "Cancel" | COMPLETE -> `String "Complete"
@@ -1399,6 +1445,13 @@ let automation_execution_not_found_exception_to_yojson
   (x : automation_execution_not_found_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
+let impact_type_to_yojson (x : impact_type) =
+  match x with
+  | UNDETERMINED -> `String "Undetermined"
+  | NON_MUTATING -> `String "NonMutating"
+  | MUTATING -> `String "Mutating"
+let step_preview_map_to_yojson tree =
+  map_to_yojson impact_type_to_yojson integer__to_yojson tree
 let automation_action_name_to_yojson = string_to_yojson
 let long_to_yojson = long_to_yojson
 let automation_execution_status_to_yojson (x : automation_execution_status) =
@@ -1526,6 +1579,40 @@ let start_session_request_to_yojson (x : start_session_request) =
     ("DocumentName",
       (option_to_yojson document_ar_n_to_yojson x.document_name));
     ("Target", (Some (session_target_to_yojson x.target)))]
+let execution_preview_id_to_yojson = string_to_yojson
+let start_execution_preview_response_to_yojson
+  (x : start_execution_preview_response) =
+  assoc_to_yojson
+    [("ExecutionPreviewId",
+       (option_to_yojson execution_preview_id_to_yojson
+          x.execution_preview_id))]
+let automation_execution_inputs_to_yojson (x : automation_execution_inputs) =
+  assoc_to_yojson
+    [("TargetLocationsURL",
+       (option_to_yojson target_locations_ur_l_to_yojson
+          x.target_locations_ur_l));
+    ("TargetLocations",
+      (option_to_yojson target_locations_to_yojson x.target_locations));
+    ("TargetMaps", (option_to_yojson target_maps_to_yojson x.target_maps));
+    ("Targets", (option_to_yojson targets_to_yojson x.targets));
+    ("TargetParameterName",
+      (option_to_yojson automation_parameter_key_to_yojson
+         x.target_parameter_name));
+    ("Parameters",
+      (option_to_yojson automation_parameter_map_to_yojson x.parameters))]
+let execution_inputs_to_yojson (x : execution_inputs) =
+  match x with
+  | Automation arg ->
+      assoc_to_yojson
+        [("Automation", (Some (automation_execution_inputs_to_yojson arg)))]
+let start_execution_preview_request_to_yojson
+  (x : start_execution_preview_request) =
+  assoc_to_yojson
+    [("ExecutionInputs",
+       (option_to_yojson execution_inputs_to_yojson x.execution_inputs));
+    ("DocumentVersion",
+      (option_to_yojson document_version_to_yojson x.document_version));
+    ("DocumentName", (Some (document_name_to_yojson x.document_name)))]
 let start_change_request_execution_result_to_yojson
   (x : start_change_request_execution_result) =
   assoc_to_yojson
@@ -1611,8 +1698,11 @@ let execution_mode_to_yojson (x : execution_mode) =
 let start_automation_execution_request_to_yojson
   (x : start_automation_execution_request) =
   assoc_to_yojson
-    [("AlarmConfiguration",
-       (option_to_yojson alarm_configuration_to_yojson x.alarm_configuration));
+    [("TargetLocationsURL",
+       (option_to_yojson target_locations_ur_l_to_yojson
+          x.target_locations_ur_l));
+    ("AlarmConfiguration",
+      (option_to_yojson alarm_configuration_to_yojson x.alarm_configuration));
     ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("TargetLocations",
       (option_to_yojson target_locations_to_yojson x.target_locations));
@@ -1643,6 +1733,32 @@ let start_associations_once_request_to_yojson
 let invalid_association_to_yojson (x : invalid_association) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
+let access_request_id_to_yojson = string_to_yojson
+let start_access_request_response_to_yojson
+  (x : start_access_request_response) =
+  assoc_to_yojson
+    [("AccessRequestId",
+       (option_to_yojson access_request_id_to_yojson x.access_request_id))]
+let start_access_request_request_to_yojson (x : start_access_request_request)
+  =
+  assoc_to_yojson
+    [("Tags", (option_to_yojson tag_list_to_yojson x.tags));
+    ("Targets", (Some (targets_to_yojson x.targets)));
+    ("Reason", (Some (string1to256_to_yojson x.reason)))]
+let service_quota_exceeded_exception_to_yojson
+  (x : service_quota_exceeded_exception) =
+  assoc_to_yojson
+    [("ServiceCode", (Some (string__to_yojson x.service_code)));
+    ("QuotaCode", (Some (string__to_yojson x.quota_code)));
+    ("ResourceType", (option_to_yojson string__to_yojson x.resource_type));
+    ("ResourceId", (option_to_yojson string__to_yojson x.resource_id));
+    ("Message", (Some (string__to_yojson x.message)))]
+let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
+  =
+  assoc_to_yojson
+    [("Message", (option_to_yojson string__to_yojson x.message))]
+let access_denied_exception_to_yojson (x : access_denied_exception) =
+  assoc_to_yojson [("Message", (Some (string__to_yojson x.message)))]
 let standard_output_content_to_yojson = string_to_yojson
 let standard_error_content_to_yojson = string_to_yojson
 let source_type_to_yojson (x : source_type) =
@@ -1655,6 +1771,7 @@ let snapshot_id_to_yojson = string_to_yojson
 let snapshot_download_url_to_yojson = string_to_yojson
 let signal_type_to_yojson (x : signal_type) =
   match x with
+  | REVOKE -> `String "Revoke"
   | RESUME -> `String "Resume"
   | STOP_STEP -> `String "StopStep"
   | START_STEP -> `String "StartStep"
@@ -1678,6 +1795,7 @@ let severity_summary_to_yojson (x : severity_summary) =
       (option_to_yojson compliance_summary_count_to_yojson x.high_count));
     ("CriticalCount",
       (option_to_yojson compliance_summary_count_to_yojson x.critical_count))]
+let session_token_type_to_yojson = string_to_yojson
 let session_status_to_yojson (x : session_status) =
   match x with
   | FAILED -> `String "Failed"
@@ -1702,11 +1820,15 @@ let session_manager_output_url_to_yojson (x : session_manager_output_url) =
          x.s3_output_url))]
 let session_details_to_yojson = string_to_yojson
 let max_session_duration_to_yojson = string_to_yojson
+let access_type_to_yojson (x : access_type) =
+  match x with
+  | JUSTINTIME -> `String "JustInTime"
+  | STANDARD -> `String "Standard"
 let session_to_yojson (x : session) =
   assoc_to_yojson
-    [("MaxSessionDuration",
-       (option_to_yojson max_session_duration_to_yojson
-          x.max_session_duration));
+    [("AccessType", (option_to_yojson access_type_to_yojson x.access_type));
+    ("MaxSessionDuration",
+      (option_to_yojson max_session_duration_to_yojson x.max_session_duration));
     ("OutputUrl",
       (option_to_yojson session_manager_output_url_to_yojson x.output_url));
     ("Details", (option_to_yojson session_details_to_yojson x.details));
@@ -1723,6 +1845,7 @@ let session_list_to_yojson tree = list_to_yojson session_to_yojson tree
 let session_filter_value_to_yojson = string_to_yojson
 let session_filter_key_to_yojson (x : session_filter_key) =
   match x with
+  | ACCESS_TYPE -> `String "AccessType"
   | SESSION_ID -> `String "SessionId"
   | STATUS -> `String "Status"
   | OWNER -> `String "Owner"
@@ -1934,10 +2057,6 @@ let resource_policy_invalid_parameter_exception_to_yojson
          x.parameter_names))]
 let resource_policy_conflict_exception_to_yojson
   (x : resource_policy_conflict_exception) =
-  assoc_to_yojson
-    [("Message", (option_to_yojson string__to_yojson x.message))]
-let resource_not_found_exception_to_yojson (x : resource_not_found_exception)
-  =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
 let resource_limit_exceeded_exception_to_yojson
@@ -2250,6 +2369,7 @@ let register_default_patch_baseline_request_to_yojson
   (x : register_default_patch_baseline_request) =
   assoc_to_yojson
     [("BaselineId", (Some (baseline_id_to_yojson x.baseline_id)))]
+let region_list_to_yojson tree = list_to_yojson region_to_yojson tree
 let reboot_option_to_yojson (x : reboot_option) =
   match x with
   | NO_REBOOT -> `String "NoReboot"
@@ -2613,6 +2733,7 @@ let patch_critical_non_compliant_count_to_yojson = int_to_yojson
 let patch_compliance_max_results_to_yojson = int_to_yojson
 let patch_compliance_data_state_to_yojson (x : patch_compliance_data_state) =
   match x with
+  | AvailableSecurityUpdate -> `String "AVAILABLE_SECURITY_UPDATE"
   | Failed -> `String "FAILED"
   | NotApplicable -> `String "NOT_APPLICABLE"
   | Missing -> `String "MISSING"
@@ -2636,6 +2757,7 @@ let patch_compliance_data_list_to_yojson tree =
 let patch_baseline_max_results_to_yojson = int_to_yojson
 let patch_baseline_identity_list_to_yojson tree =
   list_to_yojson patch_baseline_identity_to_yojson tree
+let patch_available_security_update_count_to_yojson = int_to_yojson
 let parameters_filter_value_to_yojson = string_to_yojson
 let parameters_filter_value_list_to_yojson tree =
   list_to_yojson parameters_filter_value_to_yojson tree
@@ -2900,6 +3022,18 @@ let ops_item_filter_key_to_yojson (x : ops_item_filter_key) =
   | CHANGE_REQUEST_APPROVER_ARN -> `String "ChangeRequestByApproverArn"
   | CHANGE_REQUEST_REQUESTER_NAME -> `String "ChangeRequestByRequesterName"
   | CHANGE_REQUEST_REQUESTER_ARN -> `String "ChangeRequestByRequesterArn"
+  | ACCESS_REQUEST_TARGET_RESOURCE_ID ->
+      `String "AccessRequestByTargetResourceId"
+  | ACCESS_REQUEST_IS_REPLICA -> `String "AccessRequestByIsReplica"
+  | ACCESS_REQUEST_SOURCE_REGION -> `String "AccessRequestBySourceRegion"
+  | ACCESS_REQUEST_SOURCE_OPS_ITEM_ID ->
+      `String "AccessRequestBySourceOpsItemId"
+  | ACCESS_REQUEST_SOURCE_ACCOUNT_ID ->
+      `String "AccessRequestBySourceAccountId"
+  | ACCESS_REQUEST_APPROVER_ID -> `String "AccessRequestByApproverId"
+  | ACCESS_REQUEST_APPROVER_ARN -> `String "AccessRequestByApproverArn"
+  | ACCESS_REQUEST_REQUESTER_ID -> `String "AccessRequestByRequesterId"
+  | ACCESS_REQUEST_REQUESTER_ARN -> `String "AccessRequestByRequesterArn"
   | OPSITEM_TYPE -> `String "OpsItemType"
   | SEVERITY -> `String "Severity"
   | CATEGORY -> `String "Category"
@@ -3061,6 +3195,123 @@ let rec ops_aggregator_to_yojson (x : ops_aggregator) =
       (option_to_yojson ops_aggregator_type_to_yojson x.aggregator_type))]
 and ops_aggregator_list_to_yojson tree =
   list_to_yojson ops_aggregator_to_yojson tree
+let node_type_name_to_yojson (x : node_type_name) =
+  match x with | INSTANCE -> `String "Instance"
+let agent_type_to_yojson = string_to_yojson
+let agent_version_to_yojson = string_to_yojson
+let computer_name_to_yojson = string_to_yojson
+let instance_status_to_yojson = string_to_yojson
+let ip_address_to_yojson = string_to_yojson
+let managed_status_to_yojson (x : managed_status) =
+  match x with
+  | UNMANAGED -> `String "Unmanaged"
+  | MANAGED -> `String "Managed"
+  | ALL -> `String "All"
+let instance_info_to_yojson (x : instance_info) =
+  assoc_to_yojson
+    [("ResourceType",
+       (option_to_yojson resource_type_to_yojson x.resource_type));
+    ("PlatformVersion",
+      (option_to_yojson platform_version_to_yojson x.platform_version));
+    ("PlatformName",
+      (option_to_yojson platform_name_to_yojson x.platform_name));
+    ("PlatformType",
+      (option_to_yojson platform_type_to_yojson x.platform_type));
+    ("ManagedStatus",
+      (option_to_yojson managed_status_to_yojson x.managed_status));
+    ("IpAddress", (option_to_yojson ip_address_to_yojson x.ip_address));
+    ("InstanceStatus",
+      (option_to_yojson instance_status_to_yojson x.instance_status));
+    ("ComputerName",
+      (option_to_yojson computer_name_to_yojson x.computer_name));
+    ("AgentVersion",
+      (option_to_yojson agent_version_to_yojson x.agent_version));
+    ("AgentType", (option_to_yojson agent_type_to_yojson x.agent_type))]
+let node_type_to_yojson (x : node_type) =
+  match x with
+  | Instance arg ->
+      assoc_to_yojson [("Instance", (Some (instance_info_to_yojson arg)))]
+let node_summary_to_yojson tree =
+  map_to_yojson attribute_name_to_yojson attribute_value_to_yojson tree
+let node_summary_list_to_yojson tree =
+  list_to_yojson node_summary_to_yojson tree
+let node_region_to_yojson = string_to_yojson
+let node_account_id_to_yojson = string_to_yojson
+let node_organizational_unit_id_to_yojson = string_to_yojson
+let node_organizational_unit_path_to_yojson = string_to_yojson
+let node_owner_info_to_yojson (x : node_owner_info) =
+  assoc_to_yojson
+    [("OrganizationalUnitPath",
+       (option_to_yojson node_organizational_unit_path_to_yojson
+          x.organizational_unit_path));
+    ("OrganizationalUnitId",
+      (option_to_yojson node_organizational_unit_id_to_yojson
+         x.organizational_unit_id));
+    ("AccountId", (option_to_yojson node_account_id_to_yojson x.account_id))]
+let node_capture_time_to_yojson = timestamp_to_yojson
+let node_id_to_yojson = string_to_yojson
+let node_to_yojson (x : node) =
+  assoc_to_yojson
+    [("NodeType", (option_to_yojson node_type_to_yojson x.node_type));
+    ("Region", (option_to_yojson node_region_to_yojson x.region));
+    ("Owner", (option_to_yojson node_owner_info_to_yojson x.owner));
+    ("Id", (option_to_yojson node_id_to_yojson x.id));
+    ("CaptureTime",
+      (option_to_yojson node_capture_time_to_yojson x.capture_time))]
+let node_list_to_yojson tree = list_to_yojson node_to_yojson tree
+let node_filter_value_to_yojson = string_to_yojson
+let node_filter_value_list_to_yojson tree =
+  list_to_yojson node_filter_value_to_yojson tree
+let node_filter_operator_type_to_yojson (x : node_filter_operator_type) =
+  match x with
+  | BEGIN_WITH -> `String "BeginWith"
+  | NOT_EQUAL -> `String "NotEqual"
+  | EQUAL -> `String "Equal"
+let node_filter_key_to_yojson (x : node_filter_key) =
+  match x with
+  | ACCOUNT_ID -> `String "AccountId"
+  | REGION -> `String "Region"
+  | ORGANIZATIONAL_UNIT_PATH -> `String "OrganizationalUnitPath"
+  | ORGANIZATIONAL_UNIT_ID -> `String "OrganizationalUnitId"
+  | RESOURCE_TYPE -> `String "ResourceType"
+  | PLATFORM_VERSION -> `String "PlatformVersion"
+  | PLATFORM_TYPE -> `String "PlatformType"
+  | PLATFORM_NAME -> `String "PlatformName"
+  | MANAGED_STATUS -> `String "ManagedStatus"
+  | IP_ADDRESS -> `String "IpAddress"
+  | INSTANCE_STATUS -> `String "InstanceStatus"
+  | INSTANCE_ID -> `String "InstanceId"
+  | COMPUTER_NAME -> `String "ComputerName"
+  | AGENT_VERSION -> `String "AgentVersion"
+  | AGENT_TYPE -> `String "AgentType"
+let node_filter_to_yojson (x : node_filter) =
+  assoc_to_yojson
+    [("Type", (option_to_yojson node_filter_operator_type_to_yojson x.type_));
+    ("Values", (Some (node_filter_value_list_to_yojson x.values)));
+    ("Key", (Some (node_filter_key_to_yojson x.key)))]
+let node_filter_list_to_yojson tree =
+  list_to_yojson node_filter_to_yojson tree
+let node_attribute_name_to_yojson (x : node_attribute_name) =
+  match x with
+  | RESOURCE_TYPE -> `String "ResourceType"
+  | REGION -> `String "Region"
+  | PLATFORM_VERSION -> `String "PlatformVersion"
+  | PLATFORM_TYPE -> `String "PlatformType"
+  | PLATFORM_NAME -> `String "PlatformName"
+  | AGENT_VERSION -> `String "AgentVersion"
+let node_aggregator_type_to_yojson (x : node_aggregator_type) =
+  match x with | COUNT -> `String "Count"
+let rec node_aggregator_to_yojson (x : node_aggregator) =
+  assoc_to_yojson
+    [("Aggregators",
+       (option_to_yojson node_aggregator_list_to_yojson x.aggregators));
+    ("AttributeName",
+      (Some (node_attribute_name_to_yojson x.attribute_name)));
+    ("TypeName", (Some (node_type_name_to_yojson x.type_name)));
+    ("AggregatorType",
+      (Some (node_aggregator_type_to_yojson x.aggregator_type)))]
+and node_aggregator_list_to_yojson tree =
+  list_to_yojson node_aggregator_to_yojson tree
 let next_token_to_yojson = string_to_yojson
 let modify_document_permission_response_to_yojson = unit_to_yojson
 let document_permission_type_to_yojson (x : document_permission_type) =
@@ -3418,6 +3669,33 @@ let list_ops_item_events_request_to_yojson (x : list_ops_item_events_request)
       (option_to_yojson ops_item_event_max_results_to_yojson x.max_results));
     ("Filters",
       (option_to_yojson ops_item_event_filters_to_yojson x.filters))]
+let list_nodes_summary_result_to_yojson (x : list_nodes_summary_result) =
+  assoc_to_yojson
+    [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("Summary", (option_to_yojson node_summary_list_to_yojson x.summary))]
+let list_nodes_summary_request_to_yojson (x : list_nodes_summary_request) =
+  assoc_to_yojson
+    [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("Aggregators", (Some (node_aggregator_list_to_yojson x.aggregators)));
+    ("Filters", (option_to_yojson node_filter_list_to_yojson x.filters));
+    ("SyncName",
+      (option_to_yojson resource_data_sync_name_to_yojson x.sync_name))]
+let invalid_aggregator_exception_to_yojson (x : invalid_aggregator_exception)
+  =
+  assoc_to_yojson
+    [("Message", (option_to_yojson string__to_yojson x.message))]
+let list_nodes_result_to_yojson (x : list_nodes_result) =
+  assoc_to_yojson
+    [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("Nodes", (option_to_yojson node_list_to_yojson x.nodes))]
+let list_nodes_request_to_yojson (x : list_nodes_request) =
+  assoc_to_yojson
+    [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("Filters", (option_to_yojson node_filter_list_to_yojson x.filters));
+    ("SyncName",
+      (option_to_yojson resource_data_sync_name_to_yojson x.sync_name))]
 let list_inventory_entries_result_to_yojson
   (x : list_inventory_entries_result) =
   assoc_to_yojson
@@ -4079,10 +4357,6 @@ let invalid_delete_inventory_parameters_exception_to_yojson
   (x : invalid_delete_inventory_parameters_exception) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
-let invalid_aggregator_exception_to_yojson (x : invalid_aggregator_exception)
-  =
-  assoc_to_yojson
-    [("Message", (option_to_yojson string__to_yojson x.message))]
 let invalid_activation_id_to_yojson (x : invalid_activation_id) =
   assoc_to_yojson
     [("Message", (option_to_yojson string__to_yojson x.message))]
@@ -4137,9 +4411,7 @@ let instance_property_filter_list_to_yojson tree =
   list_to_yojson instance_property_filter_to_yojson tree
 let instance_name_to_yojson = string_to_yojson
 let architecture_to_yojson = string_to_yojson
-let ip_address_to_yojson = string_to_yojson
 let activation_id_to_yojson = string_to_yojson
-let computer_name_to_yojson = string_to_yojson
 let instance_association_status_aggregated_count_to_yojson tree =
   map_to_yojson status_name_to_yojson instance_count_to_yojson tree
 let instance_aggregated_association_overview_to_yojson
@@ -4219,6 +4491,9 @@ let instance_patch_state_to_yojson (x : instance_patch_state) =
     ("OperationEndTime", (Some (date_time_to_yojson x.operation_end_time)));
     ("OperationStartTime",
       (Some (date_time_to_yojson x.operation_start_time)));
+    ("AvailableSecurityUpdateCount",
+      (option_to_yojson patch_available_security_update_count_to_yojson
+         x.available_security_update_count));
     ("NotApplicableCount",
       (option_to_yojson patch_not_applicable_count_to_yojson
          x.not_applicable_count));
@@ -4417,7 +4692,10 @@ let get_resource_policies_request_to_yojson
     ("ResourceArn", (Some (resource_arn_string_to_yojson x.resource_arn)))]
 let get_patch_baseline_result_to_yojson (x : get_patch_baseline_result) =
   assoc_to_yojson
-    [("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
+    [("AvailableSecurityUpdatesComplianceStatus",
+       (option_to_yojson patch_compliance_status_to_yojson
+          x.available_security_updates_compliance_status));
+    ("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
     ("Description",
       (option_to_yojson baseline_description_to_yojson x.description));
     ("ModifiedDate", (option_to_yojson date_time_to_yojson x.modified_date));
@@ -4778,6 +5056,43 @@ let get_inventory_request_to_yojson (x : get_inventory_request) =
     ("Aggregators",
       (option_to_yojson inventory_aggregator_list_to_yojson x.aggregators));
     ("Filters", (option_to_yojson inventory_filter_list_to_yojson x.filters))]
+let execution_preview_status_to_yojson (x : execution_preview_status) =
+  match x with
+  | FAILED -> `String "Failed"
+  | SUCCESS -> `String "Success"
+  | IN_PROGRESS -> `String "InProgress"
+  | PENDING -> `String "Pending"
+let automation_execution_preview_to_yojson (x : automation_execution_preview)
+  =
+  assoc_to_yojson
+    [("TotalAccounts",
+       (option_to_yojson integer__to_yojson x.total_accounts));
+    ("TargetPreviews",
+      (option_to_yojson target_preview_list_to_yojson x.target_previews));
+    ("Regions", (option_to_yojson region_list_to_yojson x.regions));
+    ("StepPreviews",
+      (option_to_yojson step_preview_map_to_yojson x.step_previews))]
+let execution_preview_to_yojson (x : execution_preview) =
+  match x with
+  | Automation arg ->
+      assoc_to_yojson
+        [("Automation", (Some (automation_execution_preview_to_yojson arg)))]
+let get_execution_preview_response_to_yojson
+  (x : get_execution_preview_response) =
+  assoc_to_yojson
+    [("ExecutionPreview",
+       (option_to_yojson execution_preview_to_yojson x.execution_preview));
+    ("StatusMessage", (option_to_yojson string__to_yojson x.status_message));
+    ("Status",
+      (option_to_yojson execution_preview_status_to_yojson x.status));
+    ("EndedAt", (option_to_yojson date_time_to_yojson x.ended_at));
+    ("ExecutionPreviewId",
+      (option_to_yojson execution_preview_id_to_yojson x.execution_preview_id))]
+let get_execution_preview_request_to_yojson
+  (x : get_execution_preview_request) =
+  assoc_to_yojson
+    [("ExecutionPreviewId",
+       (Some (execution_preview_id_to_yojson x.execution_preview_id)))]
 let content_length_to_yojson = long_to_yojson
 let attachment_hash_to_yojson = string_to_yojson
 let attachment_hash_type_to_yojson (x : attachment_hash_type) =
@@ -4839,7 +5154,10 @@ let get_deployable_patch_snapshot_for_instance_result_to_yojson
     ("InstanceId", (option_to_yojson instance_id_to_yojson x.instance_id))]
 let baseline_override_to_yojson (x : baseline_override) =
   assoc_to_yojson
-    [("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
+    [("AvailableSecurityUpdatesComplianceStatus",
+       (option_to_yojson patch_compliance_status_to_yojson
+          x.available_security_updates_compliance_status));
+    ("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
     ("ApprovedPatchesEnableNonSecurity",
       (option_to_yojson boolean__to_yojson
          x.approved_patches_enable_non_security));
@@ -4947,7 +5265,9 @@ let get_calendar_state_request_to_yojson (x : get_calendar_state_request) =
     ("CalendarNames",
       (Some (calendar_name_or_arn_list_to_yojson x.calendar_names)))]
 let automation_subtype_to_yojson (x : automation_subtype) =
-  match x with | ChangeRequest -> `String "ChangeRequest"
+  match x with
+  | AccessRequest -> `String "AccessRequest"
+  | ChangeRequest -> `String "ChangeRequest"
 let automation_execution_to_yojson (x : automation_execution) =
   assoc_to_yojson
     [("Variables",
@@ -4961,6 +5281,9 @@ let automation_execution_to_yojson (x : automation_execution) =
       (option_to_yojson date_time_to_yojson x.scheduled_time));
     ("AutomationSubtype",
       (option_to_yojson automation_subtype_to_yojson x.automation_subtype));
+    ("TargetLocationsURL",
+      (option_to_yojson target_locations_ur_l_to_yojson
+         x.target_locations_ur_l));
     ("TriggeredAlarms",
       (option_to_yojson alarm_state_information_list_to_yojson
          x.triggered_alarms));
@@ -5024,6 +5347,32 @@ let get_automation_execution_request_to_yojson
   assoc_to_yojson
     [("AutomationExecutionId",
        (Some (automation_execution_id_to_yojson x.automation_execution_id)))]
+let access_key_id_type_to_yojson = string_to_yojson
+let access_key_secret_type_to_yojson = string_to_yojson
+let credentials_to_yojson (x : credentials) =
+  assoc_to_yojson
+    [("ExpirationTime", (Some (date_time_to_yojson x.expiration_time)));
+    ("SessionToken", (Some (session_token_type_to_yojson x.session_token)));
+    ("SecretAccessKey",
+      (Some (access_key_secret_type_to_yojson x.secret_access_key)));
+    ("AccessKeyId", (Some (access_key_id_type_to_yojson x.access_key_id)))]
+let access_request_status_to_yojson (x : access_request_status) =
+  match x with
+  | PENDING -> `String "Pending"
+  | EXPIRED -> `String "Expired"
+  | REVOKED -> `String "Revoked"
+  | REJECTED -> `String "Rejected"
+  | APPROVED -> `String "Approved"
+let get_access_token_response_to_yojson (x : get_access_token_response) =
+  assoc_to_yojson
+    [("AccessRequestStatus",
+       (option_to_yojson access_request_status_to_yojson
+          x.access_request_status));
+    ("Credentials", (option_to_yojson credentials_to_yojson x.credentials))]
+let get_access_token_request_to_yojson (x : get_access_token_request) =
+  assoc_to_yojson
+    [("AccessRequestId",
+       (Some (access_request_id_to_yojson x.access_request_id)))]
 let fault_to_yojson (x : fault) =
   match x with
   | Unknown -> `String "Unknown"
@@ -5146,9 +5495,12 @@ let describe_patch_groups_request_to_yojson
 let describe_patch_group_state_result_to_yojson
   (x : describe_patch_group_state_result) =
   assoc_to_yojson
-    [("InstancesWithOtherNonCompliantPatches",
-       (option_to_yojson instances_count_to_yojson
-          x.instances_with_other_non_compliant_patches));
+    [("InstancesWithAvailableSecurityUpdates",
+       (option_to_yojson integer__to_yojson
+          x.instances_with_available_security_updates));
+    ("InstancesWithOtherNonCompliantPatches",
+      (option_to_yojson instances_count_to_yojson
+         x.instances_with_other_non_compliant_patches));
     ("InstancesWithSecurityNonCompliantPatches",
       (option_to_yojson instances_count_to_yojson
          x.instances_with_security_non_compliant_patches));
@@ -5587,6 +5939,9 @@ let automation_execution_metadata_to_yojson
       (option_to_yojson date_time_to_yojson x.scheduled_time));
     ("AutomationSubtype",
       (option_to_yojson automation_subtype_to_yojson x.automation_subtype));
+    ("TargetLocationsURL",
+      (option_to_yojson target_locations_ur_l_to_yojson
+         x.target_locations_ur_l));
     ("TriggeredAlarms",
       (option_to_yojson alarm_state_information_list_to_yojson
          x.triggered_alarms));
@@ -6013,6 +6368,9 @@ let create_patch_baseline_request_to_yojson
   assoc_to_yojson
     [("Tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("ClientToken", (option_to_yojson client_token_to_yojson x.client_token));
+    ("AvailableSecurityUpdatesComplianceStatus",
+      (option_to_yojson patch_compliance_status_to_yojson
+         x.available_security_updates_compliance_status));
     ("Sources", (option_to_yojson patch_source_list_to_yojson x.sources));
     ("Description",
       (option_to_yojson baseline_description_to_yojson x.description));

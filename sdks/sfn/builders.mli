@@ -7,12 +7,15 @@ val make_validate_state_machine_definition_diagnostic :
         severity:validate_state_machine_definition_severity ->
           unit -> validate_state_machine_definition_diagnostic
 val make_validate_state_machine_definition_output :
-  diagnostics:validate_state_machine_definition_diagnostic list ->
-    result:validate_state_machine_definition_result_code ->
-      unit -> validate_state_machine_definition_output
+  ?truncated:bool ->
+    diagnostics:validate_state_machine_definition_diagnostic list ->
+      result:validate_state_machine_definition_result_code ->
+        unit -> validate_state_machine_definition_output
 val make_validate_state_machine_definition_input :
-  ?type_:state_machine_type ->
-    definition:string -> unit -> validate_state_machine_definition_input
+  ?max_results:int ->
+    ?severity:validate_state_machine_definition_severity ->
+      ?type_:state_machine_type ->
+        definition:string -> unit -> validate_state_machine_definition_input
 val make_update_state_machine_output :
   ?state_machine_version_arn:string ->
     ?revision_id:string ->
@@ -29,14 +32,20 @@ val make_logging_configuration :
       ?level:log_level -> unit -> logging_configuration
 val make_tracing_configuration :
   ?enabled:bool -> unit -> tracing_configuration
+val make_encryption_configuration :
+  ?kms_data_key_reuse_period_seconds:int ->
+    ?kms_key_id:string ->
+      type_:encryption_type -> unit -> encryption_configuration
 val make_update_state_machine_input :
-  ?version_description:string ->
-    ?publish:bool ->
-      ?tracing_configuration:tracing_configuration ->
-        ?logging_configuration:logging_configuration ->
-          ?role_arn:string ->
-            ?definition:string ->
-              state_machine_arn:string -> unit -> update_state_machine_input
+  ?encryption_configuration:encryption_configuration ->
+    ?version_description:string ->
+      ?publish:bool ->
+        ?tracing_configuration:tracing_configuration ->
+          ?logging_configuration:logging_configuration ->
+            ?role_arn:string ->
+              ?definition:string ->
+                state_machine_arn:string ->
+                  unit -> update_state_machine_input
 val make_update_state_machine_alias_output :
   update_date:CoreTypes.Timestamp.t ->
     unit -> update_state_machine_alias_output
@@ -71,14 +80,16 @@ val make_inspection_data_response :
         ?status_code:string ->
           ?protocol:string -> unit -> inspection_data_response
 val make_inspection_data :
-  ?response:inspection_data_response ->
-    ?request:inspection_data_request ->
-      ?after_result_path:string ->
-        ?after_result_selector:string ->
-          ?result:string ->
-            ?after_parameters:string ->
-              ?after_input_path:string ->
-                ?input:string -> unit -> inspection_data
+  ?variables:string ->
+    ?response:inspection_data_response ->
+      ?request:inspection_data_request ->
+        ?after_result_path:string ->
+          ?after_result_selector:string ->
+            ?result:string ->
+              ?after_parameters:string ->
+                ?after_input_path:string ->
+                  ?after_arguments:string ->
+                    ?input:string -> unit -> inspection_data
 val make_test_state_output :
   ?status:test_execution_status ->
     ?next_state:string ->
@@ -86,10 +97,11 @@ val make_test_state_output :
         ?cause:string ->
           ?error:string -> ?output:string -> unit -> test_state_output
 val make_test_state_input :
-  ?reveal_secrets:bool ->
-    ?inspection_level:inspection_level ->
-      ?input:string ->
-        role_arn:string -> definition:string -> unit -> test_state_input
+  ?variables:string ->
+    ?reveal_secrets:bool ->
+      ?inspection_level:inspection_level ->
+        ?input:string ->
+          ?role_arn:string -> definition:string -> unit -> test_state_input
 val make_task_timed_out_event_details :
   ?cause:string ->
     ?error:string ->
@@ -155,9 +167,13 @@ val make_state_machine_list_item :
 val make_state_machine_alias_list_item :
   creation_date:CoreTypes.Timestamp.t ->
     state_machine_alias_arn:string -> unit -> state_machine_alias_list_item
+val make_assigned_variables_details :
+  ?truncated:bool -> unit -> assigned_variables_details
 val make_state_exited_event_details :
-  ?output_details:history_event_execution_data_details ->
-    ?output:string -> name:string -> unit -> state_exited_event_details
+  ?assigned_variables_details:assigned_variables_details ->
+    ?assigned_variables:assigned_variables ->
+      ?output_details:history_event_execution_data_details ->
+        ?output:string -> name:string -> unit -> state_exited_event_details
 val make_state_entered_event_details :
   ?input_details:history_event_execution_data_details ->
     ?input:string -> name:string -> unit -> state_entered_event_details
@@ -183,10 +199,11 @@ val make_start_sync_execution_output :
                             execution_arn:string ->
                               unit -> start_sync_execution_output
 val make_start_sync_execution_input :
-  ?trace_header:string ->
-    ?input:string ->
-      ?name:string ->
-        state_machine_arn:string -> unit -> start_sync_execution_input
+  ?included_data:included_data ->
+    ?trace_header:string ->
+      ?input:string ->
+        ?name:string ->
+          state_machine_arn:string -> unit -> start_sync_execution_input
 val make_start_execution_output :
   start_date:CoreTypes.Timestamp.t ->
     execution_arn:string -> unit -> start_execution_output
@@ -375,67 +392,73 @@ val make_execution_timed_out_event_details :
   ?cause:string -> ?error:string -> unit -> execution_timed_out_event_details
 val make_execution_redriven_event_details :
   ?redrive_count:int -> unit -> execution_redriven_event_details
+val make_evaluation_failed_event_details :
+  ?location:string ->
+    ?cause:string ->
+      ?error:string ->
+        state:string -> unit -> evaluation_failed_event_details
 val make_history_event :
-  ?map_run_redriven_event_details:map_run_redriven_event_details ->
-    ?map_run_failed_event_details:map_run_failed_event_details ->
-      ?map_run_started_event_details:map_run_started_event_details ->
-        ?state_exited_event_details:state_exited_event_details ->
-          ?state_entered_event_details:state_entered_event_details ->
-            ?lambda_function_timed_out_event_details:lambda_function_timed_out_event_details
-              ->
-              ?lambda_function_succeeded_event_details:lambda_function_succeeded_event_details
+  ?evaluation_failed_event_details:evaluation_failed_event_details ->
+    ?map_run_redriven_event_details:map_run_redriven_event_details ->
+      ?map_run_failed_event_details:map_run_failed_event_details ->
+        ?map_run_started_event_details:map_run_started_event_details ->
+          ?state_exited_event_details:state_exited_event_details ->
+            ?state_entered_event_details:state_entered_event_details ->
+              ?lambda_function_timed_out_event_details:lambda_function_timed_out_event_details
                 ->
-                ?lambda_function_start_failed_event_details:lambda_function_start_failed_event_details
+                ?lambda_function_succeeded_event_details:lambda_function_succeeded_event_details
                   ->
-                  ?lambda_function_scheduled_event_details:lambda_function_scheduled_event_details
+                  ?lambda_function_start_failed_event_details:lambda_function_start_failed_event_details
                     ->
-                    ?lambda_function_schedule_failed_event_details:lambda_function_schedule_failed_event_details
+                    ?lambda_function_scheduled_event_details:lambda_function_scheduled_event_details
                       ->
-                      ?lambda_function_failed_event_details:lambda_function_failed_event_details
+                      ?lambda_function_schedule_failed_event_details:lambda_function_schedule_failed_event_details
                         ->
-                        ?map_iteration_aborted_event_details:map_iteration_event_details
+                        ?lambda_function_failed_event_details:lambda_function_failed_event_details
                           ->
-                          ?map_iteration_failed_event_details:map_iteration_event_details
+                          ?map_iteration_aborted_event_details:map_iteration_event_details
                             ->
-                            ?map_iteration_succeeded_event_details:map_iteration_event_details
+                            ?map_iteration_failed_event_details:map_iteration_event_details
                               ->
-                              ?map_iteration_started_event_details:map_iteration_event_details
+                              ?map_iteration_succeeded_event_details:map_iteration_event_details
                                 ->
-                                ?map_state_started_event_details:map_state_started_event_details
+                                ?map_iteration_started_event_details:map_iteration_event_details
                                   ->
-                                  ?execution_redriven_event_details:execution_redriven_event_details
+                                  ?map_state_started_event_details:map_state_started_event_details
                                     ->
-                                    ?execution_timed_out_event_details:execution_timed_out_event_details
+                                    ?execution_redriven_event_details:execution_redriven_event_details
                                       ->
-                                      ?execution_aborted_event_details:execution_aborted_event_details
+                                      ?execution_timed_out_event_details:execution_timed_out_event_details
                                         ->
-                                        ?execution_succeeded_event_details:execution_succeeded_event_details
+                                        ?execution_aborted_event_details:execution_aborted_event_details
                                           ->
-                                          ?execution_started_event_details:execution_started_event_details
+                                          ?execution_succeeded_event_details:execution_succeeded_event_details
                                             ->
-                                            ?execution_failed_event_details:execution_failed_event_details
+                                            ?execution_started_event_details:execution_started_event_details
                                               ->
-                                              ?task_timed_out_event_details:task_timed_out_event_details
+                                              ?execution_failed_event_details:execution_failed_event_details
                                                 ->
-                                                ?task_succeeded_event_details:task_succeeded_event_details
+                                                ?task_timed_out_event_details:task_timed_out_event_details
                                                   ->
-                                                  ?task_submitted_event_details:task_submitted_event_details
+                                                  ?task_succeeded_event_details:task_succeeded_event_details
                                                     ->
-                                                    ?task_submit_failed_event_details:task_submit_failed_event_details
+                                                    ?task_submitted_event_details:task_submitted_event_details
                                                       ->
-                                                      ?task_started_event_details:task_started_event_details
+                                                      ?task_submit_failed_event_details:task_submit_failed_event_details
                                                         ->
-                                                        ?task_start_failed_event_details:task_start_failed_event_details
+                                                        ?task_started_event_details:task_started_event_details
                                                           ->
-                                                          ?task_scheduled_event_details:task_scheduled_event_details
+                                                          ?task_start_failed_event_details:task_start_failed_event_details
                                                             ->
-                                                            ?task_failed_event_details:task_failed_event_details
+                                                            ?task_scheduled_event_details:task_scheduled_event_details
                                                               ->
-                                                              ?activity_timed_out_event_details:activity_timed_out_event_details
+                                                              ?task_failed_event_details:task_failed_event_details
                                                                 ->
-                                                                ?activity_succeeded_event_details:activity_succeeded_event_details
+                                                                ?activity_timed_out_event_details:activity_timed_out_event_details
                                                                   ->
-                                                                  ?activity_started_event_details:activity_started_event_details
+                                                                  ?activity_succeeded_event_details:activity_succeeded_event_details
+                                                                    ->
+                                                                    ?activity_started_event_details:activity_started_event_details
                                                                     ->
                                                                     ?activity_scheduled_event_details:activity_scheduled_event_details
                                                                     ->
@@ -467,35 +490,42 @@ val make_get_activity_task_input :
   ?worker_name:string ->
     activity_arn:string -> unit -> get_activity_task_input
 val make_describe_state_machine_output :
-  ?description:string ->
-    ?revision_id:string ->
-      ?label:string ->
-        ?tracing_configuration:tracing_configuration ->
-          ?logging_configuration:logging_configuration ->
-            ?status:state_machine_status ->
-              creation_date:CoreTypes.Timestamp.t ->
-                type_:state_machine_type ->
+  ?variable_references:variable_references ->
+    ?encryption_configuration:encryption_configuration ->
+      ?description:string ->
+        ?revision_id:string ->
+          ?label:string ->
+            ?tracing_configuration:tracing_configuration ->
+              ?logging_configuration:logging_configuration ->
+                ?status:state_machine_status ->
+                  creation_date:CoreTypes.Timestamp.t ->
+                    type_:state_machine_type ->
+                      role_arn:string ->
+                        definition:string ->
+                          name:string ->
+                            state_machine_arn:string ->
+                              unit -> describe_state_machine_output
+val make_describe_state_machine_input :
+  ?included_data:included_data ->
+    state_machine_arn:string -> unit -> describe_state_machine_input
+val make_describe_state_machine_for_execution_output :
+  ?variable_references:variable_references ->
+    ?encryption_configuration:encryption_configuration ->
+      ?revision_id:string ->
+        ?label:string ->
+          ?map_run_arn:string ->
+            ?tracing_configuration:tracing_configuration ->
+              ?logging_configuration:logging_configuration ->
+                update_date:CoreTypes.Timestamp.t ->
                   role_arn:string ->
                     definition:string ->
                       name:string ->
                         state_machine_arn:string ->
-                          unit -> describe_state_machine_output
-val make_describe_state_machine_input :
-  state_machine_arn:string -> unit -> describe_state_machine_input
-val make_describe_state_machine_for_execution_output :
-  ?revision_id:string ->
-    ?label:string ->
-      ?map_run_arn:string ->
-        ?tracing_configuration:tracing_configuration ->
-          ?logging_configuration:logging_configuration ->
-            update_date:CoreTypes.Timestamp.t ->
-              role_arn:string ->
-                definition:string ->
-                  name:string ->
-                    state_machine_arn:string ->
-                      unit -> describe_state_machine_for_execution_output
+                          unit -> describe_state_machine_for_execution_output
 val make_describe_state_machine_for_execution_input :
-  execution_arn:string -> unit -> describe_state_machine_for_execution_input
+  ?included_data:included_data ->
+    execution_arn:string ->
+      unit -> describe_state_machine_for_execution_input
 val make_describe_state_machine_alias_output :
   ?update_date:CoreTypes.Timestamp.t ->
     ?creation_date:CoreTypes.Timestamp.t ->
@@ -547,10 +577,12 @@ val make_describe_execution_output :
                                         execution_arn:string ->
                                           unit -> describe_execution_output
 val make_describe_execution_input :
-  execution_arn:string -> unit -> describe_execution_input
+  ?included_data:included_data ->
+    execution_arn:string -> unit -> describe_execution_input
 val make_describe_activity_output :
-  creation_date:CoreTypes.Timestamp.t ->
-    name:string -> activity_arn:string -> unit -> describe_activity_output
+  ?encryption_configuration:encryption_configuration ->
+    creation_date:CoreTypes.Timestamp.t ->
+      name:string -> activity_arn:string -> unit -> describe_activity_output
 val make_describe_activity_input :
   activity_arn:string -> unit -> describe_activity_input
 val make_delete_state_machine_version_output : unit -> unit
@@ -571,15 +603,16 @@ val make_create_state_machine_output :
     creation_date:CoreTypes.Timestamp.t ->
       state_machine_arn:string -> unit -> create_state_machine_output
 val make_create_state_machine_input :
-  ?version_description:string ->
-    ?publish:bool ->
-      ?tracing_configuration:tracing_configuration ->
-        ?tags:tag list ->
-          ?logging_configuration:logging_configuration ->
-            ?type_:state_machine_type ->
-              role_arn:string ->
-                definition:string ->
-                  name:string -> unit -> create_state_machine_input
+  ?encryption_configuration:encryption_configuration ->
+    ?version_description:string ->
+      ?publish:bool ->
+        ?tracing_configuration:tracing_configuration ->
+          ?tags:tag list ->
+            ?logging_configuration:logging_configuration ->
+              ?type_:state_machine_type ->
+                role_arn:string ->
+                  definition:string ->
+                    name:string -> unit -> create_state_machine_input
 val make_create_state_machine_alias_output :
   creation_date:CoreTypes.Timestamp.t ->
     state_machine_alias_arn:string ->
@@ -592,4 +625,5 @@ val make_create_activity_output :
   creation_date:CoreTypes.Timestamp.t ->
     activity_arn:string -> unit -> create_activity_output
 val make_create_activity_input :
-  ?tags:tag list -> name:string -> unit -> create_activity_input
+  ?encryption_configuration:encryption_configuration ->
+    ?tags:tag list -> name:string -> unit -> create_activity_input

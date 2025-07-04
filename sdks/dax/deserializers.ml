@@ -235,14 +235,16 @@ let parameter_group_status_of_yojson tree path =
    } : parameter_group_status)
 let base_unit_of_yojson = unit_of_yojson
 let sse_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DISABLED" -> DISABLED
-   | `String "DISABLING" -> DISABLING
-   | `String "ENABLED" -> ENABLED
-   | `String "ENABLING" -> ENABLING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SSEStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "SSEStatus") : sse_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DISABLED" -> DISABLED
+    | `String "DISABLING" -> DISABLING
+    | `String "ENABLED" -> ENABLED
+    | `String "ENABLING" -> ENABLING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SSEStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "SSEStatus") : sse_status) : 
+  sse_status)
 let sse_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -251,17 +253,18 @@ let sse_description_of_yojson tree path =
           path)
    } : sse_description)
 let cluster_endpoint_encryption_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TLS" -> TLS
-   | `String "NONE" -> NONE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ClusterEndpointEncryptionType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ClusterEndpointEncryptionType") : 
-  cluster_endpoint_encryption_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TLS" -> TLS
+    | `String "NONE" -> NONE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ClusterEndpointEncryptionType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "ClusterEndpointEncryptionType") : 
+     cluster_endpoint_encryption_type) : cluster_endpoint_encryption_type)
 let cluster_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -461,13 +464,15 @@ let subnet_group_already_exists_fault_of_yojson tree path =
           (value_for_key exception_message_of_yojson "message") _list path)
    } : subnet_group_already_exists_fault)
 let source_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SUBNET_GROUP" -> SUBNET_GROUP
-   | `String "PARAMETER_GROUP" -> PARAMETER_GROUP
-   | `String "CLUSTER" -> CLUSTER
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "SourceType") : source_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SUBNET_GROUP" -> SUBNET_GROUP
+    | `String "PARAMETER_GROUP" -> PARAMETER_GROUP
+    | `String "CLUSTER" -> CLUSTER
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "SourceType") : source_type) : 
+  source_type)
 let service_quota_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let sse_enabled_of_yojson = bool_of_yojson
@@ -497,14 +502,15 @@ let node_not_found_fault_of_yojson tree path =
           (value_for_key exception_message_of_yojson "message") _list path)
    } : node_not_found_fault)
 let parameter_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NODE_TYPE_SPECIFIC" -> NODE_TYPE_SPECIFIC
-   | `String "DEFAULT" -> DEFAULT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ParameterType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ParameterType") : 
-  parameter_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NODE_TYPE_SPECIFIC" -> NODE_TYPE_SPECIFIC
+    | `String "DEFAULT" -> DEFAULT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ParameterType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ParameterType") : 
+     parameter_type) : parameter_type)
 let node_type_specific_value_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -517,21 +523,25 @@ let node_type_specific_value_of_yojson tree path =
 let node_type_specific_value_list_of_yojson tree path =
   list_of_yojson node_type_specific_value_of_yojson tree path
 let is_modifiable_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CONDITIONAL" -> CONDITIONAL
-   | `String "FALSE" -> FALSE
-   | `String "TRUE" -> TRUE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "IsModifiable" value)
-   | _ -> raise (deserialize_wrong_type_error path "IsModifiable") : 
-  is_modifiable)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CONDITIONAL" -> CONDITIONAL
+    | `String "FALSE" -> FALSE
+    | `String "TRUE" -> TRUE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "IsModifiable" value)
+    | _ -> raise (deserialize_wrong_type_error path "IsModifiable") : 
+     is_modifiable) : is_modifiable)
 let change_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "REQUIRES_REBOOT" -> REQUIRES_REBOOT
-   | `String "IMMEDIATE" -> IMMEDIATE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ChangeType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ChangeType") : change_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "REQUIRES_REBOOT" -> REQUIRES_REBOOT
+    | `String "IMMEDIATE" -> IMMEDIATE
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ChangeType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ChangeType") : change_type) : 
+  change_type)
 let parameter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({

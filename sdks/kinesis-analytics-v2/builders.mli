@@ -232,21 +232,26 @@ val make_environment_property_descriptions :
 val make_application_snapshot_configuration_description :
   snapshots_enabled:bool ->
     unit -> application_snapshot_configuration_description
+val make_application_system_rollback_configuration_description :
+  rollback_enabled:bool ->
+    unit -> application_system_rollback_configuration_description
 val make_application_configuration_description :
   ?zeppelin_application_configuration_description:zeppelin_application_configuration_description
     ->
     ?vpc_configuration_descriptions:vpc_configuration_description list ->
-      ?application_snapshot_configuration_description:application_snapshot_configuration_description
+      ?application_system_rollback_configuration_description:application_system_rollback_configuration_description
         ->
-        ?environment_property_descriptions:environment_property_descriptions
+        ?application_snapshot_configuration_description:application_snapshot_configuration_description
           ->
-          ?flink_application_configuration_description:flink_application_configuration_description
+          ?environment_property_descriptions:environment_property_descriptions
             ->
-            ?run_configuration_description:run_configuration_description ->
-              ?application_code_configuration_description:application_code_configuration_description
-                ->
-                ?sql_application_configuration_description:sql_application_configuration_description
-                  -> unit -> application_configuration_description
+            ?flink_application_configuration_description:flink_application_configuration_description
+              ->
+              ?run_configuration_description:run_configuration_description ->
+                ?application_code_configuration_description:application_code_configuration_description
+                  ->
+                  ?sql_application_configuration_description:sql_application_configuration_description
+                    -> unit -> application_configuration_description
 val make_cloud_watch_logging_option_description :
   ?role_ar_n:string ->
     ?cloud_watch_logging_option_id:string ->
@@ -260,27 +265,29 @@ val make_application_detail :
   ?application_mode:application_mode ->
     ?application_version_rolled_back_to:int ->
       ?conditional_token:string ->
-        ?application_version_rolled_back_from:int ->
-          ?application_version_updated_from:int ->
-            ?application_maintenance_configuration_description:application_maintenance_configuration_description
-              ->
-              ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-                list ->
-                ?application_configuration_description:application_configuration_description
-                  ->
-                  ?last_update_timestamp:CoreTypes.Timestamp.t ->
-                    ?create_timestamp:CoreTypes.Timestamp.t ->
-                      ?service_execution_role:string ->
-                        ?application_description:string ->
-                          application_version_id:int ->
-                            application_status:application_status ->
-                              runtime_environment:runtime_environment ->
-                                application_name:string ->
-                                  application_ar_n:string ->
-                                    unit -> application_detail
+        ?application_version_create_timestamp:CoreTypes.Timestamp.t ->
+          ?application_version_rolled_back_from:int ->
+            ?application_version_updated_from:int ->
+              ?application_maintenance_configuration_description:application_maintenance_configuration_description
+                ->
+                ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+                  list ->
+                  ?application_configuration_description:application_configuration_description
+                    ->
+                    ?last_update_timestamp:CoreTypes.Timestamp.t ->
+                      ?create_timestamp:CoreTypes.Timestamp.t ->
+                        ?service_execution_role:string ->
+                          ?application_description:string ->
+                            application_version_id:int ->
+                              application_status:application_status ->
+                                runtime_environment:runtime_environment ->
+                                  application_name:string ->
+                                    application_ar_n:string ->
+                                      unit -> application_detail
 val make_update_application_response :
-  application_detail:application_detail ->
-    unit -> update_application_response
+  ?operation_id:string ->
+    application_detail:application_detail ->
+      unit -> update_application_response
 val make_input_lambda_processor_update :
   resource_arn_update:string -> unit -> input_lambda_processor_update
 val make_input_processing_configuration_update :
@@ -369,19 +376,24 @@ val make_environment_property_updates :
 val make_application_snapshot_configuration_update :
   snapshots_enabled_update:bool ->
     unit -> application_snapshot_configuration_update
+val make_application_system_rollback_configuration_update :
+  rollback_enabled_update:bool ->
+    unit -> application_system_rollback_configuration_update
 val make_application_configuration_update :
   ?zeppelin_application_configuration_update:zeppelin_application_configuration_update
     ->
     ?vpc_configuration_updates:vpc_configuration_update list ->
-      ?application_snapshot_configuration_update:application_snapshot_configuration_update
+      ?application_system_rollback_configuration_update:application_system_rollback_configuration_update
         ->
-        ?environment_property_updates:environment_property_updates ->
-          ?flink_application_configuration_update:flink_application_configuration_update
-            ->
-            ?application_code_configuration_update:application_code_configuration_update
+        ?application_snapshot_configuration_update:application_snapshot_configuration_update
+          ->
+          ?environment_property_updates:environment_property_updates ->
+            ?flink_application_configuration_update:flink_application_configuration_update
               ->
-              ?sql_application_configuration_update:sql_application_configuration_update
-                -> unit -> application_configuration_update
+              ?application_code_configuration_update:application_code_configuration_update
+                ->
+                ?sql_application_configuration_update:sql_application_configuration_update
+                  -> unit -> application_configuration_update
 val make_run_configuration_update :
   ?application_restore_configuration:application_restore_configuration ->
     ?flink_run_configuration:flink_run_configuration ->
@@ -422,10 +434,12 @@ val make_tag : ?value:string -> key:string -> unit -> tag
 val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
-val make_stop_application_response : unit -> unit
+val make_stop_application_response :
+  ?operation_id:string -> unit -> stop_application_response
 val make_stop_application_request :
   ?force:bool -> application_name:string -> unit -> stop_application_request
-val make_start_application_response : unit -> unit
+val make_start_application_response :
+  ?operation_id:string -> unit -> start_application_response
 val make_sql_run_configuration :
   input_starting_position_configuration:input_starting_position_configuration
     -> input_id:string -> unit -> sql_run_configuration
@@ -482,8 +496,9 @@ val make_snapshot_details :
 val make_s3_configuration :
   file_key:string -> bucket_ar_n:string -> unit -> s3_configuration
 val make_rollback_application_response :
-  application_detail:application_detail ->
-    unit -> rollback_application_response
+  ?operation_id:string ->
+    application_detail:application_detail ->
+      unit -> rollback_application_response
 val make_rollback_application_request :
   current_application_version_id:int ->
     application_name:string -> unit -> rollback_application_request
@@ -493,6 +508,10 @@ val make_parallelism_configuration :
       ?parallelism:int ->
         configuration_type:configuration_type ->
           unit -> parallelism_configuration
+val make_error_info : ?error_string:string -> unit -> error_info
+val make_operation_failure_details :
+  ?error_info:error_info ->
+    ?rollback_operation_id:string -> unit -> operation_failure_details
 val make_monitoring_configuration :
   ?log_level:log_level ->
     ?metrics_level:metrics_level ->
@@ -534,6 +553,23 @@ val make_list_application_snapshots_request :
   ?next_token:string ->
     ?limit:int ->
       application_name:string -> unit -> list_application_snapshots_request
+val make_application_operation_info :
+  ?operation_status:operation_status ->
+    ?end_time:CoreTypes.Timestamp.t ->
+      ?start_time:CoreTypes.Timestamp.t ->
+        ?operation_id:string ->
+          ?operation:string -> unit -> application_operation_info
+val make_list_application_operations_response :
+  ?next_token:string ->
+    ?application_operation_info_list:application_operation_info list ->
+      unit -> list_application_operations_response
+val make_list_application_operations_request :
+  ?operation_status:operation_status ->
+    ?operation:string ->
+      ?next_token:string ->
+        ?limit:int ->
+          application_name:string ->
+            unit -> list_application_operations_request
 val make_discover_input_schema_response :
   ?raw_input_records:string list ->
     ?processed_input_records:string list ->
@@ -559,6 +595,23 @@ val make_describe_application_snapshot_response :
 val make_describe_application_snapshot_request :
   snapshot_name:string ->
     application_name:string -> unit -> describe_application_snapshot_request
+val make_application_version_change_details :
+  application_version_updated_to:int ->
+    application_version_updated_from:int ->
+      unit -> application_version_change_details
+val make_application_operation_info_details :
+  ?operation_failure_details:operation_failure_details ->
+    ?application_version_change_details:application_version_change_details ->
+      operation_status:operation_status ->
+        end_time:CoreTypes.Timestamp.t ->
+          start_time:CoreTypes.Timestamp.t ->
+            operation:string -> unit -> application_operation_info_details
+val make_describe_application_operation_response :
+  ?application_operation_info_details:application_operation_info_details ->
+    unit -> describe_application_operation_response
+val make_describe_application_operation_request :
+  operation_id:string ->
+    application_name:string -> unit -> describe_application_operation_request
 val make_describe_application_response :
   application_detail:application_detail ->
     unit -> describe_application_response
@@ -566,9 +619,10 @@ val make_describe_application_request :
   ?include_additional_details:bool ->
     application_name:string -> unit -> describe_application_request
 val make_delete_application_vpc_configuration_response :
-  ?application_version_id:int ->
-    ?application_ar_n:string ->
-      unit -> delete_application_vpc_configuration_response
+  ?operation_id:string ->
+    ?application_version_id:int ->
+      ?application_ar_n:string ->
+        unit -> delete_application_vpc_configuration_response
 val make_delete_application_vpc_configuration_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -606,11 +660,12 @@ val make_delete_application_input_processing_configuration_request :
       application_name:string ->
         unit -> delete_application_input_processing_configuration_request
 val make_delete_application_cloud_watch_logging_option_response :
-  ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-    list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> delete_application_cloud_watch_logging_option_response
+  ?operation_id:string ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+      list ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> delete_application_cloud_watch_logging_option_response
 val make_delete_application_cloud_watch_logging_option_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -657,17 +712,21 @@ val make_application_code_configuration :
       unit -> application_code_configuration
 val make_application_snapshot_configuration :
   snapshots_enabled:bool -> unit -> application_snapshot_configuration
+val make_application_system_rollback_configuration :
+  rollback_enabled:bool -> unit -> application_system_rollback_configuration
 val make_application_configuration :
   ?zeppelin_application_configuration:zeppelin_application_configuration ->
     ?vpc_configurations:vpc_configuration list ->
-      ?application_snapshot_configuration:application_snapshot_configuration
+      ?application_system_rollback_configuration:application_system_rollback_configuration
         ->
-        ?application_code_configuration:application_code_configuration ->
-          ?environment_properties:environment_properties ->
-            ?flink_application_configuration:flink_application_configuration
-              ->
-              ?sql_application_configuration:sql_application_configuration ->
-                unit -> application_configuration
+        ?application_snapshot_configuration:application_snapshot_configuration
+          ->
+          ?application_code_configuration:application_code_configuration ->
+            ?environment_properties:environment_properties ->
+              ?flink_application_configuration:flink_application_configuration
+                ->
+                ?sql_application_configuration:sql_application_configuration
+                  -> unit -> application_configuration
 val make_cloud_watch_logging_option :
   log_stream_ar_n:string -> unit -> cloud_watch_logging_option
 val make_create_application_request :
@@ -680,10 +739,11 @@ val make_create_application_request :
               runtime_environment:runtime_environment ->
                 application_name:string -> unit -> create_application_request
 val make_add_application_vpc_configuration_response :
-  ?vpc_configuration_description:vpc_configuration_description ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> add_application_vpc_configuration_response
+  ?operation_id:string ->
+    ?vpc_configuration_description:vpc_configuration_description ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> add_application_vpc_configuration_response
 val make_add_application_vpc_configuration_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->
@@ -731,11 +791,12 @@ val make_add_application_input_request :
     current_application_version_id:int ->
       application_name:string -> unit -> add_application_input_request
 val make_add_application_cloud_watch_logging_option_response :
-  ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-    list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
-        unit -> add_application_cloud_watch_logging_option_response
+  ?operation_id:string ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
+      list ->
+      ?application_version_id:int ->
+        ?application_ar_n:string ->
+          unit -> add_application_cloud_watch_logging_option_response
 val make_add_application_cloud_watch_logging_option_request :
   ?conditional_token:string ->
     ?current_application_version_id:int ->

@@ -60,12 +60,24 @@ type nonrec update_service_request =
   {
   service: service_change
     [@ocaml.doc
-      "A complex type that contains the new settings for the service.\n"];
+      "A complex type that contains the new settings for the service. You can specify a maximum of 30 attributes (key-value pairs).\n"];
   id: string [@ocaml.doc "The ID of the service that you want to update.\n"]}
 [@@ocaml.doc ""]
+type nonrec service_attributes_map = (string * string) list[@@ocaml.doc ""]
+type nonrec update_service_attributes_request =
+  {
+  attributes: service_attributes_map
+    [@ocaml.doc "A string map that contains attribute key-value pairs.\n"];
+  service_id: string
+    [@ocaml.doc "The ID of the service that you want to update.\n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec service_not_found = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "No service exists with the specified ID.\n"]
+type nonrec service_attributes_limit_exceeded_exception =
+  {
+  message: string option [@ocaml.doc ""]}[@@ocaml.doc
+                                           "The attribute can't be added to the service because you've exceeded the quota for the number of attributes you can add to a service.\n"]
 type nonrec invalid_input = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "One or more specified values aren't valid. For example, a required value might be missing, a numeric value might be outside the allowed range, or a string value might exceed length constraints.\n"]
@@ -245,7 +257,7 @@ type nonrec dns_config =
   {
   dns_records: dns_record list
     [@ocaml.doc
-      "An array that contains one [DnsRecord] object for each Route\194\16053 DNS record that you want Cloud Map to create when you register an instance.\n"];
+      "An array that contains one [DnsRecord] object for each Route\194\16053 DNS record that you want Cloud Map to create when you register an instance.\n\n  The record type of a service specified in a [DnsRecord] object can't be updated. To change a record type, you need to delete the service and recreate it with a new [DnsConfig].\n  \n   "];
   routing_policy: routing_policy option
     [@ocaml.doc
       "The routing policy that you want to apply to all Route\194\16053 DNS records that Cloud Map creates when you register an instance and specify this service.\n\n  If you want to use this service to register instances that create alias records, specify [WEIGHTED] for the routing policy.\n  \n    You can specify the following values:\n    \n      MULTIVALUE  If you define a health check for the service and the health check is healthy, Route\194\16053 returns the applicable value for up to eight instances.\n                  \n                   For example, suppose that the service includes configurations for one [A] record and a health check. You use the service to register 10 instances. Route\194\16053 responds to DNS queries with IP addresses for up to eight healthy instances. If fewer than eight instances are healthy, Route\194\16053 responds to every DNS query with the IP addresses for all of the healthy instances.\n                   \n                    If you don't define a health check for the service, Route\194\16053 assumes that all instances are healthy and returns the values for up to eight instances.\n                    \n                     For more information about the multivalue routing policy, see {{:https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-multivalue}Multivalue Answer Routing} in the {i Route\194\16053 Developer Guide}.\n                     \n                       WEIGHTED  Route\194\16053 returns the applicable value from one randomly selected instance from among the instances that you registered using the same service. Currently, all records have the same weight, so you can't route more or less traffic to any instances.\n                                 \n                                  For example, suppose that the service includes configurations for one [A] record and a health check. You use the service to register 10 instances. Route\194\16053 responds to DNS queries with the IP address for one randomly selected instance from among the healthy instances. If no instances are healthy, Route\194\16053 responds to DNS queries as if all of the instances were healthy.\n                                  \n                                   If you don't define a health check for the service, Route\194\16053 assumes that all instances are healthy and returns the applicable value for one randomly selected instance.\n                                   \n                                    For more information about the weighted routing policy, see {{:https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-weighted}Weighted Routing} in the {i Route\194\16053 Developer Guide}.\n                                    \n                                      "];
@@ -253,7 +265,7 @@ type nonrec dns_config =
     [@ocaml.doc
       " {i Use NamespaceId in {{:https://docs.aws.amazon.com/cloud-map/latest/api/API_Service.html}Service} instead.} \n\n The ID of the namespace to use for DNS configuration.\n "]}
 [@@ocaml.doc
-  "A complex type that contains information about the Amazon Route\194\16053 DNS records that you want Cloud Map to create when you register an instance.\n\n  The record types of a service can only be changed by deleting the service and recreating it with a new [Dnsconfig].\n  \n   "]
+  "A complex type that contains information about the Amazon Route\194\16053 DNS records that you want Cloud Map to create when you register an instance.\n"]
 type nonrec health_check_custom_config =
   {
   failure_threshold: int option
@@ -310,6 +322,16 @@ type nonrec service_filter =
   name: service_filter_name [@ocaml.doc "Specify [NAMESPACE_ID].\n"]}
 [@@ocaml.doc
   "A complex type that lets you specify the namespaces that you want to list services for.\n"]
+type nonrec service_attributes =
+  {
+  attributes: service_attributes_map option
+    [@ocaml.doc
+      "A string map that contains the following information for the service that you specify in [ServiceArn]:\n\n {ul\n       {-  The attributes that apply to the service. \n           \n            }\n       {-  For each attribute, the applicable value.\n           \n            }\n       }\n   You can specify a total of 30 attributes.\n   "];
+  service_arn: string option
+    [@ocaml.doc
+      "The ARN of the service that the attributes are associated with.\n"]}
+[@@ocaml.doc
+  "A complex type that contains information about attributes associated with a specific service.\n"]
 type nonrec service_already_exists =
   {
   service_id: string option [@ocaml.doc "The ID of the existing service.\n"];
@@ -587,6 +609,18 @@ type nonrec list_instances_request =
     [@ocaml.doc
       "The ID of the service that you want to list instances for.\n"]}
 [@@ocaml.doc ""]
+type nonrec get_service_attributes_response =
+  {
+  service_attributes: service_attributes option
+    [@ocaml.doc
+      "A complex type that contains the service ARN and a list of attribute key-value pairs associated with the service.\n"]}
+[@@ocaml.doc ""]
+type nonrec get_service_attributes_request =
+  {
+  service_id: string
+    [@ocaml.doc
+      "The ID of the service that you want to get attributes for.\n"]}
+[@@ocaml.doc ""]
 type nonrec get_service_response =
   {
   service: service option
@@ -837,6 +871,15 @@ type nonrec deregister_instance_request =
   service_id: string
     [@ocaml.doc
       "The ID of the service that the instance is associated with.\n"]}
+[@@ocaml.doc ""]
+type nonrec delete_service_attributes_request =
+  {
+  attributes: string list
+    [@ocaml.doc
+      "A list of keys corresponding to each attribute that you want to delete.\n"];
+  service_id: string
+    [@ocaml.doc
+      "The ID of the service from which the attributes will be deleted.\n"]}
 [@@ocaml.doc ""]
 type nonrec delete_service_request =
   {

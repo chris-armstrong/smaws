@@ -11,6 +11,11 @@ val service : Smaws_Lib.Service.descriptor
 type nonrec rs =
   | SINGLE_REGION [@ocaml.doc ""]
   | MULTI_REGION [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec view_type =
+  | NEW_IMAGE [@ocaml.doc ""]
+  | OLD_IMAGE [@ocaml.doc ""]
+  | KEYS_ONLY [@ocaml.doc ""]
+  | NEW_AND_OLD_IMAGES [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validation_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
@@ -143,8 +148,44 @@ type nonrec replica_specification =
       "The provisioned read capacity units for the multi-Region table in the specified Amazon Web Services Region.\n"];
   region: string [@ocaml.doc "The Amazon Web Services Region.\n"]}[@@ocaml.doc
                                                                     "The Amazon Web Services Region specific settings of a multi-Region table.\n\n For a multi-Region table, you can configure the table's read capacity differently per Amazon Web Services Region. You can do this by configuring the following parameters.\n \n  {ul\n        {-   [region]: The Region where these settings are applied. (Required)\n            \n             }\n        {-   [readCapacityUnits]: The provisioned read capacity units. (Optional)\n            \n             }\n        {-   [readCapacityAutoScaling]: The read capacity auto scaling settings for the table. (Optional)\n            \n             }\n        }\n  "]
+type nonrec cdc_status =
+  | ENABLED [@ocaml.doc ""]
+  | ENABLING [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec tag =
+  {
+  value: string
+    [@ocaml.doc
+      "The value of the tag. Tag values are case-sensitive and can be null.\n"];
+  key: string
+    [@ocaml.doc
+      "The key of the tag. Tag keys are case sensitive. Each Amazon Keyspaces resource can only have up to one tag with the same key. If you try to add an existing tag (same key), the existing tag value will be updated to the new value.\n"]}
+[@@ocaml.doc
+  "Describes a tag. A tag is a key-value pair. You can add up to 50 tags to a single Amazon Keyspaces resource.\n\n Amazon Web Services-assigned tag names and values are automatically assigned the [aws:] prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix [user:] in the Cost Allocation Report. You cannot backdate the application of a tag.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+type nonrec cdc_propagate_tags =
+  | TABLE [@ocaml.doc ""]
+  | NONE [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec cdc_specification =
+  {
+  propagate_tags: cdc_propagate_tags option
+    [@ocaml.doc
+      "Specifies that the stream inherits the tags from the table.\n"];
+  tags: tag list option
+    [@ocaml.doc
+      "The tags (key-value pairs) that you want to apply to the stream.\n"];
+  view_type: view_type option
+    [@ocaml.doc
+      "The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. After you create the stream, you can't make changes to this selection. \n\n The options are:\n \n  {ul\n        {-   [NEW_AND_OLD_IMAGES] - both versions of the row, before and after the change. This is the default.\n            \n             }\n        {-   [NEW_IMAGE] - the version of the row after the change.\n            \n             }\n        {-   [OLD_IMAGE] - the version of the row before the change.\n            \n             }\n        {-   [KEYS_ONLY] - the partition and clustering keys of the row that was changed.\n            \n             }\n        }\n  "];
+  status: cdc_status
+    [@ocaml.doc
+      "The status of the CDC stream. You can enable or disable a stream for a table.\n"]}
+[@@ocaml.doc
+  "The settings for the CDC stream of a table. For more information about CDC streams, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html}Working with change data capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 type nonrec update_table_request =
   {
+  cdc_specification: cdc_specification option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
   replica_specifications: replica_specification list option
     [@ocaml.doc "The Region specific settings of a multi-Regional table.\n"];
   auto_scaling_specification: auto_scaling_specification option
@@ -184,9 +225,9 @@ type nonrec resource_not_found_exception =
   {
   resource_arn: string option
     [@ocaml.doc
-      "The unique identifier in the format of Amazon Resource Name (ARN), for the resource not found.\n"];
+      "The unique identifier in the format of Amazon Resource Name (ARN) for the resource couldn\226\128\153t be found.\n"];
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
-                                                                    "The operation tried to access a keyspace or table that doesn't exist. The resource might not be specified correctly, or its status might not be [ACTIVE].\n"]
+                                                                    "The operation tried to access a keyspace, table, or type that doesn't exist. The resource might not be specified correctly, or its status might not be [ACTIVE].\n"]
 type nonrec internal_server_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
@@ -199,16 +240,28 @@ type nonrec access_denied_exception =
   {
   message: string option [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                                     "You don't have sufficient access permissions to perform this action. \n"]
-type nonrec tag =
+type nonrec update_keyspace_response =
   {
-  value: string
+  resource_arn: string
     [@ocaml.doc
-      "The value of the tag. Tag values are case-sensitive and can be null.\n"];
-  key: string
+      " The unique identifier of the keyspace in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec replication_specification =
+  {
+  region_list: string list option
     [@ocaml.doc
-      "The key of the tag. Tag keys are case sensitive. Each Amazon Keyspaces resource can only have up to one tag with the same key. If you try to add an existing tag (same key), the existing tag value will be updated to the new value.\n"]}
+      " The [regionList] contains the Amazon Web Services Regions where the keyspace is replicated in. \n"];
+  replication_strategy: rs
+    [@ocaml.doc
+      " The [replicationStrategy] of a keyspace, the required value is [SINGLE_REGION] or [MULTI_REGION]. \n"]}
 [@@ocaml.doc
-  "Describes a tag. A tag is a key-value pair. You can add up to 50 tags to a single Amazon Keyspaces resource.\n\n Amazon Web Services-assigned tag names and values are automatically assigned the [aws:] prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix [user:] in the Cost Allocation Report. You cannot backdate the application of a tag.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+  " The replication specification of the keyspace includes:\n\n {ul\n       {-   [regionList] - the Amazon Web Services Regions where the keyspace is replicated in.\n           \n            }\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       }\n  "]
+type nonrec update_keyspace_request =
+  {
+  client_side_timestamps: client_side_timestamps option [@ocaml.doc ""];
+  replication_specification: replication_specification [@ocaml.doc ""];
+  keyspace_name: string [@ocaml.doc " The name of the keyspace. \n"]}
+[@@ocaml.doc ""]
 type nonrec untag_resource_request =
   {
   tags: tag list
@@ -218,6 +271,11 @@ type nonrec untag_resource_request =
     [@ocaml.doc
       "The Amazon Keyspaces resource that the tags will be removed from. This value is an Amazon Resource Name (ARN).\n"]}
 [@@ocaml.doc ""]
+type nonrec type_status =
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | RESTORING [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec tag_resource_request =
   {
   tags: tag list
@@ -312,16 +370,22 @@ type nonrec restore_table_request =
   source_table_name: string [@ocaml.doc "The name of the source table.\n"];
   source_keyspace_name: string
     [@ocaml.doc "The keyspace name of the source table.\n"]}[@@ocaml.doc ""]
-type nonrec replication_specification =
+type nonrec keyspace_status =
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec replication_group_status =
   {
-  region_list: string list option
+  tables_replication_progress: string option
     [@ocaml.doc
-      " The [regionList] can contain up to six Amazon Web Services Regions where the keyspace is replicated in. \n"];
-  replication_strategy: rs
-    [@ocaml.doc
-      " The [replicationStrategy] of a keyspace, the required value is [SINGLE_REGION] or [MULTI_REGION]. \n"]}
+      " This shows the replication progress of tables in the keyspace. The value is expressed as a percentage of the newly replicated tables with status [Active] compared to the total number of tables in the keyspace. \n"];
+  keyspace_status: keyspace_status
+    [@ocaml.doc " The status of the keyspace. \n"];
+  region: string
+    [@ocaml.doc " The name of the Region that was added to the keyspace. \n"]}
 [@@ocaml.doc
-  " The replication specification of the keyspace includes:\n\n {ul\n       {-   [regionList] - up to six Amazon Web Services Regions where the keyspace is replicated in.\n           \n            }\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       }\n  "]
+  " This shows the summary status of the keyspace after a new Amazon Web Services Region was added. \n"]
 type nonrec capacity_specification_summary =
   {
   last_update_to_pay_per_request_timestamp: CoreTypes.Timestamp.t option
@@ -365,6 +429,26 @@ type nonrec point_in_time_recovery_summary =
     [@ocaml.doc
       "Shows if point-in-time recovery is enabled or disabled for the specified table.\n"]}
 [@@ocaml.doc "The point-in-time recovery status of the specified table.\n"]
+type nonrec list_types_response =
+  {
+  types: string list
+    [@ocaml.doc " The list of types contained in the specified keyspace. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The pagination token. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"]}
+[@@ocaml.doc ""]
+type nonrec list_types_request =
+  {
+  keyspace_name: string
+    [@ocaml.doc
+      " The name of the keyspace that contains the listed types. \n"];
+  max_results: int option
+    [@ocaml.doc
+      " The total number of types to return in the output. If the total number of types available is more than the value specified, a [NextToken] is provided in the output. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"];
+  next_token: string option
+    [@ocaml.doc
+      " The pagination token. To resume pagination, provide the [NextToken] value as an argument of a subsequent API invocation. \n"]}
+[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_response =
   {
   tags: tag list option [@ocaml.doc "A list of tags.\n"];
@@ -430,6 +514,42 @@ type nonrec list_keyspaces_request =
     [@ocaml.doc
       "The pagination token. To resume pagination, provide the [NextToken] value as argument of a subsequent API invocation.\n"]}
 [@@ocaml.doc ""]
+type nonrec field_definition =
+  {
+  type_: string
+    [@ocaml.doc
+      " Any supported Cassandra data type, including collections and other user-defined types that are contained in the same keyspace. \n\n For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cassandra-apis.html#cassandra-data-type}Cassandra data type support} in the {i Amazon Keyspaces Developer Guide}.\n "];
+  name: string [@ocaml.doc " The identifier. \n"]}[@@ocaml.doc
+                                                    " A field definition consists out of a name and a type. \n"]
+type nonrec get_type_response =
+  {
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace that contains this type in the format of an Amazon Resource Name (ARN). \n"];
+  max_nesting_depth: int option
+    [@ocaml.doc " The level of nesting implemented for this type. \n"];
+  direct_parent_types: string list option
+    [@ocaml.doc " The types that use this type. \n"];
+  direct_referring_tables: string list option
+    [@ocaml.doc " The tables that use this type. \n"];
+  status: type_status option [@ocaml.doc " The status of this type. \n"];
+  last_modified_timestamp: CoreTypes.Timestamp.t option
+    [@ocaml.doc
+      " The timestamp that shows when this type was last modified. \n"];
+  field_definitions: field_definition list option
+    [@ocaml.doc " The names and types that define this type. \n"];
+  type_name: string [@ocaml.doc " The name of the type. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace that contains this type. \n"]}
+[@@ocaml.doc ""]
+type nonrec get_type_request =
+  {
+  type_name: string
+    [@ocaml.doc
+      "The formatted name of the type. For example, if the name of the type was created without double quotes, Amazon Keyspaces saved the name in lower-case characters. If the name was created in double quotes, you must use double quotes to specify the type name. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace that contains this type. \n"]}
+[@@ocaml.doc ""]
 type nonrec get_table_auto_scaling_settings_response =
   {
   replica_specifications: replica_auto_scaling_specification list option
@@ -451,8 +571,22 @@ type nonrec comment =
   {
   message: string [@ocaml.doc "An optional description of the table.\n"]}
 [@@ocaml.doc "An optional comment that describes the table.\n"]
+type nonrec cdc_specification_summary =
+  {
+  view_type: view_type option
+    [@ocaml.doc
+      "The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. This setting can't be changed, after the stream has been created. \n\n The options are:\n \n  {ul\n        {-   [NEW_AND_OLD_IMAGES] - both versions of the row, before and after the change. This is the default.\n            \n             }\n        {-   [NEW_IMAGE] - the version of the row after the change.\n            \n             }\n        {-   [OLD_IMAGE] - the version of the row before the change.\n            \n             }\n        {-   [KEYS_ONLY] - the partition and clustering keys of the row that was changed.\n            \n             }\n        }\n  "];
+  status: cdc_status
+    [@ocaml.doc
+      "The status of the CDC stream. Specifies if the table has a CDC stream.\n"]}
+[@@ocaml.doc
+  "The settings of the CDC stream of the table. For more information about CDC streams, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html}Working with change data capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 type nonrec get_table_response =
   {
+  cdc_specification: cdc_specification_summary option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
+  latest_stream_arn: string option
+    [@ocaml.doc "The Amazon Resource Name (ARN) of the stream.\n"];
   replica_specifications: replica_specification_summary list option
     [@ocaml.doc
       "Returns the Amazon Web Services Region specific settings of all Regions a multi-Region table is replicated in.\n"];
@@ -494,6 +628,9 @@ type nonrec get_table_request =
 [@@ocaml.doc ""]
 type nonrec get_keyspace_response =
   {
+  replication_group_statuses: replication_group_status list option
+    [@ocaml.doc
+      " A list of all Regions the keyspace is replicated in after the update keyspace operation and their status. \n"];
   replication_regions: string list option
     [@ocaml.doc
       " If the [replicationStrategy] of the keyspace is [MULTI_REGION], a list of replication Regions is returned. \n"];
@@ -507,6 +644,19 @@ type nonrec get_keyspace_request =
   {
   keyspace_name: string [@ocaml.doc "The name of the keyspace.\n"]}[@@ocaml.doc
                                                                     ""]
+type nonrec delete_type_response =
+  {
+  type_name: string [@ocaml.doc " The name of the type that was deleted. \n"];
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace from which the type was deleted in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec delete_type_request =
+  {
+  type_name: string [@ocaml.doc " The name of the type to be deleted. \n"];
+  keyspace_name: string
+    [@ocaml.doc " The name of the keyspace of the to be deleted type. \n"]}
+[@@ocaml.doc ""]
 type nonrec delete_table_request =
   {
   table_name: string [@ocaml.doc "The name of the table to be deleted.\n"];
@@ -517,6 +667,25 @@ type nonrec delete_keyspace_request =
   {
   keyspace_name: string
     [@ocaml.doc "The name of the keyspace to be deleted.\n"]}[@@ocaml.doc ""]
+type nonrec create_type_response =
+  {
+  type_name: string
+    [@ocaml.doc
+      " The formatted name of the user-defined type that was created. Note that Amazon Keyspaces requires the formatted name of the type for other operations, for example [GetType]. \n"];
+  keyspace_arn: string
+    [@ocaml.doc
+      " The unique identifier of the keyspace that contains the new type in the format of an Amazon Resource Name (ARN). \n"]}
+[@@ocaml.doc ""]
+type nonrec create_type_request =
+  {
+  field_definitions: field_definition list
+    [@ocaml.doc
+      " The field definitions, consisting of names and types, that define this type. \n"];
+  type_name: string
+    [@ocaml.doc
+      " The name of the user-defined type. \n\n UDT names must contain 48 characters or less, must begin with an alphabetic character, and can only contain alpha-numeric characters and underscores. Amazon Keyspaces converts upper case characters automatically into lower case characters. \n \n  Alternatively, you can declare a UDT name in double quotes. When declaring a UDT name inside double quotes, Amazon Keyspaces preserves upper casing and allows special characters.\n  \n   You can also use double quotes as part of the name when you create the UDT, but you must escape each double quote character with an additional double quote character.\n   "];
+  keyspace_name: string [@ocaml.doc " The name of the keyspace. \n"]}
+[@@ocaml.doc ""]
 type nonrec create_table_response =
   {
   resource_arn: string
@@ -525,6 +694,8 @@ type nonrec create_table_response =
 [@@ocaml.doc ""]
 type nonrec create_table_request =
   {
+  cdc_specification: cdc_specification option
+    [@ocaml.doc "The CDC stream settings of the table.\n"];
   replica_specifications: replica_specification list option
     [@ocaml.doc
       "The optional Amazon Web Services Region specific settings of a multi-Region table. These settings overwrite the general settings of the table for the specified Region. \n\n For a multi-Region table in provisioned capacity mode, you can configure the table's read capacity differently for each Region's replica. The write capacity, however, remains synchronized between all replicas to ensure that there's enough capacity to replicate writes across all Regions. To define the read capacity for a table replica in a specific Region, you can do so by configuring the following parameters.\n \n  {ul\n        {-   [region]: The Region where these settings are applied. (Required)\n            \n             }\n        {-   [readCapacityUnits]: The provisioned read capacity units. (Optional)\n            \n             }\n        {-   [readCapacityAutoScaling]: The read capacity auto scaling settings for the table. (Optional) \n            \n             }\n        }\n  "];
@@ -573,7 +744,7 @@ type nonrec create_keyspace_request =
   {
   replication_specification: replication_specification option
     [@ocaml.doc
-      " The replication specification of the keyspace includes:\n\n {ul\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       {-   [regionList] - if the [replicationStrategy] is [MULTI_REGION], the [regionList] requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in. The maximum number of supported replication Regions including the current Region is six.\n           \n            }\n       }\n  "];
+      " The replication specification of the keyspace includes:\n\n {ul\n       {-   [replicationStrategy] - the required value is [SINGLE_REGION] or [MULTI_REGION].\n           \n            }\n       {-   [regionList] - if the [replicationStrategy] is [MULTI_REGION], the [regionList] requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in.\n           \n            }\n       }\n  "];
   tags: tag list option
     [@ocaml.doc
       "A list of key-value pair tags to be attached to the keyspace.\n\n For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/tagging-keyspaces.html}Adding tags and labels to Amazon Keyspaces resources} in the {i Amazon Keyspaces Developer Guide}.\n "];
@@ -618,20 +789,34 @@ val make_replica_specification :
   ?read_capacity_auto_scaling:auto_scaling_settings ->
     ?read_capacity_units:int ->
       region:string -> unit -> replica_specification
-val make_update_table_request :
-  ?replica_specifications:replica_specification list ->
-    ?auto_scaling_specification:auto_scaling_specification ->
-      ?client_side_timestamps:client_side_timestamps ->
-        ?default_time_to_live:int ->
-          ?ttl:time_to_live ->
-            ?point_in_time_recovery:point_in_time_recovery ->
-              ?encryption_specification:encryption_specification ->
-                ?capacity_specification:capacity_specification ->
-                  ?add_columns:column_definition list ->
-                    table_name:string ->
-                      keyspace_name:string -> unit -> update_table_request
-val make_untag_resource_response : unit -> unit
 val make_tag : value:string -> key:string -> unit -> tag
+val make_cdc_specification :
+  ?propagate_tags:cdc_propagate_tags ->
+    ?tags:tag list ->
+      ?view_type:view_type -> status:cdc_status -> unit -> cdc_specification
+val make_update_table_request :
+  ?cdc_specification:cdc_specification ->
+    ?replica_specifications:replica_specification list ->
+      ?auto_scaling_specification:auto_scaling_specification ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?default_time_to_live:int ->
+            ?ttl:time_to_live ->
+              ?point_in_time_recovery:point_in_time_recovery ->
+                ?encryption_specification:encryption_specification ->
+                  ?capacity_specification:capacity_specification ->
+                    ?add_columns:column_definition list ->
+                      table_name:string ->
+                        keyspace_name:string -> unit -> update_table_request
+val make_update_keyspace_response :
+  resource_arn:string -> unit -> update_keyspace_response
+val make_replication_specification :
+  ?region_list:string list ->
+    replication_strategy:rs -> unit -> replication_specification
+val make_update_keyspace_request :
+  ?client_side_timestamps:client_side_timestamps ->
+    replication_specification:replication_specification ->
+      keyspace_name:string -> unit -> update_keyspace_request
+val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tags:tag list -> resource_arn:string -> unit -> untag_resource_request
 val make_tag_resource_response : unit -> unit
@@ -664,9 +849,10 @@ val make_restore_table_request :
                     source_table_name:string ->
                       source_keyspace_name:string ->
                         unit -> restore_table_request
-val make_replication_specification :
-  ?region_list:string list ->
-    replication_strategy:rs -> unit -> replication_specification
+val make_replication_group_status :
+  ?tables_replication_progress:string ->
+    keyspace_status:keyspace_status ->
+      region:string -> unit -> replication_group_status
 val make_capacity_specification_summary :
   ?last_update_to_pay_per_request_timestamp:CoreTypes.Timestamp.t ->
     ?write_capacity_units:int ->
@@ -684,6 +870,11 @@ val make_point_in_time_recovery_summary :
   ?earliest_restorable_timestamp:CoreTypes.Timestamp.t ->
     status:point_in_time_recovery_status ->
       unit -> point_in_time_recovery_summary
+val make_list_types_response :
+  ?next_token:string -> types:string list -> unit -> list_types_response
+val make_list_types_request :
+  ?max_results:int ->
+    ?next_token:string -> keyspace_name:string -> unit -> list_types_request
 val make_list_tags_for_resource_response :
   ?tags:tag list ->
     ?next_token:string -> unit -> list_tags_for_resource_response
@@ -706,6 +897,20 @@ val make_list_keyspaces_response :
     keyspaces:keyspace_summary list -> unit -> list_keyspaces_response
 val make_list_keyspaces_request :
   ?max_results:int -> ?next_token:string -> unit -> list_keyspaces_request
+val make_field_definition :
+  type_:string -> name:string -> unit -> field_definition
+val make_get_type_response :
+  ?max_nesting_depth:int ->
+    ?direct_parent_types:string list ->
+      ?direct_referring_tables:string list ->
+        ?status:type_status ->
+          ?last_modified_timestamp:CoreTypes.Timestamp.t ->
+            ?field_definitions:field_definition list ->
+              keyspace_arn:string ->
+                type_name:string ->
+                  keyspace_name:string -> unit -> get_type_response
+val make_get_type_request :
+  type_name:string -> keyspace_name:string -> unit -> get_type_request
 val make_get_table_auto_scaling_settings_response :
   ?replica_specifications:replica_auto_scaling_specification list ->
     ?auto_scaling_specification:auto_scaling_specification ->
@@ -717,54 +922,70 @@ val make_get_table_auto_scaling_settings_request :
   table_name:string ->
     keyspace_name:string -> unit -> get_table_auto_scaling_settings_request
 val make_comment : message:string -> unit -> comment
+val make_cdc_specification_summary :
+  ?view_type:view_type ->
+    status:cdc_status -> unit -> cdc_specification_summary
 val make_get_table_response :
-  ?replica_specifications:replica_specification_summary list ->
-    ?client_side_timestamps:client_side_timestamps ->
-      ?comment:comment ->
-        ?default_time_to_live:int ->
-          ?ttl:time_to_live ->
-            ?point_in_time_recovery:point_in_time_recovery_summary ->
-              ?encryption_specification:encryption_specification ->
-                ?capacity_specification:capacity_specification_summary ->
-                  ?schema_definition:schema_definition ->
-                    ?status:table_status ->
-                      ?creation_timestamp:CoreTypes.Timestamp.t ->
-                        resource_arn:string ->
-                          table_name:string ->
-                            keyspace_name:string ->
-                              unit -> get_table_response
+  ?cdc_specification:cdc_specification_summary ->
+    ?latest_stream_arn:string ->
+      ?replica_specifications:replica_specification_summary list ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?comment:comment ->
+            ?default_time_to_live:int ->
+              ?ttl:time_to_live ->
+                ?point_in_time_recovery:point_in_time_recovery_summary ->
+                  ?encryption_specification:encryption_specification ->
+                    ?capacity_specification:capacity_specification_summary ->
+                      ?schema_definition:schema_definition ->
+                        ?status:table_status ->
+                          ?creation_timestamp:CoreTypes.Timestamp.t ->
+                            resource_arn:string ->
+                              table_name:string ->
+                                keyspace_name:string ->
+                                  unit -> get_table_response
 val make_get_table_request :
   table_name:string -> keyspace_name:string -> unit -> get_table_request
 val make_get_keyspace_response :
-  ?replication_regions:string list ->
-    replication_strategy:rs ->
-      resource_arn:string ->
-        keyspace_name:string -> unit -> get_keyspace_response
+  ?replication_group_statuses:replication_group_status list ->
+    ?replication_regions:string list ->
+      replication_strategy:rs ->
+        resource_arn:string ->
+          keyspace_name:string -> unit -> get_keyspace_response
 val make_get_keyspace_request :
   keyspace_name:string -> unit -> get_keyspace_request
+val make_delete_type_response :
+  type_name:string -> keyspace_arn:string -> unit -> delete_type_response
+val make_delete_type_request :
+  type_name:string -> keyspace_name:string -> unit -> delete_type_request
 val make_delete_table_response : unit -> unit
 val make_delete_table_request :
   table_name:string -> keyspace_name:string -> unit -> delete_table_request
 val make_delete_keyspace_response : unit -> unit
 val make_delete_keyspace_request :
   keyspace_name:string -> unit -> delete_keyspace_request
+val make_create_type_response :
+  type_name:string -> keyspace_arn:string -> unit -> create_type_response
+val make_create_type_request :
+  field_definitions:field_definition list ->
+    type_name:string -> keyspace_name:string -> unit -> create_type_request
 val make_create_table_response :
   resource_arn:string -> unit -> create_table_response
 val make_create_table_request :
-  ?replica_specifications:replica_specification list ->
-    ?auto_scaling_specification:auto_scaling_specification ->
-      ?client_side_timestamps:client_side_timestamps ->
-        ?tags:tag list ->
-          ?default_time_to_live:int ->
-            ?ttl:time_to_live ->
-              ?point_in_time_recovery:point_in_time_recovery ->
-                ?encryption_specification:encryption_specification ->
-                  ?capacity_specification:capacity_specification ->
-                    ?comment:comment ->
-                      schema_definition:schema_definition ->
-                        table_name:string ->
-                          keyspace_name:string ->
-                            unit -> create_table_request
+  ?cdc_specification:cdc_specification ->
+    ?replica_specifications:replica_specification list ->
+      ?auto_scaling_specification:auto_scaling_specification ->
+        ?client_side_timestamps:client_side_timestamps ->
+          ?tags:tag list ->
+            ?default_time_to_live:int ->
+              ?ttl:time_to_live ->
+                ?point_in_time_recovery:point_in_time_recovery ->
+                  ?encryption_specification:encryption_specification ->
+                    ?capacity_specification:capacity_specification ->
+                      ?comment:comment ->
+                        schema_definition:schema_definition ->
+                          table_name:string ->
+                            keyspace_name:string ->
+                              unit -> create_table_request
 val make_create_keyspace_response :
   resource_arn:string -> unit -> create_keyspace_response
 val make_create_keyspace_request :
@@ -785,7 +1006,7 @@ sig
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services account, keyspace names must be unique within each Region.\n\n  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new keyspace by using the [GetKeyspace] operation.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/working-with-keyspaces.html#keyspaces-create}Creating keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+     "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services account, keyspace names must be unique within each Region.\n\n  [CreateKeyspace] is an asynchronous operation. You can monitor the creation status of the new keyspace by using the [GetKeyspace] operation.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.keyspaces.html}Create a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n  "]
 module CreateTable :
 sig
   val request :
@@ -801,7 +1022,23 @@ sig
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, table names must be unique.\n\n  [CreateTable] is an asynchronous operation. When the request is received, the status of the table is set to [CREATING]. You can monitor the creation status of the new table by using the [GetTable] operation, which returns the current [status] of the table. You can start using a table when the status is [ACTIVE].\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/working-with-tables.html#tables-create}Creating tables} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+     "The [CreateTable] operation adds a new table to the specified keyspace. Within a keyspace, table names must be unique.\n\n  [CreateTable] is an asynchronous operation. When the request is received, the status of the table is set to [CREATING]. You can monitor the creation status of the new table by using the [GetTable] operation, which returns the current [status] of the table. You can start using a table when the status is [ACTIVE].\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/getting-started.tables.html}Create a table} in the {i Amazon Keyspaces Developer Guide}.\n  "]
+module CreateType :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      create_type_request ->
+        (create_type_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ConflictException of conflict_exception 
+          | `InternalServerException of internal_server_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n To configure the required permissions, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create}Permissions to create a UDT} in the {i Amazon Keyspaces Developer Guide}.\n \n  For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html}User-defined types (UDTs)} in the {i Amazon Keyspaces Developer Guide}. \n  "]
 module DeleteKeyspace :
 sig
   val request :
@@ -834,6 +1071,22 @@ sig
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
      "The [DeleteTable] operation deletes a table and all of its data. After a [DeleteTable] request is received, the specified table is in the [DELETING] state until Amazon Keyspaces completes the deletion. If the table is in the [ACTIVE] state, you can delete it. If a table is either in the [CREATING] or [UPDATING] states, then Amazon Keyspaces returns a [ResourceInUseException]. If the specified table does not exist, Amazon Keyspaces returns a [ResourceNotFoundException]. If the table is already in the [DELETING] state, no error is returned.\n"]
+module DeleteType :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_type_request ->
+        (delete_type_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ConflictException of conflict_exception 
+          | `InternalServerException of internal_server_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that is not used in a table or another UDT. \n\n To configure the required permissions, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop}Permissions to delete a UDT} in the {i Amazon Keyspaces Developer Guide}.\n "]
 module GetKeyspace :
 sig
   val request :
@@ -848,7 +1101,7 @@ sig
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns the name and the Amazon Resource Name (ARN) of the specified table.\n"]
+     "Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly added Regions after an [UpdateKeyspace] operation.\n"]
 module GetTable :
 sig
   val request :
@@ -863,7 +1116,7 @@ sig
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns information about the table, including the table's name and current status, the keyspace name, configuration settings, and metadata.\n\n To read table metadata using [GetTable], [Select] action permissions for the table and system tables are required to complete the operation.\n "]
+     "Returns information about the table, including the table's name and current status, the keyspace name, configuration settings, and metadata.\n\n To read table metadata using [GetTable], the IAM principal needs [Select] action permissions for the table and the system keyspace.\n "]
 module GetTableAutoScalingSettings :
 sig
   val request :
@@ -879,6 +1132,21 @@ sig
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
      "Returns auto scaling related settings of the specified table in JSON format. If the table is a multi-Region table, the Amazon Web Services Region specific auto scaling settings of the table are included.\n\n Amazon Keyspaces auto scaling helps you provision throughput capacity for variable workloads efficiently by increasing and decreasing your table's read and write capacity automatically in response to application traffic. For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/autoscaling.html}Managing throughput capacity automatically with Amazon Keyspaces auto scaling} in the {i Amazon Keyspaces Developer Guide}.\n \n    [GetTableAutoScalingSettings] can't be used as an action in an IAM policy.\n   \n     To define permissions for [GetTableAutoScalingSettings], you must allow the following two actions in the IAM policy statement's [Action] element:\n     \n      {ul\n            {-   [application-autoscaling:DescribeScalableTargets] \n                \n                 }\n            {-   [application-autoscaling:DescribeScalingPolicies] \n                \n                 }\n            }\n  "]
+module GetType :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_type_request ->
+        (get_type_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerException of internal_server_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     " The [GetType] operation returns information about the type, for example the field definitions, the timestamp when the type was last modified, the level of nesting, the status, and details about if the type is used in other types and tables. \n\n To read keyspace metadata using [GetType], the IAM principal needs [Select] action permissions for the system keyspace. To configure the required permissions, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n "]
 module ListKeyspaces :
 sig
   val request :
@@ -892,7 +1160,8 @@ sig
           | `ServiceQuotaExceededException of
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
-end[@@ocaml.doc "Returns a list of keyspaces.\n"]
+end[@@ocaml.doc
+     "The [ListKeyspaces] operation returns a list of keyspaces.\n"]
 module ListTables :
 sig
   val request :
@@ -906,7 +1175,8 @@ sig
           | `ServiceQuotaExceededException of
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
-end[@@ocaml.doc "Returns a list of tables for a specified keyspace.\n"]
+end[@@ocaml.doc
+     "The [ListTables] operation returns a list of tables for a specified keyspace.\n\n To read keyspace metadata using [ListTables], the IAM principal needs [Select] action permissions for the system keyspace.\n "]
 module ListTagsForResource :
 sig
   val request :
@@ -921,7 +1191,22 @@ sig
               service_quota_exceeded_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns a list of all tags associated with the specified Amazon Keyspaces resource.\n"]
+     "Returns a list of all tags associated with the specified Amazon Keyspaces resource.\n\n To read keyspace metadata using [ListTagsForResource], the IAM principal needs [Select] action permissions for the specified resource and the system keyspace.\n "]
+module ListTypes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_types_request ->
+        (list_types_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerException of internal_server_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     " The [ListTypes] operation returns a list of types for a specified keyspace. \n\n To read keyspace metadata using [ListTypes], the IAM principal needs [Select] action permissions for the system keyspace. To configure the required permissions, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view}Permissions to view a UDT} in the {i Amazon Keyspaces Developer Guide}.\n "]
 module RestoreTable :
 sig
   val request :
@@ -946,6 +1231,7 @@ sig
         (unit,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
+          | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ServiceQuotaExceededException of
@@ -969,6 +1255,22 @@ sig
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
      "Removes the association of tags from a Amazon Keyspaces resource.\n"]
+module UpdateKeyspace :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      update_keyspace_request ->
+        (update_keyspace_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ConflictException of conflict_exception 
+          | `InternalServerException of internal_server_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     " Adds a new Amazon Web Services Region to the keyspace. You can add a new Region to a keyspace that is either a single or a multi-Region keyspace. Amazon Keyspaces is going to replicate all tables in the keyspace to the new Region. To successfully replicate all tables to the new Region, they must use client-side timestamps for conflict resolution. To enable client-side timestamps, specify [clientSideTimestamps.status = enabled] when invoking the API. For more information about client-side timestamps, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/client-side-timestamps.html}Client-side timestamps in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n\n To add a Region to a keyspace using the [UpdateKeyspace] API, the IAM principal needs permissions for the following IAM actions:\n \n  {ul\n        {-   [cassandra:Alter] \n            \n             }\n        {-   [cassandra:AlterMultiRegionResource] \n            \n             }\n        {-   [cassandra:Create] \n            \n             }\n        {-   [cassandra:CreateMultiRegionResource] \n            \n             }\n        {-   [cassandra:Select] \n            \n             }\n        {-   [cassandra:SelectMultiRegionResource] \n            \n             }\n        {-   [cassandra:Modify] \n            \n             }\n        {-   [cassandra:ModifyMultiRegionResource] \n            \n             }\n        }\n   If the keyspace contains a table that is configured in provisioned mode with auto scaling enabled, the following additional IAM actions need to be allowed.\n   \n    {ul\n          {-   [application-autoscaling:RegisterScalableTarget] \n              \n               }\n          {-   [application-autoscaling:DeregisterScalableTarget] \n              \n               }\n          {-   [application-autoscaling:DescribeScalableTargets] \n              \n               }\n          {-   [application-autoscaling:PutScalingPolicy] \n              \n               }\n          {-   [application-autoscaling:DescribeScalingPolicies] \n              \n               }\n          }\n   To use the [UpdateKeyspace] API, the IAM principal also needs permissions to create a service-linked role with the following elements:\n   \n    {ul\n          {-   [iam:CreateServiceLinkedRole] - The {b action} the principal can perform.\n              \n               }\n          {-   [arn:aws:iam::*:role/aws-service-role/replication.cassandra.amazonaws.com/AWSServiceRoleForKeyspacesReplication] - The {b resource} that the action can be performed on. \n              \n               }\n          {-   [iam:AWSServiceName: replication.cassandra.amazonaws.com] - The only Amazon Web Services service that this role can be attached to is Amazon Keyspaces.\n              \n               }\n          }\n   For more information, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/howitworks_replication_permissions_addReplica.html}Configure the IAM permissions required to add an Amazon Web Services Region to a keyspace} in the {i Amazon Keyspaces Developer Guide}.\n   "]
 module UpdateTable :
 sig
   val request :

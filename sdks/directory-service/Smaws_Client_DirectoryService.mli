@@ -118,7 +118,7 @@ type nonrec directory_unavailable_exception =
   {
   request_id: string option [@ocaml.doc ""];
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The specified directory is unavailable or could not be found.\n"]
+                                           "The specified directory is unavailable.\n"]
 type nonrec directory_does_not_exist_exception =
   {
   request_id: string option [@ocaml.doc ""];
@@ -139,7 +139,7 @@ type nonrec radius_settings =
     [@ocaml.doc "Required for enabling RADIUS on the directory.\n"];
   radius_retries: int option
     [@ocaml.doc
-      "The maximum number of times that communication with the RADIUS server is attempted.\n"];
+      "The maximum number of times that communication with the RADIUS server is retried after the initial attempt.\n"];
   radius_timeout: int option
     [@ocaml.doc
       "The amount of time, in seconds, to wait for the RADIUS server to respond.\n"];
@@ -225,7 +225,7 @@ type nonrec access_denied_exception =
   {
   request_id: string option [@ocaml.doc ""];
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Client authentication is not available in this region at this time.\n"]
+                                           "You do not have sufficient access to perform this action.\n"]
 type nonrec update_conditional_forwarder_request =
   {
   dns_ip_addrs: string list
@@ -330,10 +330,10 @@ type nonrec tag =
   {
   value: string
     [@ocaml.doc
-      "The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"];
+      "The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '\\@' (Java regex: \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"];
   key: string
     [@ocaml.doc
-      "Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]}
+      "Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '\\@'(Java regex: \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]}
 [@@ocaml.doc
   "Metadata assigned to a directory consisting of a key-value pair.\n"]
 type nonrec tag_limit_exceeded_exception =
@@ -515,7 +515,7 @@ type nonrec setting_entry =
       "The name of the directory setting. For example:\n\n  [TLS_1_0] \n "];
   type_: string option
     [@ocaml.doc
-      "The type, or category, of a directory setting. Similar settings have the same type. For example, [Protocol], [Cipher], or [Certificate-Based Authentication].\n"]}
+      "The type, or category, of a directory setting. Similar settings have the same type. For example, [Protocol], [Cipher], or [Certificate-Based\n        Authentication].\n"]}
 [@@ocaml.doc
   "Contains information about the specified configurable setting for a directory.\n"]
 type nonrec schema_extension_status =
@@ -668,6 +668,7 @@ type nonrec region_type =
   | ADDITIONAL [@ocaml.doc ""]
   | PRIMARY [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec directory_stage =
+  | UPDATING [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
   | DELETED [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""]
@@ -1054,6 +1055,10 @@ type nonrec enable_ldaps_request =
       "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"];
   directory_id: string [@ocaml.doc "The identifier of the directory.\n"]}
 [@@ocaml.doc ""]
+type nonrec enable_directory_data_access_request =
+  {
+  directory_id: string [@ocaml.doc "The directory identifier.\n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec client_authentication_type =
   | SMART_CARD_OR_PASSWORD [@ocaml.doc ""]
   | SMART_CARD [@ocaml.doc ""][@@ocaml.doc ""]
@@ -1066,6 +1071,7 @@ type nonrec enable_client_authentication_request =
     [@ocaml.doc "The identifier of the specified directory. \n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec domain_controller_status =
+  | UPDATING [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
   | DELETED [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""]
@@ -1127,11 +1133,15 @@ type nonrec disable_ldaps_request =
       "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"];
   directory_id: string [@ocaml.doc "The identifier of the directory.\n"]}
 [@@ocaml.doc ""]
+type nonrec disable_directory_data_access_request =
+  {
+  directory_id: string [@ocaml.doc "The directory identifier.\n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec disable_client_authentication_request =
   {
   type_: client_authentication_type
     [@ocaml.doc
-      "The type of client authentication to disable. Currently, only the parameter, [SmartCard] is supported.\n"];
+      "The type of client authentication to disable. Currently the only parameter [\"SmartCard\"] is supported.\n"];
   directory_id: string [@ocaml.doc "The identifier of the directory \n"]}
 [@@ocaml.doc ""]
 type nonrec directory_type =
@@ -1329,6 +1339,22 @@ type nonrec describe_domain_controllers_request =
     [@ocaml.doc
       "Identifier of the directory for which to retrieve the domain controller information.\n"]}
 [@@ocaml.doc ""]
+type nonrec data_access_status =
+  | FAILED [@ocaml.doc ""]
+  | ENABLING [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec describe_directory_data_access_result =
+  {
+  data_access_status: data_access_status option
+    [@ocaml.doc
+      "The current status of data access through the Directory Service Data API.\n"]}
+[@@ocaml.doc ""]
+type nonrec describe_directory_data_access_request =
+  {
+  directory_id: string [@ocaml.doc "The directory identifier.\n"]}[@@ocaml.doc
+                                                                    ""]
 type nonrec directory_edition =
   | STANDARD [@ocaml.doc ""]
   | ENTERPRISE [@ocaml.doc ""][@@ocaml.doc ""]
@@ -1379,7 +1405,7 @@ type nonrec directory_description =
   vpc_settings: directory_vpc_settings_description option
     [@ocaml.doc
       "A [DirectoryVpcSettingsDescription] object that contains additional information about a directory. This member is only present if the directory is a Simple AD or Managed Microsoft AD directory.\n"];
-  type_: directory_type option [@ocaml.doc "The directory size.\n"];
+  type_: directory_type option [@ocaml.doc "The directory type.\n"];
   stage_last_updated_date_time: CoreTypes.Timestamp.t option
     [@ocaml.doc "The date and time that the stage was last updated.\n"];
   launch_time: CoreTypes.Timestamp.t option
@@ -1421,7 +1447,7 @@ type nonrec describe_directories_result =
       "If not null, more results are available. Pass this value for the [NextToken] parameter in a subsequent call to [DescribeDirectories] to retrieve the next set of items.\n"];
   directory_descriptions: directory_description list option
     [@ocaml.doc
-      "The list of [DirectoryDescription] objects that were retrieved.\n\n It is possible that this list contains less than the number of items specified in the [Limit] member of the request. This occurs if there are less than the requested number of items left to retrieve, or if the limitations of the operation have been exceeded.\n "]}
+      "The list of available [DirectoryDescription] objects that were retrieved.\n\n It is possible that this list contains less than the number of items specified in the [Limit] member of the request. This occurs if there are less than the requested number of items left to retrieve, or if the limitations of the operation have been exceeded.\n "]}
 [@@ocaml.doc
   "Contains the results of the [DescribeDirectories] operation.\n"]
 type nonrec describe_directories_request =
@@ -1632,7 +1658,7 @@ type nonrec create_trust_request =
     [@ocaml.doc "The direction of the trust relationship.\n"];
   trust_password: string
     [@ocaml.doc
-      "The trust password. The must be the same password that was used when creating the trust relationship on the external domain.\n"];
+      "The trust password. The trust password must be the same password that was used when creating the trust relationship on the external domain.\n"];
   remote_domain_name: string
     [@ocaml.doc
       "The Fully Qualified Domain Name (FQDN) of the external domain for which to create the trust relationship.\n"];
@@ -1860,7 +1886,7 @@ type nonrec add_ip_routes_request =
   {
   update_security_group_for_directory_controllers: bool option
     [@ocaml.doc
-      "If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for {i directory ID} directory controllers.\" Following are the new rules: \n\n Inbound:\n \n  {ul\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: DNS (UDP), Protocol: UDP, Range: 53, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: DNS (TCP), Protocol: TCP, Range: 53, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: LDAP, Protocol: TCP, Range: 389, Source: 0.0.0.0/0\n            \n             }\n        {-  Type: All ICMP, Protocol: All, Range: N/A, Source: 0.0.0.0/0\n            \n             }\n        }\n   \n   \n    Outbound:\n    \n     {ul\n           {-  Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0\n               \n                }\n           }\n   These security rules impact an internal network interface that is not exposed publicly.\n   "];
+      "If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for {i directory ID} directory controllers.\" Following are the new rules: \n\n Inbound:\n \n  {ul\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: DNS (UDP), Protocol: UDP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: DNS (TCP), Protocol: TCP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: LDAP, Protocol: TCP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        {-  Type: All ICMP, Protocol: All, Range: N/A, Source: Managed Microsoft AD VPC IPv4 CIDR\n            \n             }\n        }\n   \n   \n    Outbound:\n    \n     {ul\n           {-  Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0\n               \n                }\n           }\n   These security rules impact an internal network interface that is not exposed publicly.\n   "];
   ip_routes: ip_route list
     [@ocaml.doc
       "IP address blocks, using CIDR format, of the traffic to route. This is often the IP address block of the DNS server used for your self-managed domain.\n"];
@@ -2118,6 +2144,8 @@ val make_enable_radius_request :
     directory_id:string -> unit -> enable_radius_request
 val make_enable_ldaps_request :
   type_:ldaps_type -> directory_id:string -> unit -> enable_ldaps_request
+val make_enable_directory_data_access_request :
+  directory_id:string -> unit -> enable_directory_data_access_request
 val make_enable_client_authentication_request :
   type_:client_authentication_type ->
     directory_id:string -> unit -> enable_client_authentication_request
@@ -2139,6 +2167,8 @@ val make_disable_radius_request :
   directory_id:string -> unit -> disable_radius_request
 val make_disable_ldaps_request :
   type_:ldaps_type -> directory_id:string -> unit -> disable_ldaps_request
+val make_disable_directory_data_access_request :
+  directory_id:string -> unit -> disable_directory_data_access_request
 val make_disable_client_authentication_request :
   type_:client_authentication_type ->
     directory_id:string -> unit -> disable_client_authentication_request
@@ -2184,6 +2214,8 @@ val make_describe_domain_controllers_request :
     ?next_token:string ->
       ?domain_controller_ids:string list ->
         directory_id:string -> unit -> describe_domain_controllers_request
+val make_describe_directory_data_access_request :
+  directory_id:string -> unit -> describe_directory_data_access_request
 val make_directory_connect_settings_description :
   ?connect_ips:string list ->
     ?availability_zones:string list ->
@@ -2735,6 +2767,22 @@ sig
           | `ServiceException of service_exception ]) result
 end[@@ocaml.doc
      "Obtains information about the directories that belong to this account.\n\n You can retrieve information about specific directories by passing the directory identifiers in the [DirectoryIds] parameter. Otherwise, all directories that belong to the current account are returned.\n \n  This operation supports pagination with the use of the [NextToken] request and response parameters. If more results are available, the [DescribeDirectoriesResult.NextToken] member contains a token that you pass in the next call to [DescribeDirectories] to retrieve the next set of items.\n  \n   You can also specify a maximum number of return results with the [Limit] parameter.\n   "]
+module DescribeDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_directory_data_access_request ->
+        (describe_directory_data_access_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Obtains status of directory data access enablement through the Directory Service Data API for the specified directory.\n"]
 module DescribeDomainControllers :
 sig
   val request :
@@ -2895,6 +2943,25 @@ sig
           result
 end[@@ocaml.doc
      "Disables alternative client authentication methods for the specified directory. \n"]
+module DisableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disable_directory_data_access_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Deactivates access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module DisableLDAPS :
 sig
   val request :
@@ -2959,6 +3026,25 @@ sig
           result
 end[@@ocaml.doc
      "Enables alternative client authentication methods for the specified directory.\n"]
+module EnableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      enable_directory_data_access_request ->
+        (unit,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Enables access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module EnableLDAPS :
 sig
   val request :
@@ -3209,7 +3295,7 @@ sig
           | `UserDoesNotExistException of user_does_not_exist_exception ])
           result
 end[@@ocaml.doc
-     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
+     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory. Disabled users will become enabled and can be authenticated following the API call.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
 module RestoreFromSnapshot :
 sig
   val request :

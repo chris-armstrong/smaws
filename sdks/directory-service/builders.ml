@@ -478,6 +478,9 @@ let make_enable_radius_request
 let make_enable_ldaps_request ~type_:(type__ : ldaps_type)
   ~directory_id:(directory_id_ : string) () =
   ({ type_ = type__; directory_id = directory_id_ } : enable_ldaps_request)
+let make_enable_directory_data_access_request
+  ~directory_id:(directory_id_ : string) () =
+  ({ directory_id = directory_id_ } : enable_directory_data_access_request)
 let make_enable_client_authentication_request
   ~type_:(type__ : client_authentication_type)
   ~directory_id:(directory_id_ : string) () =
@@ -518,6 +521,9 @@ let make_disable_radius_request ~directory_id:(directory_id_ : string) () =
 let make_disable_ldaps_request ~type_:(type__ : ldaps_type)
   ~directory_id:(directory_id_ : string) () =
   ({ type_ = type__; directory_id = directory_id_ } : disable_ldaps_request)
+let make_disable_directory_data_access_request
+  ~directory_id:(directory_id_ : string) () =
+  ({ directory_id = directory_id_ } : disable_directory_data_access_request)
 let make_disable_client_authentication_request
   ~type_:(type__ : client_authentication_type)
   ~directory_id:(directory_id_ : string) () =
@@ -600,6 +606,9 @@ let make_describe_domain_controllers_request ?limit:(limit_ : int option)
      domain_controller_ids = domain_controller_ids_;
      directory_id = directory_id_
    } : describe_domain_controllers_request)
+let make_describe_directory_data_access_request
+  ~directory_id:(directory_id_ : string) () =
+  ({ directory_id = directory_id_ } : describe_directory_data_access_request)
 let make_directory_connect_settings_description
   ?connect_ips:(connect_ips_ : string list option)
   ?availability_zones:(availability_zones_ : string list option)

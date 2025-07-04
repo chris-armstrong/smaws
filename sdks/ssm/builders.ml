@@ -63,6 +63,10 @@ let make_patch_source ~configuration:(configuration_ : string)
   ({ configuration = configuration_; products = products_; name = name_ } : 
   patch_source)
 let make_update_patch_baseline_request ?replace:(replace_ : bool option)
+  ?available_security_updates_compliance_status:(available_security_updates_compliance_status_
+                                                  :
+                                                  patch_compliance_status
+                                                    option)
   ?sources:(sources_ : patch_source list option)
   ?description:(description_ : string option)
   ?rejected_patches_action:(rejected_patches_action_ : patch_action option)
@@ -77,6 +81,8 @@ let make_update_patch_baseline_request ?replace:(replace_ : bool option)
   ?name:(name_ : string option) ~baseline_id:(baseline_id_ : string) () =
   ({
      replace = replace_;
+     available_security_updates_compliance_status =
+       available_security_updates_compliance_status_;
      sources = sources_;
      description = description_;
      rejected_patches_action = rejected_patches_action_;
@@ -494,6 +500,12 @@ let make_instance_association_output_location
   ?s3_location:(s3_location_ : s3_output_location option) () =
   ({ s3_location = s3_location_ } : instance_association_output_location)
 let make_target_location
+  ?targets_max_errors:(targets_max_errors_ : string option)
+  ?targets_max_concurrency:(targets_max_concurrency_ : string option)
+  ?targets:(targets_ : target list option)
+  ?exclude_accounts:(exclude_accounts_ : string list option)
+  ?include_child_organization_units:(include_child_organization_units_ :
+                                      bool option)
   ?target_location_alarm_configuration:(target_location_alarm_configuration_
                                          : alarm_configuration option)
   ?execution_role_name:(execution_role_name_ : string option)
@@ -503,6 +515,11 @@ let make_target_location
   ?regions:(regions_ : string list option)
   ?accounts:(accounts_ : string list option) () =
   ({
+     targets_max_errors = targets_max_errors_;
+     targets_max_concurrency = targets_max_concurrency_;
+     targets = targets_;
+     exclude_accounts = exclude_accounts_;
+     include_child_organization_units = include_child_organization_units_;
      target_location_alarm_configuration =
        target_location_alarm_configuration_;
      execution_role_name = execution_role_name_;
@@ -643,6 +660,9 @@ let make_terminate_session_response ?session_id:(session_id_ : string option)
   () = ({ session_id = session_id_ } : terminate_session_response)
 let make_terminate_session_request ~session_id:(session_id_ : string) () =
   ({ session_id = session_id_ } : terminate_session_request)
+let make_target_preview ?target_type:(target_type_ : string option)
+  ?count:(count_ : int option) () =
+  ({ target_type = target_type_; count = count_ } : target_preview)
 let make_stop_automation_execution_request ?type_:(type__ : stop_type option)
   ~automation_execution_id:(automation_execution_id_ : string) () =
   ({ type_ = type__; automation_execution_id = automation_execution_id_ } : 
@@ -742,6 +762,33 @@ let make_start_session_request
      document_name = document_name_;
      target = target_
    } : start_session_request)
+let make_start_execution_preview_response
+  ?execution_preview_id:(execution_preview_id_ : string option) () =
+  ({ execution_preview_id = execution_preview_id_ } : start_execution_preview_response)
+let make_automation_execution_inputs
+  ?target_locations_ur_l:(target_locations_ur_l_ : string option)
+  ?target_locations:(target_locations_ : target_location list option)
+  ?target_maps:(target_maps_ : target_map list option)
+  ?targets:(targets_ : target list option)
+  ?target_parameter_name:(target_parameter_name_ : string option)
+  ?parameters:(parameters_ : automation_parameter_map option) () =
+  ({
+     target_locations_ur_l = target_locations_ur_l_;
+     target_locations = target_locations_;
+     target_maps = target_maps_;
+     targets = targets_;
+     target_parameter_name = target_parameter_name_;
+     parameters = parameters_
+   } : automation_execution_inputs)
+let make_start_execution_preview_request
+  ?execution_inputs:(execution_inputs_ : execution_inputs option)
+  ?document_version:(document_version_ : string option)
+  ~document_name:(document_name_ : string) () =
+  ({
+     execution_inputs = execution_inputs_;
+     document_version = document_version_;
+     document_name = document_name_
+   } : start_execution_preview_request)
 let make_runbook
   ?target_locations:(target_locations_ : target_location list option)
   ?max_errors:(max_errors_ : string option)
@@ -788,6 +835,7 @@ let make_start_change_request_execution_request
      scheduled_time = scheduled_time_
    } : start_change_request_execution_request)
 let make_start_automation_execution_request
+  ?target_locations_ur_l:(target_locations_ur_l_ : string option)
   ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
   ?tags:(tags_ : tag list option)
   ?target_locations:(target_locations_ : target_location list option)
@@ -802,6 +850,7 @@ let make_start_automation_execution_request
   ?document_version:(document_version_ : string option)
   ~document_name:(document_name_ : string) () =
   ({
+     target_locations_ur_l = target_locations_ur_l_;
      alarm_configuration = alarm_configuration_;
      tags = tags_;
      target_locations = target_locations_;
@@ -819,6 +868,12 @@ let make_start_automation_execution_request
 let make_start_associations_once_request
   ~association_ids:(association_ids_ : string list) () =
   ({ association_ids = association_ids_ } : start_associations_once_request)
+let make_start_access_request_response
+  ?access_request_id:(access_request_id_ : string option) () =
+  ({ access_request_id = access_request_id_ } : start_access_request_response)
+let make_start_access_request_request ?tags:(tags_ : tag list option)
+  ~targets:(targets_ : target list) ~reason:(reason_ : string) () =
+  ({ tags = tags_; targets = targets_; reason = reason_ } : start_access_request_request)
 let make_severity_summary
   ?unspecified_count:(unspecified_count_ : int option)
   ?informational_count:(informational_count_ : int option)
@@ -841,7 +896,7 @@ let make_session_manager_output_url
      cloud_watch_output_url = cloud_watch_output_url_;
      s3_output_url = s3_output_url_
    } : session_manager_output_url)
-let make_session
+let make_session ?access_type:(access_type_ : access_type option)
   ?max_session_duration:(max_session_duration_ : string option)
   ?output_url:(output_url_ : session_manager_output_url option)
   ?details:(details_ : string option) ?reason:(reason_ : string option)
@@ -852,6 +907,7 @@ let make_session
   ?status:(status_ : session_status option) ?target:(target_ : string option)
   ?session_id:(session_id_ : string option) () =
   ({
+     access_type = access_type_;
      max_session_duration = max_session_duration_;
      output_url = output_url_;
      details = details_;
@@ -1632,6 +1688,62 @@ let make_ops_aggregator
      type_name = type_name_;
      aggregator_type = aggregator_type_
    } : ops_aggregator)
+let make_instance_info ?resource_type:(resource_type_ : resource_type option)
+  ?platform_version:(platform_version_ : string option)
+  ?platform_name:(platform_name_ : string option)
+  ?platform_type:(platform_type_ : platform_type option)
+  ?managed_status:(managed_status_ : managed_status option)
+  ?ip_address:(ip_address_ : string option)
+  ?instance_status:(instance_status_ : string option)
+  ?computer_name:(computer_name_ : string option)
+  ?agent_version:(agent_version_ : string option)
+  ?agent_type:(agent_type_ : string option) () =
+  ({
+     resource_type = resource_type_;
+     platform_version = platform_version_;
+     platform_name = platform_name_;
+     platform_type = platform_type_;
+     managed_status = managed_status_;
+     ip_address = ip_address_;
+     instance_status = instance_status_;
+     computer_name = computer_name_;
+     agent_version = agent_version_;
+     agent_type = agent_type_
+   } : instance_info)
+let make_node_owner_info
+  ?organizational_unit_path:(organizational_unit_path_ : string option)
+  ?organizational_unit_id:(organizational_unit_id_ : string option)
+  ?account_id:(account_id_ : string option) () =
+  ({
+     organizational_unit_path = organizational_unit_path_;
+     organizational_unit_id = organizational_unit_id_;
+     account_id = account_id_
+   } : node_owner_info)
+let make_node ?node_type:(node_type_ : node_type option)
+  ?region:(region_ : string option) ?owner:(owner_ : node_owner_info option)
+  ?id:(id_ : string option)
+  ?capture_time:(capture_time_ : CoreTypes.Timestamp.t option) () =
+  ({
+     node_type = node_type_;
+     region = region_;
+     owner = owner_;
+     id = id_;
+     capture_time = capture_time_
+   } : node)
+let make_node_filter ?type_:(type__ : node_filter_operator_type option)
+  ~values:(values_ : string list) ~key:(key_ : node_filter_key) () =
+  ({ type_ = type__; values = values_; key = key_ } : node_filter)
+let make_node_aggregator
+  ?aggregators:(aggregators_ : node_aggregator list option)
+  ~attribute_name:(attribute_name_ : node_attribute_name)
+  ~type_name:(type_name_ : node_type_name)
+  ~aggregator_type:(aggregator_type_ : node_aggregator_type) () =
+  ({
+     aggregators = aggregators_;
+     attribute_name = attribute_name_;
+     type_name = type_name_;
+     aggregator_type = aggregator_type_
+   } : node_aggregator)
 let make_modify_document_permission_response () = (() : unit)
 let make_modify_document_permission_request
   ?shared_document_version:(shared_document_version_ : string option)
@@ -1843,6 +1955,28 @@ let make_list_ops_item_events_request
   ?filters:(filters_ : ops_item_event_filter list option) () =
   ({ next_token = next_token_; max_results = max_results_; filters = filters_
    } : list_ops_item_events_request)
+let make_list_nodes_summary_request ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ?filters:(filters_ : node_filter list option)
+  ?sync_name:(sync_name_ : string option)
+  ~aggregators:(aggregators_ : node_aggregator list) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     aggregators = aggregators_;
+     filters = filters_;
+     sync_name = sync_name_
+   } : list_nodes_summary_request)
+let make_list_nodes_request ?max_results:(max_results_ : int option)
+  ?next_token:(next_token_ : string option)
+  ?filters:(filters_ : node_filter list option)
+  ?sync_name:(sync_name_ : string option) () =
+  ({
+     max_results = max_results_;
+     next_token = next_token_;
+     filters = filters_;
+     sync_name = sync_name_
+   } : list_nodes_request)
 let make_inventory_filter
   ?type_:(type__ : inventory_query_operator_type option)
   ~values:(values_ : string list) ~key:(key_ : string) () =
@@ -2376,6 +2510,8 @@ let make_instance_patch_state
   ?reboot_option:(reboot_option_ : reboot_option option)
   ?last_no_reboot_install_operation_time:(last_no_reboot_install_operation_time_
                                            : CoreTypes.Timestamp.t option)
+  ?available_security_update_count:(available_security_update_count_ :
+                                     int option)
   ?not_applicable_count:(not_applicable_count_ : int option)
   ?unreported_not_applicable_count:(unreported_not_applicable_count_ :
                                      int option)
@@ -2404,6 +2540,7 @@ let make_instance_patch_state
      operation = operation_;
      operation_end_time = operation_end_time_;
      operation_start_time = operation_start_time_;
+     available_security_update_count = available_security_update_count_;
      not_applicable_count = not_applicable_count_;
      unreported_not_applicable_count = unreported_not_applicable_count_;
      failed_count = failed_count_;
@@ -2654,6 +2791,33 @@ let make_get_inventory_request ?max_results:(max_results_ : int option)
      aggregators = aggregators_;
      filters = filters_
    } : get_inventory_request)
+let make_automation_execution_preview
+  ?total_accounts:(total_accounts_ : int option)
+  ?target_previews:(target_previews_ : target_preview list option)
+  ?regions:(regions_ : string list option)
+  ?step_previews:(step_previews_ : step_preview_map option) () =
+  ({
+     total_accounts = total_accounts_;
+     target_previews = target_previews_;
+     regions = regions_;
+     step_previews = step_previews_
+   } : automation_execution_preview)
+let make_get_execution_preview_response
+  ?execution_preview:(execution_preview_ : execution_preview option)
+  ?status_message:(status_message_ : string option)
+  ?status:(status_ : execution_preview_status option)
+  ?ended_at:(ended_at_ : CoreTypes.Timestamp.t option)
+  ?execution_preview_id:(execution_preview_id_ : string option) () =
+  ({
+     execution_preview = execution_preview_;
+     status_message = status_message_;
+     status = status_;
+     ended_at = ended_at_;
+     execution_preview_id = execution_preview_id_
+   } : get_execution_preview_response)
+let make_get_execution_preview_request
+  ~execution_preview_id:(execution_preview_id_ : string) () =
+  ({ execution_preview_id = execution_preview_id_ } : get_execution_preview_request)
 let make_attachment_content ?url:(url_ : string option)
   ?hash_type:(hash_type_ : attachment_hash_type option)
   ?hash:(hash_ : string option) ?size:(size_ : int option)
@@ -2675,7 +2839,12 @@ let make_get_document_request
      version_name = version_name_;
      name = name_
    } : get_document_request)
-let make_baseline_override ?sources:(sources_ : patch_source list option)
+let make_baseline_override
+  ?available_security_updates_compliance_status:(available_security_updates_compliance_status_
+                                                  :
+                                                  patch_compliance_status
+                                                    option)
+  ?sources:(sources_ : patch_source list option)
   ?approved_patches_enable_non_security:(approved_patches_enable_non_security_
                                           : bool option)
   ?rejected_patches_action:(rejected_patches_action_ : patch_action option)
@@ -2687,6 +2856,8 @@ let make_baseline_override ?sources:(sources_ : patch_source list option)
   ?global_filters:(global_filters_ : patch_filter_group option)
   ?operating_system:(operating_system_ : operating_system option) () =
   ({
+     available_security_updates_compliance_status =
+       available_security_updates_compliance_status_;
      sources = sources_;
      approved_patches_enable_non_security =
        approved_patches_enable_non_security_;
@@ -2745,6 +2916,7 @@ let make_automation_execution
   ?runbooks:(runbooks_ : runbook list option)
   ?scheduled_time:(scheduled_time_ : CoreTypes.Timestamp.t option)
   ?automation_subtype:(automation_subtype_ : automation_subtype option)
+  ?target_locations_ur_l:(target_locations_ur_l_ : string option)
   ?triggered_alarms:(triggered_alarms_ : alarm_state_information list option)
   ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
   ?progress_counters:(progress_counters_ : progress_counters option)
@@ -2782,6 +2954,7 @@ let make_automation_execution
      runbooks = runbooks_;
      scheduled_time = scheduled_time_;
      automation_subtype = automation_subtype_;
+     target_locations_ur_l = target_locations_ur_l_;
      triggered_alarms = triggered_alarms_;
      alarm_configuration = alarm_configuration_;
      progress_counters = progress_counters_;
@@ -2813,6 +2986,28 @@ let make_automation_execution
 let make_get_automation_execution_request
   ~automation_execution_id:(automation_execution_id_ : string) () =
   ({ automation_execution_id = automation_execution_id_ } : get_automation_execution_request)
+let make_credentials
+  ~expiration_time:(expiration_time_ : CoreTypes.Timestamp.t)
+  ~session_token:(session_token_ : string)
+  ~secret_access_key:(secret_access_key_ : string)
+  ~access_key_id:(access_key_id_ : string) () =
+  ({
+     expiration_time = expiration_time_;
+     session_token = session_token_;
+     secret_access_key = secret_access_key_;
+     access_key_id = access_key_id_
+   } : credentials)
+let make_get_access_token_response
+  ?access_request_status:(access_request_status_ :
+                           access_request_status option)
+  ?credentials:(credentials_ : credentials option) () =
+  ({
+     access_request_status = access_request_status_;
+     credentials = credentials_
+   } : get_access_token_response)
+let make_get_access_token_request
+  ~access_request_id:(access_request_id_ : string) () =
+  ({ access_request_id = access_request_id_ } : get_access_token_request)
 let make_create_association_batch_request_entry
   ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
   ?target_maps:(target_maps_ : target_map list option)
@@ -3185,6 +3380,7 @@ let make_automation_execution_metadata
   ?runbooks:(runbooks_ : runbook list option)
   ?scheduled_time:(scheduled_time_ : CoreTypes.Timestamp.t option)
   ?automation_subtype:(automation_subtype_ : automation_subtype option)
+  ?target_locations_ur_l:(target_locations_ur_l_ : string option)
   ?triggered_alarms:(triggered_alarms_ : alarm_state_information list option)
   ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
   ?automation_type:(automation_type_ : automation_type option)
@@ -3218,6 +3414,7 @@ let make_automation_execution_metadata
      runbooks = runbooks_;
      scheduled_time = scheduled_time_;
      automation_subtype = automation_subtype_;
+     target_locations_ur_l = target_locations_ur_l_;
      triggered_alarms = triggered_alarms_;
      alarm_configuration = alarm_configuration_;
      automation_type = automation_type_;
@@ -3463,6 +3660,10 @@ let make_create_resource_data_sync_request
    } : create_resource_data_sync_request)
 let make_create_patch_baseline_request ?tags:(tags_ : tag list option)
   ?client_token:(client_token_ : string option)
+  ?available_security_updates_compliance_status:(available_security_updates_compliance_status_
+                                                  :
+                                                  patch_compliance_status
+                                                    option)
   ?sources:(sources_ : patch_source list option)
   ?description:(description_ : string option)
   ?rejected_patches_action:(rejected_patches_action_ : patch_action option)
@@ -3479,6 +3680,8 @@ let make_create_patch_baseline_request ?tags:(tags_ : tag list option)
   ({
      tags = tags_;
      client_token = client_token_;
+     available_security_updates_compliance_status =
+       available_security_updates_compliance_status_;
      sources = sources_;
      description = description_;
      rejected_patches_action = rejected_patches_action_;

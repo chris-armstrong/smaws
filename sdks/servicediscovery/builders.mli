@@ -15,6 +15,10 @@ val make_service_change :
       ?description:string -> unit -> service_change
 val make_update_service_request :
   service:service_change -> id:string -> unit -> update_service_request
+val make_update_service_attributes_response : unit -> unit
+val make_update_service_attributes_request :
+  attributes:service_attributes_map ->
+    service_id:string -> unit -> update_service_attributes_request
 val make_update_public_dns_namespace_response :
   ?operation_id:string -> unit -> update_public_dns_namespace_response
 val make_soa_change : tt_l:int -> unit -> soa_change
@@ -83,6 +87,9 @@ val make_service_summary :
 val make_service_filter :
   ?condition:filter_condition ->
     values:string list -> name:service_filter_name -> unit -> service_filter
+val make_service_attributes :
+  ?attributes:service_attributes_map ->
+    ?service_arn:string -> unit -> service_attributes
 val make_service :
   ?creator_request_id:string ->
     ?create_date:CoreTypes.Timestamp.t ->
@@ -157,6 +164,11 @@ val make_list_instances_response :
 val make_list_instances_request :
   ?max_results:int ->
     ?next_token:string -> service_id:string -> unit -> list_instances_request
+val make_get_service_attributes_response :
+  ?service_attributes:service_attributes ->
+    unit -> get_service_attributes_response
+val make_get_service_attributes_request :
+  service_id:string -> unit -> get_service_attributes_request
 val make_get_service_response :
   ?service:service -> unit -> get_service_response
 val make_get_service_request : id:string -> unit -> get_service_request
@@ -226,6 +238,10 @@ val make_deregister_instance_response :
 val make_deregister_instance_request :
   instance_id:string ->
     service_id:string -> unit -> deregister_instance_request
+val make_delete_service_attributes_response : unit -> unit
+val make_delete_service_attributes_request :
+  attributes:string list ->
+    service_id:string -> unit -> delete_service_attributes_request
 val make_delete_service_response : unit -> unit
 val make_delete_service_request : id:string -> unit -> delete_service_request
 val make_delete_namespace_response :
