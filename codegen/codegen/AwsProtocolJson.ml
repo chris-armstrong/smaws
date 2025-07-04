@@ -541,7 +541,7 @@ module Operations = struct
           B.pexp_fun Nolabel None
             (B.ppat_constraint
                (B.ppat_var (Location.mknoloc "request"))
-               (Types_ppx.resolve alias_context ~name:input_name))
+               (Types.resolve alias_context ~name:input_name))
             shape_func_body)
     in
     [%stri let request = fun context -> [%e shape_func]]
@@ -570,7 +570,7 @@ module Operations = struct
     errors |> Option.value ~default:[]
     |> List.map ~f:(fun error ->
            let name = SafeNames.safeConstructorName error in
-           B.rtag (lstr_noloc name) false [ Types_ppx.resolve alias_ctx ~name:error ])
+           B.rtag (lstr_noloc name) false [ Types.resolve alias_ctx ~name:error ])
     |> fun constructors -> B.ptyp_variant (smaws_lib_constructor @ constructors) Open None
 
   let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
@@ -580,13 +580,13 @@ module Operations = struct
     let input_type =
       operation_shape.input
       |> Option.value_map
-           ~f:(fun input -> Types_ppx.resolve alias_context ~name:input)
+           ~f:(fun input -> Types.resolve alias_context ~name:input)
            ~default:(B.ptyp_constr (lident_noloc "unit") [])
     in
     let output_type =
       operation_shape.output
       |> Option.value_map
-           ~f:(fun output -> Types_ppx.resolve alias_context ~name:output)
+           ~f:(fun output -> Types.resolve alias_context ~name:output)
            ~default:(B.ptyp_constr (lident_noloc "unit") [])
     in
 

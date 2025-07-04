@@ -1,6 +1,6 @@
 open Parselib
 
-type t = Codegen.Types_ppx.t
+type t = Codegen.Types.t
 
 val create_alias_context : Ast.Shape.t list -> t
 
