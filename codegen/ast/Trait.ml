@@ -72,7 +72,7 @@ type t =
   | DocumentationTrait of string
   | EndpointTrait
   | EnumTrait of enumPair list
-  | EnumValueTrait of string
+  | EnumValueTrait of [ `String of string | `Int of int ]
   | ErrorTrait of errorTraitType
   | EventPayloadTrait
   | ExamplesTrait
@@ -121,6 +121,13 @@ type t =
   | XmlAttributeTrait
   | XmlFlattenedTrait
   | XmlNameTrait of string
+  | PrivateTrait
+  | IdRefTrait of {
+      failWhenMissing : bool option;
+      selector : string option;
+      errorMessage : string option;
+    }
+  | UnspecifiedTrait of string * Yojson.Basic.t
 [@@deriving show, equal]
 
 let isEnumTrait trait = match trait with EnumTrait _ -> true | _ -> false

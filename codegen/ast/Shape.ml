@@ -49,6 +49,8 @@ type shapeDescriptor =
   | ServiceShape of serviceShapeDetails
   | BlobShape of primitiveShapeDetails
   | BooleanShape of primitiveShapeDetails
+  | ByteShape of primitiveShapeDetails
+  | ShortShape of primitiveShapeDetails
   | IntegerShape of primitiveShapeDetails
   | StringShape of primitiveShapeDetails
   | BigIntegerShape of primitiveShapeDetails
@@ -74,6 +76,7 @@ let getShapeTraits descriptor =
   | ServiceShape { traits; _ }
   | BooleanShape { traits }
   | IntegerShape { traits }
+  | ShortShape { traits }
   | StringShape { traits }
   | MapShape { traits; _ }
   | TimestampShape { traits }
@@ -85,6 +88,7 @@ let getShapeTraits descriptor =
   | SetShape { traits; _ } ->
       traits
   | EnumShape { traits; _ } -> traits
+  | ByteShape { traits; _ } -> traits
   | UnitShape -> None
   | ResourceShape -> None
   | DocumentShape -> None

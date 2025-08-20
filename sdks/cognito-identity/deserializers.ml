@@ -156,8 +156,8 @@ let base_unit_of_yojson = unit_of_yojson
 let error_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "INTERNAL_SERVER_ERROR" -> INTERNAL_SERVER_ERROR
-    | `String "ACCESS_DENIED" -> ACCESS_DENIED
+    | `String "InternalServerError" -> INTERNAL_SERVER_ERROR
+    | `String "AccessDenied" -> ACCESS_DENIED
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
     | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code) : 
@@ -266,8 +266,8 @@ let roles_map_of_yojson tree path =
 let role_mapping_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "RULES" -> RULES
-    | `String "TOKEN" -> TOKEN
+    | `String "Rules" -> RULES
+    | `String "Token" -> TOKEN
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "RoleMappingType" value)
@@ -276,8 +276,8 @@ let role_mapping_type_of_yojson (tree : t) path =
 let ambiguous_role_resolution_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "DENY" -> DENY
-    | `String "AUTHENTICATED_ROLE" -> AUTHENTICATED_ROLE
+    | `String "Deny" -> DENY
+    | `String "AuthenticatedRole" -> AUTHENTICATED_ROLE
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path
@@ -290,10 +290,10 @@ let claim_name_of_yojson = string_of_yojson
 let mapping_rule_match_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NOT_EQUAL" -> NOT_EQUAL
-    | `String "STARTS_WITH" -> STARTS_WITH
-    | `String "CONTAINS" -> CONTAINS
-    | `String "EQUALS" -> EQUALS
+    | `String "NotEqual" -> NOT_EQUAL
+    | `String "StartsWith" -> STARTS_WITH
+    | `String "Contains" -> CONTAINS
+    | `String "Equals" -> EQUALS
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "MappingRuleMatchType"

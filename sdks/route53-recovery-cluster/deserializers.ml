@@ -4,10 +4,10 @@ let base_unit_of_yojson = unit_of_yojson
 let validation_exception_reason_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "OTHER" -> OTHER
-    | `String "FIELD_VALIDATION_FAILED" -> FIELD_VALIDATION_FAILED
-    | `String "CANNOT_PARSE" -> CANNOT_PARSE
-    | `String "UNKNOWN_OPERATION" -> UNKNOWN_OPERATION
+    | `String "other" -> OTHER
+    | `String "fieldValidationFailed" -> FIELD_VALIDATION_FAILED
+    | `String "cannotParse" -> CANNOT_PARSE
+    | `String "unknownOperation" -> UNKNOWN_OPERATION
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path

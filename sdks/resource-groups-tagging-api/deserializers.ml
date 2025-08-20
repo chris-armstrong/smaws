@@ -5,8 +5,8 @@ let base_unit_of_yojson = unit_of_yojson
 let error_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "INVALID_PARAMETER_EXCEPTION" -> INVALID_PARAMETER_EXCEPTION
-    | `String "INTERNAL_SERVICE_EXCEPTION" -> INTERNAL_SERVICE_EXCEPTION
+    | `String "InvalidParameterException" -> INVALID_PARAMETER_EXCEPTION
+    | `String "InternalServiceException" -> INTERNAL_SERVICE_EXCEPTION
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
     | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code) : 

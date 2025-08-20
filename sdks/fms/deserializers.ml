@@ -31,48 +31,49 @@ let base_unit_of_yojson = unit_of_yojson
 let violation_reason_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "WebACLConfigurationOrScopeOfUse" ->
+    | `String "WEB_ACL_CONFIGURATION_OR_SCOPE_OF_USE" ->
         WebACLConfigurationOrScopeOfUse
-    | `String "InvalidNetworkAclEntry" -> InvalidNetworkAclEntry
-    | `String "FirewallSubnetMissingVPCEndpoint" ->
+    | `String "INVALID_NETWORK_ACL_ENTRY" -> InvalidNetworkAclEntry
+    | `String "FIREWALL_SUBNET_MISSING_VPCE_ENDPOINT" ->
         FirewallSubnetMissingVPCEndpoint
-    | `String "RouteHasOutOfScopeEndpoint" -> RouteHasOutOfScopeEndpoint
-    | `String "ResourceMissingDnsFirewall" -> ResourceMissingDnsFirewall
-    | `String "BlackHoleRouteDetectedInFirewallSubnet" ->
+    | `String "ROUTE_HAS_OUT_OF_SCOPE_ENDPOINT" -> RouteHasOutOfScopeEndpoint
+    | `String "RESOURCE_MISSING_DNS_FIREWALL" -> ResourceMissingDnsFirewall
+    | `String "BLACK_HOLE_ROUTE_DETECTED_IN_FIREWALL_SUBNET" ->
         BlackHoleRouteDetectedInFirewallSubnet
-    | `String "BlackHoleRouteDetected" -> BlackHoleRouteDetected
-    | `String "InternetTrafficNotInspected" -> InternetTrafficNotInspected
-    | `String "MissingTargetGateway" -> MissingTargetGateway
-    | `String "InvalidRouteConfiguration" -> InvalidRouteConfiguration
-    | `String "TrafficInspectionCrossesAZBoundary" ->
+    | `String "BLACK_HOLE_ROUTE_DETECTED" -> BlackHoleRouteDetected
+    | `String "INTERNET_TRAFFIC_NOT_INSPECTED" -> InternetTrafficNotInspected
+    | `String "MISSING_TARGET_GATEWAY" -> MissingTargetGateway
+    | `String "INVALID_ROUTE_CONFIGURATION" -> InvalidRouteConfiguration
+    | `String "TRAFFIC_INSPECTION_CROSSES_AZ_BOUNDARY" ->
         TrafficInspectionCrossesAZBoundary
-    | `String "UnexpectedTargetGatewayRoutes" ->
+    | `String "UNEXPECTED_TARGET_GATEWAY_ROUTES" ->
         UnexpectedTargetGatewayRoutes
-    | `String "UnexpectedFirewallRoutes" -> UnexpectedFirewallRoutes
-    | `String "FirewallSubnetMissingExpectedRoute" ->
+    | `String "UNEXPECTED_FIREWALL_ROUTES" -> UnexpectedFirewallRoutes
+    | `String "FIREWALL_SUBNET_MISSING_EXPECTED_ROUTE" ->
         FirewallSubnetMissingExpectedRoute
-    | `String "InternetGatewayMissingExpectedRoute" ->
+    | `String "INTERNET_GATEWAY_MISSING_EXPECTED_ROUTE" ->
         InternetGatewayMissingExpectedRoute
-    | `String "FirewallSubnetIsOutOfScope" -> FirewallSubnetIsOutOfScope
-    | `String "NetworkFirewallPolicyModified" ->
+    | `String "FIREWALL_SUBNET_IS_OUT_OF_SCOPE" -> FirewallSubnetIsOutOfScope
+    | `String "NETWORK_FIREWALL_POLICY_MODIFIED" ->
         NetworkFirewallPolicyModified
-    | `String "MissingExpectedRouteTable" -> MissingExpectedRouteTable
-    | `String "MissingFirewallSubnetInAZ" -> MissingFirewallSubnetInAZ
-    | `String "MissingFirewall" -> MissingFirewall
-    | `String "FMSCreatedSecurityGroupEdited" ->
+    | `String "MISSING_EXPECTED_ROUTE_TABLE" -> MissingExpectedRouteTable
+    | `String "MISSING_FIREWALL_SUBNET_IN_AZ" -> MissingFirewallSubnetInAZ
+    | `String "MISSING_FIREWALL" -> MissingFirewall
+    | `String "FMS_CREATED_SECURITY_GROUP_EDITED" ->
         FMSCreatedSecurityGroupEdited
-    | `String "SecurityGroupRedundant" -> SecurityGroupRedundant
-    | `String "SecurityGroupUnused" -> SecurityGroupUnused
-    | `String "ResourceViolatesAuditSecurityGroup" ->
+    | `String "SECURITY_GROUP_REDUNDANT" -> SecurityGroupRedundant
+    | `String "SECURITY_GROUP_UNUSED" -> SecurityGroupUnused
+    | `String "RESOURCE_VIOLATES_AUDIT_SECURITY_GROUP" ->
         ResourceViolatesAuditSecurityGroup
-    | `String "ResourceMissingSecurityGroup" -> ResourceMissingSecurityGroup
-    | `String "ResourceMissingWebaclOrShieldProtection" ->
+    | `String "RESOURCE_MISSING_SECURITY_GROUP" ->
+        ResourceMissingSecurityGroup
+    | `String "RESOURCE_MISSING_WEB_ACL_OR_SHIELD_PROTECTION" ->
         ResourceMissingWebaclOrShieldProtection
-    | `String "ResourceMissingShieldProtection" ->
+    | `String "RESOURCE_MISSING_SHIELD_PROTECTION" ->
         ResourceMissingShieldProtection
-    | `String "ResourceIncorrectWebAcl" -> ResourceIncorrectWebAcl
-    | `String "ResourceMissingWebAcl" -> ResourceMissingWebAcl
-    | `String "WebAclMissingRuleGroup" -> WebAclMissingRuleGroup
+    | `String "RESOURCE_INCORRECT_WEB_ACL" -> ResourceIncorrectWebAcl
+    | `String "RESOURCE_MISSING_WEB_ACL" -> ResourceMissingWebAcl
+    | `String "WEB_ACL_MISSING_RULE_GROUP" -> WebAclMissingRuleGroup
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ViolationReason" value)
@@ -102,8 +103,8 @@ let partial_matches_of_yojson tree path =
 let remediation_action_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Modify" -> Modify
-    | `String "Remove" -> Remove
+    | `String "MODIFY" -> Modify
+    | `String "REMOVE" -> Remove
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "RemediationActionType"
@@ -415,7 +416,7 @@ let network_firewall_policy_modified_violation_of_yojson tree path =
 let destination_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "PrefixList" -> PrefixList
+    | `String "PREFIX_LIST" -> PrefixList
     | `String "IPV6" -> IPV6
     | `String "IPV4" -> IPV4
     | `String value ->
@@ -426,16 +427,16 @@ let destination_type_of_yojson (tree : t) path =
 let target_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "TransitGateway" -> TransitGateway
-    | `String "EgressOnlyInternetGateway" -> EgressOnlyInternetGateway
-    | `String "VPCPeeringConnection" -> VPCPeeringConnection
-    | `String "VPCEndpoint" -> VPCEndpoint
-    | `String "NetworkInterface" -> NetworkInterface
-    | `String "NatGateway" -> NatGateway
-    | `String "LocalGateway" -> LocalGateway
-    | `String "Instance" -> Instance
-    | `String "CarrierGateway" -> CarrierGateway
-    | `String "Gateway" -> Gateway
+    | `String "TRANSIT_GATEWAY" -> TransitGateway
+    | `String "EGRESS_ONLY_INTERNET_GATEWAY" -> EgressOnlyInternetGateway
+    | `String "VPC_PEERING_CONNECTION" -> VPCPeeringConnection
+    | `String "VPC_ENDPOINT" -> VPCEndpoint
+    | `String "NETWORK_INTERFACE" -> NetworkInterface
+    | `String "NAT_GATEWAY" -> NatGateway
+    | `String "LOCAL_GATEWAY" -> LocalGateway
+    | `String "INSTANCE" -> Instance
+    | `String "CARRIER_GATEWAY" -> CarrierGateway
+    | `String "GATEWAY" -> Gateway
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "TargetType" value)
     | _ -> raise (deserialize_wrong_type_error path "TargetType") : target_type) : 
@@ -911,8 +912,8 @@ let length_bounded_non_empty_string_of_yojson = string_of_yojson
 let network_acl_rule_action_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "DENY" -> DENY
-    | `String "ALLOW" -> ALLOW
+    | `String "deny" -> DENY
+    | `String "allow" -> ALLOW
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "NetworkAclRuleAction"
@@ -950,9 +951,9 @@ let integer_object_minimum0_of_yojson = int_of_yojson
 let entry_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "CustomEntry" -> CustomEntry
-    | `String "FMSManagedLastEntry" -> FMSManagedLastEntry
-    | `String "FMSManagedFirstEntry" -> FMSManagedFirstEntry
+    | `String "CUSTOM_ENTRY" -> CustomEntry
+    | `String "FMS_MANAGED_LAST_ENTRY" -> FMSManagedLastEntry
+    | `String "FMS_MANAGED_FIRST_ENTRY" -> FMSManagedFirstEntry
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "EntryType" value)
     | _ -> raise (deserialize_wrong_type_error path "EntryType") : entry_type) : 
@@ -977,9 +978,9 @@ let entries_with_conflicts_of_yojson tree path =
 let entry_violation_reason_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "EntryConflict" -> EntryConflict
-    | `String "IncorrectEntryOrder" -> IncorrectEntryOrder
-    | `String "MissingExpectedEntry" -> MissingExpectedEntry
+    | `String "ENTRY_CONFLICT" -> EntryConflict
+    | `String "INCORRECT_ENTRY_ORDER" -> IncorrectEntryOrder
+    | `String "MISSING_EXPECTED_ENTRY" -> MissingExpectedEntry
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "EntryViolationReason"
@@ -2202,8 +2203,8 @@ let policy_summary_list_of_yojson tree path =
 let policy_compliance_status_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NonCompliant" -> NonCompliant
-    | `String "Compliant" -> Compliant
+    | `String "NON_COMPLIANT" -> NonCompliant
+    | `String "COMPLIANT" -> Compliant
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path
@@ -2233,10 +2234,10 @@ let detailed_info_of_yojson = string_of_yojson
 let dependent_service_name_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "AWSVirtualPrivateCloud" -> AWSVirtualPrivateCloud
-    | `String "AWSShieldAdvanced" -> AWSShieldAdvanced
+    | `String "AWSVPC" -> AWSVirtualPrivateCloud
+    | `String "AWSSHIELD_ADVANCED" -> AWSShieldAdvanced
     | `String "AWSWAF" -> AWSWAF
-    | `String "AWSConfig" -> AWSConfig
+    | `String "AWSCONFIG" -> AWSConfig
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "DependentServiceName"
@@ -2329,10 +2330,10 @@ let pagination_max_results_of_yojson = int_of_yojson
 let organization_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "OffboardingComplete" -> OffboardingComplete
-    | `String "Offboarding" -> Offboarding
-    | `String "OnboardingComplete" -> OnboardingComplete
-    | `String "Onboarding" -> Onboarding
+    | `String "OFFBOARDING_COMPLETE" -> OffboardingComplete
+    | `String "OFFBOARDING" -> Offboarding
+    | `String "ONBOARDING_COMPLETE" -> OnboardingComplete
+    | `String "ONBOARDING" -> Onboarding
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "OrganizationStatus"
@@ -2865,11 +2866,11 @@ let get_admin_scope_request_of_yojson tree path =
 let account_role_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Deleted" -> Deleted
-    | `String "Deleting" -> Deleting
-    | `String "PendingDeletion" -> PendingDeletion
-    | `String "Creating" -> Creating
-    | `String "Ready" -> Ready
+    | `String "DELETED" -> Deleted
+    | `String "DELETING" -> Deleting
+    | `String "PENDING_DELETION" -> PendingDeletion
+    | `String "CREATING" -> Creating
+    | `String "READY" -> Ready
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "AccountRoleStatus"
@@ -2892,12 +2893,12 @@ let get_admin_account_request_of_yojson tree path =
 let failed_item_reason_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NotValidAccountId" -> NotValidAccountId
-    | `String "NotValidResourceType" -> NotValidResourceType
-    | `String "NotValidService" -> NotValidService
-    | `String "NotValidRegion" -> NotValidRegion
-    | `String "NotValidPartition" -> NotValidPartition
-    | `String "NotValidArn" -> NotValidArn
+    | `String "NOT_VALID_ACCOUNT_ID" -> NotValidAccountId
+    | `String "NOT_VALID_RESOURCE_TYPE" -> NotValidResourceType
+    | `String "NOT_VALID_SERVICE" -> NotValidService
+    | `String "NOT_VALID_REGION" -> NotValidRegion
+    | `String "NOT_VALID_PARTITION" -> NotValidPartition
+    | `String "NOT_VALID_ARN" -> NotValidArn
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "FailedItemReason" value)

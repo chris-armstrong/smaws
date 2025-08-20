@@ -10,16 +10,16 @@ let loc = Location.none
 
 exception UnexpectedType of string
 
-let has_func_body =
-  Shape.(
-    function
-    | StructureShape { members = []; _ } -> false
-    | StructureShape _ | StringShape _ | IntegerShape _ | BooleanShape _ | BigIntegerShape _
-    | BigDecimalShape _ | TimestampShape _ | BlobShape _ | MapShape _ | UnionShape _ | SetShape _
-    | LongShape _ | DocumentShape | ListShape _ | FloatShape _ | DoubleShape _ | EnumShape _
-    | UnitShape ->
-        true
-    | ResourceShape | OperationShape _ | ServiceShape _ -> false)
+(* let has_func_body = *)
+(*   Shape.( *)
+(*     function *)
+(*     | StructureShape { members = []; _ } -> false *)
+(*     | StructureShape _ | StringShape _ | IntegerShape _ | BooleanShape _ | BigIntegerShape _ *)
+(*     | BigDecimalShape _ | TimestampShape _ | BlobShape _ | MapShape _ | UnionShape _ | SetShape _ *)
+(*     | LongShape _ | DocumentShape | ListShape _ | FloatShape _ | DoubleShape _ | EnumShape _ *)
+(*     | UnitShape -> *)
+(*         true *)
+(*     | ResourceShape | OperationShape _ | ServiceShape _ -> false) *)
 
 module Serialiser = struct
   let func_name ?(is_exception_type = false) name =
@@ -41,7 +41,10 @@ module Serialiser = struct
                B.case
                  ~lhs:(B.ppat_construct (lident_noloc name) None)
                  ~guard:None
-                 ~rhs:(B.pexp_variant "String" (Some (exp_str value)))))
+                 ~rhs:
+                   (match value with
+                   | `String value -> B.pexp_variant "String" (Some (exp_str value))
+                   | `Int value -> B.pexp_variant "Int" (Some (exp_int value)))))
     in
 
     exp_fun "x" (SafeNames.safeTypeName name) match_exp
@@ -119,6 +122,8 @@ module Serialiser = struct
     | StructureShape x -> Some (structure_func_body shapeWithTarget.name x)
     | StringShape x -> exp_func "string_to_yojson"
     | IntegerShape x -> exp_func "int_to_yojson"
+    | ByteShape x -> exp_func "byte_to_yojson"
+    | ShortShape x -> exp_func "short_to_yojson"
     | BooleanShape x -> exp_func "bool_to_yojson"
     | BigIntegerShape x -> exp_func "big_int_to_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_to_yojson"
@@ -264,8 +269,19 @@ module Deserialiser = struct
     let cases =
       s.members
       |> List.map ~f:(fun (m : Ast.Shape.member) ->
+             let value =
+               List.find_map_exn
+                 ~f:(fun (t : Ast.Trait.t) -> match t with EnumValueTrait e -> Some e | _ -> None)
+                 Shape.(m.traits |> Option.value ~default:[])
+             in
              let pattern =
-               B.ppat_variant "String" (Some (B.ppat_constant (Pconst_string (m.name, loc, None))))
+               match value with
+               | `String value ->
+                   B.ppat_variant "String"
+                     (Some (B.ppat_constant (Pconst_string (value, loc, None))))
+               | `Int value ->
+                   B.ppat_variant "Int"
+                     (Some (B.ppat_constant (Pconst_integer (value |> Int.to_string, None))))
              in
              let constructor_exp =
                B.pexp_construct (lident_noloc (SafeNames.safeConstructorName m.name)) None
@@ -274,6 +290,7 @@ module Deserialiser = struct
     in
     let name_const = B.pexp_constant (Pconst_string (name |> Util.symbolName, loc, None)) in
     let failure_cases =
+      (* TODO: this is incorrect, it could be a string or int *)
       [
         B.case
           ~lhs:(B.ppat_variant "String" (Some (B.ppat_var (Location.mknoloc "value"))))
@@ -353,6 +370,8 @@ module Deserialiser = struct
     | StructureShape x -> Some (structure_func_body shapeWithTarget.name x)
     | StringShape x -> exp_func "string_of_yojson"
     | IntegerShape x -> exp_func "int_of_yojson"
+    | ByteShape x -> exp_func "byte_of_yojson"
+    | ShortShape x -> exp_func "short_of_yojson"
     | BooleanShape x -> exp_func "bool_of_yojson"
     | BigIntegerShape x -> exp_func "big_int_of_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_of_yojson"

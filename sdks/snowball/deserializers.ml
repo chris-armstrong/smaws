@@ -72,19 +72,19 @@ let sns_topic_ar_n_of_yojson = string_of_yojson
 let job_state_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "PENDING" -> PENDING
-    | `String "LISTING" -> LISTING
-    | `String "CANCELLED" -> CANCELLED
-    | `String "COMPLETE" -> COMPLETE
-    | `String "IN_PROGRESS" -> IN_PROGRESS
-    | `String "WITH_AWS" -> WITH_AWS
-    | `String "WITH_AWS_SORTING_FACILITY" -> WITH_AWS_SORTING_FACILITY
-    | `String "IN_TRANSIT_TO_AWS" -> IN_TRANSIT_TO_AWS
-    | `String "WITH_CUSTOMER" -> WITH_CUSTOMER
-    | `String "IN_TRANSIT_TO_CUSTOMER" -> IN_TRANSIT_TO_CUSTOMER
-    | `String "PREPARING_SHIPMENT" -> PREPARING_SHIPMENT
-    | `String "PREPARING_APPLIANCE" -> PREPARING_APPLIANCE
-    | `String "NEW" -> NEW
+    | `String "Pending" -> PENDING
+    | `String "Listing" -> LISTING
+    | `String "Cancelled" -> CANCELLED
+    | `String "Complete" -> COMPLETE
+    | `String "InProgress" -> IN_PROGRESS
+    | `String "WithAWS" -> WITH_AWS
+    | `String "WithAWSSortingFacility" -> WITH_AWS_SORTING_FACILITY
+    | `String "InTransitToAWS" -> IN_TRANSIT_TO_AWS
+    | `String "WithCustomer" -> WITH_CUSTOMER
+    | `String "InTransitToCustomer" -> IN_TRANSIT_TO_CUSTOMER
+    | `String "PreparingShipment" -> PREPARING_SHIPMENT
+    | `String "PreparingAppliance" -> PREPARING_APPLIANCE
+    | `String "New" -> NEW
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "JobState" value)
     | _ -> raise (deserialize_wrong_type_error path "JobState") : job_state) : 
@@ -319,7 +319,7 @@ let snowball_capacity_of_yojson (tree : t) path =
    (match tree with
     | `String "T13" -> T13
     | `String "T240" -> T240
-    | `String "NO_PREFERENCE" -> NO_PREFERENCE
+    | `String "NoPreference" -> NO_PREFERENCE
     | `String "T32" -> T32
     | `String "T14" -> T14
     | `String "T8" -> T8
@@ -515,10 +515,10 @@ let snowball_type_of_yojson (tree : t) path =
 let shipping_label_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "FAILED" -> FAILED
-    | `String "SUCCEEDED" -> SUCCEEDED
-    | `String "TIMED_OUT" -> TIMED_OUT
-    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "Failed" -> FAILED
+    | `String "Succeeded" -> SUCCEEDED
+    | `String "TimedOut" -> TIMED_OUT
+    | `String "InProgress" -> IN_PROGRESS
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ShippingLabelStatus"
@@ -588,9 +588,9 @@ let remote_management_of_yojson (tree : t) path =
 let long_term_pricing_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "ONE_MONTH" -> ONE_MONTH
-    | `String "THREE_YEAR" -> THREE_YEAR
-    | `String "ONE_YEAR" -> ONE_YEAR
+    | `String "OneMonth" -> ONE_MONTH
+    | `String "ThreeYear" -> THREE_YEAR
+    | `String "OneYear" -> ONE_YEAR
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "LongTermPricingType"
@@ -888,11 +888,11 @@ let list_compatible_images_request_of_yojson tree path =
 let cluster_state_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "CANCELLED" -> CANCELLED
-    | `String "COMPLETE" -> COMPLETE
-    | `String "IN_USE" -> IN_USE
-    | `String "PENDING" -> PENDING
-    | `String "AWAITING_QUORUM" -> AWAITING_QUORUM
+    | `String "Cancelled" -> CANCELLED
+    | `String "Complete" -> COMPLETE
+    | `String "InUse" -> IN_USE
+    | `String "Pending" -> PENDING
+    | `String "AwaitingQuorum" -> AWAITING_QUORUM
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ClusterState" value)

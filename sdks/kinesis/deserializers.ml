@@ -382,15 +382,15 @@ let metrics_name_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "ALL" -> ALL
-    | `String "ITERATOR_AGE_MILLISECONDS" -> ITERATOR_AGE_MILLISECONDS
-    | `String "READ_PROVISIONED_THROUGHPUT_EXCEEDED" ->
+    | `String "IteratorAgeMilliseconds" -> ITERATOR_AGE_MILLISECONDS
+    | `String "ReadProvisionedThroughputExceeded" ->
         READ_PROVISIONED_THROUGHPUT_EXCEEDED
-    | `String "WRITE_PROVISIONED_THROUGHPUT_EXCEEDED" ->
+    | `String "WriteProvisionedThroughputExceeded" ->
         WRITE_PROVISIONED_THROUGHPUT_EXCEEDED
-    | `String "OUTGOING_RECORDS" -> OUTGOING_RECORDS
-    | `String "OUTGOING_BYTES" -> OUTGOING_BYTES
-    | `String "INCOMING_RECORDS" -> INCOMING_RECORDS
-    | `String "INCOMING_BYTES" -> INCOMING_BYTES
+    | `String "OutgoingRecords" -> OUTGOING_RECORDS
+    | `String "OutgoingBytes" -> OUTGOING_BYTES
+    | `String "IncomingRecords" -> INCOMING_RECORDS
+    | `String "IncomingBytes" -> INCOMING_BYTES
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "MetricsName" value)
     | _ -> raise (deserialize_wrong_type_error path "MetricsName") : 

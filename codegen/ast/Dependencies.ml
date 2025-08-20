@@ -61,15 +61,12 @@ let getTargets descriptor =
   | ServiceShape { operations; _ } -> Option.value operations ~default:[]
   | MapShape { mapKey; mapValue; _ } -> [ mapKey.target; mapValue.target ]
   | BlobShape _ | BooleanShape _ | IntegerShape _ | StringShape _ | ResourceShape | TimestampShape _
-  | BigIntegerShape _ | BigDecimalShape _ ->
+  | ByteShape _ | BigIntegerShape _ | BigDecimalShape _ | ShortShape _ | FloatShape _ | UnitShape
+  | LongShape _ | DoubleShape _ ->
       []
   | UnionShape { members; _ } -> List.map members ~f:(fun member -> member.target)
-  | LongShape _ -> []
-  | DoubleShape _ -> []
   | SetShape { target; _ } -> [ target ]
   | EnumShape { members; _ } -> List.map members ~f:(fun member -> member.target)
-  | FloatShape _ -> []
-  | UnitShape -> []
   | DocumentShape -> []
 [@@ocaml.doc "\n * Get the targets for each shape type\n "]
 

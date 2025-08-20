@@ -25,6 +25,7 @@ let sigi_open names =
 
 let exp_ident name = B.pexp_ident (lident_noloc name)
 let exp_str name = B.pexp_constant (Pconst_string (name, loc, None))
+let exp_int value = B.pexp_constant (Pconst_integer (value |> Int.to_string, None))
 
 let exp_fun arg_name arg_type exp =
   B.pexp_fun Nolabel None

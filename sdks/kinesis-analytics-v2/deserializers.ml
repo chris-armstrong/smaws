@@ -311,18 +311,18 @@ let application_name_of_yojson = string_of_yojson
 let runtime_environment_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "FLINK_1_20" -> FLINK_1_20
-    | `String "FLINK_1_19" -> FLINK_1_19
-    | `String "FLINK_1_18" -> FLINK_1_18
-    | `String "ZEPPELIN_FLINK_3_0" -> ZEPPELIN_FLINK_3_0
-    | `String "FLINK_1_15" -> FLINK_1_15
-    | `String "ZEPPELIN_FLINK_2_0" -> ZEPPELIN_FLINK_2_0
-    | `String "FLINK_1_13" -> FLINK_1_13
-    | `String "FLINK_1_11" -> FLINK_1_11
-    | `String "ZEPPELIN_FLINK_1_0" -> ZEPPELIN_FLINK_1_0
-    | `String "FLINK_1_8" -> FLINK_1_8
-    | `String "FLINK_1_6" -> FLINK_1_6
-    | `String "SQL_1_0" -> SQL_1_0
+    | `String "FLINK-1_20" -> FLINK_1_20
+    | `String "FLINK-1_19" -> FLINK_1_19
+    | `String "FLINK-1_18" -> FLINK_1_18
+    | `String "ZEPPELIN-FLINK-3_0" -> ZEPPELIN_FLINK_3_0
+    | `String "FLINK-1_15" -> FLINK_1_15
+    | `String "ZEPPELIN-FLINK-2_0" -> ZEPPELIN_FLINK_2_0
+    | `String "FLINK-1_13" -> FLINK_1_13
+    | `String "FLINK-1_11" -> FLINK_1_11
+    | `String "ZEPPELIN-FLINK-1_0" -> ZEPPELIN_FLINK_1_0
+    | `String "FLINK-1_8" -> FLINK_1_8
+    | `String "FLINK-1_6" -> FLINK_1_6
+    | `String "SQL-1_0" -> SQL_1_0
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "RuntimeEnvironment"

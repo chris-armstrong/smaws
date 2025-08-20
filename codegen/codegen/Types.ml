@@ -99,7 +99,7 @@ let label_declaration ~name ~type_ ~doc_string =
       pld_attributes = [ Docs.create_doc_attr ~loc doc_string ];
     }
 
-let constructor_declaration ~name ~args ~res ~doc_string =
+let type_constructor ?res ?doc_string ~name ~args () =
   Ppxlib.
     {
       pcd_name = name;
@@ -107,14 +107,16 @@ let constructor_declaration ~name ~args ~res ~doc_string =
       pcd_args = args;
       pcd_res = res;
       pcd_loc = loc;
-      pcd_attributes = [ Docs.create_doc_attr ~loc doc_string ];
+      pcd_attributes =
+        Option.map doc_string ~f:(fun doc_string -> [ Docs.create_doc_attr ~loc doc_string ])
+        |> Option.value ~default:[];
     }
 
 let empty_type_constructor ~name ~traits =
   let doc_string = Docs.convert_docs traits in
-  constructor_declaration
+  type_constructor
     ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
-    ~args:(Pcstr_tuple []) ~res:None ~doc_string
+    ~args:(Pcstr_tuple []) ~doc_string ()
 
 let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor) =
   let open Ast.Shape in
@@ -149,7 +151,6 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       let doc_string = Docs.convert_docs traits in
 
       type_declaration ~name ~is_exception_type ~kind:(Ptype_variant enum_members) ~doc_string ()
-      (* | UnionShape { traits; _ } -> *)
   | MapShape { traits; mapKey; mapValue } ->
       let key_type = resolve ctx ~name:mapKey.target in
       let value_type = resolve ctx ~name:mapValue.target in
@@ -164,10 +165,10 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->
                let doc_string = Docs.convert_docs traits in
-               constructor_declaration
+               type_constructor
                  ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
                  ~args:(Pcstr_tuple [ resolve ctx ~name:target ])
-                 ~res:None ~doc_string)
+                 ~doc_string ())
       in
 
       let doc_string = Docs.convert_docs traits in

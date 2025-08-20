@@ -4,7 +4,7 @@ let base_unit_of_yojson = unit_of_yojson
 let update_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "MigrationTaskStateUpdated" -> MigrationTaskStateUpdated
+    | `String "MIGRATION_TASK_STATE_UPDATED" -> MigrationTaskStateUpdated
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "UpdateType" value)
     | _ -> raise (deserialize_wrong_type_error path "UpdateType") : update_type) : 

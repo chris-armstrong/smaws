@@ -35,501 +35,533 @@ let resource_id_of_yojson = string_of_yojson
 let resource_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "TransferProfile" -> TransferProfile
-    | `String "SecurityHubStandard" -> SecurityHubStandard
-    | `String "SageMakerInferenceExperiment" -> SageMakerInferenceExperiment
-    | `String "S3ExpressDirectoryBucket" -> S3ExpressDirectoryBucket
-    | `String "S3ExpressBucketPolicy" -> S3ExpressBucketPolicy
-    | `String "S3StorageLensGroup" -> S3StorageLensGroup
-    | `String "Route53ProfilesProfile" -> Route53ProfilesProfile
-    | `String "RedshiftEndpointAuthorization" ->
+    | `String "AWS::Transfer::Profile" -> TransferProfile
+    | `String "AWS::SecurityHub::Standard" -> SecurityHubStandard
+    | `String "AWS::SageMaker::InferenceExperiment" ->
+        SageMakerInferenceExperiment
+    | `String "AWS::S3Express::DirectoryBucket" -> S3ExpressDirectoryBucket
+    | `String "AWS::S3Express::BucketPolicy" -> S3ExpressBucketPolicy
+    | `String "AWS::S3::StorageLensGroup" -> S3StorageLensGroup
+    | `String "AWS::Route53Profiles::Profile" -> Route53ProfilesProfile
+    | `String "AWS::Redshift::EndpointAuthorization" ->
         RedshiftEndpointAuthorization
-    | `String "OpenSearchServerlessVpcEndpoint" ->
+    | `String "AWS::OpenSearchServerless::VpcEndpoint" ->
         OpenSearchServerlessVpcEndpoint
-    | `String "OpenSearchServerlessCollection" ->
+    | `String "AWS::OpenSearchServerless::Collection" ->
         OpenSearchServerlessCollection
-    | `String "MemoryDBSubnetGroup" -> MemoryDBSubnetGroup
-    | `String "MediaConnectGateway" -> MediaConnectGateway
-    | `String "MSKVpcConnection" -> MSKVpcConnection
-    | `String "MSKClusterPolicy" -> MSKClusterPolicy
-    | `String "InspectorV2Activation" -> InspectorV2Activation
-    | `String "IAMOIDCProvider" -> IAMOIDCProvider
-    | `String "EvidentlySegment" -> EvidentlySegment
-    | `String "EC2VPNConnectionRoute" -> EC2VPNConnectionRoute
-    | `String "EC2VPCEndpointConnectionNotification" ->
+    | `String "AWS::MemoryDB::SubnetGroup" -> MemoryDBSubnetGroup
+    | `String "AWS::MediaConnect::Gateway" -> MediaConnectGateway
+    | `String "AWS::MSK::VpcConnection" -> MSKVpcConnection
+    | `String "AWS::MSK::ClusterPolicy" -> MSKClusterPolicy
+    | `String "AWS::InspectorV2::Activation" -> InspectorV2Activation
+    | `String "AWS::IAM::OIDCProvider" -> IAMOIDCProvider
+    | `String "AWS::Evidently::Segment" -> EvidentlySegment
+    | `String "AWS::EC2::VPNConnectionRoute" -> EC2VPNConnectionRoute
+    | `String "AWS::EC2::VPCEndpointConnectionNotification" ->
         EC2VPCEndpointConnectionNotification
-    | `String "EC2VPCBlockPublicAccessOptions" ->
+    | `String "AWS::EC2::VPCBlockPublicAccessOptions" ->
         EC2VPCBlockPublicAccessOptions
-    | `String "EC2VPCBlockPublicAccessExclusion" ->
+    | `String "AWS::EC2::VPCBlockPublicAccessExclusion" ->
         EC2VPCBlockPublicAccessExclusion
-    | `String "EC2SnapshotBlockPublicAccess" -> EC2SnapshotBlockPublicAccess
-    | `String "EC2InstanceConnectEndpoint" -> EC2InstanceConnectEndpoint
-    | `String "EC2IPAMResourceDiscoveryAssociation" ->
+    | `String "AWS::EC2::SnapshotBlockPublicAccess" ->
+        EC2SnapshotBlockPublicAccess
+    | `String "AWS::EC2::InstanceConnectEndpoint" ->
+        EC2InstanceConnectEndpoint
+    | `String "AWS::EC2::IPAMResourceDiscoveryAssociation" ->
         EC2IPAMResourceDiscoveryAssociation
-    | `String "EC2IPAMResourceDiscovery" -> EC2IPAMResourceDiscovery
-    | `String "EC2EIPAssociation" -> EC2EIPAssociation
-    | `String "EC2ClientVpnTargetNetworkAssociation" ->
+    | `String "AWS::EC2::IPAMResourceDiscovery" -> EC2IPAMResourceDiscovery
+    | `String "AWS::EC2::EIPAssociation" -> EC2EIPAssociation
+    | `String "AWS::EC2::ClientVpnTargetNetworkAssociation" ->
         EC2ClientVpnTargetNetworkAssociation
-    | `String "ConnectUser" -> ConnectUser
-    | `String "ConnectRule" -> ConnectRule
-    | `String "CognitoIdentityPool" -> CognitoIdentityPool
-    | `String "BedrockKnowledgeBase" -> BedrockKnowledgeBase
-    | `String "BedrockGuardrail" -> BedrockGuardrail
-    | `String "AppSyncApiCache" -> AppSyncApiCache
-    | `String "AppIntegrationsApplication" -> AppIntegrationsApplication
-    | `String "AppConfigExtensionAssociation" ->
+    | `String "AWS::Connect::User" -> ConnectUser
+    | `String "AWS::Connect::Rule" -> ConnectRule
+    | `String "AWS::Cognito::IdentityPool" -> CognitoIdentityPool
+    | `String "AWS::Bedrock::KnowledgeBase" -> BedrockKnowledgeBase
+    | `String "AWS::Bedrock::Guardrail" -> BedrockGuardrail
+    | `String "AWS::AppSync::ApiCache" -> AppSyncApiCache
+    | `String "AWS::AppIntegrations::Application" ->
+        AppIntegrationsApplication
+    | `String "AWS::AppConfig::ExtensionAssociation" ->
         AppConfigExtensionAssociation
-    | `String "SSMDocument" -> SSMDocument
-    | `String "Route53ResolverFirewallRuleGroup" ->
+    | `String "AWS::SSM::Document" -> SSMDocument
+    | `String "AWS::Route53Resolver::FirewallRuleGroup" ->
         Route53ResolverFirewallRuleGroup
-    | `String "RedshiftEndpointAccess" -> RedshiftEndpointAccess
-    | `String "RDSOptionGroup" -> RDSOptionGroup
-    | `String "QuickSightTheme" -> QuickSightTheme
-    | `String "QuickSightTemplate" -> QuickSightTemplate
-    | `String "QuickSightDataSource" -> QuickSightDataSource
-    | `String "M2Environment" -> M2Environment
-    | `String "KMSAlias" -> KMSAlias
-    | `String "ImageBuilderImageRecipe" -> ImageBuilderImageRecipe
-    | `String "GroundStationDataflowEndpointGroup" ->
+    | `String "AWS::Redshift::EndpointAccess" -> RedshiftEndpointAccess
+    | `String "AWS::RDS::OptionGroup" -> RDSOptionGroup
+    | `String "AWS::QuickSight::Theme" -> QuickSightTheme
+    | `String "AWS::QuickSight::Template" -> QuickSightTemplate
+    | `String "AWS::QuickSight::DataSource" -> QuickSightDataSource
+    | `String "AWS::M2::Environment" -> M2Environment
+    | `String "AWS::KMS::Alias" -> KMSAlias
+    | `String "AWS::ImageBuilder::ImageRecipe" -> ImageBuilderImageRecipe
+    | `String "AWS::GroundStation::DataflowEndpointGroup" ->
         GroundStationDataflowEndpointGroup
-    | `String "GrafanaWorkspace" -> GrafanaWorkspace
-    | `String "EC2NetworkInsightsAnalysis" -> EC2NetworkInsightsAnalysis
-    | `String "EC2NetworkInsightsAccessScope" ->
+    | `String "AWS::Grafana::Workspace" -> GrafanaWorkspace
+    | `String "AWS::EC2::NetworkInsightsAnalysis" ->
+        EC2NetworkInsightsAnalysis
+    | `String "AWS::EC2::NetworkInsightsAccessScope" ->
         EC2NetworkInsightsAccessScope
-    | `String "CognitoUserPoolGroup" -> CognitoUserPoolGroup
-    | `String "CognitoUserPoolClient" -> CognitoUserPoolClient
-    | `String "CognitoUserPool" -> CognitoUserPool
-    | `String "AppStreamFleet" -> AppStreamFleet
-    | `String "ResourceExplorer2Index" -> ResourceExplorer2Index
-    | `String "NetworkManagerConnectPeer" -> NetworkManagerConnectPeer
-    | `String "LambdaCodeSigningConfig" -> LambdaCodeSigningConfig
-    | `String "KafkaConnectConnector" -> KafkaConnectConnector
-    | `String "IoTTwinMakerSyncJob" -> IoTTwinMakerSyncJob
-    | `String "IoTCACertificate" -> IoTCACertificate
-    | `String "IAMInstanceProfile" -> IAMInstanceProfile
-    | `String "ECSCapacityProvider" -> ECSCapacityProvider
-    | `String "EC2TransitGatewayMulticastDomain" ->
+    | `String "AWS::Cognito::UserPoolGroup" -> CognitoUserPoolGroup
+    | `String "AWS::Cognito::UserPoolClient" -> CognitoUserPoolClient
+    | `String "AWS::Cognito::UserPool" -> CognitoUserPool
+    | `String "AWS::AppStream::Fleet" -> AppStreamFleet
+    | `String "AWS::ResourceExplorer2::Index" -> ResourceExplorer2Index
+    | `String "AWS::NetworkManager::ConnectPeer" -> NetworkManagerConnectPeer
+    | `String "AWS::Lambda::CodeSigningConfig" -> LambdaCodeSigningConfig
+    | `String "AWS::KafkaConnect::Connector" -> KafkaConnectConnector
+    | `String "AWS::IoTTwinMaker::SyncJob" -> IoTTwinMakerSyncJob
+    | `String "AWS::IoT::CACertificate" -> IoTCACertificate
+    | `String "AWS::IAM::InstanceProfile" -> IAMInstanceProfile
+    | `String "AWS::ECS::CapacityProvider" -> ECSCapacityProvider
+    | `String "AWS::EC2::TransitGatewayMulticastDomain" ->
         EC2TransitGatewayMulticastDomain
-    | `String "EC2TransitGatewayConnect" -> EC2TransitGatewayConnect
-    | `String "EC2IPAMPool" -> EC2IPAMPool
-    | `String "EC2CarrierGateway" -> EC2CarrierGateway
-    | `String "ConnectQuickConnect" -> ConnectQuickConnect
-    | `String "ConnectInstance" -> ConnectInstance
-    | `String "AppMeshMesh" -> AppMeshMesh
-    | `String "AppMeshGatewayRoute" -> AppMeshGatewayRoute
-    | `String "ACMPCACertificateAuthorityActivation" ->
+    | `String "AWS::EC2::TransitGatewayConnect" -> EC2TransitGatewayConnect
+    | `String "AWS::EC2::IPAMPool" -> EC2IPAMPool
+    | `String "AWS::EC2::CarrierGateway" -> EC2CarrierGateway
+    | `String "AWS::Connect::QuickConnect" -> ConnectQuickConnect
+    | `String "AWS::Connect::Instance" -> ConnectInstance
+    | `String "AWS::AppMesh::Mesh" -> AppMeshMesh
+    | `String "AWS::AppMesh::GatewayRoute" -> AppMeshGatewayRoute
+    | `String "AWS::ACMPCA::CertificateAuthorityActivation" ->
         ACMPCACertificateAuthorityActivation
-    | `String "BatchSchedulingPolicy" -> BatchSchedulingPolicy
-    | `String "Route53ResolverResolverQueryLoggingConfig" ->
+    | `String "AWS::Batch::SchedulingPolicy" -> BatchSchedulingPolicy
+    | `String "AWS::Route53Resolver::ResolverQueryLoggingConfig" ->
         Route53ResolverResolverQueryLoggingConfig
-    | `String "CodeGuruProfilerProfilingGroup" ->
+    | `String "AWS::CodeGuruProfiler::ProfilingGroup" ->
         CodeGuruProfilerProfilingGroup
-    | `String "APSRuleGroupsNamespace" -> APSRuleGroupsNamespace
-    | `String "MediaConnectFlowSource" -> MediaConnectFlowSource
-    | `String "TransferCertificate" -> TransferCertificate
-    | `String "ServiceDiscoveryInstance" -> ServiceDiscoveryInstance
-    | `String "Route53ResolverResolverQueryLoggingConfigAssociation" ->
-        Route53ResolverResolverQueryLoggingConfigAssociation
-    | `String "InspectorV2Filter" -> InspectorV2Filter
-    | `String "IoTProvisioningTemplate" -> IoTProvisioningTemplate
-    | `String "IoTWirelessFuotaTask" -> IoTWirelessFuotaTask
-    | `String "IoTJobTemplate" -> IoTJobTemplate
-    | `String "AppStreamStack" -> AppStreamStack
-    | `String "MSKBatchScramSecret" -> MSKBatchScramSecret
-    | `String "SageMakerFeatureGroup" -> SageMakerFeatureGroup
-    | `String "CodeBuildReportGroup" -> CodeBuildReportGroup
-    | `String "IoTTwinMakerComponentType" -> IoTTwinMakerComponentType
-    | `String "PersonalizeDatasetGroup" -> PersonalizeDatasetGroup
-    | `String "IoTWirelessMulticastGroup" -> IoTWirelessMulticastGroup
-    | `String "NetworkManagerLinkAssociation" ->
+    | `String "AWS::APS::RuleGroupsNamespace" -> APSRuleGroupsNamespace
+    | `String "AWS::MediaConnect::FlowSource" -> MediaConnectFlowSource
+    | `String "AWS::Transfer::Certificate" -> TransferCertificate
+    | `String "AWS::ServiceDiscovery::Instance" -> ServiceDiscoveryInstance
+    | `String "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation"
+        -> Route53ResolverResolverQueryLoggingConfigAssociation
+    | `String "AWS::InspectorV2::Filter" -> InspectorV2Filter
+    | `String "AWS::IoT::ProvisioningTemplate" -> IoTProvisioningTemplate
+    | `String "AWS::IoTWireless::FuotaTask" -> IoTWirelessFuotaTask
+    | `String "AWS::IoT::JobTemplate" -> IoTJobTemplate
+    | `String "AWS::AppStream::Stack" -> AppStreamStack
+    | `String "AWS::MSK::BatchScramSecret" -> MSKBatchScramSecret
+    | `String "AWS::SageMaker::FeatureGroup" -> SageMakerFeatureGroup
+    | `String "AWS::CodeBuild::ReportGroup" -> CodeBuildReportGroup
+    | `String "AWS::IoTTwinMaker::ComponentType" -> IoTTwinMakerComponentType
+    | `String "AWS::Personalize::DatasetGroup" -> PersonalizeDatasetGroup
+    | `String "AWS::IoTWireless::MulticastGroup" -> IoTWirelessMulticastGroup
+    | `String "AWS::NetworkManager::LinkAssociation" ->
         NetworkManagerLinkAssociation
-    | `String "NetworkManagerCustomerGatewayAssociation" ->
+    | `String "AWS::NetworkManager::CustomerGatewayAssociation" ->
         NetworkManagerCustomerGatewayAssociation
-    | `String "S3AccessPoint" -> S3AccessPoint
-    | `String "PinpointEmailChannel" -> PinpointEmailChannel
-    | `String "LogsDestination" -> LogsDestination
-    | `String "KinesisVideoStream" -> KinesisVideoStream
-    | `String "KendraIndex" -> KendraIndex
-    | `String "EC2ClientVpnEndpoint" -> EC2ClientVpnEndpoint
-    | `String "EC2CapacityReservation" -> EC2CapacityReservation
-    | `String "DMSEndpoint" -> DMSEndpoint
-    | `String "CustomerProfilesObjectType" -> CustomerProfilesObjectType
-    | `String "AppRunnerService" -> AppRunnerService
-    | `String "AppMeshVirtualRouter" -> AppMeshVirtualRouter
-    | `String "AppMeshVirtualGateway" -> AppMeshVirtualGateway
-    | `String "AppConfigHostedConfigurationVersion" ->
+    | `String "AWS::S3::AccessPoint" -> S3AccessPoint
+    | `String "AWS::Pinpoint::EmailChannel" -> PinpointEmailChannel
+    | `String "AWS::Logs::Destination" -> LogsDestination
+    | `String "AWS::KinesisVideo::Stream" -> KinesisVideoStream
+    | `String "AWS::Kendra::Index" -> KendraIndex
+    | `String "AWS::EC2::ClientVpnEndpoint" -> EC2ClientVpnEndpoint
+    | `String "AWS::EC2::CapacityReservation" -> EC2CapacityReservation
+    | `String "AWS::DMS::Endpoint" -> DMSEndpoint
+    | `String "AWS::CustomerProfiles::ObjectType" ->
+        CustomerProfilesObjectType
+    | `String "AWS::AppRunner::Service" -> AppRunnerService
+    | `String "AWS::AppMesh::VirtualRouter" -> AppMeshVirtualRouter
+    | `String "AWS::AppMesh::VirtualGateway" -> AppMeshVirtualGateway
+    | `String "AWS::AppConfig::HostedConfigurationVersion" ->
         AppConfigHostedConfigurationVersion
-    | `String "ACMPCACertificateAuthority" -> ACMPCACertificateAuthority
-    | `String "ResilienceHubApp" -> ResilienceHubApp
-    | `String "PinpointEventStream" -> PinpointEventStream
-    | `String "PinpointEmailTemplate" -> PinpointEmailTemplate
-    | `String "PersonalizeSolution" -> PersonalizeSolution
-    | `String "PersonalizeSchema" -> PersonalizeSchema
-    | `String "PersonalizeDataset" -> PersonalizeDataset
-    | `String "MSKConfiguration" -> MSKConfiguration
-    | `String "MediaTailorPlaybackConfiguration" ->
+    | `String "AWS::ACMPCA::CertificateAuthority" ->
+        ACMPCACertificateAuthority
+    | `String "AWS::ResilienceHub::App" -> ResilienceHubApp
+    | `String "AWS::Pinpoint::EventStream" -> PinpointEventStream
+    | `String "AWS::Pinpoint::EmailTemplate" -> PinpointEmailTemplate
+    | `String "AWS::Personalize::Solution" -> PersonalizeSolution
+    | `String "AWS::Personalize::Schema" -> PersonalizeSchema
+    | `String "AWS::Personalize::Dataset" -> PersonalizeDataset
+    | `String "AWS::MSK::Configuration" -> MSKConfiguration
+    | `String "AWS::MediaTailor::PlaybackConfiguration" ->
         MediaTailorPlaybackConfiguration
-    | `String "MediaConnectFlowVpcInterface" -> MediaConnectFlowVpcInterface
-    | `String "MediaConnectFlowEntitlement" -> MediaConnectFlowEntitlement
-    | `String "GroundStationMissionProfile" -> GroundStationMissionProfile
-    | `String "GreengrassV2ComponentVersion" -> GreengrassV2ComponentVersion
-    | `String "ForecastDatasetGroup" -> ForecastDatasetGroup
-    | `String "EvidentlyLaunch" -> EvidentlyLaunch
-    | `String "EC2IPAMScope" -> EC2IPAMScope
-    | `String "AthenaPreparedStatement" -> AthenaPreparedStatement
-    | `String "AppMeshRoute" -> AppMeshRoute
-    | `String "AppIntegrationsEventIntegration" ->
+    | `String "AWS::MediaConnect::FlowVpcInterface" ->
+        MediaConnectFlowVpcInterface
+    | `String "AWS::MediaConnect::FlowEntitlement" ->
+        MediaConnectFlowEntitlement
+    | `String "AWS::GroundStation::MissionProfile" ->
+        GroundStationMissionProfile
+    | `String "AWS::GreengrassV2::ComponentVersion" ->
+        GreengrassV2ComponentVersion
+    | `String "AWS::Forecast::DatasetGroup" -> ForecastDatasetGroup
+    | `String "AWS::Evidently::Launch" -> EvidentlyLaunch
+    | `String "AWS::EC2::IPAMScope" -> EC2IPAMScope
+    | `String "AWS::Athena::PreparedStatement" -> AthenaPreparedStatement
+    | `String "AWS::AppMesh::Route" -> AppMeshRoute
+    | `String "AWS::AppIntegrations::EventIntegration" ->
         AppIntegrationsEventIntegration
-    | `String "AmplifyBranch" -> AmplifyBranch
-    | `String "KinesisFirehoseDeliveryStream" ->
+    | `String "AWS::Amplify::Branch" -> AmplifyBranch
+    | `String "AWS::KinesisFirehose::DeliveryStream" ->
         KinesisFirehoseDeliveryStream
-    | `String "TransferConnector" -> TransferConnector
-    | `String "TransferAgreement" -> TransferAgreement
-    | `String "SageMakerDomain" -> SageMakerDomain
-    | `String "PinpointInAppTemplate" -> PinpointInAppTemplate
-    | `String "PinpointCampaign" -> PinpointCampaign
-    | `String "IAMServerCertificate" -> IAMServerCertificate
-    | `String "IAMSAMLProvider" -> IAMSAMLProvider
-    | `String "ForecastDataset" -> ForecastDataset
-    | `String "EvidentlyProject" -> EvidentlyProject
-    | `String "EC2SpotFleet" -> EC2SpotFleet
-    | `String "EC2PrefixList" -> EC2PrefixList
-    | `String "CodeArtifactRepository" -> CodeArtifactRepository
-    | `String "AppStreamApplication" -> AppStreamApplication
-    | `String "AppRunnerVpcConnector" -> AppRunnerVpcConnector
-    | `String "AppMeshVirtualService" -> AppMeshVirtualService
-    | `String "AppMeshVirtualNode" -> AppMeshVirtualNode
-    | `String "AmplifyApp" -> AmplifyApp
-    | `String "SignerSigningProfile" -> SignerSigningProfile
-    | `String "CassandraKeyspace" -> CassandraKeyspace
-    | `String "ECSTaskSet" -> ECSTaskSet
-    | `String "SageMakerImage" -> SageMakerImage
-    | `String "SageMakerAppImageConfig" -> SageMakerAppImageConfig
-    | `String "Route53ResolverFirewallRuleGroupAssociation" ->
+    | `String "AWS::Transfer::Connector" -> TransferConnector
+    | `String "AWS::Transfer::Agreement" -> TransferAgreement
+    | `String "AWS::SageMaker::Domain" -> SageMakerDomain
+    | `String "AWS::Pinpoint::InAppTemplate" -> PinpointInAppTemplate
+    | `String "AWS::Pinpoint::Campaign" -> PinpointCampaign
+    | `String "AWS::IAM::ServerCertificate" -> IAMServerCertificate
+    | `String "AWS::IAM::SAMLProvider" -> IAMSAMLProvider
+    | `String "AWS::Forecast::Dataset" -> ForecastDataset
+    | `String "AWS::Evidently::Project" -> EvidentlyProject
+    | `String "AWS::EC2::SpotFleet" -> EC2SpotFleet
+    | `String "AWS::EC2::PrefixList" -> EC2PrefixList
+    | `String "AWS::CodeArtifact::Repository" -> CodeArtifactRepository
+    | `String "AWS::AppStream::Application" -> AppStreamApplication
+    | `String "AWS::AppRunner::VpcConnector" -> AppRunnerVpcConnector
+    | `String "AWS::AppMesh::VirtualService" -> AppMeshVirtualService
+    | `String "AWS::AppMesh::VirtualNode" -> AppMeshVirtualNode
+    | `String "AWS::Amplify::App" -> AmplifyApp
+    | `String "AWS::Signer::SigningProfile" -> SignerSigningProfile
+    | `String "AWS::Cassandra::Keyspace" -> CassandraKeyspace
+    | `String "AWS::ECS::TaskSet" -> ECSTaskSet
+    | `String "AWS::SageMaker::Image" -> SageMakerImage
+    | `String "AWS::SageMaker::AppImageConfig" -> SageMakerAppImageConfig
+    | `String "AWS::Route53Resolver::FirewallRuleGroupAssociation" ->
         Route53ResolverFirewallRuleGroupAssociation
-    | `String "RedshiftScheduledAction" -> RedshiftScheduledAction
-    | `String "PinpointApp" -> PinpointApp
-    | `String "PanoramaPackage" -> PanoramaPackage
-    | `String "NetworkManagerSite" -> NetworkManagerSite
-    | `String "NetworkManagerLink" -> NetworkManagerLink
-    | `String "NetworkManagerGlobalNetwork" -> NetworkManagerGlobalNetwork
-    | `String "NetworkManagerDevice" -> NetworkManagerDevice
-    | `String "IoTWirelessServiceProfile" -> IoTWirelessServiceProfile
-    | `String "IoTFleetMetric" -> IoTFleetMetric
-    | `String "ImageBuilderImagePipeline" -> ImageBuilderImagePipeline
-    | `String "GroundStationConfig" -> GroundStationConfig
-    | `String "ECRPullThroughCacheRule" -> ECRPullThroughCacheRule
-    | `String "EC2SubnetRouteTableAssociation" ->
+    | `String "AWS::Redshift::ScheduledAction" -> RedshiftScheduledAction
+    | `String "AWS::Pinpoint::App" -> PinpointApp
+    | `String "AWS::Panorama::Package" -> PanoramaPackage
+    | `String "AWS::NetworkManager::Site" -> NetworkManagerSite
+    | `String "AWS::NetworkManager::Link" -> NetworkManagerLink
+    | `String "AWS::NetworkManager::GlobalNetwork" ->
+        NetworkManagerGlobalNetwork
+    | `String "AWS::NetworkManager::Device" -> NetworkManagerDevice
+    | `String "AWS::IoTWireless::ServiceProfile" -> IoTWirelessServiceProfile
+    | `String "AWS::IoT::FleetMetric" -> IoTFleetMetric
+    | `String "AWS::ImageBuilder::ImagePipeline" -> ImageBuilderImagePipeline
+    | `String "AWS::GroundStation::Config" -> GroundStationConfig
+    | `String "AWS::ECR::PullThroughCacheRule" -> ECRPullThroughCacheRule
+    | `String "AWS::EC2::SubnetRouteTableAssociation" ->
         EC2SubnetRouteTableAssociation
-    | `String "EC2EC2Fleet" -> EC2EC2Fleet
-    | `String "DeviceFarmProject" -> DeviceFarmProject
-    | `String "DeviceFarmInstanceProfile" -> DeviceFarmInstanceProfile
-    | `String "CloudWatchMetricStream" -> CloudWatchMetricStream
-    | `String "AuditManagerAssessment" -> AuditManagerAssessment
-    | `String "AppFlowFlow" -> AppFlowFlow
-    | `String "AppConfigDeploymentStrategy" -> AppConfigDeploymentStrategy
-    | `String "ConnectPhoneNumber" -> ConnectPhoneNumber
-    | `String "AutoScalingWarmPool" -> AutoScalingWarmPool
-    | `String "CustomerProfilesDomain" -> CustomerProfilesDomain
-    | `String "NetworkManagerTransitGatewayRegistration" ->
+    | `String "AWS::EC2::EC2Fleet" -> EC2EC2Fleet
+    | `String "AWS::DeviceFarm::Project" -> DeviceFarmProject
+    | `String "AWS::DeviceFarm::InstanceProfile" -> DeviceFarmInstanceProfile
+    | `String "AWS::CloudWatch::MetricStream" -> CloudWatchMetricStream
+    | `String "AWS::AuditManager::Assessment" -> AuditManagerAssessment
+    | `String "AWS::AppFlow::Flow" -> AppFlowFlow
+    | `String "AWS::AppConfig::DeploymentStrategy" ->
+        AppConfigDeploymentStrategy
+    | `String "AWS::Connect::PhoneNumber" -> ConnectPhoneNumber
+    | `String "AWS::AutoScaling::WarmPool" -> AutoScalingWarmPool
+    | `String "AWS::CustomerProfiles::Domain" -> CustomerProfilesDomain
+    | `String "AWS::NetworkManager::TransitGatewayRegistration" ->
         NetworkManagerTransitGatewayRegistration
-    | `String "IoTTwinMakerScene" -> IoTTwinMakerScene
-    | `String "EC2IPAM" -> EC2IPAM
-    | `String "EC2TrafficMirrorFilter" -> EC2TrafficMirrorFilter
-    | `String "EC2NetworkInsightsPath" -> EC2NetworkInsightsPath
-    | `String "EC2DHCPOptions" -> EC2DHCPOptions
-    | `String "EventsRule" -> EventsRule
-    | `String "PinpointApplicationSettings" -> PinpointApplicationSettings
-    | `String "PinpointSegment" -> PinpointSegment
-    | `String "HealthLakeFHIRDatastore" -> HealthLakeFHIRDatastore
-    | `String "RoboMakerRobotApplication" -> RoboMakerRobotApplication
-    | `String "RoboMakerSimulationApplication" ->
+    | `String "AWS::IoTTwinMaker::Scene" -> IoTTwinMakerScene
+    | `String "AWS::EC2::IPAM" -> EC2IPAM
+    | `String "AWS::EC2::TrafficMirrorFilter" -> EC2TrafficMirrorFilter
+    | `String "AWS::EC2::NetworkInsightsPath" -> EC2NetworkInsightsPath
+    | `String "AWS::EC2::DHCPOptions" -> EC2DHCPOptions
+    | `String "AWS::Events::Rule" -> EventsRule
+    | `String "AWS::Pinpoint::ApplicationSettings" ->
+        PinpointApplicationSettings
+    | `String "AWS::Pinpoint::Segment" -> PinpointSegment
+    | `String "AWS::HealthLake::FHIRDatastore" -> HealthLakeFHIRDatastore
+    | `String "AWS::RoboMaker::RobotApplication" -> RoboMakerRobotApplication
+    | `String "AWS::RoboMaker::SimulationApplication" ->
         RoboMakerSimulationApplication
-    | `String "Route53RecoveryReadinessResourceSet" ->
+    | `String "AWS::Route53RecoveryReadiness::ResourceSet" ->
         Route53RecoveryReadinessResourceSet
-    | `String "Route53RecoveryControlRoutingControl" ->
+    | `String "AWS::Route53RecoveryControl::RoutingControl" ->
         Route53RecoveryControlRoutingControl
-    | `String "Route53RecoveryControlControlPanel" ->
+    | `String "AWS::Route53RecoveryControl::ControlPanel" ->
         Route53RecoveryControlControlPanel
-    | `String "Route53RecoveryControlSafetyRule" ->
+    | `String "AWS::Route53RecoveryControl::SafetyRule" ->
         Route53RecoveryControlSafetyRule
-    | `String "Route53RecoveryControlCluster" ->
+    | `String "AWS::Route53RecoveryControl::Cluster" ->
         Route53RecoveryControlCluster
-    | `String "LookoutVisionProject" -> LookoutVisionProject
-    | `String "AppStreamDirectoryConfig" -> AppStreamDirectoryConfig
-    | `String "KinesisVideoSignalingChannel" -> KinesisVideoSignalingChannel
-    | `String "MediaPackagePackagingConfiguration" ->
+    | `String "AWS::LookoutVision::Project" -> LookoutVisionProject
+    | `String "AWS::AppStream::DirectoryConfig" -> AppStreamDirectoryConfig
+    | `String "AWS::KinesisVideo::SignalingChannel" ->
+        KinesisVideoSignalingChannel
+    | `String "AWS::MediaPackage::PackagingConfiguration" ->
         MediaPackagePackagingConfiguration
-    | `String "EventSchemasSchema" -> EventSchemasSchema
-    | `String "EventsConnection" -> EventsConnection
-    | `String "IoTScheduledAudit" -> IoTScheduledAudit
-    | `String "S3StorageLens" -> S3StorageLens
-    | `String "EC2TrafficMirrorTarget" -> EC2TrafficMirrorTarget
-    | `String "IoTAccountAuditConfiguration" -> IoTAccountAuditConfiguration
-    | `String "LookoutMetricsAlert" -> LookoutMetricsAlert
-    | `String "LexBotAlias" -> LexBotAlias
-    | `String "IoTSiteWiseGateway" -> IoTSiteWiseGateway
-    | `String "EC2TrafficMirrorSession" -> EC2TrafficMirrorSession
-    | `String "RoboMakerRobotApplicationVersion" ->
+    | `String "AWS::EventSchemas::Schema" -> EventSchemasSchema
+    | `String "AWS::Events::Connection" -> EventsConnection
+    | `String "AWS::IoT::ScheduledAudit" -> IoTScheduledAudit
+    | `String "AWS::S3::StorageLens" -> S3StorageLens
+    | `String "AWS::EC2::TrafficMirrorTarget" -> EC2TrafficMirrorTarget
+    | `String "AWS::IoT::AccountAuditConfiguration" ->
+        IoTAccountAuditConfiguration
+    | `String "AWS::LookoutMetrics::Alert" -> LookoutMetricsAlert
+    | `String "AWS::Lex::BotAlias" -> LexBotAlias
+    | `String "AWS::IoTSiteWise::Gateway" -> IoTSiteWiseGateway
+    | `String "AWS::EC2::TrafficMirrorSession" -> EC2TrafficMirrorSession
+    | `String "AWS::RoboMaker::RobotApplicationVersion" ->
         RoboMakerRobotApplicationVersion
-    | `String "Route53ResolverFirewallDomainList" ->
+    | `String "AWS::Route53Resolver::FirewallDomainList" ->
         Route53ResolverFirewallDomainList
-    | `String "IoTCustomMetric" -> IoTCustomMetric
-    | `String "CodeGuruReviewerRepositoryAssociation" ->
+    | `String "AWS::IoT::CustomMetric" -> IoTCustomMetric
+    | `String "AWS::CodeGuruReviewer::RepositoryAssociation" ->
         CodeGuruReviewerRepositoryAssociation
-    | `String "LexBot" -> LexBot
-    | `String "BudgetsBudgetsAction" -> BudgetsBudgetsAction
-    | `String "DeviceFarmTestGridProject" -> DeviceFarmTestGridProject
-    | `String "S3MultiRegionAccessPoint" -> S3MultiRegionAccessPoint
-    | `String "RDSGlobalCluster" -> RDSGlobalCluster
-    | `String "KinesisAnalyticsV2Application" ->
+    | `String "AWS::Lex::Bot" -> LexBot
+    | `String "AWS::Budgets::BudgetsAction" -> BudgetsBudgetsAction
+    | `String "AWS::DeviceFarm::TestGridProject" -> DeviceFarmTestGridProject
+    | `String "AWS::S3::MultiRegionAccessPoint" -> S3MultiRegionAccessPoint
+    | `String "AWS::RDS::GlobalCluster" -> RDSGlobalCluster
+    | `String "AWS::KinesisAnalyticsV2::Application" ->
         KinesisAnalyticsV2Application
-    | `String "IVSPlaybackKeyPair" -> IVSPlaybackKeyPair
-    | `String "IVSRecordingConfiguration" -> IVSRecordingConfiguration
-    | `String "IVSChannel" -> IVSChannel
-    | `String "IoTSiteWiseAssetModel" -> IoTSiteWiseAssetModel
-    | `String "IoTSiteWisePortal" -> IoTSiteWisePortal
-    | `String "IoTSiteWiseProject" -> IoTSiteWiseProject
-    | `String "IoTSiteWiseDashboard" -> IoTSiteWiseDashboard
-    | `String "IoTAnalyticsChannel" -> IoTAnalyticsChannel
-    | `String "IoTAnalyticsPipeline" -> IoTAnalyticsPipeline
-    | `String "IoTAnalyticsDataset" -> IoTAnalyticsDataset
-    | `String "IoTTwinMakerEntity" -> IoTTwinMakerEntity
-    | `String "IoTTwinMakerWorkspace" -> IoTTwinMakerWorkspace
-    | `String "IoTMitigationAction" -> IoTMitigationAction
-    | `String "IoTPolicy" -> IoTPolicy
-    | `String "GlueMLTransform" -> GlueMLTransform
-    | `String "EKSAddon" -> EKSAddon
-    | `String "EKSIdentityProviderConfig" -> EKSIdentityProviderConfig
-    | `String "TransferWorkflow" -> TransferWorkflow
-    | `String "ResilienceHubResiliencyPolicy" ->
+    | `String "AWS::IVS::PlaybackKeyPair" -> IVSPlaybackKeyPair
+    | `String "AWS::IVS::RecordingConfiguration" -> IVSRecordingConfiguration
+    | `String "AWS::IVS::Channel" -> IVSChannel
+    | `String "AWS::IoTSiteWise::AssetModel" -> IoTSiteWiseAssetModel
+    | `String "AWS::IoTSiteWise::Portal" -> IoTSiteWisePortal
+    | `String "AWS::IoTSiteWise::Project" -> IoTSiteWiseProject
+    | `String "AWS::IoTSiteWise::Dashboard" -> IoTSiteWiseDashboard
+    | `String "AWS::IoTAnalytics::Channel" -> IoTAnalyticsChannel
+    | `String "AWS::IoTAnalytics::Pipeline" -> IoTAnalyticsPipeline
+    | `String "AWS::IoTAnalytics::Dataset" -> IoTAnalyticsDataset
+    | `String "AWS::IoTTwinMaker::Entity" -> IoTTwinMakerEntity
+    | `String "AWS::IoTTwinMaker::Workspace" -> IoTTwinMakerWorkspace
+    | `String "AWS::IoT::MitigationAction" -> IoTMitigationAction
+    | `String "AWS::IoT::Policy" -> IoTPolicy
+    | `String "AWS::Glue::MLTransform" -> GlueMLTransform
+    | `String "AWS::EKS::Addon" -> EKSAddon
+    | `String "AWS::EKS::IdentityProviderConfig" -> EKSIdentityProviderConfig
+    | `String "AWS::Transfer::Workflow" -> TransferWorkflow
+    | `String "AWS::ResilienceHub::ResiliencyPolicy" ->
         ResilienceHubResiliencyPolicy
-    | `String "Route53RecoveryReadinessRecoveryGroup" ->
+    | `String "AWS::Route53RecoveryReadiness::RecoveryGroup" ->
         Route53RecoveryReadinessRecoveryGroup
-    | `String "MediaPackagePackagingGroup" -> MediaPackagePackagingGroup
-    | `String "LightsailStaticIp" -> LightsailStaticIp
-    | `String "LightsailBucket" -> LightsailBucket
-    | `String "IoTAnalyticsDatastore" -> IoTAnalyticsDatastore
-    | `String "IoTDimension" -> IoTDimension
-    | `String "IoTRoleAlias" -> IoTRoleAlias
-    | `String "IoTSecurityProfile" -> IoTSecurityProfile
-    | `String "IoTAuthorizer" -> IoTAuthorizer
-    | `String "FraudDetectorOutcome" -> FraudDetectorOutcome
-    | `String "FraudDetectorVariable" -> FraudDetectorVariable
-    | `String "FraudDetectorEntityType" -> FraudDetectorEntityType
-    | `String "FraudDetectorLabel" -> FraudDetectorLabel
-    | `String "EventSchemasDiscoverer" -> EventSchemasDiscoverer
-    | `String "EventSchemasRegistryPolicy" -> EventSchemasRegistryPolicy
-    | `String "EventSchemasRegistry" -> EventSchemasRegistry
-    | `String "Cloud9EnvironmentEC2" -> Cloud9EnvironmentEC2
-    | `String "AppConfigConfigurationProfile" ->
+    | `String "AWS::MediaPackage::PackagingGroup" ->
+        MediaPackagePackagingGroup
+    | `String "AWS::Lightsail::StaticIp" -> LightsailStaticIp
+    | `String "AWS::Lightsail::Bucket" -> LightsailBucket
+    | `String "AWS::IoTAnalytics::Datastore" -> IoTAnalyticsDatastore
+    | `String "AWS::IoT::Dimension" -> IoTDimension
+    | `String "AWS::IoT::RoleAlias" -> IoTRoleAlias
+    | `String "AWS::IoT::SecurityProfile" -> IoTSecurityProfile
+    | `String "AWS::IoT::Authorizer" -> IoTAuthorizer
+    | `String "AWS::FraudDetector::Outcome" -> FraudDetectorOutcome
+    | `String "AWS::FraudDetector::Variable" -> FraudDetectorVariable
+    | `String "AWS::FraudDetector::EntityType" -> FraudDetectorEntityType
+    | `String "AWS::FraudDetector::Label" -> FraudDetectorLabel
+    | `String "AWS::EventSchemas::Discoverer" -> EventSchemasDiscoverer
+    | `String "AWS::EventSchemas::RegistryPolicy" ->
+        EventSchemasRegistryPolicy
+    | `String "AWS::EventSchemas::Registry" -> EventSchemasRegistry
+    | `String "AWS::Cloud9::EnvironmentEC2" -> Cloud9EnvironmentEC2
+    | `String "AWS::AppConfig::ConfigurationProfile" ->
         AppConfigConfigurationProfile
-    | `String "AppConfigEnvironment" -> AppConfigEnvironment
-    | `String "AmazonMQBroker" -> AmazonMQBroker
-    | `String "SESTemplate" -> SESTemplate
-    | `String "GuardDutyFilter" -> GuardDutyFilter
-    | `String "SESReceiptFilter" -> SESReceiptFilter
-    | `String "DataSyncLocationFSxWindows" -> DataSyncLocationFSxWindows
-    | `String "FISExperimentTemplate" -> FISExperimentTemplate
-    | `String "LightsailDisk" -> LightsailDisk
-    | `String "EventsApiDestination" -> EventsApiDestination
-    | `String "EventsArchive" -> EventsArchive
-    | `String "SESReceiptRuleSet" -> SESReceiptRuleSet
-    | `String "EventsEndpoint" -> EventsEndpoint
-    | `String "RUMAppMonitor" -> RUMAppMonitor
-    | `String "LightsailCertificate" -> LightsailCertificate
-    | `String "BackupReportPlan" -> BackupReportPlan
-    | `String "ECRRegistryPolicy" -> ECRRegistryPolicy
-    | `String "Route53RecoveryReadinessReadinessCheck" ->
+    | `String "AWS::AppConfig::Environment" -> AppConfigEnvironment
+    | `String "AWS::AmazonMQ::Broker" -> AmazonMQBroker
+    | `String "AWS::SES::Template" -> SESTemplate
+    | `String "AWS::GuardDuty::Filter" -> GuardDutyFilter
+    | `String "AWS::SES::ReceiptFilter" -> SESReceiptFilter
+    | `String "AWS::DataSync::LocationFSxWindows" ->
+        DataSyncLocationFSxWindows
+    | `String "AWS::FIS::ExperimentTemplate" -> FISExperimentTemplate
+    | `String "AWS::Lightsail::Disk" -> LightsailDisk
+    | `String "AWS::Events::ApiDestination" -> EventsApiDestination
+    | `String "AWS::Events::Archive" -> EventsArchive
+    | `String "AWS::SES::ReceiptRuleSet" -> SESReceiptRuleSet
+    | `String "AWS::Events::Endpoint" -> EventsEndpoint
+    | `String "AWS::RUM::AppMonitor" -> RUMAppMonitor
+    | `String "AWS::Lightsail::Certificate" -> LightsailCertificate
+    | `String "AWS::Backup::ReportPlan" -> BackupReportPlan
+    | `String "AWS::ECR::RegistryPolicy" -> ECRRegistryPolicy
+    | `String "AWS::Route53RecoveryReadiness::ReadinessCheck" ->
         Route53RecoveryReadinessReadinessCheck
-    | `String "Route53RecoveryReadinessCell" -> Route53RecoveryReadinessCell
-    | `String "GlueClassifier" -> GlueClassifier
-    | `String "DataSyncLocationHDFS" -> DataSyncLocationHDFS
-    | `String "DataSyncLocationObjectStorage" ->
+    | `String "AWS::Route53RecoveryReadiness::Cell" ->
+        Route53RecoveryReadinessCell
+    | `String "AWS::Glue::Classifier" -> GlueClassifier
+    | `String "AWS::DataSync::LocationHDFS" -> DataSyncLocationHDFS
+    | `String "AWS::DataSync::LocationObjectStorage" ->
         DataSyncLocationObjectStorage
-    | `String "ImageBuilderInfrastructureConfiguration" ->
+    | `String "AWS::ImageBuilder::InfrastructureConfiguration" ->
         ImageBuilderInfrastructureConfiguration
-    | `String "ImageBuilderDistributionConfiguration" ->
+    | `String "AWS::ImageBuilder::DistributionConfiguration" ->
         ImageBuilderDistributionConfiguration
-    | `String "ImageBuilderContainerRecipe" -> ImageBuilderContainerRecipe
-    | `String "EventsEventBus" -> EventsEventBus
-    | `String "ServiceDiscoveryHttpNamespace" ->
+    | `String "AWS::ImageBuilder::ContainerRecipe" ->
+        ImageBuilderContainerRecipe
+    | `String "AWS::Events::EventBus" -> EventsEventBus
+    | `String "AWS::ServiceDiscovery::HttpNamespace" ->
         ServiceDiscoveryHttpNamespace
-    | `String "IoTEventsAlarmModel" -> IoTEventsAlarmModel
-    | `String "IoTEventsDetectorModel" -> IoTEventsDetectorModel
-    | `String "IoTEventsInput" -> IoTEventsInput
-    | `String "Route53HostedZone" -> Route53HostedZone
-    | `String "SESConfigurationSet" -> SESConfigurationSet
-    | `String "SESContactList" -> SESContactList
-    | `String "ServiceDiscoveryPublicDnsNamespace" ->
+    | `String "AWS::IoTEvents::AlarmModel" -> IoTEventsAlarmModel
+    | `String "AWS::IoTEvents::DetectorModel" -> IoTEventsDetectorModel
+    | `String "AWS::IoTEvents::Input" -> IoTEventsInput
+    | `String "AWS::Route53::HostedZone" -> Route53HostedZone
+    | `String "AWS::SES::ConfigurationSet" -> SESConfigurationSet
+    | `String "AWS::SES::ContactList" -> SESContactList
+    | `String "AWS::ServiceDiscovery::PublicDnsNamespace" ->
         ServiceDiscoveryPublicDnsNamespace
-    | `String "ServiceDiscoveryService" -> ServiceDiscoveryService
-    | `String "SageMakerNotebookInstanceLifecycleConfig" ->
+    | `String "AWS::ServiceDiscovery::Service" -> ServiceDiscoveryService
+    | `String "AWS::SageMaker::NotebookInstanceLifecycleConfig" ->
         SageMakerNotebookInstanceLifecycleConfig
-    | `String "SageMakerWorkteam" -> SageMakerWorkteam
-    | `String "GuardDutyIPSet" -> GuardDutyIPSet
-    | `String "GuardDutyThreatIntelSet" -> GuardDutyThreatIntelSet
-    | `String "GlueJob" -> GlueJob
-    | `String "EKSFargateProfile" -> EKSFargateProfile
-    | `String "NetworkInsightsAccessScopeAnalysis" ->
+    | `String "AWS::SageMaker::Workteam" -> SageMakerWorkteam
+    | `String "AWS::GuardDuty::IPSet" -> GuardDutyIPSet
+    | `String "AWS::GuardDuty::ThreatIntelSet" -> GuardDutyThreatIntelSet
+    | `String "AWS::Glue::Job" -> GlueJob
+    | `String "AWS::EKS::FargateProfile" -> EKSFargateProfile
+    | `String "AWS::EC2::NetworkInsightsAccessScopeAnalysis" ->
         NetworkInsightsAccessScopeAnalysis
-    | `String "DataSyncLocationNFS" -> DataSyncLocationNFS
-    | `String "DataSyncTask" -> DataSyncTask
-    | `String "DataSyncLocationEFS" -> DataSyncLocationEFS
-    | `String "DataSyncLocationS3" -> DataSyncLocationS3
-    | `String "DataSyncLocationFSxLustre" -> DataSyncLocationFSxLustre
-    | `String "DataSyncLocationSMB" -> DataSyncLocationSMB
-    | `String "AppSyncGraphQLApi" -> AppSyncGraphQLApi
-    | `String "AppConfigApplication" -> AppConfigApplication
-    | `String "DMSCertificate" -> DMSCertificate
-    | `String "TransitGatewayRouteTable" -> TransitGatewayRouteTable
-    | `String "TransitGatewayAttachment" -> TransitGatewayAttachment
-    | `String "GlobalAcceleratorListener" -> GlobalAcceleratorListener
-    | `String "GlobalAcceleratorEndpointGroup" ->
+    | `String "AWS::DataSync::LocationNFS" -> DataSyncLocationNFS
+    | `String "AWS::DataSync::Task" -> DataSyncTask
+    | `String "AWS::DataSync::LocationEFS" -> DataSyncLocationEFS
+    | `String "AWS::DataSync::LocationS3" -> DataSyncLocationS3
+    | `String "AWS::DataSync::LocationFSxLustre" -> DataSyncLocationFSxLustre
+    | `String "AWS::DataSync::LocationSMB" -> DataSyncLocationSMB
+    | `String "AWS::AppSync::GraphQLApi" -> AppSyncGraphQLApi
+    | `String "AWS::AppConfig::Application" -> AppConfigApplication
+    | `String "AWS::DMS::Certificate" -> DMSCertificate
+    | `String "AWS::EC2::TransitGatewayRouteTable" ->
+        TransitGatewayRouteTable
+    | `String "AWS::EC2::TransitGatewayAttachment" ->
+        TransitGatewayAttachment
+    | `String "AWS::GlobalAccelerator::Listener" -> GlobalAcceleratorListener
+    | `String "AWS::GlobalAccelerator::EndpointGroup" ->
         GlobalAcceleratorEndpointGroup
-    | `String "GlobalAcceleratorAccelerator" -> GlobalAcceleratorAccelerator
-    | `String "DetectiveGraph" -> DetectiveGraph
-    | `String "AthenaDataCatalog" -> AthenaDataCatalog
-    | `String "AthenaWorkGroup" -> AthenaWorkGroup
-    | `String "AccessAnalyzerAnalyzer" -> AccessAnalyzerAnalyzer
-    | `String "BatchComputeEnvironment" -> BatchComputeEnvironment
-    | `String "BatchJobQueue" -> BatchJobQueue
-    | `String "StepFunctionsStateMachine" -> StepFunctionsStateMachine
-    | `String "ListenerV2" -> ListenerV2
-    | `String "SageMakerModel" -> SageMakerModel
-    | `String "WorkSpacesConnectionAlias" -> WorkSpacesConnectionAlias
-    | `String "WorkSpacesWorkspace" -> WorkSpacesWorkspace
-    | `String "StepFunctionsActivity" -> StepFunctionsActivity
-    | `String "MSKCluster" -> MSKCluster
-    | `String "DMSEventSubscription" -> DMSEventSubscription
-    | `String "DMSReplicationSubnetGroup" -> DMSReplicationSubnetGroup
-    | `String "Route53ResolverResolverRuleAssociation" ->
+    | `String "AWS::GlobalAccelerator::Accelerator" ->
+        GlobalAcceleratorAccelerator
+    | `String "AWS::Detective::Graph" -> DetectiveGraph
+    | `String "AWS::Athena::DataCatalog" -> AthenaDataCatalog
+    | `String "AWS::Athena::WorkGroup" -> AthenaWorkGroup
+    | `String "AWS::AccessAnalyzer::Analyzer" -> AccessAnalyzerAnalyzer
+    | `String "AWS::Batch::ComputeEnvironment" -> BatchComputeEnvironment
+    | `String "AWS::Batch::JobQueue" -> BatchJobQueue
+    | `String "AWS::StepFunctions::StateMachine" -> StepFunctionsStateMachine
+    | `String "AWS::ElasticLoadBalancingV2::Listener" -> ListenerV2
+    | `String "AWS::SageMaker::Model" -> SageMakerModel
+    | `String "AWS::WorkSpaces::ConnectionAlias" -> WorkSpacesConnectionAlias
+    | `String "AWS::WorkSpaces::Workspace" -> WorkSpacesWorkspace
+    | `String "AWS::StepFunctions::Activity" -> StepFunctionsActivity
+    | `String "AWS::MSK::Cluster" -> MSKCluster
+    | `String "AWS::DMS::EventSubscription" -> DMSEventSubscription
+    | `String "AWS::DMS::ReplicationSubnetGroup" -> DMSReplicationSubnetGroup
+    | `String "AWS::Route53Resolver::ResolverRuleAssociation" ->
         Route53ResolverResolverRuleAssociation
-    | `String "Route53ResolverResolverRule" -> Route53ResolverResolverRule
-    | `String "Route53ResolverResolverEndpoint" ->
+    | `String "AWS::Route53Resolver::ResolverRule" ->
+        Route53ResolverResolverRule
+    | `String "AWS::Route53Resolver::ResolverEndpoint" ->
         Route53ResolverResolverEndpoint
-    | `String "SageMakerCodeRepository" -> SageMakerCodeRepository
-    | `String "EMRSecurityConfiguration" -> EMRSecurityConfiguration
-    | `String "GuardDutyDetector" -> GuardDutyDetector
-    | `String "ECRPublicRepository" -> ECRPublicRepository
-    | `String "LaunchTemplate" -> LaunchTemplate
-    | `String "CodeDeployDeploymentGroup" -> CodeDeployDeploymentGroup
-    | `String "CodeDeployDeploymentConfig" -> CodeDeployDeploymentConfig
-    | `String "CodeDeployApplication" -> CodeDeployApplication
-    | `String "KinesisStreamConsumer" -> KinesisStreamConsumer
-    | `String "KinesisStream" -> KinesisStream
-    | `String "TransitGateway" -> TransitGateway
-    | `String "OpenSearchDomain" -> OpenSearchDomain
-    | `String "EKSCluster" -> EKSCluster
-    | `String "EFSFileSystem" -> EFSFileSystem
-    | `String "EFSAccessPoint" -> EFSAccessPoint
-    | `String "ECSTaskDefinition" -> ECSTaskDefinition
-    | `String "ECSService" -> ECSService
-    | `String "ECSCluster" -> ECSCluster
-    | `String "ECRRepository" -> ECRRepository
-    | `String "BackupRecoveryPoint" -> BackupRecoveryPoint
-    | `String "BackupVault" -> BackupVault
-    | `String "BackupSelection" -> BackupSelection
-    | `String "BackupPlan" -> BackupPlan
-    | `String "FileData" -> FileData
-    | `String "Topic" -> Topic
-    | `String "Secret" -> Secret
-    | `String "QLDBLedger" -> QLDBLedger
-    | `String "Key" -> Key
-    | `String "Queue" -> Queue
-    | `String "Portfolio" -> Portfolio
-    | `String "CloudFormationProduct" -> CloudFormationProduct
-    | `String "CloudFormationProvisionedProduct" ->
+    | `String "AWS::SageMaker::CodeRepository" -> SageMakerCodeRepository
+    | `String "AWS::EMR::SecurityConfiguration" -> EMRSecurityConfiguration
+    | `String "AWS::GuardDuty::Detector" -> GuardDutyDetector
+    | `String "AWS::ECR::PublicRepository" -> ECRPublicRepository
+    | `String "AWS::EC2::LaunchTemplate" -> LaunchTemplate
+    | `String "AWS::CodeDeploy::DeploymentGroup" -> CodeDeployDeploymentGroup
+    | `String "AWS::CodeDeploy::DeploymentConfig" ->
+        CodeDeployDeploymentConfig
+    | `String "AWS::CodeDeploy::Application" -> CodeDeployApplication
+    | `String "AWS::Kinesis::StreamConsumer" -> KinesisStreamConsumer
+    | `String "AWS::Kinesis::Stream" -> KinesisStream
+    | `String "AWS::EC2::TransitGateway" -> TransitGateway
+    | `String "AWS::OpenSearch::Domain" -> OpenSearchDomain
+    | `String "AWS::EKS::Cluster" -> EKSCluster
+    | `String "AWS::EFS::FileSystem" -> EFSFileSystem
+    | `String "AWS::EFS::AccessPoint" -> EFSAccessPoint
+    | `String "AWS::ECS::TaskDefinition" -> ECSTaskDefinition
+    | `String "AWS::ECS::Service" -> ECSService
+    | `String "AWS::ECS::Cluster" -> ECSCluster
+    | `String "AWS::ECR::Repository" -> ECRRepository
+    | `String "AWS::Backup::RecoveryPoint" -> BackupRecoveryPoint
+    | `String "AWS::Backup::BackupVault" -> BackupVault
+    | `String "AWS::Backup::BackupSelection" -> BackupSelection
+    | `String "AWS::Backup::BackupPlan" -> BackupPlan
+    | `String "AWS::SSM::FileData" -> FileData
+    | `String "AWS::SNS::Topic" -> Topic
+    | `String "AWS::SecretsManager::Secret" -> Secret
+    | `String "AWS::QLDB::Ledger" -> QLDBLedger
+    | `String "AWS::KMS::Key" -> Key
+    | `String "AWS::SQS::Queue" -> Queue
+    | `String "AWS::ServiceCatalog::Portfolio" -> Portfolio
+    | `String "AWS::ServiceCatalog::CloudFormationProduct" ->
+        CloudFormationProduct
+    | `String "AWS::ServiceCatalog::CloudFormationProvisionedProduct" ->
         CloudFormationProvisionedProduct
-    | `String "Pipeline" -> Pipeline
-    | `String "Api" -> Api
-    | `String "StageV2" -> StageV2
-    | `String "RestApi" -> RestApi
-    | `String "Stage" -> Stage
-    | `String "ResourceCompliance" -> ResourceCompliance
-    | `String "ConformancePackCompliance" -> ConformancePackCompliance
-    | `String "RegionalProtection" -> RegionalProtection
-    | `String "Protection" -> Protection
-    | `String "PatchCompliance" -> PatchCompliance
-    | `String "AssociationCompliance" -> AssociationCompliance
-    | `String "EncryptionConfig" -> EncryptionConfig
-    | `String "ManagedRuleSetV2" -> ManagedRuleSetV2
-    | `String "RegexPatternSetV2" -> RegexPatternSetV2
-    | `String "IPSetV2" -> IPSetV2
-    | `String "RuleGroupV2" -> RuleGroupV2
-    | `String "WebACLV2" -> WebACLV2
-    | `String "Environment" -> Environment
-    | `String "ApplicationVersion" -> ApplicationVersion
-    | `String "Application" -> Application
-    | `String "NetworkFirewallRuleGroup" -> NetworkFirewallRuleGroup
-    | `String "NetworkFirewallFirewallPolicy" ->
+    | `String "AWS::CodePipeline::Pipeline" -> Pipeline
+    | `String "AWS::ApiGatewayV2::Api" -> Api
+    | `String "AWS::ApiGatewayV2::Stage" -> StageV2
+    | `String "AWS::ApiGateway::RestApi" -> RestApi
+    | `String "AWS::ApiGateway::Stage" -> Stage
+    | `String "AWS::Config::ResourceCompliance" -> ResourceCompliance
+    | `String "AWS::Config::ConformancePackCompliance" ->
+        ConformancePackCompliance
+    | `String "AWS::ShieldRegional::Protection" -> RegionalProtection
+    | `String "AWS::Shield::Protection" -> Protection
+    | `String "AWS::SSM::PatchCompliance" -> PatchCompliance
+    | `String "AWS::SSM::AssociationCompliance" -> AssociationCompliance
+    | `String "AWS::XRay::EncryptionConfig" -> EncryptionConfig
+    | `String "AWS::WAFv2::ManagedRuleSet" -> ManagedRuleSetV2
+    | `String "AWS::WAFv2::RegexPatternSet" -> RegexPatternSetV2
+    | `String "AWS::WAFv2::IPSet" -> IPSetV2
+    | `String "AWS::WAFv2::RuleGroup" -> RuleGroupV2
+    | `String "AWS::WAFv2::WebACL" -> WebACLV2
+    | `String "AWS::ElasticBeanstalk::Environment" -> Environment
+    | `String "AWS::ElasticBeanstalk::ApplicationVersion" ->
+        ApplicationVersion
+    | `String "AWS::ElasticBeanstalk::Application" -> Application
+    | `String "AWS::NetworkFirewall::RuleGroup" -> NetworkFirewallRuleGroup
+    | `String "AWS::NetworkFirewall::FirewallPolicy" ->
         NetworkFirewallFirewallPolicy
-    | `String "NetworkFirewallFirewall" -> NetworkFirewallFirewall
-    | `String "Function" -> Function
-    | `String "StreamingDistribution" -> StreamingDistribution
-    | `String "Distribution" -> Distribution
-    | `String "RegionalWebACL" -> RegionalWebACL
-    | `String "RegionalRuleGroup" -> RegionalRuleGroup
-    | `String "RegionalRule" -> RegionalRule
-    | `String "RegionalRateBasedRule" -> RegionalRateBasedRule
-    | `String "WebACL" -> WebACL
-    | `String "RuleGroup" -> RuleGroup
-    | `String "Rule" -> Rule
-    | `String "RateBasedRule" -> RateBasedRule
-    | `String "Project" -> Project
-    | `String "Table" -> Table
-    | `String "ScheduledAction" -> ScheduledAction
-    | `String "ScalingPolicy" -> ScalingPolicy
-    | `String "LaunchConfiguration" -> LaunchConfiguration
-    | `String "AutoScalingGroup" -> AutoScalingGroup
-    | `String "LoadBalancer" -> LoadBalancer
-    | `String "Stack" -> Stack
-    | `String "Alarm" -> Alarm
-    | `String "ManagedInstanceInventory" -> ManagedInstanceInventory
-    | `String "RedshiftEventSubscription" -> RedshiftEventSubscription
-    | `String "ClusterSubnetGroup" -> ClusterSubnetGroup
-    | `String "ClusterSecurityGroup" -> ClusterSecurityGroup
-    | `String "ClusterParameterGroup" -> ClusterParameterGroup
-    | `String "ClusterSnapshot" -> ClusterSnapshot
-    | `String "Cluster" -> Cluster
-    | `String "AccountPublicAccessBlock" -> AccountPublicAccessBlock
-    | `String "Bucket" -> Bucket
-    | `String "EventSubscription" -> EventSubscription
-    | `String "DBClusterSnapshot" -> DBClusterSnapshot
-    | `String "DBCluster" -> DBCluster
-    | `String "DBSnapshot" -> DBSnapshot
-    | `String "DBSecurityGroup" -> DBSecurityGroup
-    | `String "DBSubnetGroup" -> DBSubnetGroup
-    | `String "DBInstance" -> DBInstance
-    | `String "Certificate" -> Certificate
-    | `String "LoadBalancerV2" -> LoadBalancerV2
-    | `String "User" -> User
-    | `String "Role" -> Role
-    | `String "Policy" -> Policy
-    | `String "Group" -> Group
-    | `String "Domain" -> Domain
-    | `String "VPCPeeringConnection" -> VPCPeeringConnection
-    | `String "FlowLog" -> FlowLog
-    | `String "VPCEndpointService" -> VPCEndpointService
-    | `String "VPCEndpoint" -> VPCEndpoint
-    | `String "EgressOnlyInternetGateway" -> EgressOnlyInternetGateway
-    | `String "NatGateway" -> NatGateway
-    | `String "RegisteredHAInstance" -> RegisteredHAInstance
-    | `String "VPNGateway" -> VPNGateway
-    | `String "VPNConnection" -> VPNConnection
-    | `String "VPC" -> VPC
-    | `String "Volume" -> Volume
-    | `String "Trail" -> Trail
-    | `String "Subnet" -> Subnet
-    | `String "SecurityGroup" -> SecurityGroup
-    | `String "RouteTable" -> RouteTable
-    | `String "NetworkInterface" -> NetworkInterface
-    | `String "NetworkAcl" -> NetworkAcl
-    | `String "InternetGateway" -> InternetGateway
-    | `String "Instance" -> Instance
-    | `String "Host" -> Host
-    | `String "EIP" -> EIP
-    | `String "CustomerGateway" -> CustomerGateway
+    | `String "AWS::NetworkFirewall::Firewall" -> NetworkFirewallFirewall
+    | `String "AWS::Lambda::Function" -> Function
+    | `String "AWS::CloudFront::StreamingDistribution" ->
+        StreamingDistribution
+    | `String "AWS::CloudFront::Distribution" -> Distribution
+    | `String "AWS::WAFRegional::WebACL" -> RegionalWebACL
+    | `String "AWS::WAFRegional::RuleGroup" -> RegionalRuleGroup
+    | `String "AWS::WAFRegional::Rule" -> RegionalRule
+    | `String "AWS::WAFRegional::RateBasedRule" -> RegionalRateBasedRule
+    | `String "AWS::WAF::WebACL" -> WebACL
+    | `String "AWS::WAF::RuleGroup" -> RuleGroup
+    | `String "AWS::WAF::Rule" -> Rule
+    | `String "AWS::WAF::RateBasedRule" -> RateBasedRule
+    | `String "AWS::CodeBuild::Project" -> Project
+    | `String "AWS::DynamoDB::Table" -> Table
+    | `String "AWS::AutoScaling::ScheduledAction" -> ScheduledAction
+    | `String "AWS::AutoScaling::ScalingPolicy" -> ScalingPolicy
+    | `String "AWS::AutoScaling::LaunchConfiguration" -> LaunchConfiguration
+    | `String "AWS::AutoScaling::AutoScalingGroup" -> AutoScalingGroup
+    | `String "AWS::ElasticLoadBalancing::LoadBalancer" -> LoadBalancer
+    | `String "AWS::CloudFormation::Stack" -> Stack
+    | `String "AWS::CloudWatch::Alarm" -> Alarm
+    | `String "AWS::SSM::ManagedInstanceInventory" ->
+        ManagedInstanceInventory
+    | `String "AWS::Redshift::EventSubscription" -> RedshiftEventSubscription
+    | `String "AWS::Redshift::ClusterSubnetGroup" -> ClusterSubnetGroup
+    | `String "AWS::Redshift::ClusterSecurityGroup" -> ClusterSecurityGroup
+    | `String "AWS::Redshift::ClusterParameterGroup" -> ClusterParameterGroup
+    | `String "AWS::Redshift::ClusterSnapshot" -> ClusterSnapshot
+    | `String "AWS::Redshift::Cluster" -> Cluster
+    | `String "AWS::S3::AccountPublicAccessBlock" -> AccountPublicAccessBlock
+    | `String "AWS::S3::Bucket" -> Bucket
+    | `String "AWS::RDS::EventSubscription" -> EventSubscription
+    | `String "AWS::RDS::DBClusterSnapshot" -> DBClusterSnapshot
+    | `String "AWS::RDS::DBCluster" -> DBCluster
+    | `String "AWS::RDS::DBSnapshot" -> DBSnapshot
+    | `String "AWS::RDS::DBSecurityGroup" -> DBSecurityGroup
+    | `String "AWS::RDS::DBSubnetGroup" -> DBSubnetGroup
+    | `String "AWS::RDS::DBInstance" -> DBInstance
+    | `String "AWS::ACM::Certificate" -> Certificate
+    | `String "AWS::ElasticLoadBalancingV2::LoadBalancer" -> LoadBalancerV2
+    | `String "AWS::IAM::User" -> User
+    | `String "AWS::IAM::Role" -> Role
+    | `String "AWS::IAM::Policy" -> Policy
+    | `String "AWS::IAM::Group" -> Group
+    | `String "AWS::Elasticsearch::Domain" -> Domain
+    | `String "AWS::EC2::VPCPeeringConnection" -> VPCPeeringConnection
+    | `String "AWS::EC2::FlowLog" -> FlowLog
+    | `String "AWS::EC2::VPCEndpointService" -> VPCEndpointService
+    | `String "AWS::EC2::VPCEndpoint" -> VPCEndpoint
+    | `String "AWS::EC2::EgressOnlyInternetGateway" ->
+        EgressOnlyInternetGateway
+    | `String "AWS::EC2::NatGateway" -> NatGateway
+    | `String "AWS::EC2::RegisteredHAInstance" -> RegisteredHAInstance
+    | `String "AWS::EC2::VPNGateway" -> VPNGateway
+    | `String "AWS::EC2::VPNConnection" -> VPNConnection
+    | `String "AWS::EC2::VPC" -> VPC
+    | `String "AWS::EC2::Volume" -> Volume
+    | `String "AWS::CloudTrail::Trail" -> Trail
+    | `String "AWS::EC2::Subnet" -> Subnet
+    | `String "AWS::EC2::SecurityGroup" -> SecurityGroup
+    | `String "AWS::EC2::RouteTable" -> RouteTable
+    | `String "AWS::EC2::NetworkInterface" -> NetworkInterface
+    | `String "AWS::EC2::NetworkAcl" -> NetworkAcl
+    | `String "AWS::EC2::InternetGateway" -> InternetGateway
+    | `String "AWS::EC2::Instance" -> Instance
+    | `String "AWS::EC2::Host" -> Host
+    | `String "AWS::EC2::EIP" -> EIP
+    | `String "AWS::EC2::CustomerGateway" -> CustomerGateway
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ResourceType" value)
@@ -1495,10 +1527,10 @@ let organization_managed_rule_metadata_of_yojson tree path =
 let organization_config_rule_trigger_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "SCHEDULED_NOTIFICATION" -> SCHEDULED_NOTIFICATION
-    | `String "OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION" ->
+    | `String "ScheduledNotification" -> SCHEDULED_NOTIFICATION
+    | `String "OversizedConfigurationItemChangeNotification" ->
         OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
-    | `String "CONFIGURATION_ITEM_CHANGE_NOTIFICATION" ->
+    | `String "ConfigurationItemChangeNotification" ->
         CONFIGURATION_ITEM_CHANGE_NOTIFICATION
     | `String value ->
         raise
@@ -1552,9 +1584,9 @@ let organization_custom_rule_metadata_of_yojson tree path =
 let organization_config_rule_trigger_type_no_s_n_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION" ->
+    | `String "OversizedConfigurationItemChangeNotification" ->
         OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
-    | `String "CONFIGURATION_ITEM_CHANGE_NOTIFICATION" ->
+    | `String "ConfigurationItemChangeNotification" ->
         CONFIGURATION_ITEM_CHANGE_NOTIFICATION
     | `String value ->
         raise
@@ -1645,10 +1677,10 @@ let put_external_evaluation_response_of_yojson tree path =
 let compliance_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Insufficient_Data" -> Insufficient_Data
-    | `String "Not_Applicable" -> Not_Applicable
-    | `String "Non_Compliant" -> Non_Compliant
-    | `String "Compliant" -> Compliant
+    | `String "INSUFFICIENT_DATA" -> Insufficient_Data
+    | `String "NOT_APPLICABLE" -> Not_Applicable
+    | `String "NON_COMPLIANT" -> Non_Compliant
+    | `String "COMPLIANT" -> Compliant
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ComplianceType" value)
@@ -2231,9 +2263,9 @@ let scope_of_yojson tree path =
 let owner_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Custom_Policy" -> Custom_Policy
-    | `String "Aws" -> Aws
-    | `String "Custom_Lambda" -> Custom_Lambda
+    | `String "CUSTOM_POLICY" -> Custom_Policy
+    | `String "AWS" -> Aws
+    | `String "CUSTOM_LAMBDA" -> Custom_Lambda
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "Owner" value)
     | _ -> raise (deserialize_wrong_type_error path "Owner") : owner) : 
@@ -2241,7 +2273,7 @@ let owner_of_yojson (tree : t) path =
 let event_source_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Aws_Config" -> Aws_Config
+    | `String "aws.config" -> Aws_Config
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "EventSource" value)
     | _ -> raise (deserialize_wrong_type_error path "EventSource") : 
@@ -2680,7 +2712,7 @@ let list_configuration_recorders_response_of_yojson tree path =
 let configuration_recorder_filter_name_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "RecordingScope" -> RecordingScope
+    | `String "recordingScope" -> RecordingScope
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path

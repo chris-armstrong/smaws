@@ -18,111 +18,111 @@ let vocabulary_name_of_yojson = string_of_yojson
 let language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "ZU_ZA" -> ZU_ZA
-    | `String "ZH_HK" -> ZH_HK
-    | `String "WO_SN" -> WO_SN
-    | `String "UZ_UZ" -> UZ_UZ
-    | `String "UK_UA" -> UK_UA
-    | `String "UG_CN" -> UG_CN
-    | `String "TT_RU" -> TT_RU
-    | `String "TL_PH" -> TL_PH
-    | `String "SW_UG" -> SW_UG
-    | `String "SW_TZ" -> SW_TZ
-    | `String "SW_RW" -> SW_RW
-    | `String "SW_KE" -> SW_KE
-    | `String "SW_BI" -> SW_BI
-    | `String "SU_ID" -> SU_ID
-    | `String "SR_RS" -> SR_RS
-    | `String "SO_SO" -> SO_SO
-    | `String "SL_SI" -> SL_SI
-    | `String "SK_SK" -> SK_SK
-    | `String "SI_LK" -> SI_LK
-    | `String "RW_RW" -> RW_RW
-    | `String "RO_RO" -> RO_RO
-    | `String "PS_AF" -> PS_AF
-    | `String "PL_PL" -> PL_PL
-    | `String "PA_IN" -> PA_IN
-    | `String "OR_IN" -> OR_IN
-    | `String "NO_NO" -> NO_NO
-    | `String "MT_MT" -> MT_MT
-    | `String "MR_IN" -> MR_IN
-    | `String "MN_MN" -> MN_MN
-    | `String "ML_IN" -> ML_IN
-    | `String "MK_MK" -> MK_MK
-    | `String "MI_NZ" -> MI_NZ
-    | `String "MHR_RU" -> MHR_RU
-    | `String "LV_LV" -> LV_LV
-    | `String "LT_LT" -> LT_LT
-    | `String "LG_IN" -> LG_IN
-    | `String "KY_KG" -> KY_KG
-    | `String "KN_IN" -> KN_IN
-    | `String "KK_KZ" -> KK_KZ
-    | `String "KAB_DZ" -> KAB_DZ
-    | `String "KA_GE" -> KA_GE
-    | `String "IS_IS" -> IS_IS
-    | `String "HY_AM" -> HY_AM
-    | `String "HU_HU" -> HU_HU
-    | `String "HR_HR" -> HR_HR
-    | `String "HA_NG" -> HA_NG
-    | `String "GU_IN" -> GU_IN
-    | `String "GL_ES" -> GL_ES
-    | `String "FI_FI" -> FI_FI
-    | `String "EU_ES" -> EU_ES
-    | `String "ET_ET" -> ET_ET
-    | `String "ET_EE" -> ET_EE
-    | `String "EL_GR" -> EL_GR
-    | `String "CY_WL" -> CY_WL
-    | `String "CS_CZ" -> CS_CZ
-    | `String "CKB_IR" -> CKB_IR
-    | `String "CKB_IQ" -> CKB_IQ
-    | `String "CA_ES" -> CA_ES
-    | `String "BS_BA" -> BS_BA
-    | `String "BN_IN" -> BN_IN
-    | `String "BG_BG" -> BG_BG
-    | `String "BE_BY" -> BE_BY
-    | `String "BA_RU" -> BA_RU
-    | `String "AZ_AZ" -> AZ_AZ
-    | `String "AST_ES" -> AST_ES
-    | `String "AB_GE" -> AB_GE
-    | `String "SV_SE" -> SV_SE
-    | `String "VI_VN" -> VI_VN
-    | `String "EN_NZ" -> EN_NZ
-    | `String "EN_ZA" -> EN_ZA
-    | `String "TH_TH" -> TH_TH
-    | `String "ZH_TW" -> ZH_TW
-    | `String "ZH_CN" -> ZH_CN
-    | `String "TR_TR" -> TR_TR
-    | `String "TE_IN" -> TE_IN
-    | `String "TA_IN" -> TA_IN
-    | `String "RU_RU" -> RU_RU
-    | `String "PT_PT" -> PT_PT
-    | `String "PT_BR" -> PT_BR
-    | `String "NL_NL" -> NL_NL
-    | `String "MS_MY" -> MS_MY
-    | `String "KO_KR" -> KO_KR
-    | `String "JA_JP" -> JA_JP
-    | `String "IT_IT" -> IT_IT
-    | `String "ID_ID" -> ID_ID
-    | `String "HI_IN" -> HI_IN
-    | `String "HE_IL" -> HE_IL
-    | `String "FR_FR" -> FR_FR
-    | `String "FR_CA" -> FR_CA
-    | `String "FA_IR" -> FA_IR
-    | `String "ES_US" -> ES_US
-    | `String "ES_ES" -> ES_ES
-    | `String "EN_WL" -> EN_WL
-    | `String "EN_US" -> EN_US
-    | `String "EN_IN" -> EN_IN
-    | `String "EN_IE" -> EN_IE
-    | `String "EN_GB" -> EN_GB
-    | `String "EN_AU" -> EN_AU
-    | `String "EN_AB" -> EN_AB
-    | `String "DE_DE" -> DE_DE
-    | `String "DE_CH" -> DE_CH
-    | `String "DA_DK" -> DA_DK
-    | `String "AR_SA" -> AR_SA
-    | `String "AR_AE" -> AR_AE
-    | `String "AF_ZA" -> AF_ZA
+    | `String "zu-ZA" -> ZU_ZA
+    | `String "zh-HK" -> ZH_HK
+    | `String "wo-SN" -> WO_SN
+    | `String "uz-UZ" -> UZ_UZ
+    | `String "uk-UA" -> UK_UA
+    | `String "ug-CN" -> UG_CN
+    | `String "tt-RU" -> TT_RU
+    | `String "tl-PH" -> TL_PH
+    | `String "sw-UG" -> SW_UG
+    | `String "sw-TZ" -> SW_TZ
+    | `String "sw-RW" -> SW_RW
+    | `String "sw-KE" -> SW_KE
+    | `String "sw-BI" -> SW_BI
+    | `String "su-ID" -> SU_ID
+    | `String "sr-RS" -> SR_RS
+    | `String "so-SO" -> SO_SO
+    | `String "sl-SI" -> SL_SI
+    | `String "sk-SK" -> SK_SK
+    | `String "si-LK" -> SI_LK
+    | `String "rw-RW" -> RW_RW
+    | `String "ro-RO" -> RO_RO
+    | `String "ps-AF" -> PS_AF
+    | `String "pl-PL" -> PL_PL
+    | `String "pa-IN" -> PA_IN
+    | `String "or-IN" -> OR_IN
+    | `String "no-NO" -> NO_NO
+    | `String "mt-MT" -> MT_MT
+    | `String "mr-IN" -> MR_IN
+    | `String "mn-MN" -> MN_MN
+    | `String "ml-IN" -> ML_IN
+    | `String "mk-MK" -> MK_MK
+    | `String "mi-NZ" -> MI_NZ
+    | `String "mhr-RU" -> MHR_RU
+    | `String "lv-LV" -> LV_LV
+    | `String "lt-LT" -> LT_LT
+    | `String "lg-IN" -> LG_IN
+    | `String "ky-KG" -> KY_KG
+    | `String "kn-IN" -> KN_IN
+    | `String "kk-KZ" -> KK_KZ
+    | `String "kab-DZ" -> KAB_DZ
+    | `String "ka-GE" -> KA_GE
+    | `String "is-IS" -> IS_IS
+    | `String "hy-AM" -> HY_AM
+    | `String "hu-HU" -> HU_HU
+    | `String "hr-HR" -> HR_HR
+    | `String "ha-NG" -> HA_NG
+    | `String "gu-IN" -> GU_IN
+    | `String "gl-ES" -> GL_ES
+    | `String "fi-FI" -> FI_FI
+    | `String "eu-ES" -> EU_ES
+    | `String "et-ET" -> ET_ET
+    | `String "et-EE" -> ET_EE
+    | `String "el-GR" -> EL_GR
+    | `String "cy-WL" -> CY_WL
+    | `String "cs-CZ" -> CS_CZ
+    | `String "ckb-IR" -> CKB_IR
+    | `String "ckb-IQ" -> CKB_IQ
+    | `String "ca-ES" -> CA_ES
+    | `String "bs-BA" -> BS_BA
+    | `String "bn-IN" -> BN_IN
+    | `String "bg-BG" -> BG_BG
+    | `String "be-BY" -> BE_BY
+    | `String "ba-RU" -> BA_RU
+    | `String "az-AZ" -> AZ_AZ
+    | `String "ast-ES" -> AST_ES
+    | `String "ab-GE" -> AB_GE
+    | `String "sv-SE" -> SV_SE
+    | `String "vi-VN" -> VI_VN
+    | `String "en-NZ" -> EN_NZ
+    | `String "en-ZA" -> EN_ZA
+    | `String "th-TH" -> TH_TH
+    | `String "zh-TW" -> ZH_TW
+    | `String "zh-CN" -> ZH_CN
+    | `String "tr-TR" -> TR_TR
+    | `String "te-IN" -> TE_IN
+    | `String "ta-IN" -> TA_IN
+    | `String "ru-RU" -> RU_RU
+    | `String "pt-PT" -> PT_PT
+    | `String "pt-BR" -> PT_BR
+    | `String "nl-NL" -> NL_NL
+    | `String "ms-MY" -> MS_MY
+    | `String "ko-KR" -> KO_KR
+    | `String "ja-JP" -> JA_JP
+    | `String "it-IT" -> IT_IT
+    | `String "id-ID" -> ID_ID
+    | `String "hi-IN" -> HI_IN
+    | `String "he-IL" -> HE_IL
+    | `String "fr-FR" -> FR_FR
+    | `String "fr-CA" -> FR_CA
+    | `String "fa-IR" -> FA_IR
+    | `String "es-US" -> ES_US
+    | `String "es-ES" -> ES_ES
+    | `String "en-WL" -> EN_WL
+    | `String "en-US" -> EN_US
+    | `String "en-IN" -> EN_IN
+    | `String "en-IE" -> EN_IE
+    | `String "en-GB" -> EN_GB
+    | `String "en-AU" -> EN_AU
+    | `String "en-AB" -> EN_AB
+    | `String "de-DE" -> DE_DE
+    | `String "de-CH" -> DE_CH
+    | `String "da-DK" -> DA_DK
+    | `String "ar-SA" -> AR_SA
+    | `String "ar-AE" -> AR_AE
+    | `String "af-ZA" -> AF_ZA
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "LanguageCode" value)
@@ -167,9 +167,9 @@ let vocabulary_filters_of_yojson tree path =
 let vocabulary_filter_method_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "TAG" -> TAG
-    | `String "MASK" -> MASK
-    | `String "REMOVE" -> REMOVE
+    | `String "tag" -> TAG
+    | `String "mask" -> MASK
+    | `String "remove" -> REMOVE
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "VocabularyFilterMethod"
@@ -609,8 +609,8 @@ let redaction_type_of_yojson (tree : t) path =
 let redaction_output_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "REDACTED_AND_UNREDACTED" -> REDACTED_AND_UNREDACTED
-    | `String "REDACTED" -> REDACTED
+    | `String "redacted_and_unredacted" -> REDACTED_AND_UNREDACTED
+    | `String "redacted" -> REDACTED
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "RedactionOutput" value)
@@ -756,14 +756,14 @@ let media_sample_rate_hertz_of_yojson = int_of_yojson
 let media_format_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "M4A" -> M4A
-    | `String "WEBM" -> WEBM
-    | `String "AMR" -> AMR
-    | `String "OGG" -> OGG
-    | `String "FLAC" -> FLAC
-    | `String "WAV" -> WAV
-    | `String "MP4" -> MP4
-    | `String "MP3" -> MP3
+    | `String "m4a" -> M4A
+    | `String "webm" -> WEBM
+    | `String "amr" -> AMR
+    | `String "ogg" -> OGG
+    | `String "flac" -> FLAC
+    | `String "wav" -> WAV
+    | `String "mp4" -> MP4
+    | `String "mp3" -> MP3
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "MediaFormat" value)
     | _ -> raise (deserialize_wrong_type_error path "MediaFormat") : 
@@ -842,8 +842,8 @@ let language_options_of_yojson tree path =
 let subtitle_format_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "SRT" -> SRT
-    | `String "VTT" -> VTT
+    | `String "srt" -> SRT
+    | `String "vtt" -> VTT
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "SubtitleFormat" value)
@@ -1254,7 +1254,7 @@ let medical_scribe_job_status_of_yojson (tree : t) path =
 let medical_scribe_language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "EN_US" -> EN_US
+    | `String "en-US" -> EN_US
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path
@@ -1928,13 +1928,13 @@ let list_medical_scribe_jobs_request_of_yojson tree path =
 let clm_language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "JA_JP" -> JA_JP
-    | `String "DE_DE" -> DE_DE
-    | `String "EN_AU" -> EN_AU
-    | `String "EN_GB" -> EN_GB
-    | `String "ES_US" -> ES_US
-    | `String "HI_IN" -> HI_IN
-    | `String "EN_US" -> EN_US
+    | `String "ja-JP" -> JA_JP
+    | `String "de-DE" -> DE_DE
+    | `String "en-AU" -> EN_AU
+    | `String "en-GB" -> EN_GB
+    | `String "es-US" -> ES_US
+    | `String "hi-IN" -> HI_IN
+    | `String "en-US" -> EN_US
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "CLMLanguageCode" value)
@@ -1943,8 +1943,8 @@ let clm_language_code_of_yojson (tree : t) path =
 let base_model_name_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "WIDE_BAND" -> WIDE_BAND
-    | `String "NARROW_BAND" -> NARROW_BAND
+    | `String "WideBand" -> WIDE_BAND
+    | `String "NarrowBand" -> NARROW_BAND
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "BaseModelName" value)

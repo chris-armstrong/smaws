@@ -309,9 +309,9 @@ let dimensions_metric_list_of_yojson tree path =
 let fine_grained_action_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "GET_RESOURCE_METRICS" -> GET_RESOURCE_METRICS
-    | `String "GET_DIMENSION_KEY_DETAILS" -> GET_DIMENSION_KEY_DETAILS
-    | `String "DESCRIBE_DIMENSION_KEYS" -> DESCRIBE_DIMENSION_KEYS
+    | `String "GetResourceMetrics" -> GET_RESOURCE_METRICS
+    | `String "GetDimensionKeyDetails" -> GET_DIMENSION_KEY_DETAILS
+    | `String "DescribeDimensionKeys" -> DESCRIBE_DIMENSION_KEYS
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "FineGrainedAction"

@@ -548,13 +548,13 @@ let key_usage_name_of_yojson (tree : t) path =
     | `String "CUSTOM" -> CUSTOM
     | `String "ANY" -> ANY
     | `String "DECIPHER_ONLY" -> DECIPHER_ONLY
-    | `String "ENCHIPER_ONLY" -> ENCHIPER_ONLY
+    | `String "ENCIPHER_ONLY" -> ENCHIPER_ONLY
     | `String "CRL_SIGNING" -> CRL_SIGNING
     | `String "CERTIFICATE_SIGNING" -> CERTIFICATE_SIGNING
     | `String "KEY_AGREEMENT" -> KEY_AGREEMENT
     | `String "DATA_ENCIPHERMENT" -> DATA_ENCIPHERMENT
     | `String "KEY_ENCIPHERMENT" -> KEY_ENCIPHERMENT
-    | `String "NON_REPUDATION" -> NON_REPUDATION
+    | `String "NON_REPUDIATION" -> NON_REPUDATION
     | `String "DIGITAL_SIGNATURE" -> DIGITAL_SIGNATURE
     | `String value ->
         raise

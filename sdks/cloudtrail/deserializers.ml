@@ -1765,14 +1765,14 @@ let lookup_events_response_of_yojson tree path =
 let lookup_attribute_key_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "ACCESS_KEY_ID" -> ACCESS_KEY_ID
-    | `String "EVENT_SOURCE" -> EVENT_SOURCE
-    | `String "RESOURCE_NAME" -> RESOURCE_NAME
-    | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
-    | `String "USERNAME" -> USERNAME
-    | `String "READ_ONLY" -> READ_ONLY
-    | `String "EVENT_NAME" -> EVENT_NAME
-    | `String "EVENT_ID" -> EVENT_ID
+    | `String "AccessKeyId" -> ACCESS_KEY_ID
+    | `String "EventSource" -> EVENT_SOURCE
+    | `String "ResourceName" -> RESOURCE_NAME
+    | `String "ResourceType" -> RESOURCE_TYPE
+    | `String "Username" -> USERNAME
+    | `String "ReadOnly" -> READ_ONLY
+    | `String "EventName" -> EVENT_NAME
+    | `String "EventId" -> EVENT_ID
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "LookupAttributeKey"
@@ -1795,7 +1795,7 @@ let lookup_attributes_list_of_yojson tree path =
 let event_category_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "Insight" -> Insight
+    | `String "insight" -> Insight
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "EventCategory" value)
@@ -2009,8 +2009,8 @@ let insights_metric_period_of_yojson = int_of_yojson
 let insights_metric_data_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NON_ZERO_DATA" -> NON_ZERO_DATA
-    | `String "FILL_WITH_ZEROS" -> FILL_WITH_ZEROS
+    | `String "NonZeroData" -> NON_ZERO_DATA
+    | `String "FillWithZeros" -> FILL_WITH_ZEROS
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "InsightsMetricDataType"

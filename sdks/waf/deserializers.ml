@@ -551,13 +551,13 @@ let negated_of_yojson = bool_of_yojson
 let predicate_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "REGEX_MATCH" -> REGEX_MATCH
-    | `String "XSS_MATCH" -> XSS_MATCH
-    | `String "SIZE_CONSTRAINT" -> SIZE_CONSTRAINT
-    | `String "GEO_MATCH" -> GEO_MATCH
-    | `String "SQL_INJECTION_MATCH" -> SQL_INJECTION_MATCH
-    | `String "BYTE_MATCH" -> BYTE_MATCH
-    | `String "IP_MATCH" -> IP_MATCH
+    | `String "RegexMatch" -> REGEX_MATCH
+    | `String "XssMatch" -> XSS_MATCH
+    | `String "SizeConstraint" -> SIZE_CONSTRAINT
+    | `String "GeoMatch" -> GEO_MATCH
+    | `String "SqlInjectionMatch" -> SQL_INJECTION_MATCH
+    | `String "ByteMatch" -> BYTE_MATCH
+    | `String "IPMatch" -> IP_MATCH
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "PredicateType" value)

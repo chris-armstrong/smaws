@@ -4185,8 +4185,8 @@ let data_source_sync_job_status_of_yojson (tree : t) path =
 let error_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "INVALID_REQUEST" -> INVALID_REQUEST
-    | `String "INTERNAL_ERROR" -> INTERNAL_ERROR
+    | `String "InvalidRequest" -> INVALID_REQUEST
+    | `String "InternalError" -> INTERNAL_ERROR
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
     | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code) : 

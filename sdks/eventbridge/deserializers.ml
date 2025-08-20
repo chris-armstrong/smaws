@@ -781,8 +781,8 @@ let capacity_provider_strategy_of_yojson tree path =
 let placement_constraint_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "MEMBER_OF" -> MEMBER_OF
-    | `String "DISTINCT_INSTANCE" -> DISTINCT_INSTANCE
+    | `String "memberOf" -> MEMBER_OF
+    | `String "distinctInstance" -> DISTINCT_INSTANCE
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path
@@ -808,9 +808,9 @@ let placement_constraints_of_yojson tree path =
 let placement_strategy_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "BINPACK" -> BINPACK
-    | `String "SPREAD" -> SPREAD
-    | `String "RANDOM" -> RANDOM
+    | `String "binpack" -> BINPACK
+    | `String "spread" -> SPREAD
+    | `String "random" -> RANDOM
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "PlacementStrategyType"

@@ -29,11 +29,11 @@ let base_unit_of_yojson = unit_of_yojson
 let provider_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "GITLAB_SELF_MANAGED" -> GITLAB_SELF_MANAGED
-    | `String "GITLAB" -> GITLAB
-    | `String "GITHUB_ENTERPRISE_SERVER" -> GITHUB_ENTERPRISE_SERVER
-    | `String "GITHUB" -> GITHUB
-    | `String "BITBUCKET" -> BITBUCKET
+    | `String "GitLabSelfManaged" -> GITLAB_SELF_MANAGED
+    | `String "GitLab" -> GITLAB
+    | `String "GitHubEnterpriseServer" -> GITHUB_ENTERPRISE_SERVER
+    | `String "GitHub" -> GITHUB
+    | `String "Bitbucket" -> BITBUCKET
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ProviderType" value)

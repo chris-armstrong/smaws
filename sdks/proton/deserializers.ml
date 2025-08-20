@@ -1712,13 +1712,13 @@ let list_service_pipeline_outputs_input_of_yojson tree path =
 let list_service_instances_sort_by_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NAME" -> NAME
-    | `String "DEPLOYMENT_STATUS" -> DEPLOYMENT_STATUS
-    | `String "TEMPLATE_NAME" -> TEMPLATE_NAME
-    | `String "SERVICE_NAME" -> SERVICE_NAME
-    | `String "ENVIRONMENT_NAME" -> ENVIRONMENT_NAME
-    | `String "LAST_DEPLOYMENT_ATTEMPTED_AT" -> LAST_DEPLOYMENT_ATTEMPTED_AT
-    | `String "CREATED_AT" -> CREATED_AT
+    | `String "name" -> NAME
+    | `String "deploymentStatus" -> DEPLOYMENT_STATUS
+    | `String "templateName" -> TEMPLATE_NAME
+    | `String "serviceName" -> SERVICE_NAME
+    | `String "environmentName" -> ENVIRONMENT_NAME
+    | `String "lastDeploymentAttemptedAt" -> LAST_DEPLOYMENT_ATTEMPTED_AT
+    | `String "createdAt" -> CREATED_AT
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path
@@ -1740,19 +1740,19 @@ let list_service_instances_output_of_yojson tree path =
 let list_service_instances_filter_by_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "NAME" -> NAME
-    | `String "DEPLOYMENT_STATUS" -> DEPLOYMENT_STATUS
-    | `String "TEMPLATE_NAME" -> TEMPLATE_NAME
-    | `String "SERVICE_NAME" -> SERVICE_NAME
-    | `String "DEPLOYED_TEMPLATE_VERSION_STATUS" ->
+    | `String "name" -> NAME
+    | `String "deploymentStatus" -> DEPLOYMENT_STATUS
+    | `String "templateName" -> TEMPLATE_NAME
+    | `String "serviceName" -> SERVICE_NAME
+    | `String "deployedTemplateVersionStatus" ->
         DEPLOYED_TEMPLATE_VERSION_STATUS
-    | `String "ENVIRONMENT_NAME" -> ENVIRONMENT_NAME
-    | `String "LAST_DEPLOYMENT_ATTEMPTED_AT_BEFORE" ->
+    | `String "environmentName" -> ENVIRONMENT_NAME
+    | `String "lastDeploymentAttemptedAtBefore" ->
         LAST_DEPLOYMENT_ATTEMPTED_AT_BEFORE
-    | `String "LAST_DEPLOYMENT_ATTEMPTED_AT_AFTER" ->
+    | `String "lastDeploymentAttemptedAtAfter" ->
         LAST_DEPLOYMENT_ATTEMPTED_AT_AFTER
-    | `String "CREATED_AT_BEFORE" -> CREATED_AT_BEFORE
-    | `String "CREATED_AT_AFTER" -> CREATED_AT_AFTER
+    | `String "createdAtBefore" -> CREATED_AT_BEFORE
+    | `String "createdAtAfter" -> CREATED_AT_AFTER
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path

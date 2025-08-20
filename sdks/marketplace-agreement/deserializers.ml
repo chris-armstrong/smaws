@@ -333,7 +333,7 @@ let schedule_list_of_yojson tree path =
 let resource_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
-    | `String "AGREEMENT" -> AGREEMENT
+    | `String "Agreement" -> AGREEMENT
     | `String value ->
         raise
           (deserialize_unknown_enum_value_error path "ResourceType" value)
