@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "kinesisanalytics";
-      endpointPrefix = "kinesisanalytics";
-      version = "2018-05-23";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec log_level =
   | DEBUG [@ocaml.doc ""]
   | ERROR [@ocaml.doc ""]

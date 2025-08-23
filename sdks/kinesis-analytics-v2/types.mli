@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec log_level =
   | DEBUG [@ocaml.doc ""]
   | ERROR [@ocaml.doc ""]

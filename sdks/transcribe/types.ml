@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "transcribe";
-      endpointPrefix = "transcribe";
-      version = "2017-10-26";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec vocabulary_state =
   | FAILED [@ocaml.doc ""]
   | READY [@ocaml.doc ""]

@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec view_properties_map = (string * string) list[@@ocaml.doc ""]
 type nonrec widget =
   {

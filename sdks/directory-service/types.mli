@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec verify_trust_result =
   {
   trust_id: string option

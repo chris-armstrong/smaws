@@ -1,5 +1,5 @@
 (rule
-  (mode promote)
+ (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
   (:input ../../definitions/pi.json))
@@ -10,6 +10,8 @@
   deserializers.ml
   types.ml
   types.mli
+  service_metadata.ml
+  service_metadata.mli
   operations.ml
   operations.mli
   Smaws_Client_PI.ml
@@ -24,6 +26,7 @@
    -targets
    builders
    types
+   service_metadata
    serializers
    deserializers
    operations
@@ -35,6 +38,7 @@
  (modules
   Smaws_Client_PI
   types
+  service_metadata
   serializers
   deserializers
   operations

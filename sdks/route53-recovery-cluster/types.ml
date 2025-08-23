@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "route53-recovery-cluster";
-      endpointPrefix = "route53-recovery-cluster";
-      version = "2019-12-02";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec validation_exception_reason =
   | OTHER [@ocaml.doc ""]
   | FIELD_VALIDATION_FAILED [@ocaml.doc ""]

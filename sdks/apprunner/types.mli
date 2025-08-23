@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec vpc_ingress_connection_summary =
   {
   service_arn: string option

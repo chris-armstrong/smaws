@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "kinesis";
-      endpointPrefix = "kinesis";
-      version = "2013-12-02";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec validation_exception = {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc
                                            "Specifies that you tried to invoke this API for a data stream with the on-demand capacity mode. This API is only supported for data streams with the provisioned capacity mode. \n"]

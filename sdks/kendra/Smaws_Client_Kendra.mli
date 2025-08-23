@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec data_source_to_index_field_mapping =
   {
   index_field_name: string

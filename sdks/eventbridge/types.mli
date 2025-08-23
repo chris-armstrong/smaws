@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec dead_letter_config =
   {
   arn: string option

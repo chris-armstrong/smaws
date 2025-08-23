@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec input_lambda_processor_update =
   {
   role_arn_update: string option

@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec variable_references = (string * string list) list[@@ocaml.doc ""]
 type nonrec validation_exception_reason =
   | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]

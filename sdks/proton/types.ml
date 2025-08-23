@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "<blank>";
-      endpointPrefix = "proton";
-      version = "2020-07-20";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec validation_exception = {
   message: string [@ocaml.doc ""]}[@@ocaml.doc
                                     "The input is invalid or an out-of-range value was supplied for the input parameter.\n"]

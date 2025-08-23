@@ -36,6 +36,11 @@ let make_context shapes =
 
 type error = [ `ParseError of Parse.Json.Decode.jsonParseError | `OutputError of string ]
 
+let pp_error ppf = function
+  | `ParseError error ->
+      Fmt.pf ppf "Parse error: %s" (Parselib.Parse.Json.Decode.jsonParseErrorToString error)
+  | `OutputError error -> Fmt.pf ppf "Output error: %s" error
+
 let ( let+ ) r func = Result.map ~f:func r
 let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
 
@@ -63,6 +68,17 @@ let write_types ~output_dir ~filename t =
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context output_fmt)
+  in
+  Result.all_unit [ r1; r2 ]
+
+let write_service_metadata ~output_dir ~filename t =
+  let { name; service; structure_shapes; alias_context; _ } = t in
+  let r1 =
+    write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
+        Gen_service_metadata.generate_ml ~name ~service ~structure_shapes ~alias_context output_fmt)
+  and r2 =
+    write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
+        Gen_service_metadata.generate_mli ~name ~service ~structure_shapes ~alias_context output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 

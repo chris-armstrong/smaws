@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type attribute_value =
   | BOOL of bool
   [@ocaml.doc

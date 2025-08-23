@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec validity_term =
   {
   agreement_end_date: CoreTypes.Timestamp.t option

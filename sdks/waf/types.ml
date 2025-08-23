@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "waf";
-      endpointPrefix = "waf";
-      version = "2015-08-24";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec match_field_type =
   | ALL_QUERY_ARGS [@ocaml.doc ""]
   | SINGLE_QUERY_ARG [@ocaml.doc ""]

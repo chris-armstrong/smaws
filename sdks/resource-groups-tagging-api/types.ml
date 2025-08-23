@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "tagging";
-      endpointPrefix = "tagging";
-      version = "2017-01-26";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec error_code =
   | INVALID_PARAMETER_EXCEPTION [@ocaml.doc ""]
   | INTERNAL_SERVICE_EXCEPTION [@ocaml.doc ""][@@ocaml.doc ""]

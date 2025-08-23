@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec vpc_endpoint_status =
   | PENDING [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""]

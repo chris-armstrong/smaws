@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "cassandra";
-      endpointPrefix = "cassandra";
-      version = "2022-02-10";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec rs =
   | SINGLE_REGION [@ocaml.doc ""]
   | MULTI_REGION [@ocaml.doc ""][@@ocaml.doc ""]

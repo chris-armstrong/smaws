@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec validation_exception_reason =
   | OTHER [@ocaml.doc ""]
   | FIELD_VALIDATION_FAILED [@ocaml.doc ""][@@ocaml.doc ""]

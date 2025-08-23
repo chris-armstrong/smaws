@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec error_code =
   | INVALID_PARAMETER_EXCEPTION [@ocaml.doc ""]
   | INTERNAL_SERVICE_EXCEPTION [@ocaml.doc ""][@@ocaml.doc ""]

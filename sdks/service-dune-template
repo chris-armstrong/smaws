@@ -23,6 +23,7 @@
    -targets
    builders
    types
+   service_metadata
    serializers
    deserializers
    operations
@@ -34,6 +35,7 @@
  (modules
   Smaws_Client_%%service-full-name%%
   types
+  service_metadata
   serializers
   deserializers
   operations

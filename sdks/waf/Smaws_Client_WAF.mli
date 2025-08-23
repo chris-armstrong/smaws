@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec match_field_type =
   | ALL_QUERY_ARGS [@ocaml.doc ""]
   | SINGLE_QUERY_ARG [@ocaml.doc ""]

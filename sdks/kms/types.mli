@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec xks_proxy_vpc_endpoint_service_not_found_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc

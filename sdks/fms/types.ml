@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "fms";
-      endpointPrefix = "fms";
-      version = "2018-01-01";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec web_acl_has_out_of_scope_resources_violation =
   {
   out_of_scope_resource_list: string list option

@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec update_type =
   | MigrationTaskStateUpdated [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec unauthorized_operation = {

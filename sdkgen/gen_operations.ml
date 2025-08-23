@@ -10,7 +10,9 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
       | Trait.AwsProtocolAwsJson1_0Trait -> true
       | _ -> false)
   then (
-    let opens = [ Codegen.Ppx_util.stri_open [ "Types" ] ] in
+    let opens =
+      [ Codegen.Ppx_util.stri_open [ "Types" ]; Codegen.Ppx_util.stri_open [ "Service_metadata" ] ]
+    in
     try
       let structure =
         Codegen.AwsProtocolJson.Operations.generate ~name ~operation_shapes ~alias_context

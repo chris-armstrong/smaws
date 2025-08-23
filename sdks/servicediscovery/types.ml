@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "servicediscovery";
-      endpointPrefix = "servicediscovery";
-      version = "2017-03-14";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec update_service_response =
   {
   operation_id: string option

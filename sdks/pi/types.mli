@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec service_type =
   | DOCDB [@ocaml.doc ""]
   | RDS [@ocaml.doc ""][@@ocaml.doc ""]

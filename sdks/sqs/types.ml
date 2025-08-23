@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "sqs";
-      endpointPrefix = "sqs";
-      version = "2012-11-05";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec untag_queue_request =
   {
   tag_keys: string list

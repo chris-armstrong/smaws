@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec validation_exception = {
   message: string [@ocaml.doc ""]}[@@ocaml.doc
                                     "The input is invalid or an out-of-range value was supplied for the input parameter.\n"]

@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "config";
-      endpointPrefix = "config";
-      version = "2014-11-12";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec validation_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}

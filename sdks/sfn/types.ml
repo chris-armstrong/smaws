@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "states";
-      endpointPrefix = "states";
-      version = "2016-11-23";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec variable_references = (string * string list) list[@@ocaml.doc ""]
 type nonrec validation_exception_reason =
   | INVALID_ROUTING_CONFIGURATION [@ocaml.doc ""]

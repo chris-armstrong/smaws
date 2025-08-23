@@ -9,6 +9,7 @@ type command =
   | DeserialisersCommand
   | BuildersCommand
   | ModuleCommand
+  | ServiceMetadataCommand
 
 let readCommandLine () =
   try
@@ -50,6 +51,7 @@ let readCommandLine () =
               | "deserializers" -> DeserialisersCommand
               | "builders" -> BuildersCommand
               | "module" -> ModuleCommand
+              | "service_metadata" -> ServiceMetadataCommand
               | _ ->
                   Fmt.pf Fmt.stderr "You must specify a -run <command>\n";
                   Stdlib.exit 1)
@@ -76,6 +78,8 @@ let main () =
       | BuildersCommand -> Sdkgen.write_builders ~output_dir ~filename:"builders" generator
       | ServiceCommand -> Sdkgen.write_service ~output_dir ~filename:"service" generator
       | OperationsCommand -> Sdkgen.write_operations ~output_dir ~filename:"operations" generator
+      | ServiceMetadataCommand ->
+          Sdkgen.write_service_metadata ~output_dir ~filename:"service_metadata" generator
       | SerialisersCommand -> Sdkgen.write_serialisers ~output_dir ~filename:"serializers" generator
       | DeserialisersCommand ->
           Sdkgen.write_deserialisers ~output_dir ~filename:"deserializers" generator

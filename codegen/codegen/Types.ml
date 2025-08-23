@@ -42,6 +42,8 @@ let make_basic_type_manifest ctx descriptor =
   match descriptor with
   | BigDecimalShape { traits; _ } -> [%type: Bigdecimal.t]
   | BigIntegerShape { traits; _ } -> [%type: Big_int.big_int]
+  | ByteShape { traits; _ } -> [%type: int]
+  | ShortShape { traits; _ } -> [%type: int]
   | BlobShape { traits; _ } -> [%type: bytes]
   | BooleanShape { traits; _ } -> [%type: bool]
   | DocumentShape -> [%type: CoreTypes.Document.t]
@@ -180,9 +182,9 @@ let create_alias_context shapes : t =
   List.iter
     ~f:(fun Ast.Shape.{ name; descriptor; _ } ->
       match descriptor with
-      | UnitShape | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _ | StringShape _
-      | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _ | LongShape _
-      | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
+      | UnitShape | ByteShape _ | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _
+      | StringShape _ | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _
+      | ShortShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
       | StructureShape { members = []; _ } ->
           let alias = make_basic_type_manifest tbl descriptor in
           (* Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias; *)
@@ -234,9 +236,9 @@ let generate_type_target ctx name descriptor =
   let open Ast.Shape in
   match descriptor with
   (* basic types are aliased and don't require separate declaration *)
-  | UnitShape | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _ | StringShape _
-  | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _ | LongShape _
-  | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape ->
+  | UnitShape | ByteShape _ | ShortShape _ | ListShape _ | BlobShape _ | BooleanShape _
+  | IntegerShape _ | StringShape _ | BigIntegerShape _ | BigDecimalShape _ | ResourceShape
+  | TimestampShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape ->
       None
   (* service shapes and operation shapes are not of interest to type generation (yet) *)
   | ServiceShape _ | OperationShape _ -> None

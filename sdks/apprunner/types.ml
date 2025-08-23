@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "apprunner";
-      endpointPrefix = "apprunner";
-      version = "2020-05-15";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec vpc_ingress_connection_summary =
   {
   service_arn: string option

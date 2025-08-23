@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec validation_exception =
   {
   message: string option [@ocaml.doc "Error executing the command\n"]}

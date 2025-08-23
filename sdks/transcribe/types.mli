@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec vocabulary_state =
   | FAILED [@ocaml.doc ""]
   | READY [@ocaml.doc ""]

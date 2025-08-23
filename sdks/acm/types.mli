@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec validation_method =
   | HTTP [@ocaml.doc ""]
   | DNS [@ocaml.doc ""]

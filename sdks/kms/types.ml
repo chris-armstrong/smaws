@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "kms";
-      endpointPrefix = "kms";
-      version = "2014-11-01";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec xks_proxy_vpc_endpoint_service_not_found_exception =
   {
   message: string option [@ocaml.doc ""]}[@@ocaml.doc

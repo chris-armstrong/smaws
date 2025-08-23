@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "kendra";
-      endpointPrefix = "kendra";
-      version = "2019-02-03";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec data_source_to_index_field_mapping =
   {
   index_field_name: string

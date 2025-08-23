@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "wafv2";
-      endpointPrefix = "wafv2";
-      version = "2019-07-29";
-      protocol = Smaws_Lib.Service.AwsJson_1_1
-    }
 type nonrec single_header =
   {
   name: string [@ocaml.doc "The name of the query header to inspect.\n"]}

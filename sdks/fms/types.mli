@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec web_acl_has_out_of_scope_resources_violation =
   {
   out_of_scope_resource_list: string list option

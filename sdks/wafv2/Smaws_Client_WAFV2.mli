@@ -7,7 +7,6 @@ open Smaws_Lib
 
 (** {1:types Types} *)
 
-val service : Smaws_Lib.Service.descriptor
 type nonrec single_header =
   {
   name: string [@ocaml.doc "The name of the query header to inspect.\n"]}

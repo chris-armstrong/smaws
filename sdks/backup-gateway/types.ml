@@ -1,12 +1,4 @@
 open Smaws_Lib
-let service =
-  let open Smaws_Lib.Service in
-    {
-      namespace = "backup-gateway";
-      endpointPrefix = "backup-gateway";
-      version = "2021-01-01";
-      protocol = Smaws_Lib.Service.AwsJson_1_0
-    }
 type nonrec vmware_to_aws_tag_mapping =
   {
   aws_tag_value: string

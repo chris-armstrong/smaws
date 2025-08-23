@@ -1,4 +1,5 @@
 open Types
+open Service_metadata
 module ActivateEventSource =
   struct
     let error_deserializer tree path =

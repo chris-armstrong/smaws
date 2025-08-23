@@ -1,5 +1,4 @@
 open Smaws_Lib
-val service : Smaws_Lib.Service.descriptor
 type nonrec vmware_to_aws_tag_mapping =
   {
   aws_tag_value: string
