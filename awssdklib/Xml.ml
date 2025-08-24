@@ -143,8 +143,7 @@ module Parse = struct
           else raise (XmlUnexpectedConstruct (XmlOneOfElement [ t1.tag; t2.tag ], next, Xmlm.pos i)));
       (!r1, !r2)
 
-    let item3 :
-        type a b c.
+    let item3 : type a b c.
         input -> a inputItem -> b inputItem -> c inputItem -> a option * b option * c option =
      fun i t1 t2 t3 ->
       let r1 = ref None in
@@ -161,8 +160,7 @@ module Parse = struct
                    (XmlOneOfElement [ t1.tag; t2.tag; t3.tag ], next, Xmlm.pos i)));
       (!r1, !r2, !r3)
 
-    let item4 :
-        type a b c d.
+    let item4 : type a b c d.
         input ->
         a inputItem ->
         b inputItem ->
@@ -186,8 +184,7 @@ module Parse = struct
                    (XmlOneOfElement [ t1.tag; t2.tag; t3.tag; t4.tag ], next, Xmlm.pos i)));
       (!r1, !r2, !r3, !r4)
 
-    let item5 :
-        type a b c d e.
+    let item5 : type a b c d e.
         input ->
         a inputItem ->
         b inputItem ->
@@ -214,8 +211,7 @@ module Parse = struct
                    (XmlOneOfElement [ t1.tag; t2.tag; t3.tag; t4.tag; t5.tag ], next, Xmlm.pos i)));
       (!r1, !r2, !r3, !r4, !r5)
 
-    let item6 :
-        type a b c d e f.
+    let item6 : type a b c d e f.
         input ->
         a inputItem ->
         b inputItem ->
@@ -247,8 +243,7 @@ module Parse = struct
                      Xmlm.pos i )));
       (!r1, !r2, !r3, !r4, !r5, !r6)
 
-    let item7 :
-        type a b c d e f g.
+    let item7 : type a b c d e f g.
         input ->
         a inputItem ->
         b inputItem ->
