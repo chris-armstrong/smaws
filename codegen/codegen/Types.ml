@@ -245,7 +245,13 @@ let generate_type_target ctx name descriptor =
   | StructureShape { members = []; _ } -> None
   | _ -> Some (make_complex_type_declaration ctx ~name ~descriptor)
 
-let stri_structure_shapes ctx structure_shapes fmt =
+let str_deriving_attributes () =
+  [
+    B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str show]);
+    B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str eq]);
+  ]
+
+let stri_structure_shapes ?(with_derivings = false) ctx structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->
@@ -257,19 +263,42 @@ let stri_structure_shapes ctx structure_shapes fmt =
                ~f:(fun item -> generate_type_target ctx item.name item.descriptor)
                items
            in
-           if List.length filtered_items > 0 then
+           let attributed_items =
+             filtered_items
+             |> List.map ~f:(fun tt ->
+                    match with_derivings with
+                    | true ->
+                        Ppxlib_ast.Ast.
+                          {
+                            tt with
+                            ptype_attributes = tt.ptype_attributes @ str_deriving_attributes ();
+                          }
+                    | _ -> tt)
+           in
+           if List.length attributed_items > 0 then
              Some
-               (*(B.pstr_type Recursive filtered_items)*)
                Ppxlib_ast.Parsetree.
-                 { pstr_loc = Location.none; pstr_desc = Pstr_type (Recursive, filtered_items) }
+                 { pstr_loc = Location.none; pstr_desc = Pstr_type (Recursive, attributed_items) }
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
        | Ast.Dependencies.{ name; descriptor; _ } ->
            let type_declaration = generate_type_target ctx name descriptor in
 
            type_declaration
-           |> Option.map ~f:(fun type_declaration -> B.pstr_type Nonrecursive [ type_declaration ]))
+           |> Option.map ~f:(fun type_declaration ->
+                  let filtered_declaration =
+                    if with_derivings then
+                      Ppxlib.Ast.
+                        {
+                          type_declaration with
+                          ptype_attributes =
+                            type_declaration.ptype_attributes @ str_deriving_attributes ();
+                        }
+                    else type_declaration
+                  in
 
-let sigi_structure_shapes ctx structure_shapes fmt =
+                  B.pstr_type Nonrecursive [ filtered_declaration ]))
+
+let sigi_structure_shapes ?(with_derivings = false) ctx structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->

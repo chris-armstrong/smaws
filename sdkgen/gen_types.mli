@@ -9,6 +9,7 @@ val generate_ml :
   service:Ast.Shape.serviceShapeDetails ->
   structure_shapes:Ast.Dependencies.shapeWithTarget list ->
   alias_context:t ->
+  ?with_derivings:bool ->
   ?no_open:bool ->
   Format.formatter ->
   unit
@@ -18,6 +19,7 @@ val generate_mli :
   service:Ast.Shape.serviceShapeDetails ->
   structure_shapes:Ast.Dependencies.shapeWithTarget list ->
   alias_context:t ->
+  ?with_derivings:bool ->
   ?no_open:bool ->
   Format.formatter ->
   unit

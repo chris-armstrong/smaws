@@ -1,0 +1,23 @@
+(executable
+ (name gen)
+ (libraries yojson Parselib sdkgen base))
+
+(rule
+ (mode promote)
+ (targets types.ml types.mli)
+ (deps
+  (:gen ./gen.exe)
+  (:input ../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input})))
+
+; (executable
+;  (name tests)
+;  (libraries yojson Parselib alcotest)
+;  (modules tests types))
+
+; (tests
+;   (names tests)
+;   (libraries yojson Parselib alcotest Smaws_Lib)
+;   (modules tests types manual_test)
+;   )

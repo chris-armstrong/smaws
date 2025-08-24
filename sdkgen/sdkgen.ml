@@ -60,14 +60,16 @@ let write_output ~output_dir ~filename generate =
     Ok ()
   with Sys_error txt -> Error (`OutputError txt)
 
-let write_types ~output_dir ~filename t =
+let write_types ~output_dir ~filename ?(with_derivings = false) t =
   let { name; service; structure_shapes; alias_context; _ } = t in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context output_fmt)
+        Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context ~with_derivings
+          output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context output_fmt)
+        Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context ~with_derivings
+          output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 
@@ -136,3 +138,8 @@ let write_module ~output_dir ~filename t =
           output_fmt)
   in
   Result.all_unit [ r1; r2 ]
+
+(** Accesors **)
+
+(** Get the list of operations as (name, operationShapeDetails, targets list *)
+let operations t = t.operation_shapes
