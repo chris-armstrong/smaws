@@ -37,6 +37,29 @@ type staticContextParams = (string * staticContextParamValue) list [@@deriving s
 type operationContextParam = { path : string } [@@deriving show, equal]
 type operationContextParams = (string * operationContextParam) list [@@deriving show, equal]
 
+type httpRequestTest = {
+  id : string;
+  protocol : string;
+  method_ : string;
+  uri : string;
+  host : string option;
+  resolvedHost : string option;
+  authScheme : string option;
+  queryParams : string list option;
+  forbidQueryParams : string list option;
+  headers : (string * string) list option;
+  forbidHeaders : string list option;
+  body : string option;
+  bodyMediaType : string option;
+  params : Yojson.Basic.t option;
+  vendorParams : Yojson.Basic.t option;
+  vendorParamsShape : string option;
+  documentation : string option;
+  tags : string list option;
+  appliesTo : [ `Client | `Server ] option;
+}
+[@@deriving show, equal]
+
 type t =
   | ApiTitleTrait of string
   | ApiXmlNamespaceTrait of string
@@ -122,6 +145,7 @@ type t =
   | XmlFlattenedTrait
   | XmlNameTrait of string
   | PrivateTrait
+  | TestHttpRequestTests of httpRequestTest list
   | IdRefTrait of {
       failWhenMissing : bool option;
       selector : string option;

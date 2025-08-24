@@ -103,6 +103,73 @@ let parseEnumValue value =
   in
   value_ |> Result.map ~f:(fun value_ -> Trait.EnumValueTrait value_)
 
+let parseTestHttpRequestTests value =
+  let ( let+ ) r f = Result.bind ~f r in
+  let open Trait in
+  let+ tests =
+    parseArray
+      (fun value ->
+        let value = parseObject value in
+        let+ id = value |> field "id" |> parseString in
+        let+ protocol = value |> field "protocol" |> parseString in
+        let+ method_ = value |> field "method" |> parseString in
+        let+ uri = value |> field "uri" |> parseString in
+        let+ host = optional (value |> field "host") |> mapOptional parseString in
+        let+ resolvedHost = optional (value |> field "resolvedHost") |> mapOptional parseString in
+        let+ authScheme = optional (value |> field "authScheme") |> mapOptional parseString in
+        let+ queryParams =
+          optional (value |> field "queryParams") |> mapOptional (parseArray parseString)
+        in
+        let+ forbidQueryParams =
+          optional (value |> field "forbidQueryParams") |> mapOptional (parseArray parseString)
+        in
+        let+ headers =
+          optional (value |> field "headers")
+          |> mapOptional
+               (parseRecord (fun name value_ ->
+                    let value_ = value_ |> parseString in
+                    map2 (Ok name) value_ (fun name value_ -> (name, value_))))
+        in
+        let+ forbidHeaders =
+          optional (value |> field "forbidHeaders") |> mapOptional (parseArray parseString)
+        in
+        let+ body = optional (value |> field "body") |> mapOptional parseString in
+        let+ bodyMediaType = optional (value |> field "bodyMediaType") |> mapOptional parseString in
+        let+ params = optional (value |> field "params") |> mapOptional raw in
+        let+ vendorParams = optional (value |> field "vendorParams") |> mapOptional raw in
+        let+ vendorParamsShape =
+          optional (value |> field "vendorParamsShape") |> mapOptional parseString
+        in
+
+        let+ documentation = optional (value |> field "documentation") |> mapOptional parseString in
+        let+ tags = optional (value |> field "tags") |> mapOptional (parseArray parseString) in
+        Ok
+          {
+            id;
+            protocol;
+            method_;
+            uri;
+            host;
+            resolvedHost;
+            authScheme;
+            queryParams;
+            forbidQueryParams;
+            headers;
+            forbidHeaders;
+            body;
+            bodyMediaType;
+            params;
+            vendorParams;
+            vendorParamsShape;
+            documentation;
+            tags;
+            appliesTo = None;
+            (* TODO: parse appliesTo correctly *)
+          })
+      value
+  in
+  Ok (Trait.TestHttpRequestTests tests)
+
 let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
   let open Result in
   let traitValue =
@@ -234,6 +301,7 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.test#smokeTests" -> Ok Trait.TestSmokeTests
     | "smithy.api#private" -> Ok Trait.PrivateTrait
     | "smithy.api#idRef" -> value |> parseIdRef
+    | "smithy.test#httpRequestTests" -> value |> parseTestHttpRequestTests
     | unknownTrait -> Ok (Trait.UnspecifiedTrait (unknownTrait, value |> Json.Decode.raw_exn))
   in
   traitValue
