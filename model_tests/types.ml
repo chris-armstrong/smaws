@@ -486,13 +486,13 @@ type nonrec nested_with_namespace =
 [@@deriving eq]
 type nonrec simple_scalar_properties_input_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
   nested: nested_with_namespace option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   false_boolean_value: bool option [@ocaml.doc ""];
   true_boolean_value: bool option [@ocaml.doc ""];
   string_value: string option [@ocaml.doc ""];
@@ -500,12 +500,12 @@ type nonrec simple_scalar_properties_input_output =
 [@@deriving eq]
 type nonrec xml_nested_union_struct =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   boolean_value: bool option [@ocaml.doc ""];
   string_value: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
                                                                 show]
@@ -513,12 +513,12 @@ type nonrec xml_nested_union_struct =
 type nonrec xml_union_shape =
   | StructValue of xml_nested_union_struct [@ocaml.doc ""]
   | UnionValue of xml_union_shape [@ocaml.doc ""]
-  | DoubleValue of base_double [@ocaml.doc ""]
-  | FloatValue of base_float [@ocaml.doc ""]
+  | DoubleValue of double [@ocaml.doc ""]
+  | FloatValue of float_ [@ocaml.doc ""]
   | LongValue of int [@ocaml.doc ""]
   | IntegerValue of int [@ocaml.doc ""]
-  | ShortValue of base_short [@ocaml.doc ""]
-  | ByteValue of base_byte [@ocaml.doc ""]
+  | ShortValue of short [@ocaml.doc ""]
+  | ByteValue of byte [@ocaml.doc ""]
   | BooleanValue of bool [@ocaml.doc ""]
   | StringValue of string [@ocaml.doc ""][@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
@@ -640,19 +640,17 @@ type nonrec xml_empty_maps_request =
   {
   my_map: xml_maps_input_output_map option [@ocaml.doc ""]}[@@ocaml.doc ""]
 [@@deriving show][@@deriving eq]
-type nonrec xml_empty_blobs_response =
-  {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+type nonrec xml_empty_blobs_response = {
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
-type nonrec xml_empty_blobs_request =
-  {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+type nonrec xml_empty_blobs_request = {
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec xml_blobs_response = {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec xml_blobs_request = {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec xml_attributes_on_payload_response =
   {
@@ -687,12 +685,12 @@ type nonrec string_enum =
   | V [@ocaml.doc ""][@@ocaml.doc ""][@@deriving show][@@deriving eq]
 type nonrec simple_scalar_properties_input_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   false_boolean_value: bool option [@ocaml.doc ""];
   true_boolean_value: bool option [@ocaml.doc ""];
   string_value: string option [@ocaml.doc ""];
@@ -758,12 +756,12 @@ type nonrec input_and_output_with_headers_i_o =
   header_string_list: string list option [@ocaml.doc ""];
   header_false_bool: bool option [@ocaml.doc ""];
   header_true_bool: bool option [@ocaml.doc ""];
-  header_double: base_double option [@ocaml.doc ""];
-  header_float: base_float option [@ocaml.doc ""];
+  header_double: double option [@ocaml.doc ""];
+  header_float: float_ option [@ocaml.doc ""];
   header_long: int option [@ocaml.doc ""];
   header_integer: int option [@ocaml.doc ""];
-  header_short: base_short option [@ocaml.doc ""];
-  header_byte: base_byte option [@ocaml.doc ""];
+  header_short: short option [@ocaml.doc ""];
+  header_byte: byte option [@ocaml.doc ""];
   header_string: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
                                                                  show]
 [@@deriving eq]
@@ -792,11 +790,11 @@ type nonrec http_request_with_labels_input =
     [@ocaml.doc
       "Note that this member has no format, so it's serialized as an RFC 3399 date-time."];
   boolean_: bool [@ocaml.doc "Serialized in the path as true or false."];
-  double: base_double [@ocaml.doc ""];
-  float_: base_float [@ocaml.doc ""];
+  double: double [@ocaml.doc ""];
+  float_: float_ [@ocaml.doc ""];
   long: int [@ocaml.doc ""];
   integer_: int [@ocaml.doc ""];
-  short: base_short [@ocaml.doc ""];
+  short: short [@ocaml.doc ""];
   string_: string [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show][@@deriving
                                                                     eq]
 type nonrec http_request_with_greedy_label_in_path_input =
@@ -806,9 +804,9 @@ type nonrec http_request_with_greedy_label_in_path_input =
                                                                  eq]
 type nonrec http_request_with_float_labels_input =
   {
-  double: base_double [@ocaml.doc ""];
-  float_: base_float [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
-[@@deriving eq]
+  double: double [@ocaml.doc ""];
+  float_: float_ [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show][@@deriving
+                                                                    eq]
 type nonrec foo_prefix_headers = (string * string) list[@@ocaml.doc ""]
 [@@deriving show][@@deriving eq]
 type nonrec http_prefix_headers_input_output =
@@ -865,7 +863,7 @@ type nonrec http_payload_traits_with_media_type_input_output =
 [@@deriving eq]
 type nonrec http_payload_traits_input_output =
   {
-  blob: base_blob option [@ocaml.doc ""];
+  blob: blob option [@ocaml.doc ""];
   foo: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec enum_payload_input =
@@ -971,15 +969,15 @@ type nonrec all_query_string_types_input =
   query_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
   query_boolean_list: bool list option [@ocaml.doc ""];
   query_boolean: bool option [@ocaml.doc ""];
-  query_double_list: base_double list option [@ocaml.doc ""];
-  query_double: base_double option [@ocaml.doc ""];
-  query_float: base_float option [@ocaml.doc ""];
+  query_double_list: double list option [@ocaml.doc ""];
+  query_double: double option [@ocaml.doc ""];
+  query_float: float_ option [@ocaml.doc ""];
   query_long: int option [@ocaml.doc ""];
   query_integer_set: int list option [@ocaml.doc ""];
   query_integer_list: int list option [@ocaml.doc ""];
   query_integer: int option [@ocaml.doc ""];
-  query_short: base_short option [@ocaml.doc ""];
-  query_byte: base_byte option [@ocaml.doc ""];
+  query_short: short option [@ocaml.doc ""];
+  query_byte: byte option [@ocaml.doc ""];
   query_string_set: string list option [@ocaml.doc ""];
   query_string_list: string list option [@ocaml.doc ""];
   query_string: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
@@ -1040,12 +1038,12 @@ type nonrec malformed_unique_items_input =
   timestamp_list: CoreTypes.Timestamp.t list option [@ocaml.doc ""];
   long_list: int list option [@ocaml.doc ""];
   integer_list: int list option [@ocaml.doc ""];
-  short_list: base_short list option [@ocaml.doc ""];
-  byte_list: base_byte list option [@ocaml.doc ""];
+  short_list: short list option [@ocaml.doc ""];
+  byte_list: byte list option [@ocaml.doc ""];
   string_list: string list option [@ocaml.doc ""];
   boolean_list: bool list option [@ocaml.doc ""];
-  blob_list: base_blob list option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                    show]
+  blob_list: blob list option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                                show]
 [@@deriving eq]
 type nonrec malformed_required_input =
   {
@@ -1184,7 +1182,7 @@ type nonrec my_union =
   | ListValue of string list [@ocaml.doc ""]
   | EnumValue of foo_enum [@ocaml.doc ""]
   | TimestampValue of CoreTypes.Timestamp.t [@ocaml.doc ""]
-  | BlobValue of base_blob [@ocaml.doc ""]
+  | BlobValue of blob [@ocaml.doc ""]
   | NumberValue of int [@ocaml.doc ""]
   | BooleanValue of bool [@ocaml.doc ""]
   | StringValue of string [@ocaml.doc ""][@@ocaml.doc
@@ -1221,7 +1219,7 @@ type nonrec test_payload_structure_input_output =
 [@@deriving eq]
 type nonrec test_payload_blob_input_output =
   {
-  data: base_blob option [@ocaml.doc ""];
+  data: blob option [@ocaml.doc ""];
   content_type: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
                                                                 show]
 [@@deriving eq]
@@ -1288,7 +1286,7 @@ type nonrec sparse_json_maps_input_output =
 [@@deriving eq]
 type nonrec sparse_json_lists_input_output =
   {
-  sparse_short_list: base_short option list option [@ocaml.doc ""];
+  sparse_short_list: short option list option [@ocaml.doc ""];
   sparse_string_list: string option list option [@ocaml.doc ""]}[@@ocaml.doc
                                                                   ""]
 [@@deriving show][@@deriving eq]
@@ -1298,12 +1296,12 @@ type nonrec simple_union =
                                                                  eq]
 type nonrec simple_scalar_properties_input_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   false_boolean_value: bool option [@ocaml.doc ""];
   true_boolean_value: bool option [@ocaml.doc ""];
   string_value: string option [@ocaml.doc ""];
@@ -1392,7 +1390,7 @@ type nonrec omits_serializing_empty_lists_input =
   query_enum_list: foo_enum list option [@ocaml.doc ""];
   query_timestamp_list: CoreTypes.Timestamp.t list option [@ocaml.doc ""];
   query_boolean_list: bool list option [@ocaml.doc ""];
-  query_double_list: base_double list option [@ocaml.doc ""];
+  query_double_list: double list option [@ocaml.doc ""];
   query_integer_list: int list option [@ocaml.doc ""];
   query_string_list: string list option [@ocaml.doc ""]}[@@ocaml.doc ""]
 [@@deriving show][@@deriving eq]
@@ -1483,15 +1481,15 @@ type nonrec malformed_string_input = {
 [@@deriving eq]
 type nonrec malformed_short_input =
   {
-  short_in_header: base_short option [@ocaml.doc ""];
-  short_in_query: base_short option [@ocaml.doc ""];
-  short_in_path: base_short [@ocaml.doc ""];
-  short_in_body: base_short option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                    show]
+  short_in_header: short option [@ocaml.doc ""];
+  short_in_query: short option [@ocaml.doc ""];
+  short_in_path: short [@ocaml.doc ""];
+  short_in_body: short option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                                show]
 [@@deriving eq]
 type nonrec malformed_request_body_input =
   {
-  float_: base_float option [@ocaml.doc ""];
+  float_: float_ option [@ocaml.doc ""];
   int_: int option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show][@@deriving
                                                                     eq]
 type nonrec malformed_map_input =
@@ -1521,19 +1519,20 @@ type nonrec malformed_integer_input =
 [@@deriving eq]
 type nonrec malformed_float_input =
   {
-  float_in_header: base_float option [@ocaml.doc ""];
-  float_in_query: base_float option [@ocaml.doc ""];
-  float_in_path: base_float [@ocaml.doc ""];
-  float_in_body: base_float option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                    show]
+  float_in_header: float_ option [@ocaml.doc ""];
+  float_in_query: float_ option [@ocaml.doc ""];
+  float_in_path: float_ [@ocaml.doc ""];
+  float_in_body: float_ option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                                 show]
 [@@deriving eq]
 type nonrec malformed_double_input =
   {
-  double_in_header: base_double option [@ocaml.doc ""];
-  double_in_query: base_double option [@ocaml.doc ""];
-  double_in_path: base_double [@ocaml.doc ""];
-  double_in_body: base_double option [@ocaml.doc ""]}[@@ocaml.doc ""]
-[@@deriving show][@@deriving eq]
+  double_in_header: double option [@ocaml.doc ""];
+  double_in_query: double option [@ocaml.doc ""];
+  double_in_path: double [@ocaml.doc ""];
+  double_in_body: double option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                                  show]
+[@@deriving eq]
 type nonrec malformed_content_type_with_payload_input =
   {
   payload: bytes option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
@@ -1548,11 +1547,10 @@ type nonrec malformed_content_type_with_generic_string_input =
 [@@deriving eq]
 type nonrec malformed_byte_input =
   {
-  byte_in_header: base_byte option [@ocaml.doc ""];
-  byte_in_query: base_byte option [@ocaml.doc ""];
-  byte_in_path: base_byte [@ocaml.doc ""];
-  byte_in_body: base_byte option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                   show]
+  byte_in_header: byte option [@ocaml.doc ""];
+  byte_in_query: byte option [@ocaml.doc ""];
+  byte_in_path: byte [@ocaml.doc ""];
+  byte_in_body: byte option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec malformed_boolean_input =
   {
@@ -1563,7 +1561,7 @@ type nonrec malformed_boolean_input =
                                                                  show]
 [@@deriving eq]
 type nonrec malformed_blob_input = {
-  blob: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  blob: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec malformed_accept_with_payload_output =
   {
@@ -1637,9 +1635,8 @@ type nonrec json_enums_input_output =
   foo_enum1: foo_enum option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
                                                                show][@@deriving
                                                                     eq]
-type nonrec json_blobs_input_output =
-  {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+type nonrec json_blobs_input_output = {
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec input_and_output_with_headers_i_o =
   {
@@ -1654,12 +1651,12 @@ type nonrec input_and_output_with_headers_i_o =
   header_string_list: string list option [@ocaml.doc ""];
   header_false_bool: bool option [@ocaml.doc ""];
   header_true_bool: bool option [@ocaml.doc ""];
-  header_double: base_double option [@ocaml.doc ""];
-  header_float: base_float option [@ocaml.doc ""];
+  header_double: double option [@ocaml.doc ""];
+  header_float: float_ option [@ocaml.doc ""];
   header_long: int option [@ocaml.doc ""];
   header_integer: int option [@ocaml.doc ""];
-  header_short: base_short option [@ocaml.doc ""];
-  header_byte: base_byte option [@ocaml.doc ""];
+  header_short: short option [@ocaml.doc ""];
+  header_byte: byte option [@ocaml.doc ""];
   header_string: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
                                                                  show]
 [@@deriving eq]
@@ -1692,11 +1689,11 @@ type nonrec http_request_with_labels_input =
     [@ocaml.doc
       "Note that this member has no format, so it's serialized as an RFC 3399 date-time."];
   boolean_: bool [@ocaml.doc "Serialized in the path as true or false."];
-  double: base_double [@ocaml.doc ""];
-  float_: base_float [@ocaml.doc ""];
+  double: double [@ocaml.doc ""];
+  float_: float_ [@ocaml.doc ""];
   long: int [@ocaml.doc ""];
   integer_: int [@ocaml.doc ""];
-  short: base_short [@ocaml.doc ""];
+  short: short [@ocaml.doc ""];
   string_: string [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show][@@deriving
                                                                     eq]
 type nonrec http_request_with_greedy_label_in_path_input =
@@ -1706,9 +1703,9 @@ type nonrec http_request_with_greedy_label_in_path_input =
                                                                  eq]
 type nonrec http_request_with_float_labels_input =
   {
-  double: base_double [@ocaml.doc ""];
-  float_: base_float [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
-[@@deriving eq]
+  double: double [@ocaml.doc ""];
+  float_: float_ [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show][@@deriving
+                                                                    eq]
 type nonrec http_prefix_headers_in_response_output =
   {
   prefix_headers: string_map option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
@@ -1746,7 +1743,7 @@ type nonrec http_payload_traits_with_media_type_input_output =
 [@@deriving eq]
 type nonrec http_payload_traits_input_output =
   {
-  blob: base_blob option [@ocaml.doc ""];
+  blob: blob option [@ocaml.doc ""];
   foo: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec enum_payload_input =
@@ -1840,15 +1837,15 @@ type nonrec all_query_string_types_input =
   query_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
   query_boolean_list: bool list option [@ocaml.doc ""];
   query_boolean: bool option [@ocaml.doc ""];
-  query_double_list: base_double list option [@ocaml.doc ""];
-  query_double: base_double option [@ocaml.doc ""];
-  query_float: base_float option [@ocaml.doc ""];
+  query_double_list: double list option [@ocaml.doc ""];
+  query_double: double option [@ocaml.doc ""];
+  query_float: float_ option [@ocaml.doc ""];
   query_long: int option [@ocaml.doc ""];
   query_integer_set: int list option [@ocaml.doc ""];
   query_integer_list: int list option [@ocaml.doc ""];
   query_integer: int option [@ocaml.doc ""];
-  query_short: base_short option [@ocaml.doc ""];
-  query_byte: base_byte option [@ocaml.doc ""];
+  query_short: short option [@ocaml.doc ""];
+  query_byte: byte option [@ocaml.doc ""];
   query_string_set: string list option [@ocaml.doc ""];
   query_string_list: string list option [@ocaml.doc ""];
   query_string: string option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
@@ -1874,25 +1871,25 @@ type nonrec nested_defaults_mixin =
                                                                     eq]
 type nonrec defaults_mixin =
   {
-  zero_double: base_double option [@ocaml.doc ""];
-  zero_float: base_float option [@ocaml.doc ""];
+  zero_double: double option [@ocaml.doc ""];
+  zero_float: float_ option [@ocaml.doc ""];
   zero_long: int option [@ocaml.doc ""];
   zero_integer: int option [@ocaml.doc ""];
-  zero_short: base_short option [@ocaml.doc ""];
-  zero_byte: base_byte option [@ocaml.doc ""];
-  empty_blob: base_blob option [@ocaml.doc ""];
+  zero_short: short option [@ocaml.doc ""];
+  zero_byte: byte option [@ocaml.doc ""];
+  empty_blob: blob option [@ocaml.doc ""];
   false_boolean: bool option [@ocaml.doc ""];
   empty_string: string option [@ocaml.doc ""];
   default_int_enum: test_int_enum option [@ocaml.doc ""];
   default_enum: test_enum option [@ocaml.doc ""];
   default_map: test_string_map option [@ocaml.doc ""];
-  default_double: base_double option [@ocaml.doc ""];
-  default_float: base_float option [@ocaml.doc ""];
+  default_double: double option [@ocaml.doc ""];
+  default_float: float_ option [@ocaml.doc ""];
   default_long: int option [@ocaml.doc ""];
   default_integer: int option [@ocaml.doc ""];
-  default_short: base_short option [@ocaml.doc ""];
-  default_byte: base_byte option [@ocaml.doc ""];
-  default_blob: base_blob option [@ocaml.doc ""];
+  default_short: short option [@ocaml.doc ""];
+  default_byte: byte option [@ocaml.doc ""];
+  default_blob: blob option [@ocaml.doc ""];
   default_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
   default_null_document: CoreTypes.Document.t option [@ocaml.doc ""];
   default_document_list: CoreTypes.Document.t option [@ocaml.doc ""];
@@ -1982,7 +1979,7 @@ type nonrec xml_enums_output =
                                                                show][@@deriving
                                                                     eq]
 type nonrec xml_blobs_output = {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec struct_arg =
   {
@@ -1992,12 +1989,12 @@ type nonrec struct_arg =
 [@@deriving eq]
 type nonrec simple_scalar_xml_properties_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   false_boolean_value: bool option [@ocaml.doc ""];
   true_boolean_value: bool option [@ocaml.doc ""];
   empty_string_value: string option [@ocaml.doc ""];
@@ -2008,9 +2005,9 @@ type nonrec simple_input_params_input =
   {
   integer_enum: integer_enum option [@ocaml.doc ""];
   foo_enum: foo_enum option [@ocaml.doc ""];
-  qux: base_blob option [@ocaml.doc ""];
-  boo: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  qux: blob option [@ocaml.doc ""];
+  boo: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   bam: int option [@ocaml.doc ""];
   baz: bool option [@ocaml.doc ""];
   bar: string option [@ocaml.doc ""];
@@ -2154,16 +2151,16 @@ type nonrec test_enum =
   | FOO [@ocaml.doc ""][@@ocaml.doc ""][@@deriving show][@@deriving eq]
 type nonrec simple_scalar_properties_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                   show]
-[@@deriving eq]
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                               show][@@deriving
+                                                                    eq]
 type nonrec simple_scalar_properties_input =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                   show]
-[@@deriving eq]
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                               show][@@deriving
+                                                                    eq]
 type nonrec required_string_map = (string * string) list[@@ocaml.doc ""]
 [@@deriving show][@@deriving eq]
 type nonrec required_enum =
@@ -2178,13 +2175,13 @@ type nonrec required_members_with_defaults_mixin =
   required_int_enum: required_int_enum [@ocaml.doc ""];
   required_enum: required_enum [@ocaml.doc ""];
   required_map: required_string_map [@ocaml.doc ""];
-  required_double: base_double [@ocaml.doc ""];
-  required_float: base_float [@ocaml.doc ""];
+  required_double: double [@ocaml.doc ""];
+  required_float: float_ [@ocaml.doc ""];
   required_long: int [@ocaml.doc ""];
   required_integer: int [@ocaml.doc ""];
-  required_short: base_short [@ocaml.doc ""];
-  required_byte: base_byte [@ocaml.doc ""];
-  required_blob: base_blob [@ocaml.doc ""];
+  required_short: short [@ocaml.doc ""];
+  required_byte: byte [@ocaml.doc ""];
+  required_blob: blob [@ocaml.doc ""];
   required_timestamp: CoreTypes.Timestamp.t [@ocaml.doc ""];
   required_list: string list [@ocaml.doc ""];
   required_boolean: bool [@ocaml.doc ""];
@@ -2193,13 +2190,13 @@ type nonrec required_members_with_defaults_mixin =
 type nonrec required_members_mixin =
   {
   required_map: required_string_map [@ocaml.doc ""];
-  required_double: base_double [@ocaml.doc ""];
-  required_float: base_float [@ocaml.doc ""];
+  required_double: double [@ocaml.doc ""];
+  required_float: float_ [@ocaml.doc ""];
   required_long: int [@ocaml.doc ""];
   required_integer: int [@ocaml.doc ""];
-  required_short: base_short [@ocaml.doc ""];
-  required_byte: base_byte [@ocaml.doc ""];
-  required_blob: base_blob [@ocaml.doc ""];
+  required_short: short [@ocaml.doc ""];
+  required_byte: byte [@ocaml.doc ""];
+  required_blob: blob [@ocaml.doc ""];
   required_timestamp: CoreTypes.Timestamp.t [@ocaml.doc ""];
   required_list: string list [@ocaml.doc ""];
   required_boolean: bool [@ocaml.doc ""];
@@ -2255,7 +2252,7 @@ type nonrec my_union =
   | IntEnumValue of integer_enum [@ocaml.doc ""]
   | EnumValue of foo_enum [@ocaml.doc ""]
   | TimestampValue of CoreTypes.Timestamp.t [@ocaml.doc ""]
-  | BlobValue of base_blob [@ocaml.doc ""]
+  | BlobValue of blob [@ocaml.doc ""]
   | NumberValue of int [@ocaml.doc ""]
   | BooleanValue of bool [@ocaml.doc ""]
   | StringValue of string [@ocaml.doc ""][@@ocaml.doc
@@ -2298,25 +2295,25 @@ type nonrec content_type_parameters_input =
 [@@deriving eq]
 type nonrec defaults_mixin =
   {
-  zero_double: base_double option [@ocaml.doc ""];
-  zero_float: base_float option [@ocaml.doc ""];
+  zero_double: double option [@ocaml.doc ""];
+  zero_float: float_ option [@ocaml.doc ""];
   zero_long: int option [@ocaml.doc ""];
   zero_integer: int option [@ocaml.doc ""];
-  zero_short: base_short option [@ocaml.doc ""];
-  zero_byte: base_byte option [@ocaml.doc ""];
-  empty_blob: base_blob option [@ocaml.doc ""];
+  zero_short: short option [@ocaml.doc ""];
+  zero_byte: byte option [@ocaml.doc ""];
+  empty_blob: blob option [@ocaml.doc ""];
   false_boolean: bool option [@ocaml.doc ""];
   empty_string: string option [@ocaml.doc ""];
   default_int_enum: test_int_enum option [@ocaml.doc ""];
   default_enum: test_enum option [@ocaml.doc ""];
   default_map: test_string_map option [@ocaml.doc ""];
-  default_double: base_double option [@ocaml.doc ""];
-  default_float: base_float option [@ocaml.doc ""];
+  default_double: double option [@ocaml.doc ""];
+  default_float: float_ option [@ocaml.doc ""];
   default_long: int option [@ocaml.doc ""];
   default_integer: int option [@ocaml.doc ""];
-  default_short: base_short option [@ocaml.doc ""];
-  default_byte: base_byte option [@ocaml.doc ""];
-  default_blob: base_blob option [@ocaml.doc ""];
+  default_short: short option [@ocaml.doc ""];
+  default_byte: byte option [@ocaml.doc ""];
+  default_blob: blob option [@ocaml.doc ""];
   default_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
   default_null_document: CoreTypes.Document.t option [@ocaml.doc ""];
   default_document_list: CoreTypes.Document.t option [@ocaml.doc ""];
@@ -2334,7 +2331,7 @@ type nonrec my_union =
   | ListValue of string list [@ocaml.doc ""]
   | EnumValue of foo_enum [@ocaml.doc ""]
   | TimestampValue of CoreTypes.Timestamp.t [@ocaml.doc ""]
-  | BlobValue of base_blob [@ocaml.doc ""]
+  | BlobValue of blob [@ocaml.doc ""]
   | NumberValue of int [@ocaml.doc ""]
   | BooleanValue of bool [@ocaml.doc ""]
   | StringValue of string [@ocaml.doc ""][@@ocaml.doc
@@ -2358,10 +2355,10 @@ type nonrec simple_struct = {
 [@@deriving eq]
 type nonrec simple_scalar_properties_input_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
-                                                                   show]
-[@@deriving eq]
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving
+                                                               show][@@deriving
+                                                                    eq]
 type nonrec put_with_content_encoding_input =
   {
   data: string option [@ocaml.doc ""];
@@ -2419,11 +2416,11 @@ type kitchen_sink =
   iso8601_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
   integer_: int option [@ocaml.doc ""];
   httpdate_timestamp: CoreTypes.Timestamp.t option [@ocaml.doc ""];
-  float_: base_float option [@ocaml.doc ""];
+  float_: float_ option [@ocaml.doc ""];
   empty_struct: unit option [@ocaml.doc ""];
-  double: base_double option [@ocaml.doc ""];
+  double: double option [@ocaml.doc ""];
   boolean_: bool option [@ocaml.doc ""];
-  blob: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  blob: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 and map_of_kitchen_sinks = (string * kitchen_sink) list[@@ocaml.doc ""]
 [@@deriving show][@@deriving eq]
@@ -2552,7 +2549,7 @@ type nonrec xml_enums_output =
                                                                show][@@deriving
                                                                     eq]
 type nonrec xml_blobs_output = {
-  data: base_blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
+  data: blob option [@ocaml.doc ""]}[@@ocaml.doc ""][@@deriving show]
 [@@deriving eq]
 type nonrec struct_arg =
   {
@@ -2562,12 +2559,12 @@ type nonrec struct_arg =
 [@@deriving eq]
 type nonrec simple_scalar_xml_properties_output =
   {
-  double_value: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  double_value: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   long_value: int option [@ocaml.doc ""];
   integer_value: int option [@ocaml.doc ""];
-  short_value: base_short option [@ocaml.doc ""];
-  byte_value: base_byte option [@ocaml.doc ""];
+  short_value: short option [@ocaml.doc ""];
+  byte_value: byte option [@ocaml.doc ""];
   false_boolean_value: bool option [@ocaml.doc ""];
   true_boolean_value: bool option [@ocaml.doc ""];
   empty_string_value: string option [@ocaml.doc ""];
@@ -2580,9 +2577,9 @@ type nonrec simple_input_params_input =
   has_query_and_xml_name: string option [@ocaml.doc ""];
   has_query_name: string option [@ocaml.doc ""];
   foo_enum: foo_enum option [@ocaml.doc ""];
-  qux: base_blob option [@ocaml.doc ""];
-  boo: base_double option [@ocaml.doc ""];
-  float_value: base_float option [@ocaml.doc ""];
+  qux: blob option [@ocaml.doc ""];
+  boo: double option [@ocaml.doc ""];
+  float_value: float_ option [@ocaml.doc ""];
   bam: int option [@ocaml.doc ""];
   baz: bool option [@ocaml.doc ""];
   bar: string option [@ocaml.doc ""];
@@ -2701,7 +2698,7 @@ type nonrec s3_config =
 [@@deriving show][@@deriving eq]
 type nonrec file_config_settings =
   {
-  max_attempts: base_short option [@ocaml.doc ""];
+  max_attempts: short option [@ocaml.doc ""];
   retry_mode: retry_mode option [@ocaml.doc ""];
   s3: s3_config option [@ocaml.doc ""];
   region: string option [@ocaml.doc ""];
@@ -2715,7 +2712,7 @@ type nonrec config_file = (string * file_config_settings) list[@@ocaml.doc
 [@@deriving show][@@deriving eq]
 type nonrec retry_config =
   {
-  max_attempts: base_short option [@ocaml.doc ""];
+  max_attempts: short option [@ocaml.doc ""];
   mode: retry_mode option [@ocaml.doc ""]}[@@ocaml.doc
                                             "Configuration specific to retries."]
 [@@deriving show][@@deriving eq]
