@@ -9,11 +9,46 @@ type t = {
   service_details : Ast.Trait.serviceDetails;
   alias_context : Codegen.Types.t;
   shapes : Ast.Shape.t list;
+  namespace_module_mapping : (string, string) Map.Poly.t;
 }
 
 let shape_with_target Ast.Shape.{ name; descriptor } =
   let open Ast.Dependencies in
   { name; descriptor; targets = getTargets descriptor; recursWith = None }
+
+let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarget list) 
+    (namespace_module_mapping : (string, string) Map.Poly.t) : 
+  (string * t) list =
+  let namespace_map = 
+    List.fold ordered_shapes ~init:(Map.Poly.empty : (string, Ast.Dependencies.shapeWithTarget list) Map.Poly.t) 
+      ~f:(fun acc shape ->
+        let namespace = Codegen.Util.symbolNamespace shape.name in
+        Map.update acc namespace ~f:(function
+          | None -> [shape]
+          | Some existing -> shape :: existing))
+  in
+  Map.to_alist namespace_map
+  |> List.map ~f:(fun (namespace, namespace_shapes) ->
+       let context = make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping in
+       (namespace, context))
+
+and make_namespace_context namespace shapes namespace_module_mapping =
+  let (name, service), operation_shapes, structure_shapes =
+    Ast.Organize.partitionOperationShapes shapes in
+  let service_details = Ast.Trait.extractServiceTrait service.traits in
+  let flattened_shapes =
+    structure_shapes
+    |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
+           Ast.Shape.{ name; descriptor }
+           :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
+                  List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
+                      Ast.Shape.{ name; descriptor }))) in
+  let alias_context = Gen_types.create_alias_context flattened_shapes in
+  {
+    name; service; operation_shapes; structure_shapes; 
+    service_details; alias_context; shapes = flattened_shapes;
+    namespace_module_mapping;
+  }
 
 let make_context shapes =
   (* let open Ast.Dependencies in *)
@@ -32,7 +67,8 @@ let make_context shapes =
   in
 
   let alias_context = Gen_types.create_alias_context shapes in
-  { name; service; operation_shapes; structure_shapes; service_details; alias_context; shapes }
+  { name; service; operation_shapes; structure_shapes; service_details; alias_context; shapes;
+    namespace_module_mapping = Map.Poly.empty }
 
 type error = [ `ParseError of Parse.Json.Decode.jsonParseError | `OutputError of string ]
 
@@ -47,6 +83,13 @@ let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
 let create_from_model_file input_filename =
   match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
   | Ok shapes -> Ok (make_context shapes)
+  | Error error -> Error (`ParseError error)
+
+let create_from_model_file_with_namespaces ~namespace_module_mapping input_filename =
+  match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
+  | Ok shapes -> 
+      let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in
+      Ok (partition_by_namespace ordered namespace_module_mapping)
   | Error error -> Error (`ParseError error)
 
 let write_output ~output_dir ~filename generate =
@@ -138,6 +181,25 @@ let write_module ~output_dir ~filename t =
           output_fmt)
   in
   Result.all_unit [ r1; r2 ]
+
+(** Namespace generation functions **)
+
+let generate_all_namespaces input_filename namespace_module_mapping output_dir =
+  match create_from_model_file_with_namespaces ~namespace_module_mapping input_filename with
+  | Ok namespace_contexts ->
+      List.iter namespace_contexts ~f:(fun (namespace, context) ->
+        match Map.find namespace_module_mapping namespace with
+        | Some module_name ->
+            let _ = write_types ~output_dir ~filename:module_name context in
+            let _ = write_operations ~output_dir ~filename:module_name context in
+            let _ = write_builders ~output_dir ~filename:module_name context in
+            let _ = write_serialisers ~output_dir ~filename:module_name context in
+            let _ = write_deserialisers ~output_dir ~filename:module_name context in
+            let _ = write_service_metadata ~output_dir ~filename:module_name context in
+            ()
+        | None -> failwith ("No module mapping found for namespace: " ^ namespace)
+      )
+  | Error error -> failwith (Fmt.str "%a" pp_error error)
 
 (** Accesors **)
 
