@@ -11,6 +11,14 @@ This is a set of tools for generating AWS SDks from Smithy definitions to OCaml.
 * Naming convention for OCaml code is snake_case for all functions and types
 * Use CamelCase for type constructors
 * Modules should be Snake_case (with a capital letter for the first letter but snaked otherwise. Its filename is just snake case (OCaml capitalises the first letter when referring to the corresponding module in code)
+* Never use git or commit changes or modify the git history
+* Stop after each phase to give the developer a chance to review the code and commit it themselves
+
+### Refactoring code
+
+* Write a plan or design document to the @refactoring/ directory e.g. `refactoring/namespace.md`
+* Before starting a refactoring, create a corresponding todo file in the @refactoring/ directory with `.todo.md` extension e.g. `refactoring/namespace.todo.md`
+* After making a change, update the todo file
 
 ## Libraries
 * yojson - json parsing
