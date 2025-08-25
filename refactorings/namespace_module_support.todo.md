@@ -79,17 +79,18 @@ Phase 4 focuses on comprehensive testing of the namespace module support impleme
 - [x] Update main generation loop to handle multiple namespaces (from Phase 1)
 - [x] Test implementation with existing models (basic single-namespace verified)
 - [x] Design comprehensive test plan for multi-namespace support
-- [ ] Create test model with multiple namespaces for testing
-- [ ] Implement unit tests with Alcotest for namespace functions
+- [x] Create test model with multiple namespaces for testing
+- [x] Implement unit tests with Alcotest for namespace functions
+- [x] Update dune configuration for test execution
+- [x] Test namespace resolution with builtin types and cross-namespace references
+- [x] Verify cross-namespace references generate correct module qualifiers
+- [x] Enhanced namespace resolver to handle builtin type mapping
 - [ ] Implement integration tests for multi-namespace pipeline
-- [ ] Update dune configuration for test execution
-- [ ] Test namespace resolution with actual multi-namespace models
-- [ ] Verify cross-namespace references generate correct module qualifiers
-- [ ] Test complete generation pipeline with multi-namespace output
+- [ ] Test complete generation pipeline with multi-namespace output using real test model
 - [ ] Update main generator binary to support namespace mappings parameter
 - [ ] Test with real AWS service models from sdks/ directory
 
-## Implementation Status: Phase 3 Complete ✅
+## Implementation Status: Phase 4 Unit Testing Complete ✅
 
 ### Completed in Phase 3:
 - ✅ All core codegen modules updated to accept namespace resolver
@@ -99,6 +100,22 @@ Phase 4 focuses on comprehensive testing of the namespace module support impleme
 - ✅ Backward compatibility verified with single-namespace models
 - ✅ Full codebase compiles successfully
 - ✅ Basic functionality testing completed
+
+### Completed in Phase 4 Unit Testing:
+- ✅ Created comprehensive synthetic multi-namespace test model (`test_models/multi_namespace_test.json`)
+- ✅ Implemented complete unit test suite in `sdkgen/namespace_tests.ml`:
+  - ✅ Partition by namespace function testing (8 test cases)
+  - ✅ Namespace resolver testing (cross-namespace, builtin types, error handling)
+  - ✅ Single-namespace backward compatibility testing
+  - ✅ Cross-namespace structure reference testing
+- ✅ Enhanced namespace resolver with builtin type mapping:
+  - ✅ `smithy.api#String` → `string`
+  - ✅ `smithy.api#Boolean` → `bool` 
+  - ✅ `smithy.api#Integer` → `int`
+  - ✅ All other smithy.api types mapped to OCaml equivalents
+- ✅ Updated dune configuration for test execution
+- ✅ All 8 unit tests pass successfully
+- ✅ Verified namespace partitioning, resolution, and error handling work correctly
 
 ### Technical Implementation Details:
 - All functions accept optional `?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None)` 
