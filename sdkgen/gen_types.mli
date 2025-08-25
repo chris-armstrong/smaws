@@ -11,6 +11,7 @@ val generate_ml :
   alias_context:t ->
   ?with_derivings:bool ->
   ?no_open:bool ->
+  ?namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t option ->
   Format.formatter ->
   unit
 
@@ -21,5 +22,6 @@ val generate_mli :
   alias_context:t ->
   ?with_derivings:bool ->
   ?no_open:bool ->
+  ?namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t option ->
   Format.formatter ->
   unit
