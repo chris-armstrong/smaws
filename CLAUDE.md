@@ -38,6 +38,10 @@ This is a set of tools for generating AWS SDks from Smithy definitions to OCaml.
 * dune - build system
    + `dune build` builds everything - use it to verify code compiles after making changes
    + `dune fmt` formats the code - this should be done after making any changes to the code
+   + `dune exec ./path/to/executable.exe` runs the executable defined in dune by an `(executable (name executable)...)` clause
+   + `dune runtest` is an alias for running all the tests in the project
+   + `dune exec ./path/to/executable.exe` runs the specific test defined in dune by an `(tests (name executable)...)` or `(test (names executable ...) ...)` clause
+   + all of dunes artifacts are stored in the `_build/<context>` directory in the root of the project, with a layout that mirrors the project. For example, an executable defined in `bin/something.ml` will output to `_build/default/bin/something.exe` (assuming the default build context, which is implied)
 * git 
 * opam is used for package management
 * ocamlformat - use it to format code
