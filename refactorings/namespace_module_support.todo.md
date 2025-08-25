@@ -32,6 +32,50 @@
 - [ ] Test namespace resolution with multi-namespace models (Phase 4)
 
 ## Phase 4: Integration and Testing (In Progress)
+
+### Phase 4 Testing Plan
+
+#### Overview
+Phase 4 focuses on comprehensive testing of the namespace module support implementation. All core functionality has been implemented in Phases 1-3, so Phase 4 validates the implementation works correctly across various scenarios.
+
+#### Testing Strategy
+
+**1. Create Synthetic Test Data**
+- Build a multi-namespace JSON model with realistic AWS service patterns
+- Include cross-namespace references (e.g., Amplify referencing S3 types)  
+- Test builtin type handling (`smithy.api` namespace)
+
+**2. Unit Tests** (`sdkgen/namespace_tests.ml`)
+- Test `partition_by_namespace` function with multi-namespace models
+- Test `make_namespace_context` for individual namespace processing
+- Test namespace resolver functions for reference resolution
+- Verify builtin types resolve to OCaml primitives, not module qualifiers
+- Test single-namespace backward compatibility
+
+**3. Integration Tests** (`sdkgen/integration_tests.ml`)
+- Test complete generation pipeline with cross-namespace references
+- Test realistic AWS service scenarios
+- Verify generated code structure and compilation
+- Test with existing models from `sdks/` directory
+
+**4. Infrastructure Setup**
+- Update `sdkgen/dune` with test configurations
+- Add alcotest dependency to `dune-project`
+- Ensure tests can be run with `dune test`
+
+**5. Validation**
+- Run tests to verify all functionality works
+- Test backward compatibility with existing single-namespace models
+- Verify cross-namespace references generate correct module qualifiers
+
+#### Key Testing Focus Areas
+- **Namespace Partitioning**: Shapes correctly separated by namespace
+- **Cross-namespace References**: Generate proper `Module.Type` qualifiers
+- **Builtin Types**: `smithy.api` types resolve to OCaml primitives
+- **Backward Compatibility**: Single-namespace models work unchanged
+- **Complete Pipeline**: End-to-end generation with multi-namespace models
+
+### Implementation Tasks:
 - [x] Update main generation loop to handle multiple namespaces (from Phase 1)
 - [x] Test implementation with existing models (basic single-namespace verified)
 - [x] Design comprehensive test plan for multi-namespace support
