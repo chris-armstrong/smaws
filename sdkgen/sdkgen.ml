@@ -16,25 +16,35 @@ let shape_with_target Ast.Shape.{ name; descriptor } =
   let open Ast.Dependencies in
   { name; descriptor; targets = getTargets descriptor; recursWith = None }
 
-let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarget list) 
-    (namespace_module_mapping : (string, string) Map.Poly.t) : 
-  (string * t) list =
-  let namespace_map = 
-    List.fold ordered_shapes ~init:(Map.Poly.empty : (string, Ast.Dependencies.shapeWithTarget list) Map.Poly.t) 
+let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarget list)
+    (namespace_module_mapping : (string, string) Map.Poly.t) : (string * t) list =
+  let namespace_map =
+    List.fold ordered_shapes
+      ~init:(Map.Poly.empty : (string, Ast.Dependencies.shapeWithTarget list) Map.Poly.t)
       ~f:(fun acc shape ->
         let namespace = Codegen.Util.symbolNamespace shape.name in
         Map.update acc namespace ~f:(function
-          | None -> [shape]
+          | None -> [ shape ]
           | Some existing -> shape :: existing))
   in
   Map.to_alist namespace_map
-  |> List.map ~f:(fun (namespace, namespace_shapes) ->
-       let context = make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping in
-       (namespace, context))
+  |> List.filter_map ~f:(fun (namespace, namespace_shapes) ->
+         (* Only create contexts for namespaces that have services *)
+         let has_service =
+           List.exists namespace_shapes ~f:(fun Ast.Dependencies.{ descriptor; _ } ->
+               match descriptor with ServiceShape _ -> true | _ -> false)
+         in
+         if has_service then (
+           let context =
+             make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping
+           in
+           Some (namespace, context))
+         else None)
 
 and make_namespace_context namespace shapes namespace_module_mapping =
   let (name, service), operation_shapes, structure_shapes =
-    Ast.Organize.partitionOperationShapes shapes in
+    Ast.Organize.partitionOperationShapes shapes
+  in
   let service_details = Ast.Trait.extractServiceTrait service.traits in
   let flattened_shapes =
     structure_shapes
@@ -42,11 +52,17 @@ and make_namespace_context namespace shapes namespace_module_mapping =
            Ast.Shape.{ name; descriptor }
            :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
                   List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
-                      Ast.Shape.{ name; descriptor }))) in
+                      Ast.Shape.{ name; descriptor })))
+  in
   let alias_context = Gen_types.create_alias_context flattened_shapes in
   {
-    name; service; operation_shapes; structure_shapes; 
-    service_details; alias_context; shapes = flattened_shapes;
+    name;
+    service;
+    operation_shapes;
+    structure_shapes;
+    service_details;
+    alias_context;
+    shapes = flattened_shapes;
     namespace_module_mapping;
   }
 
@@ -67,8 +83,16 @@ let make_context shapes =
   in
 
   let alias_context = Gen_types.create_alias_context shapes in
-  { name; service; operation_shapes; structure_shapes; service_details; alias_context; shapes;
-    namespace_module_mapping = Map.Poly.empty }
+  {
+    name;
+    service;
+    operation_shapes;
+    structure_shapes;
+    service_details;
+    alias_context;
+    shapes;
+    namespace_module_mapping = Map.Poly.empty;
+  }
 
 type error = [ `ParseError of Parse.Json.Decode.jsonParseError | `OutputError of string ]
 
@@ -80,16 +104,30 @@ let pp_error ppf = function
 let ( let+ ) r func = Result.map ~f:func r
 let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
 
+(** Create a context from a model file. DEPRECATED: use create_from_model_file_with_namespaces
+    instead *)
 let create_from_model_file input_filename =
   match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
   | Ok shapes -> Ok (make_context shapes)
   | Error error -> Error (`ParseError error)
 
+(** Create a mapping of namespaces to contexts from a Smithy model file.
+
+    [~namespace_module_mapping] is a map of namespace names to module names. The module names are
+    used to generate the output files when they refer to types or functions across namespaces.
+
+    NOTE: If you don't specify a namespace mapping then it will not be included in the result. *)
 let create_from_model_file_with_namespaces ~namespace_module_mapping input_filename =
   match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
-  | Ok shapes -> 
+  | Ok shapes ->
       let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in
-      Ok (partition_by_namespace ordered namespace_module_mapping)
+      let all_namespace_contexts = partition_by_namespace ordered namespace_module_mapping in
+      (* Filter to only return namespaces that are in the mapping *)
+      let filtered_contexts =
+        List.filter all_namespace_contexts ~f:(fun (namespace, _context) ->
+            Map.mem namespace_module_mapping namespace)
+      in
+      Ok filtered_contexts
   | Error error -> Error (`ParseError error)
 
 let write_output ~output_dir ~filename generate =
@@ -105,20 +143,22 @@ let write_output ~output_dir ~filename generate =
 
 let write_types ~output_dir ~filename ?(with_derivings = false) t =
   let { name; service; structure_shapes; alias_context; namespace_module_mapping; _ } = t in
-  let namespace_resolver = 
+  let namespace_resolver =
     if Map.is_empty namespace_module_mapping then None
-    else
+    else (
       let current_namespace = Codegen.Util.symbolNamespace name in
-      Some (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace ~namespace_module_mapping)
+      Some
+        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+           ~namespace_module_mapping))
   in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context ~with_derivings ~namespace_resolver
-          output_fmt)
+        Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context ~with_derivings
+          ~namespace_resolver output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context ~with_derivings ~namespace_resolver
-          output_fmt)
+        Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context ~with_derivings
+          ~namespace_resolver output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 
@@ -134,37 +174,61 @@ let write_service_metadata ~output_dir ~filename t =
   Result.all_unit [ r1; r2 ]
 
 let write_builders ~output_dir ~filename t =
-  let { name; service; structure_shapes; alias_context; operation_shapes; namespace_module_mapping; _ } = t in
-  let namespace_resolver = 
+  let {
+    name;
+    service;
+    structure_shapes;
+    alias_context;
+    operation_shapes;
+    namespace_module_mapping;
+    _;
+  } =
+    t
+  in
+  let namespace_resolver =
     if Map.is_empty namespace_module_mapping then None
-    else
+    else (
       let current_namespace = Codegen.Util.symbolNamespace name in
-      Some (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace ~namespace_module_mapping)
+      Some
+        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+           ~namespace_module_mapping))
   in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context ~namespace_resolver
-          output_fmt)
+        Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
+          ~namespace_resolver output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes ~alias_context ~namespace_resolver
-          output_fmt)
+        Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes ~alias_context
+          ~namespace_resolver output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 
 let write_operations ~output_dir ~filename t =
-  let { name; service; operation_shapes; structure_shapes; alias_context; namespace_module_mapping; _ } = t in
-  let namespace_resolver = 
+  let {
+    name;
+    service;
+    operation_shapes;
+    structure_shapes;
+    alias_context;
+    namespace_module_mapping;
+    _;
+  } =
+    t
+  in
+  let namespace_resolver =
     if Map.is_empty namespace_module_mapping then None
-    else
+    else (
       let current_namespace = Codegen.Util.symbolNamespace name in
-      Some (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace ~namespace_module_mapping)
+      Some
+        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+           ~namespace_module_mapping))
   in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context ~namespace_resolver
-          output_fmt)
+        Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
+          ~namespace_resolver output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
@@ -179,25 +243,31 @@ let write_service ~output_dir ~filename t =
 
 let write_serialisers ~output_dir ~filename t =
   let { name; service; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let namespace_resolver = 
+  let namespace_resolver =
     if Map.is_empty namespace_module_mapping then None
-    else
+    else (
       let current_namespace = Codegen.Util.symbolNamespace name in
-      Some (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace ~namespace_module_mapping)
+      Some
+        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+           ~namespace_module_mapping))
   in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_serialisers.generate ~name ~service ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
+      Gen_serialisers.generate ~name ~service ~operation_shapes ~structure_shapes
+        ~namespace_resolver output_fmt)
 
 let write_deserialisers ~output_dir ~filename t =
   let { name; service; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let namespace_resolver = 
+  let namespace_resolver =
     if Map.is_empty namespace_module_mapping then None
-    else
+    else (
       let current_namespace = Codegen.Util.symbolNamespace name in
-      Some (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace ~namespace_module_mapping)
+      Some
+        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+           ~namespace_module_mapping))
   in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_deserialisers.generate ~name ~service ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
+      Gen_deserialisers.generate ~name ~service ~operation_shapes ~structure_shapes
+        ~namespace_resolver output_fmt)
 
 let write_module ~output_dir ~filename t =
   let { name; service; operation_shapes; structure_shapes; alias_context; _ } = t in
@@ -218,17 +288,16 @@ let generate_all_namespaces input_filename namespace_module_mapping output_dir =
   match create_from_model_file_with_namespaces ~namespace_module_mapping input_filename with
   | Ok namespace_contexts ->
       List.iter namespace_contexts ~f:(fun (namespace, context) ->
-        match Map.find namespace_module_mapping namespace with
-        | Some module_name ->
-            let _ = write_types ~output_dir ~filename:module_name context in
-            let _ = write_operations ~output_dir ~filename:module_name context in
-            let _ = write_builders ~output_dir ~filename:module_name context in
-            let _ = write_serialisers ~output_dir ~filename:module_name context in
-            let _ = write_deserialisers ~output_dir ~filename:module_name context in
-            let _ = write_service_metadata ~output_dir ~filename:module_name context in
-            ()
-        | None -> failwith ("No module mapping found for namespace: " ^ namespace)
-      )
+          match Map.find namespace_module_mapping namespace with
+          | Some module_name ->
+              let _ = write_types ~output_dir ~filename:module_name context in
+              let _ = write_operations ~output_dir ~filename:module_name context in
+              let _ = write_builders ~output_dir ~filename:module_name context in
+              let _ = write_serialisers ~output_dir ~filename:module_name context in
+              let _ = write_deserialisers ~output_dir ~filename:module_name context in
+              let _ = write_service_metadata ~output_dir ~filename:module_name context in
+              ()
+          | None -> failwith ("No module mapping found for namespace: " ^ namespace))
   | Error error -> failwith (Fmt.str "%a" pp_error error)
 
 (** Accesors **)

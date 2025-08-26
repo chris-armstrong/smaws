@@ -11,10 +11,10 @@
  (action
   (run %{gen} %{input})))
 
-; (executable
-;  (name tests)
-;  (libraries yojson Parselib alcotest)
-;  (modules tests types))
+(executable
+ (name tests)
+ (libraries yojson Parselib alcotest)
+ (modules tests types))
 
 ; (tests
 ;   (names tests)

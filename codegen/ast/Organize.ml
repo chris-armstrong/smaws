@@ -10,7 +10,7 @@ let shapesWithTargets shapes =
       { name; descriptor; targets = Dependencies.getTargets descriptor; recursWith = None })
 
 let partitionOperationShapes shapesWithTargets =
-  let service, remaining =
+  let service, _remaining =
     List.partition_map shapesWithTargets ~f:(fun { descriptor; name; targets; recursWith } ->
         match descriptor with
         | ServiceShape x -> Base.Either.First (name, x)

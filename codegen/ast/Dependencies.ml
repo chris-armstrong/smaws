@@ -44,6 +44,36 @@ let smithyImplicitShapes =
       recursWith = None;
     };
     { name = "smithy.api#Document"; descriptor = DocumentShape; targets = []; recursWith = None };
+    {
+      name = "smithy.api#Float";
+      descriptor = FloatShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
+      name = "smithy.api#Double";
+      descriptor = DoubleShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
+      name = "smithy.api#Short";
+      descriptor = ShortShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
+      name = "smithy.api#Blob";
+      descriptor = BlobShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
+      name = "smithy.api#Byte";
+      descriptor = ByteShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
   ]
 
 (** resolve the target shape names referenced by the specified shape descriptor *)
@@ -94,7 +124,8 @@ module ShapeWithTargetGraph = struct
             List.find_exn x ~f:(fun iter_target -> String.equal iter_target.name target_name)
           in
           iterator target
-        with Not_found_s _ -> Fmt.pr "Could not find dependency target %s\n" y.name)
+        with Not_found_s _ ->
+          Fmt.pr "Could not find dependency target %s for %s\n" target_name y.name)
 end
 
 module ShapeWithTargetComponents = Graph.Components.Make (ShapeWithTargetGraph)

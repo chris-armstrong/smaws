@@ -6,7 +6,24 @@ let main () =
   let filename = Array.unsafe_get (Sys.get_argv ()) 1 in
 
   (* generate test types *)
-  let+ model = Sdkgen.create_from_model_file filename in
+  let namespace_module_mapping =
+    Map.Poly.of_alist_exn
+      [
+        ("aws.protocoltests.shared", "ProtocolTestsShared");
+        ("aws.protocoltests.restxml.xmlns", "ProtocolTestsRestXmlXmlns");
+        ("aws.protocoltests.restjson", "ProtocolTestsRestJson");
+        ("aws.protocoltests.query", "ProtocolTestsQuery");
+        ("aws.protocoltests.json10", "ProtocolTestsJson10");
+        ("aws.protocoltests.json", "ProtocolTestsJson");
+        ("aws.protocoltests.ec2", "ProtocolTestsEC2");
+        ("aws.protocoltests.config", "ProtocolTestsConfig");
+      ]
+  in
+  let+ mapped_models =
+    Sdkgen.create_from_model_file_with_namespaces ~namespace_module_mapping filename
+  in
+
+  let model = List.Assoc.find_exn ~equal:String.equal mapped_models "aws.protocoltests.json" in
 
   let _ = Sdkgen.write_types ~with_derivings:true ~output_dir:"." ~filename:"types" model in
 

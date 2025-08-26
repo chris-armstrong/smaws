@@ -21,7 +21,15 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "Amplify service for testing multi-namespace support"
+        "smithy.api#documentation": "Amplify service for testing multi-namespace support",
+        "aws.api#service": {
+          "sdkId": "Amplify",
+          "arnNamespace": "amplify",
+          "cloudFormationName": "Amplify",
+          "cloudTrailEventSource": "amplify.amazonaws.com",
+          "endpointPrefix": "amplify"
+        },
+        "aws.protocols#restJson1": {}
       }
     },
     "com.amazonaws.amplify#CreateApp": {
@@ -241,7 +249,15 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "S3 service for testing multi-namespace support"
+        "smithy.api#documentation": "S3 service for testing multi-namespace support",
+        "aws.api#service": {
+          "sdkId": "S3",
+          "arnNamespace": "s3",
+          "cloudFormationName": "S3",
+          "cloudTrailEventSource": "s3.amazonaws.com",
+          "endpointPrefix": "s3"
+        },
+        "aws.protocols#restXml": {}
       }
     },
     "com.amazonaws.s3#CreateBucket": {

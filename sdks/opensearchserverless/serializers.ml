@@ -947,3 +947,8 @@ let create_access_policy_request_to_yojson (x : create_access_policy_request)
     ("name", (Some (policy_name_to_yojson x.name)));
     ("type", (Some (access_policy_type_to_yojson x.type_)))]
 let base_timestamp_to_yojson = timestamp_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

@@ -23,3 +23,12 @@
    base
    alcotest))
 
+(test
+ (name integration_tests)
+ (modules integration_tests)
+ (libraries 
+   Parselib
+   sdkgen
+   base
+   alcotest))
+

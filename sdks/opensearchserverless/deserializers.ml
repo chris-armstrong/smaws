@@ -1661,3 +1661,8 @@ let create_access_policy_request_of_yojson tree path =
      type_ = (value_for_key access_policy_type_of_yojson "type" _list path)
    } : create_access_policy_request)
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson
