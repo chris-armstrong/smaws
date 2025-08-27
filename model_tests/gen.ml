@@ -54,6 +54,34 @@ let main () =
           pf fmt "%s: %a" name (list ~sep:(any ";") Ast.Trait.pp_httpRequestTest) s))
     operations;
 
+  (* find operations with response tests we can use *)
+  let response_operations =
+    Sdkgen.operations model
+    |> List.filter_map
+         ~f:(fun
+             ((name, shapeDetails, _) : string * Ast.Shape.operationShapeDetails * string list) ->
+           let traitValue =
+             List.find_map
+               ~f:(function
+                 | Ast.Trait.TestHttpResponseTests tests
+                   when List.exists
+                          ~f:(fun test ->
+                            String.equal test.protocol "aws.protocols#awsJson1_1"
+                            || String.equal test.protocol "aws.protocols#awsJson1_0")
+                          tests ->
+                     Some tests
+                 | _ -> None)
+               (shapeDetails.traits |> Option.value ~default:[])
+           in
+           Option.map traitValue ~f:(fun traitValue -> (name, traitValue)))
+  in
+
+  Fmt.pr "\nresponse_operations: %a\n"
+    Fmt.(
+      list ~sep:(any "\n") (fun fmt (name, s) ->
+          pf fmt "%s: %a" name (list ~sep:(any ";") Ast.Trait.pp_httpResponseTest) s))
+    response_operations;
+
   Ok ()
 
 let _ = match main () with Ok () -> () | Error e -> Fmt.pr "%a" Sdkgen.pp_error e

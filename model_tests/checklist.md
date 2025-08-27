@@ -15,16 +15,16 @@ This checklist tracks the implementation progress of Smithy protocol compliance 
 ## Phase 1: Core Infrastructure ⚠️ Critical Prerequisites
 
 ### Task 1.1: HTTP Client Interface Refactoring
-**Status**: ❌ **Not Started** - This is a **CRITICAL BLOCKER**
+**Status**: ✅ **Completed** - Critical blocker resolved
 
-**Current Issue**: The `Context.t` type hardcodes `Http.Client.t`, preventing HTTP client substitution needed for testing.
+**Implemented**: The `Context.t` type is now generic and supports HTTP client substitution for testing.
 
-- [ ] **BLOCKER**: Modify `awssdklib/protocols_gen/AwsJson.ml` to accept HTTP client as first-class module
-- [ ] **BLOCKER**: Change from functor `Make (Http_module : Http.Client_intf)` to function accepting `(module Http.Client_intf)`
-- [ ] **BLOCKER**: Update `request` function signature to use first-class module HTTP client
-- [ ] **BLOCKER**: Modify `awssdklib/Context.ml` to provide HTTP module extraction
-- [ ] **BLOCKER**: Update generated operations to use new AwsJson API
-- [ ] **BLOCKER**: Ensure backward compatibility with existing production code
+- [x] **COMPLETED**: Modified `awssdklib/protocols_gen/AwsJson.ml` to accept HTTP client as first-class module
+- [x] **COMPLETED**: Changed from functor `Make (Http_module : Http.Client_intf)` to function accepting `(module Http.Client_intf)`
+- [x] **COMPLETED**: Updated `request` function signature to use first-class module HTTP client
+- [x] **COMPLETED**: Modified `awssdklib/Context.ml` to provide HTTP module extraction
+- [x] **COMPLETED**: Generated operations continue to use compatible AwsJson API
+- [x] **COMPLETED**: Ensured backward compatibility with existing production code
 
 **Files to modify**:
 - `/home/chris/dev/smaws/awssdklib/protocols_gen/AwsJson.ml`
@@ -47,7 +47,7 @@ This checklist tracks the implementation progress of Smithy protocol compliance 
 
 ---
 
-## Phase 2: AST and Parser Extensions 📝 Partially Complete
+## Phase 2: AST and Parser Extensions ✅ Completed
 
 ### Task 2.1: Request Test Support
 **Status**: ✅ **Completed**
@@ -60,13 +60,13 @@ This checklist tracks the implementation progress of Smithy protocol compliance 
 - [x] Test data extraction working (as verified by current `gen.ml` output)
 
 ### Task 2.2: Response Test Support
-**Status**: ❌ **Not Started** - Missing implementation
+**Status**: ✅ **Completed** - Response test parsing implemented
 
-- [ ] Add `httpResponseTest` type to `codegen/ast/Trait.ml`
-- [ ] Add `TestHttpResponseTests` variant to trait union
-- [ ] Extend `codegen/parse/Smithy.ml` to parse `smithy.test#httpResponseTests`
-- [ ] Verify response test data extraction in Smithy model
-- [ ] Test filtering for AWS JSON protocols
+- [x] **COMPLETED**: Add `httpResponseTest` type to `codegen/ast/Trait.ml`
+- [x] **COMPLETED**: Add `TestHttpResponseTests` variant to trait union
+- [x] **COMPLETED**: Extend `codegen/parse/Smithy.ml` to parse `smithy.test#httpResponseTests`
+- [x] **COMPLETED**: Verify response test data extraction in Smithy model
+- [x] **COMPLETED**: Test filtering for AWS JSON protocols
 
 **Required Fields**: `id`, `protocol`, `code`, `headers`, `body`, `bodyMediaType`, `params`, `vendorParams`, `vendorParamsShape`, `documentation`, `tags`, `appliesTo`
 

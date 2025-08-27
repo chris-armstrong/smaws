@@ -60,6 +60,22 @@ type httpRequestTest = {
 }
 [@@deriving show, equal]
 
+type httpResponseTest = {
+  id : string;
+  protocol : string;
+  code : int;
+  headers : (string * string) list option;
+  body : string option;
+  bodyMediaType : string option;
+  params : Yojson.Basic.t option;
+  vendorParams : Yojson.Basic.t option;
+  vendorParamsShape : string option;
+  documentation : string option;
+  tags : string list option;
+  appliesTo : [ `Client | `Server ] option;
+}
+[@@deriving show, equal]
+
 type t =
   | ApiTitleTrait of string
   | ApiXmlNamespaceTrait of string
@@ -146,6 +162,7 @@ type t =
   | XmlNameTrait of string
   | PrivateTrait
   | TestHttpRequestTests of httpRequestTest list
+  | TestHttpResponseTests of httpResponseTest list
   | IdRefTrait of {
       failWhenMissing : bool option;
       selector : string option;
