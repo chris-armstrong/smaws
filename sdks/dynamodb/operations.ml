@@ -22,9 +22,11 @@ module BatchExecuteStatement =
         let open Deserializers in
           let input =
             Serializers.batch_execute_statement_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810BatchExecuteStatement" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:batch_execute_statement_output_of_yojson
             ~error_deserializer
   end
@@ -59,9 +61,10 @@ module BatchGetItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.batch_get_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810BatchGetItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810BatchGetItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:batch_get_item_output_of_yojson
             ~error_deserializer
   end
@@ -103,9 +106,10 @@ module BatchWriteItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.batch_write_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810BatchWriteItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810BatchWriteItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:batch_write_item_output_of_yojson
             ~error_deserializer
   end
@@ -145,9 +149,10 @@ module CreateBackup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_backup_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810CreateBackup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810CreateBackup"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_backup_output_of_yojson
             ~error_deserializer
   end
@@ -181,9 +186,11 @@ module CreateGlobalTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_global_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810CreateGlobalTable" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_global_table_output_of_yojson
             ~error_deserializer
   end
@@ -214,9 +221,10 @@ module CreateTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810CreateTable" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810CreateTable"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_table_output_of_yojson
             ~error_deserializer
   end
@@ -250,9 +258,10 @@ module DeleteBackup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_backup_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DeleteBackup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DeleteBackup"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_backup_output_of_yojson
             ~error_deserializer
   end
@@ -300,9 +309,10 @@ module DeleteItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DeleteItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DeleteItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_item_output_of_yojson
             ~error_deserializer
   end
@@ -340,9 +350,11 @@ module DeleteResourcePolicy =
         let open Deserializers in
           let input =
             Serializers.delete_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DeleteResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_resource_policy_output_of_yojson
             ~error_deserializer
   end
@@ -376,9 +388,10 @@ module DeleteTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DeleteTable" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DeleteTable"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_table_output_of_yojson
             ~error_deserializer
   end
@@ -406,9 +419,10 @@ module DescribeBackup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_backup_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DescribeBackup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DescribeBackup"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_backup_output_of_yojson
             ~error_deserializer
   end
@@ -437,9 +451,11 @@ module DescribeContinuousBackups =
         let open Deserializers in
           let input =
             Serializers.describe_continuous_backups_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeContinuousBackups" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_continuous_backups_output_of_yojson
             ~error_deserializer
   end
@@ -465,9 +481,11 @@ module DescribeContributorInsights =
         let open Deserializers in
           let input =
             Serializers.describe_contributor_insights_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeContributorInsights"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_contributor_insights_output_of_yojson
             ~error_deserializer
   end
@@ -484,9 +502,11 @@ module DescribeEndpoints =
         let open Deserializers in
           let input =
             Serializers.describe_endpoints_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeEndpoints" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_endpoints_response_of_yojson
             ~error_deserializer
   end
@@ -514,9 +534,10 @@ module DescribeExport =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_export_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DescribeExport" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DescribeExport"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_export_output_of_yojson
             ~error_deserializer
   end
@@ -545,9 +566,11 @@ module DescribeGlobalTable =
         let open Deserializers in
           let input =
             Serializers.describe_global_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeGlobalTable" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_global_table_output_of_yojson
             ~error_deserializer
   end
@@ -577,9 +600,11 @@ module DescribeGlobalTableSettings =
           let input =
             Serializers.describe_global_table_settings_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeGlobalTableSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_global_table_settings_output_of_yojson
             ~error_deserializer
   end
@@ -601,9 +626,10 @@ module DescribeImport =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_import_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DescribeImport" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DescribeImport"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_import_output_of_yojson
             ~error_deserializer
   end
@@ -634,9 +660,11 @@ module DescribeKinesisStreamingDestination =
           let input =
             Serializers.describe_kinesis_streaming_destination_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeKinesisStreamingDestination"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_kinesis_streaming_destination_output_of_yojson
             ~error_deserializer
   end
@@ -661,9 +689,10 @@ module DescribeLimits =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_limits_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DescribeLimits" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DescribeLimits"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_limits_output_of_yojson
             ~error_deserializer
   end
@@ -691,9 +720,10 @@ module DescribeTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810DescribeTable" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810DescribeTable"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_table_output_of_yojson
             ~error_deserializer
   end
@@ -721,9 +751,11 @@ module DescribeTableReplicaAutoScaling =
           let input =
             Serializers.describe_table_replica_auto_scaling_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeTableReplicaAutoScaling"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_table_replica_auto_scaling_output_of_yojson
             ~error_deserializer
   end
@@ -752,9 +784,11 @@ module DescribeTimeToLive =
         let open Deserializers in
           let input =
             Serializers.describe_time_to_live_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DescribeTimeToLive" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_time_to_live_output_of_yojson
             ~error_deserializer
   end
@@ -789,9 +823,11 @@ module DisableKinesisStreamingDestination =
         let open Deserializers in
           let input =
             Serializers.kinesis_streaming_destination_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810DisableKinesisStreamingDestination"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:kinesis_streaming_destination_output_of_yojson
             ~error_deserializer
   end
@@ -826,9 +862,11 @@ module EnableKinesisStreamingDestination =
         let open Deserializers in
           let input =
             Serializers.kinesis_streaming_destination_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810EnableKinesisStreamingDestination"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:kinesis_streaming_destination_output_of_yojson
             ~error_deserializer
   end
@@ -873,9 +911,11 @@ module ExecuteStatement =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.execute_statement_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ExecuteStatement" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:execute_statement_output_of_yojson
             ~error_deserializer
   end
@@ -916,9 +956,11 @@ module ExecuteTransaction =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.execute_transaction_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ExecuteTransaction" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:execute_transaction_output_of_yojson
             ~error_deserializer
   end
@@ -957,9 +999,11 @@ module ExportTableToPointInTime =
         let open Deserializers in
           let input =
             Serializers.export_table_to_point_in_time_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ExportTableToPointInTime" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:export_table_to_point_in_time_output_of_yojson
             ~error_deserializer
   end
@@ -994,9 +1038,10 @@ module GetItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810GetItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810GetItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_item_output_of_yojson
             ~error_deserializer
   end
@@ -1027,9 +1072,11 @@ module GetResourcePolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810GetResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_resource_policy_output_of_yojson
             ~error_deserializer
   end
@@ -1057,9 +1104,10 @@ module ImportTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.import_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810ImportTable" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810ImportTable"
+            ~service ~config:context.config ~input
             ~output_deserializer:import_table_output_of_yojson
             ~error_deserializer
   end
@@ -1084,9 +1132,10 @@ module ListBackups =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_backups_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810ListBackups" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810ListBackups"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_backups_output_of_yojson
             ~error_deserializer
   end
@@ -1112,9 +1161,11 @@ module ListContributorInsights =
         let open Deserializers in
           let input =
             Serializers.list_contributor_insights_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ListContributorInsights" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_contributor_insights_output_of_yojson
             ~error_deserializer
   end
@@ -1139,9 +1190,10 @@ module ListExports =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_exports_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810ListExports" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810ListExports"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_exports_output_of_yojson
             ~error_deserializer
   end
@@ -1166,9 +1218,11 @@ module ListGlobalTables =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_global_tables_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ListGlobalTables" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_global_tables_output_of_yojson
             ~error_deserializer
   end
@@ -1190,9 +1244,10 @@ module ListImports =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_imports_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810ListImports" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810ListImports"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_imports_output_of_yojson
             ~error_deserializer
   end
@@ -1217,9 +1272,10 @@ module ListTables =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_tables_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810ListTables" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810ListTables"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tables_output_of_yojson
             ~error_deserializer
   end
@@ -1248,9 +1304,11 @@ module ListTagsOfResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_of_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810ListTagsOfResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_of_resource_output_of_yojson
             ~error_deserializer
   end
@@ -1298,9 +1356,10 @@ module PutItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810PutItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810PutItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_item_output_of_yojson
             ~error_deserializer
   end
@@ -1337,9 +1396,11 @@ module PutResourcePolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810PutResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_resource_policy_output_of_yojson
             ~error_deserializer
   end
@@ -1374,9 +1435,10 @@ module Query =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.query_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810Query" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810Query" ~service
+            ~config:context.config ~input
             ~output_deserializer:query_output_of_yojson ~error_deserializer
   end
 module RestoreTableFromBackup =
@@ -1416,9 +1478,11 @@ module RestoreTableFromBackup =
         let open Deserializers in
           let input =
             Serializers.restore_table_from_backup_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810RestoreTableFromBackup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:restore_table_from_backup_output_of_yojson
             ~error_deserializer
   end
@@ -1464,9 +1528,11 @@ module RestoreTableToPointInTime =
           let input =
             Serializers.restore_table_to_point_in_time_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810RestoreTableToPointInTime" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:restore_table_to_point_in_time_output_of_yojson
             ~error_deserializer
   end
@@ -1501,9 +1567,10 @@ module Scan =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.scan_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810Scan" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810Scan" ~service
+            ~config:context.config ~input
             ~output_deserializer:scan_output_of_yojson ~error_deserializer
   end
 module TagResource =
@@ -1536,9 +1603,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module TransactGetItems =
@@ -1575,9 +1643,11 @@ module TransactGetItems =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.transact_get_items_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810TransactGetItems" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:transact_get_items_output_of_yojson
             ~error_deserializer
   end
@@ -1622,9 +1692,11 @@ module TransactWriteItems =
         let open Deserializers in
           let input =
             Serializers.transact_write_items_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810TransactWriteItems" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:transact_write_items_output_of_yojson
             ~error_deserializer
   end
@@ -1658,9 +1730,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateContinuousBackups =
@@ -1691,9 +1764,11 @@ module UpdateContinuousBackups =
         let open Deserializers in
           let input =
             Serializers.update_continuous_backups_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateContinuousBackups" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_continuous_backups_output_of_yojson
             ~error_deserializer
   end
@@ -1719,9 +1794,11 @@ module UpdateContributorInsights =
         let open Deserializers in
           let input =
             Serializers.update_contributor_insights_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateContributorInsights" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_contributor_insights_output_of_yojson
             ~error_deserializer
   end
@@ -1758,9 +1835,11 @@ module UpdateGlobalTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_global_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateGlobalTable" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_global_table_output_of_yojson
             ~error_deserializer
   end
@@ -1801,9 +1880,11 @@ module UpdateGlobalTableSettings =
         let open Deserializers in
           let input =
             Serializers.update_global_table_settings_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateGlobalTableSettings" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_global_table_settings_output_of_yojson
             ~error_deserializer
   end
@@ -1851,9 +1932,10 @@ module UpdateItem =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_item_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810UpdateItem" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810UpdateItem"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_item_output_of_yojson
             ~error_deserializer
   end
@@ -1890,9 +1972,11 @@ module UpdateKinesisStreamingDestination =
           let input =
             Serializers.update_kinesis_streaming_destination_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateKinesisStreamingDestination"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_kinesis_streaming_destination_output_of_yojson
             ~error_deserializer
   end
@@ -1926,9 +2010,10 @@ module UpdateTable =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_table_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"DynamoDB_20120810UpdateTable" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"DynamoDB_20120810UpdateTable"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_table_output_of_yojson
             ~error_deserializer
   end
@@ -1961,9 +2046,11 @@ module UpdateTableReplicaAutoScaling =
           let input =
             Serializers.update_table_replica_auto_scaling_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateTableReplicaAutoScaling"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_table_replica_auto_scaling_output_of_yojson
             ~error_deserializer
   end
@@ -1997,9 +2084,11 @@ module UpdateTimeToLive =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_time_to_live_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDB_20120810UpdateTimeToLive" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_time_to_live_output_of_yojson
             ~error_deserializer
   end

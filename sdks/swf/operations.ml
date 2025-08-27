@@ -23,9 +23,11 @@ module CountClosedWorkflowExecutions =
           let input =
             Serializers.count_closed_workflow_executions_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceCountClosedWorkflowExecutions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:workflow_execution_count_of_yojson
             ~error_deserializer
   end
@@ -52,9 +54,11 @@ module CountOpenWorkflowExecutions =
           let input =
             Serializers.count_open_workflow_executions_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceCountOpenWorkflowExecutions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:workflow_execution_count_of_yojson
             ~error_deserializer
   end
@@ -80,9 +84,11 @@ module CountPendingActivityTasks =
         let open Deserializers in
           let input =
             Serializers.count_pending_activity_tasks_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceCountPendingActivityTasks"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:pending_task_count_of_yojson
             ~error_deserializer
   end
@@ -108,9 +114,11 @@ module CountPendingDecisionTasks =
         let open Deserializers in
           let input =
             Serializers.count_pending_decision_tasks_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceCountPendingDecisionTasks"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:pending_task_count_of_yojson
             ~error_deserializer
   end
@@ -139,9 +147,11 @@ module DeleteActivityType =
         let open Deserializers in
           let input =
             Serializers.delete_activity_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDeleteActivityType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteWorkflowType =
@@ -169,9 +179,11 @@ module DeleteWorkflowType =
         let open Deserializers in
           let input =
             Serializers.delete_workflow_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDeleteWorkflowType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeprecateActivityType =
@@ -199,9 +211,11 @@ module DeprecateActivityType =
         let open Deserializers in
           let input =
             Serializers.deprecate_activity_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDeprecateActivityType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeprecateDomain =
@@ -228,9 +242,11 @@ module DeprecateDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.deprecate_domain_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDeprecateDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeprecateWorkflowType =
@@ -258,9 +274,11 @@ module DeprecateWorkflowType =
         let open Deserializers in
           let input =
             Serializers.deprecate_workflow_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDeprecateWorkflowType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeActivityType =
@@ -285,9 +303,11 @@ module DescribeActivityType =
         let open Deserializers in
           let input =
             Serializers.describe_activity_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDescribeActivityType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:activity_type_detail_of_yojson
             ~error_deserializer
   end
@@ -312,9 +332,11 @@ module DescribeDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_domain_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDescribeDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:domain_detail_of_yojson ~error_deserializer
   end
 module DescribeWorkflowExecution =
@@ -339,9 +361,11 @@ module DescribeWorkflowExecution =
         let open Deserializers in
           let input =
             Serializers.describe_workflow_execution_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDescribeWorkflowExecution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:workflow_execution_detail_of_yojson
             ~error_deserializer
   end
@@ -367,9 +391,11 @@ module DescribeWorkflowType =
         let open Deserializers in
           let input =
             Serializers.describe_workflow_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceDescribeWorkflowType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:workflow_type_detail_of_yojson
             ~error_deserializer
   end
@@ -396,9 +422,11 @@ module GetWorkflowExecutionHistory =
           let input =
             Serializers.get_workflow_execution_history_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceGetWorkflowExecutionHistory"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:history_of_yojson ~error_deserializer
   end
 module ListActivityTypes =
@@ -422,9 +450,11 @@ module ListActivityTypes =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_activity_types_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceListActivityTypes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:activity_type_infos_of_yojson
             ~error_deserializer
   end
@@ -451,9 +481,11 @@ module ListClosedWorkflowExecutions =
           let input =
             Serializers.list_closed_workflow_executions_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceListClosedWorkflowExecutions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:workflow_execution_infos_of_yojson
             ~error_deserializer
   end
@@ -475,9 +507,10 @@ module ListDomains =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_domains_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"SimpleWorkflowServiceListDomains" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"SimpleWorkflowServiceListDomains"
+            ~service ~config:context.config ~input
             ~output_deserializer:domain_infos_of_yojson ~error_deserializer
   end
 module ListOpenWorkflowExecutions =
@@ -502,9 +535,11 @@ module ListOpenWorkflowExecutions =
         let open Deserializers in
           let input =
             Serializers.list_open_workflow_executions_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceListOpenWorkflowExecutions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:workflow_execution_infos_of_yojson
             ~error_deserializer
   end
@@ -532,9 +567,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_output_of_yojson
             ~error_deserializer
   end
@@ -559,9 +596,11 @@ module ListWorkflowTypes =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_workflow_types_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceListWorkflowTypes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:workflow_type_infos_of_yojson
             ~error_deserializer
   end
@@ -589,9 +628,11 @@ module PollForActivityTask =
         let open Deserializers in
           let input =
             Serializers.poll_for_activity_task_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServicePollForActivityTask" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:activity_task_of_yojson ~error_deserializer
   end
 module PollForDecisionTask =
@@ -618,9 +659,11 @@ module PollForDecisionTask =
         let open Deserializers in
           let input =
             Serializers.poll_for_decision_task_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServicePollForDecisionTask" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:decision_task_of_yojson ~error_deserializer
   end
 module RecordActivityTaskHeartbeat =
@@ -646,9 +689,11 @@ module RecordActivityTaskHeartbeat =
           let input =
             Serializers.record_activity_task_heartbeat_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRecordActivityTaskHeartbeat"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:activity_task_status_of_yojson
             ~error_deserializer
   end
@@ -679,9 +724,11 @@ module RegisterActivityType =
         let open Deserializers in
           let input =
             Serializers.register_activity_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRegisterActivityType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RegisterDomain =
@@ -709,9 +756,11 @@ module RegisterDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.register_domain_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRegisterDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RegisterWorkflowType =
@@ -741,9 +790,11 @@ module RegisterWorkflowType =
         let open Deserializers in
           let input =
             Serializers.register_workflow_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRegisterWorkflowType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RequestCancelWorkflowExecution =
@@ -769,9 +820,11 @@ module RequestCancelWorkflowExecution =
           let input =
             Serializers.request_cancel_workflow_execution_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRequestCancelWorkflowExecution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RespondActivityTaskCanceled =
@@ -797,9 +850,11 @@ module RespondActivityTaskCanceled =
           let input =
             Serializers.respond_activity_task_canceled_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRespondActivityTaskCanceled"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RespondActivityTaskCompleted =
@@ -825,9 +880,11 @@ module RespondActivityTaskCompleted =
           let input =
             Serializers.respond_activity_task_completed_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRespondActivityTaskCompleted"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RespondActivityTaskFailed =
@@ -852,9 +909,11 @@ module RespondActivityTaskFailed =
         let open Deserializers in
           let input =
             Serializers.respond_activity_task_failed_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRespondActivityTaskFailed"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RespondDecisionTaskCompleted =
@@ -880,9 +939,11 @@ module RespondDecisionTaskCompleted =
           let input =
             Serializers.respond_decision_task_completed_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceRespondDecisionTaskCompleted"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SignalWorkflowExecution =
@@ -907,9 +968,11 @@ module SignalWorkflowExecution =
         let open Deserializers in
           let input =
             Serializers.signal_workflow_execution_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceSignalWorkflowExecution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module StartWorkflowExecution =
@@ -945,9 +1008,11 @@ module StartWorkflowExecution =
         let open Deserializers in
           let input =
             Serializers.start_workflow_execution_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceStartWorkflowExecution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:run_of_yojson ~error_deserializer
   end
 module TagResource =
@@ -975,9 +1040,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"SimpleWorkflowServiceTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"SimpleWorkflowServiceTagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module TerminateWorkflowExecution =
@@ -1002,9 +1068,11 @@ module TerminateWorkflowExecution =
         let open Deserializers in
           let input =
             Serializers.terminate_workflow_execution_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceTerminateWorkflowExecution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UndeprecateActivityType =
@@ -1032,9 +1100,11 @@ module UndeprecateActivityType =
         let open Deserializers in
           let input =
             Serializers.undeprecate_activity_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceUndeprecateActivityType"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UndeprecateDomain =
@@ -1061,9 +1131,11 @@ module UndeprecateDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.undeprecate_domain_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceUndeprecateDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UndeprecateWorkflowType =
@@ -1091,9 +1163,11 @@ module UndeprecateWorkflowType =
         let open Deserializers in
           let input =
             Serializers.undeprecate_workflow_type_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceUndeprecateWorkflowType"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UntagResource =
@@ -1119,8 +1193,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"SimpleWorkflowServiceUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end

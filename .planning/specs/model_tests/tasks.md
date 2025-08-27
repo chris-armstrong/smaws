@@ -1,6 +1,8 @@
 # Implementation Tasks - Model Tests
 
-## Phase 1: Core Infrastructure
+## Phase 1: Core Infrastructure ✅ COMPLETED
+
+**Summary**: Successfully implemented first-class module support for HTTP client substitution in AwsJson protocols. All infrastructure is in place to support model testing with custom HTTP clients.
 
 ### Task 1.1: Extend HTTP Client Interface ✅ COMPLETED
 **Acceptance Criteria**: AwsJson protocols accept HTTP client as first-class module
@@ -26,18 +28,20 @@
 - Implemented generic context type `'http context` for parameterization
 - Added helper functions `make_with_http_client` and `extract_http_module` for testing scenarios
 
-### Task 1.3: Modify Generated Operations ⚠️ NEEDS WORK
+### Task 1.3: Modify Generated Operations ✅ COMPLETED
 **Acceptance Criteria**: Generated operations use new AwsJson API with extracted HTTP module
-- [ ] Update `codegen/codegen/AwsProtocolJson.ml` templates (not gen_operations.ml)
-- [ ] Change operation calls from `AwsJson.Make(Http.Client).request` pattern
-- [ ] To `AwsJson.request_with_http_module ~http_module:(Context.http_module context)` pattern
-- [ ] Regenerate test operations to verify changes
-- [ ] Run existing tests to ensure no regressions
+- [x] Update `codegen/codegen/AwsProtocolJson.ml` templates (not gen_operations.ml)
+- [x] Change operation calls from `AwsJson.Make(Http.Client).request` pattern
+- [x] To `AwsJson.request_with_http_module ~http_module:(Context.http_module context)` pattern
+- [x] Regenerate test operations to verify changes
+- [x] Run existing tests to ensure no regressions
 
-**Current Status**: 
-- Located generation code in `codegen/codegen/AwsProtocolJson.ml:572-575`
-- Still using old functor-based API pattern in `generate_request_handler` function
-- Need to update to use new `request_with_http_module` function with first-class modules
+**Implementation Details**:
+- Updated `generate_request_handler` function in `codegen/codegen/AwsProtocolJson.ml:559-579`
+- Changed from `request` to `request_with_http_module` function call
+- Added `~http_module:(Context.http_module context)` parameter
+- Verified existing SDKs (e.g., KMS) already use new API pattern
+- All tests pass (`dune runtest` successful)
 
 ## Phase 2: Test Data Processing
 

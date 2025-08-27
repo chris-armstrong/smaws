@@ -18,9 +18,11 @@ module AssociateGatewayToServer =
         let open Deserializers in
           let input =
             Serializers.associate_gateway_to_server_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101AssociateGatewayToServer"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_gateway_to_server_output_of_yojson
             ~error_deserializer
   end
@@ -36,9 +38,11 @@ module CreateGateway =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_gateway_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101CreateGateway" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_gateway_output_of_yojson
             ~error_deserializer
   end
@@ -60,9 +64,11 @@ module DeleteGateway =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_gateway_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101DeleteGateway" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_gateway_output_of_yojson
             ~error_deserializer
   end
@@ -89,9 +95,11 @@ module DeleteHypervisor =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_hypervisor_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101DeleteHypervisor" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_hypervisor_output_of_yojson
             ~error_deserializer
   end
@@ -117,9 +125,11 @@ module DisassociateGatewayFromServer =
           let input =
             Serializers.disassociate_gateway_from_server_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101DisassociateGatewayFromServer"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_gateway_from_server_output_of_yojson
             ~error_deserializer
   end
@@ -143,9 +153,11 @@ module GetBandwidthRateLimitSchedule =
           let input =
             Serializers.get_bandwidth_rate_limit_schedule_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101GetBandwidthRateLimitSchedule"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_bandwidth_rate_limit_schedule_output_of_yojson
             ~error_deserializer
   end
@@ -167,9 +179,11 @@ module GetGateway =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_gateway_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101GetGateway" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_gateway_output_of_yojson
             ~error_deserializer
   end
@@ -191,9 +205,11 @@ module GetHypervisor =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_hypervisor_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101GetHypervisor" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_hypervisor_output_of_yojson
             ~error_deserializer
   end
@@ -217,9 +233,11 @@ module GetHypervisorPropertyMappings =
           let input =
             Serializers.get_hypervisor_property_mappings_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101GetHypervisorPropertyMappings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_hypervisor_property_mappings_output_of_yojson
             ~error_deserializer
   end
@@ -241,9 +259,11 @@ module GetVirtualMachine =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_virtual_machine_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101GetVirtualMachine"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_virtual_machine_output_of_yojson
             ~error_deserializer
   end
@@ -269,9 +289,11 @@ module ImportHypervisorConfiguration =
           let input =
             Serializers.import_hypervisor_configuration_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101ImportHypervisorConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:import_hypervisor_configuration_output_of_yojson
             ~error_deserializer
   end
@@ -287,9 +309,11 @@ module ListGateways =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_gateways_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101ListGateways" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_gateways_output_of_yojson
             ~error_deserializer
   end
@@ -305,9 +329,11 @@ module ListHypervisors =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_hypervisors_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101ListHypervisors" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_hypervisors_output_of_yojson
             ~error_deserializer
   end
@@ -330,9 +356,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101ListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_output_of_yojson
             ~error_deserializer
   end
@@ -349,9 +377,11 @@ module ListVirtualMachines =
         let open Deserializers in
           let input =
             Serializers.list_virtual_machines_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101ListVirtualMachines"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_virtual_machines_output_of_yojson
             ~error_deserializer
   end
@@ -375,9 +405,11 @@ module PutBandwidthRateLimitSchedule =
           let input =
             Serializers.put_bandwidth_rate_limit_schedule_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101PutBandwidthRateLimitSchedule"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_bandwidth_rate_limit_schedule_output_of_yojson
             ~error_deserializer
   end
@@ -406,9 +438,11 @@ module PutHypervisorPropertyMappings =
           let input =
             Serializers.put_hypervisor_property_mappings_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101PutHypervisorPropertyMappings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_hypervisor_property_mappings_output_of_yojson
             ~error_deserializer
   end
@@ -433,9 +467,11 @@ module PutMaintenanceStartTime =
         let open Deserializers in
           let input =
             Serializers.put_maintenance_start_time_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101PutMaintenanceStartTime"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_maintenance_start_time_output_of_yojson
             ~error_deserializer
   end
@@ -463,9 +499,11 @@ module StartVirtualMachinesMetadataSync =
           let input =
             Serializers.start_virtual_machines_metadata_sync_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101StartVirtualMachinesMetadataSync"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:start_virtual_machines_metadata_sync_output_of_yojson
             ~error_deserializer
   end
@@ -487,9 +525,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_output_of_yojson
             ~error_deserializer
   end
@@ -514,9 +554,11 @@ module TestHypervisorConfiguration =
         let open Deserializers in
           let input =
             Serializers.test_hypervisor_configuration_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101TestHypervisorConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:test_hypervisor_configuration_output_of_yojson
             ~error_deserializer
   end
@@ -538,9 +580,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_output_of_yojson
             ~error_deserializer
   end
@@ -565,9 +609,11 @@ module UpdateGatewayInformation =
         let open Deserializers in
           let input =
             Serializers.update_gateway_information_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101UpdateGatewayInformation"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_gateway_information_output_of_yojson
             ~error_deserializer
   end
@@ -590,9 +636,11 @@ module UpdateGatewaySoftwareNow =
         let open Deserializers in
           let input =
             Serializers.update_gateway_software_now_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101UpdateGatewaySoftwareNow"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_gateway_software_now_output_of_yojson
             ~error_deserializer
   end
@@ -619,9 +667,11 @@ module UpdateHypervisor =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_hypervisor_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"BackupOnPremises_v20210101UpdateHypervisor" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_hypervisor_output_of_yojson
             ~error_deserializer
   end

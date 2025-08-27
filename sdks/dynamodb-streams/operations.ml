@@ -21,9 +21,11 @@ module DescribeStream =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDBStreams_20120810DescribeStream" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_stream_output_of_yojson
             ~error_deserializer
   end
@@ -57,9 +59,11 @@ module GetRecords =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_records_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDBStreams_20120810GetRecords" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_records_output_of_yojson
             ~error_deserializer
   end
@@ -87,9 +91,11 @@ module GetShardIterator =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_shard_iterator_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDBStreams_20120810GetShardIterator" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_shard_iterator_output_of_yojson
             ~error_deserializer
   end
@@ -114,9 +120,11 @@ module ListStreams =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_streams_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DynamoDBStreams_20120810ListStreams" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_streams_output_of_yojson
             ~error_deserializer
   end

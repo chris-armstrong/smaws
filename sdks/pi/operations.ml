@@ -27,9 +27,11 @@ module CreatePerformanceAnalysisReport =
           let input =
             Serializers.create_performance_analysis_report_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227CreatePerformanceAnalysisReport"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_performance_analysis_report_response_of_yojson
             ~error_deserializer
   end
@@ -60,9 +62,11 @@ module DeletePerformanceAnalysisReport =
           let input =
             Serializers.delete_performance_analysis_report_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227DeletePerformanceAnalysisReport"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_performance_analysis_report_response_of_yojson
             ~error_deserializer
   end
@@ -91,9 +95,11 @@ module DescribeDimensionKeys =
         let open Deserializers in
           let input =
             Serializers.describe_dimension_keys_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227DescribeDimensionKeys"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_dimension_keys_response_of_yojson
             ~error_deserializer
   end
@@ -122,9 +128,11 @@ module GetDimensionKeyDetails =
         let open Deserializers in
           let input =
             Serializers.get_dimension_key_details_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227GetDimensionKeyDetails"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_dimension_key_details_response_of_yojson
             ~error_deserializer
   end
@@ -154,9 +162,11 @@ module GetPerformanceAnalysisReport =
           let input =
             Serializers.get_performance_analysis_report_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227GetPerformanceAnalysisReport"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_performance_analysis_report_response_of_yojson
             ~error_deserializer
   end
@@ -185,9 +195,11 @@ module GetResourceMetadata =
         let open Deserializers in
           let input =
             Serializers.get_resource_metadata_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227GetResourceMetadata"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_resource_metadata_response_of_yojson
             ~error_deserializer
   end
@@ -216,9 +228,11 @@ module GetResourceMetrics =
         let open Deserializers in
           let input =
             Serializers.get_resource_metrics_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227GetResourceMetrics"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_resource_metrics_response_of_yojson
             ~error_deserializer
   end
@@ -249,9 +263,11 @@ module ListAvailableResourceDimensions =
           let input =
             Serializers.list_available_resource_dimensions_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227ListAvailableResourceDimensions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_available_resource_dimensions_response_of_yojson
             ~error_deserializer
   end
@@ -281,9 +297,11 @@ module ListAvailableResourceMetrics =
           let input =
             Serializers.list_available_resource_metrics_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227ListAvailableResourceMetrics"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_available_resource_metrics_response_of_yojson
             ~error_deserializer
   end
@@ -314,9 +332,11 @@ module ListPerformanceAnalysisReports =
           let input =
             Serializers.list_performance_analysis_reports_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227ListPerformanceAnalysisReports"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_performance_analysis_reports_response_of_yojson
             ~error_deserializer
   end
@@ -345,9 +365,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227ListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -375,9 +397,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -405,9 +429,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"PerformanceInsightsv20180227UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end

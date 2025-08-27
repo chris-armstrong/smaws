@@ -35,9 +35,11 @@ module AllocateStaticIp =
         let open Deserializers in
           let input =
             Serializers.allocate_static_ip_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128AllocateStaticIp" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:allocate_static_ip_result_of_yojson
             ~error_deserializer
   end
@@ -75,9 +77,11 @@ module AttachCertificateToDistribution =
           let input =
             Serializers.attach_certificate_to_distribution_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128AttachCertificateToDistribution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:attach_certificate_to_distribution_result_of_yojson
             ~error_deserializer
   end
@@ -115,9 +119,10 @@ module AttachDisk =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.attach_disk_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128AttachDisk" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128AttachDisk"
+            ~service ~config:context.config ~input
             ~output_deserializer:attach_disk_result_of_yojson
             ~error_deserializer
   end
@@ -158,9 +163,11 @@ module AttachInstancesToLoadBalancer =
           let input =
             Serializers.attach_instances_to_load_balancer_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128AttachInstancesToLoadBalancer"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:attach_instances_to_load_balancer_result_of_yojson
             ~error_deserializer
   end
@@ -201,9 +208,11 @@ module AttachLoadBalancerTlsCertificate =
           let input =
             Serializers.attach_load_balancer_tls_certificate_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128AttachLoadBalancerTlsCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:attach_load_balancer_tls_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -241,9 +250,10 @@ module AttachStaticIp =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.attach_static_ip_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128AttachStaticIp" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128AttachStaticIp"
+            ~service ~config:context.config ~input
             ~output_deserializer:attach_static_ip_result_of_yojson
             ~error_deserializer
   end
@@ -282,9 +292,11 @@ module CloseInstancePublicPorts =
         let open Deserializers in
           let input =
             Serializers.close_instance_public_ports_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CloseInstancePublicPorts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:close_instance_public_ports_result_of_yojson
             ~error_deserializer
   end
@@ -322,9 +334,10 @@ module CopySnapshot =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.copy_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128CopySnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128CopySnapshot"
+            ~service ~config:context.config ~input
             ~output_deserializer:copy_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -354,9 +367,10 @@ module CreateBucket =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_bucket_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128CreateBucket" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128CreateBucket"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_bucket_result_of_yojson
             ~error_deserializer
   end
@@ -389,9 +403,11 @@ module CreateBucketAccessKey =
         let open Deserializers in
           let input =
             Serializers.create_bucket_access_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateBucketAccessKey" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_bucket_access_key_result_of_yojson
             ~error_deserializer
   end
@@ -424,9 +440,11 @@ module CreateCertificate =
         let open Deserializers in
           let input =
             Serializers.create_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -466,9 +484,11 @@ module CreateCloudFormationStack =
           let input =
             Serializers.create_cloud_formation_stack_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateCloudFormationStack"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_cloud_formation_stack_result_of_yojson
             ~error_deserializer
   end
@@ -504,9 +524,11 @@ module CreateContactMethod =
         let open Deserializers in
           let input =
             Serializers.create_contact_method_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateContactMethod" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_contact_method_result_of_yojson
             ~error_deserializer
   end
@@ -539,9 +561,11 @@ module CreateContainerService =
         let open Deserializers in
           let input =
             Serializers.create_container_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateContainerService" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_container_service_result_of_yojson
             ~error_deserializer
   end
@@ -576,9 +600,11 @@ module CreateContainerServiceDeployment =
           let input =
             Serializers.create_container_service_deployment_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateContainerServiceDeployment"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_container_service_deployment_result_of_yojson
             ~error_deserializer
   end
@@ -612,9 +638,11 @@ module CreateContainerServiceRegistryLogin =
           let input =
             Serializers.create_container_service_registry_login_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateContainerServiceRegistryLogin"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_container_service_registry_login_result_of_yojson
             ~error_deserializer
   end
@@ -652,9 +680,10 @@ module CreateDisk =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_disk_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128CreateDisk" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128CreateDisk"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_disk_result_of_yojson
             ~error_deserializer
   end
@@ -693,9 +722,11 @@ module CreateDiskFromSnapshot =
         let open Deserializers in
           let input =
             Serializers.create_disk_from_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateDiskFromSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_disk_from_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -734,9 +765,11 @@ module CreateDiskSnapshot =
         let open Deserializers in
           let input =
             Serializers.create_disk_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateDiskSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_disk_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -772,9 +805,11 @@ module CreateDistribution =
         let open Deserializers in
           let input =
             Serializers.create_distribution_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateDistribution" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_distribution_result_of_yojson
             ~error_deserializer
   end
@@ -812,9 +847,10 @@ module CreateDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128CreateDomain" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128CreateDomain"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_domain_result_of_yojson
             ~error_deserializer
   end
@@ -853,9 +889,11 @@ module CreateDomainEntry =
         let open Deserializers in
           let input =
             Serializers.create_domain_entry_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateDomainEntry" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_domain_entry_result_of_yojson
             ~error_deserializer
   end
@@ -890,9 +928,11 @@ module CreateGUISessionAccessDetails =
           let input =
             Serializers.create_gui_session_access_details_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateGUISessionAccessDetails"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_gui_session_access_details_result_of_yojson
             ~error_deserializer
   end
@@ -930,9 +970,11 @@ module CreateInstances =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_instances_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateInstances" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_instances_result_of_yojson
             ~error_deserializer
   end
@@ -972,9 +1014,11 @@ module CreateInstancesFromSnapshot =
           let input =
             Serializers.create_instances_from_snapshot_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateInstancesFromSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_instances_from_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1013,9 +1057,11 @@ module CreateInstanceSnapshot =
         let open Deserializers in
           let input =
             Serializers.create_instance_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateInstanceSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_instance_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1053,9 +1099,10 @@ module CreateKeyPair =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128CreateKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128CreateKeyPair"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_key_pair_result_of_yojson
             ~error_deserializer
   end
@@ -1094,9 +1141,11 @@ module CreateLoadBalancer =
         let open Deserializers in
           let input =
             Serializers.create_load_balancer_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateLoadBalancer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_load_balancer_result_of_yojson
             ~error_deserializer
   end
@@ -1137,9 +1186,11 @@ module CreateLoadBalancerTlsCertificate =
           let input =
             Serializers.create_load_balancer_tls_certificate_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateLoadBalancerTlsCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_load_balancer_tls_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -1178,9 +1229,11 @@ module CreateRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.create_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -1221,9 +1274,11 @@ module CreateRelationalDatabaseFromSnapshot =
           let input =
             Serializers.create_relational_database_from_snapshot_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateRelationalDatabaseFromSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_relational_database_from_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1264,9 +1319,11 @@ module CreateRelationalDatabaseSnapshot =
           let input =
             Serializers.create_relational_database_snapshot_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128CreateRelationalDatabaseSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_relational_database_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1301,9 +1358,10 @@ module DeleteAlarm =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_alarm_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteAlarm" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteAlarm"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_alarm_result_of_yojson
             ~error_deserializer
   end
@@ -1339,9 +1397,11 @@ module DeleteAutoSnapshot =
         let open Deserializers in
           let input =
             Serializers.delete_auto_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteAutoSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_auto_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1373,9 +1433,10 @@ module DeleteBucket =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_bucket_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteBucket" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteBucket"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_bucket_result_of_yojson
             ~error_deserializer
   end
@@ -1408,9 +1469,11 @@ module DeleteBucketAccessKey =
         let open Deserializers in
           let input =
             Serializers.delete_bucket_access_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteBucketAccessKey" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_bucket_access_key_result_of_yojson
             ~error_deserializer
   end
@@ -1443,9 +1506,11 @@ module DeleteCertificate =
         let open Deserializers in
           let input =
             Serializers.delete_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -1481,9 +1546,11 @@ module DeleteContactMethod =
         let open Deserializers in
           let input =
             Serializers.delete_contact_method_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteContactMethod" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_contact_method_result_of_yojson
             ~error_deserializer
   end
@@ -1516,9 +1583,11 @@ module DeleteContainerImage =
         let open Deserializers in
           let input =
             Serializers.delete_container_image_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteContainerImage" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_container_image_result_of_yojson
             ~error_deserializer
   end
@@ -1551,9 +1620,11 @@ module DeleteContainerService =
         let open Deserializers in
           let input =
             Serializers.delete_container_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteContainerService" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_container_service_result_of_yojson
             ~error_deserializer
   end
@@ -1591,9 +1662,10 @@ module DeleteDisk =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_disk_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteDisk" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteDisk"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_disk_result_of_yojson
             ~error_deserializer
   end
@@ -1632,9 +1704,11 @@ module DeleteDiskSnapshot =
         let open Deserializers in
           let input =
             Serializers.delete_disk_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteDiskSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_disk_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1670,9 +1744,11 @@ module DeleteDistribution =
         let open Deserializers in
           let input =
             Serializers.delete_distribution_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteDistribution" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_distribution_result_of_yojson
             ~error_deserializer
   end
@@ -1710,9 +1786,10 @@ module DeleteDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteDomain" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteDomain"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_domain_result_of_yojson
             ~error_deserializer
   end
@@ -1751,9 +1828,11 @@ module DeleteDomainEntry =
         let open Deserializers in
           let input =
             Serializers.delete_domain_entry_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteDomainEntry" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_domain_entry_result_of_yojson
             ~error_deserializer
   end
@@ -1791,9 +1870,10 @@ module DeleteInstance =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_instance_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteInstance" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteInstance"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_instance_result_of_yojson
             ~error_deserializer
   end
@@ -1832,9 +1912,11 @@ module DeleteInstanceSnapshot =
         let open Deserializers in
           let input =
             Serializers.delete_instance_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteInstanceSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_instance_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -1872,9 +1954,10 @@ module DeleteKeyPair =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DeleteKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DeleteKeyPair"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_key_pair_result_of_yojson
             ~error_deserializer
   end
@@ -1913,9 +1996,11 @@ module DeleteKnownHostKeys =
         let open Deserializers in
           let input =
             Serializers.delete_known_host_keys_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteKnownHostKeys" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_known_host_keys_result_of_yojson
             ~error_deserializer
   end
@@ -1954,9 +2039,11 @@ module DeleteLoadBalancer =
         let open Deserializers in
           let input =
             Serializers.delete_load_balancer_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteLoadBalancer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_load_balancer_result_of_yojson
             ~error_deserializer
   end
@@ -1997,9 +2084,11 @@ module DeleteLoadBalancerTlsCertificate =
           let input =
             Serializers.delete_load_balancer_tls_certificate_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteLoadBalancerTlsCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_load_balancer_tls_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -2038,9 +2127,11 @@ module DeleteRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.delete_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -2081,9 +2172,11 @@ module DeleteRelationalDatabaseSnapshot =
           let input =
             Serializers.delete_relational_database_snapshot_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DeleteRelationalDatabaseSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_relational_database_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -2121,9 +2214,11 @@ module DetachCertificateFromDistribution =
           let input =
             Serializers.detach_certificate_from_distribution_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DetachCertificateFromDistribution"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:detach_certificate_from_distribution_result_of_yojson
             ~error_deserializer
   end
@@ -2161,9 +2256,10 @@ module DetachDisk =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.detach_disk_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DetachDisk" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DetachDisk"
+            ~service ~config:context.config ~input
             ~output_deserializer:detach_disk_result_of_yojson
             ~error_deserializer
   end
@@ -2204,9 +2300,11 @@ module DetachInstancesFromLoadBalancer =
           let input =
             Serializers.detach_instances_from_load_balancer_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DetachInstancesFromLoadBalancer"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:detach_instances_from_load_balancer_result_of_yojson
             ~error_deserializer
   end
@@ -2244,9 +2342,10 @@ module DetachStaticIp =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.detach_static_ip_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DetachStaticIp" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DetachStaticIp"
+            ~service ~config:context.config ~input
             ~output_deserializer:detach_static_ip_result_of_yojson
             ~error_deserializer
   end
@@ -2281,9 +2380,10 @@ module DisableAddOn =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_add_on_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128DisableAddOn" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128DisableAddOn"
+            ~service ~config:context.config ~input
             ~output_deserializer:disable_add_on_result_of_yojson
             ~error_deserializer
   end
@@ -2322,9 +2422,11 @@ module DownloadDefaultKeyPair =
         let open Deserializers in
           let input =
             Serializers.download_default_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128DownloadDefaultKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:download_default_key_pair_result_of_yojson
             ~error_deserializer
   end
@@ -2359,9 +2461,10 @@ module EnableAddOn =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_add_on_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128EnableAddOn" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128EnableAddOn"
+            ~service ~config:context.config ~input
             ~output_deserializer:enable_add_on_result_of_yojson
             ~error_deserializer
   end
@@ -2399,9 +2502,10 @@ module ExportSnapshot =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.export_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128ExportSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128ExportSnapshot"
+            ~service ~config:context.config ~input
             ~output_deserializer:export_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -2439,9 +2543,10 @@ module GetActiveNames =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_active_names_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetActiveNames" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetActiveNames"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_active_names_result_of_yojson
             ~error_deserializer
   end
@@ -2476,9 +2581,10 @@ module GetAlarms =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_alarms_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetAlarms" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetAlarms"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_alarms_result_of_yojson
             ~error_deserializer
   end
@@ -2514,9 +2620,11 @@ module GetAutoSnapshots =
         let open Deserializers in
           let input =
             Serializers.get_auto_snapshots_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetAutoSnapshots" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_auto_snapshots_result_of_yojson
             ~error_deserializer
   end
@@ -2554,9 +2662,10 @@ module GetBlueprints =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_blueprints_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetBlueprints" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetBlueprints"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_blueprints_result_of_yojson
             ~error_deserializer
   end
@@ -2589,9 +2698,11 @@ module GetBucketAccessKeys =
         let open Deserializers in
           let input =
             Serializers.get_bucket_access_keys_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetBucketAccessKeys" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_bucket_access_keys_result_of_yojson
             ~error_deserializer
   end
@@ -2622,9 +2733,11 @@ module GetBucketBundles =
         let open Deserializers in
           let input =
             Serializers.get_bucket_bundles_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetBucketBundles" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_bucket_bundles_result_of_yojson
             ~error_deserializer
   end
@@ -2657,9 +2770,11 @@ module GetBucketMetricData =
         let open Deserializers in
           let input =
             Serializers.get_bucket_metric_data_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetBucketMetricData" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_bucket_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -2691,9 +2806,10 @@ module GetBuckets =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_buckets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetBuckets" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetBuckets"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_buckets_result_of_yojson
             ~error_deserializer
   end
@@ -2731,9 +2847,10 @@ module GetBundles =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_bundles_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetBundles" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetBundles"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_bundles_result_of_yojson
             ~error_deserializer
   end
@@ -2765,9 +2882,11 @@ module GetCertificates =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_certificates_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetCertificates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_certificates_result_of_yojson
             ~error_deserializer
   end
@@ -2808,9 +2927,11 @@ module GetCloudFormationStackRecords =
           let input =
             Serializers.get_cloud_formation_stack_records_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetCloudFormationStackRecords"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_cloud_formation_stack_records_result_of_yojson
             ~error_deserializer
   end
@@ -2846,9 +2967,11 @@ module GetContactMethods =
         let open Deserializers in
           let input =
             Serializers.get_contact_methods_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContactMethods" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_contact_methods_result_of_yojson
             ~error_deserializer
   end
@@ -2876,9 +2999,11 @@ module GetContainerAPIMetadata =
         let open Deserializers in
           let input =
             Serializers.get_container_api_metadata_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerAPIMetadata" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_container_api_metadata_result_of_yojson
             ~error_deserializer
   end
@@ -2911,9 +3036,11 @@ module GetContainerImages =
         let open Deserializers in
           let input =
             Serializers.get_container_images_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerImages" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_container_images_result_of_yojson
             ~error_deserializer
   end
@@ -2945,9 +3072,11 @@ module GetContainerLog =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_container_log_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerLog" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_container_log_result_of_yojson
             ~error_deserializer
   end
@@ -2982,9 +3111,11 @@ module GetContainerServiceDeployments =
           let input =
             Serializers.get_container_service_deployments_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerServiceDeployments"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_container_service_deployments_result_of_yojson
             ~error_deserializer
   end
@@ -3019,9 +3150,11 @@ module GetContainerServiceMetricData =
           let input =
             Serializers.get_container_service_metric_data_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerServiceMetricData"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_container_service_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -3055,9 +3188,11 @@ module GetContainerServicePowers =
           let input =
             Serializers.get_container_service_powers_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerServicePowers"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_container_service_powers_result_of_yojson
             ~error_deserializer
   end
@@ -3090,9 +3225,11 @@ module GetContainerServices =
         let open Deserializers in
           let input =
             Serializers.get_container_services_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetContainerServices" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:container_services_list_result_of_yojson
             ~error_deserializer
   end
@@ -3124,9 +3261,11 @@ module GetCostEstimate =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_cost_estimate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetCostEstimate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_cost_estimate_result_of_yojson
             ~error_deserializer
   end
@@ -3164,9 +3303,10 @@ module GetDisk =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_disk_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetDisk" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetDisk"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_disk_result_of_yojson
             ~error_deserializer
   end
@@ -3204,9 +3344,10 @@ module GetDisks =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_disks_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetDisks" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetDisks"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_disks_result_of_yojson
             ~error_deserializer
   end
@@ -3244,9 +3385,11 @@ module GetDiskSnapshot =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_disk_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDiskSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_disk_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -3285,9 +3428,11 @@ module GetDiskSnapshots =
         let open Deserializers in
           let input =
             Serializers.get_disk_snapshots_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDiskSnapshots" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_disk_snapshots_result_of_yojson
             ~error_deserializer
   end
@@ -3323,9 +3468,11 @@ module GetDistributionBundles =
         let open Deserializers in
           let input =
             Serializers.get_distribution_bundles_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDistributionBundles" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_distribution_bundles_result_of_yojson
             ~error_deserializer
   end
@@ -3363,9 +3510,11 @@ module GetDistributionLatestCacheReset =
           let input =
             Serializers.get_distribution_latest_cache_reset_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDistributionLatestCacheReset"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_distribution_latest_cache_reset_result_of_yojson
             ~error_deserializer
   end
@@ -3402,9 +3551,11 @@ module GetDistributionMetricData =
           let input =
             Serializers.get_distribution_metric_data_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDistributionMetricData"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_distribution_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -3439,9 +3590,11 @@ module GetDistributions =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_distributions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetDistributions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_distributions_result_of_yojson
             ~error_deserializer
   end
@@ -3479,9 +3632,10 @@ module GetDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetDomain" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetDomain"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_domain_result_of_yojson
             ~error_deserializer
   end
@@ -3519,9 +3673,10 @@ module GetDomains =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_domains_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetDomains" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetDomains"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_domains_result_of_yojson
             ~error_deserializer
   end
@@ -3560,9 +3715,11 @@ module GetExportSnapshotRecords =
         let open Deserializers in
           let input =
             Serializers.get_export_snapshot_records_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetExportSnapshotRecords" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_export_snapshot_records_result_of_yojson
             ~error_deserializer
   end
@@ -3600,9 +3757,10 @@ module GetInstance =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_instance_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetInstance" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetInstance"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_instance_result_of_yojson
             ~error_deserializer
   end
@@ -3641,9 +3799,11 @@ module GetInstanceAccessDetails =
         let open Deserializers in
           let input =
             Serializers.get_instance_access_details_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstanceAccessDetails" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_access_details_result_of_yojson
             ~error_deserializer
   end
@@ -3682,9 +3842,11 @@ module GetInstanceMetricData =
         let open Deserializers in
           let input =
             Serializers.get_instance_metric_data_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstanceMetricData" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -3723,9 +3885,11 @@ module GetInstancePortStates =
         let open Deserializers in
           let input =
             Serializers.get_instance_port_states_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstancePortStates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_port_states_result_of_yojson
             ~error_deserializer
   end
@@ -3763,9 +3927,10 @@ module GetInstances =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_instances_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetInstances" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetInstances"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_instances_result_of_yojson
             ~error_deserializer
   end
@@ -3804,9 +3969,11 @@ module GetInstanceSnapshot =
         let open Deserializers in
           let input =
             Serializers.get_instance_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstanceSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -3845,9 +4012,11 @@ module GetInstanceSnapshots =
         let open Deserializers in
           let input =
             Serializers.get_instance_snapshots_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstanceSnapshots" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_snapshots_result_of_yojson
             ~error_deserializer
   end
@@ -3886,9 +4055,11 @@ module GetInstanceState =
         let open Deserializers in
           let input =
             Serializers.get_instance_state_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetInstanceState" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_instance_state_result_of_yojson
             ~error_deserializer
   end
@@ -3926,9 +4097,10 @@ module GetKeyPair =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetKeyPair"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_key_pair_result_of_yojson
             ~error_deserializer
   end
@@ -3966,9 +4138,10 @@ module GetKeyPairs =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_key_pairs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetKeyPairs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetKeyPairs"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_key_pairs_result_of_yojson
             ~error_deserializer
   end
@@ -4006,9 +4179,11 @@ module GetLoadBalancer =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_load_balancer_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetLoadBalancer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_load_balancer_result_of_yojson
             ~error_deserializer
   end
@@ -4048,9 +4223,11 @@ module GetLoadBalancerMetricData =
           let input =
             Serializers.get_load_balancer_metric_data_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetLoadBalancerMetricData"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_load_balancer_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -4089,9 +4266,11 @@ module GetLoadBalancers =
         let open Deserializers in
           let input =
             Serializers.get_load_balancers_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetLoadBalancers" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_load_balancers_result_of_yojson
             ~error_deserializer
   end
@@ -4132,9 +4311,11 @@ module GetLoadBalancerTlsCertificates =
           let input =
             Serializers.get_load_balancer_tls_certificates_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetLoadBalancerTlsCertificates"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_load_balancer_tls_certificates_result_of_yojson
             ~error_deserializer
   end
@@ -4169,9 +4350,11 @@ module GetLoadBalancerTlsPolicies =
           let input =
             Serializers.get_load_balancer_tls_policies_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetLoadBalancerTlsPolicies"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_load_balancer_tls_policies_result_of_yojson
             ~error_deserializer
   end
@@ -4209,9 +4392,10 @@ module GetOperation =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_operation_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetOperation" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetOperation"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_operation_result_of_yojson
             ~error_deserializer
   end
@@ -4249,9 +4433,10 @@ module GetOperations =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_operations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetOperations" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetOperations"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_operations_result_of_yojson
             ~error_deserializer
   end
@@ -4290,9 +4475,11 @@ module GetOperationsForResource =
         let open Deserializers in
           let input =
             Serializers.get_operations_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetOperationsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_operations_for_resource_result_of_yojson
             ~error_deserializer
   end
@@ -4330,9 +4517,10 @@ module GetRegions =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_regions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetRegions" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetRegions"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_regions_result_of_yojson
             ~error_deserializer
   end
@@ -4371,9 +4559,11 @@ module GetRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.get_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -4414,9 +4604,11 @@ module GetRelationalDatabaseBlueprints =
           let input =
             Serializers.get_relational_database_blueprints_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseBlueprints"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_blueprints_result_of_yojson
             ~error_deserializer
   end
@@ -4456,9 +4648,11 @@ module GetRelationalDatabaseBundles =
           let input =
             Serializers.get_relational_database_bundles_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseBundles"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_bundles_result_of_yojson
             ~error_deserializer
   end
@@ -4498,9 +4692,11 @@ module GetRelationalDatabaseEvents =
           let input =
             Serializers.get_relational_database_events_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseEvents"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_events_result_of_yojson
             ~error_deserializer
   end
@@ -4541,9 +4737,11 @@ module GetRelationalDatabaseLogEvents =
           let input =
             Serializers.get_relational_database_log_events_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseLogEvents"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_log_events_result_of_yojson
             ~error_deserializer
   end
@@ -4584,9 +4782,11 @@ module GetRelationalDatabaseLogStreams =
           let input =
             Serializers.get_relational_database_log_streams_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseLogStreams"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_log_streams_result_of_yojson
             ~error_deserializer
   end
@@ -4627,9 +4827,11 @@ module GetRelationalDatabaseMasterUserPassword =
           let input =
             Serializers.get_relational_database_master_user_password_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseMasterUserPassword"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_master_user_password_result_of_yojson
             ~error_deserializer
   end
@@ -4670,9 +4872,11 @@ module GetRelationalDatabaseMetricData =
           let input =
             Serializers.get_relational_database_metric_data_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseMetricData"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_metric_data_result_of_yojson
             ~error_deserializer
   end
@@ -4713,9 +4917,11 @@ module GetRelationalDatabaseParameters =
           let input =
             Serializers.get_relational_database_parameters_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseParameters"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_parameters_result_of_yojson
             ~error_deserializer
   end
@@ -4754,9 +4960,11 @@ module GetRelationalDatabases =
         let open Deserializers in
           let input =
             Serializers.get_relational_databases_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabases" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_relational_databases_result_of_yojson
             ~error_deserializer
   end
@@ -4797,9 +5005,11 @@ module GetRelationalDatabaseSnapshot =
           let input =
             Serializers.get_relational_database_snapshot_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -4840,9 +5050,11 @@ module GetRelationalDatabaseSnapshots =
           let input =
             Serializers.get_relational_database_snapshots_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetRelationalDatabaseSnapshots"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_relational_database_snapshots_result_of_yojson
             ~error_deserializer
   end
@@ -4874,9 +5086,11 @@ module GetSetupHistory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_setup_history_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128GetSetupHistory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_setup_history_result_of_yojson
             ~error_deserializer
   end
@@ -4914,9 +5128,10 @@ module GetStaticIp =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_static_ip_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetStaticIp" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetStaticIp"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_static_ip_result_of_yojson
             ~error_deserializer
   end
@@ -4954,9 +5169,10 @@ module GetStaticIps =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_static_ips_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128GetStaticIps" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128GetStaticIps"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_static_ips_result_of_yojson
             ~error_deserializer
   end
@@ -4994,9 +5210,10 @@ module ImportKeyPair =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.import_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128ImportKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128ImportKeyPair"
+            ~service ~config:context.config ~input
             ~output_deserializer:import_key_pair_result_of_yojson
             ~error_deserializer
   end
@@ -5034,9 +5251,10 @@ module IsVpcPeered =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.is_vpc_peered_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128IsVpcPeered" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128IsVpcPeered"
+            ~service ~config:context.config ~input
             ~output_deserializer:is_vpc_peered_result_of_yojson
             ~error_deserializer
   end
@@ -5075,9 +5293,11 @@ module OpenInstancePublicPorts =
         let open Deserializers in
           let input =
             Serializers.open_instance_public_ports_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128OpenInstancePublicPorts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:open_instance_public_ports_result_of_yojson
             ~error_deserializer
   end
@@ -5115,9 +5335,10 @@ module PeerVpc =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.peer_vpc_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128PeerVpc" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128PeerVpc"
+            ~service ~config:context.config ~input
             ~output_deserializer:peer_vpc_result_of_yojson
             ~error_deserializer
   end
@@ -5152,9 +5373,10 @@ module PutAlarm =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_alarm_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128PutAlarm" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128PutAlarm"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_alarm_result_of_yojson
             ~error_deserializer
   end
@@ -5193,9 +5415,11 @@ module PutInstancePublicPorts =
         let open Deserializers in
           let input =
             Serializers.put_instance_public_ports_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128PutInstancePublicPorts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_instance_public_ports_result_of_yojson
             ~error_deserializer
   end
@@ -5233,9 +5457,10 @@ module RebootInstance =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.reboot_instance_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128RebootInstance" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128RebootInstance"
+            ~service ~config:context.config ~input
             ~output_deserializer:reboot_instance_result_of_yojson
             ~error_deserializer
   end
@@ -5274,9 +5499,11 @@ module RebootRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.reboot_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128RebootRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:reboot_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -5309,9 +5536,11 @@ module RegisterContainerImage =
         let open Deserializers in
           let input =
             Serializers.register_container_image_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128RegisterContainerImage" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:register_container_image_result_of_yojson
             ~error_deserializer
   end
@@ -5349,9 +5578,11 @@ module ReleaseStaticIp =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.release_static_ip_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128ReleaseStaticIp" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:release_static_ip_result_of_yojson
             ~error_deserializer
   end
@@ -5387,9 +5618,11 @@ module ResetDistributionCache =
         let open Deserializers in
           let input =
             Serializers.reset_distribution_cache_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128ResetDistributionCache" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:reset_distribution_cache_result_of_yojson
             ~error_deserializer
   end
@@ -5427,9 +5660,11 @@ module SendContactMethodVerification =
           let input =
             Serializers.send_contact_method_verification_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128SendContactMethodVerification"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:send_contact_method_verification_result_of_yojson
             ~error_deserializer
   end
@@ -5468,9 +5703,11 @@ module SetIpAddressType =
         let open Deserializers in
           let input =
             Serializers.set_ip_address_type_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128SetIpAddressType" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:set_ip_address_type_result_of_yojson
             ~error_deserializer
   end
@@ -5504,9 +5741,11 @@ module SetResourceAccessForBucket =
           let input =
             Serializers.set_resource_access_for_bucket_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128SetResourceAccessForBucket"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:set_resource_access_for_bucket_result_of_yojson
             ~error_deserializer
   end
@@ -5539,9 +5778,11 @@ module SetupInstanceHttps =
         let open Deserializers in
           let input =
             Serializers.setup_instance_https_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128SetupInstanceHttps" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:setup_instance_https_result_of_yojson
             ~error_deserializer
   end
@@ -5573,9 +5814,11 @@ module StartGUISession =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.start_gui_session_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128StartGUISession" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:start_gui_session_result_of_yojson
             ~error_deserializer
   end
@@ -5613,9 +5856,10 @@ module StartInstance =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.start_instance_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128StartInstance" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128StartInstance"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_instance_result_of_yojson
             ~error_deserializer
   end
@@ -5654,9 +5898,11 @@ module StartRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.start_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128StartRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:start_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -5688,9 +5934,10 @@ module StopGUISession =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.stop_gui_session_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128StopGUISession" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128StopGUISession"
+            ~service ~config:context.config ~input
             ~output_deserializer:stop_gui_session_result_of_yojson
             ~error_deserializer
   end
@@ -5728,9 +5975,10 @@ module StopInstance =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.stop_instance_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128StopInstance" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128StopInstance"
+            ~service ~config:context.config ~input
             ~output_deserializer:stop_instance_result_of_yojson
             ~error_deserializer
   end
@@ -5769,9 +6017,11 @@ module StopRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.stop_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128StopRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:stop_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -5809,9 +6059,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:tag_resource_result_of_yojson
             ~error_deserializer
   end
@@ -5846,9 +6097,10 @@ module TestAlarm =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.test_alarm_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128TestAlarm" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128TestAlarm"
+            ~service ~config:context.config ~input
             ~output_deserializer:test_alarm_result_of_yojson
             ~error_deserializer
   end
@@ -5886,9 +6138,10 @@ module UnpeerVpc =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.unpeer_vpc_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128UnpeerVpc" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128UnpeerVpc"
+            ~service ~config:context.config ~input
             ~output_deserializer:unpeer_vpc_result_of_yojson
             ~error_deserializer
   end
@@ -5926,9 +6179,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_result_of_yojson
             ~error_deserializer
   end
@@ -5960,9 +6214,10 @@ module UpdateBucket =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_bucket_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Lightsail_20161128UpdateBucket" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Lightsail_20161128UpdateBucket"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_bucket_result_of_yojson
             ~error_deserializer
   end
@@ -5995,9 +6250,11 @@ module UpdateBucketBundle =
         let open Deserializers in
           let input =
             Serializers.update_bucket_bundle_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateBucketBundle" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_bucket_bundle_result_of_yojson
             ~error_deserializer
   end
@@ -6030,9 +6287,11 @@ module UpdateContainerService =
         let open Deserializers in
           let input =
             Serializers.update_container_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateContainerService" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_container_service_result_of_yojson
             ~error_deserializer
   end
@@ -6068,9 +6327,11 @@ module UpdateDistribution =
         let open Deserializers in
           let input =
             Serializers.update_distribution_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateDistribution" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_distribution_result_of_yojson
             ~error_deserializer
   end
@@ -6106,9 +6367,11 @@ module UpdateDistributionBundle =
         let open Deserializers in
           let input =
             Serializers.update_distribution_bundle_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateDistributionBundle" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_distribution_bundle_result_of_yojson
             ~error_deserializer
   end
@@ -6147,9 +6410,11 @@ module UpdateDomainEntry =
         let open Deserializers in
           let input =
             Serializers.update_domain_entry_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateDomainEntry" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_domain_entry_result_of_yojson
             ~error_deserializer
   end
@@ -6190,9 +6455,11 @@ module UpdateInstanceMetadataOptions =
           let input =
             Serializers.update_instance_metadata_options_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateInstanceMetadataOptions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_instance_metadata_options_result_of_yojson
             ~error_deserializer
   end
@@ -6232,9 +6499,11 @@ module UpdateLoadBalancerAttribute =
           let input =
             Serializers.update_load_balancer_attribute_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateLoadBalancerAttribute"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_load_balancer_attribute_result_of_yojson
             ~error_deserializer
   end
@@ -6273,9 +6542,11 @@ module UpdateRelationalDatabase =
         let open Deserializers in
           let input =
             Serializers.update_relational_database_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateRelationalDatabase" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_relational_database_result_of_yojson
             ~error_deserializer
   end
@@ -6316,9 +6587,11 @@ module UpdateRelationalDatabaseParameters =
           let input =
             Serializers.update_relational_database_parameters_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Lightsail_20161128UpdateRelationalDatabaseParameters"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_relational_database_parameters_result_of_yojson
             ~error_deserializer
   end

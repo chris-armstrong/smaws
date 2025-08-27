@@ -35,9 +35,11 @@ module AssociateDelegateToResource =
           let input =
             Serializers.associate_delegate_to_resource_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceAssociateDelegateToResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_delegate_to_resource_response_of_yojson
             ~error_deserializer
   end
@@ -82,9 +84,11 @@ module AssociateMemberToGroup =
         let open Deserializers in
           let input =
             Serializers.associate_member_to_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceAssociateMemberToGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_member_to_group_response_of_yojson
             ~error_deserializer
   end
@@ -116,9 +120,11 @@ module AssumeImpersonationRole =
         let open Deserializers in
           let input =
             Serializers.assume_impersonation_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceAssumeImpersonationRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:assume_impersonation_role_response_of_yojson
             ~error_deserializer
   end
@@ -150,9 +156,11 @@ module CancelMailboxExportJob =
         let open Deserializers in
           let input =
             Serializers.cancel_mailbox_export_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCancelMailboxExportJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:cancel_mailbox_export_job_response_of_yojson
             ~error_deserializer
   end
@@ -198,9 +206,10 @@ module CreateAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceCreateAlias" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceCreateAlias"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_alias_response_of_yojson
             ~error_deserializer
   end
@@ -237,9 +246,11 @@ module CreateAvailabilityConfiguration =
           let input =
             Serializers.create_availability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCreateAvailabilityConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_availability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -283,9 +294,10 @@ module CreateGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceCreateGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceCreateGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_group_response_of_yojson
             ~error_deserializer
   end
@@ -310,9 +322,11 @@ module CreateIdentityCenterApplication =
           let input =
             Serializers.create_identity_center_application_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCreateIdentityCenterApplication"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_identity_center_application_response_of_yojson
             ~error_deserializer
   end
@@ -350,9 +364,11 @@ module CreateImpersonationRole =
         let open Deserializers in
           let input =
             Serializers.create_impersonation_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCreateImpersonationRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_impersonation_role_response_of_yojson
             ~error_deserializer
   end
@@ -386,9 +402,11 @@ module CreateMobileDeviceAccessRule =
           let input =
             Serializers.create_mobile_device_access_rule_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCreateMobileDeviceAccessRule"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_mobile_device_access_rule_response_of_yojson
             ~error_deserializer
   end
@@ -423,9 +441,11 @@ module CreateOrganization =
         let open Deserializers in
           let input =
             Serializers.create_organization_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceCreateOrganization" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_organization_response_of_yojson
             ~error_deserializer
   end
@@ -469,9 +489,10 @@ module CreateResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceCreateResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceCreateResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_resource_response_of_yojson
             ~error_deserializer
   end
@@ -518,9 +539,10 @@ module CreateUser =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_user_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceCreateUser" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceCreateUser"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_user_response_of_yojson
             ~error_deserializer
   end
@@ -546,9 +568,11 @@ module DeleteAccessControlRule =
         let open Deserializers in
           let input =
             Serializers.delete_access_control_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteAccessControlRule" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_access_control_rule_response_of_yojson
             ~error_deserializer
   end
@@ -582,9 +606,10 @@ module DeleteAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDeleteAlias" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDeleteAlias"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_alias_response_of_yojson
             ~error_deserializer
   end
@@ -612,9 +637,11 @@ module DeleteAvailabilityConfiguration =
           let input =
             Serializers.delete_availability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteAvailabilityConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_availability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -645,9 +672,11 @@ module DeleteEmailMonitoringConfiguration =
           let input =
             Serializers.delete_email_monitoring_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteEmailMonitoringConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_email_monitoring_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -688,9 +717,10 @@ module DeleteGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDeleteGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDeleteGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_group_response_of_yojson
             ~error_deserializer
   end
@@ -718,9 +748,11 @@ module DeleteIdentityCenterApplication =
           let input =
             Serializers.delete_identity_center_application_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteIdentityCenterApplication"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_identity_center_application_response_of_yojson
             ~error_deserializer
   end
@@ -751,9 +783,11 @@ module DeleteIdentityProviderConfiguration =
           let input =
             Serializers.delete_identity_provider_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteIdentityProviderConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_identity_provider_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -782,9 +816,11 @@ module DeleteImpersonationRole =
         let open Deserializers in
           let input =
             Serializers.delete_impersonation_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteImpersonationRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_impersonation_role_response_of_yojson
             ~error_deserializer
   end
@@ -819,9 +855,11 @@ module DeleteMailboxPermissions =
         let open Deserializers in
           let input =
             Serializers.delete_mailbox_permissions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteMailboxPermissions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_mailbox_permissions_response_of_yojson
             ~error_deserializer
   end
@@ -855,9 +893,11 @@ module DeleteMobileDeviceAccessOverride =
           let input =
             Serializers.delete_mobile_device_access_override_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteMobileDeviceAccessOverride"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_mobile_device_access_override_response_of_yojson
             ~error_deserializer
   end
@@ -888,9 +928,11 @@ module DeleteMobileDeviceAccessRule =
           let input =
             Serializers.delete_mobile_device_access_rule_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteMobileDeviceAccessRule"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_mobile_device_access_rule_response_of_yojson
             ~error_deserializer
   end
@@ -919,9 +961,11 @@ module DeleteOrganization =
         let open Deserializers in
           let input =
             Serializers.delete_organization_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteOrganization" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_organization_response_of_yojson
             ~error_deserializer
   end
@@ -951,9 +995,11 @@ module DeletePersonalAccessToken =
           let input =
             Serializers.delete_personal_access_token_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeletePersonalAccessToken" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_personal_access_token_response_of_yojson
             ~error_deserializer
   end
@@ -987,9 +1033,10 @@ module DeleteResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDeleteResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDeleteResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1018,9 +1065,11 @@ module DeleteRetentionPolicy =
         let open Deserializers in
           let input =
             Serializers.delete_retention_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeleteRetentionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_retention_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1061,9 +1110,10 @@ module DeleteUser =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_user_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDeleteUser" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDeleteUser"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_user_response_of_yojson
             ~error_deserializer
   end
@@ -1098,9 +1148,11 @@ module DeregisterFromWorkMail =
         let open Deserializers in
           let input =
             Serializers.deregister_from_work_mail_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeregisterFromWorkMail" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:deregister_from_work_mail_response_of_yojson
             ~error_deserializer
   end
@@ -1136,9 +1188,11 @@ module DeregisterMailDomain =
         let open Deserializers in
           let input =
             Serializers.deregister_mail_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDeregisterMailDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:deregister_mail_domain_response_of_yojson
             ~error_deserializer
   end
@@ -1172,9 +1226,11 @@ module DescribeEmailMonitoringConfiguration =
           let input =
             Serializers.describe_email_monitoring_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDescribeEmailMonitoringConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_email_monitoring_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -1205,9 +1261,10 @@ module DescribeEntity =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_entity_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDescribeEntity" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDescribeEntity"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_entity_response_of_yojson
             ~error_deserializer
   end
@@ -1238,9 +1295,10 @@ module DescribeGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDescribeGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDescribeGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_group_response_of_yojson
             ~error_deserializer
   end
@@ -1274,9 +1332,11 @@ module DescribeIdentityProviderConfiguration =
           let input =
             Serializers.describe_identity_provider_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDescribeIdentityProviderConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_identity_provider_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -1303,9 +1363,11 @@ module DescribeInboundDmarcSettings =
           let input =
             Serializers.describe_inbound_dmarc_settings_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDescribeInboundDmarcSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_inbound_dmarc_settings_response_of_yojson
             ~error_deserializer
   end
@@ -1337,9 +1399,11 @@ module DescribeMailboxExportJob =
         let open Deserializers in
           let input =
             Serializers.describe_mailbox_export_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDescribeMailboxExportJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_mailbox_export_job_response_of_yojson
             ~error_deserializer
   end
@@ -1365,9 +1429,11 @@ module DescribeOrganization =
         let open Deserializers in
           let input =
             Serializers.describe_organization_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDescribeOrganization" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_organization_response_of_yojson
             ~error_deserializer
   end
@@ -1401,9 +1467,10 @@ module DescribeResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDescribeResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDescribeResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1441,9 +1508,10 @@ module DescribeUser =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_user_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceDescribeUser" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceDescribeUser"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_user_response_of_yojson
             ~error_deserializer
   end
@@ -1483,9 +1551,11 @@ module DisassociateDelegateFromResource =
           let input =
             Serializers.disassociate_delegate_from_resource_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDisassociateDelegateFromResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_delegate_from_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1531,9 +1601,11 @@ module DisassociateMemberFromGroup =
           let input =
             Serializers.disassociate_member_from_group_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceDisassociateMemberFromGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_member_from_group_response_of_yojson
             ~error_deserializer
   end
@@ -1568,9 +1640,11 @@ module GetAccessControlEffect =
         let open Deserializers in
           let input =
             Serializers.get_access_control_effect_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetAccessControlEffect" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_access_control_effect_response_of_yojson
             ~error_deserializer
   end
@@ -1603,9 +1677,11 @@ module GetDefaultRetentionPolicy =
           let input =
             Serializers.get_default_retention_policy_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetDefaultRetentionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_default_retention_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1637,9 +1713,11 @@ module GetImpersonationRole =
         let open Deserializers in
           let input =
             Serializers.get_impersonation_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetImpersonationRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_impersonation_role_response_of_yojson
             ~error_deserializer
   end
@@ -1678,9 +1756,11 @@ module GetImpersonationRoleEffect =
           let input =
             Serializers.get_impersonation_role_effect_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetImpersonationRoleEffect" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_impersonation_role_effect_response_of_yojson
             ~error_deserializer
   end
@@ -1712,9 +1792,10 @@ module GetMailboxDetails =
         let open Deserializers in
           let input =
             Serializers.get_mailbox_details_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceGetMailboxDetails" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceGetMailboxDetails"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_mailbox_details_response_of_yojson
             ~error_deserializer
   end
@@ -1745,9 +1826,10 @@ module GetMailDomain =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_mail_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceGetMailDomain" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceGetMailDomain"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_mail_domain_response_of_yojson
             ~error_deserializer
   end
@@ -1777,9 +1859,11 @@ module GetMobileDeviceAccessEffect =
           let input =
             Serializers.get_mobile_device_access_effect_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetMobileDeviceAccessEffect" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_mobile_device_access_effect_response_of_yojson
             ~error_deserializer
   end
@@ -1816,9 +1900,11 @@ module GetMobileDeviceAccessOverride =
           let input =
             Serializers.get_mobile_device_access_override_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetMobileDeviceAccessOverride"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_mobile_device_access_override_response_of_yojson
             ~error_deserializer
   end
@@ -1852,9 +1938,11 @@ module GetPersonalAccessTokenMetadata =
           let input =
             Serializers.get_personal_access_token_metadata_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceGetPersonalAccessTokenMetadata"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_personal_access_token_metadata_response_of_yojson
             ~error_deserializer
   end
@@ -1880,9 +1968,11 @@ module ListAccessControlRules =
         let open Deserializers in
           let input =
             Serializers.list_access_control_rules_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListAccessControlRules" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_access_control_rules_response_of_yojson
             ~error_deserializer
   end
@@ -1916,9 +2006,10 @@ module ListAliases =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_aliases_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListAliases" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListAliases"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_aliases_response_of_yojson
             ~error_deserializer
   end
@@ -1949,9 +2040,11 @@ module ListAvailabilityConfigurations =
           let input =
             Serializers.list_availability_configurations_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListAvailabilityConfigurations"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_availability_configurations_response_of_yojson
             ~error_deserializer
   end
@@ -1986,9 +2079,10 @@ module ListGroupMembers =
         let open Deserializers in
           let input =
             Serializers.list_group_members_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListGroupMembers" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListGroupMembers"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_group_members_response_of_yojson
             ~error_deserializer
   end
@@ -2019,9 +2113,10 @@ module ListGroups =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_groups_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListGroups" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListGroups"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_groups_response_of_yojson
             ~error_deserializer
   end
@@ -2056,9 +2151,11 @@ module ListGroupsForEntity =
         let open Deserializers in
           let input =
             Serializers.list_groups_for_entity_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListGroupsForEntity" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_groups_for_entity_response_of_yojson
             ~error_deserializer
   end
@@ -2087,9 +2184,11 @@ module ListImpersonationRoles =
         let open Deserializers in
           let input =
             Serializers.list_impersonation_roles_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListImpersonationRoles" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_impersonation_roles_response_of_yojson
             ~error_deserializer
   end
@@ -2118,9 +2217,11 @@ module ListMailboxExportJobs =
         let open Deserializers in
           let input =
             Serializers.list_mailbox_export_jobs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListMailboxExportJobs" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_mailbox_export_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -2152,9 +2253,11 @@ module ListMailboxPermissions =
         let open Deserializers in
           let input =
             Serializers.list_mailbox_permissions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListMailboxPermissions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_mailbox_permissions_response_of_yojson
             ~error_deserializer
   end
@@ -2182,9 +2285,10 @@ module ListMailDomains =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_mail_domains_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListMailDomains" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListMailDomains"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_mail_domains_response_of_yojson
             ~error_deserializer
   end
@@ -2218,9 +2322,11 @@ module ListMobileDeviceAccessOverrides =
           let input =
             Serializers.list_mobile_device_access_overrides_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListMobileDeviceAccessOverrides"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_mobile_device_access_overrides_response_of_yojson
             ~error_deserializer
   end
@@ -2250,9 +2356,11 @@ module ListMobileDeviceAccessRules =
           let input =
             Serializers.list_mobile_device_access_rules_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListMobileDeviceAccessRules" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_mobile_device_access_rules_response_of_yojson
             ~error_deserializer
   end
@@ -2275,9 +2383,10 @@ module ListOrganizations =
         let open Deserializers in
           let input =
             Serializers.list_organizations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListOrganizations" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListOrganizations"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_organizations_response_of_yojson
             ~error_deserializer
   end
@@ -2312,9 +2421,11 @@ module ListPersonalAccessTokens =
         let open Deserializers in
           let input =
             Serializers.list_personal_access_tokens_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListPersonalAccessTokens" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_personal_access_tokens_response_of_yojson
             ~error_deserializer
   end
@@ -2352,9 +2463,11 @@ module ListResourceDelegates =
         let open Deserializers in
           let input =
             Serializers.list_resource_delegates_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListResourceDelegates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_resource_delegates_response_of_yojson
             ~error_deserializer
   end
@@ -2385,9 +2498,10 @@ module ListResources =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_resources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListResources" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListResources"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_resources_response_of_yojson
             ~error_deserializer
   end
@@ -2410,9 +2524,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -2440,9 +2556,10 @@ module ListUsers =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_users_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceListUsers" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceListUsers"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_users_response_of_yojson
             ~error_deserializer
   end
@@ -2480,9 +2597,11 @@ module PutAccessControlRule =
         let open Deserializers in
           let input =
             Serializers.put_access_control_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutAccessControlRule" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_access_control_rule_response_of_yojson
             ~error_deserializer
   end
@@ -2516,9 +2635,11 @@ module PutEmailMonitoringConfiguration =
           let input =
             Serializers.put_email_monitoring_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutEmailMonitoringConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_email_monitoring_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -2552,9 +2673,11 @@ module PutIdentityProviderConfiguration =
           let input =
             Serializers.put_identity_provider_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutIdentityProviderConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_identity_provider_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -2580,9 +2703,11 @@ module PutInboundDmarcSettings =
         let open Deserializers in
           let input =
             Serializers.put_inbound_dmarc_settings_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutInboundDmarcSettings" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_inbound_dmarc_settings_response_of_yojson
             ~error_deserializer
   end
@@ -2617,9 +2742,11 @@ module PutMailboxPermissions =
         let open Deserializers in
           let input =
             Serializers.put_mailbox_permissions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutMailboxPermissions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_mailbox_permissions_response_of_yojson
             ~error_deserializer
   end
@@ -2656,9 +2783,11 @@ module PutMobileDeviceAccessOverride =
           let input =
             Serializers.put_mobile_device_access_override_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutMobileDeviceAccessOverride"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:put_mobile_device_access_override_response_of_yojson
             ~error_deserializer
   end
@@ -2690,9 +2819,11 @@ module PutRetentionPolicy =
         let open Deserializers in
           let input =
             Serializers.put_retention_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServicePutRetentionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_retention_policy_response_of_yojson
             ~error_deserializer
   end
@@ -2727,9 +2858,11 @@ module RegisterMailDomain =
         let open Deserializers in
           let input =
             Serializers.register_mail_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceRegisterMailDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:register_mail_domain_response_of_yojson
             ~error_deserializer
   end
@@ -2783,9 +2916,11 @@ module RegisterToWorkMail =
         let open Deserializers in
           let input =
             Serializers.register_to_work_mail_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceRegisterToWorkMail" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:register_to_work_mail_response_of_yojson
             ~error_deserializer
   end
@@ -2832,9 +2967,10 @@ module ResetPassword =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.reset_password_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceResetPassword" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceResetPassword"
+            ~service ~config:context.config ~input
             ~output_deserializer:reset_password_response_of_yojson
             ~error_deserializer
   end
@@ -2869,9 +3005,11 @@ module StartMailboxExportJob =
         let open Deserializers in
           let input =
             Serializers.start_mailbox_export_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceStartMailboxExportJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:start_mailbox_export_job_response_of_yojson
             ~error_deserializer
   end
@@ -2902,9 +3040,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceTagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -2937,9 +3076,11 @@ module TestAvailabilityConfiguration =
           let input =
             Serializers.test_availability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceTestAvailabilityConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:test_availability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -2961,9 +3102,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceUntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -2997,9 +3139,11 @@ module UpdateAvailabilityConfiguration =
           let input =
             Serializers.update_availability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdateAvailabilityConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_availability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -3034,9 +3178,11 @@ module UpdateDefaultMailDomain =
         let open Deserializers in
           let input =
             Serializers.update_default_mail_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdateDefaultMailDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_default_mail_domain_response_of_yojson
             ~error_deserializer
   end
@@ -3073,9 +3219,10 @@ module UpdateGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceUpdateGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceUpdateGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_group_response_of_yojson
             ~error_deserializer
   end
@@ -3116,9 +3263,11 @@ module UpdateImpersonationRole =
         let open Deserializers in
           let input =
             Serializers.update_impersonation_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdateImpersonationRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_impersonation_role_response_of_yojson
             ~error_deserializer
   end
@@ -3153,9 +3302,11 @@ module UpdateMailboxQuota =
         let open Deserializers in
           let input =
             Serializers.update_mailbox_quota_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdateMailboxQuota" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_mailbox_quota_response_of_yojson
             ~error_deserializer
   end
@@ -3189,9 +3340,11 @@ module UpdateMobileDeviceAccessRule =
           let input =
             Serializers.update_mobile_device_access_rule_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdateMobileDeviceAccessRule"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_mobile_device_access_rule_response_of_yojson
             ~error_deserializer
   end
@@ -3246,9 +3399,11 @@ module UpdatePrimaryEmailAddress =
           let input =
             Serializers.update_primary_email_address_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"WorkMailServiceUpdatePrimaryEmailAddress" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_primary_email_address_response_of_yojson
             ~error_deserializer
   end
@@ -3303,9 +3458,10 @@ module UpdateResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceUpdateResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceUpdateResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_resource_response_of_yojson
             ~error_deserializer
   end
@@ -3349,9 +3505,10 @@ module UpdateUser =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_user_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"WorkMailServiceUpdateUser" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"WorkMailServiceUpdateUser"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_user_response_of_yojson
             ~error_deserializer
   end

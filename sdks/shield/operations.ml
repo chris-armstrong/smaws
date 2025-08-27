@@ -40,9 +40,11 @@ module AssociateDRTLogBucket =
         let open Deserializers in
           let input =
             Serializers.associate_drt_log_bucket_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616AssociateDRTLogBucket" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_drt_log_bucket_response_of_yojson
             ~error_deserializer
   end
@@ -80,9 +82,11 @@ module AssociateDRTRole =
         let open Deserializers in
           let input =
             Serializers.associate_drt_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616AssociateDRTRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_drt_role_response_of_yojson
             ~error_deserializer
   end
@@ -120,9 +124,11 @@ module AssociateHealthCheck =
         let open Deserializers in
           let input =
             Serializers.associate_health_check_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616AssociateHealthCheck" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_health_check_response_of_yojson
             ~error_deserializer
   end
@@ -159,9 +165,11 @@ module AssociateProactiveEngagementDetails =
           let input =
             Serializers.associate_proactive_engagement_details_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616AssociateProactiveEngagementDetails"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_proactive_engagement_details_response_of_yojson
             ~error_deserializer
   end
@@ -204,9 +212,11 @@ module CreateProtection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_protection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616CreateProtection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_protection_response_of_yojson
             ~error_deserializer
   end
@@ -244,9 +254,11 @@ module CreateProtectionGroup =
         let open Deserializers in
           let input =
             Serializers.create_protection_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616CreateProtectionGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_protection_group_response_of_yojson
             ~error_deserializer
   end
@@ -272,9 +284,11 @@ module CreateSubscription =
         let open Deserializers in
           let input =
             Serializers.create_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616CreateSubscription" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_subscription_response_of_yojson
             ~error_deserializer
   end
@@ -302,9 +316,11 @@ module DeleteProtection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_protection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DeleteProtection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_protection_response_of_yojson
             ~error_deserializer
   end
@@ -333,9 +349,11 @@ module DeleteProtectionGroup =
         let open Deserializers in
           let input =
             Serializers.delete_protection_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DeleteProtectionGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_protection_group_response_of_yojson
             ~error_deserializer
   end
@@ -364,9 +382,11 @@ module DeleteSubscription =
         let open Deserializers in
           let input =
             Serializers.delete_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DeleteSubscription" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_subscription_response_of_yojson
             ~error_deserializer
   end
@@ -391,9 +411,10 @@ module DescribeAttack =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_attack_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSShield_20160616DescribeAttack" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSShield_20160616DescribeAttack"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_attack_response_of_yojson
             ~error_deserializer
   end
@@ -416,9 +437,11 @@ module DescribeAttackStatistics =
         let open Deserializers in
           let input =
             Serializers.describe_attack_statistics_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeAttackStatistics" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_attack_statistics_response_of_yojson
             ~error_deserializer
   end
@@ -444,9 +467,11 @@ module DescribeDRTAccess =
         let open Deserializers in
           let input =
             Serializers.describe_drt_access_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeDRTAccess" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_drt_access_response_of_yojson
             ~error_deserializer
   end
@@ -473,9 +498,11 @@ module DescribeEmergencyContactSettings =
           let input =
             Serializers.describe_emergency_contact_settings_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeEmergencyContactSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_emergency_contact_settings_response_of_yojson
             ~error_deserializer
   end
@@ -504,9 +531,11 @@ module DescribeProtection =
         let open Deserializers in
           let input =
             Serializers.describe_protection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeProtection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_protection_response_of_yojson
             ~error_deserializer
   end
@@ -532,9 +561,11 @@ module DescribeProtectionGroup =
         let open Deserializers in
           let input =
             Serializers.describe_protection_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeProtectionGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_protection_group_response_of_yojson
             ~error_deserializer
   end
@@ -560,9 +591,11 @@ module DescribeSubscription =
         let open Deserializers in
           let input =
             Serializers.describe_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DescribeSubscription" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_subscription_response_of_yojson
             ~error_deserializer
   end
@@ -599,9 +632,11 @@ module DisableApplicationLayerAutomaticResponse =
           let input =
             Serializers.disable_application_layer_automatic_response_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DisableApplicationLayerAutomaticResponse"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disable_application_layer_automatic_response_response_of_yojson
             ~error_deserializer
   end
@@ -637,9 +672,11 @@ module DisableProactiveEngagement =
           let input =
             Serializers.disable_proactive_engagement_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DisableProactiveEngagement"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disable_proactive_engagement_response_of_yojson
             ~error_deserializer
   end
@@ -677,9 +714,11 @@ module DisassociateDRTLogBucket =
         let open Deserializers in
           let input =
             Serializers.disassociate_drt_log_bucket_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DisassociateDRTLogBucket" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_drt_log_bucket_response_of_yojson
             ~error_deserializer
   end
@@ -711,9 +750,11 @@ module DisassociateDRTRole =
         let open Deserializers in
           let input =
             Serializers.disassociate_drt_role_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DisassociateDRTRole" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_drt_role_response_of_yojson
             ~error_deserializer
   end
@@ -748,9 +789,11 @@ module DisassociateHealthCheck =
         let open Deserializers in
           let input =
             Serializers.disassociate_health_check_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616DisassociateHealthCheck" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_health_check_response_of_yojson
             ~error_deserializer
   end
@@ -790,9 +833,11 @@ module EnableApplicationLayerAutomaticResponse =
           let input =
             Serializers.enable_application_layer_automatic_response_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616EnableApplicationLayerAutomaticResponse"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:enable_application_layer_automatic_response_response_of_yojson
             ~error_deserializer
   end
@@ -827,9 +872,11 @@ module EnableProactiveEngagement =
         let open Deserializers in
           let input =
             Serializers.enable_proactive_engagement_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616EnableProactiveEngagement"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:enable_proactive_engagement_response_of_yojson
             ~error_deserializer
   end
@@ -852,9 +899,11 @@ module GetSubscriptionState =
         let open Deserializers in
           let input =
             Serializers.get_subscription_state_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616GetSubscriptionState" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_subscription_state_response_of_yojson
             ~error_deserializer
   end
@@ -882,9 +931,10 @@ module ListAttacks =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_attacks_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSShield_20160616ListAttacks" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSShield_20160616ListAttacks"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_attacks_response_of_yojson
             ~error_deserializer
   end
@@ -913,9 +963,11 @@ module ListProtectionGroups =
         let open Deserializers in
           let input =
             Serializers.list_protection_groups_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616ListProtectionGroups" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_protection_groups_response_of_yojson
             ~error_deserializer
   end
@@ -943,9 +995,11 @@ module ListProtections =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_protections_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616ListProtections" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_protections_response_of_yojson
             ~error_deserializer
   end
@@ -976,9 +1030,11 @@ module ListResourcesInProtectionGroup =
           let input =
             Serializers.list_resources_in_protection_group_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616ListResourcesInProtectionGroup"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_resources_in_protection_group_response_of_yojson
             ~error_deserializer
   end
@@ -1007,9 +1063,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616ListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1040,9 +1098,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSShield_20160616TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSShield_20160616TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1073,9 +1132,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSShield_20160616UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSShield_20160616UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1112,9 +1172,11 @@ module UpdateApplicationLayerAutomaticResponse =
           let input =
             Serializers.update_application_layer_automatic_response_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616UpdateApplicationLayerAutomaticResponse"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_application_layer_automatic_response_response_of_yojson
             ~error_deserializer
   end
@@ -1148,9 +1210,11 @@ module UpdateEmergencyContactSettings =
           let input =
             Serializers.update_emergency_contact_settings_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616UpdateEmergencyContactSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_emergency_contact_settings_response_of_yojson
             ~error_deserializer
   end
@@ -1182,9 +1246,11 @@ module UpdateProtectionGroup =
         let open Deserializers in
           let input =
             Serializers.update_protection_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616UpdateProtectionGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_protection_group_response_of_yojson
             ~error_deserializer
   end
@@ -1219,9 +1285,11 @@ module UpdateSubscription =
         let open Deserializers in
           let input =
             Serializers.update_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSShield_20160616UpdateSubscription" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_subscription_response_of_yojson
             ~error_deserializer
   end

@@ -30,9 +30,10 @@ module CancelKeyDeletion =
         let open Deserializers in
           let input =
             Serializers.cancel_key_deletion_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceCancelKeyDeletion" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceCancelKeyDeletion"
+            ~service ~config:context.config ~input
             ~output_deserializer:cancel_key_deletion_response_of_yojson
             ~error_deserializer
   end
@@ -68,9 +69,11 @@ module ConnectCustomKeyStore =
         let open Deserializers in
           let input =
             Serializers.connect_custom_key_store_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceConnectCustomKeyStore" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:connect_custom_key_store_response_of_yojson
             ~error_deserializer
   end
@@ -109,9 +112,10 @@ module CreateAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceCreateAlias" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceCreateAlias" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module CreateCustomKeyStore =
@@ -187,9 +191,10 @@ module CreateCustomKeyStore =
         let open Deserializers in
           let input =
             Serializers.create_custom_key_store_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceCreateCustomKeyStore" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceCreateCustomKeyStore"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_custom_key_store_response_of_yojson
             ~error_deserializer
   end
@@ -233,9 +238,10 @@ module CreateGrant =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_grant_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceCreateGrant" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceCreateGrant" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_grant_response_of_yojson
             ~error_deserializer
   end
@@ -293,9 +299,10 @@ module CreateKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceCreateKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceCreateKey" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_key_response_of_yojson
             ~error_deserializer
   end
@@ -345,9 +352,10 @@ module Decrypt =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.decrypt_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDecrypt" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDecrypt" ~service
+            ~config:context.config ~input
             ~output_deserializer:decrypt_response_of_yojson
             ~error_deserializer
   end
@@ -377,9 +385,10 @@ module DeleteAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDeleteAlias" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDeleteAlias" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteCustomKeyStore =
@@ -410,9 +419,10 @@ module DeleteCustomKeyStore =
         let open Deserializers in
           let input =
             Serializers.delete_custom_key_store_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDeleteCustomKeyStore" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDeleteCustomKeyStore"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_custom_key_store_response_of_yojson
             ~error_deserializer
   end
@@ -450,9 +460,11 @@ module DeleteImportedKeyMaterial =
           let input =
             Serializers.delete_imported_key_material_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceDeleteImportedKeyMaterial" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_imported_key_material_response_of_yojson
             ~error_deserializer
   end
@@ -497,9 +509,10 @@ module DeriveSharedSecret =
         let open Deserializers in
           let input =
             Serializers.derive_shared_secret_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDeriveSharedSecret" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDeriveSharedSecret"
+            ~service ~config:context.config ~input
             ~output_deserializer:derive_shared_secret_response_of_yojson
             ~error_deserializer
   end
@@ -528,9 +541,11 @@ module DescribeCustomKeyStores =
         let open Deserializers in
           let input =
             Serializers.describe_custom_key_stores_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceDescribeCustomKeyStores" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_custom_key_stores_response_of_yojson
             ~error_deserializer
   end
@@ -560,9 +575,10 @@ module DescribeKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDescribeKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDescribeKey" ~service
+            ~config:context.config ~input
             ~output_deserializer:describe_key_response_of_yojson
             ~error_deserializer
   end
@@ -595,9 +611,10 @@ module DisableKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDisableKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDisableKey" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DisableKeyRotation =
@@ -635,9 +652,10 @@ module DisableKeyRotation =
         let open Deserializers in
           let input =
             Serializers.disable_key_rotation_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceDisableKeyRotation" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceDisableKeyRotation"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DisconnectCustomKeyStore =
@@ -665,9 +683,11 @@ module DisconnectCustomKeyStore =
         let open Deserializers in
           let input =
             Serializers.disconnect_custom_key_store_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceDisconnectCustomKeyStore" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disconnect_custom_key_store_response_of_yojson
             ~error_deserializer
   end
@@ -703,9 +723,10 @@ module EnableKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceEnableKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceEnableKey" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module EnableKeyRotation =
@@ -743,9 +764,10 @@ module EnableKeyRotation =
         let open Deserializers in
           let input =
             Serializers.enable_key_rotation_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceEnableKeyRotation" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceEnableKeyRotation"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module Encrypt =
@@ -788,9 +810,10 @@ module Encrypt =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.encrypt_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceEncrypt" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceEncrypt" ~service
+            ~config:context.config ~input
             ~output_deserializer:encrypt_response_of_yojson
             ~error_deserializer
   end
@@ -834,9 +857,10 @@ module GenerateDataKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.generate_data_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGenerateDataKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGenerateDataKey"
+            ~service ~config:context.config ~input
             ~output_deserializer:generate_data_key_response_of_yojson
             ~error_deserializer
   end
@@ -884,9 +908,10 @@ module GenerateDataKeyPair =
         let open Deserializers in
           let input =
             Serializers.generate_data_key_pair_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGenerateDataKeyPair" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGenerateDataKeyPair"
+            ~service ~config:context.config ~input
             ~output_deserializer:generate_data_key_pair_response_of_yojson
             ~error_deserializer
   end
@@ -936,9 +961,11 @@ module GenerateDataKeyPairWithoutPlaintext =
           let input =
             Serializers.generate_data_key_pair_without_plaintext_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceGenerateDataKeyPairWithoutPlaintext"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:generate_data_key_pair_without_plaintext_response_of_yojson
             ~error_deserializer
   end
@@ -985,9 +1012,11 @@ module GenerateDataKeyWithoutPlaintext =
           let input =
             Serializers.generate_data_key_without_plaintext_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceGenerateDataKeyWithoutPlaintext"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:generate_data_key_without_plaintext_response_of_yojson
             ~error_deserializer
   end
@@ -1028,9 +1057,10 @@ module GenerateMac =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.generate_mac_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGenerateMac" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGenerateMac" ~service
+            ~config:context.config ~input
             ~output_deserializer:generate_mac_response_of_yojson
             ~error_deserializer
   end
@@ -1064,9 +1094,10 @@ module GenerateRandom =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.generate_random_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGenerateRandom" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGenerateRandom"
+            ~service ~config:context.config ~input
             ~output_deserializer:generate_random_response_of_yojson
             ~error_deserializer
   end
@@ -1099,9 +1130,10 @@ module GetKeyPolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_key_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGetKeyPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGetKeyPolicy"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_key_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1138,9 +1170,10 @@ module GetKeyRotationStatus =
         let open Deserializers in
           let input =
             Serializers.get_key_rotation_status_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGetKeyRotationStatus" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGetKeyRotationStatus"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_key_rotation_status_response_of_yojson
             ~error_deserializer
   end
@@ -1177,9 +1210,11 @@ module GetParametersForImport =
         let open Deserializers in
           let input =
             Serializers.get_parameters_for_import_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TrentServiceGetParametersForImport" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_parameters_for_import_response_of_yojson
             ~error_deserializer
   end
@@ -1226,9 +1261,10 @@ module GetPublicKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_public_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceGetPublicKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceGetPublicKey"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_public_key_response_of_yojson
             ~error_deserializer
   end
@@ -1277,9 +1313,10 @@ module ImportKeyMaterial =
         let open Deserializers in
           let input =
             Serializers.import_key_material_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceImportKeyMaterial" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceImportKeyMaterial"
+            ~service ~config:context.config ~input
             ~output_deserializer:import_key_material_response_of_yojson
             ~error_deserializer
   end
@@ -1312,9 +1349,10 @@ module ListAliases =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_aliases_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListAliases" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListAliases" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_aliases_response_of_yojson
             ~error_deserializer
   end
@@ -1353,9 +1391,10 @@ module ListGrants =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_grants_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListGrants" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListGrants" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_grants_response_of_yojson
             ~error_deserializer
   end
@@ -1388,9 +1427,10 @@ module ListKeyPolicies =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_key_policies_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListKeyPolicies" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListKeyPolicies"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_key_policies_response_of_yojson
             ~error_deserializer
   end
@@ -1427,9 +1467,10 @@ module ListKeyRotations =
         let open Deserializers in
           let input =
             Serializers.list_key_rotations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListKeyRotations" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListKeyRotations"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_key_rotations_response_of_yojson
             ~error_deserializer
   end
@@ -1457,9 +1498,10 @@ module ListKeys =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_keys_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListKeys" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListKeys" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_keys_response_of_yojson
             ~error_deserializer
   end
@@ -1490,9 +1532,10 @@ module ListResourceTags =
         let open Deserializers in
           let input =
             Serializers.list_resource_tags_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListResourceTags" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListResourceTags"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_resource_tags_response_of_yojson
             ~error_deserializer
   end
@@ -1526,9 +1569,10 @@ module ListRetirableGrants =
         let open Deserializers in
           let input =
             Serializers.list_retirable_grants_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceListRetirableGrants" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceListRetirableGrants"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_grants_response_of_yojson
             ~error_deserializer
   end
@@ -1570,9 +1614,10 @@ module PutKeyPolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_key_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServicePutKeyPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServicePutKeyPolicy"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module ReEncrypt =
@@ -1621,9 +1666,10 @@ module ReEncrypt =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.re_encrypt_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceReEncrypt" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceReEncrypt" ~service
+            ~config:context.config ~input
             ~output_deserializer:re_encrypt_response_of_yojson
             ~error_deserializer
   end
@@ -1669,9 +1715,10 @@ module ReplicateKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.replicate_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceReplicateKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceReplicateKey"
+            ~service ~config:context.config ~input
             ~output_deserializer:replicate_key_response_of_yojson
             ~error_deserializer
   end
@@ -1713,9 +1760,10 @@ module RetireGrant =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.retire_grant_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceRetireGrant" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceRetireGrant" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RevokeGrant =
@@ -1753,9 +1801,10 @@ module RevokeGrant =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.revoke_grant_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceRevokeGrant" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceRevokeGrant" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RotateKeyOnDemand =
@@ -1798,9 +1847,10 @@ module RotateKeyOnDemand =
         let open Deserializers in
           let input =
             Serializers.rotate_key_on_demand_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceRotateKeyOnDemand" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceRotateKeyOnDemand"
+            ~service ~config:context.config ~input
             ~output_deserializer:rotate_key_on_demand_response_of_yojson
             ~error_deserializer
   end
@@ -1834,9 +1884,10 @@ module ScheduleKeyDeletion =
         let open Deserializers in
           let input =
             Serializers.schedule_key_deletion_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceScheduleKeyDeletion" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceScheduleKeyDeletion"
+            ~service ~config:context.config ~input
             ~output_deserializer:schedule_key_deletion_response_of_yojson
             ~error_deserializer
   end
@@ -1880,8 +1931,10 @@ module Sign =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.sign_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentServiceSign"
-            ~service ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceSign" ~service
+            ~config:context.config ~input
             ~output_deserializer:sign_response_of_yojson ~error_deserializer
   end
 module TagResource =
@@ -1915,9 +1968,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceTagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UntagResource =
@@ -1948,9 +2002,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceUntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateAlias =
@@ -1982,9 +2037,10 @@ module UpdateAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceUpdateAlias" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceUpdateAlias" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateCustomKeyStore =
@@ -2060,9 +2116,10 @@ module UpdateCustomKeyStore =
         let open Deserializers in
           let input =
             Serializers.update_custom_key_store_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceUpdateCustomKeyStore" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceUpdateCustomKeyStore"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_custom_key_store_response_of_yojson
             ~error_deserializer
   end
@@ -2096,9 +2153,10 @@ module UpdateKeyDescription =
         let open Deserializers in
           let input =
             Serializers.update_key_description_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceUpdateKeyDescription" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceUpdateKeyDescription"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdatePrimaryRegion =
@@ -2133,9 +2191,10 @@ module UpdatePrimaryRegion =
         let open Deserializers in
           let input =
             Serializers.update_primary_region_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceUpdatePrimaryRegion" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceUpdatePrimaryRegion"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module Verify =
@@ -2181,9 +2240,10 @@ module Verify =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.verify_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceVerify" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceVerify" ~service
+            ~config:context.config ~input
             ~output_deserializer:verify_response_of_yojson
             ~error_deserializer
   end
@@ -2227,9 +2287,10 @@ module VerifyMac =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.verify_mac_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TrentServiceVerifyMac" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TrentServiceVerifyMac" ~service
+            ~config:context.config ~input
             ~output_deserializer:verify_mac_response_of_yojson
             ~error_deserializer
   end

@@ -34,9 +34,11 @@ module AssociateEntitiesToExperience =
           let input =
             Serializers.associate_entities_to_experience_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceAssociateEntitiesToExperience"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_entities_to_experience_response_of_yojson
             ~error_deserializer
   end
@@ -73,9 +75,11 @@ module AssociatePersonasToEntities =
           let input =
             Serializers.associate_personas_to_entities_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceAssociatePersonasToEntities"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_personas_to_entities_response_of_yojson
             ~error_deserializer
   end
@@ -110,9 +114,11 @@ module BatchDeleteDocument =
         let open Deserializers in
           let input =
             Serializers.batch_delete_document_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceBatchDeleteDocument"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:batch_delete_document_response_of_yojson
             ~error_deserializer
   end
@@ -147,9 +153,11 @@ module BatchDeleteFeaturedResultsSet =
           let input =
             Serializers.batch_delete_featured_results_set_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceBatchDeleteFeaturedResultsSet"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:batch_delete_featured_results_set_response_of_yojson
             ~error_deserializer
   end
@@ -184,9 +192,11 @@ module BatchGetDocumentStatus =
         let open Deserializers in
           let input =
             Serializers.batch_get_document_status_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceBatchGetDocumentStatus"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:batch_get_document_status_response_of_yojson
             ~error_deserializer
   end
@@ -224,9 +234,11 @@ module BatchPutDocument =
         let open Deserializers in
           let input =
             Serializers.batch_put_document_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceBatchPutDocument" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:batch_put_document_response_of_yojson
             ~error_deserializer
   end
@@ -261,9 +273,11 @@ module ClearQuerySuggestions =
         let open Deserializers in
           let input =
             Serializers.clear_query_suggestions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceClearQuerySuggestions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module CreateAccessControlConfiguration =
@@ -302,9 +316,11 @@ module CreateAccessControlConfiguration =
           let input =
             Serializers.create_access_control_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateAccessControlConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_access_control_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -345,9 +361,11 @@ module CreateDataSource =
         let open Deserializers in
           let input =
             Serializers.create_data_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateDataSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_data_source_response_of_yojson
             ~error_deserializer
   end
@@ -384,9 +402,11 @@ module CreateExperience =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_experience_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateExperience" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_experience_response_of_yojson
             ~error_deserializer
   end
@@ -423,9 +443,11 @@ module CreateFaq =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_faq_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateFaq" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_faq_response_of_yojson
             ~error_deserializer
   end
@@ -463,9 +485,11 @@ module CreateFeaturedResultsSet =
         let open Deserializers in
           let input =
             Serializers.create_featured_results_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateFeaturedResultsSet"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_featured_results_set_response_of_yojson
             ~error_deserializer
   end
@@ -502,9 +526,11 @@ module CreateIndex =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_index_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateIndex" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_index_response_of_yojson
             ~error_deserializer
   end
@@ -544,9 +570,11 @@ module CreateQuerySuggestionsBlockList =
           let input =
             Serializers.create_query_suggestions_block_list_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateQuerySuggestionsBlockList"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_query_suggestions_block_list_response_of_yojson
             ~error_deserializer
   end
@@ -583,9 +611,11 @@ module CreateThesaurus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_thesaurus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceCreateThesaurus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_thesaurus_response_of_yojson
             ~error_deserializer
   end
@@ -622,9 +652,11 @@ module DeleteAccessControlConfiguration =
           let input =
             Serializers.delete_access_control_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteAccessControlConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_access_control_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -659,9 +691,11 @@ module DeleteDataSource =
         let open Deserializers in
           let input =
             Serializers.delete_data_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteDataSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteExperience =
@@ -694,9 +728,11 @@ module DeleteExperience =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_experience_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteExperience" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_experience_response_of_yojson
             ~error_deserializer
   end
@@ -730,9 +766,11 @@ module DeleteFaq =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_faq_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteFaq" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteIndex =
@@ -765,9 +803,11 @@ module DeleteIndex =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_index_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteIndex" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeletePrincipalMapping =
@@ -801,9 +841,11 @@ module DeletePrincipalMapping =
         let open Deserializers in
           let input =
             Serializers.delete_principal_mapping_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeletePrincipalMapping"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteQuerySuggestionsBlockList =
@@ -839,9 +881,11 @@ module DeleteQuerySuggestionsBlockList =
           let input =
             Serializers.delete_query_suggestions_block_list_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteQuerySuggestionsBlockList"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteThesaurus =
@@ -874,9 +918,11 @@ module DeleteThesaurus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_thesaurus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDeleteThesaurus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeAccessControlConfiguration =
@@ -910,9 +956,11 @@ module DescribeAccessControlConfiguration =
           let input =
             Serializers.describe_access_control_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeAccessControlConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_access_control_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -945,9 +993,11 @@ module DescribeDataSource =
         let open Deserializers in
           let input =
             Serializers.describe_data_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeDataSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_data_source_response_of_yojson
             ~error_deserializer
   end
@@ -980,9 +1030,11 @@ module DescribeExperience =
         let open Deserializers in
           let input =
             Serializers.describe_experience_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeExperience" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_experience_response_of_yojson
             ~error_deserializer
   end
@@ -1014,9 +1066,11 @@ module DescribeFaq =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_faq_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeFaq" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_faq_response_of_yojson
             ~error_deserializer
   end
@@ -1050,9 +1104,11 @@ module DescribeFeaturedResultsSet =
           let input =
             Serializers.describe_featured_results_set_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeFeaturedResultsSet"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_featured_results_set_response_of_yojson
             ~error_deserializer
   end
@@ -1084,9 +1140,11 @@ module DescribeIndex =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_index_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeIndex" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_index_response_of_yojson
             ~error_deserializer
   end
@@ -1119,9 +1177,11 @@ module DescribePrincipalMapping =
         let open Deserializers in
           let input =
             Serializers.describe_principal_mapping_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribePrincipalMapping"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_principal_mapping_response_of_yojson
             ~error_deserializer
   end
@@ -1156,9 +1216,11 @@ module DescribeQuerySuggestionsBlockList =
           let input =
             Serializers.describe_query_suggestions_block_list_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeQuerySuggestionsBlockList"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_query_suggestions_block_list_response_of_yojson
             ~error_deserializer
   end
@@ -1193,9 +1255,11 @@ module DescribeQuerySuggestionsConfig =
           let input =
             Serializers.describe_query_suggestions_config_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeQuerySuggestionsConfig"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_query_suggestions_config_response_of_yojson
             ~error_deserializer
   end
@@ -1228,9 +1292,11 @@ module DescribeThesaurus =
         let open Deserializers in
           let input =
             Serializers.describe_thesaurus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDescribeThesaurus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_thesaurus_response_of_yojson
             ~error_deserializer
   end
@@ -1265,9 +1331,11 @@ module DisassociateEntitiesFromExperience =
           let input =
             Serializers.disassociate_entities_from_experience_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDisassociateEntitiesFromExperience"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_entities_from_experience_response_of_yojson
             ~error_deserializer
   end
@@ -1302,9 +1370,11 @@ module DisassociatePersonasFromEntities =
           let input =
             Serializers.disassociate_personas_from_entities_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceDisassociatePersonasFromEntities"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_personas_from_entities_response_of_yojson
             ~error_deserializer
   end
@@ -1342,9 +1412,11 @@ module GetQuerySuggestions =
         let open Deserializers in
           let input =
             Serializers.get_query_suggestions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceGetQuerySuggestions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_query_suggestions_response_of_yojson
             ~error_deserializer
   end
@@ -1375,9 +1447,11 @@ module GetSnapshots =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_snapshots_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceGetSnapshots" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_snapshots_response_of_yojson
             ~error_deserializer
   end
@@ -1412,9 +1486,11 @@ module ListAccessControlConfigurations =
           let input =
             Serializers.list_access_control_configurations_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListAccessControlConfigurations"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_access_control_configurations_response_of_yojson
             ~error_deserializer
   end
@@ -1449,9 +1525,11 @@ module ListDataSourceSyncJobs =
         let open Deserializers in
           let input =
             Serializers.list_data_source_sync_jobs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListDataSourceSyncJobs"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_data_source_sync_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -1483,9 +1561,11 @@ module ListDataSources =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_data_sources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListDataSources" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_data_sources_response_of_yojson
             ~error_deserializer
   end
@@ -1518,9 +1598,11 @@ module ListEntityPersonas =
         let open Deserializers in
           let input =
             Serializers.list_entity_personas_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListEntityPersonas" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_entity_personas_response_of_yojson
             ~error_deserializer
   end
@@ -1553,9 +1635,11 @@ module ListExperienceEntities =
         let open Deserializers in
           let input =
             Serializers.list_experience_entities_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListExperienceEntities"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_experience_entities_response_of_yojson
             ~error_deserializer
   end
@@ -1587,9 +1671,11 @@ module ListExperiences =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_experiences_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListExperiences" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_experiences_response_of_yojson
             ~error_deserializer
   end
@@ -1621,9 +1707,10 @@ module ListFaqs =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_faqs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSKendraFrontendServiceListFaqs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSKendraFrontendServiceListFaqs"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_faqs_response_of_yojson
             ~error_deserializer
   end
@@ -1656,9 +1743,11 @@ module ListFeaturedResultsSets =
         let open Deserializers in
           let input =
             Serializers.list_featured_results_sets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListFeaturedResultsSets"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_featured_results_sets_response_of_yojson
             ~error_deserializer
   end
@@ -1695,9 +1784,11 @@ module ListGroupsOlderThanOrderingId =
           let input =
             Serializers.list_groups_older_than_ordering_id_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListGroupsOlderThanOrderingId"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_groups_older_than_ordering_id_response_of_yojson
             ~error_deserializer
   end
@@ -1726,9 +1817,11 @@ module ListIndices =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_indices_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListIndices" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_indices_response_of_yojson
             ~error_deserializer
   end
@@ -1763,9 +1856,11 @@ module ListQuerySuggestionsBlockLists =
           let input =
             Serializers.list_query_suggestions_block_lists_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListQuerySuggestionsBlockLists"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_query_suggestions_block_lists_response_of_yojson
             ~error_deserializer
   end
@@ -1798,9 +1893,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1832,9 +1929,11 @@ module ListThesauri =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_thesauri_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceListThesauri" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_thesauri_response_of_yojson
             ~error_deserializer
   end
@@ -1872,9 +1971,11 @@ module PutPrincipalMapping =
         let open Deserializers in
           let input =
             Serializers.put_principal_mapping_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServicePutPrincipalMapping"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module Query =
@@ -1910,9 +2011,10 @@ module Query =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.query_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSKendraFrontendServiceQuery" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSKendraFrontendServiceQuery"
+            ~service ~config:context.config ~input
             ~output_deserializer:query_result_of_yojson ~error_deserializer
   end
 module Retrieve =
@@ -1948,9 +2050,10 @@ module Retrieve =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.retrieve_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSKendraFrontendServiceRetrieve" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSKendraFrontendServiceRetrieve"
+            ~service ~config:context.config ~input
             ~output_deserializer:retrieve_result_of_yojson
             ~error_deserializer
   end
@@ -1988,9 +2091,11 @@ module StartDataSourceSyncJob =
         let open Deserializers in
           let input =
             Serializers.start_data_source_sync_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceStartDataSourceSyncJob"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:start_data_source_sync_job_response_of_yojson
             ~error_deserializer
   end
@@ -2023,9 +2128,11 @@ module StopDataSourceSyncJob =
         let open Deserializers in
           let input =
             Serializers.stop_data_source_sync_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceStopDataSourceSyncJob"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SubmitFeedback =
@@ -2059,9 +2166,11 @@ module SubmitFeedback =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.submit_feedback_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceSubmitFeedback" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module TagResource =
@@ -2092,9 +2201,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -2126,9 +2237,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -2168,9 +2281,11 @@ module UpdateAccessControlConfiguration =
           let input =
             Serializers.update_access_control_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateAccessControlConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_access_control_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -2205,9 +2320,11 @@ module UpdateDataSource =
         let open Deserializers in
           let input =
             Serializers.update_data_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateDataSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateExperience =
@@ -2240,9 +2357,11 @@ module UpdateExperience =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_experience_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateExperience" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateFeaturedResultsSet =
@@ -2277,9 +2396,11 @@ module UpdateFeaturedResultsSet =
         let open Deserializers in
           let input =
             Serializers.update_featured_results_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateFeaturedResultsSet"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_featured_results_set_response_of_yojson
             ~error_deserializer
   end
@@ -2316,9 +2437,11 @@ module UpdateIndex =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_index_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateIndex" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateQuerySuggestionsBlockList =
@@ -2354,9 +2477,11 @@ module UpdateQuerySuggestionsBlockList =
           let input =
             Serializers.update_query_suggestions_block_list_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateQuerySuggestionsBlockList"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateQuerySuggestionsConfig =
@@ -2391,9 +2516,11 @@ module UpdateQuerySuggestionsConfig =
           let input =
             Serializers.update_query_suggestions_config_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateQuerySuggestionsConfig"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateThesaurus =
@@ -2426,8 +2553,10 @@ module UpdateThesaurus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_thesaurus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSKendraFrontendServiceUpdateThesaurus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end

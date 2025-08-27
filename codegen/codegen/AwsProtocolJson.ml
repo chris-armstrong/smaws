@@ -557,7 +557,10 @@ module Operations = struct
         |> Option.value ~default:"base_unit_of_yojson"
       in
       let request_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request_with_http_module" ]))
+      in
+      let http_module_func_name =
+        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.context; "http_module" ]))
       in
       let config_func_name =
         B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "config" ]))
@@ -569,8 +572,9 @@ module Operations = struct
         let open Smaws_Lib.Context in
         let open Deserializers in
         let input = [%e input] in
-        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service
-          ~config:[%e config_func_name] ~http:[%e http_func_name] ~input
+        [%e request_func_name] ~http_module:([%e http_module_func_name] context) 
+          ~http:[%e http_func_name] ~shape_name:[%e const_str service_shape] ~service
+          ~config:[%e config_func_name] ~input
           ~output_deserializer:[%e exp_ident response_shape_deserializer]
           ~error_deserializer]
     in

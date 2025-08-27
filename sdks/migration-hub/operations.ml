@@ -41,9 +41,11 @@ module AssociateCreatedArtifact =
         let open Deserializers in
           let input =
             Serializers.associate_created_artifact_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubAssociateCreatedArtifact" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_created_artifact_result_of_yojson
             ~error_deserializer
   end
@@ -92,9 +94,11 @@ module AssociateDiscoveredResource =
           let input =
             Serializers.associate_discovered_resource_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubAssociateDiscoveredResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_discovered_resource_result_of_yojson
             ~error_deserializer
   end
@@ -136,9 +140,11 @@ module AssociateSourceResource =
         let open Deserializers in
           let input =
             Serializers.associate_source_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubAssociateSourceResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_source_resource_result_of_yojson
             ~error_deserializer
   end
@@ -181,9 +187,11 @@ module CreateProgressUpdateStream =
           let input =
             Serializers.create_progress_update_stream_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubCreateProgressUpdateStream" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_progress_update_stream_result_of_yojson
             ~error_deserializer
   end
@@ -229,9 +237,11 @@ module DeleteProgressUpdateStream =
           let input =
             Serializers.delete_progress_update_stream_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDeleteProgressUpdateStream" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_progress_update_stream_result_of_yojson
             ~error_deserializer
   end
@@ -274,9 +284,11 @@ module DescribeApplicationState =
         let open Deserializers in
           let input =
             Serializers.describe_application_state_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDescribeApplicationState" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_application_state_result_of_yojson
             ~error_deserializer
   end
@@ -316,9 +328,11 @@ module DescribeMigrationTask =
         let open Deserializers in
           let input =
             Serializers.describe_migration_task_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDescribeMigrationTask" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_migration_task_result_of_yojson
             ~error_deserializer
   end
@@ -364,9 +378,11 @@ module DisassociateCreatedArtifact =
           let input =
             Serializers.disassociate_created_artifact_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDisassociateCreatedArtifact" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_created_artifact_result_of_yojson
             ~error_deserializer
   end
@@ -413,9 +429,11 @@ module DisassociateDiscoveredResource =
           let input =
             Serializers.disassociate_discovered_resource_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDisassociateDiscoveredResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_discovered_resource_result_of_yojson
             ~error_deserializer
   end
@@ -458,9 +476,11 @@ module DisassociateSourceResource =
           let input =
             Serializers.disassociate_source_resource_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubDisassociateSourceResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_source_resource_result_of_yojson
             ~error_deserializer
   end
@@ -505,9 +525,11 @@ module ImportMigrationTask =
         let open Deserializers in
           let input =
             Serializers.import_migration_task_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubImportMigrationTask" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:import_migration_task_result_of_yojson
             ~error_deserializer
   end
@@ -544,9 +566,11 @@ module ListApplicationStates =
         let open Deserializers in
           let input =
             Serializers.list_application_states_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListApplicationStates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_application_states_result_of_yojson
             ~error_deserializer
   end
@@ -586,9 +610,11 @@ module ListCreatedArtifacts =
         let open Deserializers in
           let input =
             Serializers.list_created_artifacts_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListCreatedArtifacts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_created_artifacts_result_of_yojson
             ~error_deserializer
   end
@@ -628,9 +654,11 @@ module ListDiscoveredResources =
         let open Deserializers in
           let input =
             Serializers.list_discovered_resources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListDiscoveredResources" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_discovered_resources_result_of_yojson
             ~error_deserializer
   end
@@ -667,9 +695,11 @@ module ListMigrationTaskUpdates =
         let open Deserializers in
           let input =
             Serializers.list_migration_task_updates_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListMigrationTaskUpdates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_migration_task_updates_result_of_yojson
             ~error_deserializer
   end
@@ -712,9 +742,11 @@ module ListMigrationTasks =
         let open Deserializers in
           let input =
             Serializers.list_migration_tasks_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListMigrationTasks" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_migration_tasks_result_of_yojson
             ~error_deserializer
   end
@@ -752,9 +784,11 @@ module ListProgressUpdateStreams =
           let input =
             Serializers.list_progress_update_streams_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListProgressUpdateStreams" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_progress_update_streams_result_of_yojson
             ~error_deserializer
   end
@@ -791,9 +825,11 @@ module ListSourceResources =
         let open Deserializers in
           let input =
             Serializers.list_source_resources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubListSourceResources" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_source_resources_result_of_yojson
             ~error_deserializer
   end
@@ -841,9 +877,11 @@ module NotifyApplicationState =
         let open Deserializers in
           let input =
             Serializers.notify_application_state_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubNotifyApplicationState" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:notify_application_state_result_of_yojson
             ~error_deserializer
   end
@@ -888,9 +926,11 @@ module NotifyMigrationTaskState =
         let open Deserializers in
           let input =
             Serializers.notify_migration_task_state_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubNotifyMigrationTaskState" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:notify_migration_task_state_result_of_yojson
             ~error_deserializer
   end
@@ -935,9 +975,11 @@ module PutResourceAttributes =
         let open Deserializers in
           let input =
             Serializers.put_resource_attributes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMigrationHubPutResourceAttributes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_resource_attributes_result_of_yojson
             ~error_deserializer
   end

@@ -61,9 +61,10 @@ module CreateCluster =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_cluster_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3CreateCluster" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3CreateCluster"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_cluster_response_of_yojson
             ~error_deserializer
   end
@@ -101,9 +102,10 @@ module CreateParameterGroup =
         let open Deserializers in
           let input =
             Serializers.create_parameter_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3CreateParameterGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3CreateParameterGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_parameter_group_response_of_yojson
             ~error_deserializer
   end
@@ -137,9 +139,10 @@ module CreateSubnetGroup =
         let open Deserializers in
           let input =
             Serializers.create_subnet_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3CreateSubnetGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3CreateSubnetGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_subnet_group_response_of_yojson
             ~error_deserializer
   end
@@ -176,9 +179,11 @@ module DecreaseReplicationFactor =
         let open Deserializers in
           let input =
             Serializers.decrease_replication_factor_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonDAXV3DecreaseReplicationFactor" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:decrease_replication_factor_response_of_yojson
             ~error_deserializer
   end
@@ -212,9 +217,10 @@ module DeleteCluster =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_cluster_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DeleteCluster" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DeleteCluster"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_cluster_response_of_yojson
             ~error_deserializer
   end
@@ -249,9 +255,10 @@ module DeleteParameterGroup =
         let open Deserializers in
           let input =
             Serializers.delete_parameter_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DeleteParameterGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DeleteParameterGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_parameter_group_response_of_yojson
             ~error_deserializer
   end
@@ -280,9 +287,10 @@ module DeleteSubnetGroup =
         let open Deserializers in
           let input =
             Serializers.delete_subnet_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DeleteSubnetGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DeleteSubnetGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_subnet_group_response_of_yojson
             ~error_deserializer
   end
@@ -313,9 +321,10 @@ module DescribeClusters =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_clusters_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DescribeClusters" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DescribeClusters"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_clusters_response_of_yojson
             ~error_deserializer
   end
@@ -344,9 +353,11 @@ module DescribeDefaultParameters =
         let open Deserializers in
           let input =
             Serializers.describe_default_parameters_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonDAXV3DescribeDefaultParameters" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_default_parameters_response_of_yojson
             ~error_deserializer
   end
@@ -374,9 +385,10 @@ module DescribeEvents =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_events_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DescribeEvents" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DescribeEvents"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_events_response_of_yojson
             ~error_deserializer
   end
@@ -408,9 +420,11 @@ module DescribeParameterGroups =
         let open Deserializers in
           let input =
             Serializers.describe_parameter_groups_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonDAXV3DescribeParameterGroups" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_parameter_groups_response_of_yojson
             ~error_deserializer
   end
@@ -442,9 +456,10 @@ module DescribeParameters =
         let open Deserializers in
           let input =
             Serializers.describe_parameters_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DescribeParameters" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DescribeParameters"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_parameters_response_of_yojson
             ~error_deserializer
   end
@@ -470,9 +485,10 @@ module DescribeSubnetGroups =
         let open Deserializers in
           let input =
             Serializers.describe_subnet_groups_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3DescribeSubnetGroups" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3DescribeSubnetGroups"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_subnet_groups_response_of_yojson
             ~error_deserializer
   end
@@ -519,9 +535,11 @@ module IncreaseReplicationFactor =
         let open Deserializers in
           let input =
             Serializers.increase_replication_factor_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonDAXV3IncreaseReplicationFactor" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:increase_replication_factor_response_of_yojson
             ~error_deserializer
   end
@@ -557,9 +575,10 @@ module ListTags =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_tags_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3ListTags" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3ListTags" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_tags_response_of_yojson
             ~error_deserializer
   end
@@ -595,9 +614,10 @@ module RebootNode =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.reboot_node_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3RebootNode" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3RebootNode" ~service
+            ~config:context.config ~input
             ~output_deserializer:reboot_node_response_of_yojson
             ~error_deserializer
   end
@@ -636,9 +656,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3TagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -676,9 +697,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -718,9 +740,10 @@ module UpdateCluster =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_cluster_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3UpdateCluster" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3UpdateCluster"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_cluster_response_of_yojson
             ~error_deserializer
   end
@@ -755,9 +778,10 @@ module UpdateParameterGroup =
         let open Deserializers in
           let input =
             Serializers.update_parameter_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3UpdateParameterGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3UpdateParameterGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_parameter_group_response_of_yojson
             ~error_deserializer
   end
@@ -790,9 +814,10 @@ module UpdateSubnetGroup =
         let open Deserializers in
           let input =
             Serializers.update_subnet_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonDAXV3UpdateSubnetGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonDAXV3UpdateSubnetGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_subnet_group_response_of_yojson
             ~error_deserializer
   end

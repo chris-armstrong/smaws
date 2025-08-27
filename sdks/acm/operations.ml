@@ -35,9 +35,11 @@ module AddTagsToCertificate =
         let open Deserializers in
           let input =
             Serializers.add_tags_to_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerAddTagsToCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteCertificate =
@@ -72,9 +74,11 @@ module DeleteCertificate =
         let open Deserializers in
           let input =
             Serializers.delete_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerDeleteCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeCertificate =
@@ -99,9 +103,11 @@ module DescribeCertificate =
         let open Deserializers in
           let input =
             Serializers.describe_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerDescribeCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -130,9 +136,11 @@ module ExportCertificate =
         let open Deserializers in
           let input =
             Serializers.export_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerExportCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:export_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -156,9 +164,11 @@ module GetAccountConfiguration =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.base_unit_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerGetAccountConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_account_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -186,9 +196,10 @@ module GetCertificate =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"CertificateManagerGetCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"CertificateManagerGetCertificate"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -228,9 +239,11 @@ module ImportCertificate =
         let open Deserializers in
           let input =
             Serializers.import_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerImportCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:import_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -254,9 +267,11 @@ module ListCertificates =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_certificates_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerListCertificates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_certificates_response_of_yojson
             ~error_deserializer
   end
@@ -282,9 +297,11 @@ module ListTagsForCertificate =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerListTagsForCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -313,9 +330,11 @@ module PutAccountConfiguration =
         let open Deserializers in
           let input =
             Serializers.put_account_configuration_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerPutAccountConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RemoveTagsFromCertificate =
@@ -351,9 +370,11 @@ module RemoveTagsFromCertificate =
           let input =
             Serializers.remove_tags_from_certificate_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerRemoveTagsFromCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RenewCertificate =
@@ -380,9 +401,11 @@ module RenewCertificate =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.renew_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerRenewCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RequestCertificate =
@@ -422,9 +445,11 @@ module RequestCertificate =
         let open Deserializers in
           let input =
             Serializers.request_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerRequestCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:request_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -457,9 +482,11 @@ module ResendValidationEmail =
         let open Deserializers in
           let input =
             Serializers.resend_validation_email_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerResendValidationEmail" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RevokeCertificate =
@@ -494,9 +521,11 @@ module RevokeCertificate =
         let open Deserializers in
           let input =
             Serializers.revoke_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerRevokeCertificate" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:revoke_certificate_response_of_yojson
             ~error_deserializer
   end
@@ -528,8 +557,10 @@ module UpdateCertificateOptions =
         let open Deserializers in
           let input =
             Serializers.update_certificate_options_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CertificateManagerUpdateCertificateOptions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end

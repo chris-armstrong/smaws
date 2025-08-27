@@ -34,9 +34,11 @@ module CreateIdentityPool =
         let open Deserializers in
           let input =
             Serializers.create_identity_pool_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceCreateIdentityPool"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:identity_pool_of_yojson ~error_deserializer
   end
 module DeleteIdentities =
@@ -63,9 +65,11 @@ module DeleteIdentities =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_identities_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceDeleteIdentities" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_identities_response_of_yojson
             ~error_deserializer
   end
@@ -100,9 +104,11 @@ module DeleteIdentityPool =
         let open Deserializers in
           let input =
             Serializers.delete_identity_pool_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceDeleteIdentityPool"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeIdentity =
@@ -135,9 +141,11 @@ module DescribeIdentity =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_identity_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceDescribeIdentity" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:identity_description_of_yojson
             ~error_deserializer
   end
@@ -172,9 +180,11 @@ module DescribeIdentityPool =
         let open Deserializers in
           let input =
             Serializers.describe_identity_pool_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceDescribeIdentityPool"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:identity_pool_of_yojson ~error_deserializer
   end
 module GetCredentialsForIdentity =
@@ -218,9 +228,11 @@ module GetCredentialsForIdentity =
         let open Deserializers in
           let input =
             Serializers.get_credentials_for_identity_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceGetCredentialsForIdentity"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_credentials_for_identity_response_of_yojson
             ~error_deserializer
   end
@@ -263,9 +275,10 @@ module GetId =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_id_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSCognitoIdentityServiceGetId" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSCognitoIdentityServiceGetId"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_id_response_of_yojson
             ~error_deserializer
   end
@@ -303,9 +316,11 @@ module GetIdentityPoolRoles =
         let open Deserializers in
           let input =
             Serializers.get_identity_pool_roles_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceGetIdentityPoolRoles"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_identity_pool_roles_response_of_yojson
             ~error_deserializer
   end
@@ -345,9 +360,11 @@ module GetOpenIdToken =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_open_id_token_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceGetOpenIdToken" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_open_id_token_response_of_yojson
             ~error_deserializer
   end
@@ -391,9 +408,11 @@ module GetOpenIdTokenForDeveloperIdentity =
           let input =
             Serializers.get_open_id_token_for_developer_identity_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceGetOpenIdTokenForDeveloperIdentity"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_open_id_token_for_developer_identity_response_of_yojson
             ~error_deserializer
   end
@@ -429,9 +448,11 @@ module GetPrincipalTagAttributeMap =
           let input =
             Serializers.get_principal_tag_attribute_map_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceGetPrincipalTagAttributeMap"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_principal_tag_attribute_map_response_of_yojson
             ~error_deserializer
   end
@@ -465,9 +486,11 @@ module ListIdentities =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_identities_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceListIdentities" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_identities_response_of_yojson
             ~error_deserializer
   end
@@ -501,9 +524,11 @@ module ListIdentityPools =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_identity_pools_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceListIdentityPools" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_identity_pools_response_of_yojson
             ~error_deserializer
   end
@@ -538,9 +563,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -578,9 +605,11 @@ module LookupDeveloperIdentity =
         let open Deserializers in
           let input =
             Serializers.lookup_developer_identity_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceLookupDeveloperIdentity"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:lookup_developer_identity_response_of_yojson
             ~error_deserializer
   end
@@ -618,9 +647,11 @@ module MergeDeveloperIdentities =
         let open Deserializers in
           let input =
             Serializers.merge_developer_identities_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceMergeDeveloperIdentities"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:merge_developer_identities_response_of_yojson
             ~error_deserializer
   end
@@ -661,9 +692,11 @@ module SetIdentityPoolRoles =
         let open Deserializers in
           let input =
             Serializers.set_identity_pool_roles_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceSetIdentityPoolRoles"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SetPrincipalTagAttributeMap =
@@ -698,9 +731,11 @@ module SetPrincipalTagAttributeMap =
           let input =
             Serializers.set_principal_tag_attribute_map_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceSetPrincipalTagAttributeMap"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:set_principal_tag_attribute_map_response_of_yojson
             ~error_deserializer
   end
@@ -734,9 +769,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -774,9 +811,11 @@ module UnlinkDeveloperIdentity =
         let open Deserializers in
           let input =
             Serializers.unlink_developer_identity_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceUnlinkDeveloperIdentity"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UnlinkIdentity =
@@ -815,9 +854,11 @@ module UnlinkIdentity =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.unlink_identity_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceUnlinkIdentity" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UntagResource =
@@ -850,9 +891,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -895,8 +938,10 @@ module UpdateIdentityPool =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.identity_pool_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSCognitoIdentityServiceUpdateIdentityPool"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:identity_pool_of_yojson ~error_deserializer
   end

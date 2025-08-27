@@ -30,9 +30,10 @@ module AddTagsToStream =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.add_tags_to_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202AddTagsToStream" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202AddTagsToStream"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module CreateStream =
@@ -59,9 +60,10 @@ module CreateStream =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202CreateStream" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202CreateStream"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DecreaseStreamRetentionPeriod =
@@ -96,9 +98,11 @@ module DecreaseStreamRetentionPeriod =
           let input =
             Serializers.decrease_stream_retention_period_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DecreaseStreamRetentionPeriod"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteResourcePolicy =
@@ -132,9 +136,11 @@ module DeleteResourcePolicy =
         let open Deserializers in
           let input =
             Serializers.delete_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DeleteResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteStream =
@@ -167,9 +173,10 @@ module DeleteStream =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202DeleteStream" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202DeleteStream"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeregisterStreamConsumer =
@@ -197,9 +204,11 @@ module DeregisterStreamConsumer =
         let open Deserializers in
           let input =
             Serializers.deregister_stream_consumer_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DeregisterStreamConsumer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeLimits =
@@ -220,9 +229,10 @@ module DescribeLimits =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_limits_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202DescribeLimits" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202DescribeLimits"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_limits_output_of_yojson
             ~error_deserializer
   end
@@ -253,9 +263,10 @@ module DescribeStream =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202DescribeStream" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202DescribeStream"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_stream_output_of_yojson
             ~error_deserializer
   end
@@ -284,9 +295,11 @@ module DescribeStreamConsumer =
         let open Deserializers in
           let input =
             Serializers.describe_stream_consumer_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DescribeStreamConsumer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_stream_consumer_output_of_yojson
             ~error_deserializer
   end
@@ -318,9 +331,11 @@ module DescribeStreamSummary =
         let open Deserializers in
           let input =
             Serializers.describe_stream_summary_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DescribeStreamSummary" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_stream_summary_output_of_yojson
             ~error_deserializer
   end
@@ -355,9 +370,11 @@ module DisableEnhancedMonitoring =
         let open Deserializers in
           let input =
             Serializers.disable_enhanced_monitoring_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202DisableEnhancedMonitoring" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:enhanced_monitoring_output_of_yojson
             ~error_deserializer
   end
@@ -392,9 +409,11 @@ module EnableEnhancedMonitoring =
         let open Deserializers in
           let input =
             Serializers.enable_enhanced_monitoring_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202EnableEnhancedMonitoring" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:enhanced_monitoring_output_of_yojson
             ~error_deserializer
   end
@@ -449,9 +468,10 @@ module GetRecords =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_records_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202GetRecords" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202GetRecords"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_records_output_of_yojson
             ~error_deserializer
   end
@@ -485,9 +505,11 @@ module GetResourcePolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202GetResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_resource_policy_output_of_yojson
             ~error_deserializer
   end
@@ -522,9 +544,10 @@ module GetShardIterator =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_shard_iterator_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202GetShardIterator" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202GetShardIterator"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_shard_iterator_output_of_yojson
             ~error_deserializer
   end
@@ -560,9 +583,11 @@ module IncreaseStreamRetentionPeriod =
           let input =
             Serializers.increase_stream_retention_period_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202IncreaseStreamRetentionPeriod"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module ListShards =
@@ -598,9 +623,10 @@ module ListShards =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_shards_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202ListShards" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202ListShards"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_shards_output_of_yojson
             ~error_deserializer
   end
@@ -635,9 +661,11 @@ module ListStreamConsumers =
         let open Deserializers in
           let input =
             Serializers.list_stream_consumers_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202ListStreamConsumers" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_stream_consumers_output_of_yojson
             ~error_deserializer
   end
@@ -665,9 +693,10 @@ module ListStreams =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_streams_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202ListStreams" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202ListStreams"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_streams_output_of_yojson
             ~error_deserializer
   end
@@ -702,9 +731,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202ListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_output_of_yojson
             ~error_deserializer
   end
@@ -736,9 +767,11 @@ module ListTagsForStream =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202ListTagsForStream" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_stream_output_of_yojson
             ~error_deserializer
   end
@@ -774,9 +807,10 @@ module MergeShards =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.merge_shards_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202MergeShards" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202MergeShards"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module PutRecord =
@@ -827,9 +861,10 @@ module PutRecord =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_record_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202PutRecord" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202PutRecord"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_record_output_of_yojson
             ~error_deserializer
   end
@@ -881,9 +916,10 @@ module PutRecords =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_records_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202PutRecords" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202PutRecords"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_records_output_of_yojson
             ~error_deserializer
   end
@@ -917,9 +953,11 @@ module PutResourcePolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_resource_policy_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202PutResourcePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RegisterStreamConsumer =
@@ -950,9 +988,11 @@ module RegisterStreamConsumer =
         let open Deserializers in
           let input =
             Serializers.register_stream_consumer_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202RegisterStreamConsumer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:register_stream_consumer_output_of_yojson
             ~error_deserializer
   end
@@ -987,9 +1027,11 @@ module RemoveTagsFromStream =
         let open Deserializers in
           let input =
             Serializers.remove_tags_from_stream_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202RemoveTagsFromStream" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SplitShard =
@@ -1024,9 +1066,10 @@ module SplitShard =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.split_shard_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202SplitShard" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202SplitShard"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module StartStreamEncryption =
@@ -1077,9 +1120,11 @@ module StartStreamEncryption =
         let open Deserializers in
           let input =
             Serializers.start_stream_encryption_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202StartStreamEncryption" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module StopStreamEncryption =
@@ -1113,9 +1158,11 @@ module StopStreamEncryption =
         let open Deserializers in
           let input =
             Serializers.stop_stream_encryption_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"Kinesis_20131202StopStreamEncryption" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SubscribeToShard =
@@ -1148,9 +1195,10 @@ module SubscribeToShard =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.subscribe_to_shard_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202SubscribeToShard" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202SubscribeToShard"
+            ~service ~config:context.config ~input
             ~output_deserializer:subscribe_to_shard_output_of_yojson
             ~error_deserializer
   end
@@ -1184,9 +1232,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UntagResource =
@@ -1219,9 +1268,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UpdateShardCount =
@@ -1256,9 +1306,10 @@ module UpdateShardCount =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_shard_count_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202UpdateShardCount" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202UpdateShardCount"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_shard_count_output_of_yojson
             ~error_deserializer
   end
@@ -1289,8 +1340,9 @@ module UpdateStreamMode =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_stream_mode_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"Kinesis_20131202UpdateStreamMode" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"Kinesis_20131202UpdateStreamMode"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end

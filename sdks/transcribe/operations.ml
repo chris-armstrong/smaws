@@ -28,9 +28,11 @@ module CreateCallAnalyticsCategory =
           let input =
             Serializers.create_call_analytics_category_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeCreateCallAnalyticsCategory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_call_analytics_category_response_of_yojson
             ~error_deserializer
   end
@@ -61,9 +63,10 @@ module CreateLanguageModel =
         let open Deserializers in
           let input =
             Serializers.create_language_model_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeCreateLanguageModel" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeCreateLanguageModel"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_language_model_response_of_yojson
             ~error_deserializer
   end
@@ -94,9 +97,11 @@ module CreateMedicalVocabulary =
         let open Deserializers in
           let input =
             Serializers.create_medical_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeCreateMedicalVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_medical_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -126,9 +131,10 @@ module CreateVocabulary =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeCreateVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeCreateVocabulary"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -159,9 +165,10 @@ module CreateVocabularyFilter =
         let open Deserializers in
           let input =
             Serializers.create_vocabulary_filter_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeCreateVocabularyFilter" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeCreateVocabularyFilter"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_vocabulary_filter_response_of_yojson
             ~error_deserializer
   end
@@ -193,9 +200,11 @@ module DeleteCallAnalyticsCategory =
           let input =
             Serializers.delete_call_analytics_category_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeDeleteCallAnalyticsCategory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_call_analytics_category_response_of_yojson
             ~error_deserializer
   end
@@ -224,9 +233,10 @@ module DeleteCallAnalyticsJob =
         let open Deserializers in
           let input =
             Serializers.delete_call_analytics_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteCallAnalyticsJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteCallAnalyticsJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_call_analytics_job_response_of_yojson
             ~error_deserializer
   end
@@ -255,9 +265,10 @@ module DeleteLanguageModel =
         let open Deserializers in
           let input =
             Serializers.delete_language_model_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteLanguageModel" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteLanguageModel"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteMedicalScribeJob =
@@ -285,9 +296,10 @@ module DeleteMedicalScribeJob =
         let open Deserializers in
           let input =
             Serializers.delete_medical_scribe_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteMedicalScribeJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteMedicalScribeJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteMedicalTranscriptionJob =
@@ -317,9 +329,11 @@ module DeleteMedicalTranscriptionJob =
           let input =
             Serializers.delete_medical_transcription_job_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeDeleteMedicalTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteMedicalVocabulary =
@@ -349,9 +363,11 @@ module DeleteMedicalVocabulary =
         let open Deserializers in
           let input =
             Serializers.delete_medical_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeDeleteMedicalVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteTranscriptionJob =
@@ -379,9 +395,10 @@ module DeleteTranscriptionJob =
         let open Deserializers in
           let input =
             Serializers.delete_transcription_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteTranscriptionJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteVocabulary =
@@ -410,9 +427,10 @@ module DeleteVocabulary =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteVocabulary"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteVocabularyFilter =
@@ -442,9 +460,10 @@ module DeleteVocabularyFilter =
         let open Deserializers in
           let input =
             Serializers.delete_vocabulary_filter_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDeleteVocabularyFilter" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDeleteVocabularyFilter"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeLanguageModel =
@@ -474,9 +493,10 @@ module DescribeLanguageModel =
         let open Deserializers in
           let input =
             Serializers.describe_language_model_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeDescribeLanguageModel" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeDescribeLanguageModel"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_language_model_response_of_yojson
             ~error_deserializer
   end
@@ -507,9 +527,11 @@ module GetCallAnalyticsCategory =
         let open Deserializers in
           let input =
             Serializers.get_call_analytics_category_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeGetCallAnalyticsCategory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_call_analytics_category_response_of_yojson
             ~error_deserializer
   end
@@ -540,9 +562,10 @@ module GetCallAnalyticsJob =
         let open Deserializers in
           let input =
             Serializers.get_call_analytics_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetCallAnalyticsJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetCallAnalyticsJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_call_analytics_job_response_of_yojson
             ~error_deserializer
   end
@@ -573,9 +596,10 @@ module GetMedicalScribeJob =
         let open Deserializers in
           let input =
             Serializers.get_medical_scribe_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetMedicalScribeJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetMedicalScribeJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_medical_scribe_job_response_of_yojson
             ~error_deserializer
   end
@@ -607,9 +631,11 @@ module GetMedicalTranscriptionJob =
           let input =
             Serializers.get_medical_transcription_job_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeGetMedicalTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_medical_transcription_job_response_of_yojson
             ~error_deserializer
   end
@@ -640,9 +666,10 @@ module GetMedicalVocabulary =
         let open Deserializers in
           let input =
             Serializers.get_medical_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetMedicalVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetMedicalVocabulary"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_medical_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -673,9 +700,10 @@ module GetTranscriptionJob =
         let open Deserializers in
           let input =
             Serializers.get_transcription_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetTranscriptionJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_transcription_job_response_of_yojson
             ~error_deserializer
   end
@@ -705,9 +733,10 @@ module GetVocabulary =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetVocabulary" ~service
+            ~config:context.config ~input
             ~output_deserializer:get_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -738,9 +767,10 @@ module GetVocabularyFilter =
         let open Deserializers in
           let input =
             Serializers.get_vocabulary_filter_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeGetVocabularyFilter" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeGetVocabularyFilter"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_vocabulary_filter_response_of_yojson
             ~error_deserializer
   end
@@ -770,9 +800,11 @@ module ListCallAnalyticsCategories =
           let input =
             Serializers.list_call_analytics_categories_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeListCallAnalyticsCategories" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_call_analytics_categories_response_of_yojson
             ~error_deserializer
   end
@@ -801,9 +833,10 @@ module ListCallAnalyticsJobs =
         let open Deserializers in
           let input =
             Serializers.list_call_analytics_jobs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListCallAnalyticsJobs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListCallAnalyticsJobs"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_call_analytics_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -832,9 +865,10 @@ module ListLanguageModels =
         let open Deserializers in
           let input =
             Serializers.list_language_models_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListLanguageModels" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListLanguageModels"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_language_models_response_of_yojson
             ~error_deserializer
   end
@@ -863,9 +897,10 @@ module ListMedicalScribeJobs =
         let open Deserializers in
           let input =
             Serializers.list_medical_scribe_jobs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListMedicalScribeJobs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListMedicalScribeJobs"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_medical_scribe_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -895,9 +930,11 @@ module ListMedicalTranscriptionJobs =
           let input =
             Serializers.list_medical_transcription_jobs_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeListMedicalTranscriptionJobs" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_medical_transcription_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -926,9 +963,11 @@ module ListMedicalVocabularies =
         let open Deserializers in
           let input =
             Serializers.list_medical_vocabularies_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeListMedicalVocabularies" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_medical_vocabularies_response_of_yojson
             ~error_deserializer
   end
@@ -959,9 +998,10 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListTagsForResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -990,9 +1030,10 @@ module ListTranscriptionJobs =
         let open Deserializers in
           let input =
             Serializers.list_transcription_jobs_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListTranscriptionJobs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListTranscriptionJobs"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_transcription_jobs_response_of_yojson
             ~error_deserializer
   end
@@ -1020,9 +1061,10 @@ module ListVocabularies =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_vocabularies_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListVocabularies" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListVocabularies"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_vocabularies_response_of_yojson
             ~error_deserializer
   end
@@ -1051,9 +1093,10 @@ module ListVocabularyFilters =
         let open Deserializers in
           let input =
             Serializers.list_vocabulary_filters_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeListVocabularyFilters" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeListVocabularyFilters"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_vocabulary_filters_response_of_yojson
             ~error_deserializer
   end
@@ -1084,9 +1127,10 @@ module StartCallAnalyticsJob =
         let open Deserializers in
           let input =
             Serializers.start_call_analytics_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeStartCallAnalyticsJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeStartCallAnalyticsJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_call_analytics_job_response_of_yojson
             ~error_deserializer
   end
@@ -1117,9 +1161,10 @@ module StartMedicalScribeJob =
         let open Deserializers in
           let input =
             Serializers.start_medical_scribe_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeStartMedicalScribeJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeStartMedicalScribeJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_medical_scribe_job_response_of_yojson
             ~error_deserializer
   end
@@ -1151,9 +1196,11 @@ module StartMedicalTranscriptionJob =
           let input =
             Serializers.start_medical_transcription_job_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeStartMedicalTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:start_medical_transcription_job_response_of_yojson
             ~error_deserializer
   end
@@ -1184,9 +1231,10 @@ module StartTranscriptionJob =
         let open Deserializers in
           let input =
             Serializers.start_transcription_job_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeStartTranscriptionJob" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeStartTranscriptionJob"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_transcription_job_response_of_yojson
             ~error_deserializer
   end
@@ -1218,9 +1266,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeTagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1252,9 +1301,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeUntagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1288,9 +1338,11 @@ module UpdateCallAnalyticsCategory =
           let input =
             Serializers.update_call_analytics_category_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeUpdateCallAnalyticsCategory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_call_analytics_category_response_of_yojson
             ~error_deserializer
   end
@@ -1323,9 +1375,11 @@ module UpdateMedicalVocabulary =
         let open Deserializers in
           let input =
             Serializers.update_medical_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"TranscribeUpdateMedicalVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_medical_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -1357,9 +1411,10 @@ module UpdateVocabulary =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_vocabulary_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeUpdateVocabulary" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeUpdateVocabulary"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_vocabulary_response_of_yojson
             ~error_deserializer
   end
@@ -1390,9 +1445,10 @@ module UpdateVocabularyFilter =
         let open Deserializers in
           let input =
             Serializers.update_vocabulary_filter_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"TranscribeUpdateVocabularyFilter" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"TranscribeUpdateVocabularyFilter"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_vocabulary_filter_response_of_yojson
             ~error_deserializer
   end

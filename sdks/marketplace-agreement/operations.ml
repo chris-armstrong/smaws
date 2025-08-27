@@ -28,9 +28,11 @@ module DescribeAgreement =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_agreement_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMPCommerceService_v20200301DescribeAgreement"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_agreement_output_of_yojson
             ~error_deserializer
   end
@@ -62,9 +64,11 @@ module GetAgreementTerms =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_agreement_terms_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMPCommerceService_v20200301GetAgreementTerms"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_agreement_terms_output_of_yojson
             ~error_deserializer
   end
@@ -93,9 +97,11 @@ module SearchAgreements =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.search_agreements_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSMPCommerceService_v20200301SearchAgreements"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:search_agreements_output_of_yojson
             ~error_deserializer
   end

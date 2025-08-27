@@ -29,9 +29,11 @@ module AcceptSharedDirectory =
         let open Deserializers in
           let input =
             Serializers.accept_shared_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416AcceptSharedDirectory"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:accept_shared_directory_result_of_yojson
             ~error_deserializer
   end
@@ -69,9 +71,11 @@ module AddIpRoutes =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.add_ip_routes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416AddIpRoutes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:add_ip_routes_result_of_yojson
             ~error_deserializer
   end
@@ -118,9 +122,11 @@ module AddRegion =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.add_region_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416AddRegion" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:add_region_result_of_yojson
             ~error_deserializer
   end
@@ -153,9 +159,11 @@ module AddTagsToResource =
         let open Deserializers in
           let input =
             Serializers.add_tags_to_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416AddTagsToResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:add_tags_to_resource_result_of_yojson
             ~error_deserializer
   end
@@ -182,9 +190,11 @@ module CancelSchemaExtension =
         let open Deserializers in
           let input =
             Serializers.cancel_schema_extension_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CancelSchemaExtension"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:cancel_schema_extension_result_of_yojson
             ~error_deserializer
   end
@@ -213,9 +223,11 @@ module ConnectDirectory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.connect_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ConnectDirectory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:connect_directory_result_of_yojson
             ~error_deserializer
   end
@@ -247,9 +259,11 @@ module CreateAlias =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_alias_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateAlias" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_alias_result_of_yojson
             ~error_deserializer
   end
@@ -290,9 +304,11 @@ module CreateComputer =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_computer_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateComputer" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_computer_result_of_yojson
             ~error_deserializer
   end
@@ -332,9 +348,11 @@ module CreateConditionalForwarder =
           let input =
             Serializers.create_conditional_forwarder_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateConditionalForwarder"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_conditional_forwarder_result_of_yojson
             ~error_deserializer
   end
@@ -363,9 +381,11 @@ module CreateDirectory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateDirectory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_directory_result_of_yojson
             ~error_deserializer
   end
@@ -401,9 +421,11 @@ module CreateLogSubscription =
         let open Deserializers in
           let input =
             Serializers.create_log_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateLogSubscription"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_log_subscription_result_of_yojson
             ~error_deserializer
   end
@@ -436,9 +458,11 @@ module CreateMicrosoftAD =
         let open Deserializers in
           let input =
             Serializers.create_microsoft_ad_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateMicrosoftAD" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_microsoft_ad_result_of_yojson
             ~error_deserializer
   end
@@ -470,9 +494,11 @@ module CreateSnapshot =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -507,9 +533,11 @@ module CreateTrust =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_trust_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416CreateTrust" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_trust_result_of_yojson
             ~error_deserializer
   end
@@ -546,9 +574,11 @@ module DeleteConditionalForwarder =
           let input =
             Serializers.delete_conditional_forwarder_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeleteConditionalForwarder"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_conditional_forwarder_result_of_yojson
             ~error_deserializer
   end
@@ -574,9 +604,11 @@ module DeleteDirectory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeleteDirectory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_directory_result_of_yojson
             ~error_deserializer
   end
@@ -606,9 +638,11 @@ module DeleteLogSubscription =
         let open Deserializers in
           let input =
             Serializers.delete_log_subscription_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeleteLogSubscription"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_log_subscription_result_of_yojson
             ~error_deserializer
   end
@@ -637,9 +671,11 @@ module DeleteSnapshot =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeleteSnapshot" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -671,9 +707,11 @@ module DeleteTrust =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_trust_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeleteTrust" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_trust_result_of_yojson
             ~error_deserializer
   end
@@ -715,9 +753,11 @@ module DeregisterCertificate =
         let open Deserializers in
           let input =
             Serializers.deregister_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeregisterCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:deregister_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -747,9 +787,11 @@ module DeregisterEventTopic =
         let open Deserializers in
           let input =
             Serializers.deregister_event_topic_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DeregisterEventTopic"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:deregister_event_topic_result_of_yojson
             ~error_deserializer
   end
@@ -785,9 +827,11 @@ module DescribeCertificate =
         let open Deserializers in
           let input =
             Serializers.describe_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -825,9 +869,11 @@ module DescribeClientAuthenticationSettings =
           let input =
             Serializers.describe_client_authentication_settings_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeClientAuthenticationSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_client_authentication_settings_result_of_yojson
             ~error_deserializer
   end
@@ -864,9 +910,11 @@ module DescribeConditionalForwarders =
           let input =
             Serializers.describe_conditional_forwarders_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeConditionalForwarders"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_conditional_forwarders_result_of_yojson
             ~error_deserializer
   end
@@ -899,9 +947,11 @@ module DescribeDirectories =
         let open Deserializers in
           let input =
             Serializers.describe_directories_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeDirectories"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_directories_result_of_yojson
             ~error_deserializer
   end
@@ -935,9 +985,11 @@ module DescribeDirectoryDataAccess =
           let input =
             Serializers.describe_directory_data_access_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeDirectoryDataAccess"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_directory_data_access_result_of_yojson
             ~error_deserializer
   end
@@ -973,9 +1025,11 @@ module DescribeDomainControllers =
         let open Deserializers in
           let input =
             Serializers.describe_domain_controllers_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeDomainControllers"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_domain_controllers_result_of_yojson
             ~error_deserializer
   end
@@ -1005,9 +1059,11 @@ module DescribeEventTopics =
         let open Deserializers in
           let input =
             Serializers.describe_event_topics_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeEventTopics"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_event_topics_result_of_yojson
             ~error_deserializer
   end
@@ -1043,9 +1099,11 @@ module DescribeLDAPSSettings =
         let open Deserializers in
           let input =
             Serializers.describe_ldaps_settings_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeLDAPSSettings"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_ldaps_settings_result_of_yojson
             ~error_deserializer
   end
@@ -1083,9 +1141,11 @@ module DescribeRegions =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_regions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeRegions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_regions_result_of_yojson
             ~error_deserializer
   end
@@ -1120,9 +1180,11 @@ module DescribeSettings =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_settings_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeSettings" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_settings_result_of_yojson
             ~error_deserializer
   end
@@ -1158,9 +1220,11 @@ module DescribeSharedDirectories =
         let open Deserializers in
           let input =
             Serializers.describe_shared_directories_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeSharedDirectories"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_shared_directories_result_of_yojson
             ~error_deserializer
   end
@@ -1193,9 +1257,11 @@ module DescribeSnapshots =
         let open Deserializers in
           let input =
             Serializers.describe_snapshots_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeSnapshots" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_snapshots_result_of_yojson
             ~error_deserializer
   end
@@ -1230,9 +1296,11 @@ module DescribeTrusts =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_trusts_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeTrusts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_trusts_result_of_yojson
             ~error_deserializer
   end
@@ -1268,9 +1336,11 @@ module DescribeUpdateDirectory =
         let open Deserializers in
           let input =
             Serializers.describe_update_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DescribeUpdateDirectory"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_update_directory_result_of_yojson
             ~error_deserializer
   end
@@ -1307,9 +1377,11 @@ module DisableClientAuthentication =
           let input =
             Serializers.disable_client_authentication_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DisableClientAuthentication"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disable_client_authentication_result_of_yojson
             ~error_deserializer
   end
@@ -1349,9 +1421,11 @@ module DisableDirectoryDataAccess =
           let input =
             Serializers.disable_directory_data_access_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DisableDirectoryDataAccess"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disable_directory_data_access_result_of_yojson
             ~error_deserializer
   end
@@ -1389,9 +1463,11 @@ module DisableLDAPS =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_ldaps_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DisableLDAPS" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disable_ldaps_result_of_yojson
             ~error_deserializer
   end
@@ -1417,9 +1493,11 @@ module DisableRadius =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_radius_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DisableRadius" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disable_radius_result_of_yojson
             ~error_deserializer
   end
@@ -1451,9 +1529,11 @@ module DisableSso =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_sso_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416DisableSso" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disable_sso_result_of_yojson
             ~error_deserializer
   end
@@ -1493,9 +1573,11 @@ module EnableClientAuthentication =
           let input =
             Serializers.enable_client_authentication_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416EnableClientAuthentication"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:enable_client_authentication_result_of_yojson
             ~error_deserializer
   end
@@ -1535,9 +1617,11 @@ module EnableDirectoryDataAccess =
           let input =
             Serializers.enable_directory_data_access_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416EnableDirectoryDataAccess"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:enable_directory_data_access_result_of_yojson
             ~error_deserializer
   end
@@ -1578,9 +1662,11 @@ module EnableLDAPS =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_ldaps_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416EnableLDAPS" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:enable_ldaps_result_of_yojson
             ~error_deserializer
   end
@@ -1612,9 +1698,11 @@ module EnableRadius =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_radius_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416EnableRadius" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:enable_radius_result_of_yojson
             ~error_deserializer
   end
@@ -1646,9 +1734,11 @@ module EnableSso =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_sso_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416EnableSso" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:enable_sso_result_of_yojson
             ~error_deserializer
   end
@@ -1675,9 +1765,11 @@ module GetDirectoryLimits =
         let open Deserializers in
           let input =
             Serializers.get_directory_limits_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416GetDirectoryLimits"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_directory_limits_result_of_yojson
             ~error_deserializer
   end
@@ -1704,9 +1796,11 @@ module GetSnapshotLimits =
         let open Deserializers in
           let input =
             Serializers.get_snapshot_limits_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416GetSnapshotLimits" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_snapshot_limits_result_of_yojson
             ~error_deserializer
   end
@@ -1741,9 +1835,11 @@ module ListCertificates =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_certificates_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ListCertificates" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_certificates_result_of_yojson
             ~error_deserializer
   end
@@ -1775,9 +1871,11 @@ module ListIpRoutes =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_ip_routes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ListIpRoutes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_ip_routes_result_of_yojson
             ~error_deserializer
   end
@@ -1807,9 +1905,11 @@ module ListLogSubscriptions =
         let open Deserializers in
           let input =
             Serializers.list_log_subscriptions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ListLogSubscriptions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_log_subscriptions_result_of_yojson
             ~error_deserializer
   end
@@ -1839,9 +1939,11 @@ module ListSchemaExtensions =
         let open Deserializers in
           let input =
             Serializers.list_schema_extensions_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ListSchemaExtensions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_schema_extensions_result_of_yojson
             ~error_deserializer
   end
@@ -1874,9 +1976,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_result_of_yojson
             ~error_deserializer
   end
@@ -1921,9 +2025,11 @@ module RegisterCertificate =
         let open Deserializers in
           let input =
             Serializers.register_certificate_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RegisterCertificate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:register_certificate_result_of_yojson
             ~error_deserializer
   end
@@ -1953,9 +2059,11 @@ module RegisterEventTopic =
         let open Deserializers in
           let input =
             Serializers.register_event_topic_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RegisterEventTopic"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:register_event_topic_result_of_yojson
             ~error_deserializer
   end
@@ -1988,9 +2096,11 @@ module RejectSharedDirectory =
         let open Deserializers in
           let input =
             Serializers.reject_shared_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RejectSharedDirectory"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:reject_shared_directory_result_of_yojson
             ~error_deserializer
   end
@@ -2022,9 +2132,11 @@ module RemoveIpRoutes =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.remove_ip_routes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RemoveIpRoutes" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:remove_ip_routes_result_of_yojson
             ~error_deserializer
   end
@@ -2059,9 +2171,11 @@ module RemoveRegion =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.remove_region_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RemoveRegion" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:remove_region_result_of_yojson
             ~error_deserializer
   end
@@ -2091,9 +2205,11 @@ module RemoveTagsFromResource =
         let open Deserializers in
           let input =
             Serializers.remove_tags_from_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RemoveTagsFromResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:remove_tags_from_resource_result_of_yojson
             ~error_deserializer
   end
@@ -2132,9 +2248,11 @@ module ResetUserPassword =
         let open Deserializers in
           let input =
             Serializers.reset_user_password_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ResetUserPassword" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:reset_user_password_result_of_yojson
             ~error_deserializer
   end
@@ -2164,9 +2282,11 @@ module RestoreFromSnapshot =
         let open Deserializers in
           let input =
             Serializers.restore_from_snapshot_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416RestoreFromSnapshot"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:restore_from_snapshot_result_of_yojson
             ~error_deserializer
   end
@@ -2213,9 +2333,11 @@ module ShareDirectory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.share_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416ShareDirectory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:share_directory_result_of_yojson
             ~error_deserializer
   end
@@ -2251,9 +2373,11 @@ module StartSchemaExtension =
         let open Deserializers in
           let input =
             Serializers.start_schema_extension_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416StartSchemaExtension"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:start_schema_extension_result_of_yojson
             ~error_deserializer
   end
@@ -2285,9 +2409,11 @@ module UnshareDirectory =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.unshare_directory_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UnshareDirectory" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:unshare_directory_result_of_yojson
             ~error_deserializer
   end
@@ -2324,9 +2450,11 @@ module UpdateConditionalForwarder =
           let input =
             Serializers.update_conditional_forwarder_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateConditionalForwarder"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_conditional_forwarder_result_of_yojson
             ~error_deserializer
   end
@@ -2371,9 +2499,11 @@ module UpdateDirectorySetup =
         let open Deserializers in
           let input =
             Serializers.update_directory_setup_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateDirectorySetup"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_directory_setup_result_of_yojson
             ~error_deserializer
   end
@@ -2415,9 +2545,11 @@ module UpdateNumberOfDomainControllers =
           let input =
             Serializers.update_number_of_domain_controllers_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateNumberOfDomainControllers"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_number_of_domain_controllers_result_of_yojson
             ~error_deserializer
   end
@@ -2446,9 +2578,11 @@ module UpdateRadius =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_radius_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateRadius" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_radius_result_of_yojson
             ~error_deserializer
   end
@@ -2489,9 +2623,11 @@ module UpdateSettings =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_settings_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateSettings" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_settings_result_of_yojson
             ~error_deserializer
   end
@@ -2520,9 +2656,11 @@ module UpdateTrust =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_trust_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416UpdateTrust" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_trust_result_of_yojson
             ~error_deserializer
   end
@@ -2554,9 +2692,11 @@ module VerifyTrust =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.verify_trust_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"DirectoryService_20150416VerifyTrust" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:verify_trust_result_of_yojson
             ~error_deserializer
   end

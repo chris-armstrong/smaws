@@ -30,9 +30,10 @@ module AssociateWebACL =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.associate_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729AssociateWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729AssociateWebACL"
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -79,9 +80,10 @@ module CheckCapacity =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.check_capacity_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729CheckCapacity" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729CheckCapacity"
+            ~service ~config:context.config ~input
             ~output_deserializer:check_capacity_response_of_yojson
             ~error_deserializer
   end
@@ -112,9 +114,10 @@ module CreateAPIKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_api_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729CreateAPIKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729CreateAPIKey"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_api_key_response_of_yojson
             ~error_deserializer
   end
@@ -158,9 +161,10 @@ module CreateIPSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_ip_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729CreateIPSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729CreateIPSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_ip_set_response_of_yojson
             ~error_deserializer
   end
@@ -205,9 +209,11 @@ module CreateRegexPatternSet =
         let open Deserializers in
           let input =
             Serializers.create_regex_pattern_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729CreateRegexPatternSet" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_regex_pattern_set_response_of_yojson
             ~error_deserializer
   end
@@ -260,9 +266,10 @@ module CreateRuleGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_rule_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729CreateRuleGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729CreateRuleGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_rule_group_response_of_yojson
             ~error_deserializer
   end
@@ -325,9 +332,10 @@ module CreateWebACL =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729CreateWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729CreateWebACL"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -361,9 +369,10 @@ module DeleteAPIKey =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_api_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729DeleteAPIKey" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729DeleteAPIKey"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_api_key_response_of_yojson
             ~error_deserializer
   end
@@ -400,9 +409,11 @@ module DeleteFirewallManagerRuleGroups =
           let input =
             Serializers.delete_firewall_manager_rule_groups_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DeleteFirewallManagerRuleGroups"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_firewall_manager_rule_groups_response_of_yojson
             ~error_deserializer
   end
@@ -446,9 +457,10 @@ module DeleteIPSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_ip_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729DeleteIPSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729DeleteIPSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_ip_set_response_of_yojson
             ~error_deserializer
   end
@@ -484,9 +496,11 @@ module DeleteLoggingConfiguration =
           let input =
             Serializers.delete_logging_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DeleteLoggingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_logging_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -515,9 +529,11 @@ module DeletePermissionPolicy =
         let open Deserializers in
           let input =
             Serializers.delete_permission_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DeletePermissionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_permission_policy_response_of_yojson
             ~error_deserializer
   end
@@ -562,9 +578,11 @@ module DeleteRegexPatternSet =
         let open Deserializers in
           let input =
             Serializers.delete_regex_pattern_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DeleteRegexPatternSet" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_regex_pattern_set_response_of_yojson
             ~error_deserializer
   end
@@ -608,9 +626,10 @@ module DeleteRuleGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_rule_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729DeleteRuleGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729DeleteRuleGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_rule_group_response_of_yojson
             ~error_deserializer
   end
@@ -654,9 +673,10 @@ module DeleteWebACL =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729DeleteWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729DeleteWebACL"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -686,9 +706,11 @@ module DescribeAllManagedProducts =
           let input =
             Serializers.describe_all_managed_products_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DescribeAllManagedProducts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_all_managed_products_response_of_yojson
             ~error_deserializer
   end
@@ -719,9 +741,11 @@ module DescribeManagedProductsByVendor =
           let input =
             Serializers.describe_managed_products_by_vendor_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DescribeManagedProductsByVendor"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_managed_products_by_vendor_response_of_yojson
             ~error_deserializer
   end
@@ -760,9 +784,11 @@ module DescribeManagedRuleGroup =
         let open Deserializers in
           let input =
             Serializers.describe_managed_rule_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DescribeManagedRuleGroup" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_managed_rule_group_response_of_yojson
             ~error_deserializer
   end
@@ -794,9 +820,11 @@ module DisassociateWebACL =
         let open Deserializers in
           let input =
             Serializers.disassociate_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729DisassociateWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -829,9 +857,11 @@ module GenerateMobileSdkReleaseUrl =
           let input =
             Serializers.generate_mobile_sdk_release_url_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GenerateMobileSdkReleaseUrl" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:generate_mobile_sdk_release_url_response_of_yojson
             ~error_deserializer
   end
@@ -866,9 +896,11 @@ module GetDecryptedAPIKey =
         let open Deserializers in
           let input =
             Serializers.get_decrypted_api_key_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetDecryptedAPIKey" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_decrypted_api_key_response_of_yojson
             ~error_deserializer
   end
@@ -899,9 +931,10 @@ module GetIPSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_ip_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729GetIPSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729GetIPSet" ~service
+            ~config:context.config ~input
             ~output_deserializer:get_ip_set_response_of_yojson
             ~error_deserializer
   end
@@ -933,9 +966,11 @@ module GetLoggingConfiguration =
         let open Deserializers in
           let input =
             Serializers.get_logging_configuration_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetLoggingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_logging_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -967,9 +1002,10 @@ module GetManagedRuleSet =
         let open Deserializers in
           let input =
             Serializers.get_managed_rule_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729GetManagedRuleSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729GetManagedRuleSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_managed_rule_set_response_of_yojson
             ~error_deserializer
   end
@@ -1001,9 +1037,11 @@ module GetMobileSdkRelease =
         let open Deserializers in
           let input =
             Serializers.get_mobile_sdk_release_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetMobileSdkRelease" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_mobile_sdk_release_response_of_yojson
             ~error_deserializer
   end
@@ -1032,9 +1070,11 @@ module GetPermissionPolicy =
         let open Deserializers in
           let input =
             Serializers.get_permission_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetPermissionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_permission_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1072,9 +1112,11 @@ module GetRateBasedStatementManagedKeys =
           let input =
             Serializers.get_rate_based_statement_managed_keys_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetRateBasedStatementManagedKeys"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_rate_based_statement_managed_keys_response_of_yojson
             ~error_deserializer
   end
@@ -1106,9 +1148,11 @@ module GetRegexPatternSet =
         let open Deserializers in
           let input =
             Serializers.get_regex_pattern_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetRegexPatternSet" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_regex_pattern_set_response_of_yojson
             ~error_deserializer
   end
@@ -1139,9 +1183,10 @@ module GetRuleGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_rule_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729GetRuleGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729GetRuleGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_rule_group_response_of_yojson
             ~error_deserializer
   end
@@ -1170,9 +1215,11 @@ module GetSampledRequests =
         let open Deserializers in
           let input =
             Serializers.get_sampled_requests_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetSampledRequests" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_sampled_requests_response_of_yojson
             ~error_deserializer
   end
@@ -1203,9 +1250,10 @@ module GetWebACL =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729GetWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729GetWebACL"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -1240,9 +1288,11 @@ module GetWebACLForResource =
         let open Deserializers in
           let input =
             Serializers.get_web_acl_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729GetWebACLForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_web_acl_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1273,9 +1323,10 @@ module ListAPIKeys =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_api_keys_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729ListAPIKeys" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729ListAPIKeys"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_api_keys_response_of_yojson
             ~error_deserializer
   end
@@ -1309,9 +1360,11 @@ module ListAvailableManagedRuleGroupVersions =
           let input =
             Serializers.list_available_managed_rule_group_versions_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListAvailableManagedRuleGroupVersions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_available_managed_rule_group_versions_response_of_yojson
             ~error_deserializer
   end
@@ -1342,9 +1395,11 @@ module ListAvailableManagedRuleGroups =
           let input =
             Serializers.list_available_managed_rule_groups_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListAvailableManagedRuleGroups"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_available_managed_rule_groups_response_of_yojson
             ~error_deserializer
   end
@@ -1372,9 +1427,10 @@ module ListIPSets =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_ip_sets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729ListIPSets" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729ListIPSets"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_ip_sets_response_of_yojson
             ~error_deserializer
   end
@@ -1403,9 +1459,11 @@ module ListLoggingConfigurations =
         let open Deserializers in
           let input =
             Serializers.list_logging_configurations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListLoggingConfigurations" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_logging_configurations_response_of_yojson
             ~error_deserializer
   end
@@ -1434,9 +1492,11 @@ module ListManagedRuleSets =
         let open Deserializers in
           let input =
             Serializers.list_managed_rule_sets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListManagedRuleSets" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_managed_rule_sets_response_of_yojson
             ~error_deserializer
   end
@@ -1465,9 +1525,11 @@ module ListMobileSdkReleases =
         let open Deserializers in
           let input =
             Serializers.list_mobile_sdk_releases_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListMobileSdkReleases" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_mobile_sdk_releases_response_of_yojson
             ~error_deserializer
   end
@@ -1496,9 +1558,11 @@ module ListRegexPatternSets =
         let open Deserializers in
           let input =
             Serializers.list_regex_pattern_sets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListRegexPatternSets" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_regex_pattern_sets_response_of_yojson
             ~error_deserializer
   end
@@ -1530,9 +1594,11 @@ module ListResourcesForWebACL =
         let open Deserializers in
           let input =
             Serializers.list_resources_for_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListResourcesForWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_resources_for_web_acl_response_of_yojson
             ~error_deserializer
   end
@@ -1560,9 +1626,10 @@ module ListRuleGroups =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_rule_groups_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729ListRuleGroups" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729ListRuleGroups"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_rule_groups_response_of_yojson
             ~error_deserializer
   end
@@ -1601,9 +1668,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729ListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1631,9 +1700,10 @@ module ListWebACLs =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_web_ac_ls_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729ListWebACLs" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729ListWebACLs"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_web_ac_ls_response_of_yojson
             ~error_deserializer
   end
@@ -1678,9 +1748,11 @@ module PutLoggingConfiguration =
         let open Deserializers in
           let input =
             Serializers.put_logging_configuration_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729PutLoggingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_logging_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -1716,9 +1788,11 @@ module PutManagedRuleSetVersions =
           let input =
             Serializers.put_managed_rule_set_versions_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729PutManagedRuleSetVersions" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_managed_rule_set_versions_response_of_yojson
             ~error_deserializer
   end
@@ -1750,9 +1824,11 @@ module PutPermissionPolicy =
         let open Deserializers in
           let input =
             Serializers.put_permission_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729PutPermissionPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:put_permission_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1793,9 +1869,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1833,9 +1910,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1875,9 +1953,10 @@ module UpdateIPSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_ip_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729UpdateIPSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729UpdateIPSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_ip_set_response_of_yojson
             ~error_deserializer
   end
@@ -1914,9 +1993,11 @@ module UpdateManagedRuleSetVersionExpiryDate =
           let input =
             Serializers.update_managed_rule_set_version_expiry_date_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729UpdateManagedRuleSetVersionExpiryDate"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_managed_rule_set_version_expiry_date_response_of_yojson
             ~error_deserializer
   end
@@ -1957,9 +2038,11 @@ module UpdateRegexPatternSet =
         let open Deserializers in
           let input =
             Serializers.update_regex_pattern_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSWAF_20190729UpdateRegexPatternSet" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_regex_pattern_set_response_of_yojson
             ~error_deserializer
   end
@@ -2008,9 +2091,10 @@ module UpdateRuleGroup =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_rule_group_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729UpdateRuleGroup" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729UpdateRuleGroup"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_rule_group_response_of_yojson
             ~error_deserializer
   end
@@ -2066,9 +2150,10 @@ module UpdateWebACL =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_web_acl_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSWAF_20190729UpdateWebACL" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSWAF_20190729UpdateWebACL"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_web_acl_response_of_yojson
             ~error_deserializer
   end

@@ -31,9 +31,11 @@ module AssociateAdminAccount =
         let open Deserializers in
           let input =
             Serializers.associate_admin_account_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101AssociateAdminAccount" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module AssociateThirdPartyFirewall =
@@ -65,9 +67,11 @@ module AssociateThirdPartyFirewall =
           let input =
             Serializers.associate_third_party_firewall_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101AssociateThirdPartyFirewall" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:associate_third_party_firewall_response_of_yojson
             ~error_deserializer
   end
@@ -102,9 +106,11 @@ module BatchAssociateResource =
         let open Deserializers in
           let input =
             Serializers.batch_associate_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101BatchAssociateResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:batch_associate_resource_response_of_yojson
             ~error_deserializer
   end
@@ -136,9 +142,11 @@ module BatchDisassociateResource =
         let open Deserializers in
           let input =
             Serializers.batch_disassociate_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101BatchDisassociateResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:batch_disassociate_resource_response_of_yojson
             ~error_deserializer
   end
@@ -166,9 +174,10 @@ module DeleteAppsList =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_apps_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101DeleteAppsList" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101DeleteAppsList"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteNotificationChannel =
@@ -196,9 +205,11 @@ module DeleteNotificationChannel =
         let open Deserializers in
           let input =
             Serializers.delete_notification_channel_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101DeleteNotificationChannel" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeletePolicy =
@@ -231,9 +242,10 @@ module DeletePolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101DeletePolicy" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101DeletePolicy"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteProtocolsList =
@@ -261,9 +273,11 @@ module DeleteProtocolsList =
         let open Deserializers in
           let input =
             Serializers.delete_protocols_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101DeleteProtocolsList" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteResourceSet =
@@ -294,9 +308,10 @@ module DeleteResourceSet =
         let open Deserializers in
           let input =
             Serializers.delete_resource_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101DeleteResourceSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101DeleteResourceSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DisassociateAdminAccount =
@@ -324,9 +339,11 @@ module DisassociateAdminAccount =
         let open Deserializers in
           let input =
             Serializers.disassociate_admin_account_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101DisassociateAdminAccount" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DisassociateThirdPartyFirewall =
@@ -359,9 +376,11 @@ module DisassociateThirdPartyFirewall =
           let input =
             Serializers.disassociate_third_party_firewall_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101DisassociateThirdPartyFirewall"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:disassociate_third_party_firewall_response_of_yojson
             ~error_deserializer
   end
@@ -389,9 +408,10 @@ module GetAdminAccount =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_admin_account_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetAdminAccount" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetAdminAccount"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_admin_account_response_of_yojson
             ~error_deserializer
   end
@@ -425,9 +445,10 @@ module GetAdminScope =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_admin_scope_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetAdminScope" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetAdminScope"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_admin_scope_response_of_yojson
             ~error_deserializer
   end
@@ -455,9 +476,10 @@ module GetAppsList =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_apps_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetAppsList" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetAppsList"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_apps_list_response_of_yojson
             ~error_deserializer
   end
@@ -489,9 +511,11 @@ module GetComplianceDetail =
         let open Deserializers in
           let input =
             Serializers.get_compliance_detail_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101GetComplianceDetail" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_compliance_detail_response_of_yojson
             ~error_deserializer
   end
@@ -520,9 +544,11 @@ module GetNotificationChannel =
         let open Deserializers in
           let input =
             Serializers.get_notification_channel_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101GetNotificationChannel" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_notification_channel_response_of_yojson
             ~error_deserializer
   end
@@ -553,9 +579,10 @@ module GetPolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetPolicy"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_policy_response_of_yojson
             ~error_deserializer
   end
@@ -584,9 +611,11 @@ module GetProtectionStatus =
         let open Deserializers in
           let input =
             Serializers.get_protection_status_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101GetProtectionStatus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_protection_status_response_of_yojson
             ~error_deserializer
   end
@@ -615,9 +644,10 @@ module GetProtocolsList =
         let open Deserializers in
           let input =
             Serializers.get_protocols_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetProtocolsList" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetProtocolsList"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_protocols_list_response_of_yojson
             ~error_deserializer
   end
@@ -648,9 +678,10 @@ module GetResourceSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_resource_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101GetResourceSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101GetResourceSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_resource_set_response_of_yojson
             ~error_deserializer
   end
@@ -684,9 +715,11 @@ module GetThirdPartyFirewallAssociationStatus =
           let input =
             Serializers.get_third_party_firewall_association_status_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101GetThirdPartyFirewallAssociationStatus"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_third_party_firewall_association_status_response_of_yojson
             ~error_deserializer
   end
@@ -715,9 +748,11 @@ module GetViolationDetails =
         let open Deserializers in
           let input =
             Serializers.get_violation_details_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101GetViolationDetails" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_violation_details_response_of_yojson
             ~error_deserializer
   end
@@ -751,9 +786,11 @@ module ListAdminAccountsForOrganization =
           let input =
             Serializers.list_admin_accounts_for_organization_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListAdminAccountsForOrganization"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_admin_accounts_for_organization_response_of_yojson
             ~error_deserializer
   end
@@ -783,9 +820,11 @@ module ListAdminsManagingAccount =
           let input =
             Serializers.list_admins_managing_account_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListAdminsManagingAccount" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_admins_managing_account_response_of_yojson
             ~error_deserializer
   end
@@ -816,9 +855,10 @@ module ListAppsLists =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_apps_lists_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101ListAppsLists" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101ListAppsLists"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_apps_lists_response_of_yojson
             ~error_deserializer
   end
@@ -844,9 +884,11 @@ module ListComplianceStatus =
         let open Deserializers in
           let input =
             Serializers.list_compliance_status_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListComplianceStatus" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_compliance_status_response_of_yojson
             ~error_deserializer
   end
@@ -875,9 +917,11 @@ module ListDiscoveredResources =
         let open Deserializers in
           let input =
             Serializers.list_discovered_resources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListDiscoveredResources" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_discovered_resources_response_of_yojson
             ~error_deserializer
   end
@@ -903,9 +947,11 @@ module ListMemberAccounts =
         let open Deserializers in
           let input =
             Serializers.list_member_accounts_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListMemberAccounts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_member_accounts_response_of_yojson
             ~error_deserializer
   end
@@ -936,9 +982,10 @@ module ListPolicies =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_policies_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101ListPolicies" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101ListPolicies"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_policies_response_of_yojson
             ~error_deserializer
   end
@@ -967,9 +1014,11 @@ module ListProtocolsLists =
         let open Deserializers in
           let input =
             Serializers.list_protocols_lists_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListProtocolsLists" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_protocols_lists_response_of_yojson
             ~error_deserializer
   end
@@ -1001,9 +1050,11 @@ module ListResourceSetResources =
         let open Deserializers in
           let input =
             Serializers.list_resource_set_resources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListResourceSetResources" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_resource_set_resources_response_of_yojson
             ~error_deserializer
   end
@@ -1032,9 +1083,10 @@ module ListResourceSets =
         let open Deserializers in
           let input =
             Serializers.list_resource_sets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101ListResourceSets" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101ListResourceSets"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_resource_sets_response_of_yojson
             ~error_deserializer
   end
@@ -1066,9 +1118,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1102,9 +1156,11 @@ module ListThirdPartyFirewallFirewallPolicies =
           let input =
             Serializers.list_third_party_firewall_firewall_policies_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101ListThirdPartyFirewallFirewallPolicies"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_third_party_firewall_firewall_policies_response_of_yojson
             ~error_deserializer
   end
@@ -1135,9 +1191,10 @@ module PutAdminAccount =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_admin_account_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101PutAdminAccount" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101PutAdminAccount"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module PutAppsList =
@@ -1170,9 +1227,10 @@ module PutAppsList =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_apps_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101PutAppsList" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101PutAppsList"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_apps_list_response_of_yojson
             ~error_deserializer
   end
@@ -1201,9 +1259,11 @@ module PutNotificationChannel =
         let open Deserializers in
           let input =
             Serializers.put_notification_channel_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSFMS_20180101PutNotificationChannel" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module PutPolicy =
@@ -1239,9 +1299,10 @@ module PutPolicy =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_policy_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101PutPolicy" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101PutPolicy"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_policy_response_of_yojson
             ~error_deserializer
   end
@@ -1276,9 +1337,10 @@ module PutProtocolsList =
         let open Deserializers in
           let input =
             Serializers.put_protocols_list_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101PutProtocolsList" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101PutProtocolsList"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_protocols_list_response_of_yojson
             ~error_deserializer
   end
@@ -1309,9 +1371,10 @@ module PutResourceSet =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_resource_set_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101PutResourceSet" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101PutResourceSet"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_resource_set_response_of_yojson
             ~error_deserializer
   end
@@ -1345,9 +1408,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101TagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1378,9 +1442,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSFMS_20180101UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSFMS_20180101UntagResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end

@@ -27,9 +27,10 @@ module AddPermission =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.add_permission_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSAddPermission" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSAddPermission" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module CancelMessageMoveTask =
@@ -60,9 +61,10 @@ module CancelMessageMoveTask =
         let open Deserializers in
           let input =
             Serializers.cancel_message_move_task_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSCancelMessageMoveTask" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSCancelMessageMoveTask"
+            ~service ~config:context.config ~input
             ~output_deserializer:cancel_message_move_task_result_of_yojson
             ~error_deserializer
   end
@@ -98,9 +100,10 @@ module ChangeMessageVisibility =
         let open Deserializers in
           let input =
             Serializers.change_message_visibility_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSChangeMessageVisibility" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSChangeMessageVisibility"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module ChangeMessageVisibilityBatch =
@@ -142,9 +145,11 @@ module ChangeMessageVisibilityBatch =
           let input =
             Serializers.change_message_visibility_batch_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonSQSChangeMessageVisibilityBatch" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:change_message_visibility_batch_result_of_yojson
             ~error_deserializer
   end
@@ -183,9 +188,10 @@ module CreateQueue =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_queue_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSCreateQueue" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSCreateQueue" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_queue_result_of_yojson
             ~error_deserializer
   end
@@ -220,9 +226,10 @@ module DeleteMessage =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_message_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSDeleteMessage" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSDeleteMessage" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteMessageBatch =
@@ -263,9 +270,10 @@ module DeleteMessageBatch =
         let open Deserializers in
           let input =
             Serializers.delete_message_batch_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSDeleteMessageBatch" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSDeleteMessageBatch"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_message_batch_result_of_yojson
             ~error_deserializer
   end
@@ -295,9 +303,10 @@ module DeleteQueue =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_queue_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSDeleteQueue" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSDeleteQueue" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module GetQueueAttributes =
@@ -330,9 +339,10 @@ module GetQueueAttributes =
         let open Deserializers in
           let input =
             Serializers.get_queue_attributes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSGetQueueAttributes" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSGetQueueAttributes"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_queue_attributes_result_of_yojson
             ~error_deserializer
   end
@@ -362,9 +372,10 @@ module GetQueueUrl =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_queue_url_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSGetQueueUrl" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSGetQueueUrl" ~service
+            ~config:context.config ~input
             ~output_deserializer:get_queue_url_result_of_yojson
             ~error_deserializer
   end
@@ -396,9 +407,11 @@ module ListDeadLetterSourceQueues =
           let input =
             Serializers.list_dead_letter_source_queues_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AmazonSQSListDeadLetterSourceQueues" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_dead_letter_source_queues_result_of_yojson
             ~error_deserializer
   end
@@ -430,9 +443,10 @@ module ListMessageMoveTasks =
         let open Deserializers in
           let input =
             Serializers.list_message_move_tasks_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSListMessageMoveTasks" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSListMessageMoveTasks"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_message_move_tasks_result_of_yojson
             ~error_deserializer
   end
@@ -462,9 +476,10 @@ module ListQueueTags =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_queue_tags_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSListQueueTags" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSListQueueTags" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_queue_tags_result_of_yojson
             ~error_deserializer
   end
@@ -492,9 +507,10 @@ module ListQueues =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_queues_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSListQueues" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSListQueues" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_queues_result_of_yojson
             ~error_deserializer
   end
@@ -527,9 +543,10 @@ module PurgeQueue =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.purge_queue_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSPurgeQueue" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSPurgeQueue" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module ReceiveMessage =
@@ -573,9 +590,10 @@ module ReceiveMessage =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.receive_message_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSReceiveMessage" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSReceiveMessage" ~service
+            ~config:context.config ~input
             ~output_deserializer:receive_message_result_of_yojson
             ~error_deserializer
   end
@@ -605,9 +623,10 @@ module RemovePermission =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.remove_permission_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSRemovePermission" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSRemovePermission"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module SendMessage =
@@ -653,9 +672,10 @@ module SendMessage =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.send_message_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSSendMessage" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSSendMessage" ~service
+            ~config:context.config ~input
             ~output_deserializer:send_message_result_of_yojson
             ~error_deserializer
   end
@@ -714,9 +734,10 @@ module SendMessageBatch =
         let open Deserializers in
           let input =
             Serializers.send_message_batch_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSSendMessageBatch" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSSendMessageBatch"
+            ~service ~config:context.config ~input
             ~output_deserializer:send_message_batch_result_of_yojson
             ~error_deserializer
   end
@@ -754,9 +775,10 @@ module SetQueueAttributes =
         let open Deserializers in
           let input =
             Serializers.set_queue_attributes_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSSetQueueAttributes" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSSetQueueAttributes"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module StartMessageMoveTask =
@@ -787,9 +809,10 @@ module StartMessageMoveTask =
         let open Deserializers in
           let input =
             Serializers.start_message_move_task_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSStartMessageMoveTask" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSStartMessageMoveTask"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_message_move_task_result_of_yojson
             ~error_deserializer
   end
@@ -819,8 +842,10 @@ module TagQueue =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_queue_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQSTagQueue"
-            ~service ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSTagQueue" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module UntagQueue =
@@ -849,8 +874,9 @@ module UntagQueue =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_queue_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AmazonSQSUntagQueue" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AmazonSQSUntagQueue" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end

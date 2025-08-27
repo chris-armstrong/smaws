@@ -25,9 +25,10 @@ module AssociateCustomDomain =
         let open Deserializers in
           let input =
             Serializers.associate_custom_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerAssociateCustomDomain" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerAssociateCustomDomain"
+            ~service ~config:context.config ~input
             ~output_deserializer:associate_custom_domain_response_of_yojson
             ~error_deserializer
   end
@@ -58,9 +59,11 @@ module CreateAutoScalingConfiguration =
           let input =
             Serializers.create_auto_scaling_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerCreateAutoScalingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_auto_scaling_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -88,9 +91,10 @@ module CreateConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerCreateConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerCreateConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_connection_response_of_yojson
             ~error_deserializer
   end
@@ -121,9 +125,11 @@ module CreateObservabilityConfiguration =
           let input =
             Serializers.create_observability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerCreateObservabilityConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_observability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -151,9 +157,10 @@ module CreateService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerCreateService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerCreateService" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_service_response_of_yojson
             ~error_deserializer
   end
@@ -182,9 +189,10 @@ module CreateVpcConnector =
         let open Deserializers in
           let input =
             Serializers.create_vpc_connector_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerCreateVpcConnector" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerCreateVpcConnector"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_vpc_connector_response_of_yojson
             ~error_deserializer
   end
@@ -217,9 +225,11 @@ module CreateVpcIngressConnection =
           let input =
             Serializers.create_vpc_ingress_connection_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerCreateVpcIngressConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_vpc_ingress_connection_response_of_yojson
             ~error_deserializer
   end
@@ -250,9 +260,11 @@ module DeleteAutoScalingConfiguration =
           let input =
             Serializers.delete_auto_scaling_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDeleteAutoScalingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_auto_scaling_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -280,9 +292,10 @@ module DeleteConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDeleteConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDeleteConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_connection_response_of_yojson
             ~error_deserializer
   end
@@ -313,9 +326,11 @@ module DeleteObservabilityConfiguration =
           let input =
             Serializers.delete_observability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDeleteObservabilityConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_observability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -346,9 +361,10 @@ module DeleteService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDeleteService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDeleteService" ~service
+            ~config:context.config ~input
             ~output_deserializer:delete_service_response_of_yojson
             ~error_deserializer
   end
@@ -377,9 +393,10 @@ module DeleteVpcConnector =
         let open Deserializers in
           let input =
             Serializers.delete_vpc_connector_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDeleteVpcConnector" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDeleteVpcConnector"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_vpc_connector_response_of_yojson
             ~error_deserializer
   end
@@ -412,9 +429,11 @@ module DeleteVpcIngressConnection =
           let input =
             Serializers.delete_vpc_ingress_connection_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDeleteVpcIngressConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_vpc_ingress_connection_response_of_yojson
             ~error_deserializer
   end
@@ -445,9 +464,11 @@ module DescribeAutoScalingConfiguration =
           let input =
             Serializers.describe_auto_scaling_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDescribeAutoScalingConfiguration" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_auto_scaling_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -476,9 +497,10 @@ module DescribeCustomDomains =
         let open Deserializers in
           let input =
             Serializers.describe_custom_domains_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDescribeCustomDomains" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDescribeCustomDomains"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_custom_domains_response_of_yojson
             ~error_deserializer
   end
@@ -509,9 +531,11 @@ module DescribeObservabilityConfiguration =
           let input =
             Serializers.describe_observability_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDescribeObservabilityConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_observability_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -539,9 +563,10 @@ module DescribeService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDescribeService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDescribeService"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_service_response_of_yojson
             ~error_deserializer
   end
@@ -570,9 +595,10 @@ module DescribeVpcConnector =
         let open Deserializers in
           let input =
             Serializers.describe_vpc_connector_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerDescribeVpcConnector" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerDescribeVpcConnector"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_vpc_connector_response_of_yojson
             ~error_deserializer
   end
@@ -602,9 +628,11 @@ module DescribeVpcIngressConnection =
           let input =
             Serializers.describe_vpc_ingress_connection_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDescribeVpcIngressConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_vpc_ingress_connection_response_of_yojson
             ~error_deserializer
   end
@@ -636,9 +664,11 @@ module DisassociateCustomDomain =
         let open Deserializers in
           let input =
             Serializers.disassociate_custom_domain_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerDisassociateCustomDomain" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:disassociate_custom_domain_response_of_yojson
             ~error_deserializer
   end
@@ -666,9 +696,11 @@ module ListAutoScalingConfigurations =
           let input =
             Serializers.list_auto_scaling_configurations_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerListAutoScalingConfigurations" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_auto_scaling_configurations_response_of_yojson
             ~error_deserializer
   end
@@ -693,9 +725,10 @@ module ListConnections =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_connections_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerListConnections" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerListConnections"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_connections_response_of_yojson
             ~error_deserializer
   end
@@ -723,9 +756,11 @@ module ListObservabilityConfigurations =
           let input =
             Serializers.list_observability_configurations_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerListObservabilityConfigurations" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_observability_configurations_response_of_yojson
             ~error_deserializer
   end
@@ -753,9 +788,10 @@ module ListOperations =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_operations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerListOperations" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerListOperations" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_operations_response_of_yojson
             ~error_deserializer
   end
@@ -780,9 +816,10 @@ module ListServices =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_services_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerListServices" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerListServices" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_services_response_of_yojson
             ~error_deserializer
   end
@@ -813,9 +850,11 @@ module ListServicesForAutoScalingConfiguration =
           let input =
             Serializers.list_services_for_auto_scaling_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerListServicesForAutoScalingConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_services_for_auto_scaling_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -847,9 +886,10 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerListTagsForResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -875,9 +915,10 @@ module ListVpcConnectors =
         let open Deserializers in
           let input =
             Serializers.list_vpc_connectors_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerListVpcConnectors" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerListVpcConnectors"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_vpc_connectors_response_of_yojson
             ~error_deserializer
   end
@@ -904,9 +945,11 @@ module ListVpcIngressConnections =
           let input =
             Serializers.list_vpc_ingress_connections_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerListVpcIngressConnections" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_vpc_ingress_connections_response_of_yojson
             ~error_deserializer
   end
@@ -937,9 +980,10 @@ module PauseService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.pause_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerPauseService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerPauseService" ~service
+            ~config:context.config ~input
             ~output_deserializer:pause_service_response_of_yojson
             ~error_deserializer
   end
@@ -970,9 +1014,10 @@ module ResumeService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.resume_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerResumeService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerResumeService" ~service
+            ~config:context.config ~input
             ~output_deserializer:resume_service_response_of_yojson
             ~error_deserializer
   end
@@ -1000,9 +1045,10 @@ module StartDeployment =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.start_deployment_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerStartDeployment" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerStartDeployment"
+            ~service ~config:context.config ~input
             ~output_deserializer:start_deployment_response_of_yojson
             ~error_deserializer
   end
@@ -1033,9 +1079,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerTagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1066,9 +1113,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerUntagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1099,9 +1147,11 @@ module UpdateDefaultAutoScalingConfiguration =
           let input =
             Serializers.update_default_auto_scaling_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerUpdateDefaultAutoScalingConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_default_auto_scaling_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -1132,9 +1182,10 @@ module UpdateService =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_service_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AppRunnerUpdateService" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AppRunnerUpdateService" ~service
+            ~config:context.config ~input
             ~output_deserializer:update_service_response_of_yojson
             ~error_deserializer
   end
@@ -1167,9 +1218,11 @@ module UpdateVpcIngressConnection =
           let input =
             Serializers.update_vpc_ingress_connection_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AppRunnerUpdateVpcIngressConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_vpc_ingress_connection_response_of_yojson
             ~error_deserializer
   end

@@ -30,9 +30,10 @@ module ActivateEventSource =
         let open Deserializers in
           let input =
             Serializers.activate_event_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsActivateEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsActivateEventSource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module CancelReplay =
@@ -61,9 +62,10 @@ module CancelReplay =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.cancel_replay_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCancelReplay" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCancelReplay" ~service
+            ~config:context.config ~input
             ~output_deserializer:cancel_replay_response_of_yojson
             ~error_deserializer
   end
@@ -94,9 +96,10 @@ module CreateApiDestination =
         let open Deserializers in
           let input =
             Serializers.create_api_destination_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCreateApiDestination" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCreateApiDestination"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_api_destination_response_of_yojson
             ~error_deserializer
   end
@@ -132,9 +135,10 @@ module CreateArchive =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_archive_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCreateArchive" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCreateArchive" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_archive_response_of_yojson
             ~error_deserializer
   end
@@ -169,9 +173,10 @@ module CreateConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCreateConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCreateConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:create_connection_response_of_yojson
             ~error_deserializer
   end
@@ -198,9 +203,10 @@ module CreateEndpoint =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_endpoint_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCreateEndpoint" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCreateEndpoint" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_endpoint_response_of_yojson
             ~error_deserializer
   end
@@ -239,9 +245,10 @@ module CreateEventBus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_event_bus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsCreateEventBus" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsCreateEventBus" ~service
+            ~config:context.config ~input
             ~output_deserializer:create_event_bus_response_of_yojson
             ~error_deserializer
   end
@@ -275,9 +282,11 @@ module CreatePartnerEventSource =
         let open Deserializers in
           let input =
             Serializers.create_partner_event_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSEventsCreatePartnerEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_partner_event_source_response_of_yojson
             ~error_deserializer
   end
@@ -311,9 +320,10 @@ module DeactivateEventSource =
         let open Deserializers in
           let input =
             Serializers.deactivate_event_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeactivateEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeactivateEventSource"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeauthorizeConnection =
@@ -340,9 +350,10 @@ module DeauthorizeConnection =
         let open Deserializers in
           let input =
             Serializers.deauthorize_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeauthorizeConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeauthorizeConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:deauthorize_connection_response_of_yojson
             ~error_deserializer
   end
@@ -370,9 +381,10 @@ module DeleteApiDestination =
         let open Deserializers in
           let input =
             Serializers.delete_api_destination_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteApiDestination" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteApiDestination"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_api_destination_response_of_yojson
             ~error_deserializer
   end
@@ -399,9 +411,10 @@ module DeleteArchive =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_archive_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteArchive" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteArchive" ~service
+            ~config:context.config ~input
             ~output_deserializer:delete_archive_response_of_yojson
             ~error_deserializer
   end
@@ -428,9 +441,10 @@ module DeleteConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_connection_response_of_yojson
             ~error_deserializer
   end
@@ -457,9 +471,10 @@ module DeleteEndpoint =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_endpoint_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteEndpoint" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteEndpoint" ~service
+            ~config:context.config ~input
             ~output_deserializer:delete_endpoint_response_of_yojson
             ~error_deserializer
   end
@@ -483,9 +498,10 @@ module DeleteEventBus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_event_bus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteEventBus" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteEventBus" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeletePartnerEventSource =
@@ -512,9 +528,11 @@ module DeletePartnerEventSource =
         let open Deserializers in
           let input =
             Serializers.delete_partner_event_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSEventsDeletePartnerEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DeleteRule =
@@ -543,9 +561,10 @@ module DeleteRule =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDeleteRule" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDeleteRule" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module DescribeApiDestination =
@@ -569,9 +588,10 @@ module DescribeApiDestination =
         let open Deserializers in
           let input =
             Serializers.describe_api_destination_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeApiDestination" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeApiDestination"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_api_destination_response_of_yojson
             ~error_deserializer
   end
@@ -598,9 +618,10 @@ module DescribeArchive =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_archive_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeArchive" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeArchive"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_archive_response_of_yojson
             ~error_deserializer
   end
@@ -625,9 +646,10 @@ module DescribeConnection =
         let open Deserializers in
           let input =
             Serializers.describe_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_connection_response_of_yojson
             ~error_deserializer
   end
@@ -651,9 +673,10 @@ module DescribeEndpoint =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_endpoint_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeEndpoint" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeEndpoint"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_endpoint_response_of_yojson
             ~error_deserializer
   end
@@ -678,9 +701,10 @@ module DescribeEventBus =
         let open Deserializers in
           let input =
             Serializers.describe_event_bus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeEventBus" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeEventBus"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_event_bus_response_of_yojson
             ~error_deserializer
   end
@@ -708,9 +732,10 @@ module DescribeEventSource =
         let open Deserializers in
           let input =
             Serializers.describe_event_source_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeEventSource"
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_event_source_response_of_yojson
             ~error_deserializer
   end
@@ -739,9 +764,11 @@ module DescribePartnerEventSource =
           let input =
             Serializers.describe_partner_event_source_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSEventsDescribePartnerEventSource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:describe_partner_event_source_response_of_yojson
             ~error_deserializer
   end
@@ -765,9 +792,10 @@ module DescribeReplay =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_replay_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeReplay" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeReplay" ~service
+            ~config:context.config ~input
             ~output_deserializer:describe_replay_response_of_yojson
             ~error_deserializer
   end
@@ -791,9 +819,10 @@ module DescribeRule =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.describe_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDescribeRule" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDescribeRule" ~service
+            ~config:context.config ~input
             ~output_deserializer:describe_rule_response_of_yojson
             ~error_deserializer
   end
@@ -823,9 +852,10 @@ module DisableRule =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.disable_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsDisableRule" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsDisableRule" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module EnableRule =
@@ -854,9 +884,10 @@ module EnableRule =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.enable_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsEnableRule" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsEnableRule" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module ListApiDestinations =
@@ -877,9 +908,10 @@ module ListApiDestinations =
         let open Deserializers in
           let input =
             Serializers.list_api_destinations_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListApiDestinations" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListApiDestinations"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_api_destinations_response_of_yojson
             ~error_deserializer
   end
@@ -903,9 +935,10 @@ module ListArchives =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_archives_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListArchives" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListArchives" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_archives_response_of_yojson
             ~error_deserializer
   end
@@ -926,9 +959,10 @@ module ListConnections =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_connections_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListConnections" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListConnections"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_connections_response_of_yojson
             ~error_deserializer
   end
@@ -949,9 +983,10 @@ module ListEndpoints =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_endpoints_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListEndpoints" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListEndpoints" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_endpoints_response_of_yojson
             ~error_deserializer
   end
@@ -972,9 +1007,10 @@ module ListEventBuses =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_event_buses_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListEventBuses" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListEventBuses" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_event_buses_response_of_yojson
             ~error_deserializer
   end
@@ -999,9 +1035,10 @@ module ListEventSources =
         let open Deserializers in
           let input =
             Serializers.list_event_sources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListEventSources" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListEventSources"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_event_sources_response_of_yojson
             ~error_deserializer
   end
@@ -1031,9 +1068,11 @@ module ListPartnerEventSourceAccounts =
           let input =
             Serializers.list_partner_event_source_accounts_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"AWSEventsListPartnerEventSourceAccounts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_partner_event_source_accounts_response_of_yojson
             ~error_deserializer
   end
@@ -1058,9 +1097,10 @@ module ListPartnerEventSources =
         let open Deserializers in
           let input =
             Serializers.list_partner_event_sources_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListPartnerEventSources" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListPartnerEventSources"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_partner_event_sources_response_of_yojson
             ~error_deserializer
   end
@@ -1081,9 +1121,10 @@ module ListReplays =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_replays_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListReplays" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListReplays" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_replays_response_of_yojson
             ~error_deserializer
   end
@@ -1108,9 +1149,10 @@ module ListRuleNamesByTarget =
         let open Deserializers in
           let input =
             Serializers.list_rule_names_by_target_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListRuleNamesByTarget" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListRuleNamesByTarget"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_rule_names_by_target_response_of_yojson
             ~error_deserializer
   end
@@ -1134,9 +1176,10 @@ module ListRules =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_rules_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListRules" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListRules" ~service
+            ~config:context.config ~input
             ~output_deserializer:list_rules_response_of_yojson
             ~error_deserializer
   end
@@ -1161,9 +1204,10 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListTagsForResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListTagsForResource"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1188,9 +1232,10 @@ module ListTargetsByRule =
         let open Deserializers in
           let input =
             Serializers.list_targets_by_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsListTargetsByRule" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsListTargetsByRule"
+            ~service ~config:context.config ~input
             ~output_deserializer:list_targets_by_rule_response_of_yojson
             ~error_deserializer
   end
@@ -1211,9 +1256,10 @@ module PutEvents =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_events_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsPutEvents" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsPutEvents" ~service
+            ~config:context.config ~input
             ~output_deserializer:put_events_response_of_yojson
             ~error_deserializer
   end
@@ -1238,9 +1284,10 @@ module PutPartnerEvents =
         let open Deserializers in
           let input =
             Serializers.put_partner_events_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsPutPartnerEvents" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsPutPartnerEvents"
+            ~service ~config:context.config ~input
             ~output_deserializer:put_partner_events_response_of_yojson
             ~error_deserializer
   end
@@ -1273,9 +1320,10 @@ module PutPermission =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_permission_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsPutPermission" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsPutPermission" ~service
+            ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module PutRule =
@@ -1310,8 +1358,10 @@ module PutRule =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_rule_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSEventsPutRule"
-            ~service ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsPutRule" ~service
+            ~config:context.config ~input
             ~output_deserializer:put_rule_response_of_yojson
             ~error_deserializer
   end
@@ -1344,9 +1394,10 @@ module PutTargets =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.put_targets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsPutTargets" ~service ~config:context.config
-            ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsPutTargets" ~service
+            ~config:context.config ~input
             ~output_deserializer:put_targets_response_of_yojson
             ~error_deserializer
   end
@@ -1376,9 +1427,10 @@ module RemovePermission =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.remove_permission_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsRemovePermission" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsRemovePermission"
+            ~service ~config:context.config ~input
             ~output_deserializer:base_unit_of_yojson ~error_deserializer
   end
 module RemoveTargets =
@@ -1407,9 +1459,10 @@ module RemoveTargets =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.remove_targets_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsRemoveTargets" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsRemoveTargets" ~service
+            ~config:context.config ~input
             ~output_deserializer:remove_targets_response_of_yojson
             ~error_deserializer
   end
@@ -1442,9 +1495,10 @@ module StartReplay =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.start_replay_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsStartReplay" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsStartReplay" ~service
+            ~config:context.config ~input
             ~output_deserializer:start_replay_response_of_yojson
             ~error_deserializer
   end
@@ -1474,9 +1528,10 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsTagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsTagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1501,9 +1556,10 @@ module TestEventPattern =
         let open Deserializers in
           let input =
             Serializers.test_event_pattern_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsTestEventPattern" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsTestEventPattern"
+            ~service ~config:context.config ~input
             ~output_deserializer:test_event_pattern_response_of_yojson
             ~error_deserializer
   end
@@ -1533,9 +1589,10 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUntagResource" ~service
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -1566,9 +1623,10 @@ module UpdateApiDestination =
         let open Deserializers in
           let input =
             Serializers.update_api_destination_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUpdateApiDestination" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUpdateApiDestination"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_api_destination_response_of_yojson
             ~error_deserializer
   end
@@ -1601,9 +1659,10 @@ module UpdateArchive =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_archive_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUpdateArchive" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUpdateArchive" ~service
+            ~config:context.config ~input
             ~output_deserializer:update_archive_response_of_yojson
             ~error_deserializer
   end
@@ -1638,9 +1697,10 @@ module UpdateConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_connection_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUpdateConnection" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUpdateConnection"
+            ~service ~config:context.config ~input
             ~output_deserializer:update_connection_response_of_yojson
             ~error_deserializer
   end
@@ -1667,9 +1727,10 @@ module UpdateEndpoint =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_endpoint_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUpdateEndpoint" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUpdateEndpoint" ~service
+            ~config:context.config ~input
             ~output_deserializer:update_endpoint_response_of_yojson
             ~error_deserializer
   end
@@ -1699,9 +1760,10 @@ module UpdateEventBus =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_event_bus_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"AWSEventsUpdateEventBus" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"AWSEventsUpdateEventBus" ~service
+            ~config:context.config ~input
             ~output_deserializer:update_event_bus_response_of_yojson
             ~error_deserializer
   end

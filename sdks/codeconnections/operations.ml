@@ -24,9 +24,11 @@ module CreateConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_connection_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201CreateConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_connection_output_of_yojson
             ~error_deserializer
   end
@@ -48,9 +50,11 @@ module CreateHost =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.create_host_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201CreateHost" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_host_output_of_yojson
             ~error_deserializer
   end
@@ -90,9 +94,11 @@ module CreateRepositoryLink =
         let open Deserializers in
           let input =
             Serializers.create_repository_link_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201CreateRepositoryLink"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_repository_link_output_of_yojson
             ~error_deserializer
   end
@@ -132,9 +138,11 @@ module CreateSyncConfiguration =
         let open Deserializers in
           let input =
             Serializers.create_sync_configuration_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201CreateSyncConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:create_sync_configuration_output_of_yojson
             ~error_deserializer
   end
@@ -156,9 +164,11 @@ module DeleteConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_connection_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201DeleteConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_connection_output_of_yojson
             ~error_deserializer
   end
@@ -183,9 +193,11 @@ module DeleteHost =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.delete_host_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201DeleteHost" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_host_output_of_yojson
             ~error_deserializer
   end
@@ -229,9 +241,11 @@ module DeleteRepositoryLink =
         let open Deserializers in
           let input =
             Serializers.delete_repository_link_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201DeleteRepositoryLink"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_repository_link_output_of_yojson
             ~error_deserializer
   end
@@ -268,9 +282,11 @@ module DeleteSyncConfiguration =
         let open Deserializers in
           let input =
             Serializers.delete_sync_configuration_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201DeleteSyncConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_sync_configuration_output_of_yojson
             ~error_deserializer
   end
@@ -295,9 +311,11 @@ module GetConnection =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_connection_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetConnection" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_connection_output_of_yojson
             ~error_deserializer
   end
@@ -322,9 +340,10 @@ module GetHost =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_host_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
-            ~shape_name:"CodeConnections_20231201GetHost" ~service
-            ~config:context.config ~http:context.http ~input
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http ~shape_name:"CodeConnections_20231201GetHost"
+            ~service ~config:context.config ~input
             ~output_deserializer:get_host_output_of_yojson
             ~error_deserializer
   end
@@ -360,9 +379,11 @@ module GetRepositoryLink =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.get_repository_link_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetRepositoryLink" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:get_repository_link_output_of_yojson
             ~error_deserializer
   end
@@ -396,9 +417,11 @@ module GetRepositorySyncStatus =
         let open Deserializers in
           let input =
             Serializers.get_repository_sync_status_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetRepositorySyncStatus"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_repository_sync_status_output_of_yojson
             ~error_deserializer
   end
@@ -432,9 +455,11 @@ module GetResourceSyncStatus =
         let open Deserializers in
           let input =
             Serializers.get_resource_sync_status_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetResourceSyncStatus"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_resource_sync_status_output_of_yojson
             ~error_deserializer
   end
@@ -468,9 +493,11 @@ module GetSyncBlockerSummary =
         let open Deserializers in
           let input =
             Serializers.get_sync_blocker_summary_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetSyncBlockerSummary"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_sync_blocker_summary_output_of_yojson
             ~error_deserializer
   end
@@ -504,9 +531,11 @@ module GetSyncConfiguration =
         let open Deserializers in
           let input =
             Serializers.get_sync_configuration_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201GetSyncConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:get_sync_configuration_output_of_yojson
             ~error_deserializer
   end
@@ -528,9 +557,11 @@ module ListConnections =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_connections_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListConnections" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_connections_output_of_yojson
             ~error_deserializer
   end
@@ -546,9 +577,11 @@ module ListHosts =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_hosts_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListHosts" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_hosts_output_of_yojson
             ~error_deserializer
   end
@@ -585,9 +618,11 @@ module ListRepositoryLinks =
         let open Deserializers in
           let input =
             Serializers.list_repository_links_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListRepositoryLinks"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_repository_links_output_of_yojson
             ~error_deserializer
   end
@@ -622,9 +657,11 @@ module ListRepositorySyncDefinitions =
           let input =
             Serializers.list_repository_sync_definitions_input_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListRepositorySyncDefinitions"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_repository_sync_definitions_output_of_yojson
             ~error_deserializer
   end
@@ -658,9 +695,11 @@ module ListSyncConfigurations =
         let open Deserializers in
           let input =
             Serializers.list_sync_configurations_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListSyncConfigurations"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_sync_configurations_output_of_yojson
             ~error_deserializer
   end
@@ -683,9 +722,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201ListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_output_of_yojson
             ~error_deserializer
   end
@@ -710,9 +751,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_output_of_yojson
             ~error_deserializer
   end
@@ -734,9 +777,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_output_of_yojson
             ~error_deserializer
   end
@@ -766,9 +811,11 @@ module UpdateHost =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_host_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201UpdateHost" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_host_output_of_yojson
             ~error_deserializer
   end
@@ -808,9 +855,11 @@ module UpdateRepositoryLink =
         let open Deserializers in
           let input =
             Serializers.update_repository_link_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201UpdateRepositoryLink"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_repository_link_output_of_yojson
             ~error_deserializer
   end
@@ -849,9 +898,11 @@ module UpdateSyncBlocker =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.update_sync_blocker_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201UpdateSyncBlocker" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_sync_blocker_output_of_yojson
             ~error_deserializer
   end
@@ -891,9 +942,11 @@ module UpdateSyncConfiguration =
         let open Deserializers in
           let input =
             Serializers.update_sync_configuration_input_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"CodeConnections_20231201UpdateSyncConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:update_sync_configuration_output_of_yojson
             ~error_deserializer
   end

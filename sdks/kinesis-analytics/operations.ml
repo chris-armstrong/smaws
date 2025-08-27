@@ -33,9 +33,11 @@ module AddApplicationCloudWatchLoggingOption =
           let input =
             Serializers.add_application_cloud_watch_logging_option_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814AddApplicationCloudWatchLoggingOption"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:add_application_cloud_watch_logging_option_response_of_yojson
             ~error_deserializer
   end
@@ -73,9 +75,11 @@ module AddApplicationInput =
         let open Deserializers in
           let input =
             Serializers.add_application_input_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814AddApplicationInput"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:add_application_input_response_of_yojson
             ~error_deserializer
   end
@@ -112,9 +116,11 @@ module AddApplicationInputProcessingConfiguration =
           let input =
             Serializers.add_application_input_processing_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814AddApplicationInputProcessingConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:add_application_input_processing_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -149,9 +155,11 @@ module AddApplicationOutput =
         let open Deserializers in
           let input =
             Serializers.add_application_output_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814AddApplicationOutput"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:add_application_output_response_of_yojson
             ~error_deserializer
   end
@@ -188,9 +196,11 @@ module AddApplicationReferenceDataSource =
           let input =
             Serializers.add_application_reference_data_source_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814AddApplicationReferenceDataSource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:add_application_reference_data_source_response_of_yojson
             ~error_deserializer
   end
@@ -228,9 +238,11 @@ module CreateApplication =
         let open Deserializers in
           let input =
             Serializers.create_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814CreateApplication" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:create_application_response_of_yojson
             ~error_deserializer
   end
@@ -262,9 +274,11 @@ module DeleteApplication =
         let open Deserializers in
           let input =
             Serializers.delete_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DeleteApplication" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:delete_application_response_of_yojson
             ~error_deserializer
   end
@@ -301,9 +315,11 @@ module DeleteApplicationCloudWatchLoggingOption =
           let input =
             Serializers.delete_application_cloud_watch_logging_option_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DeleteApplicationCloudWatchLoggingOption"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_application_cloud_watch_logging_option_response_of_yojson
             ~error_deserializer
   end
@@ -340,9 +356,11 @@ module DeleteApplicationInputProcessingConfiguration =
           let input =
             Serializers.delete_application_input_processing_configuration_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DeleteApplicationInputProcessingConfiguration"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_application_input_processing_configuration_response_of_yojson
             ~error_deserializer
   end
@@ -377,9 +395,11 @@ module DeleteApplicationOutput =
         let open Deserializers in
           let input =
             Serializers.delete_application_output_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DeleteApplicationOutput"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_application_output_response_of_yojson
             ~error_deserializer
   end
@@ -416,9 +436,11 @@ module DeleteApplicationReferenceDataSource =
           let input =
             Serializers.delete_application_reference_data_source_request_to_yojson
               request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DeleteApplicationReferenceDataSource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:delete_application_reference_data_source_response_of_yojson
             ~error_deserializer
   end
@@ -444,9 +466,11 @@ module DescribeApplication =
         let open Deserializers in
           let input =
             Serializers.describe_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DescribeApplication"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:describe_application_response_of_yojson
             ~error_deserializer
   end
@@ -479,9 +503,11 @@ module DiscoverInputSchema =
         let open Deserializers in
           let input =
             Serializers.discover_input_schema_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814DiscoverInputSchema"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:discover_input_schema_response_of_yojson
             ~error_deserializer
   end
@@ -497,9 +523,11 @@ module ListApplications =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.list_applications_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814ListApplications" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:list_applications_response_of_yojson
             ~error_deserializer
   end
@@ -528,9 +556,11 @@ module ListTagsForResource =
         let open Deserializers in
           let input =
             Serializers.list_tags_for_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814ListTagsForResource"
-            ~service ~config:context.config ~http:context.http ~input
+            ~service ~config:context.config ~input
             ~output_deserializer:list_tags_for_resource_response_of_yojson
             ~error_deserializer
   end
@@ -565,9 +595,11 @@ module StartApplication =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.start_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814StartApplication" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:start_application_response_of_yojson
             ~error_deserializer
   end
@@ -595,9 +627,11 @@ module StopApplication =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.stop_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814StopApplication" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:stop_application_response_of_yojson
             ~error_deserializer
   end
@@ -631,9 +665,11 @@ module TagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.tag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814TagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:tag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -667,9 +703,11 @@ module UntagResource =
       let open Smaws_Lib.Context in
         let open Deserializers in
           let input = Serializers.untag_resource_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814UntagResource" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:untag_resource_response_of_yojson
             ~error_deserializer
   end
@@ -707,9 +745,11 @@ module UpdateApplication =
         let open Deserializers in
           let input =
             Serializers.update_application_request_to_yojson request in
-          Smaws_Lib.Protocols.AwsJson.request
+          Smaws_Lib.Protocols.AwsJson.request_with_http_module
+            ~http_module:(Smaws_Lib.Context.http_module context)
+            ~http:context.http
             ~shape_name:"KinesisAnalytics_20150814UpdateApplication" ~service
-            ~config:context.config ~http:context.http ~input
+            ~config:context.config ~input
             ~output_deserializer:update_application_response_of_yojson
             ~error_deserializer
   end
