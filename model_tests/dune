@@ -8,12 +8,25 @@
 (library
  (name model_tests)
  (package smaws-gen)
- (modules test_data_parser)
+ (modules test_data_parser Gen_test_constructors)
  (libraries Parselib yojson base stdio))
 
-(executable
- (public_name test-parser)
+(test
  (name test_parser_example)
- (package smaws-gen)
  (modules test_parser_example)
  (libraries model_tests base stdio))
+
+(test
+ (name test_record)
+ (modules test_record)
+ (libraries Parselib))
+
+(test
+ (name test_params)
+ (modules test_params)
+ (libraries Parselib base stdio))
+
+(test
+ (name test_constructor_gen)
+ (modules test_constructor_gen)
+ (libraries model_tests yojson base stdio))
