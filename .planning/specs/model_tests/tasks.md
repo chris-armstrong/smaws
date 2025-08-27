@@ -104,6 +104,22 @@
 - [ ] Handle complex types (structures, lists, maps, unions)
 - [ ] Add `[@@deriving show, equal]` to all generated types
 
+**Implementation Approach**:
+- For request tests: `params` field matches the operation's `input` type definition
+- For response tests: `params` field matches the operation's `output` type definition  
+- If trait is attached to a structure instead of operation: use the structure type directly
+- Look up operation definition in Smithy model, find input/output type references, then convert JSON params to OCaml constructor code
+
+**Progress & Discoveries**:
+- ✅ Confirmed 34 test cases successfully extracted from `smithy-aws-protocol-tests_model.json`
+- ✅ Test data parser working correctly with operations from `aws.protocoltests.json10` and `aws.protocoltests.json` namespaces
+- ✅ Test cases include both request and response tests with varying complexity:
+  - Simple operations: `NoInputAndNoOutput`, `EmptyInputAndEmptyOutput`
+  - Complex operations: `KitchenSinkOperation` (28 request tests, 23 response tests)
+  - Operations with unions: `JsonUnions` (10 request, 12 response tests)
+- ✅ All test cases use `awsJson1_0` or `awsJson1_1` protocols as expected
+- 📋 Need to examine operation definitions and type schemas to understand parameter-to-type mapping
+
 ### Task 3.2: Generate Expected Response Constructors  
 **Acceptance Criteria**: Expected response values generated as OCaml constructors
 - [ ] Generate expected response constructors: `make_<test_id>_expected : unit -> <OperationOutput>.t`
