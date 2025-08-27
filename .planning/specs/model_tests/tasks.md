@@ -2,27 +2,42 @@
 
 ## Phase 1: Core Infrastructure
 
-### Task 1.1: Extend HTTP Client Interface
+### Task 1.1: Extend HTTP Client Interface ✅ COMPLETED
 **Acceptance Criteria**: AwsJson protocols accept HTTP client as first-class module
-- [ ] Modify `awssdklib/protocols_gen/AwsJson.ml` signature to accept HTTP client as parameter
-- [ ] Change from `Make (Http_module : Http.Client_intf)` functor to function accepting `(module Http.Client_intf)`
-- [ ] Update `request` function to use first-class module HTTP client
-- [ ] Ensure backward compatibility with existing generated code
+- [x] Modify `awssdklib/protocols_gen/AwsJson.ml` signature to accept HTTP client as parameter
+- [x] Change from `Make (Http_module : Http.Client_intf)` functor to function accepting `(module Http.Client_intf)`
+- [x] Update `request` function to use first-class module HTTP client
+- [x] Ensure backward compatibility with existing generated code
 
-### Task 1.2: Update Context Module
+**Implementation Details**:
+- Added `request_with_http_module` function at `awssdklib/protocols_gen/AwsJson.ml:67-105`
+- Preserved original `Make` functor for backward compatibility, now delegates to new function
+- Full request lifecycle implemented with first-class module unpacking
+
+### Task 1.2: Update Context Module ✅ COMPLETED
 **Acceptance Criteria**: Context provides HTTP module extraction capability
-- [ ] Add `http_module` function to `awssdklib/Context.ml`
-- [ ] Function signature: `val http_module : t -> (module Http.Client_intf)`
-- [ ] Extract HTTP client from context and package as first-class module
-- [ ] Update documentation and examples
+- [x] Add `http_module` function to `awssdklib/Context.ml`
+- [x] Function signature: `val http_module : t -> (module Http.Client_intf)`
+- [x] Extract HTTP client from context and package as first-class module
+- [x] Update documentation and examples
 
-### Task 1.3: Modify Generated Operations
+**Implementation Details**:
+- Added `http_module` function at `awssdklib/Context.ml:10-11`
+- Implemented generic context type `'http context` for parameterization
+- Added helper functions `make_with_http_client` and `extract_http_module` for testing scenarios
+
+### Task 1.3: Modify Generated Operations ⚠️ NEEDS WORK
 **Acceptance Criteria**: Generated operations use new AwsJson API with extracted HTTP module
-- [ ] Update `codegen/codegen/gen_operations.ml` templates
+- [ ] Update `codegen/codegen/AwsProtocolJson.ml` templates (not gen_operations.ml)
 - [ ] Change operation calls from `AwsJson.Make(Http.Client).request` pattern
-- [ ] To `AwsJson.request ~http:(Context.http_module context)` pattern
+- [ ] To `AwsJson.request_with_http_module ~http_module:(Context.http_module context)` pattern
 - [ ] Regenerate test operations to verify changes
 - [ ] Run existing tests to ensure no regressions
+
+**Current Status**: 
+- Located generation code in `codegen/codegen/AwsProtocolJson.ml:572-575`
+- Still using old functor-based API pattern in `generate_request_handler` function
+- Need to update to use new `request_with_http_module` function with first-class modules
 
 ## Phase 2: Test Data Processing
 
