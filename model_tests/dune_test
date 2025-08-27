@@ -1,0 +1,5 @@
+(executable
+ (public_name test-parser)
+ (name test_parser_example)
+ (package smaws-gen)
+ (libraries model_tests base stdio))

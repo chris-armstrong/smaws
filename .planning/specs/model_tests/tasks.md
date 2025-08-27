@@ -45,13 +45,20 @@
 
 ## Phase 2: Test Data Processing
 
-### Task 2.1: Extend Smithy AST for Response Tests
+### Task 2.1: Extend Smithy AST for Response Tests ✅ COMPLETED
 **Acceptance Criteria**: AST supports both request and response test data
-- [ ] Add `httpResponseTest` type to `codegen/ast/Trait.ml`
-- [ ] Fields: `id`, `protocol`, `code`, `headers`, `body`, `bodyMediaType`, `params`
-- [ ] Add `TestHttpResponseTests of httpResponseTest list` to trait variant
-- [ ] Update parser to handle response test traits
-- [ ] Add equality and show derivations
+- [x] Add `httpResponseTest` type to `codegen/ast/Trait.ml`
+- [x] Fields: `id`, `protocol`, `code`, `headers`, `body`, `bodyMediaType`, `params`
+- [x] Add `TestHttpResponseTests of httpResponseTest list` to trait variant
+- [x] Update parser to handle response test traits
+- [x] Add equality and show derivations
+
+**Implementation Details**:
+- `httpResponseTest` type already exists at `codegen/ast/Trait.ml:63-77` with all required fields
+- `TestHttpResponseTests` variant already exists in trait union at line 165
+- Parser already handles `smithy.test#httpResponseTests` at `codegen/parse/Smithy.ml:351`
+- Parser function `parseTestHttpResponseTests` implemented at lines 173-217
+- All derivations (`[@@deriving show, equal]`) already in place
 
 ### Task 2.2: Create Test Data Parser
 **Acceptance Criteria**: Parser extracts and validates test cases from Smithy model

@@ -2,4 +2,18 @@
  (public_name gen)
  (name gen)
  (package smaws-gen) 
+ (modules gen)
  (libraries Parselib yojson sdkgen))
+
+(library
+ (name model_tests)
+ (package smaws-gen)
+ (modules test_data_parser)
+ (libraries Parselib yojson base stdio))
+
+(executable
+ (public_name test-parser)
+ (name test_parser_example)
+ (package smaws-gen)
+ (modules test_parser_example)
+ (libraries model_tests base stdio))
