@@ -122,6 +122,16 @@
 - Comprehensive error handling: UnsupportedType, MissingShape, InvalidParams
 - Successfully tested with multiple operations from AWS protocol test suite
 
+**Major Refactoring (December 2024)**:
+- Refactored to use existing Parselib infrastructure instead of custom types
+- Uses `Parselib.Ast.Shape` types and `Parselib.Parse.Smithy.parseShapes` function
+- Fixed optional/required field handling using `RequiredTrait` instead of `Null` patterns
+- Implemented proper error handling for missing required fields
+- Uses `Parselib.Codegen.SafeNames` for all name generation (safeMemberName, safeTypeName)
+- Uses `Parselib.Codegen.Util` for name extraction (symbolName)
+- All Smithy semantic rules properly followed: required trait = mandatory, no required trait = optional
+- Code follows established Parselib patterns and conventions
+
 **Progress & Discoveries**:
 - ✅ Successfully generates constructors for 34 test cases from `smithy-aws-protocol-tests_model.json`
 - ✅ Working examples include:

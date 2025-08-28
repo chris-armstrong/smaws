@@ -18,7 +18,7 @@ val resolve_shape_by_name : (string, Parselib.Ast.Shape.t, Base.String.comparato
 
 (** Generate OCaml constructor expression from JSON parameter values using shape descriptors *)
 val generate_value_constructor : 
-  (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> Parselib.Ast.Shape.shapeDescriptor -> t -> (string, constructor_error) result
+  (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> Parselib.Ast.Shape.shapeDescriptor -> t -> is_required:bool -> (string, constructor_error) result
 
 (** Generate input constructor function for a test case *)
 val generate_input_constructor : 
