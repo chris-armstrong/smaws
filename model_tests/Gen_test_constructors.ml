@@ -58,6 +58,10 @@ let is_member_required (member : Shape.member) =
   | Some traits -> List.exists traits ~f:Trait.isRequiredTrait
   | None -> false
 
+(* Check if HTTP status code represents an error *)
+let is_error_status_code code =
+  code >= 400 && code <= 599
+
 (* Convert JSON parameter values to OCaml constructor expressions *)
 let rec generate_value_constructor shapes shape_descriptor json_value ~is_required =
   match shape_descriptor, json_value with
@@ -199,6 +203,91 @@ let generate_input_constructor shapes operation_name input_shape_target (test_ca
         | _ -> Error (InvalidParams ("No parameters provided for non-unit type"))))
   | Error e -> Error e
 
+(* Generate response constructor function for a test case *)
+let generate_response_constructor shapes operation_name output_shape_target (test_case : Parselib.Ast.Trait.httpResponseTest) =
+  match resolve_shape_by_name shapes output_shape_target with
+  | Ok shape_descriptor ->
+    (match test_case.params with
+     | Some params_json ->
+       (match shape_descriptor with
+        | Shape.StructureShape { members; _ } ->
+          (* For structures, we need to handle the type name prefix *)
+          let simple_name = SafeNames.safeTypeName output_shape_target in
+          (match params_json with
+           | `Assoc assoc ->
+             (match generate_structure_constructor shapes members assoc ~is_required:false with
+              | Ok field_constructor ->
+                Ok (Printf.sprintf "let make_%s_expected () = %s.%s" test_case.id simple_name field_constructor)
+              | Error e -> Error e)
+           | _ -> Error (InvalidParams "Expected object for structure parameters"))
+        | _ ->
+          (match generate_value_constructor shapes shape_descriptor params_json ~is_required:true with
+           | Ok constructor_expr -> 
+             Ok (Printf.sprintf "let make_%s_expected () = %s" test_case.id constructor_expr)
+           | Error e -> Error e))
+     | None -> 
+       (* No parameters - use unit for Unit types, empty constructor for structures *)
+       (match shape_descriptor with
+        | Shape.UnitShape -> Ok (Printf.sprintf "let make_%s_expected () = ()" test_case.id)
+        | Shape.StructureShape _ ->
+          let simple_name = SafeNames.safeTypeName output_shape_target in
+          Ok (Printf.sprintf "let make_%s_expected () = %s.default ()" test_case.id simple_name)
+        | _ -> Error (InvalidParams ("No parameters provided for non-unit type"))))
+  | Error e -> Error e
+
+(* Generate error response constructor function for a test case *)
+let generate_error_response_constructor shapes operation_name error_shapes (test_case : Parselib.Ast.Trait.httpResponseTest) =
+  if not (is_error_status_code test_case.code) then
+    Error (InvalidParams ("Not an error status code: " ^ Int.to_string test_case.code))
+  else
+    match test_case.params with
+    | Some params_json ->
+      (* Try to match the params against each possible error shape *)
+      let try_error_shape error_shape_name =
+        match resolve_shape_by_name shapes error_shape_name with
+        | Ok shape_descriptor ->
+          (match shape_descriptor with
+           | Shape.StructureShape { members; _ } ->
+             let simple_name = SafeNames.safeTypeName error_shape_name in
+             (match params_json with
+              | `Assoc assoc ->
+                (match generate_structure_constructor shapes members assoc ~is_required:false with
+                 | Ok field_constructor ->
+                   Ok (Printf.sprintf "let make_%s_error () = %s.%s" test_case.id simple_name field_constructor)
+                 | Error e -> Error e)
+              | _ -> Error (InvalidParams "Expected object for structure parameters"))
+           | _ ->
+             (match generate_value_constructor shapes shape_descriptor params_json ~is_required:true with
+              | Ok constructor_expr -> 
+                Ok (Printf.sprintf "let make_%s_error () = %s" test_case.id constructor_expr)
+              | Error e -> Error e))
+        | Error e -> Error e
+      in
+      
+      (* Try each error shape until one works *)
+      let rec try_error_shapes = function
+        | [] -> Error (InvalidParams ("No matching error shape found for test case: " ^ test_case.id))
+        | error_shape :: remaining ->
+          match try_error_shape error_shape with
+          | Ok constructor -> Ok constructor
+          | Error _ -> try_error_shapes remaining
+      in
+      try_error_shapes error_shapes
+      
+    | None -> 
+      (* No parameters - create a generic error constructor *)
+      match error_shapes with
+      | error_shape :: _ ->
+        (match resolve_shape_by_name shapes error_shape with
+         | Ok shape_descriptor ->
+           (match shape_descriptor with
+            | Shape.StructureShape _ ->
+              let simple_name = SafeNames.safeTypeName error_shape in
+              Ok (Printf.sprintf "let make_%s_error () = %s.default ()" test_case.id simple_name)
+            | _ -> Error (InvalidParams ("Unexpected error shape type for: " ^ error_shape)))
+         | Error e -> Error e)
+      | [] -> Error (InvalidParams ("No error shapes defined for operation: " ^ operation_name))
+
 (* Generate all constructor functions for an operation's test cases from parsed shapes *)
 let generate_operation_constructors_from_parsed_shapes parsed_shapes operation_name =
   match Map.find parsed_shapes operation_name with
@@ -270,4 +359,64 @@ let generate_operation_constructors shapes operation_json operation_name =
       | Ok constructor -> Ok (constructor :: acc)
       | Error e -> Error e)
   | None -> Error (InvalidParams ("Operation missing input target: " ^ operation_name))
+
+(* Generate all constructors (input and response) for an operation from parsed shapes *)
+let generate_complete_operation_constructors parsed_shapes operation_name =
+  match Map.find parsed_shapes operation_name with
+  | Some operation_shape ->
+    (match operation_shape.Shape.descriptor with
+     | Shape.OperationShape { input; output; errors; traits; _ } ->
+       (* Extract test cases from the operation shape's traits *)
+       let request_tests, response_tests = 
+         match traits with
+         | Some traits -> 
+           let requests = List.filter_map traits ~f:(function
+             | Trait.TestHttpRequestTests tests -> Some tests
+             | _ -> None) |> List.concat in
+           let responses = List.filter_map traits ~f:(function
+             | Trait.TestHttpResponseTests tests -> Some tests
+             | _ -> None) |> List.concat in
+           (requests, responses)
+         | None -> ([], [])
+       in
+       
+       (* Generate input constructors *)
+       let input_constructors = 
+         match input with
+         | Some input_target ->
+           List.fold_result request_tests ~init:[] ~f:(fun acc test_case ->
+             match generate_input_constructor parsed_shapes operation_name input_target test_case with
+             | Ok constructor -> Ok (constructor :: acc)
+             | Error e -> Error e)
+         | None -> Ok []
+       in
+       
+       (* Generate response constructors *)
+       let response_constructors =
+         match output with
+         | Some output_target ->
+           List.fold_result response_tests ~init:[] ~f:(fun acc test_case ->
+             if is_error_status_code test_case.code then
+               (* Handle error response constructors *)
+               match errors with
+               | Some error_list ->
+                 (match generate_error_response_constructor parsed_shapes operation_name error_list test_case with
+                  | Ok constructor -> Ok (constructor :: acc)
+                  | Error e -> Error e)
+               | None -> Error (InvalidParams ("Error status code but no error shapes defined for: " ^ operation_name))
+             else
+               (* Handle normal response constructors *)
+               match generate_response_constructor parsed_shapes operation_name output_target test_case with
+               | Ok constructor -> Ok (constructor :: acc)
+               | Error e -> Error e)
+         | None -> Ok []
+       in
+       
+       (* Combine all constructors *)
+       (match input_constructors, response_constructors with
+        | Ok inputs, Ok responses -> Ok (inputs @ responses)
+        | Error e, _ | _, Error e -> Error e)
+        
+     | _ -> Error (InvalidParams ("Not an operation shape: " ^ operation_name)))
+  | None -> Error (MissingShape operation_name)
 

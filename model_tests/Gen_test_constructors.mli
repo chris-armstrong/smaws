@@ -31,3 +31,15 @@ val generate_operation_constructors_from_parsed_shapes :
 (** Generate all constructor functions from raw JSON (parses shapes internally) *)
 val generate_operation_constructors : 
   (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> t -> string -> (string list, constructor_error) result
+
+(** Generate response constructor function for a test case *)
+val generate_response_constructor : 
+  (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> string -> string -> Parselib.Ast.Trait.httpResponseTest -> (string, constructor_error) result
+
+(** Generate all constructors (input and response) for an operation from parsed shapes *)
+val generate_complete_operation_constructors : 
+  (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> string -> (string list, constructor_error) result
+
+(** Generate error response constructor function for a test case *)
+val generate_error_response_constructor : 
+  (string, Parselib.Ast.Shape.t, Base.String.comparator_witness) Base.Map.t -> string -> string list -> Parselib.Ast.Trait.httpResponseTest -> (string, constructor_error) result
