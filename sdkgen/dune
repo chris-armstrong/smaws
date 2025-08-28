@@ -1,34 +1,25 @@
 (library
  (name sdkgen)
- (modules 
-   exceptions
-   gen_builders
-   gen_deserialisers
-   gen_doc
-   gen_module
-   gen_operations
-   gen_serialisers
-   gen_service_metadata
-   gen_types
-   sdkgen
-   SmithyHelpers)
+ (modules
+  exceptions
+  gen_builders
+  gen_deserialisers
+  gen_doc
+  gen_module
+  gen_operations
+  gen_serialisers
+  gen_service_metadata
+  gen_types
+  sdkgen
+  SmithyHelpers)
  (libraries Parselib base))
 
 (test
  (name namespace_tests)
  (modules namespace_tests)
- (libraries 
-   Parselib
-   sdkgen
-   base
-   alcotest))
+ (libraries Parselib sdkgen base alcotest))
 
 (test
  (name integration_tests)
  (modules integration_tests)
- (libraries 
-   Parselib
-   sdkgen
-   base
-   alcotest))
-
+ (libraries Parselib sdkgen base alcotest))

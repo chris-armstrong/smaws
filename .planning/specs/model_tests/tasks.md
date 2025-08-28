@@ -150,13 +150,43 @@
 - [ ] Support error response constructors for error test cases
 - [ ] Ensure type safety and compile-time validation
 
-### Task 3.3: Generate Test Functions
+### Task 3.3: Generate Test Functions ✅ COMPLETED
 **Acceptance Criteria**: Complete test functions generated per operation test case
-- [ ] Create `model_tests/Gen_test_functions.ml` 
-- [ ] Generate request test functions: `test_<operation>_<test_id>_request`
-- [ ] Generate response test functions: `test_<operation>_<test_id>_response`
-- [ ] Include HTTP mock setup and assertion logic
-- [ ] Use alcotest framework for test structure
+- [x] Create `model_tests/Gen_test_functions.ml` 
+- [x] Generate request test functions: `test_<operation>_<test_id>_request`
+- [x] Generate response test functions: `test_<operation>_<test_id>_response`
+- [x] Include HTTP mock setup and assertion logic
+- [x] Use alcotest framework for test structure
+
+**Implementation Details**:
+- Created `Gen_test_functions.ml` and `.mli` with complete test function generation
+- Function signatures: `generate_request_test_function`, `generate_response_test_function`, `generate_operation_test_functions`, `generate_test_module`
+- Integrated with existing HTTP mock system from `awssdklib_test/http_mock.ml`
+- Uses first-class module pattern for HTTP client integration
+- Generates structured alcotest test functions with proper assertions
+- HTTP request verification includes method, URI, headers, and body assertions
+- Error handling with `test_function_error` type covering constructor and mock setup errors
+- Successfully integrates with Task 3.1 input constructors and Task 3.2 response constructors
+- All code compiles, builds, and passes dune fmt formatting
+- Updated dune configuration to include alcotest dependency
+- Created `test_function_gen.ml` for testing and demonstration
+
+**Generated Test Function Structure**:
+```ocaml
+let test_<operation>_<test_id>_request () =
+  let module HttpMock = (val Awssdklib_test.Http_mock.create_http_mock () : Awssdklib_test.Http_mock.HttpMock_intf) in
+  let http_client = (module HttpMock : Smaws_Lib.Http.Client_intf) in  
+  let context = Smaws_Lib.Context.make_with_http_client http_client in
+  (* Mock setup, input generation, operation execution, assertions *)
+```
+
+**Key Features**:
+- Type-safe test function generation
+- HTTP mock integration with first-class modules
+- Automatic assertion generation for HTTP requests/responses
+- Alcotest framework integration
+- Comprehensive error handling
+- Modular design with clean separation of concerns
 
 ## Phase 4: Test Execution Framework
 

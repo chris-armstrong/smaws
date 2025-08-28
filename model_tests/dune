@@ -1,15 +1,15 @@
 (executable
  (public_name gen)
  (name gen)
- (package smaws-gen) 
+ (package smaws-gen)
  (modules gen)
  (libraries Parselib yojson sdkgen))
 
 (library
  (name model_tests)
  (package smaws-gen)
- (modules test_data_parser Gen_test_constructors)
- (libraries Parselib yojson base stdio))
+ (modules test_data_parser Gen_test_constructors Gen_test_functions)
+ (libraries Parselib yojson base stdio alcotest))
 
 (test
  (name test_parser_example)
@@ -29,4 +29,9 @@
 (test
  (name test_constructor_gen)
  (modules test_constructor_gen)
+ (libraries model_tests yojson base stdio))
+
+(test
+ (name test_function_gen)
+ (modules test_function_gen)
  (libraries model_tests yojson base stdio))

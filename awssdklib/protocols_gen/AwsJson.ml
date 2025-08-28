@@ -64,14 +64,10 @@ module Errors = struct
 end
 
 (* First-class module implementation for HTTP client substitution *)
-let request_with_http_module (type http_client) 
-    ~(http_module : (module Http.Client_intf with type t = http_client))
-    ~(http : http_client)
-    ~(shape_name : string) 
-    ~(service : Service.descriptor) 
-    ~(config : Config.t)
-    ~(input : json_type) 
-    ~(output_deserializer : json_type -> string list -> 'res) 
+let request_with_http_module (type http_client)
+    ~(http_module : (module Http.Client_intf with type t = http_client)) ~(http : http_client)
+    ~(shape_name : string) ~(service : Service.descriptor) ~(config : Config.t) ~(input : json_type)
+    ~(output_deserializer : json_type -> string list -> 'res)
     ~(error_deserializer : json_type -> string list -> 'error) =
   let module Http_module = (val http_module) in
   let open Json.DeserializeHelpers in
@@ -79,9 +75,7 @@ let request_with_http_module (type http_client)
   let ( let+ ) res map = Result.map map res in
   let uri = Service.makeUri ~config ~service in
   let body = json_to_string input in
-  let headers =
-    [ ("Content-Type", "application/x-amz-json-1.0"); ("X-Amz-Target", shape_name) ]
-  in
+  let headers = [ ("Content-Type", "application/x-amz-json-1.0"); ("X-Amz-Target", shape_name) ] in
   let auth = config.resolveAuth () in
   let region = config.resolveRegion () in
   let headers = Sign.sign_request_v4 ~config ~service ~uri ~method_:`POST ~headers ~body in
@@ -126,7 +120,7 @@ module Make (Http_module : Http.Client_intf) = struct
   let json_of_string = json_of_string
 
   module Errors = Errors
-  
+
   type error =
     [ AwsErrors.t
     | `HttpError of Http.http_failure

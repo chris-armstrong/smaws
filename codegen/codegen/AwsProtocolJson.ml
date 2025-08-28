@@ -22,9 +22,10 @@ exception UnexpectedType of string
 (*     | ResourceShape | OperationShape _ | ServiceShape _ -> false) *)
 
 module Serialiser = struct
-  let func_name ?(is_exception_type = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) name =
+  let func_name ?(is_exception_type = false)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) name =
     let exception_extension = if is_exception_type then "" else "" in
-    let resolved_name = 
+    let resolved_name =
       match namespace_resolver with
       | Some resolver -> Namespace_resolver.Namespace_resolver.resolve_reference resolver name
       | None -> SafeNames.safeFunctionName name
@@ -54,7 +55,8 @@ module Serialiser = struct
 
     exp_fun "x" (SafeNames.safeTypeName name) match_exp
 
-  let union_func_body name (s : Shape.structureShapeDetails) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let union_func_body name (s : Shape.structureShapeDetails)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let match_exp =
       B.pexp_match (exp_ident "x")
         (s.members
@@ -86,7 +88,8 @@ module Serialiser = struct
 
     exp_fun "x" (SafeNames.safeTypeName name) match_exp
 
-  let structure_func_body name (descriptor : Shape.structureShapeDetails) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let structure_func_body name (descriptor : Shape.structureShapeDetails)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let open Trait in
     let is_exception_type = hasTrait descriptor.traits isErrorTrait in
     let members_list_exp =
@@ -120,7 +123,8 @@ module Serialiser = struct
       (Types.type_name ~is_exception_type name)
       (B.pexp_apply (exp_ident "assoc_to_yojson") [ (Nolabel, B.elist members_list_exp) ])
 
-  let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let exp_func name = Some (exp_ident name) in
     match shapeWithTarget.descriptor with
     | StructureShape { members = []; _ } -> exp_func "unit_to_yojson"
@@ -164,7 +168,8 @@ module Serialiser = struct
     | OperationShape x -> None
     | ResourceShape -> None
 
-  let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let open Trait in
     structure_shapes
     |> List.filter_map ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
@@ -220,16 +225,18 @@ module Serialiser = struct
 end
 
 module Deserialiser = struct
-  let func_name ?(is_exception_type = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) name =
+  let func_name ?(is_exception_type = false)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) name =
     let exception_extension = if is_exception_type then "" else "" in
-    let resolved_name = 
+    let resolved_name =
       match namespace_resolver with
       | Some resolver -> Namespace_resolver.Namespace_resolver.resolve_reference resolver name
       | None -> SafeNames.safeFunctionName name
     in
     Fmt.str "%s%s_of_yojson" resolved_name exception_extension
 
-  let union_func_body name (s : Shape.structureShapeDetails) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let union_func_body name (s : Shape.structureShapeDetails)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let cases =
       s.members
       |> List.map ~f:(fun (m : Ast.Shape.member) ->
@@ -323,14 +330,17 @@ module Deserialiser = struct
       (exp_fun_untyped "path"
          (B.pexp_constraint typed_match_exp (B.ptyp_constr (lident_noloc type_name_s) [])))
 
-  let structure_func_body name (descriptor : Shape.structureShapeDetails) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let structure_func_body name (descriptor : Shape.structureShapeDetails)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let type_name = Types.type_name ~is_exception_type:false name in
     let member_exp =
       if List.length descriptor.members > 0 then
         B.pexp_record
           (List.map descriptor.members ~f:(fun mem ->
                let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
-               let converter_name = func_name ~is_exception_type:false ~namespace_resolver mem.target in
+               let converter_name =
+                 func_name ~is_exception_type:false ~namespace_resolver mem.target
+               in
                let key_name = SafeNames.safeMemberName mem.name in
                let key = lident_noloc key_name in
                let base_field_expr =
@@ -374,7 +384,8 @@ module Deserialiser = struct
     in
     exp_fun_untyped "tree" (exp_fun_untyped "path" code)
 
-  let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let exp_func name = Some (exp_ident name) in
     match shapeWithTarget.descriptor with
     | StructureShape x -> Some (structure_func_body shapeWithTarget.name x ~namespace_resolver ())
@@ -429,7 +440,8 @@ module Deserialiser = struct
     | OperationShape x -> None
     | ResourceShape -> None
 
-  let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let open Trait in
     structure_shapes
     |> List.filter_map ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
@@ -485,7 +497,8 @@ module Deserialiser = struct
 end
 
 module Operations = struct
-  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
     let handler_body =
       let protocol_aws_json_module = B.pmod_ident (lident_noloc Modules.protocolAwsJson) in
@@ -516,7 +529,9 @@ module Operations = struct
           |> List.map ~f:(fun error ->
                  let _, exc_name = Util.symbolPair error in
                  let pattern = B.ppat_tuple [ B.ppat_any; pat_const_str exc_name ] in
-                 let deserialiser_func_name = exp_ident (Deserialiser.func_name ~namespace_resolver error) in
+                 let deserialiser_func_name =
+                   exp_ident (Deserialiser.func_name ~namespace_resolver error)
+                 in
                  let expression =
                    B.pexp_variant
                      (SafeNames.safeConstructorName error)
@@ -539,7 +554,8 @@ module Operations = struct
     [%stri let error_deserializer tree path = [%e handler_body]]
 
   let generate_request_handler ~name ~operation_name
-      ~(operation_shape : Ast.Shape.operationShapeDetails) ~alias_context ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+      ~(operation_shape : Ast.Shape.operationShapeDetails) ~alias_context
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let shape_func_body =
       let input =
         operation_shape.input
@@ -547,7 +563,8 @@ module Operations = struct
                B.pexp_apply
                  (B.pexp_ident
                     (Location.mknoloc
-                       Longident.(Ldot (Lident "Serializers", Serialiser.func_name ~namespace_resolver input))))
+                       Longident.(
+                         Ldot (Lident "Serializers", Serialiser.func_name ~namespace_resolver input))))
                  [ (Nolabel, exp_ident "request") ])
       in
       let service_shape = Util.symbolName name ^ Util.symbolName operation_name in
@@ -557,7 +574,9 @@ module Operations = struct
         |> Option.value ~default:"base_unit_of_yojson"
       in
       let request_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request_with_http_module" ]))
+        B.pexp_ident
+          (Location.mknoloc
+             (make_lident ~names:[ Modules.protocolAwsJson; "request_with_http_module" ]))
       in
       let http_module_func_name =
         B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.context; "http_module" ]))
@@ -572,7 +591,8 @@ module Operations = struct
         let open Smaws_Lib.Context in
         let open Deserializers in
         let input = [%e input] in
-        [%e request_func_name] ~http_module:([%e http_module_func_name] context) 
+        [%e request_func_name]
+          ~http_module:([%e http_module_func_name] context)
           ~http:[%e http_func_name] ~shape_name:[%e const_str service_shape] ~service
           ~config:[%e config_func_name] ~input
           ~output_deserializer:[%e exp_ident response_shape_deserializer]
@@ -593,14 +613,16 @@ module Operations = struct
       ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let module_name = SafeNames.safeConstructorName operation_name in
     let request_handler =
-      generate_request_handler ~name ~operation_name ~operation_shape ~alias_context ~namespace_resolver ()
+      generate_request_handler ~name ~operation_name ~operation_shape ~alias_context
+        ~namespace_resolver ()
     in
     let error_handler = generate_error_handler ~operation_shape ~namespace_resolver () in
     let module_items = [ error_handler; request_handler ] in
     let module_expr = B.pmod_structure module_items in
     B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
 
-  let generate_error_type alias_ctx errors ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate_error_type alias_ctx errors
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     let smaws_lib_constructor =
       [
         B.rinherit
@@ -613,11 +635,13 @@ module Operations = struct
     errors |> Option.value ~default:[]
     |> List.map ~f:(fun error ->
            let name = SafeNames.safeConstructorName error in
-           B.rtag (lstr_noloc name) false [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ])
+           B.rtag (lstr_noloc name) false
+             [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ])
     |> fun constructors -> B.ptyp_variant (smaws_lib_constructor @ constructors) Open None
 
   let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
-      ~alias_context ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+      ~alias_context ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None)
+      () =
     let open Ast.Shape in
     let module_name = SafeNames.safeConstructorName operation_name in
     let input_type =
@@ -633,7 +657,9 @@ module Operations = struct
            ~default:(B.ptyp_constr (lident_noloc "unit") [])
     in
 
-    let exception_type = generate_error_type alias_context operation_shape.errors ~namespace_resolver () in
+    let exception_type =
+      generate_error_type alias_context operation_shape.errors ~namespace_resolver ()
+    in
 
     let doc_string = Docs.convert_docs operation_shape.traits in
     B.psig_module
@@ -648,13 +674,15 @@ module Operations = struct
                   ([%t output_type], [%t exception_type]) result]))
     |> Docs.attach_doc_to_signature_item ~loc ~doc_string
 
-  let generate ~name ~operation_shapes ~alias_context ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate ~name ~operation_shapes ~alias_context
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
            generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
              ~alias_context ~namespace_resolver ())
 
-  let generate_mli ~name ~operation_shapes ~alias_context ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let generate_mli ~name ~operation_shapes ~alias_context
+      ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
            generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies

@@ -14,8 +14,9 @@ let type_name ~is_exception_type name =
 (** Construct an identifier for type `name`. This method should not be used directly - go through
     resolve or resolve_for_target (unless you already know the type's resolution is this name and
     not the resolution of an alias) *)
-let type_ident ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
-  let resolved_name = 
+let type_ident ctx ~name
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+  let resolved_name =
     match namespace_resolver with
     | Some resolver -> Namespace_resolver.Namespace_resolver.resolve_reference resolver name
     | None -> Util.symbolName name
@@ -24,25 +25,30 @@ let type_ident ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_res
   B.ptyp_constr (Location.mknoloc base_ident) []
 
 (** Using the aliasing context, resolve the type for the specified name *)
-let resolve ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let resolve ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None)
+    () =
   let resolution =
-    Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
+    Hashtbl.find ctx name
+    |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
   in
   (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   resolution
 
 (** Use the aliasing context to resolve the type for the specified name, using `traits` to determine
     optionality via the `required` trait *)
-let resolve_for_target ctx ~name ~traits ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let resolve_for_target ctx ~name ~traits
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
   let resolution =
-    Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
+    Hashtbl.find ctx name
+    |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
   in
   (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   let is_required = Ast.Trait.(hasTrait traits isRequiredTrait) in
   if is_required then resolution
   else B.ptyp_constr (Location.mknoloc (Longident.Lident "option")) [ resolution ]
 
-let make_basic_type_manifest ctx descriptor ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let make_basic_type_manifest ctx descriptor
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
   let open Ast.Shape in
   match descriptor with
   | BigDecimalShape { traits; _ } -> [%type: Bigdecimal.t]
@@ -125,7 +131,8 @@ let empty_type_constructor ~name ~traits =
     ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
     ~args:(Pcstr_tuple []) ~doc_string ()
 
-let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor)
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
   let open Ast.Shape in
   let is_exception_type =
     match descriptor with
@@ -237,7 +244,8 @@ let stri_service_metadata (service : Ast.Shape.serviceShapeDetails) =
 
 let sigi_service_metadata service = [%sigi: val service : Smaws_Lib.Service.descriptor]
 
-let generate_type_target ctx name descriptor ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let generate_type_target ctx name descriptor
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
   let open Ast.Shape in
   match descriptor with
   (* basic types are aliased and don't require separate declaration *)
@@ -256,7 +264,9 @@ let str_deriving_attributes () =
     B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str eq]);
   ]
 
-let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx structure_shapes fmt =
+let stri_structure_shapes ?(with_derivings = false)
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx
+    structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->
@@ -265,7 +275,8 @@ let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
            in
            let filtered_items =
              List.filter_map
-               ~f:(fun item -> generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
+               ~f:(fun item ->
+                 generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
                items
            in
            let attributed_items =
@@ -303,7 +314,9 @@ let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
 
                   B.pstr_type Nonrecursive [ filtered_declaration ]))
 
-let sigi_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx structure_shapes fmt =
+let sigi_structure_shapes ?(with_derivings = false)
+    ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx
+    structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->
@@ -312,7 +325,8 @@ let sigi_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
            in
            let filtered_items =
              List.filter_map
-               ~f:(fun item -> generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
+               ~f:(fun item ->
+                 generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
                items
            in
 
