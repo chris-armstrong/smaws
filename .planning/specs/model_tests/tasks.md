@@ -190,12 +190,25 @@ let test_<operation>_<test_id>_request () =
 
 ## Phase 4: Test Execution Framework
 
-### Task 4.1: Create HTTP Mock Integration
+### Task 4.1: Create HTTP Mock Integration ✅ COMPLETED
 **Acceptance Criteria**: HTTP mocks properly configured for each test case
-- [ ] Extend `awssdklib_test/http_mock.ml` for response tests
-- [ ] Add response verification functions
-- [ ] Support multiple request/response cycles per test
-- [ ] Clear mock state between tests
+- [x] Extend `awssdklib_test/http_mock.ml` for response tests
+- [x] Add response verification functions
+- [x] Support multiple request/response cycles per test
+- [x] Clear mock state between tests
+
+**Implementation Details**:
+- Extended `HttpMock_intf` with comprehensive new functions for response testing
+- Added `response_record` type to track sent response data with status, headers, and body
+- Implemented `verify_request()` and `verify_response()` functions with detailed error reporting
+- Added state management functions: `all_requests()`, `all_responses()`, `last_response()`, `clear_state()`
+- Added metrics functions: `request_count()`, `response_count()` for test diagnostics
+- Changed internal storage from single-request stacks to list-based storage for multiple cycles
+- Proper `input_body` handling with polymorphic variant pattern matching
+- Comprehensive verification logic for HTTP method, URI, headers, and body content
+- Full error handling with `Result.t` types and descriptive error messages
+- Maintained backward compatibility with existing mock functionality
+- All code builds correctly and passes formatting (`dune fmt`)
 
 ### Task 4.2: Implement Test Runner
 **Acceptance Criteria**: Organized test execution with clear reporting
