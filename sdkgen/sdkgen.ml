@@ -2,11 +2,9 @@ open Parselib
 open Base
 
 type t = {
-  name : string;
-  service : Ast.Shape.serviceShapeDetails;
   operation_shapes : (string * Ast.Shape.operationShapeDetails * string list) list;
   structure_shapes : Ast.Dependencies.shapeWithTarget list;
-  service_details : Ast.Trait.serviceDetails;
+  service_details : (string * Ast.Shape.serviceShapeDetails * Ast.Trait.serviceDetails) option;
   alias_context : Codegen.Types.t;
   shapes : Ast.Shape.t list;
   namespace_module_mapping : (string, string) Map.Poly.t;
@@ -30,22 +28,37 @@ let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarge
   Map.to_alist namespace_map
   |> List.filter_map ~f:(fun (namespace, namespace_shapes) ->
          (* Only create contexts for namespaces that have services *)
-         let has_service =
-           List.exists namespace_shapes ~f:(fun Ast.Dependencies.{ descriptor; _ } ->
-               match descriptor with ServiceShape _ -> true | _ -> false)
+         (* let has_service = *)
+         (*   List.exists namespace_shapes ~f:(fun Ast.Dependencies.{ descriptor; _ } -> *)
+         (*       match descriptor with ServiceShape _ -> true | _ -> false) *)
+         (* in *)
+         (* if has_service then ( *)
+         let context =
+           make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping
          in
-         if has_service then (
-           let context =
-             make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping
-           in
-           Some (namespace, context))
-         else None)
+         Some (namespace, context))
+(* else None) *)
 
-and make_namespace_context namespace shapes namespace_module_mapping =
-  let (name, service), operation_shapes, structure_shapes =
+and make_namespace_context ?(should_alias : bool = false) namespace shapes namespace_module_mapping
+    =
+  let namespace_module_mapping =
+    Map.Poly.add_exn namespace_module_mapping ~key:"smithy.api" ~data:"Smaws_Lib.Smithy_api"
+  in
+  let service_opt, operation_shapes, structure_shapes =
     Ast.Organize.partitionOperationShapes shapes
   in
-  let service_details = Ast.Trait.extractServiceTrait service.traits in
+  let service_details =
+    service_opt
+    |> Option.map ~f:(fun ((name, service) : string * Ast.Shape.serviceShapeDetails) ->
+           (name, service, Ast.Trait.extractServiceTrait service.traits))
+  in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    (* let current_namespace = Codegen.Util.symbolNamespace name in *)
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
   let flattened_shapes =
     structure_shapes
     |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
@@ -54,45 +67,45 @@ and make_namespace_context namespace shapes namespace_module_mapping =
                   List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
                       Ast.Shape.{ name; descriptor })))
   in
-  let alias_context = Gen_types.create_alias_context flattened_shapes in
+  let alias_context =
+    Gen_types.create_alias_context ~namespace ~namespace_resolver ~should_alias flattened_shapes
+  in
   {
-    name;
-    service;
+    service_details;
     operation_shapes;
     structure_shapes;
-    service_details;
     alias_context;
     shapes = flattened_shapes;
     namespace_module_mapping;
   }
 
-let make_context shapes =
-  (* let open Ast.Dependencies in *)
-  let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in
-  let (name, service), operation_shapes, structure_shapes =
-    Ast.Organize.partitionOperationShapes ordered
-  in
-  let service_details = Ast.Trait.extractServiceTrait service.traits in
-  let shapes =
-    structure_shapes
-    |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
-           Ast.Shape.{ name; descriptor }
-           :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
-                  List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
-                      Ast.Shape.{ name; descriptor })))
-  in
-
-  let alias_context = Gen_types.create_alias_context shapes in
-  {
-    name;
-    service;
-    operation_shapes;
-    structure_shapes;
-    service_details;
-    alias_context;
-    shapes;
-    namespace_module_mapping = Map.Poly.empty;
-  }
+(* let make_context shapes = *)
+(*   (* let open Ast.Dependencies in *) *)
+(*   let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in *)
+(*   let (name, service), operation_shapes, structure_shapes = *)
+(*     Ast.Organize.partitionOperationShapes ordered *)
+(*   in *)
+(*   let service_details = Ast.Trait.extractServiceTrait service.traits in *)
+(*   let shapes = *)
+(*     structure_shapes *)
+(*     |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } -> *)
+(*            Ast.Shape.{ name; descriptor } *)
+(*            :: Option.value_map recursWith ~default:[] ~f:(fun recurs -> *)
+(*                   List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } -> *)
+(*                       Ast.Shape.{ name; descriptor }))) *)
+(*   in *)
+(**)
+(*   let alias_context = Gen_types.create_alias_context shapes in *)
+(*   { *)
+(*     name; *)
+(*     service; *)
+(*     operation_shapes; *)
+(*     structure_shapes; *)
+(*     service_details; *)
+(*     alias_context; *)
+(*     shapes; *)
+(*     namespace_module_mapping = Map.Poly.empty; *)
+(*   } *)
 
 type error = [ `ParseError of Parse.Json.Decode.jsonParseError | `OutputError of string ]
 
@@ -106,10 +119,10 @@ let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
 
 (** Create a context from a model file. DEPRECATED: use create_from_model_file_with_namespaces
     instead *)
-let create_from_model_file input_filename =
-  match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
-  | Ok shapes -> Ok (make_context shapes)
-  | Error error -> Error (`ParseError error)
+(* let create_from_model_file input_filename = *)
+(*   match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with *)
+(*   | Ok shapes -> Ok (make_context shapes) *)
+(*   | Error error -> Error (`ParseError error) *)
 
 (** Create a mapping of namespaces to contexts from a Smithy model file.
 
@@ -141,16 +154,20 @@ let write_output ~output_dir ~filename generate =
     Ok ()
   with Sys_error txt -> Error (`OutputError txt)
 
-let write_types ~output_dir ~filename ?(with_derivings = false) t =
-  let { name; service; structure_shapes; alias_context; namespace_module_mapping; _ } = t in
-  let namespace_resolver =
-    if Map.is_empty namespace_module_mapping then None
-    else (
-      let current_namespace = Codegen.Util.symbolNamespace name in
-      Some
-        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
-           ~namespace_module_mapping))
+let write_types ~output_dir ?(with_derivings = false) t =
+  let { service_details; structure_shapes; alias_context; namespace_module_mapping; _ } = t in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
   in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
+  in
+  let filename = "types" in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context ~with_derivings
@@ -162,8 +179,12 @@ let write_types ~output_dir ~filename ?(with_derivings = false) t =
   in
   Result.all_unit [ r1; r2 ]
 
-let write_service_metadata ~output_dir ~filename t =
-  let { name; service; structure_shapes; alias_context; _ } = t in
+let write_service_metadata ~output_dir t =
+  let { service_details; structure_shapes; alias_context; _ } = t in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
+  in
+  let filename = "service_metadata" in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_service_metadata.generate_ml ~name ~service ~structure_shapes ~alias_context output_fmt)
@@ -173,10 +194,9 @@ let write_service_metadata ~output_dir ~filename t =
   in
   Result.all_unit [ r1; r2 ]
 
-let write_builders ~output_dir ~filename t =
+let write_builders ~output_dir t =
   let {
-    name;
-    service;
+    service_details;
     structure_shapes;
     alias_context;
     operation_shapes;
@@ -185,14 +205,17 @@ let write_builders ~output_dir ~filename t =
   } =
     t
   in
-  let namespace_resolver =
-    if Map.is_empty namespace_module_mapping then None
-    else (
-      let current_namespace = Codegen.Util.symbolNamespace name in
-      Some
-        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
-           ~namespace_module_mapping))
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
   in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
+  in
+  let filename = "builders" in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
@@ -205,10 +228,9 @@ let write_builders ~output_dir ~filename t =
   in
   Result.all_unit [ r1; r2 ]
 
-let write_operations ~output_dir ~filename t =
+let write_operations ~output_dir t =
   let {
-    name;
-    service;
+    service_details;
     operation_shapes;
     structure_shapes;
     alias_context;
@@ -217,13 +239,17 @@ let write_operations ~output_dir ~filename t =
   } =
     t
   in
+  let filename = "operations" in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
+  in
   let namespace_resolver =
-    if Map.is_empty namespace_module_mapping then None
-    else (
-      let current_namespace = Codegen.Util.symbolNamespace name in
-      Some
-        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
-           ~namespace_module_mapping))
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+    (* Some *)
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
   in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
@@ -236,69 +262,78 @@ let write_operations ~output_dir ~filename t =
   in
   Result.all_unit [ r1; r2 ]
 
-let write_service ~output_dir ~filename t =
+let write_service ~output_dir t =
+  let filename = "service" in
   let { shapes; _ } = t in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       SmithyHelpers.printServiceDetails shapes)
 
-let write_serialisers ~output_dir ~filename t =
-  let { name; service; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let namespace_resolver =
-    if Map.is_empty namespace_module_mapping then None
-    else (
-      let current_namespace = Codegen.Util.symbolNamespace name in
-      Some
-        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
-           ~namespace_module_mapping))
+let write_serialisers ~output_dir t =
+  let { service_details; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
   in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+    (* Some *)
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
+  in
+  let filename = "json_serializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_serialisers.generate ~name ~service ~operation_shapes ~structure_shapes
         ~namespace_resolver output_fmt)
 
-let write_deserialisers ~output_dir ~filename t =
-  let { name; service; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let namespace_resolver =
-    if Map.is_empty namespace_module_mapping then None
-    else (
-      let current_namespace = Codegen.Util.symbolNamespace name in
-      Some
-        (Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
-           ~namespace_module_mapping))
+let write_deserialisers ~output_dir t =
+  let { service_details; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
   in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
+  in
+  let filename = "json_deserializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_deserialisers.generate ~name ~service ~operation_shapes ~structure_shapes
         ~namespace_resolver output_fmt)
 
 let write_module ~output_dir ~filename t =
-  let { name; service; operation_shapes; structure_shapes; alias_context; _ } = t in
+  let {
+    service_details;
+    operation_shapes;
+    structure_shapes;
+    alias_context;
+    namespace_module_mapping;
+    _;
+  } =
+    t
+  in
+  let name, service, service_details =
+    service_details |> Option.value_exn ~message:"no service shape present"
+  in
+  let namespace_resolver =
+    (* if Map.is_empty namespace_module_mapping then None *)
+    (* else ( *)
+    let current_namespace = Codegen.Util.symbolNamespace name in
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+      ~namespace_module_mapping
+  in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_module.generate output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_module.generate_mli ~name ~service ~operation_shapes ~structure_shapes ~alias_context
-          output_fmt)
+        Gen_module.generate_mli ~name ~service ~namespace_resolver ~operation_shapes
+          ~structure_shapes ~alias_context output_fmt)
   in
   Result.all_unit [ r1; r2 ]
-
-(** Namespace generation functions **)
-
-let generate_all_namespaces input_filename namespace_module_mapping output_dir =
-  match create_from_model_file_with_namespaces ~namespace_module_mapping input_filename with
-  | Ok namespace_contexts ->
-      List.iter namespace_contexts ~f:(fun (namespace, context) ->
-          match Map.find namespace_module_mapping namespace with
-          | Some module_name ->
-              let _ = write_types ~output_dir ~filename:module_name context in
-              let _ = write_operations ~output_dir ~filename:module_name context in
-              let _ = write_builders ~output_dir ~filename:module_name context in
-              let _ = write_serialisers ~output_dir ~filename:module_name context in
-              let _ = write_deserialisers ~output_dir ~filename:module_name context in
-              let _ = write_service_metadata ~output_dir ~filename:module_name context in
-              ()
-          | None -> failwith ("No module mapping found for namespace: " ^ namespace))
-  | Error error -> failwith (Fmt.str "%a" pp_error error)
 
 (** Accesors **)
 

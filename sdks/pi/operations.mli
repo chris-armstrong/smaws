@@ -16,7 +16,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_performance_analysis_report_request ->
-        (unit,
+        (delete_performance_analysis_report_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -135,7 +135,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -147,7 +147,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 

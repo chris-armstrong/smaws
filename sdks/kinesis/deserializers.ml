@@ -9,7 +9,6 @@ let validation_exception_of_yojson tree path =
           _list path)
    } : validation_exception)
 let stream_ar_n_of_yojson = string_of_yojson
-let base_unit_of_yojson = unit_of_yojson
 let stream_mode_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1191,14 +1190,3 @@ let add_tags_to_stream_input_of_yojson tree path =
        (option_of_yojson (value_for_key stream_name_of_yojson "StreamName")
           _list path)
    } : add_tags_to_stream_input)
-let base_string_of_yojson = string_of_yojson
-let base_boolean_of_yojson = bool_of_yojson
-let base_integer_of_yojson = int_of_yojson
-let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
-let base_long_of_yojson = long_of_yojson
-let base_document_of_yojson = json_of_yojson
-let base_float_of_yojson = float_of_yojson
-let base_double_of_yojson = double_of_yojson
-let base_short_of_yojson = short_of_yojson
-let base_blob_of_yojson = blob_of_yojson
-let base_byte_of_yojson = byte_of_yojson

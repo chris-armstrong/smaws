@@ -26,7 +26,8 @@ sig
           | `ParameterGroupNotFoundFault of parameter_group_not_found_fault 
           | `ServiceLinkedRoleNotFoundFault of
               service_linked_role_not_found_fault 
-          | `ServiceQuotaExceededException of unit 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
           | `SubnetGroupNotFoundFault of subnet_group_not_found_fault 
           | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ])
           result

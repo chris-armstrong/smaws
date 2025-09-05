@@ -61,7 +61,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_access_policy_request ->
-        (unit,
+        (delete_access_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
@@ -87,7 +87,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_lifecycle_policy_request ->
-        (unit,
+        (delete_lifecycle_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
@@ -100,7 +100,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_security_config_request ->
-        (unit,
+        (delete_security_config_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
@@ -113,7 +113,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_security_policy_request ->
-        (unit,
+        (delete_security_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
@@ -311,7 +311,7 @@ module GetAccountSettings :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_account_settings_request ->
         (get_account_settings_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerException of internal_server_exception 
@@ -322,7 +322,7 @@ module GetPoliciesStats :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_policies_stats_request ->
         (get_policies_stats_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerException of internal_server_exception ]) result
@@ -345,7 +345,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 
@@ -360,7 +360,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InternalServerException of internal_server_exception 

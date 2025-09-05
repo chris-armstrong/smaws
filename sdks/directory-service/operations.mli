@@ -19,7 +19,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_ip_routes_request ->
-        (unit,
+        (add_ip_routes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -36,7 +36,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_region_request ->
-        (unit,
+        (add_region_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -58,7 +58,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_resource_request ->
-        (unit,
+        (add_tags_to_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -73,7 +73,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_schema_extension_request ->
-        (unit,
+        (cancel_schema_extension_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -131,7 +131,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_conditional_forwarder_request ->
-        (unit,
+        (create_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -162,7 +162,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_log_subscription_request ->
-        (unit,
+        (create_log_subscription_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityAlreadyExistsException of entity_already_exists_exception 
@@ -227,7 +227,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_conditional_forwarder_request ->
-        (unit,
+        (delete_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -255,7 +255,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_log_subscription_request ->
-        (unit,
+        (delete_log_subscription_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -295,7 +295,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_certificate_request ->
-        (unit,
+        (deregister_certificate_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CertificateDoesNotExistException of
               certificate_does_not_exist_exception 
@@ -315,7 +315,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_event_topic_request ->
-        (unit,
+        (deregister_event_topic_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -551,7 +551,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_client_authentication_request ->
-        (unit,
+        (disable_client_authentication_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -569,7 +569,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_directory_data_access_request ->
-        (unit,
+        (disable_directory_data_access_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -588,7 +588,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_ldaps_request ->
-        (unit,
+        (disable_ldaps_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryDoesNotExistException of
@@ -606,7 +606,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_radius_request ->
-        (unit,
+        (disable_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -618,7 +618,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_sso_request ->
-        (unit,
+        (disable_sso_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AuthenticationFailedException of authentication_failed_exception 
           | `ClientException of client_exception 
@@ -632,7 +632,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_client_authentication_request ->
-        (unit,
+        (enable_client_authentication_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -652,7 +652,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_directory_data_access_request ->
-        (unit,
+        (enable_directory_data_access_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -671,7 +671,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_ldaps_request ->
-        (unit,
+        (enable_ldaps_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryDoesNotExistException of
@@ -691,7 +691,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_radius_request ->
-        (unit,
+        (enable_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityAlreadyExistsException of entity_already_exists_exception 
@@ -705,7 +705,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_sso_request ->
-        (unit,
+        (enable_sso_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AuthenticationFailedException of authentication_failed_exception 
           | `ClientException of client_exception 
@@ -719,7 +719,7 @@ module GetDirectoryLimits :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_directory_limits_request ->
         (get_directory_limits_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
@@ -835,7 +835,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_event_topic_request ->
-        (unit,
+        (register_event_topic_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -863,7 +863,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_ip_routes_request ->
-        (unit,
+        (remove_ip_routes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -876,7 +876,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_region_request ->
-        (unit,
+        (remove_region_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -893,7 +893,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_resource_request ->
-        (unit,
+        (remove_tags_from_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -905,7 +905,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       reset_user_password_request ->
-        (unit,
+        (reset_user_password_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -922,7 +922,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       restore_from_snapshot_request ->
-        (unit,
+        (restore_from_snapshot_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -986,7 +986,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_conditional_forwarder_request ->
-        (unit,
+        (update_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -1002,7 +1002,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_directory_setup_request ->
-        (unit,
+        (update_directory_setup_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -1023,7 +1023,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_number_of_domain_controllers_request ->
-        (unit,
+        (update_number_of_domain_controllers_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -1041,7 +1041,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_radius_request ->
-        (unit,
+        (update_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 

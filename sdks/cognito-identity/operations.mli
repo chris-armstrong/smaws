@@ -33,7 +33,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_identity_pool_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -258,7 +258,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       set_identity_pool_roles_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -291,7 +291,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -306,7 +306,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       unlink_developer_identity_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -322,7 +322,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       unlink_identity_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExternalServiceException of external_service_exception 
           | `InternalErrorException of internal_error_exception 
@@ -339,7 +339,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidParameterException of invalid_parameter_exception 

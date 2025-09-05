@@ -73,7 +73,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_service_request ->
-        (unit,
+        (delete_service_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceInUse of resource_in_use 
@@ -85,7 +85,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_service_attributes_request ->
-        (unit,
+        (delete_service_attributes_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ServiceNotFound of service_not_found ]) result
@@ -266,7 +266,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceNotFoundException of resource_not_found_exception 
@@ -277,7 +277,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ResourceNotFoundException of resource_not_found_exception ])
@@ -300,7 +300,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_instance_custom_health_status_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomHealthNotFound of custom_health_not_found 
           | `InstanceNotFound of instance_not_found 
@@ -349,7 +349,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_service_attributes_request ->
-        (unit,
+        (update_service_attributes_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidInput of invalid_input 
           | `ServiceAttributesLimitExceededException of

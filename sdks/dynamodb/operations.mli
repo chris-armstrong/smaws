@@ -199,7 +199,7 @@ module DescribeEndpoints :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      describe_endpoints_request ->
         (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error])
           result
 end[@@ocaml.doc
@@ -265,7 +265,7 @@ module DescribeLimits :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      describe_limits_input ->
         (describe_limits_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
@@ -625,7 +625,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidEndpointException of invalid_endpoint_exception 
@@ -678,7 +678,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidEndpointException of invalid_endpoint_exception 

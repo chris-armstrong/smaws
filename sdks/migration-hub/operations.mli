@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_created_artifact_request ->
-        (unit,
+        (associate_created_artifact_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -22,7 +22,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_discovered_resource_request ->
-        (unit,
+        (associate_discovered_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -41,7 +41,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_source_resource_request ->
-        (unit,
+        (associate_source_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -58,7 +58,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_progress_update_stream_request ->
-        (unit,
+        (create_progress_update_stream_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -75,7 +75,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_progress_update_stream_request ->
-        (unit,
+        (delete_progress_update_stream_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -125,7 +125,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_created_artifact_request ->
-        (unit,
+        (disassociate_created_artifact_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -143,7 +143,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_discovered_resource_request ->
-        (unit,
+        (disassociate_discovered_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -161,7 +161,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_source_resource_request ->
-        (unit,
+        (disassociate_source_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -178,7 +178,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       import_migration_task_request ->
-        (unit,
+        (import_migration_task_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -305,7 +305,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       notify_application_state_request ->
-        (unit,
+        (notify_application_state_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -324,7 +324,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       notify_migration_task_state_request ->
-        (unit,
+        (notify_migration_task_state_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -342,7 +342,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_resource_attributes_request ->
-        (unit,
+        (put_resource_attributes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 

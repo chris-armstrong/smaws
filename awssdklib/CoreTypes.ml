@@ -6,3 +6,7 @@ end
 
 module Document = Yojson.Basic
 module Timestamp = Ptime
+
+module Resource = struct
+  type t = unit
+end

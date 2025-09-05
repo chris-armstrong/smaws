@@ -33,7 +33,6 @@ let directory_service_authentication_failed_exception_to_yojson
 let update_user_response_to_yojson = unit_to_yojson
 let organization_id_to_yojson = string_to_yojson
 let entity_identifier_to_yojson = string_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let user_role_to_yojson (x : user_role) =
   match x with
   | REMOTE_USER -> `String "REMOTE_USER"
@@ -1681,14 +1680,3 @@ let associate_delegate_to_resource_request_to_yojson
     [("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson
-let base_float_to_yojson = float_to_yojson
-let base_double_to_yojson = double_to_yojson
-let base_short_to_yojson = short_to_yojson
-let base_blob_to_yojson = blob_to_yojson
-let base_byte_to_yojson = byte_to_yojson

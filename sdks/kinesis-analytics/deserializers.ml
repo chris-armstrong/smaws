@@ -48,7 +48,6 @@ let kinesis_firehose_input_update_of_yojson tree path =
           (value_for_key resource_ar_n_of_yojson "ResourceARNUpdate") _list
           path)
    } : kinesis_firehose_input_update)
-let base_unit_of_yojson = unit_of_yojson
 let record_format_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1166,14 +1165,3 @@ let add_application_cloud_watch_logging_option_request_of_yojson tree path =
      application_name =
        (value_for_key application_name_of_yojson "ApplicationName" _list path)
    } : add_application_cloud_watch_logging_option_request)
-let base_string_of_yojson = string_of_yojson
-let base_boolean_of_yojson = bool_of_yojson
-let base_integer_of_yojson = int_of_yojson
-let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
-let base_long_of_yojson = long_of_yojson
-let base_document_of_yojson = json_of_yojson
-let base_float_of_yojson = float_of_yojson
-let base_double_of_yojson = double_of_yojson
-let base_short_of_yojson = short_of_yojson
-let base_blob_of_yojson = blob_of_yojson
-let base_byte_of_yojson = byte_of_yojson

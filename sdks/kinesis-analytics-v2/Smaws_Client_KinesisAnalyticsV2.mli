@@ -3,10 +3,9 @@
     
 *)
 
-open Smaws_Lib
-
 (** {1:types Types} *)
 
+type nonrec zip_file_content = bytes[@@ocaml.doc ""]
 type nonrec log_level =
   | DEBUG [@ocaml.doc ""]
   | ERROR [@ocaml.doc ""]
@@ -32,9 +31,10 @@ type nonrec zeppelin_monitoring_configuration =
     [@ocaml.doc "The verbosity of the CloudWatch Logs for an application.\n"]}
 [@@ocaml.doc
   "Describes configuration parameters for Amazon CloudWatch logging for a Managed Service for Apache Flink Studio notebook. For more information about CloudWatch logging, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/java/monitoring-overview.html}Monitoring}.\n"]
+type nonrec database_ar_n = string[@@ocaml.doc ""]
 type nonrec glue_data_catalog_configuration_update =
   {
-  database_arn_update: string
+  database_arn_update: database_ar_n
     [@ocaml.doc "The updated Amazon Resource Name (ARN) of the database.\n"]}
 [@@ocaml.doc
   "Updates to the configuration of the Glue Data Catalog that you use for SQL queries that you write in a Managed Service for Apache Flink Studio notebook.\n"]
@@ -46,11 +46,13 @@ type nonrec catalog_configuration_update =
       "Updates to the configuration parameters for the default Amazon Glue database. You use this database for SQL queries that you write in a Managed Service for Apache Flink Studio notebook.\n"]}
 [@@ocaml.doc
   "Updates to the configuration parameters for the default Amazon Glue database. You use this database for SQL queries that you write in a Managed Service for Apache Flink Studio notebook.\n"]
+type nonrec bucket_ar_n = string[@@ocaml.doc ""]
+type nonrec base_path = string[@@ocaml.doc ""]
 type nonrec s3_content_base_location_update =
   {
-  base_path_update: string option
+  base_path_update: base_path option
     [@ocaml.doc "The updated S3 bucket path.\n"];
-  bucket_arn_update: string option
+  bucket_arn_update: bucket_ar_n option
     [@ocaml.doc "The updated Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc
   "The information required to update the S3 base location that holds the application.\n"]
@@ -64,27 +66,32 @@ type nonrec deploy_as_application_configuration_update =
 type nonrec artifact_type =
   | DEPENDENCY_JAR [@ocaml.doc ""]
   | UDF [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec file_key = string[@@ocaml.doc ""]
+type nonrec object_version = string[@@ocaml.doc ""]
 type nonrec s3_content_location =
   {
-  object_version: string option
+  object_version: object_version option
     [@ocaml.doc
       "The version of the object containing the application code.\n"];
-  file_key: string
+  file_key: file_key
     [@ocaml.doc
       "The file key for the object containing the application code.\n"];
-  bucket_ar_n: string
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) for the S3 bucket containing the application code.\n"]}
 [@@ocaml.doc
   "For a Managed Service for Apache Flink application provides a description of an Amazon S3 object, including the Amazon Resource Name (ARN) of the S3 bucket, the name of the Amazon S3 object that contains the data, and the version number of the Amazon S3 object that contains the data. \n"]
+type nonrec maven_group_id = string[@@ocaml.doc ""]
+type nonrec maven_artifact_id = string[@@ocaml.doc ""]
+type nonrec maven_version = string[@@ocaml.doc ""]
 type nonrec maven_reference =
   {
-  version: string [@ocaml.doc "The version of the Maven reference.\n"];
-  artifact_id: string
+  version: maven_version [@ocaml.doc "The version of the Maven reference.\n"];
+  artifact_id: maven_artifact_id
     [@ocaml.doc "The artifact ID of the Maven reference.\n"];
-  group_id: string [@ocaml.doc "The group ID of the Maven reference.\n"]}
-[@@ocaml.doc
-  "The information required to specify a Maven reference. You can use Maven references to specify dependency JAR files.\n"]
+  group_id: maven_group_id
+    [@ocaml.doc "The group ID of the Maven reference.\n"]}[@@ocaml.doc
+                                                            "The information required to specify a Maven reference. You can use Maven references to specify dependency JAR files.\n"]
 type nonrec custom_artifact_configuration =
   {
   maven_reference: maven_reference option
@@ -96,10 +103,12 @@ type nonrec custom_artifact_configuration =
       " [UDF] stands for user-defined functions. This type of artifact must be in an S3 bucket. A [DEPENDENCY_JAR] can be in either Maven or an S3 bucket.\n"]}
 [@@ocaml.doc
   "Specifies dependency JARs, as well as JAR files that contain user-defined functions (UDF).\n"]
+type nonrec custom_artifacts_configuration_list =
+  custom_artifact_configuration list[@@ocaml.doc ""]
 type nonrec zeppelin_application_configuration_update =
   {
   custom_artifacts_configuration_update:
-    custom_artifact_configuration list option
+    custom_artifacts_configuration_list option
     [@ocaml.doc
       "Updates to the customer artifacts. Custom artifacts are dependency JAR files and user-defined functions (UDF).\n"];
   deploy_as_application_configuration_update:
@@ -115,7 +124,7 @@ type nonrec zeppelin_application_configuration_update =
   "Updates to the configuration of Managed Service for Apache Flink Studio notebook.\n"]
 type nonrec glue_data_catalog_configuration_description =
   {
-  database_ar_n: string
+  database_ar_n: database_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the database.\n"]}
 [@@ocaml.doc
   "The configuration of the Glue Data Catalog that you use for Apache Flink SQL queries and table API transforms that you write in an application.\n"]
@@ -129,8 +138,9 @@ type nonrec catalog_configuration_description =
   "The configuration parameters for the default Amazon Glue database. You use this database for Apache Flink SQL queries and table API transforms that you write in a Managed Service for Apache Flink Studio notebook.\n"]
 type nonrec s3_content_base_location_description =
   {
-  base_path: string option [@ocaml.doc "The base path for the S3 bucket.\n"];
-  bucket_ar_n: string
+  base_path: base_path option
+    [@ocaml.doc "The base path for the S3 bucket.\n"];
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc
   "The description of the S3 base location that holds the application.\n"]
@@ -152,10 +162,12 @@ type nonrec custom_artifact_configuration_description =
       " [UDF] stands for user-defined functions. This type of artifact must be in an S3 bucket. A [DEPENDENCY_JAR] can be in either Maven or an S3 bucket.\n"]}
 [@@ocaml.doc
   "Specifies a dependency JAR or a JAR of user-defined functions.\n"]
+type nonrec custom_artifacts_configuration_description_list =
+  custom_artifact_configuration_description list[@@ocaml.doc ""]
 type nonrec zeppelin_application_configuration_description =
   {
   custom_artifacts_configuration_description:
-    custom_artifact_configuration_description list option
+    custom_artifacts_configuration_description_list option
     [@ocaml.doc
       "Custom artifacts are dependency JARs and user-defined functions (UDF).\n"];
   deploy_as_application_configuration_description:
@@ -173,7 +185,7 @@ type nonrec zeppelin_application_configuration_description =
   "The configuration of a Managed Service for Apache Flink Studio notebook.\n"]
 type nonrec glue_data_catalog_configuration =
   {
-  database_ar_n: string
+  database_ar_n: database_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the database.\n"]}
 [@@ocaml.doc
   "The configuration of the Glue Data Catalog that you use for Apache Flink SQL queries and table API transforms that you write in an application.\n"]
@@ -186,8 +198,9 @@ type nonrec catalog_configuration =
   "The configuration parameters for the default Amazon Glue database. You use this database for SQL queries that you write in a Managed Service for Apache Flink Studio notebook.\n"]
 type nonrec s3_content_base_location =
   {
-  base_path: string option [@ocaml.doc "The base path for the S3 bucket.\n"];
-  bucket_ar_n: string
+  base_path: base_path option
+    [@ocaml.doc "The base path for the S3 bucket.\n"];
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc "The S3 bucket that holds the application information.\n"]
 type nonrec deploy_as_application_configuration =
@@ -199,7 +212,7 @@ type nonrec deploy_as_application_configuration =
   "The information required to deploy a Managed Service for Apache Flink Studio notebook as an application with durable state.\n"]
 type nonrec zeppelin_application_configuration =
   {
-  custom_artifacts_configuration: custom_artifact_configuration list option
+  custom_artifacts_configuration: custom_artifacts_configuration_list option
     [@ocaml.doc
       "Custom artifacts are dependency JARs and user-defined functions (UDF).\n"];
   deploy_as_application_configuration:
@@ -214,42 +227,55 @@ type nonrec zeppelin_application_configuration =
       "The monitoring configuration of a Managed Service for Apache Flink Studio notebook.\n"]}
 [@@ocaml.doc
   "The configuration of a Managed Service for Apache Flink Studio notebook.\n"]
+type nonrec vpc_id = string[@@ocaml.doc ""]
+type nonrec subnet_id = string[@@ocaml.doc ""]
+type nonrec subnet_ids = subnet_id list[@@ocaml.doc ""]
+type nonrec security_group_id = string[@@ocaml.doc ""]
+type nonrec security_group_ids = security_group_id list[@@ocaml.doc ""]
 type nonrec vpc_configuration =
   {
-  security_group_ids: string list
+  security_group_ids: security_group_ids
     [@ocaml.doc
       "The array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SecurityGroup.html}SecurityGroup} IDs used by the VPC configuration.\n"];
-  subnet_ids: string list
+  subnet_ids: subnet_ids
     [@ocaml.doc
       "The array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Subnet.html}Subnet} IDs used by the VPC configuration.\n"]}
 [@@ocaml.doc "Describes the parameters of a VPC used by the application.\n"]
+type nonrec vpc_configurations = vpc_configuration list[@@ocaml.doc ""]
+type nonrec id = string[@@ocaml.doc ""]
 type nonrec vpc_configuration_update =
   {
-  security_group_id_updates: string list option
+  security_group_id_updates: security_group_ids option
     [@ocaml.doc
       "Describes updates to the array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SecurityGroup.html}SecurityGroup} IDs used by the VPC configuration.\n"];
-  subnet_id_updates: string list option
+  subnet_id_updates: subnet_ids option
     [@ocaml.doc
       "Describes updates to the array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Subnet.html}Subnet} IDs used by the VPC configuration.\n"];
-  vpc_configuration_id: string
+  vpc_configuration_id: id
     [@ocaml.doc "Describes an update to the ID of the VPC configuration.\n"]}
 [@@ocaml.doc
   "Describes updates to the VPC configuration used by the application.\n"]
+type nonrec vpc_configuration_updates = vpc_configuration_update list
+[@@ocaml.doc ""]
 type nonrec vpc_configuration_description =
   {
-  security_group_ids: string list
+  security_group_ids: security_group_ids
     [@ocaml.doc
       "The array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_SecurityGroup.html}SecurityGroup} IDs used by the VPC configuration.\n"];
-  subnet_ids: string list
+  subnet_ids: subnet_ids
     [@ocaml.doc
       "The array of {{:https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Subnet.html}Subnet} IDs used by the VPC configuration.\n"];
-  vpc_id: string [@ocaml.doc "The ID of the associated VPC.\n"];
-  vpc_configuration_id: string
-    [@ocaml.doc "The ID of the VPC configuration.\n"]}[@@ocaml.doc
-                                                        "Describes the parameters of a VPC used by the application.\n"]
+  vpc_id: vpc_id [@ocaml.doc "The ID of the associated VPC.\n"];
+  vpc_configuration_id: id [@ocaml.doc "The ID of the VPC configuration.\n"]}
+[@@ocaml.doc "Describes the parameters of a VPC used by the application.\n"]
+type nonrec vpc_configuration_descriptions =
+  vpc_configuration_description list[@@ocaml.doc ""]
 type nonrec url_type =
   | ZEPPELIN_UI_URL [@ocaml.doc ""]
   | FLINK_DASHBOARD_URL [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec resource_ar_n = string[@@ocaml.doc ""]
+type nonrec application_description = string[@@ocaml.doc ""]
+type nonrec application_name = string[@@ocaml.doc ""]
 type nonrec runtime_environment =
   | FLINK_1_20 [@ocaml.doc ""]
   | FLINK_1_19 [@ocaml.doc ""]
@@ -263,6 +289,7 @@ type nonrec runtime_environment =
   | FLINK_1_8 [@ocaml.doc ""]
   | FLINK_1_6 [@ocaml.doc ""]
   | SQL_1_0 [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec role_ar_n = string[@@ocaml.doc ""]
 type nonrec application_status =
   | ROLLED_BACK [@ocaml.doc ""]
   | MAINTENANCE [@ocaml.doc ""]
@@ -275,12 +302,16 @@ type nonrec application_status =
   | STOPPING [@ocaml.doc ""]
   | STARTING [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec application_version_id = int[@@ocaml.doc ""]
+type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t[@@ocaml.doc ""]
+type nonrec in_app_stream_name = string[@@ocaml.doc ""]
+type nonrec in_app_stream_names = in_app_stream_name list[@@ocaml.doc ""]
 type nonrec input_lambda_processor_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that is used to access the Amazon Lambda function.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The ARN of the Amazon Lambda function that is used to preprocess the records in the stream.\n\n  To specify an earlier version of the Lambda function than the latest, include the Lambda function version in the Lambda function ARN. For more information about Lambda ARNs, see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-lambda}Example ARNs: Amazon Lambda} \n  \n   "]}
 [@@ocaml.doc
@@ -295,39 +326,42 @@ type nonrec input_processing_configuration_description =
   "For a SQL-based Kinesis Data Analytics application, provides the configuration information about an input processor. Currently, the only input processor available is {{:https://docs.aws.amazon.com/lambda/}Amazon Lambda}.\n"]
 type nonrec kinesis_streams_input_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics can assume to access the stream.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the Kinesis data stream.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the Kinesis data stream that is configured as the streaming source in the application input configuration. \n"]
 type nonrec kinesis_firehose_input_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics assumes to access the stream.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the delivery stream.\n"]}
 [@@ocaml.doc
   "Describes the Amazon Kinesis Data Firehose delivery stream that is configured as the streaming source in the application input configuration. \n"]
 type nonrec record_format_type =
   | CSV [@ocaml.doc ""]
   | JSON [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec record_row_path = string[@@ocaml.doc ""]
 type nonrec json_mapping_parameters =
   {
-  record_row_path: string
+  record_row_path: record_row_path
     [@ocaml.doc
       "The path to the top-level parent that contains the records.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, provides additional mapping information when JSON is the record format on the streaming source.\n"]
+type nonrec record_row_delimiter = string[@@ocaml.doc ""]
+type nonrec record_column_delimiter = string[@@ocaml.doc ""]
 type nonrec csv_mapping_parameters =
   {
-  record_column_delimiter: string
+  record_column_delimiter: record_column_delimiter
     [@ocaml.doc
       "The column delimiter. For example, in a CSV format, a comma (\",\") is the typical column delimiter.\n"];
-  record_row_delimiter: string
+  record_row_delimiter: record_row_delimiter
     [@ocaml.doc
       "The row delimiter. For example, in a CSV format, {i '\\n'} is the typical row delimiter.\n"]}
 [@@ocaml.doc
@@ -350,24 +384,29 @@ type nonrec record_format =
   record_format_type: record_format_type
     [@ocaml.doc "The type of record format.\n"]}[@@ocaml.doc
                                                   " For a SQL-based Kinesis Data Analytics application, describes the record format and relevant mapping information that should be applied to schematize the records on the stream. \n"]
+type nonrec record_encoding = string[@@ocaml.doc ""]
+type nonrec record_column_name = string[@@ocaml.doc ""]
+type nonrec record_column_mapping = string[@@ocaml.doc ""]
+type nonrec record_column_sql_type = string[@@ocaml.doc ""]
 type nonrec record_column =
   {
-  sql_type: string
+  sql_type: record_column_sql_type
     [@ocaml.doc
       "The type of column created in the in-application input stream or reference table.\n"];
-  mapping: string option
+  mapping: record_column_mapping option
     [@ocaml.doc
       "A reference to the data element in the streaming input or the reference data source.\n"];
-  name: string
+  name: record_column_name
     [@ocaml.doc
       "The name of the column that is created in the in-application input stream or reference table.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the mapping of each data element in the streaming source to the corresponding column in the in-application stream.\n\n Also used to describe the format of the reference data source.\n "]
+type nonrec record_columns = record_column list[@@ocaml.doc ""]
 type nonrec source_schema =
   {
-  record_columns: record_column list
+  record_columns: record_columns
     [@ocaml.doc "A list of [RecordColumn] objects. \n"];
-  record_encoding: string option
+  record_encoding: record_encoding option
     [@ocaml.doc
       "Specifies the encoding of the records in the streaming source. For example, UTF-8.\n"];
   record_format: record_format
@@ -375,9 +414,10 @@ type nonrec source_schema =
       "Specifies the format of the records on the streaming source.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream. \n"]
+type nonrec input_parallelism_count = int[@@ocaml.doc ""]
 type nonrec input_parallelism =
   {
-  count: int option
+  count: input_parallelism_count option
     [@ocaml.doc "The number of in-application streams to create.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the number of in-application streams to create for a given streaming source. \n"]
@@ -415,40 +455,42 @@ type nonrec input_description =
     input_processing_configuration_description option
     [@ocaml.doc
       "The description of the preprocessor that executes on records in this input before the application's code is run. \n"];
-  in_app_stream_names: string list option
+  in_app_stream_names: in_app_stream_names option
     [@ocaml.doc
       "Returns the in-application stream names that are mapped to the stream source. \n"];
-  name_prefix: string option [@ocaml.doc "The in-application name prefix.\n"];
-  input_id: string option
+  name_prefix: in_app_stream_name option
+    [@ocaml.doc "The in-application name prefix.\n"];
+  input_id: id option
     [@ocaml.doc
       "The input ID that is associated with the application input. This is the ID that Kinesis Data Analytics assigns to each input configuration that you add to your application. \n"]}
 [@@ocaml.doc
   "Describes the application input configuration for a SQL-based Kinesis Data Analytics application. \n"]
+type nonrec input_descriptions = input_description list[@@ocaml.doc ""]
 type nonrec kinesis_streams_output_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics can assume to access the stream.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the Kinesis data stream.\n"]}
 [@@ocaml.doc
   "For an SQL-based Kinesis Data Analytics application's output, describes the Kinesis data stream that is configured as its destination. \n"]
 type nonrec kinesis_firehose_output_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics can assume to access the stream.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the delivery stream.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application's output, describes the Kinesis Data Firehose delivery stream that is configured as its destination.\n"]
 type nonrec lambda_output_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics can assume to write to the destination function.\n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the destination Lambda function.\n"]}
 [@@ocaml.doc
@@ -476,20 +518,22 @@ type nonrec output_description =
     kinesis_streams_output_description option
     [@ocaml.doc
       "Describes the Kinesis data stream that is configured as the destination where output is written.\n"];
-  name: string option
+  name: in_app_stream_name option
     [@ocaml.doc
       "The name of the in-application stream that is configured as output.\n"];
-  output_id: string option
+  output_id: id option
     [@ocaml.doc "A unique identifier for the output configuration.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the application output configuration, which includes the in-application stream name and the destination where the stream data is written. The destination can be a Kinesis data stream or a Kinesis Data Firehose delivery stream. \n"]
+type nonrec output_descriptions = output_description list[@@ocaml.doc ""]
+type nonrec in_app_table_name = string[@@ocaml.doc ""]
 type nonrec s3_reference_data_source_description =
   {
-  reference_role_ar_n: string option
+  reference_role_ar_n: role_ar_n option
     [@ocaml.doc
       "The ARN of the IAM role that Kinesis Data Analytics can assume to read the Amazon S3 object on your behalf to populate the in-application reference table. \n\n  Provided for backward compatibility. Applications that are created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  file_key: string [@ocaml.doc "Amazon S3 object key name.\n"];
-  bucket_ar_n: string
+  file_key: file_key [@ocaml.doc "Amazon S3 object key name.\n"];
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, provides the bucket name and object key name that stores the reference data.\n"]
@@ -501,24 +545,26 @@ type nonrec reference_data_source_description =
   s3_reference_data_source_description: s3_reference_data_source_description
     [@ocaml.doc
       "Provides the Amazon S3 bucket name, the object key name that contains the reference data. \n"];
-  table_name: string
+  table_name: in_app_table_name
     [@ocaml.doc
       "The in-application table name created by the specific reference data source configuration.\n"];
-  reference_id: string
+  reference_id: id
     [@ocaml.doc
       "The ID of the reference data source. This is the ID that Kinesis Data Analytics assigns when you add the reference data source to your application using the [CreateApplication] or [UpdateApplication] operation.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the reference data source configured for an application.\n"]
+type nonrec reference_data_source_descriptions =
+  reference_data_source_description list[@@ocaml.doc ""]
 type nonrec sql_application_configuration_description =
   {
   reference_data_source_descriptions:
-    reference_data_source_description list option
+    reference_data_source_descriptions option
     [@ocaml.doc
       "The array of [ReferenceDataSourceDescription] objects describing the reference data sources used by the application.\n"];
-  output_descriptions: output_description list option
+  output_descriptions: output_descriptions option
     [@ocaml.doc
       "The array of [OutputDescription] objects describing the destination streams used by the application.\n"];
-  input_descriptions: input_description list option
+  input_descriptions: input_descriptions option
     [@ocaml.doc
       "The array of [InputDescription] objects describing the input streams used by the application.\n"]}
 [@@ocaml.doc
@@ -526,15 +572,18 @@ type nonrec sql_application_configuration_description =
 type nonrec code_content_type =
   | ZIPFILE [@ocaml.doc ""]
   | PLAINTEXT [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec text_content = string[@@ocaml.doc ""]
+type nonrec code_m_d5 = string[@@ocaml.doc ""]
+type nonrec code_size = int[@@ocaml.doc ""]
 type nonrec s3_application_code_location_description =
   {
-  object_version: string option
+  object_version: object_version option
     [@ocaml.doc
       "The version of the object containing the application code.\n"];
-  file_key: string
+  file_key: file_key
     [@ocaml.doc
       "The file key for the object containing the application code.\n"];
-  bucket_ar_n: string
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) for the S3 bucket containing the application code.\n"]}
 [@@ocaml.doc
@@ -545,14 +594,15 @@ type nonrec code_content_description =
     s3_application_code_location_description option
     [@ocaml.doc
       "The S3 bucket Amazon Resource Name (ARN), file key, and object version of the application code stored in Amazon S3.\n"];
-  code_size: int option
+  code_size: code_size option
     [@ocaml.doc
       "The size in bytes of the application code. Can be used to validate zip-format code.\n"];
-  code_m_d5: string option
+  code_m_d5: code_m_d5 option
     [@ocaml.doc
       "The checksum that can be used to validate zip-format code.\n"];
-  text_content: string option [@ocaml.doc "The text-format code\n"]}[@@ocaml.doc
-                                                                    "Describes details about the code of a Managed Service for Apache Flink application.\n"]
+  text_content: text_content option [@ocaml.doc "The text-format code\n"]}
+[@@ocaml.doc
+  "Describes details about the code of a Managed Service for Apache Flink application.\n"]
 type nonrec application_code_configuration_description =
   {
   code_content_description: code_content_description option
@@ -566,18 +616,20 @@ type nonrec application_restore_type =
   | RESTORE_FROM_CUSTOM_SNAPSHOT [@ocaml.doc ""]
   | RESTORE_FROM_LATEST_SNAPSHOT [@ocaml.doc ""]
   | SKIP_RESTORE_FROM_SNAPSHOT [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec snapshot_name = string[@@ocaml.doc ""]
 type nonrec application_restore_configuration =
   {
-  snapshot_name: string option
+  snapshot_name: snapshot_name option
     [@ocaml.doc
       "The identifier of an existing snapshot of application state to use to restart an application. The application uses this value if [RESTORE_FROM_CUSTOM_SNAPSHOT] is specified for the [ApplicationRestoreType].\n"];
   application_restore_type: application_restore_type
     [@ocaml.doc "Specifies how the application should be restored.\n"]}
 [@@ocaml.doc
   "Specifies the method and snapshot to use when restarting an application using previously saved application state.\n"]
+type nonrec boolean_object = bool[@@ocaml.doc ""]
 type nonrec flink_run_configuration =
   {
-  allow_non_restored_state: bool option
+  allow_non_restored_state: boolean_object option
     [@ocaml.doc
       "When restoring from a snapshot, specifies whether the runtime is allowed to skip a state that cannot be mapped to the new program. This will happen if the program is updated between snapshots to remove stateful parameters, and state data in the snapshot no longer corresponds to valid application data. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/savepoints/#allowing-non-restored-state} Allowing Non-Restored State} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink documentation}.\n\n  This value defaults to [false]. If you update your application without specifying this parameter, [AllowNonRestoredState] will be set to [false], even if it was previously set to [true].\n  \n   "]}
 [@@ocaml.doc
@@ -595,15 +647,17 @@ type nonrec run_configuration_description =
 type nonrec configuration_type =
   | CUSTOM [@ocaml.doc ""]
   | DEFAULT [@ocaml.doc ""][@@ocaml.doc ""]
+type nonrec checkpoint_interval = int[@@ocaml.doc ""]
+type nonrec min_pause_between_checkpoints = int[@@ocaml.doc ""]
 type nonrec checkpoint_configuration_description =
   {
-  min_pause_between_checkpoints: int option
+  min_pause_between_checkpoints: min_pause_between_checkpoints option
     [@ocaml.doc
       "Describes the minimum time in milliseconds after a checkpoint operation completes that a new checkpoint operation can start. \n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or in application code.\n  \n   "];
-  checkpoint_interval: int option
+  checkpoint_interval: checkpoint_interval option
     [@ocaml.doc
       "Describes the interval in milliseconds between checkpoint operations. \n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointInterval] value of 60000, even if this value is set to another value using this API or in application code.\n  \n   "];
-  checkpointing_enabled: bool option
+  checkpointing_enabled: boolean_object option
     [@ocaml.doc
       "Describes whether checkpointing is enabled for a Managed Service for Apache Flink application.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointingEnabled] value of [true], even if this value is set to another value using this API or in application code.\n  \n   "];
   configuration_type: configuration_type option
@@ -629,18 +683,20 @@ type nonrec monitoring_configuration_description =
       "Describes whether to use the default CloudWatch logging configuration for an application.\n"]}
 [@@ocaml.doc
   "Describes configuration parameters for CloudWatch logging for an application.\n"]
+type nonrec parallelism = int[@@ocaml.doc ""]
+type nonrec parallelism_per_kp_u = int[@@ocaml.doc ""]
 type nonrec parallelism_configuration_description =
   {
-  auto_scaling_enabled: bool option
+  auto_scaling_enabled: boolean_object option
     [@ocaml.doc
       "Describes whether the Managed Service for Apache Flink service can increase the parallelism of the application in response to increased throughput.\n"];
-  current_parallelism: int option
+  current_parallelism: parallelism option
     [@ocaml.doc
       "Describes the current number of parallel tasks that a Managed Service for Apache Flink application can perform. If [AutoScalingEnabled] is set to True, Managed Service for Apache Flink can increase this value in response to application load. The service can increase this value up to the maximum parallelism, which is [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs for an application is 32 by default, and can be increased by requesting a limit increase. If application load is reduced, the service can reduce the [CurrentParallelism] value down to the [Parallelism] setting.\n"];
-  parallelism_per_kp_u: int option
+  parallelism_per_kp_u: parallelism_per_kp_u option
     [@ocaml.doc
       "Describes the number of parallel tasks that a Managed Service for Apache Flink application can perform per Kinesis Processing Unit (KPU) used by the application.\n"];
-  parallelism: int option
+  parallelism: parallelism option
     [@ocaml.doc
       "Describes the initial number of parallel tasks that a Managed Service for Apache Flink application can perform. If [AutoScalingEnabled] is set to True, then Managed Service for Apache Flink can increase the [CurrentParallelism] value in response to application load. The service can increase [CurrentParallelism] up to the maximum parallelism, which is [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs for an application is 32 by default, and can be increased by requesting a limit increase. If application load is reduced, the service can reduce the [CurrentParallelism] value down to the [Parallelism] setting.\n"];
   configuration_type: configuration_type option
@@ -648,9 +704,10 @@ type nonrec parallelism_configuration_description =
       "Describes whether the application uses the default parallelism for the Managed Service for Apache Flink service. \n"]}
 [@@ocaml.doc
   "Describes parameters for how a Managed Service for Apache Flink application executes multiple tasks simultaneously.\n"]
+type nonrec job_plan_description = string[@@ocaml.doc ""]
 type nonrec flink_application_configuration_description =
   {
-  job_plan_description: string option
+  job_plan_description: job_plan_description option
     [@ocaml.doc
       "The job plan for an application. For more information about the job plan, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/internals/job_scheduling.html}Jobs and Scheduling} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}. To retrieve the job plan for the application, use the [DescribeApplicationRequest$IncludeAdditionalDetails] parameter of the [DescribeApplication] operation.\n"];
   parallelism_configuration_description:
@@ -667,31 +724,35 @@ type nonrec flink_application_configuration_description =
       "Describes an application's checkpointing configuration. Checkpointing is the process of persisting application state for fault tolerance.\n"]}
 [@@ocaml.doc
   "Describes configuration parameters for a Managed Service for Apache Flink application.\n"]
-type nonrec property_map = (string * string) list[@@ocaml.doc ""]
+type nonrec property_value = string[@@ocaml.doc ""]
+type nonrec property_key = string[@@ocaml.doc ""]
+type nonrec property_map = (property_key * property_value) list[@@ocaml.doc
+                                                                 ""]
 type nonrec property_group =
   {
   property_map: property_map
     [@ocaml.doc
       "Describes the value of an application execution property key-value pair.\n"];
-  property_group_id: string
+  property_group_id: id
     [@ocaml.doc
       "Describes the key of an application execution property key-value pair.\n"]}
 [@@ocaml.doc "Property key-value pairs passed into an application.\n"]
+type nonrec property_groups = property_group list[@@ocaml.doc ""]
 type nonrec environment_property_descriptions =
   {
-  property_group_descriptions: property_group list option
+  property_group_descriptions: property_groups option
     [@ocaml.doc "Describes the execution property groups.\n"]}[@@ocaml.doc
                                                                 "Describes the execution properties for an Apache Flink runtime.\n"]
 type nonrec application_snapshot_configuration_description =
   {
-  snapshots_enabled: bool
+  snapshots_enabled: boolean_object
     [@ocaml.doc
       "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc
   "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
 type nonrec application_system_rollback_configuration_description =
   {
-  rollback_enabled: bool
+  rollback_enabled: boolean_object
     [@ocaml.doc
       "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
 [@@ocaml.doc
@@ -702,7 +763,7 @@ type nonrec application_configuration_description =
     zeppelin_application_configuration_description option
     [@ocaml.doc
       "The configuration parameters for a Managed Service for Apache Flink Studio notebook.\n"];
-  vpc_configuration_descriptions: vpc_configuration_description list option
+  vpc_configuration_descriptions: vpc_configuration_descriptions option
     [@ocaml.doc
       "The array of descriptions of VPC configurations available to the application.\n"];
   application_system_rollback_configuration_description:
@@ -732,24 +793,33 @@ type nonrec application_configuration_description =
       "The details about inputs, outputs, and reference data sources for a SQL-based Kinesis Data Analytics application.\n"]}
 [@@ocaml.doc
   "Describes details about the application code and starting parameters for a Managed Service for Apache Flink application.\n"]
+type nonrec log_stream_ar_n = string[@@ocaml.doc ""]
 type nonrec cloud_watch_logging_option_description =
   {
-  role_ar_n: string option
+  role_ar_n: role_ar_n option
     [@ocaml.doc
       "The IAM ARN of the role to use to send application messages. \n\n  Provided for backward compatibility. Applications created with the current API version have an application-level service execution role rather than a resource-level role.\n  \n   "];
-  log_stream_ar_n: string
+  log_stream_ar_n: log_stream_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the CloudWatch log to receive application messages.\n"];
-  cloud_watch_logging_option_id: string option
+  cloud_watch_logging_option_id: id option
     [@ocaml.doc "The ID of the CloudWatch logging option description.\n"]}
 [@@ocaml.doc "Describes the Amazon CloudWatch logging option.\n"]
+type nonrec cloud_watch_logging_option_descriptions =
+  cloud_watch_logging_option_description list[@@ocaml.doc ""]
+type nonrec application_maintenance_window_start_time = string[@@ocaml.doc
+                                                                ""]
+type nonrec application_maintenance_window_end_time = string[@@ocaml.doc ""]
 type nonrec application_maintenance_configuration_description =
   {
-  application_maintenance_window_end_time: string
+  application_maintenance_window_end_time:
+    application_maintenance_window_end_time
     [@ocaml.doc "The end time for the maintenance window.\n"];
-  application_maintenance_window_start_time: string
+  application_maintenance_window_start_time:
+    application_maintenance_window_start_time
     [@ocaml.doc "The start time for the maintenance window.\n"]}[@@ocaml.doc
                                                                   "The details of the maintenance configuration for the application.\n"]
+type nonrec conditional_token = string[@@ocaml.doc ""]
 type nonrec application_mode =
   | INTERACTIVE [@ocaml.doc ""]
   | STREAMING [@ocaml.doc ""][@@ocaml.doc ""]
@@ -758,19 +828,19 @@ type nonrec application_detail =
   application_mode: application_mode option
     [@ocaml.doc
       "To create a Managed Service for Apache Flink Studio notebook, you must set the mode to [INTERACTIVE]. However, for a Managed Service for Apache Flink application, the mode is optional.\n"];
-  application_version_rolled_back_to: int option
+  application_version_rolled_back_to: application_version_id option
     [@ocaml.doc
       "The version to which you want to roll back the application.\n"];
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates.\n"];
-  application_version_create_timestamp: CoreTypes.Timestamp.t option
+  application_version_create_timestamp: timestamp option
     [@ocaml.doc
       "The current timestamp when the application version was created."];
-  application_version_rolled_back_from: int option
+  application_version_rolled_back_from: application_version_id option
     [@ocaml.doc
       "If you reverted the application using [RollbackApplication], the application version when [RollbackApplication] was called.\n"];
-  application_version_updated_from: int option
+  application_version_updated_from: application_version_id option
     [@ocaml.doc
       "The previous application version before the latest application update. [RollbackApplication] reverts the application to this version.\n"];
   application_maintenance_configuration_description:
@@ -778,43 +848,45 @@ type nonrec application_detail =
     [@ocaml.doc
       "The details of the maintenance configuration for the application.\n"];
   cloud_watch_logging_option_descriptions:
-    cloud_watch_logging_option_description list option
+    cloud_watch_logging_option_descriptions option
     [@ocaml.doc
       "Describes the application Amazon CloudWatch logging options.\n"];
   application_configuration_description:
     application_configuration_description option
     [@ocaml.doc
       "Describes details about the application code and starting parameters for a Managed Service for Apache Flink application.\n"];
-  last_update_timestamp: CoreTypes.Timestamp.t option
+  last_update_timestamp: timestamp option
     [@ocaml.doc
       "The current timestamp when the application was last updated.\n"];
-  create_timestamp: CoreTypes.Timestamp.t option
+  create_timestamp: timestamp option
     [@ocaml.doc "The current timestamp when the application was created.\n"];
-  application_version_id: int
+  application_version_id: application_version_id
     [@ocaml.doc
       "Provides the current application version. Managed Service for Apache Flink updates the [ApplicationVersionId] each time you update the application.\n"];
   application_status: application_status
     [@ocaml.doc "The status of the application.\n"];
-  service_execution_role: string option
+  service_execution_role: role_ar_n option
     [@ocaml.doc
       "Specifies the IAM role that the application uses to access external resources.\n"];
   runtime_environment: runtime_environment
     [@ocaml.doc "The runtime environment for the application.\n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"];
-  application_description: string option
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"];
+  application_description: application_description option
     [@ocaml.doc "The description of the application.\n"];
-  application_ar_n: string [@ocaml.doc "The ARN of the application.\n"]}
-[@@ocaml.doc
-  "Describes the application, including the application Amazon Resource Name (ARN), status, latest version, and input and output configurations.\n"]
+  application_ar_n: resource_ar_n
+    [@ocaml.doc "The ARN of the application.\n"]}[@@ocaml.doc
+                                                   "Describes the application, including the application Amazon Resource Name (ARN), status, latest version, and input and output configurations.\n"]
+type nonrec operation_id = string[@@ocaml.doc ""]
 type nonrec update_application_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc "Operation ID for tracking UpdateApplication request"];
   application_detail: application_detail
     [@ocaml.doc "Describes application updates.\n"]}[@@ocaml.doc ""]
 type nonrec input_lambda_processor_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the new Amazon Lambda function that is used to preprocess the records in the stream.\n\n  To specify an earlier version of the Lambda function than the latest, include the Lambda function version in the Lambda function ARN. For more information about Lambda ARNs, see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-lambda}Example ARNs: Amazon Lambda} \n  \n   "]}
 [@@ocaml.doc
@@ -828,24 +900,24 @@ type nonrec input_processing_configuration_update =
   "For a SQL-based Kinesis Data Analytics application, describes updates to an [InputProcessingConfiguration].\n"]
 type nonrec kinesis_streams_input_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the input Kinesis data stream to read.\n"]}
 [@@ocaml.doc
   "When you update the input configuration for a SQL-based Kinesis Data Analytics application, provides information about a Kinesis stream as the streaming source.\n"]
 type nonrec kinesis_firehose_input_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the input delivery stream to read.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, when updating application input configuration, provides information about a Kinesis Data Firehose delivery stream as the streaming source.\n"]
 type nonrec input_schema_update =
   {
-  record_column_updates: record_column list option
+  record_column_updates: record_columns option
     [@ocaml.doc
       "A list of [RecordColumn] objects. Each object describes the mapping of the streaming source element to the corresponding column in the in-application stream.\n"];
-  record_encoding_update: string option
+  record_encoding_update: record_encoding option
     [@ocaml.doc
       "Specifies the encoding of the records in the streaming source; for example, UTF-8.\n"];
   record_format_update: record_format option
@@ -855,7 +927,7 @@ type nonrec input_schema_update =
   "Describes updates for an SQL-based Kinesis Data Analytics application's input schema.\n"]
 type nonrec input_parallelism_update =
   {
-  count_update: int
+  count_update: input_parallelism_count
     [@ocaml.doc
       "The number of in-application streams to create for the specified streaming source.\n"]}
 [@@ocaml.doc
@@ -877,30 +949,31 @@ type nonrec input_update =
   input_processing_configuration_update:
     input_processing_configuration_update option
     [@ocaml.doc "Describes updates to an [InputProcessingConfiguration].\n"];
-  name_prefix_update: string option
+  name_prefix_update: in_app_stream_name option
     [@ocaml.doc
       "The name prefix for in-application streams that Kinesis Data Analytics creates for the specific streaming source.\n"];
-  input_id: string
+  input_id: id
     [@ocaml.doc "The input ID of the application input to be updated.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes updates to a specific input configuration (identified by the [InputId] of an application). \n"]
+type nonrec input_updates = input_update list[@@ocaml.doc ""]
 type nonrec kinesis_streams_output_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the Kinesis data stream where you want to write the output.\n"]}
 [@@ocaml.doc
   "When you update a SQL-based Kinesis Data Analytics application's output configuration using the [UpdateApplication] operation, provides information about a Kinesis data stream that is configured as the destination.\n"]
 type nonrec kinesis_firehose_output_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the delivery stream to write to. \n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, when updating an output configuration using the [UpdateApplication] operation, provides information about a Kinesis Data Firehose delivery stream that is configured as the destination.\n"]
 type nonrec lambda_output_update =
   {
-  resource_arn_update: string
+  resource_arn_update: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the destination Amazon Lambda function.\n\n  To specify an earlier version of the Lambda function than the latest, include the Lambda function version in the Lambda function ARN. For more information about Lambda ARNs, see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-lambda}Example ARNs: Amazon Lambda} \n  \n   "]}
 [@@ocaml.doc
@@ -919,18 +992,19 @@ type nonrec output_update =
   kinesis_streams_output_update: kinesis_streams_output_update option
     [@ocaml.doc
       "Describes a Kinesis data stream as the destination for the output.\n"];
-  name_update: string option
+  name_update: in_app_stream_name option
     [@ocaml.doc
       "If you want to specify a different in-application stream for this output configuration, use this field to specify the new in-application stream name.\n"];
-  output_id: string
+  output_id: id
     [@ocaml.doc
       "Identifies the specific output configuration that you want to update.\n"]}
 [@@ocaml.doc
   " For a SQL-based Kinesis Data Analytics application, describes updates to the output configuration identified by the [OutputId]. \n"]
+type nonrec output_updates = output_update list[@@ocaml.doc ""]
 type nonrec s3_reference_data_source_update =
   {
-  file_key_update: string option [@ocaml.doc "The object key name.\n"];
-  bucket_arn_update: string option
+  file_key_update: file_key option [@ocaml.doc "The object key name.\n"];
+  bucket_arn_update: bucket_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the Amazon S3 bucket name and object key name for an in-application reference table. \n"]
@@ -942,36 +1016,38 @@ type nonrec reference_data_source_update =
   s3_reference_data_source_update: s3_reference_data_source_update option
     [@ocaml.doc
       "Describes the S3 bucket name, object key name, and IAM role that Kinesis Data Analytics can assume to read the Amazon S3 object on your behalf and populate the in-application reference table.\n"];
-  table_name_update: string option
+  table_name_update: in_app_table_name option
     [@ocaml.doc
       "The in-application table name that is created by this update.\n"];
-  reference_id: string
+  reference_id: id
     [@ocaml.doc
       "The ID of the reference data source that is being updated. You can use the [DescribeApplication] operation to get this value.\n"]}
 [@@ocaml.doc
   "When you update a reference data source configuration for a SQL-based Kinesis Data Analytics application, this object provides all the updated values (such as the source bucket name and object key name), the in-application table name that is created, and updated mapping information that maps the data in the Amazon S3 object to the in-application reference table that is created.\n"]
+type nonrec reference_data_source_updates = reference_data_source_update list
+[@@ocaml.doc ""]
 type nonrec sql_application_configuration_update =
   {
-  reference_data_source_updates: reference_data_source_update list option
+  reference_data_source_updates: reference_data_source_updates option
     [@ocaml.doc
       "The array of [ReferenceDataSourceUpdate] objects describing the new reference data sources used by the application.\n"];
-  output_updates: output_update list option
+  output_updates: output_updates option
     [@ocaml.doc
       "The array of [OutputUpdate] objects describing the new destination streams used by the application.\n"];
-  input_updates: input_update list option
+  input_updates: input_updates option
     [@ocaml.doc
       "The array of [InputUpdate] objects describing the new input streams used by the application.\n"]}
 [@@ocaml.doc
   "Describes updates to the input streams, destination streams, and reference data sources for a SQL-based Kinesis Data Analytics application.\n"]
 type nonrec s3_content_location_update =
   {
-  object_version_update: string option
+  object_version_update: object_version option
     [@ocaml.doc
       "The new version of the object containing the application code.\n"];
-  file_key_update: string option
+  file_key_update: file_key option
     [@ocaml.doc
       "The new file key for the object containing the application code.\n"];
-  bucket_arn_update: string option
+  bucket_arn_update: bucket_ar_n option
     [@ocaml.doc
       "The new Amazon Resource Name (ARN) for the S3 bucket containing the application code.\n"]}
 [@@ocaml.doc
@@ -981,10 +1057,10 @@ type nonrec code_content_update =
   s3_content_location_update: s3_content_location_update option
     [@ocaml.doc
       "Describes an update to the location of code for an application.\n"];
-  zip_file_content_update: bytes option
+  zip_file_content_update: zip_file_content option
     [@ocaml.doc
       "Describes an update to the zipped code for an application.\n"];
-  text_content_update: string option
+  text_content_update: text_content option
     [@ocaml.doc "Describes an update to the text code for an application.\n"]}
 [@@ocaml.doc
   "Describes an update to the code of an application. Not supported for Apache Zeppelin.\n"]
@@ -997,13 +1073,13 @@ type nonrec application_code_configuration_update =
                                                                    "Describes code configuration updates for an application. This is supported for a Managed Service for Apache Flink application or a SQL-based Kinesis Data Analytics application.\n"]
 type nonrec checkpoint_configuration_update =
   {
-  min_pause_between_checkpoints_update: int option
+  min_pause_between_checkpoints_update: min_pause_between_checkpoints option
     [@ocaml.doc
       "Describes updates to the minimum time in milliseconds after a checkpoint operation completes that a new checkpoint operation can start.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or in application code.\n  \n   "];
-  checkpoint_interval_update: int option
+  checkpoint_interval_update: checkpoint_interval option
     [@ocaml.doc
       "Describes updates to the interval in milliseconds between checkpoint operations.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointInterval] value of 60000, even if this value is set to another value using this API or in application code.\n  \n   "];
-  checkpointing_enabled_update: bool option
+  checkpointing_enabled_update: boolean_object option
     [@ocaml.doc
       "Describes updates to whether checkpointing is enabled for an application.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointingEnabled] value of [true], even if this value is set to another value using this API or in application code.\n  \n   "];
   configuration_type_update: configuration_type option
@@ -1026,13 +1102,13 @@ type nonrec monitoring_configuration_update =
   "Describes updates to configuration parameters for Amazon CloudWatch logging for an application.\n"]
 type nonrec parallelism_configuration_update =
   {
-  auto_scaling_enabled_update: bool option
+  auto_scaling_enabled_update: boolean_object option
     [@ocaml.doc
       "Describes updates to whether the Managed Service for Apache Flink service can increase the parallelism of a Managed Service for Apache Flink application in response to increased throughput.\n"];
-  parallelism_per_kpu_update: int option
+  parallelism_per_kpu_update: parallelism_per_kp_u option
     [@ocaml.doc
       "Describes updates to the number of parallel tasks an application can perform per Kinesis Processing Unit (KPU) used by the application.\n"];
-  parallelism_update: int option
+  parallelism_update: parallelism option
     [@ocaml.doc
       "Describes updates to the initial number of parallel tasks an application can perform. If [AutoScalingEnabled] is set to True, then Managed Service for Apache Flink can increase the [CurrentParallelism] value in response to application load. The service can increase [CurrentParallelism] up to the maximum parallelism, which is [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs for an application is 32 by default, and can be increased by requesting a limit increase. If application load is reduced, the service will reduce [CurrentParallelism] down to the [Parallelism] setting.\n"];
   configuration_type_update: configuration_type option
@@ -1055,20 +1131,20 @@ type nonrec flink_application_configuration_update =
   "Describes updates to the configuration parameters for a Managed Service for Apache Flink application.\n"]
 type nonrec environment_property_updates =
   {
-  property_groups: property_group list
+  property_groups: property_groups
     [@ocaml.doc "Describes updates to the execution property groups.\n"]}
 [@@ocaml.doc
   "Describes updates to the execution property groups for a Managed Service for Apache Flink application or a Studio notebook.\n"]
 type nonrec application_snapshot_configuration_update =
   {
-  snapshots_enabled_update: bool
+  snapshots_enabled_update: boolean_object
     [@ocaml.doc
       "Describes updates to whether snapshots are enabled for an application.\n"]}
 [@@ocaml.doc
   "Describes updates to whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
 type nonrec application_system_rollback_configuration_update =
   {
-  rollback_enabled_update: bool
+  rollback_enabled_update: boolean_object
     [@ocaml.doc
       "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
 [@@ocaml.doc
@@ -1079,7 +1155,7 @@ type nonrec application_configuration_update =
     zeppelin_application_configuration_update option
     [@ocaml.doc
       "Updates to the configuration of a Managed Service for Apache Flink Studio notebook.\n"];
-  vpc_configuration_updates: vpc_configuration_update list option
+  vpc_configuration_updates: vpc_configuration_updates option
     [@ocaml.doc
       "Updates to the array of descriptions of VPC configurations available to the application.\n"];
   application_system_rollback_configuration_update:
@@ -1116,35 +1192,37 @@ type nonrec run_configuration_update =
   "Describes the updates to the starting parameters for a Managed Service for Apache Flink application.\n"]
 type nonrec cloud_watch_logging_option_update =
   {
-  log_stream_arn_update: string option
+  log_stream_arn_update: log_stream_ar_n option
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the CloudWatch log to receive application messages.\n"];
-  cloud_watch_logging_option_id: string
+  cloud_watch_logging_option_id: id
     [@ocaml.doc "The ID of the CloudWatch logging option to update\n"]}
 [@@ocaml.doc "Describes the Amazon CloudWatch logging option updates.\n"]
+type nonrec cloud_watch_logging_option_updates =
+  cloud_watch_logging_option_update list[@@ocaml.doc ""]
 type nonrec update_application_request =
   {
   runtime_environment_update: runtime_environment option
     [@ocaml.doc
       "Updates the Managed Service for Apache Flink runtime environment used to run your code. To avoid issues you must:\n\n {ul\n       {-  Ensure your new jar and dependencies are compatible with the new runtime selected.\n           \n            }\n       {-  Ensure your new code's state is compatible with the snapshot from which your application will start\n           \n            }\n       }\n  "];
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You get the application's current [ConditionalToken] using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
   cloud_watch_logging_option_updates:
-    cloud_watch_logging_option_update list option
+    cloud_watch_logging_option_updates option
     [@ocaml.doc
       "Describes application Amazon CloudWatch logging option updates. You can only update existing CloudWatch logging options with this action. To add a new CloudWatch logging option, use [AddApplicationCloudWatchLoggingOption].\n"];
   run_configuration_update: run_configuration_update option
     [@ocaml.doc
       "Describes updates to the application's starting parameters.\n"];
-  service_execution_role_update: string option
+  service_execution_role_update: role_ar_n option
     [@ocaml.doc "Describes updates to the service execution role.\n"];
   application_configuration_update: application_configuration_update option
     [@ocaml.doc "Describes application configuration updates.\n"];
-  current_application_version_id: int option
+  current_application_version_id: application_version_id option
     [@ocaml.doc
       "The current application version ID. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken].You can retrieve the application version ID using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of the application to update.\n"]}[@@ocaml.doc ""]
 type nonrec update_application_maintenance_configuration_response =
   {
@@ -1152,12 +1230,13 @@ type nonrec update_application_maintenance_configuration_response =
     application_maintenance_configuration_description option
     [@ocaml.doc
       "The application maintenance configuration description after the update.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the application.\n"]}
 [@@ocaml.doc ""]
 type nonrec application_maintenance_configuration_update =
   {
-  application_maintenance_window_start_time_update: string
+  application_maintenance_window_start_time_update:
+    application_maintenance_window_start_time
     [@ocaml.doc "The updated start time for the maintenance window.\n"]}
 [@@ocaml.doc
   "Describes the updated maintenance configuration for the application.\n"]
@@ -1167,97 +1246,110 @@ type nonrec update_application_maintenance_configuration_request =
     application_maintenance_configuration_update
     [@ocaml.doc
       "Describes the application maintenance configuration update.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of the application for which you want to update the maintenance configuration.\n"]}
 [@@ocaml.doc ""]
+type nonrec error_message = string[@@ocaml.doc ""]
 type nonrec unsupported_operation_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The request was rejected because a specified parameter is not supported or a specified resource is not valid for this operation. \n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The request was rejected because a specified parameter is not supported or a specified resource is not valid for this operation. \n"]
 type nonrec resource_not_found_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Specified application can't be found.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "Specified application can't be found.\n"]
 type nonrec resource_in_use_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The application is not available for this operation.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The application is not available for this operation.\n"]
 type nonrec invalid_argument_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The specified input parameter value is not valid.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The specified input parameter value is not valid.\n"]
 type nonrec concurrent_modification_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Exception thrown as a result of concurrent modifications to an application. This error can be the result of attempting to modify an application without using the current application ID.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "Exception thrown as a result of concurrent modifications to an application. This error can be the result of attempting to modify an application without using the current application ID.\n"]
 type nonrec limit_exceeded_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The number of allowed resources has been exceeded.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The number of allowed resources has been exceeded.\n"]
 type nonrec invalid_request_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The request JSON is not valid for the operation.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The request JSON is not valid for the operation.\n"]
 type nonrec invalid_application_configuration_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The user-provided application configuration is not valid.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The user-provided application configuration is not valid.\n"]
 type nonrec code_validation_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The user-provided application code (query) is not valid. This can be a simple syntax error.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The user-provided application code (query) is not valid. This can be a simple syntax error.\n"]
+type nonrec untag_resource_response = unit[@@ocaml.doc ""]
+type nonrec kinesis_analytics_ar_n = string[@@ocaml.doc ""]
+type nonrec tag_key = string[@@ocaml.doc ""]
+type nonrec tag_keys = tag_key list[@@ocaml.doc ""]
 type nonrec untag_resource_request =
   {
-  tag_keys: string list
+  tag_keys: tag_keys
     [@ocaml.doc
       "A list of keys of tags to remove from the specified application.\n"];
-  resource_ar_n: string
+  resource_ar_n: kinesis_analytics_ar_n
     [@ocaml.doc
       "The ARN of the Managed Service for Apache Flink application from which to remove the tags.\n"]}
 [@@ocaml.doc ""]
 type nonrec too_many_tags_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Application created with too many tags, or too many tags added to an application. Note that the maximum number of application tags includes system tags. The maximum number of user-defined application tags is 50.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "Application created with too many tags, or too many tags added to an application. Note that the maximum number of application tags includes system tags. The maximum number of user-defined application tags is 50.\n"]
+type nonrec raw_input_record = string[@@ocaml.doc ""]
+type nonrec raw_input_records = raw_input_record list[@@ocaml.doc ""]
+type nonrec processed_input_record = string[@@ocaml.doc ""]
+type nonrec processed_input_records = processed_input_record list[@@ocaml.doc
+                                                                   ""]
 type nonrec unable_to_detect_schema_exception =
   {
-  processed_input_records: string list option
+  processed_input_records: processed_input_records option
     [@ocaml.doc
       "Stream data that was modified by the processor specified in the [InputProcessingConfiguration] parameter. \n"];
-  raw_input_records: string list option
+  raw_input_records: raw_input_records option
     [@ocaml.doc "Raw stream data that was sampled to infer the schema.\n"];
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The data format is not valid. Kinesis Data Analytics cannot detect the schema for the given streaming source.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The data format is not valid. Kinesis Data Analytics cannot detect the schema for the given streaming source.\n"]
+type nonrec tag_value = string[@@ocaml.doc ""]
 type nonrec tag =
   {
-  value: string option
+  value: tag_value option
     [@ocaml.doc "The value of the key-value tag. The value is optional.\n"];
-  key: string [@ocaml.doc "The key of the key-value tag.\n"]}[@@ocaml.doc
-                                                               "A key-value pair (the value is optional) that you can define and assign to Amazon resources. If you specify a tag that already exists, the tag value is replaced with the value that you specify in the request. Note that the maximum number of application tags includes system tags. The maximum number of user-defined application tags is 50. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/java/how-tagging.html}Using Tagging}.\n"]
+  key: tag_key [@ocaml.doc "The key of the key-value tag.\n"]}[@@ocaml.doc
+                                                                "A key-value pair (the value is optional) that you can define and assign to Amazon resources. If you specify a tag that already exists, the tag value is replaced with the value that you specify in the request. Note that the maximum number of application tags includes system tags. The maximum number of user-defined application tags is 50. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/java/how-tagging.html}Using Tagging}.\n"]
+type nonrec tags = tag list[@@ocaml.doc ""]
+type nonrec tag_resource_response = unit[@@ocaml.doc ""]
 type nonrec tag_resource_request =
   {
-  tags: tag list
+  tags: tags
     [@ocaml.doc "The key-value tags to assign to the application.\n"];
-  resource_ar_n: string
+  resource_ar_n: kinesis_analytics_ar_n
     [@ocaml.doc "The ARN of the application to assign the tags.\n"]}[@@ocaml.doc
                                                                     ""]
 type nonrec stop_application_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc "Operation ID for tracking StopApplication request"]}
 [@@ocaml.doc ""]
 type nonrec stop_application_request =
   {
-  force: bool option
+  force: boolean_object option
     [@ocaml.doc
       "Set to [true] to force the application to stop. If you set [Force] to [true], Managed Service for Apache Flink stops the application without taking a snapshot. \n\n  Force-stopping your application may lead to data loss or duplication. To prevent data loss or duplicate processing of data during application restarts, we recommend you to take frequent snapshots of your application.\n  \n    You can only force stop a Managed Service for Apache Flink application. You can't force stop a SQL-based Kinesis Data Analytics application.\n    \n     The application must be in the [STARTING], [UPDATING], [STOPPING], [AUTOSCALING], or [RUNNING] status. \n     "];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of the running application to stop.\n"]}[@@ocaml.doc
                                                                     ""]
 type nonrec start_application_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc "Operation ID for tracking StartApplication request"]}
 [@@ocaml.doc ""]
 type nonrec sql_run_configuration =
@@ -1266,17 +1358,19 @@ type nonrec sql_run_configuration =
     input_starting_position_configuration
     [@ocaml.doc
       "The point at which you want the application to start processing records from the streaming source. \n"];
-  input_id: string
+  input_id: id
     [@ocaml.doc
       "The input source ID. You can get this ID by calling the [DescribeApplication] operation. \n"]}
 [@@ocaml.doc
   "Describes the starting parameters for a SQL-based Kinesis Data Analytics application.\n"]
+type nonrec sql_run_configurations = sql_run_configuration list[@@ocaml.doc
+                                                                 ""]
 type nonrec run_configuration =
   {
   application_restore_configuration: application_restore_configuration option
     [@ocaml.doc
       "Describes the restore behavior of a restarting application.\n"];
-  sql_run_configurations: sql_run_configuration list option
+  sql_run_configurations: sql_run_configurations option
     [@ocaml.doc
       "Describes the starting parameters for a SQL-based Kinesis Data Analytics application application.\n"];
   flink_run_configuration: flink_run_configuration option
@@ -1289,11 +1383,11 @@ type nonrec start_application_request =
   run_configuration: run_configuration option
     [@ocaml.doc
       "Identifies the run configuration (start parameters) of a Managed Service for Apache Flink application.\n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc ""]
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc ""]
 type nonrec input_lambda_processor =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The ARN of the Amazon Lambda function that operates on records in the stream.\n\n  To specify an earlier version of the Lambda function than the latest, include the Lambda function version in the Lambda function ARN. For more information about Lambda ARNs, see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-lambda}Example ARNs: Amazon Lambda} \n  \n   "]}
 [@@ocaml.doc
@@ -1307,13 +1401,13 @@ type nonrec input_processing_configuration =
   "For a SQL-based Kinesis Data Analytics application, describes a processor that is used to preprocess the records in the stream before being processed by your application code. Currently, the only input processor available is {{:https://docs.aws.amazon.com/lambda/}Amazon Lambda}.\n"]
 type nonrec kinesis_streams_input =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc "The ARN of the input Kinesis data stream to read.\n"]}
 [@@ocaml.doc
   " Identifies a Kinesis data stream as the streaming source. You provide the stream's Amazon Resource Name (ARN).\n"]
 type nonrec kinesis_firehose_input =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc "The Amazon Resource Name (ARN) of the delivery stream.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, identifies a Kinesis Data Firehose delivery stream as the streaming source. You provide the delivery stream's Amazon Resource Name (ARN).\n"]
@@ -1334,27 +1428,28 @@ type nonrec input =
   input_processing_configuration: input_processing_configuration option
     [@ocaml.doc
       "The [InputProcessingConfiguration] for the input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is [InputLambdaProcessor]. \n"];
-  name_prefix: string
+  name_prefix: in_app_stream_name
     [@ocaml.doc
       "The name prefix to use when creating an in-application stream. Suppose that you specify a prefix \"[MyInApplicationStream].\" Kinesis Data Analytics then creates one or more (as per the [InputParallelism] count you specified) in-application streams with the names \"[MyInApplicationStream_001],\" \"[MyInApplicationStream_002],\" and so on. \n"]}
 [@@ocaml.doc
   "When you configure the application input for a SQL-based Kinesis Data Analytics application, you specify the streaming source, the in-application stream name that is created, and the mapping between the two. \n"]
+type nonrec inputs = input list[@@ocaml.doc ""]
 type nonrec kinesis_streams_output =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The ARN of the destination Kinesis data stream to write to.\n"]}
 [@@ocaml.doc
   "When you configure a SQL-based Kinesis Data Analytics application's output, identifies a Kinesis data stream as the destination. You provide the stream Amazon Resource Name (ARN). \n"]
 type nonrec kinesis_firehose_output =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc "The ARN of the destination delivery stream to write to.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, when configuring application output, identifies a Kinesis Data Firehose delivery stream as the destination. You provide the stream Amazon Resource Name (ARN) of the delivery stream. \n"]
 type nonrec lambda_output =
   {
-  resource_ar_n: string
+  resource_ar_n: resource_ar_n
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the destination Lambda function to write to.\n\n  To specify an earlier version of the Lambda function than the latest, include the Lambda function version in the Lambda function ARN. For more information about Lambda ARNs, see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-lambda}Example ARNs: Amazon Lambda} \n  \n   "]}
 [@@ocaml.doc
@@ -1371,14 +1466,15 @@ type nonrec output =
       "Identifies a Kinesis Data Firehose delivery stream as the destination.\n"];
   kinesis_streams_output: kinesis_streams_output option
     [@ocaml.doc "Identifies a Kinesis data stream as the destination.\n"];
-  name: string [@ocaml.doc "The name of the in-application stream.\n"]}
-[@@ocaml.doc
-  " Describes a SQL-based Kinesis Data Analytics application's output configuration, in which you identify an in-application stream and a destination where you want the in-application stream data to be written. The destination can be a Kinesis data stream or a Kinesis Data Firehose delivery stream. \n\n \n "]
+  name: in_app_stream_name
+    [@ocaml.doc "The name of the in-application stream.\n"]}[@@ocaml.doc
+                                                              " Describes a SQL-based Kinesis Data Analytics application's output configuration, in which you identify an in-application stream and a destination where you want the in-application stream data to be written. The destination can be a Kinesis data stream or a Kinesis Data Firehose delivery stream. \n\n \n "]
+type nonrec outputs = output list[@@ocaml.doc ""]
 type nonrec s3_reference_data_source =
   {
-  file_key: string option
+  file_key: file_key option
     [@ocaml.doc "The object key name containing the reference data.\n"];
-  bucket_ar_n: string option
+  bucket_ar_n: bucket_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the S3 bucket.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, identifies the Amazon S3 bucket and object that contains the reference data.\n\n A SQL-based Kinesis Data Analytics application loads reference data only once. If the data changes, you call the [UpdateApplication] operation to trigger reloading of data into your application. \n "]
@@ -1390,19 +1486,21 @@ type nonrec reference_data_source =
   s3_reference_data_source: s3_reference_data_source option
     [@ocaml.doc
       "Identifies the S3 bucket and object that contains the reference data. A SQL-based Kinesis Data Analytics application loads reference data only once. If the data changes, you call the [UpdateApplication] operation to trigger reloading of data into your application. \n"];
-  table_name: string
+  table_name: in_app_table_name
     [@ocaml.doc "The name of the in-application table to create.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, describes the reference data source by providing the source information (Amazon S3 bucket name and object key name), the resulting in-application table name that is created, and the necessary schema to map the data elements in the Amazon S3 object to the in-application table.\n"]
+type nonrec reference_data_sources = reference_data_source list[@@ocaml.doc
+                                                                 ""]
 type nonrec sql_application_configuration =
   {
-  reference_data_sources: reference_data_source list option
+  reference_data_sources: reference_data_sources option
     [@ocaml.doc
       "The array of [ReferenceDataSource] objects describing the reference data sources used by the application.\n"];
-  outputs: output list option
+  outputs: outputs option
     [@ocaml.doc
       "The array of [Output] objects describing the destination streams used by the application.\n"];
-  inputs: input list option
+  inputs: inputs option
     [@ocaml.doc
       "The array of [Input] objects describing the input streams used by the application.\n"]}
 [@@ocaml.doc
@@ -1416,53 +1514,59 @@ type nonrec snapshot_details =
   {
   runtime_environment: runtime_environment option
     [@ocaml.doc "The Flink Runtime for the application snapshot.\n"];
-  snapshot_creation_timestamp: CoreTypes.Timestamp.t option
+  snapshot_creation_timestamp: timestamp option
     [@ocaml.doc "The timestamp of the application snapshot.\n"];
-  application_version_id: int
+  application_version_id: application_version_id
     [@ocaml.doc
       "The current application version ID when the snapshot was created.\n"];
   snapshot_status: snapshot_status
     [@ocaml.doc "The status of the application snapshot.\n"];
-  snapshot_name: string
+  snapshot_name: snapshot_name
     [@ocaml.doc "The identifier for the application snapshot.\n"]}[@@ocaml.doc
                                                                     "Provides details about a snapshot of application state.\n"]
+type nonrec snapshot_summaries = snapshot_details list[@@ocaml.doc ""]
+type nonrec session_expiration_duration_in_seconds = int[@@ocaml.doc ""]
 type nonrec service_unavailable_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "The service cannot complete the request.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "The service cannot complete the request.\n"]
 type nonrec s3_configuration =
   {
-  file_key: string
+  file_key: file_key
     [@ocaml.doc "The name of the object that contains the data.\n"];
-  bucket_ar_n: string
+  bucket_ar_n: bucket_ar_n
     [@ocaml.doc "The ARN of the S3 bucket that contains the data.\n"]}
 [@@ocaml.doc
   "For a SQL-based Kinesis Data Analytics application, provides a description of an Amazon S3 data source, including the Amazon Resource Name (ARN) of the S3 bucket and the name of the Amazon S3 object that contains the data.\n"]
 type nonrec rollback_application_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc "Operation ID for tracking RollbackApplication request"];
   application_detail: application_detail [@ocaml.doc ""]}[@@ocaml.doc ""]
 type nonrec rollback_application_request =
   {
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The current application version ID. You can retrieve the application version ID using [DescribeApplication].\n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc ""]
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc ""]
 type nonrec resource_provisioned_throughput_exceeded_exception =
   {
-  message: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                           "Discovery failed to get a record from the streaming source because of the Kinesis Streams [ProvisionedThroughputExceededException]. For more information, see {{:http://docs.aws.amazon.com/kinesis/latest/APIReference/API_GetRecords.html}GetRecords} in the Amazon Kinesis Streams API Reference.\n"]
+  message: error_message option [@ocaml.doc ""]}[@@ocaml.doc
+                                                  "Discovery failed to get a record from the streaming source because of the Kinesis Streams [ProvisionedThroughputExceededException]. For more information, see {{:http://docs.aws.amazon.com/kinesis/latest/APIReference/API_GetRecords.html}GetRecords} in the Amazon Kinesis Streams API Reference.\n"]
+type nonrec parsed_input_record_field = string[@@ocaml.doc ""]
+type nonrec parsed_input_record = parsed_input_record_field list[@@ocaml.doc
+                                                                  ""]
+type nonrec parsed_input_records = parsed_input_record list[@@ocaml.doc ""]
 type nonrec parallelism_configuration =
   {
-  auto_scaling_enabled: bool option
+  auto_scaling_enabled: boolean_object option
     [@ocaml.doc
       "Describes whether the Managed Service for Apache Flink service can increase the parallelism of the application in response to increased throughput.\n"];
-  parallelism_per_kp_u: int option
+  parallelism_per_kp_u: parallelism_per_kp_u option
     [@ocaml.doc
       "Describes the number of parallel tasks that a Managed Service for Apache Flink application can perform per Kinesis Processing Unit (KPU) used by the application. For more information about KPUs, see {{:http://aws.amazon.com/kinesis/data-analytics/pricing/}Amazon Managed Service for Apache Flink Pricing}.\n"];
-  parallelism: int option
+  parallelism: parallelism option
     [@ocaml.doc
       "Describes the initial number of parallel tasks that a Managed Service for Apache Flink application can perform. If [AutoScalingEnabled] is set to True, Managed Service for Apache Flink increases the [CurrentParallelism] value in response to application load. The service can increase the [CurrentParallelism] value up to the maximum parallelism, which is [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs for an application is 32 by default, and can be increased by requesting a limit increase. If application load is reduced, the service can reduce the [CurrentParallelism] value down to the [Parallelism] setting.\n"];
   configuration_type: configuration_type
@@ -1476,16 +1580,19 @@ type nonrec operation_status =
   | CANCELLED [@ocaml.doc ""]
   | IN_PROGRESS [@ocaml.doc ""][@@ocaml.doc
                                  "Status of the operation performed on an application"]
+type nonrec error_string = string[@@ocaml.doc ""]
 type nonrec error_info = {
-  error_string: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                                "Provides a description of the operation failure error"]
+  error_string: error_string option [@ocaml.doc ""]}[@@ocaml.doc
+                                                      "Provides a description of the operation failure error"]
 type nonrec operation_failure_details =
   {
   error_info: error_info option [@ocaml.doc ""];
-  rollback_operation_id: string option
+  rollback_operation_id: operation_id option
     [@ocaml.doc
       "Provides the operation ID of a system-rollback operation executed due to failure in the current operation"]}
 [@@ocaml.doc "Provides a description of the operation failure"]
+type nonrec operation = string[@@ocaml.doc ""]
+type nonrec next_token = string[@@ocaml.doc ""]
 type nonrec monitoring_configuration =
   {
   log_level: log_level option
@@ -1501,14 +1608,15 @@ type nonrec monitoring_configuration =
   "Describes configuration parameters for Amazon CloudWatch logging for an application. For more information about CloudWatch logging, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/java/monitoring-overview.html}Monitoring}.\n"]
 type nonrec list_tags_for_resource_response =
   {
-  tags: tag list option
+  tags: tags option
     [@ocaml.doc "The key-value tags assigned to the application.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_tags_for_resource_request =
   {
-  resource_ar_n: string
+  resource_ar_n: kinesis_analytics_ar_n
     [@ocaml.doc "The ARN of the application for which to retrieve tags.\n"]}
 [@@ocaml.doc ""]
+type nonrec list_snapshots_input_limit = int[@@ocaml.doc ""]
 type nonrec application_summary =
   {
   application_mode: application_mode option
@@ -1516,110 +1624,119 @@ type nonrec application_summary =
       "For a Managed Service for Apache Flink application, the mode is [STREAMING]. For a Managed Service for Apache Flink Studio notebook, it is [INTERACTIVE].\n"];
   runtime_environment: runtime_environment
     [@ocaml.doc "The runtime environment for the application.\n"];
-  application_version_id: int
+  application_version_id: application_version_id
     [@ocaml.doc "Provides the current application version.\n"];
   application_status: application_status
     [@ocaml.doc "The status of the application.\n"];
-  application_ar_n: string [@ocaml.doc "The ARN of the application.\n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc
-  "Provides application summary information, including the application Amazon Resource Name (ARN), name, and status.\n"]
+  application_ar_n: resource_ar_n
+    [@ocaml.doc "The ARN of the application.\n"];
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc
+                                                    "Provides application summary information, including the application Amazon Resource Name (ARN), name, and status.\n"]
+type nonrec application_summaries = application_summary list[@@ocaml.doc ""]
 type nonrec list_applications_response =
   {
-  next_token: string option
+  next_token: application_name option
     [@ocaml.doc
       "The pagination token for the next set of results, or [null] if there are no additional results. Pass this token into a subsequent command to retrieve the next set of items For more information about pagination, see {{:https://docs.aws.amazon.com/cli/latest/userguide/pagination.html}Using the Amazon Command Line Interface's Pagination Options}.\n"];
-  application_summaries: application_summary list
+  application_summaries: application_summaries
     [@ocaml.doc "A list of [ApplicationSummary] objects.\n"]}[@@ocaml.doc ""]
+type nonrec list_applications_input_limit = int[@@ocaml.doc ""]
 type nonrec list_applications_request =
   {
-  next_token: string option
+  next_token: application_name option
     [@ocaml.doc
       "If a previous command returned a pagination token, pass it into this value to retrieve the next set of results. For more information about pagination, see {{:https://docs.aws.amazon.com/cli/latest/userguide/pagination.html}Using the Amazon Command Line Interface's Pagination Options}.\n"];
-  limit: int option
+  limit: list_applications_input_limit option
     [@ocaml.doc "The maximum number of applications to list.\n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec application_version_summary =
   {
   application_status: application_status
     [@ocaml.doc "The status of the application.\n"];
-  application_version_id: int
+  application_version_id: application_version_id
     [@ocaml.doc
       "The ID of the application version. Managed Service for Apache Flink updates the [ApplicationVersionId] each time you update the application.\n"]}
 [@@ocaml.doc "The summary of the application version.\n"]
+type nonrec application_version_summaries = application_version_summary list
+[@@ocaml.doc ""]
 type nonrec list_application_versions_response =
   {
-  next_token: string option
+  next_token: next_token option
     [@ocaml.doc
       "The pagination token for the next set of results, or [null] if there are no additional results. To retrieve the next set of items, pass this token into a subsequent invocation of this operation. For more information about pagination, see {{:https://docs.aws.amazon.com/cli/latest/userguide/pagination.html}Using the Amazon Command Line Interface's Pagination Options}.\n"];
-  application_version_summaries: application_version_summary list option
+  application_version_summaries: application_version_summaries option
     [@ocaml.doc
       "A list of the application versions and the associated configuration summaries. The list includes application versions that were rolled back.\n\n To get the complete description of a specific application version, invoke the [DescribeApplicationVersion] operation.\n "]}
 [@@ocaml.doc ""]
+type nonrec list_application_versions_input_limit = int[@@ocaml.doc ""]
 type nonrec list_application_versions_request =
   {
-  next_token: string option
+  next_token: next_token option
     [@ocaml.doc
       "If a previous invocation of this operation returned a pagination token, pass it into this value to retrieve the next set of results. For more information about pagination, see {{:https://docs.aws.amazon.com/cli/latest/userguide/pagination.html}Using the Amazon Command Line Interface's Pagination Options}.\n"];
-  limit: int option
+  limit: list_application_versions_input_limit option
     [@ocaml.doc
       "The maximum number of versions to list in this invocation of the operation.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of the application for which you want to list all versions.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_application_snapshots_response =
   {
-  next_token: string option
+  next_token: next_token option
     [@ocaml.doc
       "The token for the next set of results, or [null] if there are no additional results.\n"];
-  snapshot_summaries: snapshot_details list option
+  snapshot_summaries: snapshot_summaries option
     [@ocaml.doc
       "A collection of objects containing information about the application snapshots.\n"]}
 [@@ocaml.doc ""]
 type nonrec list_application_snapshots_request =
   {
-  next_token: string option
+  next_token: next_token option
     [@ocaml.doc
       "Use this parameter if you receive a [NextToken] response in a previous request that indicates that there is more output available. Set it to the value of the previous call's [NextToken] response to indicate where the output should continue from. \n"];
-  limit: int option
+  limit: list_snapshots_input_limit option
     [@ocaml.doc "The maximum number of application snapshots to list.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec application_operation_info =
   {
   operation_status: operation_status option [@ocaml.doc ""];
-  end_time: CoreTypes.Timestamp.t option
+  end_time: timestamp option
     [@ocaml.doc
       "The timestamp at which the operation finished for the application"];
-  start_time: CoreTypes.Timestamp.t option
+  start_time: timestamp option
     [@ocaml.doc "The timestamp at which the operation was created"];
-  operation_id: string option [@ocaml.doc ""];
-  operation: string option [@ocaml.doc ""]}[@@ocaml.doc
-                                             "Provides a description of the operation, such as the type and status of operation"]
+  operation_id: operation_id option [@ocaml.doc ""];
+  operation: operation option [@ocaml.doc ""]}[@@ocaml.doc
+                                                "Provides a description of the operation, such as the type and status of operation"]
+type nonrec application_operation_info_list = application_operation_info list
+[@@ocaml.doc ""]
 type nonrec list_application_operations_response =
   {
-  next_token: string option [@ocaml.doc ""];
-  application_operation_info_list: application_operation_info list option
+  next_token: next_token option [@ocaml.doc ""];
+  application_operation_info_list: application_operation_info_list option
     [@ocaml.doc ""]}[@@ocaml.doc
                       "Response with the list of operations for an application"]
+type nonrec list_application_operations_input_limit = int[@@ocaml.doc ""]
 type nonrec list_application_operations_request =
   {
   operation_status: operation_status option [@ocaml.doc ""];
-  operation: string option [@ocaml.doc ""];
-  next_token: string option [@ocaml.doc ""];
-  limit: int option [@ocaml.doc ""];
-  application_name: string [@ocaml.doc ""]}[@@ocaml.doc
-                                             "Request to list operations performed on an application"]
+  operation: operation option [@ocaml.doc ""];
+  next_token: next_token option [@ocaml.doc ""];
+  limit: list_application_operations_input_limit option [@ocaml.doc ""];
+  application_name: application_name [@ocaml.doc ""]}[@@ocaml.doc
+                                                       "Request to list operations performed on an application"]
 type nonrec discover_input_schema_response =
   {
-  raw_input_records: string list option
+  raw_input_records: raw_input_records option
     [@ocaml.doc
       "The raw stream data that was sampled to infer the schema.\n"];
-  processed_input_records: string list option
+  processed_input_records: processed_input_records option
     [@ocaml.doc
       "The stream data that was modified by the processor specified in the [InputProcessingConfiguration] parameter.\n"];
-  parsed_input_records: string list list option
+  parsed_input_records: parsed_input_records option
     [@ocaml.doc
       "An array of elements, where each element corresponds to a row in a stream record (a stream record can have more than one row).\n"];
   input_schema: source_schema option
@@ -1638,10 +1755,10 @@ type nonrec discover_input_schema_request =
     input_starting_position_configuration option
     [@ocaml.doc
       "The point at which you want Kinesis Data Analytics to start reading records from the specified streaming source for discovery purposes.\n"];
-  service_execution_role: string
+  service_execution_role: role_ar_n
     [@ocaml.doc
       "The ARN of the role that is used to access the streaming source.\n"];
-  resource_ar_n: string option
+  resource_ar_n: resource_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the streaming source.\n"]}
 [@@ocaml.doc ""]
 type nonrec describe_application_version_response =
@@ -1650,10 +1767,10 @@ type nonrec describe_application_version_response =
 [@@ocaml.doc ""]
 type nonrec describe_application_version_request =
   {
-  application_version_id: int
+  application_version_id: application_version_id
     [@ocaml.doc
       "The ID of the application version for which you want to get the description.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of the application for which you want to get the version description.\n"]}
 [@@ocaml.doc ""]
@@ -1665,17 +1782,17 @@ type nonrec describe_application_snapshot_response =
 [@@ocaml.doc ""]
 type nonrec describe_application_snapshot_request =
   {
-  snapshot_name: string
+  snapshot_name: snapshot_name
     [@ocaml.doc
       "The identifier of an application snapshot. You can retrieve this value using .\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec application_version_change_details =
   {
-  application_version_updated_to: int
+  application_version_updated_to: application_version_id
     [@ocaml.doc
       "The operation execution resulted in the transition to the following version of the application"];
-  application_version_updated_from: int
+  application_version_updated_from: application_version_id
     [@ocaml.doc
       "The operation was performed on this version of the application"]}
 [@@ocaml.doc
@@ -1686,13 +1803,13 @@ type nonrec application_operation_info_details =
   application_version_change_details:
     application_version_change_details option [@ocaml.doc ""];
   operation_status: operation_status [@ocaml.doc ""];
-  end_time: CoreTypes.Timestamp.t
+  end_time: timestamp
     [@ocaml.doc
       "The timestamp at which the operation finished for the application"];
-  start_time: CoreTypes.Timestamp.t
+  start_time: timestamp
     [@ocaml.doc "The timestamp at which the operation was created"];
-  operation: string [@ocaml.doc ""]}[@@ocaml.doc
-                                      "Provides a description of the operation, such as the operation-type and status"]
+  operation: operation [@ocaml.doc ""]}[@@ocaml.doc
+                                         "Provides a description of the operation, such as the operation-type and status"]
 type nonrec describe_application_operation_response =
   {
   application_operation_info_details:
@@ -1700,9 +1817,9 @@ type nonrec describe_application_operation_response =
                                                                 "Provides details of the operation corresponding to the operation-ID on a Managed Service for Apache Flink application"]
 type nonrec describe_application_operation_request =
   {
-  operation_id: string [@ocaml.doc ""];
-  application_name: string [@ocaml.doc ""]}[@@ocaml.doc
-                                             "Request for information about a specific operation performed on a Managed Service for Apache Flink application"]
+  operation_id: operation_id [@ocaml.doc ""];
+  application_name: application_name [@ocaml.doc ""]}[@@ocaml.doc
+                                                       "Request for information about a specific operation performed on a Managed Service for Apache Flink application"]
 type nonrec describe_application_response =
   {
   application_detail: application_detail
@@ -1711,149 +1828,154 @@ type nonrec describe_application_response =
 [@@ocaml.doc ""]
 type nonrec describe_application_request =
   {
-  include_additional_details: bool option
+  include_additional_details: boolean_object option
     [@ocaml.doc
       "Displays verbose information about a Managed Service for Apache Flink application, including the application's job plan.\n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc ""]
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc ""]
 type nonrec delete_application_vpc_configuration_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc
       "Operation ID for tracking DeleteApplicationVpcConfiguration request"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "The updated version ID of the application.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc
       "The ARN of the Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc ""]
 type nonrec delete_application_vpc_configuration_request =
   {
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You get the application's current [ConditionalToken] using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  vpc_configuration_id: string
+  vpc_configuration_id: id
     [@ocaml.doc "The ID of the VPC configuration to delete.\n"];
-  current_application_version_id: int option
+  current_application_version_id: application_version_id option
     [@ocaml.doc
       "The current application version ID. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You can retrieve the application version ID using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
+type nonrec delete_application_snapshot_response = unit[@@ocaml.doc ""]
 type nonrec delete_application_snapshot_request =
   {
-  snapshot_creation_timestamp: CoreTypes.Timestamp.t
+  snapshot_creation_timestamp: timestamp
     [@ocaml.doc
       "The creation timestamp of the application snapshot to delete. You can retrieve this value using or .\n"];
-  snapshot_name: string
+  snapshot_name: snapshot_name
     [@ocaml.doc "The identifier for the snapshot delete.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec delete_application_reference_data_source_response =
   {
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "The updated version ID of the application.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The application Amazon Resource Name (ARN).\n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec delete_application_reference_data_source_request =
   {
-  reference_id: string
+  reference_id: id
     [@ocaml.doc
       "The ID of the reference data source. When you add a reference data source to your application using the [AddApplicationReferenceDataSource], Kinesis Data Analytics assigns an ID. You can use the [DescribeApplication] operation to get the reference ID. \n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The current application version. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec delete_application_output_response =
   {
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "The current application version ID.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The application Amazon Resource Name (ARN).\n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec delete_application_output_request =
   {
-  output_id: string
+  output_id: id
     [@ocaml.doc
       "The ID of the configuration to delete. Each output configuration that is added to the application (either when the application is created or later) using the [AddApplicationOutput] operation has a unique ID. You need to provide the ID to uniquely identify the output configuration that you want to delete from the application configuration. You can use the [DescribeApplication] operation to get the specific [OutputId]. \n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The application version. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned. \n"];
-  application_name: string [@ocaml.doc "The application name.\n"]}[@@ocaml.doc
-                                                                    ""]
+  application_name: application_name [@ocaml.doc "The application name.\n"]}
+[@@ocaml.doc ""]
 type nonrec delete_application_input_processing_configuration_response =
   {
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "The current application version ID.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the application.\n"]}
 [@@ocaml.doc ""]
 type nonrec delete_application_input_processing_configuration_request =
   {
-  input_id: string
+  input_id: id
     [@ocaml.doc
       "The ID of the input configuration from which to delete the input processing configuration. You can get a list of the input IDs for an application by using the [DescribeApplication] operation.\n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The application version. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned. \n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc ""]
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc ""]
 type nonrec delete_application_cloud_watch_logging_option_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc
       "Operation ID for tracking DeleteApplicationCloudWatchLoggingOption request"];
   cloud_watch_logging_option_descriptions:
-    cloud_watch_logging_option_description list option
+    cloud_watch_logging_option_descriptions option
     [@ocaml.doc
       "The descriptions of the remaining CloudWatch logging options for the application.\n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc
       "The version ID of the application. Kinesis Data Analytics updates the [ApplicationVersionId] each time you change the CloudWatch logging options.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The application's Amazon Resource Name (ARN).\n"]}[@@ocaml.doc
                                                                     ""]
 type nonrec delete_application_cloud_watch_logging_option_request =
   {
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You get the application's current [ConditionalToken] using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  cloud_watch_logging_option_id: string
+  cloud_watch_logging_option_id: id
     [@ocaml.doc
       "The [CloudWatchLoggingOptionId] of the Amazon CloudWatch logging option to delete. You can get the [CloudWatchLoggingOptionId] by using the [DescribeApplication] operation. \n"];
-  current_application_version_id: int option
+  current_application_version_id: application_version_id option
     [@ocaml.doc
       "The version ID of the application. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You can retrieve the application version ID using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  application_name: string [@ocaml.doc "The application name.\n"]}[@@ocaml.doc
-                                                                    ""]
+  application_name: application_name [@ocaml.doc "The application name.\n"]}
+[@@ocaml.doc ""]
+type nonrec delete_application_response = unit[@@ocaml.doc ""]
 type nonrec delete_application_request =
   {
-  create_timestamp: CoreTypes.Timestamp.t
+  create_timestamp: timestamp
     [@ocaml.doc
       "Use the [DescribeApplication] operation to get this value.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of the application to delete.\n"]}[@@ocaml.doc ""]
+type nonrec create_application_snapshot_response = unit[@@ocaml.doc ""]
 type nonrec create_application_snapshot_request =
   {
-  snapshot_name: string
+  snapshot_name: snapshot_name
     [@ocaml.doc "An identifier for the application snapshot.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application\n"]}[@@ocaml.doc ""]
+type nonrec authorized_url = string[@@ocaml.doc ""]
 type nonrec create_application_presigned_url_response =
   {
-  authorized_url: string option [@ocaml.doc "The URL of the extension.\n"]}
-[@@ocaml.doc ""]
+  authorized_url: authorized_url option
+    [@ocaml.doc "The URL of the extension.\n"]}[@@ocaml.doc ""]
 type nonrec create_application_presigned_url_request =
   {
-  session_expiration_duration_in_seconds: int option
+  session_expiration_duration_in_seconds:
+    session_expiration_duration_in_seconds option
     [@ocaml.doc
       "The duration in seconds for which the returned URL will be valid.\n"];
   url_type: url_type
     [@ocaml.doc
       "The type of the extension for which to create and return a URL. Currently, the only valid extension URL type is [FLINK_DASHBOARD_URL]. \n"];
-  application_name: string [@ocaml.doc "The name of the application.\n"]}
-[@@ocaml.doc ""]
+  application_name: application_name
+    [@ocaml.doc "The name of the application.\n"]}[@@ocaml.doc ""]
 type nonrec create_application_response =
   {
   application_detail: application_detail
@@ -1862,13 +1984,13 @@ type nonrec create_application_response =
 [@@ocaml.doc ""]
 type nonrec checkpoint_configuration =
   {
-  min_pause_between_checkpoints: int option
+  min_pause_between_checkpoints: min_pause_between_checkpoints option
     [@ocaml.doc
       "Describes the minimum time in milliseconds after a checkpoint operation completes that a new checkpoint operation can start. If a checkpoint operation takes longer than the [CheckpointInterval], the application otherwise performs continual checkpoint operations. For more information, see {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/large_state_tuning/#tuning-checkpointing} Tuning Checkpointing} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or in application code.\n  \n   "];
-  checkpoint_interval: int option
+  checkpoint_interval: checkpoint_interval option
     [@ocaml.doc
       "Describes the interval in milliseconds between checkpoint operations. \n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointInterval] value of 60000, even if this value is set to another value using this API or in application code.\n  \n   "];
-  checkpointing_enabled: bool option
+  checkpointing_enabled: boolean_object option
     [@ocaml.doc
       "Describes whether checkpointing is enabled for a Managed Service for Apache Flink application.\n\n  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a [CheckpointingEnabled] value of [true], even if this value is set to another value using this API or in application code.\n  \n   "];
   configuration_type: configuration_type
@@ -1891,7 +2013,7 @@ type nonrec flink_application_configuration =
   "Describes configuration parameters for a Managed Service for Apache Flink application or a Studio notebook.\n"]
 type nonrec environment_properties =
   {
-  property_groups: property_group list
+  property_groups: property_groups
     [@ocaml.doc "Describes the execution property groups.\n"]}[@@ocaml.doc
                                                                 "Describes execution properties for a Managed Service for Apache Flink application.\n"]
 type nonrec code_content =
@@ -1899,10 +2021,10 @@ type nonrec code_content =
   s3_content_location: s3_content_location option
     [@ocaml.doc
       "Information about the Amazon S3 bucket that contains the application code.\n"];
-  zip_file_content: bytes option
+  zip_file_content: zip_file_content option
     [@ocaml.doc
       "The zip-format code for a Managed Service for Apache Flink application.\n"];
-  text_content: string option
+  text_content: text_content option
     [@ocaml.doc
       "The text-format code for a Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc
@@ -1917,14 +2039,14 @@ type nonrec application_code_configuration =
                                                                     "Describes code configuration for an application.\n"]
 type nonrec application_snapshot_configuration =
   {
-  snapshots_enabled: bool
+  snapshots_enabled: boolean_object
     [@ocaml.doc
       "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]}
 [@@ocaml.doc
   "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
 type nonrec application_system_rollback_configuration =
   {
-  rollback_enabled: bool
+  rollback_enabled: boolean_object
     [@ocaml.doc
       "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink application"]}
 [@@ocaml.doc
@@ -1935,7 +2057,7 @@ type nonrec application_configuration =
     zeppelin_application_configuration option
     [@ocaml.doc
       "The configuration parameters for a Managed Service for Apache Flink Studio notebook.\n"];
-  vpc_configurations: vpc_configuration list option
+  vpc_configurations: vpc_configurations option
     [@ocaml.doc
       "The array of descriptions of VPC configurations available to the application.\n"];
   application_system_rollback_configuration:
@@ -1960,69 +2082,71 @@ type nonrec application_configuration =
   "Specifies the creation parameters for a Managed Service for Apache Flink application.\n"]
 type nonrec cloud_watch_logging_option =
   {
-  log_stream_ar_n: string
+  log_stream_ar_n: log_stream_ar_n
     [@ocaml.doc
       "The ARN of the CloudWatch log to receive application messages.\n"]}
 [@@ocaml.doc
   "Provides a description of Amazon CloudWatch logging options, including the log stream Amazon Resource Name (ARN). \n"]
+type nonrec cloud_watch_logging_options = cloud_watch_logging_option list
+[@@ocaml.doc ""]
 type nonrec create_application_request =
   {
   application_mode: application_mode option
     [@ocaml.doc
       "Use the [STREAMING] mode to create a Managed Service for Apache Flink application. To create a Managed Service for Apache Flink Studio notebook, use the [INTERACTIVE] mode.\n"];
-  tags: tag list option
+  tags: tags option
     [@ocaml.doc
       "A list of one or more tags to assign to the application. A tag is a key-value pair that identifies an application. Note that the maximum number of application tags includes system tags. The maximum number of user-defined application tags is 50. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/java/how-tagging.html}Using Tagging}.\n"];
-  cloud_watch_logging_options: cloud_watch_logging_option list option
+  cloud_watch_logging_options: cloud_watch_logging_options option
     [@ocaml.doc
       "Use this parameter to configure an Amazon CloudWatch log stream to monitor application configuration errors. \n"];
   application_configuration: application_configuration option
     [@ocaml.doc "Use this parameter to configure the application.\n"];
-  service_execution_role: string
+  service_execution_role: role_ar_n
     [@ocaml.doc
       "The IAM role used by the application to access Kinesis data streams, Kinesis Data Firehose delivery streams, Amazon S3 objects, and other external resources.\n"];
   runtime_environment: runtime_environment
     [@ocaml.doc "The runtime environment for the application.\n"];
-  application_description: string option
+  application_description: application_description option
     [@ocaml.doc "A summary description of the application.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of your application (for example, [sample-app]).\n"]}
 [@@ocaml.doc ""]
 type nonrec add_application_vpc_configuration_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc
       "Operation ID for tracking AddApplicationVpcConfiguration request"];
   vpc_configuration_description: vpc_configuration_description option
     [@ocaml.doc "The parameters of the new VPC configuration.\n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc
       "Provides the current application version. Managed Service for Apache Flink updates the ApplicationVersionId each time you update the application.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The ARN of the application.\n"]}[@@ocaml.doc ""]
 type nonrec add_application_vpc_configuration_request =
   {
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates. You must provide the [ApplicationVersionID] or the [ConditionalToken]. You get the application's current [ConditionalToken] using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
   vpc_configuration: vpc_configuration
     [@ocaml.doc "Description of the VPC to add to the application.\n"];
-  current_application_version_id: int option
+  current_application_version_id: application_version_id option
     [@ocaml.doc
       "The version of the application to which you want to add the VPC configuration. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec add_application_reference_data_source_response =
   {
   reference_data_source_descriptions:
-    reference_data_source_description list option
+    reference_data_source_descriptions option
     [@ocaml.doc
       "Describes reference data sources configured for the application. \n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc
       "The updated application version ID. Kinesis Data Analytics increments this ID when the application is updated.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The application Amazon Resource Name (ARN).\n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec add_application_reference_data_source_request =
@@ -2030,20 +2154,20 @@ type nonrec add_application_reference_data_source_request =
   reference_data_source: reference_data_source
     [@ocaml.doc
       "The reference data source can be an object in your Amazon S3 bucket. Kinesis Data Analytics reads the object and copies the data into the in-application table that is created. You provide an S3 bucket, object key name, and the resulting in-application table that is created. \n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The version of the application for which you are adding the reference data source. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The name of an existing application.\n"]}[@@ocaml.doc ""]
 type nonrec add_application_output_response =
   {
-  output_descriptions: output_description list option
+  output_descriptions: output_descriptions option
     [@ocaml.doc
       "Describes the application output configuration. For more information, see {{:https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html}Configuring Application Output}. \n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc
       "The updated application version ID. Kinesis Data Analytics increments this ID when the application is updated.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The application Amazon Resource Name (ARN).\n"]}[@@ocaml.doc
                                                                    ""]
 type nonrec add_application_output_request =
@@ -2051,10 +2175,10 @@ type nonrec add_application_output_request =
   output: output
     [@ocaml.doc
       "An array of objects, each describing one output configuration. In the output configuration, you specify the name of an in-application stream, a destination (that is, a Kinesis data stream, a Kinesis Data Firehose delivery stream, or an Amazon Lambda function), and record the formation to use when writing to the destination.\n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The version of the application to which you want to add the output configuration. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned. \n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of the application to which you want to add the output configuration.\n"]}
 [@@ocaml.doc ""]
@@ -2064,12 +2188,12 @@ type nonrec add_application_input_processing_configuration_response =
     input_processing_configuration_description option
     [@ocaml.doc
       "The description of the preprocessor that executes on records in this input before the application's code is run.\n"];
-  input_id: string option
+  input_id: id option
     [@ocaml.doc
       "The input ID that is associated with the application input. This is the ID that Kinesis Data Analytics assigns to each input configuration that you add to your application.\n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "Provides the current application version. \n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the application.\n"]}
 [@@ocaml.doc ""]
 type nonrec add_application_input_processing_configuration_request =
@@ -2077,61 +2201,61 @@ type nonrec add_application_input_processing_configuration_request =
   input_processing_configuration: input_processing_configuration
     [@ocaml.doc
       "The [InputProcessingConfiguration] to add to the application.\n"];
-  input_id: string
+  input_id: id
     [@ocaml.doc
       "The ID of the input configuration to add the input processing configuration to. You can get a list of the input IDs for an application using the [DescribeApplication] operation.\n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The version of the application to which you want to add the input processing configuration. You can use the [DescribeApplication] operation to get the current application version. If the version specified is not the current version, the [ConcurrentModificationException] is returned.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of the application to which you want to add the input processing configuration.\n"]}
 [@@ocaml.doc ""]
 type nonrec add_application_input_response =
   {
-  input_descriptions: input_description list option
+  input_descriptions: input_descriptions option
     [@ocaml.doc "Describes the application input configuration. \n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc "Provides the current application version.\n"];
-  application_ar_n: string option
+  application_ar_n: resource_ar_n option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the application.\n"]}
 [@@ocaml.doc ""]
 type nonrec add_application_input_request =
   {
   input: input [@ocaml.doc "The [Input] to add.\n"];
-  current_application_version_id: int
+  current_application_version_id: application_version_id
     [@ocaml.doc
       "The current version of your application. You must provide the [ApplicationVersionID] or the [ConditionalToken].You can use the [DescribeApplication] operation to find the current application version.\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc
       "The name of your existing application to which you want to add the streaming source.\n"]}
 [@@ocaml.doc ""]
 type nonrec add_application_cloud_watch_logging_option_response =
   {
-  operation_id: string option
+  operation_id: operation_id option
     [@ocaml.doc
       "Operation ID for tracking AddApplicationCloudWatchLoggingOption request"];
   cloud_watch_logging_option_descriptions:
-    cloud_watch_logging_option_description list option
+    cloud_watch_logging_option_descriptions option
     [@ocaml.doc
       "The descriptions of the current CloudWatch logging options for the SQL-based Kinesis Data Analytics application.\n"];
-  application_version_id: int option
+  application_version_id: application_version_id option
     [@ocaml.doc
       "The new version ID of the SQL-based Kinesis Data Analytics application. Kinesis Data Analytics updates the [ApplicationVersionId] each time you change the CloudWatch logging options. \n"];
-  application_ar_n: string option [@ocaml.doc "The application's ARN.\n"]}
-[@@ocaml.doc ""]
+  application_ar_n: resource_ar_n option
+    [@ocaml.doc "The application's ARN.\n"]}[@@ocaml.doc ""]
 type nonrec add_application_cloud_watch_logging_option_request =
   {
-  conditional_token: string option
+  conditional_token: conditional_token option
     [@ocaml.doc
       "A value you use to implement strong concurrency for application updates. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken]. You get the application's current [ConditionalToken] using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
   cloud_watch_logging_option: cloud_watch_logging_option
     [@ocaml.doc
       "Provides the Amazon CloudWatch log stream Amazon Resource Name (ARN). \n"];
-  current_application_version_id: int option
+  current_application_version_id: application_version_id option
     [@ocaml.doc
       "The version ID of the SQL-based Kinesis Data Analytics application. You must provide the [CurrentApplicationVersionId] or the [ConditionalToken].You can retrieve the application version ID using [DescribeApplication]. For better concurrency support, use the [ConditionalToken] parameter instead of [CurrentApplicationVersionId].\n"];
-  application_name: string
+  application_name: application_name
     [@ocaml.doc "The Kinesis Data Analytics application name.\n"]}[@@ocaml.doc
                                                                     ""](** {1:builders Builders} *)
 
@@ -2144,29 +2268,31 @@ val make_zeppelin_monitoring_configuration_description :
 val make_zeppelin_monitoring_configuration :
   log_level:log_level -> unit -> zeppelin_monitoring_configuration
 val make_glue_data_catalog_configuration_update :
-  database_arn_update:string ->
+  database_arn_update:database_ar_n ->
     unit -> glue_data_catalog_configuration_update
 val make_catalog_configuration_update :
   glue_data_catalog_configuration_update:glue_data_catalog_configuration_update
     -> unit -> catalog_configuration_update
 val make_s3_content_base_location_update :
-  ?base_path_update:string ->
-    ?bucket_arn_update:string -> unit -> s3_content_base_location_update
+  ?base_path_update:base_path ->
+    ?bucket_arn_update:bucket_ar_n -> unit -> s3_content_base_location_update
 val make_deploy_as_application_configuration_update :
   ?s3_content_location_update:s3_content_base_location_update ->
     unit -> deploy_as_application_configuration_update
 val make_s3_content_location :
-  ?object_version:string ->
-    file_key:string -> bucket_ar_n:string -> unit -> s3_content_location
+  ?object_version:object_version ->
+    file_key:file_key ->
+      bucket_ar_n:bucket_ar_n -> unit -> s3_content_location
 val make_maven_reference :
-  version:string ->
-    artifact_id:string -> group_id:string -> unit -> maven_reference
+  version:maven_version ->
+    artifact_id:maven_artifact_id ->
+      group_id:maven_group_id -> unit -> maven_reference
 val make_custom_artifact_configuration :
   ?maven_reference:maven_reference ->
     ?s3_content_location:s3_content_location ->
       artifact_type:artifact_type -> unit -> custom_artifact_configuration
 val make_zeppelin_application_configuration_update :
-  ?custom_artifacts_configuration_update:custom_artifact_configuration list
+  ?custom_artifacts_configuration_update:custom_artifacts_configuration_list
     ->
     ?deploy_as_application_configuration_update:deploy_as_application_configuration_update
       ->
@@ -2174,13 +2300,14 @@ val make_zeppelin_application_configuration_update :
         ?monitoring_configuration_update:zeppelin_monitoring_configuration_update
           -> unit -> zeppelin_application_configuration_update
 val make_glue_data_catalog_configuration_description :
-  database_ar_n:string -> unit -> glue_data_catalog_configuration_description
+  database_ar_n:database_ar_n ->
+    unit -> glue_data_catalog_configuration_description
 val make_catalog_configuration_description :
   glue_data_catalog_configuration_description:glue_data_catalog_configuration_description
     -> unit -> catalog_configuration_description
 val make_s3_content_base_location_description :
-  ?base_path:string ->
-    bucket_ar_n:string -> unit -> s3_content_base_location_description
+  ?base_path:base_path ->
+    bucket_ar_n:bucket_ar_n -> unit -> s3_content_base_location_description
 val make_deploy_as_application_configuration_description :
   s3_content_location_description:s3_content_base_location_description ->
     unit -> deploy_as_application_configuration_description
@@ -2190,59 +2317,61 @@ val make_custom_artifact_configuration_description :
       ?artifact_type:artifact_type ->
         unit -> custom_artifact_configuration_description
 val make_zeppelin_application_configuration_description :
-  ?custom_artifacts_configuration_description:custom_artifact_configuration_description
-    list ->
+  ?custom_artifacts_configuration_description:custom_artifacts_configuration_description_list
+    ->
     ?deploy_as_application_configuration_description:deploy_as_application_configuration_description
       ->
       ?catalog_configuration_description:catalog_configuration_description ->
         monitoring_configuration_description:zeppelin_monitoring_configuration_description
           -> unit -> zeppelin_application_configuration_description
 val make_glue_data_catalog_configuration :
-  database_ar_n:string -> unit -> glue_data_catalog_configuration
+  database_ar_n:database_ar_n -> unit -> glue_data_catalog_configuration
 val make_catalog_configuration :
   glue_data_catalog_configuration:glue_data_catalog_configuration ->
     unit -> catalog_configuration
 val make_s3_content_base_location :
-  ?base_path:string -> bucket_ar_n:string -> unit -> s3_content_base_location
+  ?base_path:base_path ->
+    bucket_ar_n:bucket_ar_n -> unit -> s3_content_base_location
 val make_deploy_as_application_configuration :
   s3_content_location:s3_content_base_location ->
     unit -> deploy_as_application_configuration
 val make_zeppelin_application_configuration :
-  ?custom_artifacts_configuration:custom_artifact_configuration list ->
+  ?custom_artifacts_configuration:custom_artifacts_configuration_list ->
     ?deploy_as_application_configuration:deploy_as_application_configuration
       ->
       ?catalog_configuration:catalog_configuration ->
         ?monitoring_configuration:zeppelin_monitoring_configuration ->
           unit -> zeppelin_application_configuration
 val make_vpc_configuration :
-  security_group_ids:string list ->
-    subnet_ids:string list -> unit -> vpc_configuration
+  security_group_ids:security_group_ids ->
+    subnet_ids:subnet_ids -> unit -> vpc_configuration
 val make_vpc_configuration_update :
-  ?security_group_id_updates:string list ->
-    ?subnet_id_updates:string list ->
-      vpc_configuration_id:string -> unit -> vpc_configuration_update
+  ?security_group_id_updates:security_group_ids ->
+    ?subnet_id_updates:subnet_ids ->
+      vpc_configuration_id:id -> unit -> vpc_configuration_update
 val make_vpc_configuration_description :
-  security_group_ids:string list ->
-    subnet_ids:string list ->
-      vpc_id:string ->
-        vpc_configuration_id:string -> unit -> vpc_configuration_description
+  security_group_ids:security_group_ids ->
+    subnet_ids:subnet_ids ->
+      vpc_id:vpc_id ->
+        vpc_configuration_id:id -> unit -> vpc_configuration_description
 val make_input_lambda_processor_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> input_lambda_processor_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n -> unit -> input_lambda_processor_description
 val make_input_processing_configuration_description :
   ?input_lambda_processor_description:input_lambda_processor_description ->
     unit -> input_processing_configuration_description
 val make_kinesis_streams_input_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> kinesis_streams_input_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n -> unit -> kinesis_streams_input_description
 val make_kinesis_firehose_input_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> kinesis_firehose_input_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n -> unit -> kinesis_firehose_input_description
 val make_json_mapping_parameters :
-  record_row_path:string -> unit -> json_mapping_parameters
+  record_row_path:record_row_path -> unit -> json_mapping_parameters
 val make_csv_mapping_parameters :
-  record_column_delimiter:string ->
-    record_row_delimiter:string -> unit -> csv_mapping_parameters
+  record_column_delimiter:record_column_delimiter ->
+    record_row_delimiter:record_row_delimiter ->
+      unit -> csv_mapping_parameters
 val make_mapping_parameters :
   ?csv_mapping_parameters:csv_mapping_parameters ->
     ?json_mapping_parameters:json_mapping_parameters ->
@@ -2251,12 +2380,15 @@ val make_record_format :
   ?mapping_parameters:mapping_parameters ->
     record_format_type:record_format_type -> unit -> record_format
 val make_record_column :
-  ?mapping:string -> sql_type:string -> name:string -> unit -> record_column
+  ?mapping:record_column_mapping ->
+    sql_type:record_column_sql_type ->
+      name:record_column_name -> unit -> record_column
 val make_source_schema :
-  ?record_encoding:string ->
-    record_columns:record_column list ->
+  ?record_encoding:record_encoding ->
+    record_columns:record_columns ->
       record_format:record_format -> unit -> source_schema
-val make_input_parallelism : ?count:int -> unit -> input_parallelism
+val make_input_parallelism :
+  ?count:input_parallelism_count -> unit -> input_parallelism
 val make_input_starting_position_configuration :
   ?input_starting_position:input_starting_position ->
     unit -> input_starting_position_configuration
@@ -2271,18 +2403,19 @@ val make_input_description :
             ->
             ?input_processing_configuration_description:input_processing_configuration_description
               ->
-              ?in_app_stream_names:string list ->
-                ?name_prefix:string ->
-                  ?input_id:string -> unit -> input_description
+              ?in_app_stream_names:in_app_stream_names ->
+                ?name_prefix:in_app_stream_name ->
+                  ?input_id:id -> unit -> input_description
 val make_kinesis_streams_output_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> kinesis_streams_output_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n -> unit -> kinesis_streams_output_description
 val make_kinesis_firehose_output_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> kinesis_firehose_output_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n ->
+      unit -> kinesis_firehose_output_description
 val make_lambda_output_description :
-  ?role_ar_n:string ->
-    resource_ar_n:string -> unit -> lambda_output_description
+  ?role_ar_n:role_ar_n ->
+    resource_ar_n:resource_ar_n -> unit -> lambda_output_description
 val make_destination_schema :
   record_format_type:record_format_type -> unit -> destination_schema
 val make_output_description :
@@ -2291,51 +2424,53 @@ val make_output_description :
       ?kinesis_firehose_output_description:kinesis_firehose_output_description
         ->
         ?kinesis_streams_output_description:kinesis_streams_output_description
-          -> ?name:string -> ?output_id:string -> unit -> output_description
+          ->
+          ?name:in_app_stream_name ->
+            ?output_id:id -> unit -> output_description
 val make_s3_reference_data_source_description :
-  ?reference_role_ar_n:string ->
-    file_key:string ->
-      bucket_ar_n:string -> unit -> s3_reference_data_source_description
+  ?reference_role_ar_n:role_ar_n ->
+    file_key:file_key ->
+      bucket_ar_n:bucket_ar_n -> unit -> s3_reference_data_source_description
 val make_reference_data_source_description :
   ?reference_schema:source_schema ->
     s3_reference_data_source_description:s3_reference_data_source_description
       ->
-      table_name:string ->
-        reference_id:string -> unit -> reference_data_source_description
+      table_name:in_app_table_name ->
+        reference_id:id -> unit -> reference_data_source_description
 val make_sql_application_configuration_description :
-  ?reference_data_source_descriptions:reference_data_source_description list
-    ->
-    ?output_descriptions:output_description list ->
-      ?input_descriptions:input_description list ->
+  ?reference_data_source_descriptions:reference_data_source_descriptions ->
+    ?output_descriptions:output_descriptions ->
+      ?input_descriptions:input_descriptions ->
         unit -> sql_application_configuration_description
 val make_s3_application_code_location_description :
-  ?object_version:string ->
-    file_key:string ->
-      bucket_ar_n:string -> unit -> s3_application_code_location_description
+  ?object_version:object_version ->
+    file_key:file_key ->
+      bucket_ar_n:bucket_ar_n ->
+        unit -> s3_application_code_location_description
 val make_code_content_description :
   ?s3_application_code_location_description:s3_application_code_location_description
     ->
-    ?code_size:int ->
-      ?code_m_d5:string ->
-        ?text_content:string -> unit -> code_content_description
+    ?code_size:code_size ->
+      ?code_m_d5:code_m_d5 ->
+        ?text_content:text_content -> unit -> code_content_description
 val make_application_code_configuration_description :
   ?code_content_description:code_content_description ->
     code_content_type:code_content_type ->
       unit -> application_code_configuration_description
 val make_application_restore_configuration :
-  ?snapshot_name:string ->
+  ?snapshot_name:snapshot_name ->
     application_restore_type:application_restore_type ->
       unit -> application_restore_configuration
 val make_flink_run_configuration :
-  ?allow_non_restored_state:bool -> unit -> flink_run_configuration
+  ?allow_non_restored_state:boolean_object -> unit -> flink_run_configuration
 val make_run_configuration_description :
   ?flink_run_configuration_description:flink_run_configuration ->
     ?application_restore_configuration_description:application_restore_configuration
       -> unit -> run_configuration_description
 val make_checkpoint_configuration_description :
-  ?min_pause_between_checkpoints:int ->
-    ?checkpoint_interval:int ->
-      ?checkpointing_enabled:bool ->
+  ?min_pause_between_checkpoints:min_pause_between_checkpoints ->
+    ?checkpoint_interval:checkpoint_interval ->
+      ?checkpointing_enabled:boolean_object ->
         ?configuration_type:configuration_type ->
           unit -> checkpoint_configuration_description
 val make_monitoring_configuration_description :
@@ -2344,14 +2479,14 @@ val make_monitoring_configuration_description :
       ?configuration_type:configuration_type ->
         unit -> monitoring_configuration_description
 val make_parallelism_configuration_description :
-  ?auto_scaling_enabled:bool ->
-    ?current_parallelism:int ->
-      ?parallelism_per_kp_u:int ->
-        ?parallelism:int ->
+  ?auto_scaling_enabled:boolean_object ->
+    ?current_parallelism:parallelism ->
+      ?parallelism_per_kp_u:parallelism_per_kp_u ->
+        ?parallelism:parallelism ->
           ?configuration_type:configuration_type ->
             unit -> parallelism_configuration_description
 val make_flink_application_configuration_description :
-  ?job_plan_description:string ->
+  ?job_plan_description:job_plan_description ->
     ?parallelism_configuration_description:parallelism_configuration_description
       ->
       ?monitoring_configuration_description:monitoring_configuration_description
@@ -2359,21 +2494,20 @@ val make_flink_application_configuration_description :
         ?checkpoint_configuration_description:checkpoint_configuration_description
           -> unit -> flink_application_configuration_description
 val make_property_group :
-  property_map:property_map ->
-    property_group_id:string -> unit -> property_group
+  property_map:property_map -> property_group_id:id -> unit -> property_group
 val make_environment_property_descriptions :
-  ?property_group_descriptions:property_group list ->
+  ?property_group_descriptions:property_groups ->
     unit -> environment_property_descriptions
 val make_application_snapshot_configuration_description :
-  snapshots_enabled:bool ->
+  snapshots_enabled:boolean_object ->
     unit -> application_snapshot_configuration_description
 val make_application_system_rollback_configuration_description :
-  rollback_enabled:bool ->
+  rollback_enabled:boolean_object ->
     unit -> application_system_rollback_configuration_description
 val make_application_configuration_description :
   ?zeppelin_application_configuration_description:zeppelin_application_configuration_description
     ->
-    ?vpc_configuration_descriptions:vpc_configuration_description list ->
+    ?vpc_configuration_descriptions:vpc_configuration_descriptions ->
       ?application_system_rollback_configuration_description:application_system_rollback_configuration_description
         ->
         ?application_snapshot_configuration_description:application_snapshot_configuration_description
@@ -2388,56 +2522,57 @@ val make_application_configuration_description :
                   ?sql_application_configuration_description:sql_application_configuration_description
                     -> unit -> application_configuration_description
 val make_cloud_watch_logging_option_description :
-  ?role_ar_n:string ->
-    ?cloud_watch_logging_option_id:string ->
-      log_stream_ar_n:string ->
+  ?role_ar_n:role_ar_n ->
+    ?cloud_watch_logging_option_id:id ->
+      log_stream_ar_n:log_stream_ar_n ->
         unit -> cloud_watch_logging_option_description
 val make_application_maintenance_configuration_description :
-  application_maintenance_window_end_time:string ->
-    application_maintenance_window_start_time:string ->
-      unit -> application_maintenance_configuration_description
+  application_maintenance_window_end_time:application_maintenance_window_end_time
+    ->
+    application_maintenance_window_start_time:application_maintenance_window_start_time
+      -> unit -> application_maintenance_configuration_description
 val make_application_detail :
   ?application_mode:application_mode ->
-    ?application_version_rolled_back_to:int ->
-      ?conditional_token:string ->
-        ?application_version_create_timestamp:CoreTypes.Timestamp.t ->
-          ?application_version_rolled_back_from:int ->
-            ?application_version_updated_from:int ->
+    ?application_version_rolled_back_to:application_version_id ->
+      ?conditional_token:conditional_token ->
+        ?application_version_create_timestamp:timestamp ->
+          ?application_version_rolled_back_from:application_version_id ->
+            ?application_version_updated_from:application_version_id ->
               ?application_maintenance_configuration_description:application_maintenance_configuration_description
                 ->
-                ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-                  list ->
+                ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_descriptions
+                  ->
                   ?application_configuration_description:application_configuration_description
                     ->
-                    ?last_update_timestamp:CoreTypes.Timestamp.t ->
-                      ?create_timestamp:CoreTypes.Timestamp.t ->
-                        ?service_execution_role:string ->
-                          ?application_description:string ->
-                            application_version_id:int ->
+                    ?last_update_timestamp:timestamp ->
+                      ?create_timestamp:timestamp ->
+                        ?service_execution_role:role_ar_n ->
+                          ?application_description:application_description ->
+                            application_version_id:application_version_id ->
                               application_status:application_status ->
                                 runtime_environment:runtime_environment ->
-                                  application_name:string ->
-                                    application_ar_n:string ->
+                                  application_name:application_name ->
+                                    application_ar_n:resource_ar_n ->
                                       unit -> application_detail
 val make_update_application_response :
-  ?operation_id:string ->
+  ?operation_id:operation_id ->
     application_detail:application_detail ->
       unit -> update_application_response
 val make_input_lambda_processor_update :
-  resource_arn_update:string -> unit -> input_lambda_processor_update
+  resource_arn_update:resource_ar_n -> unit -> input_lambda_processor_update
 val make_input_processing_configuration_update :
   input_lambda_processor_update:input_lambda_processor_update ->
     unit -> input_processing_configuration_update
 val make_kinesis_streams_input_update :
-  resource_arn_update:string -> unit -> kinesis_streams_input_update
+  resource_arn_update:resource_ar_n -> unit -> kinesis_streams_input_update
 val make_kinesis_firehose_input_update :
-  resource_arn_update:string -> unit -> kinesis_firehose_input_update
+  resource_arn_update:resource_ar_n -> unit -> kinesis_firehose_input_update
 val make_input_schema_update :
-  ?record_column_updates:record_column list ->
-    ?record_encoding_update:string ->
+  ?record_column_updates:record_columns ->
+    ?record_encoding_update:record_encoding ->
       ?record_format_update:record_format -> unit -> input_schema_update
 val make_input_parallelism_update :
-  count_update:int -> unit -> input_parallelism_update
+  count_update:input_parallelism_count -> unit -> input_parallelism_update
 val make_input_update :
   ?input_parallelism_update:input_parallelism_update ->
     ?input_schema_update:input_schema_update ->
@@ -2445,49 +2580,50 @@ val make_input_update :
         ?kinesis_streams_input_update:kinesis_streams_input_update ->
           ?input_processing_configuration_update:input_processing_configuration_update
             ->
-            ?name_prefix_update:string ->
-              input_id:string -> unit -> input_update
+            ?name_prefix_update:in_app_stream_name ->
+              input_id:id -> unit -> input_update
 val make_kinesis_streams_output_update :
-  resource_arn_update:string -> unit -> kinesis_streams_output_update
+  resource_arn_update:resource_ar_n -> unit -> kinesis_streams_output_update
 val make_kinesis_firehose_output_update :
-  resource_arn_update:string -> unit -> kinesis_firehose_output_update
+  resource_arn_update:resource_ar_n -> unit -> kinesis_firehose_output_update
 val make_lambda_output_update :
-  resource_arn_update:string -> unit -> lambda_output_update
+  resource_arn_update:resource_ar_n -> unit -> lambda_output_update
 val make_output_update :
   ?destination_schema_update:destination_schema ->
     ?lambda_output_update:lambda_output_update ->
       ?kinesis_firehose_output_update:kinesis_firehose_output_update ->
         ?kinesis_streams_output_update:kinesis_streams_output_update ->
-          ?name_update:string -> output_id:string -> unit -> output_update
+          ?name_update:in_app_stream_name ->
+            output_id:id -> unit -> output_update
 val make_s3_reference_data_source_update :
-  ?file_key_update:string ->
-    ?bucket_arn_update:string -> unit -> s3_reference_data_source_update
+  ?file_key_update:file_key ->
+    ?bucket_arn_update:bucket_ar_n -> unit -> s3_reference_data_source_update
 val make_reference_data_source_update :
   ?reference_schema_update:source_schema ->
     ?s3_reference_data_source_update:s3_reference_data_source_update ->
-      ?table_name_update:string ->
-        reference_id:string -> unit -> reference_data_source_update
+      ?table_name_update:in_app_table_name ->
+        reference_id:id -> unit -> reference_data_source_update
 val make_sql_application_configuration_update :
-  ?reference_data_source_updates:reference_data_source_update list ->
-    ?output_updates:output_update list ->
-      ?input_updates:input_update list ->
+  ?reference_data_source_updates:reference_data_source_updates ->
+    ?output_updates:output_updates ->
+      ?input_updates:input_updates ->
         unit -> sql_application_configuration_update
 val make_s3_content_location_update :
-  ?object_version_update:string ->
-    ?file_key_update:string ->
-      ?bucket_arn_update:string -> unit -> s3_content_location_update
+  ?object_version_update:object_version ->
+    ?file_key_update:file_key ->
+      ?bucket_arn_update:bucket_ar_n -> unit -> s3_content_location_update
 val make_code_content_update :
   ?s3_content_location_update:s3_content_location_update ->
-    ?zip_file_content_update:bytes ->
-      ?text_content_update:string -> unit -> code_content_update
+    ?zip_file_content_update:zip_file_content ->
+      ?text_content_update:text_content -> unit -> code_content_update
 val make_application_code_configuration_update :
   ?code_content_update:code_content_update ->
     ?code_content_type_update:code_content_type ->
       unit -> application_code_configuration_update
 val make_checkpoint_configuration_update :
-  ?min_pause_between_checkpoints_update:int ->
-    ?checkpoint_interval_update:int ->
-      ?checkpointing_enabled_update:bool ->
+  ?min_pause_between_checkpoints_update:min_pause_between_checkpoints ->
+    ?checkpoint_interval_update:checkpoint_interval ->
+      ?checkpointing_enabled_update:boolean_object ->
         ?configuration_type_update:configuration_type ->
           unit -> checkpoint_configuration_update
 val make_monitoring_configuration_update :
@@ -2496,9 +2632,9 @@ val make_monitoring_configuration_update :
       ?configuration_type_update:configuration_type ->
         unit -> monitoring_configuration_update
 val make_parallelism_configuration_update :
-  ?auto_scaling_enabled_update:bool ->
-    ?parallelism_per_kpu_update:int ->
-      ?parallelism_update:int ->
+  ?auto_scaling_enabled_update:boolean_object ->
+    ?parallelism_per_kpu_update:parallelism_per_kp_u ->
+      ?parallelism_update:parallelism ->
         ?configuration_type_update:configuration_type ->
           unit -> parallelism_configuration_update
 val make_flink_application_configuration_update :
@@ -2507,17 +2643,17 @@ val make_flink_application_configuration_update :
       ?checkpoint_configuration_update:checkpoint_configuration_update ->
         unit -> flink_application_configuration_update
 val make_environment_property_updates :
-  property_groups:property_group list -> unit -> environment_property_updates
+  property_groups:property_groups -> unit -> environment_property_updates
 val make_application_snapshot_configuration_update :
-  snapshots_enabled_update:bool ->
+  snapshots_enabled_update:boolean_object ->
     unit -> application_snapshot_configuration_update
 val make_application_system_rollback_configuration_update :
-  rollback_enabled_update:bool ->
+  rollback_enabled_update:boolean_object ->
     unit -> application_system_rollback_configuration_update
 val make_application_configuration_update :
   ?zeppelin_application_configuration_update:zeppelin_application_configuration_update
     ->
-    ?vpc_configuration_updates:vpc_configuration_update list ->
+    ?vpc_configuration_updates:vpc_configuration_updates ->
       ?application_system_rollback_configuration_update:application_system_rollback_configuration_update
         ->
         ?application_snapshot_configuration_update:application_snapshot_configuration_update
@@ -2534,301 +2670,320 @@ val make_run_configuration_update :
     ?flink_run_configuration:flink_run_configuration ->
       unit -> run_configuration_update
 val make_cloud_watch_logging_option_update :
-  ?log_stream_arn_update:string ->
-    cloud_watch_logging_option_id:string ->
+  ?log_stream_arn_update:log_stream_ar_n ->
+    cloud_watch_logging_option_id:id ->
       unit -> cloud_watch_logging_option_update
 val make_update_application_request :
   ?runtime_environment_update:runtime_environment ->
-    ?conditional_token:string ->
-      ?cloud_watch_logging_option_updates:cloud_watch_logging_option_update
-        list ->
+    ?conditional_token:conditional_token ->
+      ?cloud_watch_logging_option_updates:cloud_watch_logging_option_updates
+        ->
         ?run_configuration_update:run_configuration_update ->
-          ?service_execution_role_update:string ->
+          ?service_execution_role_update:role_ar_n ->
             ?application_configuration_update:application_configuration_update
               ->
-              ?current_application_version_id:int ->
-                application_name:string -> unit -> update_application_request
+              ?current_application_version_id:application_version_id ->
+                application_name:application_name ->
+                  unit -> update_application_request
 val make_update_application_maintenance_configuration_response :
   ?application_maintenance_configuration_description:application_maintenance_configuration_description
     ->
-    ?application_ar_n:string ->
+    ?application_ar_n:resource_ar_n ->
       unit -> update_application_maintenance_configuration_response
 val make_application_maintenance_configuration_update :
-  application_maintenance_window_start_time_update:string ->
-    unit -> application_maintenance_configuration_update
+  application_maintenance_window_start_time_update:application_maintenance_window_start_time
+    -> unit -> application_maintenance_configuration_update
 val make_update_application_maintenance_configuration_request :
   application_maintenance_configuration_update:application_maintenance_configuration_update
     ->
-    application_name:string ->
+    application_name:application_name ->
       unit -> update_application_maintenance_configuration_request
 val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
-  tag_keys:string list ->
-    resource_ar_n:string -> unit -> untag_resource_request
-val make_tag : ?value:string -> key:string -> unit -> tag
+  tag_keys:tag_keys ->
+    resource_ar_n:kinesis_analytics_ar_n -> unit -> untag_resource_request
+val make_tag : ?value:tag_value -> key:tag_key -> unit -> tag
 val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
-  tags:tag list -> resource_ar_n:string -> unit -> tag_resource_request
+  tags:tags ->
+    resource_ar_n:kinesis_analytics_ar_n -> unit -> tag_resource_request
 val make_stop_application_response :
-  ?operation_id:string -> unit -> stop_application_response
+  ?operation_id:operation_id -> unit -> stop_application_response
 val make_stop_application_request :
-  ?force:bool -> application_name:string -> unit -> stop_application_request
+  ?force:boolean_object ->
+    application_name:application_name -> unit -> stop_application_request
 val make_start_application_response :
-  ?operation_id:string -> unit -> start_application_response
+  ?operation_id:operation_id -> unit -> start_application_response
 val make_sql_run_configuration :
   input_starting_position_configuration:input_starting_position_configuration
-    -> input_id:string -> unit -> sql_run_configuration
+    -> input_id:id -> unit -> sql_run_configuration
 val make_run_configuration :
   ?application_restore_configuration:application_restore_configuration ->
-    ?sql_run_configurations:sql_run_configuration list ->
+    ?sql_run_configurations:sql_run_configurations ->
       ?flink_run_configuration:flink_run_configuration ->
         unit -> run_configuration
 val make_start_application_request :
   ?run_configuration:run_configuration ->
-    application_name:string -> unit -> start_application_request
+    application_name:application_name -> unit -> start_application_request
 val make_input_lambda_processor :
-  resource_ar_n:string -> unit -> input_lambda_processor
+  resource_ar_n:resource_ar_n -> unit -> input_lambda_processor
 val make_input_processing_configuration :
   input_lambda_processor:input_lambda_processor ->
     unit -> input_processing_configuration
 val make_kinesis_streams_input :
-  resource_ar_n:string -> unit -> kinesis_streams_input
+  resource_ar_n:resource_ar_n -> unit -> kinesis_streams_input
 val make_kinesis_firehose_input :
-  resource_ar_n:string -> unit -> kinesis_firehose_input
+  resource_ar_n:resource_ar_n -> unit -> kinesis_firehose_input
 val make_input :
   ?input_parallelism:input_parallelism ->
     ?kinesis_firehose_input:kinesis_firehose_input ->
       ?kinesis_streams_input:kinesis_streams_input ->
         ?input_processing_configuration:input_processing_configuration ->
-          input_schema:source_schema -> name_prefix:string -> unit -> input
+          input_schema:source_schema ->
+            name_prefix:in_app_stream_name -> unit -> input
 val make_kinesis_streams_output :
-  resource_ar_n:string -> unit -> kinesis_streams_output
+  resource_ar_n:resource_ar_n -> unit -> kinesis_streams_output
 val make_kinesis_firehose_output :
-  resource_ar_n:string -> unit -> kinesis_firehose_output
-val make_lambda_output : resource_ar_n:string -> unit -> lambda_output
+  resource_ar_n:resource_ar_n -> unit -> kinesis_firehose_output
+val make_lambda_output : resource_ar_n:resource_ar_n -> unit -> lambda_output
 val make_output :
   ?lambda_output:lambda_output ->
     ?kinesis_firehose_output:kinesis_firehose_output ->
       ?kinesis_streams_output:kinesis_streams_output ->
         destination_schema:destination_schema ->
-          name:string -> unit -> output
+          name:in_app_stream_name -> unit -> output
 val make_s3_reference_data_source :
-  ?file_key:string -> ?bucket_ar_n:string -> unit -> s3_reference_data_source
+  ?file_key:file_key ->
+    ?bucket_ar_n:bucket_ar_n -> unit -> s3_reference_data_source
 val make_reference_data_source :
   ?s3_reference_data_source:s3_reference_data_source ->
     reference_schema:source_schema ->
-      table_name:string -> unit -> reference_data_source
+      table_name:in_app_table_name -> unit -> reference_data_source
 val make_sql_application_configuration :
-  ?reference_data_sources:reference_data_source list ->
-    ?outputs:output list ->
-      ?inputs:input list -> unit -> sql_application_configuration
+  ?reference_data_sources:reference_data_sources ->
+    ?outputs:outputs ->
+      ?inputs:inputs -> unit -> sql_application_configuration
 val make_snapshot_details :
   ?runtime_environment:runtime_environment ->
-    ?snapshot_creation_timestamp:CoreTypes.Timestamp.t ->
-      application_version_id:int ->
+    ?snapshot_creation_timestamp:timestamp ->
+      application_version_id:application_version_id ->
         snapshot_status:snapshot_status ->
-          snapshot_name:string -> unit -> snapshot_details
+          snapshot_name:snapshot_name -> unit -> snapshot_details
 val make_s3_configuration :
-  file_key:string -> bucket_ar_n:string -> unit -> s3_configuration
+  file_key:file_key -> bucket_ar_n:bucket_ar_n -> unit -> s3_configuration
 val make_rollback_application_response :
-  ?operation_id:string ->
+  ?operation_id:operation_id ->
     application_detail:application_detail ->
       unit -> rollback_application_response
 val make_rollback_application_request :
-  current_application_version_id:int ->
-    application_name:string -> unit -> rollback_application_request
+  current_application_version_id:application_version_id ->
+    application_name:application_name -> unit -> rollback_application_request
 val make_parallelism_configuration :
-  ?auto_scaling_enabled:bool ->
-    ?parallelism_per_kp_u:int ->
-      ?parallelism:int ->
+  ?auto_scaling_enabled:boolean_object ->
+    ?parallelism_per_kp_u:parallelism_per_kp_u ->
+      ?parallelism:parallelism ->
         configuration_type:configuration_type ->
           unit -> parallelism_configuration
-val make_error_info : ?error_string:string -> unit -> error_info
+val make_error_info : ?error_string:error_string -> unit -> error_info
 val make_operation_failure_details :
   ?error_info:error_info ->
-    ?rollback_operation_id:string -> unit -> operation_failure_details
+    ?rollback_operation_id:operation_id -> unit -> operation_failure_details
 val make_monitoring_configuration :
   ?log_level:log_level ->
     ?metrics_level:metrics_level ->
       configuration_type:configuration_type ->
         unit -> monitoring_configuration
 val make_list_tags_for_resource_response :
-  ?tags:tag list -> unit -> list_tags_for_resource_response
+  ?tags:tags -> unit -> list_tags_for_resource_response
 val make_list_tags_for_resource_request :
-  resource_ar_n:string -> unit -> list_tags_for_resource_request
+  resource_ar_n:kinesis_analytics_ar_n ->
+    unit -> list_tags_for_resource_request
 val make_application_summary :
   ?application_mode:application_mode ->
     runtime_environment:runtime_environment ->
-      application_version_id:int ->
+      application_version_id:application_version_id ->
         application_status:application_status ->
-          application_ar_n:string ->
-            application_name:string -> unit -> application_summary
+          application_ar_n:resource_ar_n ->
+            application_name:application_name -> unit -> application_summary
 val make_list_applications_response :
-  ?next_token:string ->
-    application_summaries:application_summary list ->
+  ?next_token:application_name ->
+    application_summaries:application_summaries ->
       unit -> list_applications_response
 val make_list_applications_request :
-  ?next_token:string -> ?limit:int -> unit -> list_applications_request
+  ?next_token:application_name ->
+    ?limit:list_applications_input_limit -> unit -> list_applications_request
 val make_application_version_summary :
   application_status:application_status ->
-    application_version_id:int -> unit -> application_version_summary
+    application_version_id:application_version_id ->
+      unit -> application_version_summary
 val make_list_application_versions_response :
-  ?next_token:string ->
-    ?application_version_summaries:application_version_summary list ->
+  ?next_token:next_token ->
+    ?application_version_summaries:application_version_summaries ->
       unit -> list_application_versions_response
 val make_list_application_versions_request :
-  ?next_token:string ->
-    ?limit:int ->
-      application_name:string -> unit -> list_application_versions_request
+  ?next_token:next_token ->
+    ?limit:list_application_versions_input_limit ->
+      application_name:application_name ->
+        unit -> list_application_versions_request
 val make_list_application_snapshots_response :
-  ?next_token:string ->
-    ?snapshot_summaries:snapshot_details list ->
+  ?next_token:next_token ->
+    ?snapshot_summaries:snapshot_summaries ->
       unit -> list_application_snapshots_response
 val make_list_application_snapshots_request :
-  ?next_token:string ->
-    ?limit:int ->
-      application_name:string -> unit -> list_application_snapshots_request
+  ?next_token:next_token ->
+    ?limit:list_snapshots_input_limit ->
+      application_name:application_name ->
+        unit -> list_application_snapshots_request
 val make_application_operation_info :
   ?operation_status:operation_status ->
-    ?end_time:CoreTypes.Timestamp.t ->
-      ?start_time:CoreTypes.Timestamp.t ->
-        ?operation_id:string ->
-          ?operation:string -> unit -> application_operation_info
+    ?end_time:timestamp ->
+      ?start_time:timestamp ->
+        ?operation_id:operation_id ->
+          ?operation:operation -> unit -> application_operation_info
 val make_list_application_operations_response :
-  ?next_token:string ->
-    ?application_operation_info_list:application_operation_info list ->
+  ?next_token:next_token ->
+    ?application_operation_info_list:application_operation_info_list ->
       unit -> list_application_operations_response
 val make_list_application_operations_request :
   ?operation_status:operation_status ->
-    ?operation:string ->
-      ?next_token:string ->
-        ?limit:int ->
-          application_name:string ->
+    ?operation:operation ->
+      ?next_token:next_token ->
+        ?limit:list_application_operations_input_limit ->
+          application_name:application_name ->
             unit -> list_application_operations_request
 val make_discover_input_schema_response :
-  ?raw_input_records:string list ->
-    ?processed_input_records:string list ->
-      ?parsed_input_records:string list list ->
+  ?raw_input_records:raw_input_records ->
+    ?processed_input_records:processed_input_records ->
+      ?parsed_input_records:parsed_input_records ->
         ?input_schema:source_schema -> unit -> discover_input_schema_response
 val make_discover_input_schema_request :
   ?input_processing_configuration:input_processing_configuration ->
     ?s3_configuration:s3_configuration ->
       ?input_starting_position_configuration:input_starting_position_configuration
         ->
-        ?resource_ar_n:string ->
-          service_execution_role:string ->
+        ?resource_ar_n:resource_ar_n ->
+          service_execution_role:role_ar_n ->
             unit -> discover_input_schema_request
 val make_describe_application_version_response :
   ?application_version_detail:application_detail ->
     unit -> describe_application_version_response
 val make_describe_application_version_request :
-  application_version_id:int ->
-    application_name:string -> unit -> describe_application_version_request
+  application_version_id:application_version_id ->
+    application_name:application_name ->
+      unit -> describe_application_version_request
 val make_describe_application_snapshot_response :
   snapshot_details:snapshot_details ->
     unit -> describe_application_snapshot_response
 val make_describe_application_snapshot_request :
-  snapshot_name:string ->
-    application_name:string -> unit -> describe_application_snapshot_request
+  snapshot_name:snapshot_name ->
+    application_name:application_name ->
+      unit -> describe_application_snapshot_request
 val make_application_version_change_details :
-  application_version_updated_to:int ->
-    application_version_updated_from:int ->
+  application_version_updated_to:application_version_id ->
+    application_version_updated_from:application_version_id ->
       unit -> application_version_change_details
 val make_application_operation_info_details :
   ?operation_failure_details:operation_failure_details ->
     ?application_version_change_details:application_version_change_details ->
       operation_status:operation_status ->
-        end_time:CoreTypes.Timestamp.t ->
-          start_time:CoreTypes.Timestamp.t ->
-            operation:string -> unit -> application_operation_info_details
+        end_time:timestamp ->
+          start_time:timestamp ->
+            operation:operation -> unit -> application_operation_info_details
 val make_describe_application_operation_response :
   ?application_operation_info_details:application_operation_info_details ->
     unit -> describe_application_operation_response
 val make_describe_application_operation_request :
-  operation_id:string ->
-    application_name:string -> unit -> describe_application_operation_request
+  operation_id:operation_id ->
+    application_name:application_name ->
+      unit -> describe_application_operation_request
 val make_describe_application_response :
   application_detail:application_detail ->
     unit -> describe_application_response
 val make_describe_application_request :
-  ?include_additional_details:bool ->
-    application_name:string -> unit -> describe_application_request
+  ?include_additional_details:boolean_object ->
+    application_name:application_name -> unit -> describe_application_request
 val make_delete_application_vpc_configuration_response :
-  ?operation_id:string ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
+  ?operation_id:operation_id ->
+    ?application_version_id:application_version_id ->
+      ?application_ar_n:resource_ar_n ->
         unit -> delete_application_vpc_configuration_response
 val make_delete_application_vpc_configuration_request :
-  ?conditional_token:string ->
-    ?current_application_version_id:int ->
-      vpc_configuration_id:string ->
-        application_name:string ->
+  ?conditional_token:conditional_token ->
+    ?current_application_version_id:application_version_id ->
+      vpc_configuration_id:id ->
+        application_name:application_name ->
           unit -> delete_application_vpc_configuration_request
 val make_delete_application_snapshot_response : unit -> unit
 val make_delete_application_snapshot_request :
-  snapshot_creation_timestamp:CoreTypes.Timestamp.t ->
-    snapshot_name:string ->
-      application_name:string -> unit -> delete_application_snapshot_request
+  snapshot_creation_timestamp:timestamp ->
+    snapshot_name:snapshot_name ->
+      application_name:application_name ->
+        unit -> delete_application_snapshot_request
 val make_delete_application_reference_data_source_response :
-  ?application_version_id:int ->
-    ?application_ar_n:string ->
+  ?application_version_id:application_version_id ->
+    ?application_ar_n:resource_ar_n ->
       unit -> delete_application_reference_data_source_response
 val make_delete_application_reference_data_source_request :
-  reference_id:string ->
-    current_application_version_id:int ->
-      application_name:string ->
+  reference_id:id ->
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
         unit -> delete_application_reference_data_source_request
 val make_delete_application_output_response :
-  ?application_version_id:int ->
-    ?application_ar_n:string -> unit -> delete_application_output_response
+  ?application_version_id:application_version_id ->
+    ?application_ar_n:resource_ar_n ->
+      unit -> delete_application_output_response
 val make_delete_application_output_request :
-  output_id:string ->
-    current_application_version_id:int ->
-      application_name:string -> unit -> delete_application_output_request
+  output_id:id ->
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
+        unit -> delete_application_output_request
 val make_delete_application_input_processing_configuration_response :
-  ?application_version_id:int ->
-    ?application_ar_n:string ->
+  ?application_version_id:application_version_id ->
+    ?application_ar_n:resource_ar_n ->
       unit -> delete_application_input_processing_configuration_response
 val make_delete_application_input_processing_configuration_request :
-  input_id:string ->
-    current_application_version_id:int ->
-      application_name:string ->
+  input_id:id ->
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
         unit -> delete_application_input_processing_configuration_request
 val make_delete_application_cloud_watch_logging_option_response :
-  ?operation_id:string ->
-    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-      list ->
-      ?application_version_id:int ->
-        ?application_ar_n:string ->
+  ?operation_id:operation_id ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_descriptions
+      ->
+      ?application_version_id:application_version_id ->
+        ?application_ar_n:resource_ar_n ->
           unit -> delete_application_cloud_watch_logging_option_response
 val make_delete_application_cloud_watch_logging_option_request :
-  ?conditional_token:string ->
-    ?current_application_version_id:int ->
-      cloud_watch_logging_option_id:string ->
-        application_name:string ->
+  ?conditional_token:conditional_token ->
+    ?current_application_version_id:application_version_id ->
+      cloud_watch_logging_option_id:id ->
+        application_name:application_name ->
           unit -> delete_application_cloud_watch_logging_option_request
 val make_delete_application_response : unit -> unit
 val make_delete_application_request :
-  create_timestamp:CoreTypes.Timestamp.t ->
-    application_name:string -> unit -> delete_application_request
+  create_timestamp:timestamp ->
+    application_name:application_name -> unit -> delete_application_request
 val make_create_application_snapshot_response : unit -> unit
 val make_create_application_snapshot_request :
-  snapshot_name:string ->
-    application_name:string -> unit -> create_application_snapshot_request
+  snapshot_name:snapshot_name ->
+    application_name:application_name ->
+      unit -> create_application_snapshot_request
 val make_create_application_presigned_url_response :
-  ?authorized_url:string -> unit -> create_application_presigned_url_response
+  ?authorized_url:authorized_url ->
+    unit -> create_application_presigned_url_response
 val make_create_application_presigned_url_request :
-  ?session_expiration_duration_in_seconds:int ->
+  ?session_expiration_duration_in_seconds:session_expiration_duration_in_seconds
+    ->
     url_type:url_type ->
-      application_name:string ->
+      application_name:application_name ->
         unit -> create_application_presigned_url_request
 val make_create_application_response :
   application_detail:application_detail ->
     unit -> create_application_response
 val make_checkpoint_configuration :
-  ?min_pause_between_checkpoints:int ->
-    ?checkpoint_interval:int ->
-      ?checkpointing_enabled:bool ->
+  ?min_pause_between_checkpoints:min_pause_between_checkpoints ->
+    ?checkpoint_interval:checkpoint_interval ->
+      ?checkpointing_enabled:boolean_object ->
         configuration_type:configuration_type ->
           unit -> checkpoint_configuration
 val make_flink_application_configuration :
@@ -2837,21 +2992,24 @@ val make_flink_application_configuration :
       ?checkpoint_configuration:checkpoint_configuration ->
         unit -> flink_application_configuration
 val make_environment_properties :
-  property_groups:property_group list -> unit -> environment_properties
+  property_groups:property_groups -> unit -> environment_properties
 val make_code_content :
   ?s3_content_location:s3_content_location ->
-    ?zip_file_content:bytes -> ?text_content:string -> unit -> code_content
+    ?zip_file_content:zip_file_content ->
+      ?text_content:text_content -> unit -> code_content
 val make_application_code_configuration :
   ?code_content:code_content ->
     code_content_type:code_content_type ->
       unit -> application_code_configuration
 val make_application_snapshot_configuration :
-  snapshots_enabled:bool -> unit -> application_snapshot_configuration
+  snapshots_enabled:boolean_object ->
+    unit -> application_snapshot_configuration
 val make_application_system_rollback_configuration :
-  rollback_enabled:bool -> unit -> application_system_rollback_configuration
+  rollback_enabled:boolean_object ->
+    unit -> application_system_rollback_configuration
 val make_application_configuration :
   ?zeppelin_application_configuration:zeppelin_application_configuration ->
-    ?vpc_configurations:vpc_configuration list ->
+    ?vpc_configurations:vpc_configurations ->
       ?application_system_rollback_configuration:application_system_rollback_configuration
         ->
         ?application_snapshot_configuration:application_snapshot_configuration
@@ -2863,80 +3021,84 @@ val make_application_configuration :
                 ?sql_application_configuration:sql_application_configuration
                   -> unit -> application_configuration
 val make_cloud_watch_logging_option :
-  log_stream_ar_n:string -> unit -> cloud_watch_logging_option
+  log_stream_ar_n:log_stream_ar_n -> unit -> cloud_watch_logging_option
 val make_create_application_request :
   ?application_mode:application_mode ->
-    ?tags:tag list ->
-      ?cloud_watch_logging_options:cloud_watch_logging_option list ->
+    ?tags:tags ->
+      ?cloud_watch_logging_options:cloud_watch_logging_options ->
         ?application_configuration:application_configuration ->
-          ?application_description:string ->
-            service_execution_role:string ->
+          ?application_description:application_description ->
+            service_execution_role:role_ar_n ->
               runtime_environment:runtime_environment ->
-                application_name:string -> unit -> create_application_request
+                application_name:application_name ->
+                  unit -> create_application_request
 val make_add_application_vpc_configuration_response :
-  ?operation_id:string ->
+  ?operation_id:operation_id ->
     ?vpc_configuration_description:vpc_configuration_description ->
-      ?application_version_id:int ->
-        ?application_ar_n:string ->
+      ?application_version_id:application_version_id ->
+        ?application_ar_n:resource_ar_n ->
           unit -> add_application_vpc_configuration_response
 val make_add_application_vpc_configuration_request :
-  ?conditional_token:string ->
-    ?current_application_version_id:int ->
+  ?conditional_token:conditional_token ->
+    ?current_application_version_id:application_version_id ->
       vpc_configuration:vpc_configuration ->
-        application_name:string ->
+        application_name:application_name ->
           unit -> add_application_vpc_configuration_request
 val make_add_application_reference_data_source_response :
-  ?reference_data_source_descriptions:reference_data_source_description list
-    ->
-    ?application_version_id:int ->
-      ?application_ar_n:string ->
+  ?reference_data_source_descriptions:reference_data_source_descriptions ->
+    ?application_version_id:application_version_id ->
+      ?application_ar_n:resource_ar_n ->
         unit -> add_application_reference_data_source_response
 val make_add_application_reference_data_source_request :
   reference_data_source:reference_data_source ->
-    current_application_version_id:int ->
-      application_name:string ->
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
         unit -> add_application_reference_data_source_request
 val make_add_application_output_response :
-  ?output_descriptions:output_description list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string -> unit -> add_application_output_response
+  ?output_descriptions:output_descriptions ->
+    ?application_version_id:application_version_id ->
+      ?application_ar_n:resource_ar_n ->
+        unit -> add_application_output_response
 val make_add_application_output_request :
   output:output ->
-    current_application_version_id:int ->
-      application_name:string -> unit -> add_application_output_request
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
+        unit -> add_application_output_request
 val make_add_application_input_processing_configuration_response :
   ?input_processing_configuration_description:input_processing_configuration_description
     ->
-    ?input_id:string ->
-      ?application_version_id:int ->
-        ?application_ar_n:string ->
+    ?input_id:id ->
+      ?application_version_id:application_version_id ->
+        ?application_ar_n:resource_ar_n ->
           unit -> add_application_input_processing_configuration_response
 val make_add_application_input_processing_configuration_request :
   input_processing_configuration:input_processing_configuration ->
-    input_id:string ->
-      current_application_version_id:int ->
-        application_name:string ->
+    input_id:id ->
+      current_application_version_id:application_version_id ->
+        application_name:application_name ->
           unit -> add_application_input_processing_configuration_request
 val make_add_application_input_response :
-  ?input_descriptions:input_description list ->
-    ?application_version_id:int ->
-      ?application_ar_n:string -> unit -> add_application_input_response
+  ?input_descriptions:input_descriptions ->
+    ?application_version_id:application_version_id ->
+      ?application_ar_n:resource_ar_n ->
+        unit -> add_application_input_response
 val make_add_application_input_request :
   input:input ->
-    current_application_version_id:int ->
-      application_name:string -> unit -> add_application_input_request
+    current_application_version_id:application_version_id ->
+      application_name:application_name ->
+        unit -> add_application_input_request
 val make_add_application_cloud_watch_logging_option_response :
-  ?operation_id:string ->
-    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_description
-      list ->
-      ?application_version_id:int ->
-        ?application_ar_n:string ->
+  ?operation_id:operation_id ->
+    ?cloud_watch_logging_option_descriptions:cloud_watch_logging_option_descriptions
+      ->
+      ?application_version_id:application_version_id ->
+        ?application_ar_n:resource_ar_n ->
           unit -> add_application_cloud_watch_logging_option_response
 val make_add_application_cloud_watch_logging_option_request :
-  ?conditional_token:string ->
-    ?current_application_version_id:int ->
+  ?conditional_token:conditional_token ->
+    ?current_application_version_id:application_version_id ->
       cloud_watch_logging_option:cloud_watch_logging_option ->
-        application_name:string ->
+        application_name:application_name ->
           unit -> add_application_cloud_watch_logging_option_request(** {1:operations Operations} *)
 
 module AddApplicationCloudWatchLoggingOption :
@@ -3076,7 +3238,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_application_snapshot_request ->
-        (unit,
+        (create_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -3093,7 +3255,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_request ->
-        (unit,
+        (delete_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -3176,7 +3338,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_snapshot_request ->
-        (unit,
+        (delete_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -3392,7 +3554,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -3407,7 +3569,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

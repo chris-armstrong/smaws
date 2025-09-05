@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       activate_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -133,7 +133,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deactivate_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -163,7 +163,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_api_destination_request ->
-        (unit,
+        (delete_api_destination_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -176,7 +176,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_archive_request ->
-        (unit,
+        (delete_archive_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -202,7 +202,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_endpoint_request ->
-        (unit,
+        (delete_endpoint_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -216,7 +216,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_event_bus_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -228,7 +228,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_partner_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -242,7 +242,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -366,7 +366,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -381,7 +381,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -564,7 +564,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -614,7 +614,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -660,7 +660,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -687,7 +687,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

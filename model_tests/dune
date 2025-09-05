@@ -2,22 +2,18 @@
  (name gen)
  (libraries yojson Parselib sdkgen base))
 
-(rule
- (mode promote)
- (targets types.ml types.mli)
- (deps
-  (:gen ./gen.exe)
-  (:input ../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input})))
+ (rule
+  (targets
+   (dir json))
+  (mode promote)
+  (deps
+   (:gen ./gen.exe)
+   (:input ../smithy-aws-protocol-tests_model.json)
+   (:output_dir ./protocols))
+  (action
+   (run %{gen} %{input} %{output_dir} aws.protocoltests.json)))
 
 (executable
  (name tests)
  (libraries yojson Parselib alcotest)
  (modules tests types))
-
-; (tests
-;   (names tests)
-;   (libraries yojson Parselib alcotest Smaws_Lib)
-;   (modules tests types manual_test)
-;   )

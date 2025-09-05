@@ -14,35 +14,40 @@ let type_name ~is_exception_type name =
 (** Construct an identifier for type `name`. This method should not be used directly - go through
     resolve or resolve_for_target (unless you already know the type's resolution is this name and
     not the resolution of an alias) *)
-let type_ident ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
-  let resolved_name = 
-    match namespace_resolver with
-    | Some resolver -> Namespace_resolver.Namespace_resolver.resolve_reference resolver name
-    | None -> Util.symbolName name
+let type_ident ctx ~name ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+  let resolved_name =
+    Namespace_resolver.Namespace_resolver.resolve_reference
+      ~symbol_transformer:(fun ~(local : _) x -> [ SafeNames.safeTypeName x ])
+      namespace_resolver name
   in
-  let base_ident = Longident.Lident (SafeNames.safeTypeName resolved_name) in
-  B.ptyp_constr (Location.mknoloc base_ident) []
+  match Longident.unflatten resolved_name with
+  | None -> failwith (Fmt.str "Could not resolve type %s" name)
+  | Some non_empty -> B.ptyp_constr (Location.mknoloc non_empty) []
 
 (** Using the aliasing context, resolve the type for the specified name *)
-let resolve ctx ~name ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let resolve ctx ~name ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let resolution =
-    Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
+    Hashtbl.find ctx name
+    |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
   in
   (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   resolution
 
 (** Use the aliasing context to resolve the type for the specified name, using `traits` to determine
     optionality via the `required` trait *)
-let resolve_for_target ctx ~name ~traits ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let resolve_for_target ctx ~name ~traits
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let resolution =
-    Hashtbl.find ctx name |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
+    Hashtbl.find ctx name
+    |> Option.value_or_thunk ~default:(fun () -> type_ident ctx ~name ~namespace_resolver ())
   in
   (* Fmt.pr "Resolving %s -> %a\n" name Ppxlib_ast.Pprintast.core_type resolution; *)
   let is_required = Ast.Trait.(hasTrait traits isRequiredTrait) in
   if is_required then resolution
   else B.ptyp_constr (Location.mknoloc (Longident.Lident "option")) [ resolution ]
 
-let make_basic_type_manifest ctx descriptor ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let make_basic_type_manifest ctx descriptor
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   match descriptor with
   | BigDecimalShape { traits; _ } -> [%type: Bigdecimal.t]
@@ -51,7 +56,7 @@ let make_basic_type_manifest ctx descriptor ?(namespace_resolver : Namespace_res
   | ShortShape { traits; _ } -> [%type: int]
   | BlobShape { traits; _ } -> [%type: bytes]
   | BooleanShape { traits; _ } -> [%type: bool]
-  | DocumentShape -> [%type: CoreTypes.Document.t]
+  | DocumentShape -> [%type: Smaws_Lib.CoreTypes.Document.t]
   | FloatShape { traits; _ } | DoubleShape { traits; _ } -> [%type: float]
   | LongShape { traits; _ } | IntegerShape { traits; _ } -> [%type: int]
   | StringShape { traits; _ } -> [%type: string]
@@ -69,9 +74,9 @@ let make_basic_type_manifest ctx descriptor ?(namespace_resolver : Namespace_res
         else basic_type
       in
       B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ resolved_type ]
-  | TimestampShape { traits; _ } -> [%type: CoreTypes.Timestamp.t]
+  | TimestampShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.Timestamp.t]
   | UnitShape -> [%type: unit]
-  | ResourceShape -> [%type: CoreTypes.Resource.t]
+  | ResourceShape -> [%type: Smaws_Lib.CoreTypes.Resource.t]
   | StructureShape { members = []; _ } -> [%type: unit]
   | _ ->
       failwith
@@ -125,7 +130,13 @@ let empty_type_constructor ~name ~traits =
     ~name:(Location.mknoloc (SafeNames.safeConstructorName name))
     ~args:(Pcstr_tuple []) ~doc_string ()
 
-let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let make_basic_type_declaration ctx ~name ~descriptor ~namespace_resolver =
+  let basic_type = make_basic_type_manifest ctx descriptor ~namespace_resolver () in
+  type_declaration ~name ~is_exception_type:false ~kind:Ptype_abstract ~manifest:(Some basic_type)
+    ~doc_string:"" ()
+
+let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescriptor)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   let is_exception_type =
     match descriptor with
@@ -182,21 +193,30 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       type_declaration ~name ~kind:(Ptype_variant union_members) ~is_exception_type ~doc_string ()
   | _ -> failwith (Fmt.str "non-complex target not supported: %s" name)
 
-let create_alias_context shapes : t =
-  let tbl = Hashtbl.create ~growth_allowed:true ~size:(List.length shapes / 2) (module String) in
-  List.iter
-    ~f:(fun Ast.Shape.{ name; descriptor; _ } ->
-      match descriptor with
-      | UnitShape | ByteShape _ | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _
-      | StringShape _ | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _
-      | ShortShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
-      | StructureShape { members = []; _ } ->
-          let alias = make_basic_type_manifest tbl descriptor () in
-          (* Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias; *)
-          ignore (Hashtbl.add ~key:name ~data:alias tbl)
-      | _ -> ())
-    shapes;
-  tbl
+let create_alias_context ~namespace ~namespace_resolver ~should_alias shapes : t =
+  if not should_alias then Hashtbl.create ~growth_allowed:false ~size:0 (module String)
+  else (
+    let tbl = Hashtbl.create ~growth_allowed:true ~size:(List.length shapes / 2) (module String) in
+    (* FIXME: make aliasing optional *)
+    List.iter
+      ~f:(fun Ast.Shape.{ name; descriptor; _ } ->
+        match descriptor with
+        | UnitShape | ByteShape _ | ListShape _ | BlobShape _ | BooleanShape _ | IntegerShape _
+        | StringShape _ | BigIntegerShape _ | BigDecimalShape _ | ResourceShape | TimestampShape _
+        | ShortShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
+        | StructureShape { members = []; _ } ->
+            let matching =
+              let shape_ns = Util.symbolNamespace name in
+              String.equal shape_ns namespace
+            in
+            if matching then (
+              let alias = make_basic_type_manifest ~namespace_resolver tbl descriptor () in
+              (* Fmt.pr "Aliasing %s -> %a\n" name Ppxlib.Pprintast.core_type alias; *)
+              ignore (Hashtbl.add ~key:name ~data:alias tbl))
+            else ()
+        | _ -> ())
+      shapes;
+    tbl)
 
 let determine_exception_type descriptor =
   match descriptor with
@@ -237,17 +257,18 @@ let stri_service_metadata (service : Ast.Shape.serviceShapeDetails) =
 
 let sigi_service_metadata service = [%sigi: val service : Smaws_Lib.Service.descriptor]
 
-let generate_type_target ctx name descriptor ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) () =
+let generate_type_target ctx name descriptor
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   match descriptor with
   (* basic types are aliased and don't require separate declaration *)
   | UnitShape | ByteShape _ | ShortShape _ | ListShape _ | BlobShape _ | BooleanShape _
   | IntegerShape _ | StringShape _ | BigIntegerShape _ | BigDecimalShape _ | ResourceShape
-  | TimestampShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape ->
-      None
+  | TimestampShape _ | LongShape _ | FloatShape _ | DoubleShape _ | SetShape _ | DocumentShape
+  | StructureShape { members = []; _ } ->
+      Some (make_basic_type_declaration ctx ~name ~descriptor ~namespace_resolver)
   (* service shapes and operation shapes are not of interest to type generation (yet) *)
   | ServiceShape _ | OperationShape _ -> None
-  | StructureShape { members = []; _ } -> None
   | _ -> Some (make_complex_type_declaration ctx ~name ~descriptor ~namespace_resolver ())
 
 let str_deriving_attributes () =
@@ -256,7 +277,8 @@ let str_deriving_attributes () =
     B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str eq]);
   ]
 
-let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx structure_shapes fmt =
+let stri_structure_shapes ?(with_derivings = false)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) ctx structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->
@@ -265,7 +287,8 @@ let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
            in
            let filtered_items =
              List.filter_map
-               ~f:(fun item -> generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
+               ~f:(fun item ->
+                 generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
                items
            in
            let attributed_items =
@@ -303,7 +326,8 @@ let stri_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
 
                   B.pstr_type Nonrecursive [ filtered_declaration ]))
 
-let sigi_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Namespace_resolver.Namespace_resolver.t option = None) ctx structure_shapes fmt =
+let sigi_structure_shapes ?(with_derivings = false)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) ctx structure_shapes fmt =
   structure_shapes
   |> List.filter_map ~f:(function
        | Ast.Dependencies.{ recursWith = Some recursItems; name; descriptor; _ } ->
@@ -312,7 +336,8 @@ let sigi_structure_shapes ?(with_derivings = false) ?(namespace_resolver : Names
            in
            let filtered_items =
              List.filter_map
-               ~f:(fun item -> generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
+               ~f:(fun item ->
+                 generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
                items
            in
 

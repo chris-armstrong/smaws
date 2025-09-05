@@ -1,21 +1,21 @@
 (rule
- (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/workmail.json))
+  (:input ../../api-models-aws/models/workmail/service/2017-10-01/workmail-2017-10-01.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
-  types.ml
-  types.mli
+  json_serializers.ml
+  json_deserializers.ml
   service_metadata.ml
   service_metadata.mli
+  types.ml
+  types.mli
   operations.ml
   operations.mli
   Smaws_Client_WorkMail.ml
   Smaws_Client_WorkMail.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -39,8 +39,8 @@
   Smaws_Client_WorkMail
   types
   service_metadata
-  serializers
-  deserializers
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))

@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_web_acl_request ->
-        (unit,
+        (associate_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
@@ -147,7 +147,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_api_key_request ->
-        (unit,
+        (delete_api_key_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
@@ -177,7 +177,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_ip_set_request ->
-        (unit,
+        (delete_ip_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFAssociatedItemException of waf_associated_item_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -195,7 +195,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_logging_configuration_request ->
-        (unit,
+        (delete_logging_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
@@ -210,7 +210,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_permission_policy_request ->
-        (unit,
+        (delete_permission_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
@@ -223,7 +223,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_regex_pattern_set_request ->
-        (unit,
+        (delete_regex_pattern_set_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFAssociatedItemException of waf_associated_item_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -241,7 +241,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_rule_group_request ->
-        (unit,
+        (delete_rule_group_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFAssociatedItemException of waf_associated_item_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -259,7 +259,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_web_acl_request ->
-        (unit,
+        (delete_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFAssociatedItemException of waf_associated_item_exception 
           | `WAFInternalErrorException of waf_internal_error_exception 
@@ -321,7 +321,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_web_acl_request ->
-        (unit,
+        (disassociate_web_acl_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
@@ -714,7 +714,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_permission_policy_request ->
-        (unit,
+        (put_permission_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidParameterException of waf_invalid_parameter_exception 
@@ -729,7 +729,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 
@@ -747,7 +747,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `WAFInternalErrorException of waf_internal_error_exception 
           | `WAFInvalidOperationException of waf_invalid_operation_exception 

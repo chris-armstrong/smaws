@@ -1,21 +1,21 @@
 (rule
- (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/cloudtrail.json))
+  (:input ../../api-models-aws/models/cloudtrail/service/2013-11-01/cloudtrail-2013-11-01.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
-  types.ml
-  types.mli
+  json_serializers.ml
+  json_deserializers.ml
   service_metadata.ml
   service_metadata.mli
+  types.ml
+  types.mli
   operations.ml
   operations.mli
   Smaws_Client_CloudTrail.ml
   Smaws_Client_CloudTrail.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -39,8 +39,8 @@
   Smaws_Client_CloudTrail
   types
   service_metadata
-  serializers
-  deserializers
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))

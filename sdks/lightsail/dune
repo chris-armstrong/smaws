@@ -1,21 +1,21 @@
 (rule
- (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/lightsail.json))
+  (:input ../../api-models-aws/models/lightsail/service/2016-11-28/lightsail-2016-11-28.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
-  types.ml
-  types.mli
+  json_serializers.ml
+  json_deserializers.ml
   service_metadata.ml
   service_metadata.mli
+  types.ml
+  types.mli
   operations.ml
   operations.mli
   Smaws_Client_Lightsail.ml
   Smaws_Client_Lightsail.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -39,8 +39,8 @@
   Smaws_Client_Lightsail
   types
   service_metadata
-  serializers
-  deserializers
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))

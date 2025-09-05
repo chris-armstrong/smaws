@@ -18,7 +18,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       connect_custom_key_store_request ->
-        (unit,
+        (connect_custom_key_store_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudHsmClusterInvalidConfigurationException of
               cloud_hsm_cluster_invalid_configuration_exception 
@@ -36,7 +36,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_alias_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AlreadyExistsException of already_exists_exception 
           | `DependencyTimeoutException of dependency_timeout_exception 
@@ -158,7 +158,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_alias_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `KMSInternalException of kms_internal_exception 
@@ -171,7 +171,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_custom_key_store_request ->
-        (unit,
+        (delete_custom_key_store_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomKeyStoreHasCMKsException of
               custom_key_store_has_cm_ks_exception 
@@ -247,7 +247,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_key_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `InvalidArnException of invalid_arn_exception 
@@ -261,7 +261,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_key_rotation_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `DisabledException of disabled_exception 
@@ -278,7 +278,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disconnect_custom_key_store_request ->
-        (unit,
+        (disconnect_custom_key_store_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomKeyStoreInvalidStateException of
               custom_key_store_invalid_state_exception 
@@ -292,7 +292,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_key_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `InvalidArnException of invalid_arn_exception 
@@ -307,7 +307,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_key_rotation_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `DisabledException of disabled_exception 
@@ -638,7 +638,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_key_policy_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `InvalidArnException of invalid_arn_exception 
@@ -698,7 +698,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       retire_grant_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `DryRunOperationException of dry_run_operation_exception 
@@ -715,7 +715,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       revoke_grant_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `DryRunOperationException of dry_run_operation_exception 
@@ -782,7 +782,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `KMSInternalException of kms_internal_exception 
@@ -797,7 +797,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `KMSInternalException of kms_internal_exception 
@@ -811,7 +811,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_alias_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `KMSInternalException of kms_internal_exception 
@@ -825,7 +825,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_custom_key_store_request ->
-        (unit,
+        (update_custom_key_store_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CloudHsmClusterInvalidConfigurationException of
               cloud_hsm_cluster_invalid_configuration_exception 
@@ -867,7 +867,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_key_description_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DependencyTimeoutException of dependency_timeout_exception 
           | `InvalidArnException of invalid_arn_exception 
@@ -881,7 +881,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_primary_region_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DisabledException of disabled_exception 
           | `InvalidArnException of invalid_arn_exception 

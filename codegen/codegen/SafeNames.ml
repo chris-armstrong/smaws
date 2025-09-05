@@ -14,14 +14,12 @@ let reservedWords =
       "protected";
       "string";
       "bool";
-      "integer";
       "object";
       "type";
       "let";
       "and";
       "open";
       "float";
-      "timestamp";
       "include";
       "boolean";
       "unit";
@@ -112,10 +110,9 @@ let snakeCase name =
 let safeMemberName = snakeCase
 
 let safeTypeName target =
-  (let name = symbolName target in
-   let namespace = symbolNamespace target in
-   match namespace with "smithy.api" -> safeMemberName ("Base" ^ name) | _ -> safeMemberName name)
-  [@ns.braces]
+  let name = symbolName target in
+  let namespace = symbolNamespace target in
+  match namespace with "smithy.api" -> safeMemberName ("Base" ^ name) | _ -> safeMemberName name
 
 let safeFunctionName = safeTypeName
 

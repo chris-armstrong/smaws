@@ -8,7 +8,6 @@ let single_query_argument_to_yojson (x : single_query_argument) =
 let all_query_arguments_to_yojson = unit_to_yojson
 let uri_path_to_yojson = unit_to_yojson
 let query_string_to_yojson = unit_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let oversize_handling_to_yojson (x : oversize_handling) =
   match x with
   | NO_MATCH -> `String "NO_MATCH"
@@ -2362,14 +2361,3 @@ let associate_web_acl_request_to_yojson (x : associate_web_acl_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)));
     ("WebACLArn", (Some (resource_arn_to_yojson x.web_acl_arn)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson
-let base_float_to_yojson = float_to_yojson
-let base_double_to_yojson = double_to_yojson
-let base_short_to_yojson = short_to_yojson
-let base_blob_to_yojson = blob_to_yojson
-let base_byte_to_yojson = byte_to_yojson

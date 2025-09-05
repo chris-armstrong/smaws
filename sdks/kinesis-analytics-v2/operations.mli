@@ -136,7 +136,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_application_snapshot_request ->
-        (unit,
+        (create_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -153,7 +153,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_request ->
-        (unit,
+        (delete_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -236,7 +236,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_snapshot_request ->
-        (unit,
+        (delete_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -452,7 +452,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -467,7 +467,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

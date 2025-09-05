@@ -1,5 +1,7 @@
 (lang dune 3.15)
 
+(using directory-targets 0.1)
+
 (name smaws)
 
 (generate_opam_files true)
@@ -82,7 +84,8 @@
    (>= "0.2.0"))
   (httpun-eio
    (>= "0.2.0"))
-  (ptime (>= "1.2.0"))
+  (ptime
+   (>= "1.2.0"))
   (ppx_deriving
    (and
     (>= "5.0")

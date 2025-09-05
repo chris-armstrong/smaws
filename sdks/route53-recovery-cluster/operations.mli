@@ -36,7 +36,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_routing_control_state_request ->
-        (unit,
+        (update_routing_control_state_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -53,7 +53,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_routing_control_states_request ->
-        (unit,
+        (update_routing_control_states_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 

@@ -5,7 +5,6 @@ let validation_exception_to_yojson (x : validation_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let stream_ar_n_to_yojson = string_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let stream_mode_to_yojson (x : stream_mode) =
   match x with
   | ON_DEMAND -> `String "ON_DEMAND"
@@ -666,14 +665,3 @@ let add_tags_to_stream_input_to_yojson (x : add_tags_to_stream_input) =
     [("StreamARN", (option_to_yojson stream_ar_n_to_yojson x.stream_ar_n));
     ("Tags", (Some (tag_map_to_yojson x.tags)));
     ("StreamName", (option_to_yojson stream_name_to_yojson x.stream_name))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson
-let base_float_to_yojson = float_to_yojson
-let base_double_to_yojson = double_to_yojson
-let base_short_to_yojson = short_to_yojson
-let base_blob_to_yojson = blob_to_yojson
-let base_byte_to_yojson = byte_to_yojson

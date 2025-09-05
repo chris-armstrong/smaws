@@ -2,7 +2,12 @@ open Parselib
 
 type t = Codegen.Types.t
 
-val create_alias_context : Ast.Shape.t list -> t
+val create_alias_context :
+  namespace:string ->
+  namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t ->
+  should_alias:bool ->
+  Ast.Shape.t list ->
+  t
 
 val generate_ml :
   name:string ->
@@ -11,7 +16,7 @@ val generate_ml :
   alias_context:t ->
   ?with_derivings:bool ->
   ?no_open:bool ->
-  ?namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t option ->
+  namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t ->
   Format.formatter ->
   unit
 
@@ -22,6 +27,6 @@ val generate_mli :
   alias_context:t ->
   ?with_derivings:bool ->
   ?no_open:bool ->
-  ?namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t option ->
+  namespace_resolver:Codegen.Namespace_resolver.Namespace_resolver.t ->
   Format.formatter ->
   unit

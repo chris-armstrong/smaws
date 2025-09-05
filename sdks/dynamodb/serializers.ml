@@ -58,7 +58,6 @@ let write_request_to_yojson (x : write_request) =
     ("PutRequest", (option_to_yojson put_request_to_yojson x.put_request))]
 let write_requests_to_yojson tree =
   list_to_yojson write_request_to_yojson tree
-let base_unit_to_yojson = unit_to_yojson
 let witness_status_to_yojson (x : witness_status) =
   match x with
   | ACTIVE -> `String "ACTIVE"
@@ -2726,14 +2725,3 @@ let batch_execute_statement_input_to_yojson
        (option_to_yojson return_consumed_capacity_to_yojson
           x.return_consumed_capacity));
     ("Statements", (Some (parti_ql_batch_request_to_yojson x.statements)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson
-let base_float_to_yojson = float_to_yojson
-let base_double_to_yojson = double_to_yojson
-let base_short_to_yojson = short_to_yojson
-let base_blob_to_yojson = blob_to_yojson
-let base_byte_to_yojson = byte_to_yojson
