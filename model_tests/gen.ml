@@ -40,7 +40,7 @@ let main () =
       in
       mkdir_if_not_exists output_dir;
       Stdlib.Printf.printf "Writing types to %s\n" output_dir;
-      let _ = Sdkgen.write_types ~with_derivings:true ~output_dir ~filename:"types" model in
+      let _ = Sdkgen.write_types ~with_derivings:true ~output_dir model in
       Ok ()
   | None -> Ok ()
 

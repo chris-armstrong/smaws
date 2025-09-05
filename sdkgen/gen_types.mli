@@ -10,8 +10,6 @@ val create_alias_context :
   t
 
 val generate_ml :
-  name:string ->
-  service:Ast.Shape.serviceShapeDetails ->
   structure_shapes:Ast.Dependencies.shapeWithTarget list ->
   alias_context:t ->
   ?with_derivings:bool ->
@@ -21,8 +19,6 @@ val generate_ml :
   unit
 
 val generate_mli :
-  name:string ->
-  service:Ast.Shape.serviceShapeDetails ->
   structure_shapes:Ast.Dependencies.shapeWithTarget list ->
   alias_context:t ->
   ?with_derivings:bool ->

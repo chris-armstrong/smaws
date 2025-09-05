@@ -1,6 +1,6 @@
 (rule
  (targets
-  (dir ./json))
+  (dir json))
  (mode promote)
  (deps
   (:gen ../gen.exe)
@@ -10,7 +10,7 @@
 
 (rule
  (targets
-  (dir ./shared))
+  (dir shared))
  (mode promote)
  (deps
   (:gen ../gen.exe)

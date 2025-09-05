@@ -2,6 +2,7 @@ open Parselib
 open Base
 
 type t = {
+  namespace : string;
   operation_shapes : (string * Ast.Shape.operationShapeDetails * string list) list;
   structure_shapes : Ast.Dependencies.shapeWithTarget list;
   service_details : (string * Ast.Shape.serviceShapeDetails * Ast.Trait.serviceDetails) option;
@@ -71,6 +72,7 @@ and make_namespace_context ?(should_alias : bool = false) namespace shapes names
     Gen_types.create_alias_context ~namespace ~namespace_resolver ~should_alias flattened_shapes
   in
   {
+    namespace;
     service_details;
     operation_shapes;
     structure_shapes;
@@ -155,27 +157,22 @@ let write_output ~output_dir ~filename generate =
   with Sys_error txt -> Error (`OutputError txt)
 
 let write_types ~output_dir ?(with_derivings = false) t =
-  let { service_details; structure_shapes; alias_context; namespace_module_mapping; _ } = t in
-  let name, service, service_details =
-    service_details |> Option.value_exn ~message:"no service shape present"
+  let { namespace; service_details; structure_shapes; alias_context; namespace_module_mapping; _ } =
+    t
   in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    let current_namespace = Codegen.Util.symbolNamespace name in
-
-    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
   let filename = "types" in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_types.generate_ml ~name ~service ~structure_shapes ~alias_context ~with_derivings
-          ~namespace_resolver output_fmt)
+        Gen_types.generate_ml ~structure_shapes ~alias_context ~with_derivings ~namespace_resolver
+          output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_types.generate_mli ~name ~service ~structure_shapes ~alias_context ~with_derivings
-          ~namespace_resolver output_fmt)
+        Gen_types.generate_mli ~structure_shapes ~alias_context ~with_derivings ~namespace_resolver
+          output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 
@@ -196,6 +193,7 @@ let write_service_metadata ~output_dir t =
 
 let write_builders ~output_dir t =
   let {
+    namespace;
     service_details;
     structure_shapes;
     alias_context;
@@ -205,25 +203,19 @@ let write_builders ~output_dir t =
   } =
     t
   in
-  let name, service, service_details =
-    service_details |> Option.value_exn ~message:"no service shape present"
-  in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    let current_namespace = Codegen.Util.symbolNamespace name in
-    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
   let filename = "builders" in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_builders.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
-          ~namespace_resolver output_fmt)
+        Gen_builders.generate ~operation_shapes ~structure_shapes ~alias_context ~namespace_resolver
+          output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_builders.generate_mli ~name ~service ~operation_shapes ~structure_shapes ~alias_context
+        Gen_builders.generate_mli ~operation_shapes ~structure_shapes ~alias_context
           ~namespace_resolver output_fmt)
   in
   Result.all_unit [ r1; r2 ]

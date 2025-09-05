@@ -5,8 +5,7 @@ type t = Codegen.Types.t
 
 let create_alias_context = Codegen.Types.create_alias_context
 
-let generate_ml ~name ~(service : Ast.Shape.serviceShapeDetails) ~structure_shapes ~alias_context
-    ?(with_derivings = false) ?(no_open = false)
+let generate_ml ~structure_shapes ~alias_context ?(with_derivings = false) ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
   let open Codegen.Types in
   (* let opens = if not no_open then [ Codegen.Ppx_util.stri_open [ "Smaws_Lib" ] ] else [] in *)
@@ -17,8 +16,7 @@ let generate_ml ~name ~(service : Ast.Shape.serviceShapeDetails) ~structure_shap
   in
   Ppxlib.Pprintast.structure fmt (opens @ sm @ types)
 
-let generate_mli ~name ~(service : Ast.Shape.serviceShapeDetails) ~structure_shapes ~alias_context
-    ?(with_derivings = false) ?(no_open = false)
+let generate_mli ~structure_shapes ~alias_context ?(with_derivings = false) ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
   let open Codegen.Types in
   (* let opens = if not no_open then [ Codegen.Ppx_util.sigi_open [ "Smaws_Lib" ] ] else [] in *)
