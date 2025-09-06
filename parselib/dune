@@ -1,0 +1,4 @@
+(library
+ (name Parselib)
+ (modules Parselib)
+ (libraries smithy_ast codegen smaws_parse))

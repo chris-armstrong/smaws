@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/keyspaces/service/2022-02-10/keyspaces-2022-02-10.json))
+  (:input
+   ../../api-models-aws/models/keyspaces/service/2022-02-10/keyspaces-2022-02-10.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Keyspaces.ml
   Smaws_Client_Keyspaces.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

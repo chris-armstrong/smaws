@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/swf/service/2012-01-25/swf-2012-01-25.json))
+  (:input
+   ../../api-models-aws/models/swf/service/2012-01-25/swf-2012-01-25.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_SWF.ml
   Smaws_Client_SWF.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

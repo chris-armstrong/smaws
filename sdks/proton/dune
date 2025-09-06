@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/proton/service/2020-07-20/proton-2020-07-20.json))
+  (:input
+   ../../api-models-aws/models/proton/service/2020-07-20/proton-2020-07-20.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Proton.ml
   Smaws_Client_Proton.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

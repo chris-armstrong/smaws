@@ -1,5 +1,4 @@
 open Base
-open Parselib
 
 type t = Codegen.Types.t
 

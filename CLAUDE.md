@@ -51,11 +51,10 @@ This is a set of tools for generating AWS SDks from Smithy definitions to OCaml.
 * api-models-aws/models/<model-name>/<model_name>/service/<version>/<model_name>-<version>.json - the Smithy definitions (git submodule)
 * awssdklib - aka Smaws_Lib, the supprot library for Smaws used in generated code
 * bin/AwsGenerator.ml - the main code generator used to make the sdks
-* codegen - aka Parselib
-* codegen/ast - the AST for Smithy
-* codegen/codegen - code generation for the SDKs
-* codegen/parse - parsing smithy definitions from json
-* library_test - tests for Parselib
+* smithy_ast - the AST for Smithy
+* codegen - code generation for the SDKs
+* smaws_parse - parsing smithy definitions from json, parse simple html for documentation, parse json
+* codegen_test - tests for codegen
 * model_tests - testing code for Smithy protocol definitions (in progress)
 * sdkgen - the SDK generator high-level code and entry-points
 * sdks - generated sdks

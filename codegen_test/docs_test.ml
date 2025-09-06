@@ -1,4 +1,4 @@
-open Parselib.Parse.Html
+open Smaws_parse.Html
 
 let mydom = (module BasicDom : Alcotest.TESTABLE with type t = BasicDom.t)
 

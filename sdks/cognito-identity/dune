@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/cognito-identity/service/2014-06-30/cognito-identity-2014-06-30.json))
+  (:input
+   ../../api-models-aws/models/cognito-identity/service/2014-06-30/cognito-identity-2014-06-30.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_CognitoIdentity.ml
   Smaws_Client_CognitoIdentity.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

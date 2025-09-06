@@ -1,19 +1,22 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
+
 let word_of_yojson = string_of_yojson
 let words_of_yojson tree path = list_of_yojson word_of_yojson tree path
+
 let vocabulary_state_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "FAILED" -> FAILED
     | `String "READY" -> READY
     | `String "PENDING" -> PENDING
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "VocabularyState" value)
-    | _ -> raise (deserialize_wrong_type_error path "VocabularyState") : 
-     vocabulary_state) : vocabulary_state)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "VocabularyState" value)
+    | _ -> raise (deserialize_wrong_type_error path "VocabularyState")
+     : vocabulary_state)
+    : vocabulary_state)
+
 let vocabulary_name_of_yojson = string_of_yojson
+
 let language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -122,47 +125,46 @@ let language_code_of_yojson (tree : t) path =
     | `String "ar-SA" -> AR_SA
     | `String "ar-AE" -> AR_AE
     | `String "af-ZA" -> AF_ZA
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "LanguageCode" value)
-    | _ -> raise (deserialize_wrong_type_error path "LanguageCode") : 
-     language_code) : language_code)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "LanguageCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "LanguageCode")
+     : language_code)
+    : language_code)
+
 let date_time_of_yojson = timestamp_epoch_seconds_of_yojson
+
 let vocabulary_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : vocabulary_info)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : vocabulary_info)
+
 let vocabulary_filter_name_of_yojson = string_of_yojson
+
 let vocabulary_filter_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path)
-   } : vocabulary_filter_info)
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
+   }
+    : vocabulary_filter_info)
+
 let vocabulary_filters_of_yojson tree path =
   list_of_yojson vocabulary_filter_info_of_yojson tree path
+
 let vocabulary_filter_method_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -170,275 +172,226 @@ let vocabulary_filter_method_of_yojson (tree : t) path =
     | `String "mask" -> MASK
     | `String "remove" -> REMOVE
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "VocabularyFilterMethod"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "VocabularyFilterMethod") : 
-     vocabulary_filter_method) : vocabulary_filter_method)
-let vocabularies_of_yojson tree path =
-  list_of_yojson vocabulary_info_of_yojson tree path
+        raise (deserialize_unknown_enum_value_error path "VocabularyFilterMethod" value)
+    | _ -> raise (deserialize_wrong_type_error path "VocabularyFilterMethod")
+     : vocabulary_filter_method)
+    : vocabulary_filter_method)
+
+let vocabularies_of_yojson tree path = list_of_yojson vocabulary_info_of_yojson tree path
 let uri_of_yojson = string_of_yojson
+
 let update_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : update_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : update_vocabulary_response)
+
 let phrase_of_yojson = string_of_yojson
 let phrases_of_yojson tree path = list_of_yojson phrase_of_yojson tree path
 let data_access_role_arn_of_yojson = string_of_yojson
+
 let update_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      vocabulary_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "VocabularyFileUri")
-          _list path);
-     phrases =
-       (option_of_yojson (value_for_key phrases_of_yojson "Phrases") _list
-          path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : update_vocabulary_request)
+       option_of_yojson (value_for_key uri_of_yojson "VocabularyFileUri") _list path;
+     phrases = option_of_yojson (value_for_key phrases_of_yojson "Phrases") _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
+     vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path;
+   }
+    : update_vocabulary_request)
+
 let update_vocabulary_filter_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path)
-   } : update_vocabulary_filter_response)
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
+   }
+    : update_vocabulary_filter_response)
+
 let update_vocabulary_filter_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      vocabulary_filter_file_uri =
-       (option_of_yojson
-          (value_for_key uri_of_yojson "VocabularyFilterFileUri") _list path);
-     words =
-       (option_of_yojson (value_for_key words_of_yojson "Words") _list path);
+       option_of_yojson (value_for_key uri_of_yojson "VocabularyFilterFileUri") _list path;
+     words = option_of_yojson (value_for_key words_of_yojson "Words") _list path;
      vocabulary_filter_name =
-       (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName"
-          _list path)
-   } : update_vocabulary_filter_request)
+       value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName" _list path;
+   }
+    : update_vocabulary_filter_request)
+
 let string__of_yojson = string_of_yojson
+
 let not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "Message") _list
-          path)
-   } : not_found_exception)
+  ({ message = option_of_yojson (value_for_key string__of_yojson "Message") _list path }
+    : not_found_exception)
+
 let limit_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "Message") _list
-          path)
-   } : limit_exceeded_exception)
+  ({ message = option_of_yojson (value_for_key string__of_yojson "Message") _list path }
+    : limit_exceeded_exception)
+
 let internal_failure_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "Message") _list
-          path)
-   } : internal_failure_exception)
+  ({ message = option_of_yojson (value_for_key string__of_yojson "Message") _list path }
+    : internal_failure_exception)
+
 let failure_reason_of_yojson = string_of_yojson
+
 let bad_request_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key failure_reason_of_yojson "Message")
-          _list path)
-   } : bad_request_exception)
+  ({ message = option_of_yojson (value_for_key failure_reason_of_yojson "Message") _list path }
+    : bad_request_exception)
+
 let conflict_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "Message") _list
-          path)
-   } : conflict_exception)
+  ({ message = option_of_yojson (value_for_key string__of_yojson "Message") _list path }
+    : conflict_exception)
+
 let update_medical_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : update_medical_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : update_medical_vocabulary_response)
+
 let update_medical_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     vocabulary_file_uri =
-       (value_for_key uri_of_yojson "VocabularyFileUri" _list path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : update_medical_vocabulary_request)
+     vocabulary_file_uri = value_for_key uri_of_yojson "VocabularyFileUri" _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
+     vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path;
+   }
+    : update_medical_vocabulary_request)
+
 let category_name_of_yojson = string_of_yojson
 let timestamp_milliseconds_of_yojson = long_of_yojson
+
 let absolute_time_range_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     last =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "Last") _list path);
-     first =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "First") _list path);
+     last = option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "Last") _list path;
+     first = option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "First") _list path;
      end_time =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "EndTime") _list
-          path);
+       option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "EndTime") _list path;
      start_time =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "StartTime") _list
-          path)
-   } : absolute_time_range)
+       option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "StartTime") _list path;
+   }
+    : absolute_time_range)
+
 let percentage_of_yojson = int_of_yojson
+
 let relative_time_range_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     last =
-       (option_of_yojson (value_for_key percentage_of_yojson "Last") _list
-          path);
-     first =
-       (option_of_yojson (value_for_key percentage_of_yojson "First") _list
-          path);
+     last = option_of_yojson (value_for_key percentage_of_yojson "Last") _list path;
+     first = option_of_yojson (value_for_key percentage_of_yojson "First") _list path;
      end_percentage =
-       (option_of_yojson (value_for_key percentage_of_yojson "EndPercentage")
-          _list path);
+       option_of_yojson (value_for_key percentage_of_yojson "EndPercentage") _list path;
      start_percentage =
-       (option_of_yojson
-          (value_for_key percentage_of_yojson "StartPercentage") _list path)
-   } : relative_time_range)
+       option_of_yojson (value_for_key percentage_of_yojson "StartPercentage") _list path;
+   }
+    : relative_time_range)
+
 let boolean__of_yojson = bool_of_yojson
+
 let non_talk_time_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     negate =
-       (option_of_yojson (value_for_key boolean__of_yojson "Negate") _list
-          path);
+     negate = option_of_yojson (value_for_key boolean__of_yojson "Negate") _list path;
      relative_time_range =
-       (option_of_yojson
-          (value_for_key relative_time_range_of_yojson "RelativeTimeRange")
-          _list path);
+       option_of_yojson (value_for_key relative_time_range_of_yojson "RelativeTimeRange") _list path;
      absolute_time_range =
-       (option_of_yojson
-          (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange")
-          _list path);
+       option_of_yojson (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange") _list path;
      threshold =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "Threshold") _list
-          path)
-   } : non_talk_time_filter)
+       option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "Threshold") _list path;
+   }
+    : non_talk_time_filter)
+
 let participant_role_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "CUSTOMER" -> CUSTOMER
     | `String "AGENT" -> AGENT
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "ParticipantRole" value)
-    | _ -> raise (deserialize_wrong_type_error path "ParticipantRole") : 
-     participant_role) : participant_role)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "ParticipantRole" value)
+    | _ -> raise (deserialize_wrong_type_error path "ParticipantRole")
+     : participant_role)
+    : participant_role)
+
 let interruption_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     negate =
-       (option_of_yojson (value_for_key boolean__of_yojson "Negate") _list
-          path);
+     negate = option_of_yojson (value_for_key boolean__of_yojson "Negate") _list path;
      relative_time_range =
-       (option_of_yojson
-          (value_for_key relative_time_range_of_yojson "RelativeTimeRange")
-          _list path);
+       option_of_yojson (value_for_key relative_time_range_of_yojson "RelativeTimeRange") _list path;
      absolute_time_range =
-       (option_of_yojson
-          (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange")
-          _list path);
+       option_of_yojson (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange") _list path;
      participant_role =
-       (option_of_yojson
-          (value_for_key participant_role_of_yojson "ParticipantRole") _list
-          path);
+       option_of_yojson (value_for_key participant_role_of_yojson "ParticipantRole") _list path;
      threshold =
-       (option_of_yojson
-          (value_for_key timestamp_milliseconds_of_yojson "Threshold") _list
-          path)
-   } : interruption_filter)
+       option_of_yojson (value_for_key timestamp_milliseconds_of_yojson "Threshold") _list path;
+   }
+    : interruption_filter)
+
 let transcript_filter_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "EXACT" -> EXACT
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "TranscriptFilterType"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "TranscriptFilterType") : 
-     transcript_filter_type) : transcript_filter_type)
+        raise (deserialize_unknown_enum_value_error path "TranscriptFilterType" value)
+    | _ -> raise (deserialize_wrong_type_error path "TranscriptFilterType")
+     : transcript_filter_type)
+    : transcript_filter_type)
+
 let non_empty_string_of_yojson = string_of_yojson
-let string_target_list_of_yojson tree path =
-  list_of_yojson non_empty_string_of_yojson tree path
+let string_target_list_of_yojson tree path = list_of_yojson non_empty_string_of_yojson tree path
+
 let transcript_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     targets =
-       (value_for_key string_target_list_of_yojson "Targets" _list path);
-     negate =
-       (option_of_yojson (value_for_key boolean__of_yojson "Negate") _list
-          path);
+     targets = value_for_key string_target_list_of_yojson "Targets" _list path;
+     negate = option_of_yojson (value_for_key boolean__of_yojson "Negate") _list path;
      participant_role =
-       (option_of_yojson
-          (value_for_key participant_role_of_yojson "ParticipantRole") _list
-          path);
+       option_of_yojson (value_for_key participant_role_of_yojson "ParticipantRole") _list path;
      relative_time_range =
-       (option_of_yojson
-          (value_for_key relative_time_range_of_yojson "RelativeTimeRange")
-          _list path);
+       option_of_yojson (value_for_key relative_time_range_of_yojson "RelativeTimeRange") _list path;
      absolute_time_range =
-       (option_of_yojson
-          (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange")
-          _list path);
+       option_of_yojson (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange") _list path;
      transcript_filter_type =
-       (value_for_key transcript_filter_type_of_yojson "TranscriptFilterType"
-          _list path)
-   } : transcript_filter)
+       value_for_key transcript_filter_type_of_yojson "TranscriptFilterType" _list path;
+   }
+    : transcript_filter)
+
 let sentiment_value_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -446,132 +399,126 @@ let sentiment_value_of_yojson (tree : t) path =
     | `String "NEUTRAL" -> NEUTRAL
     | `String "NEGATIVE" -> NEGATIVE
     | `String "POSITIVE" -> POSITIVE
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "SentimentValue" value)
-    | _ -> raise (deserialize_wrong_type_error path "SentimentValue") : 
-     sentiment_value) : sentiment_value)
-let sentiment_value_list_of_yojson tree path =
-  list_of_yojson sentiment_value_of_yojson tree path
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SentimentValue" value)
+    | _ -> raise (deserialize_wrong_type_error path "SentimentValue")
+     : sentiment_value)
+    : sentiment_value)
+
+let sentiment_value_list_of_yojson tree path = list_of_yojson sentiment_value_of_yojson tree path
+
 let sentiment_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     negate =
-       (option_of_yojson (value_for_key boolean__of_yojson "Negate") _list
-          path);
+     negate = option_of_yojson (value_for_key boolean__of_yojson "Negate") _list path;
      participant_role =
-       (option_of_yojson
-          (value_for_key participant_role_of_yojson "ParticipantRole") _list
-          path);
+       option_of_yojson (value_for_key participant_role_of_yojson "ParticipantRole") _list path;
      relative_time_range =
-       (option_of_yojson
-          (value_for_key relative_time_range_of_yojson "RelativeTimeRange")
-          _list path);
+       option_of_yojson (value_for_key relative_time_range_of_yojson "RelativeTimeRange") _list path;
      absolute_time_range =
-       (option_of_yojson
-          (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange")
-          _list path);
-     sentiments =
-       (value_for_key sentiment_value_list_of_yojson "Sentiments" _list path)
-   } : sentiment_filter)
+       option_of_yojson (value_for_key absolute_time_range_of_yojson "AbsoluteTimeRange") _list path;
+     sentiments = value_for_key sentiment_value_list_of_yojson "Sentiments" _list path;
+   }
+    : sentiment_filter)
+
 let rule_of_yojson (tree : t) path =
   let _list = assoc_of_yojson tree path in
-  let (key, value_) =
+  let key, value_ =
     match _list with
-    | (key, value_)::_ -> (key, value_)
-    | _ -> raise (deserialize_wrong_type_error path "union") in
+    | (key, value_) :: _ -> (key, value_)
+    | _ -> raise (deserialize_wrong_type_error path "union")
+  in
   (match key with
-   | "SentimentFilter" ->
-       SentimentFilter (sentiment_filter_of_yojson value_ path)
-   | "TranscriptFilter" ->
-       TranscriptFilter (transcript_filter_of_yojson value_ path)
-   | "InterruptionFilter" ->
-       InterruptionFilter (interruption_filter_of_yojson value_ path)
-   | "NonTalkTimeFilter" ->
-       NonTalkTimeFilter (non_talk_time_filter_of_yojson value_ path)
-   | _ as unknown ->
-       raise (deserialize_unknown_enum_value_error path "Rule" unknown) : 
-    rule)
+   | "SentimentFilter" -> SentimentFilter (sentiment_filter_of_yojson value_ path)
+   | "TranscriptFilter" -> TranscriptFilter (transcript_filter_of_yojson value_ path)
+   | "InterruptionFilter" -> InterruptionFilter (interruption_filter_of_yojson value_ path)
+   | "NonTalkTimeFilter" -> NonTalkTimeFilter (non_talk_time_filter_of_yojson value_ path)
+   | _ as unknown -> raise (deserialize_unknown_enum_value_error path "Rule" unknown)
+    : rule)
+
 let rule_list_of_yojson tree path = list_of_yojson rule_of_yojson tree path
 let tag_key_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
+
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     value = (value_for_key tag_value_of_yojson "Value" _list path);
-     key = (value_for_key tag_key_of_yojson "Key" _list path)
-   } : tag)
+     value = value_for_key tag_value_of_yojson "Value" _list path;
+     key = value_for_key tag_key_of_yojson "Key" _list path;
+   }
+    : tag)
+
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
+
 let input_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "POST_CALL" -> POST_CALL
     | `String "REAL_TIME" -> REAL_TIME
-    | `String value ->
-        raise (deserialize_unknown_enum_value_error path "InputType" value)
-    | _ -> raise (deserialize_wrong_type_error path "InputType") : input_type) : 
-  input_type)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "InputType" value)
+    | _ -> raise (deserialize_wrong_type_error path "InputType")
+     : input_type)
+    : input_type)
+
 let category_properties_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     input_type =
-       (option_of_yojson (value_for_key input_type_of_yojson "InputType")
-          _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     input_type = option_of_yojson (value_for_key input_type_of_yojson "InputType") _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      last_update_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "LastUpdateTime")
-          _list path);
-     create_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreateTime")
-          _list path);
-     rules =
-       (option_of_yojson (value_for_key rule_list_of_yojson "Rules") _list
-          path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastUpdateTime") _list path;
+     create_time = option_of_yojson (value_for_key date_time_of_yojson "CreateTime") _list path;
+     rules = option_of_yojson (value_for_key rule_list_of_yojson "Rules") _list path;
      category_name =
-       (option_of_yojson
-          (value_for_key category_name_of_yojson "CategoryName") _list path)
-   } : category_properties)
+       option_of_yojson (value_for_key category_name_of_yojson "CategoryName") _list path;
+   }
+    : category_properties)
+
 let update_call_analytics_category_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      category_properties =
-       (option_of_yojson
-          (value_for_key category_properties_of_yojson "CategoryProperties")
-          _list path)
-   } : update_call_analytics_category_response)
+       option_of_yojson
+         (value_for_key category_properties_of_yojson "CategoryProperties")
+         _list path;
+   }
+    : update_call_analytics_category_response)
+
 let update_call_analytics_category_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     input_type =
-       (option_of_yojson (value_for_key input_type_of_yojson "InputType")
-          _list path);
-     rules = (value_for_key rule_list_of_yojson "Rules" _list path);
-     category_name =
-       (value_for_key category_name_of_yojson "CategoryName" _list path)
-   } : update_call_analytics_category_request)
+     input_type = option_of_yojson (value_for_key input_type_of_yojson "InputType") _list path;
+     rules = value_for_key rule_list_of_yojson "Rules" _list path;
+     category_name = value_for_key category_name_of_yojson "CategoryName" _list path;
+   }
+    : update_call_analytics_category_request)
+
 let untag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let transcribe_arn_of_yojson = string_of_yojson
-let tag_key_list_of_yojson tree path =
-  list_of_yojson tag_key_of_yojson tree path
+let tag_key_list_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
+
 let untag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path);
-     resource_arn =
-       (value_for_key transcribe_arn_of_yojson "ResourceArn" _list path)
-   } : untag_resource_request)
+     tag_keys = value_for_key tag_key_list_of_yojson "TagKeys" _list path;
+     resource_arn = value_for_key transcribe_arn_of_yojson "ResourceArn" _list path;
+   }
+    : untag_resource_request)
+
 let type__of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "DICTATION" -> DICTATION
     | `String "CONVERSATION" -> CONVERSATION
-    | `String value ->
-        raise (deserialize_unknown_enum_value_error path "Type" value)
-    | _ -> raise (deserialize_wrong_type_error path "Type") : type_) : 
-  type_)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Type" value)
+    | _ -> raise (deserialize_wrong_type_error path "Type")
+     : type_)
+    : type_)
+
 let transcription_job_name_of_yojson = string_of_yojson
+
 let transcription_job_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -580,41 +527,40 @@ let transcription_job_status_of_yojson (tree : t) path =
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "QUEUED" -> QUEUED
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "TranscriptionJobStatus"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "TranscriptionJobStatus") : 
-     transcription_job_status) : transcription_job_status)
+        raise (deserialize_unknown_enum_value_error path "TranscriptionJobStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "TranscriptionJobStatus")
+     : transcription_job_status)
+    : transcription_job_status)
+
 let output_location_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "SERVICE_BUCKET" -> SERVICE_BUCKET
     | `String "CUSTOMER_BUCKET" -> CUSTOMER_BUCKET
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "OutputLocationType"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "OutputLocationType") : 
-     output_location_type) : output_location_type)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "OutputLocationType" value)
+    | _ -> raise (deserialize_wrong_type_error path "OutputLocationType")
+     : output_location_type)
+    : output_location_type)
+
 let redaction_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "PII" -> PII
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "RedactionType" value)
-    | _ -> raise (deserialize_wrong_type_error path "RedactionType") : 
-     redaction_type) : redaction_type)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "RedactionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RedactionType")
+     : redaction_type)
+    : redaction_type)
+
 let redaction_output_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "redacted_and_unredacted" -> REDACTED_AND_UNREDACTED
     | `String "redacted" -> REDACTED
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "RedactionOutput" value)
-    | _ -> raise (deserialize_wrong_type_error path "RedactionOutput") : 
-     redaction_output) : redaction_output)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "RedactionOutput" value)
+    | _ -> raise (deserialize_wrong_type_error path "RedactionOutput")
+     : redaction_output)
+    : redaction_output)
+
 let pii_entity_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -630,128 +576,117 @@ let pii_entity_type_of_yojson (tree : t) path =
     | `String "CREDIT_DEBIT_NUMBER" -> CREDIT_DEBIT_NUMBER
     | `String "BANK_ROUTING" -> BANK_ROUTING
     | `String "BANK_ACCOUNT_NUMBER" -> BANK_ACCOUNT_NUMBER
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "PiiEntityType" value)
-    | _ -> raise (deserialize_wrong_type_error path "PiiEntityType") : 
-     pii_entity_type) : pii_entity_type)
-let pii_entity_types_of_yojson tree path =
-  list_of_yojson pii_entity_type_of_yojson tree path
+    | `String value -> raise (deserialize_unknown_enum_value_error path "PiiEntityType" value)
+    | _ -> raise (deserialize_wrong_type_error path "PiiEntityType")
+     : pii_entity_type)
+    : pii_entity_type)
+
+let pii_entity_types_of_yojson tree path = list_of_yojson pii_entity_type_of_yojson tree path
+
 let content_redaction_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      pii_entity_types =
-       (option_of_yojson
-          (value_for_key pii_entity_types_of_yojson "PiiEntityTypes") _list
-          path);
-     redaction_output =
-       (value_for_key redaction_output_of_yojson "RedactionOutput" _list path);
-     redaction_type =
-       (value_for_key redaction_type_of_yojson "RedactionType" _list path)
-   } : content_redaction)
+       option_of_yojson (value_for_key pii_entity_types_of_yojson "PiiEntityTypes") _list path;
+     redaction_output = value_for_key redaction_output_of_yojson "RedactionOutput" _list path;
+     redaction_type = value_for_key redaction_type_of_yojson "RedactionType" _list path;
+   }
+    : content_redaction)
+
 let model_name_of_yojson = string_of_yojson
+
 let model_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      language_model_name =
-       (option_of_yojson
-          (value_for_key model_name_of_yojson "LanguageModelName") _list path)
-   } : model_settings)
+       option_of_yojson (value_for_key model_name_of_yojson "LanguageModelName") _list path;
+   }
+    : model_settings)
+
 let identified_language_score_of_yojson = float_of_yojson
 let duration_in_seconds_of_yojson = float_of_yojson
+
 let language_code_item_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      duration_in_seconds =
-       (option_of_yojson
-          (value_for_key duration_in_seconds_of_yojson "DurationInSeconds")
-          _list path);
+       option_of_yojson (value_for_key duration_in_seconds_of_yojson "DurationInSeconds") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path)
-   } : language_code_item)
-let language_code_list_of_yojson tree path =
-  list_of_yojson language_code_item_of_yojson tree path
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
+   }
+    : language_code_item)
+
+let language_code_list_of_yojson tree path = list_of_yojson language_code_item_of_yojson tree path
+
 let toxicity_category_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "ALL" -> ALL
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "ToxicityCategory" value)
-    | _ -> raise (deserialize_wrong_type_error path "ToxicityCategory") : 
-     toxicity_category) : toxicity_category)
-let toxicity_categories_of_yojson tree path =
-  list_of_yojson toxicity_category_of_yojson tree path
+    | `String value -> raise (deserialize_unknown_enum_value_error path "ToxicityCategory" value)
+    | _ -> raise (deserialize_wrong_type_error path "ToxicityCategory")
+     : toxicity_category)
+    : toxicity_category)
+
+let toxicity_categories_of_yojson tree path = list_of_yojson toxicity_category_of_yojson tree path
+
 let toxicity_detection_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      toxicity_categories =
-       (value_for_key toxicity_categories_of_yojson "ToxicityCategories"
-          _list path)
-   } : toxicity_detection_settings)
+       value_for_key toxicity_categories_of_yojson "ToxicityCategories" _list path;
+   }
+    : toxicity_detection_settings)
+
 let toxicity_detection_of_yojson tree path =
   list_of_yojson toxicity_detection_settings_of_yojson tree path
+
 let transcription_job_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      toxicity_detection =
-       (option_of_yojson
-          (value_for_key toxicity_detection_of_yojson "ToxicityDetection")
-          _list path);
+       option_of_yojson (value_for_key toxicity_detection_of_yojson "ToxicityDetection") _list path;
      language_codes =
-       (option_of_yojson
-          (value_for_key language_code_list_of_yojson "LanguageCodes") _list
-          path);
+       option_of_yojson (value_for_key language_code_list_of_yojson "LanguageCodes") _list path;
      identified_language_score =
-       (option_of_yojson
-          (value_for_key identified_language_score_of_yojson
-             "IdentifiedLanguageScore") _list path);
+       option_of_yojson
+         (value_for_key identified_language_score_of_yojson "IdentifiedLanguageScore")
+         _list path;
      identify_multiple_languages =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyMultipleLanguages")
-          _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyMultipleLanguages") _list path;
      identify_language =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyLanguage") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyLanguage") _list path;
      model_settings =
-       (option_of_yojson
-          (value_for_key model_settings_of_yojson "ModelSettings") _list path);
+       option_of_yojson (value_for_key model_settings_of_yojson "ModelSettings") _list path;
      content_redaction =
-       (option_of_yojson
-          (value_for_key content_redaction_of_yojson "ContentRedaction")
-          _list path);
+       option_of_yojson (value_for_key content_redaction_of_yojson "ContentRedaction") _list path;
      output_location_type =
-       (option_of_yojson
-          (value_for_key output_location_type_of_yojson "OutputLocationType")
-          _list path);
+       option_of_yojson
+         (value_for_key output_location_type_of_yojson "OutputLocationType")
+         _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      transcription_job_status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson
-             "TranscriptionJobStatus") _list path);
+       option_of_yojson
+         (value_for_key transcription_job_status_of_yojson "TranscriptionJobStatus")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
      transcription_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "TranscriptionJobName") _list path)
-   } : transcription_job_summary)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "TranscriptionJobName")
+         _list path;
+   }
+    : transcription_job_summary)
+
 let transcription_job_summaries_of_yojson tree path =
   list_of_yojson transcription_job_summary_of_yojson tree path
+
 let media_sample_rate_hertz_of_yojson = int_of_yojson
+
 let media_format_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -763,480 +698,393 @@ let media_format_of_yojson (tree : t) path =
     | `String "wav" -> WAV
     | `String "mp4" -> MP4
     | `String "mp3" -> MP3
-    | `String value ->
-        raise (deserialize_unknown_enum_value_error path "MediaFormat" value)
-    | _ -> raise (deserialize_wrong_type_error path "MediaFormat") : 
-     media_format) : media_format)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "MediaFormat" value)
+    | _ -> raise (deserialize_wrong_type_error path "MediaFormat")
+     : media_format)
+    : media_format)
+
 let media_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      redacted_media_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "RedactedMediaFileUri")
-          _list path);
-     media_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "MediaFileUri") _list
-          path)
-   } : media)
+       option_of_yojson (value_for_key uri_of_yojson "RedactedMediaFileUri") _list path;
+     media_file_uri = option_of_yojson (value_for_key uri_of_yojson "MediaFileUri") _list path;
+   }
+    : media)
+
 let transcript_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      redacted_transcript_file_uri =
-       (option_of_yojson
-          (value_for_key uri_of_yojson "RedactedTranscriptFileUri") _list
-          path);
+       option_of_yojson (value_for_key uri_of_yojson "RedactedTranscriptFileUri") _list path;
      transcript_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "TranscriptFileUri")
-          _list path)
-   } : transcript)
+       option_of_yojson (value_for_key uri_of_yojson "TranscriptFileUri") _list path;
+   }
+    : transcript)
+
 let max_speakers_of_yojson = int_of_yojson
 let max_alternatives_of_yojson = int_of_yojson
+
 let settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_filter_method =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_method_of_yojson
-             "VocabularyFilterMethod") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_method_of_yojson "VocabularyFilterMethod")
+         _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
      max_alternatives =
-       (option_of_yojson
-          (value_for_key max_alternatives_of_yojson "MaxAlternatives") _list
-          path);
+       option_of_yojson (value_for_key max_alternatives_of_yojson "MaxAlternatives") _list path;
      show_alternatives =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ShowAlternatives") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "ShowAlternatives") _list path;
      channel_identification =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ChannelIdentification") _list
-          path);
+       option_of_yojson (value_for_key boolean__of_yojson "ChannelIdentification") _list path;
      max_speaker_labels =
-       (option_of_yojson
-          (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list
-          path);
+       option_of_yojson (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list path;
      show_speaker_labels =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : settings)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : settings)
+
 let job_execution_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      allow_deferred_execution =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "AllowDeferredExecution") _list
-          path)
-   } : job_execution_settings)
-let language_options_of_yojson tree path =
-  list_of_yojson language_code_of_yojson tree path
+       option_of_yojson (value_for_key boolean__of_yojson "AllowDeferredExecution") _list path;
+   }
+    : job_execution_settings)
+
+let language_options_of_yojson tree path = list_of_yojson language_code_of_yojson tree path
+
 let subtitle_format_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "srt" -> SRT
     | `String "vtt" -> VTT
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "SubtitleFormat" value)
-    | _ -> raise (deserialize_wrong_type_error path "SubtitleFormat") : 
-     subtitle_format) : subtitle_format)
-let subtitle_formats_of_yojson tree path =
-  list_of_yojson subtitle_format_of_yojson tree path
-let subtitle_file_uris_of_yojson tree path =
-  list_of_yojson uri_of_yojson tree path
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SubtitleFormat" value)
+    | _ -> raise (deserialize_wrong_type_error path "SubtitleFormat")
+     : subtitle_format)
+    : subtitle_format)
+
+let subtitle_formats_of_yojson tree path = list_of_yojson subtitle_format_of_yojson tree path
+let subtitle_file_uris_of_yojson tree path = list_of_yojson uri_of_yojson tree path
 let subtitle_output_start_index_of_yojson = int_of_yojson
+
 let subtitles_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      output_start_index =
-       (option_of_yojson
-          (value_for_key subtitle_output_start_index_of_yojson
-             "OutputStartIndex") _list path);
+       option_of_yojson
+         (value_for_key subtitle_output_start_index_of_yojson "OutputStartIndex")
+         _list path;
      subtitle_file_uris =
-       (option_of_yojson
-          (value_for_key subtitle_file_uris_of_yojson "SubtitleFileUris")
-          _list path);
-     formats =
-       (option_of_yojson (value_for_key subtitle_formats_of_yojson "Formats")
-          _list path)
-   } : subtitles_output)
+       option_of_yojson (value_for_key subtitle_file_uris_of_yojson "SubtitleFileUris") _list path;
+     formats = option_of_yojson (value_for_key subtitle_formats_of_yojson "Formats") _list path;
+   }
+    : subtitles_output)
+
 let language_id_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      language_model_name =
-       (option_of_yojson
-          (value_for_key model_name_of_yojson "LanguageModelName") _list path);
+       option_of_yojson (value_for_key model_name_of_yojson "LanguageModelName") _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : language_id_settings)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : language_id_settings)
+
 let language_id_settings_map_of_yojson tree path =
-  map_of_yojson language_code_of_yojson language_id_settings_of_yojson tree
-    path
+  map_of_yojson language_code_of_yojson language_id_settings_of_yojson tree path
+
 let transcription_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      toxicity_detection =
-       (option_of_yojson
-          (value_for_key toxicity_detection_of_yojson "ToxicityDetection")
-          _list path);
+       option_of_yojson (value_for_key toxicity_detection_of_yojson "ToxicityDetection") _list path;
      language_id_settings =
-       (option_of_yojson
-          (value_for_key language_id_settings_map_of_yojson
-             "LanguageIdSettings") _list path);
-     subtitles =
-       (option_of_yojson
-          (value_for_key subtitles_output_of_yojson "Subtitles") _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+       option_of_yojson
+         (value_for_key language_id_settings_map_of_yojson "LanguageIdSettings")
+         _list path;
+     subtitles = option_of_yojson (value_for_key subtitles_output_of_yojson "Subtitles") _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      language_codes =
-       (option_of_yojson
-          (value_for_key language_code_list_of_yojson "LanguageCodes") _list
-          path);
+       option_of_yojson (value_for_key language_code_list_of_yojson "LanguageCodes") _list path;
      identified_language_score =
-       (option_of_yojson
-          (value_for_key identified_language_score_of_yojson
-             "IdentifiedLanguageScore") _list path);
+       option_of_yojson
+         (value_for_key identified_language_score_of_yojson "IdentifiedLanguageScore")
+         _list path;
      language_options =
-       (option_of_yojson
-          (value_for_key language_options_of_yojson "LanguageOptions") _list
-          path);
+       option_of_yojson (value_for_key language_options_of_yojson "LanguageOptions") _list path;
      identify_multiple_languages =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyMultipleLanguages")
-          _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyMultipleLanguages") _list path;
      identify_language =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyLanguage") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyLanguage") _list path;
      content_redaction =
-       (option_of_yojson
-          (value_for_key content_redaction_of_yojson "ContentRedaction")
-          _list path);
+       option_of_yojson (value_for_key content_redaction_of_yojson "ContentRedaction") _list path;
      job_execution_settings =
-       (option_of_yojson
-          (value_for_key job_execution_settings_of_yojson
-             "JobExecutionSettings") _list path);
+       option_of_yojson
+         (value_for_key job_execution_settings_of_yojson "JobExecutionSettings")
+         _list path;
      model_settings =
-       (option_of_yojson
-          (value_for_key model_settings_of_yojson "ModelSettings") _list path);
-     settings =
-       (option_of_yojson (value_for_key settings_of_yojson "Settings") _list
-          path);
+       option_of_yojson (value_for_key model_settings_of_yojson "ModelSettings") _list path;
+     settings = option_of_yojson (value_for_key settings_of_yojson "Settings") _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     transcript =
-       (option_of_yojson (value_for_key transcript_of_yojson "Transcript")
-          _list path);
-     media =
-       (option_of_yojson (value_for_key media_of_yojson "Media") _list path);
-     media_format =
-       (option_of_yojson (value_for_key media_format_of_yojson "MediaFormat")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     transcript = option_of_yojson (value_for_key transcript_of_yojson "Transcript") _list path;
+     media = option_of_yojson (value_for_key media_of_yojson "Media") _list path;
+     media_format = option_of_yojson (value_for_key media_format_of_yojson "MediaFormat") _list path;
      media_sample_rate_hertz =
-       (option_of_yojson
-          (value_for_key media_sample_rate_hertz_of_yojson
-             "MediaSampleRateHertz") _list path);
+       option_of_yojson
+         (value_for_key media_sample_rate_hertz_of_yojson "MediaSampleRateHertz")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      transcription_job_status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson
-             "TranscriptionJobStatus") _list path);
+       option_of_yojson
+         (value_for_key transcription_job_status_of_yojson "TranscriptionJobStatus")
+         _list path;
      transcription_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "TranscriptionJobName") _list path)
-   } : transcription_job)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "TranscriptionJobName")
+         _list path;
+   }
+    : transcription_job)
+
 let tag_resource_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let tag_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags = (value_for_key tag_list_of_yojson "Tags" _list path);
-     resource_arn =
-       (value_for_key transcribe_arn_of_yojson "ResourceArn" _list path)
-   } : tag_resource_request)
+     tags = value_for_key tag_list_of_yojson "Tags" _list path;
+     resource_arn = value_for_key transcribe_arn_of_yojson "ResourceArn" _list path;
+   }
+    : tag_resource_request)
+
 let start_transcription_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcription_job =
-       (option_of_yojson
-          (value_for_key transcription_job_of_yojson "TranscriptionJob")
-          _list path)
-   } : start_transcription_job_response)
+       option_of_yojson (value_for_key transcription_job_of_yojson "TranscriptionJob") _list path;
+   }
+    : start_transcription_job_response)
+
 let output_bucket_name_of_yojson = string_of_yojson
 let output_key_of_yojson = string_of_yojson
 let kms_key_id_of_yojson = string_of_yojson
+
 let kms_encryption_context_map_of_yojson tree path =
-  map_of_yojson non_empty_string_of_yojson non_empty_string_of_yojson tree
-    path
+  map_of_yojson non_empty_string_of_yojson non_empty_string_of_yojson tree path
+
 let subtitles_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      output_start_index =
-       (option_of_yojson
-          (value_for_key subtitle_output_start_index_of_yojson
-             "OutputStartIndex") _list path);
-     formats =
-       (option_of_yojson (value_for_key subtitle_formats_of_yojson "Formats")
-          _list path)
-   } : subtitles)
+       option_of_yojson
+         (value_for_key subtitle_output_start_index_of_yojson "OutputStartIndex")
+         _list path;
+     formats = option_of_yojson (value_for_key subtitle_formats_of_yojson "Formats") _list path;
+   }
+    : subtitles)
+
 let start_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      toxicity_detection =
-       (option_of_yojson
-          (value_for_key toxicity_detection_of_yojson "ToxicityDetection")
-          _list path);
+       option_of_yojson (value_for_key toxicity_detection_of_yojson "ToxicityDetection") _list path;
      language_id_settings =
-       (option_of_yojson
-          (value_for_key language_id_settings_map_of_yojson
-             "LanguageIdSettings") _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     subtitles =
-       (option_of_yojson (value_for_key subtitles_of_yojson "Subtitles")
-          _list path);
+       option_of_yojson
+         (value_for_key language_id_settings_map_of_yojson "LanguageIdSettings")
+         _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     subtitles = option_of_yojson (value_for_key subtitles_of_yojson "Subtitles") _list path;
      language_options =
-       (option_of_yojson
-          (value_for_key language_options_of_yojson "LanguageOptions") _list
-          path);
+       option_of_yojson (value_for_key language_options_of_yojson "LanguageOptions") _list path;
      identify_multiple_languages =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyMultipleLanguages")
-          _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyMultipleLanguages") _list path;
      identify_language =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "IdentifyLanguage") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "IdentifyLanguage") _list path;
      content_redaction =
-       (option_of_yojson
-          (value_for_key content_redaction_of_yojson "ContentRedaction")
-          _list path);
+       option_of_yojson (value_for_key content_redaction_of_yojson "ContentRedaction") _list path;
      job_execution_settings =
-       (option_of_yojson
-          (value_for_key job_execution_settings_of_yojson
-             "JobExecutionSettings") _list path);
+       option_of_yojson
+         (value_for_key job_execution_settings_of_yojson "JobExecutionSettings")
+         _list path;
      model_settings =
-       (option_of_yojson
-          (value_for_key model_settings_of_yojson "ModelSettings") _list path);
-     settings =
-       (option_of_yojson (value_for_key settings_of_yojson "Settings") _list
-          path);
+       option_of_yojson (value_for_key model_settings_of_yojson "ModelSettings") _list path;
+     settings = option_of_yojson (value_for_key settings_of_yojson "Settings") _list path;
      kms_encryption_context =
-       (option_of_yojson
-          (value_for_key kms_encryption_context_map_of_yojson
-             "KMSEncryptionContext") _list path);
+       option_of_yojson
+         (value_for_key kms_encryption_context_map_of_yojson "KMSEncryptionContext")
+         _list path;
      output_encryption_kms_key_id =
-       (option_of_yojson
-          (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId")
-          _list path);
-     output_key =
-       (option_of_yojson (value_for_key output_key_of_yojson "OutputKey")
-          _list path);
+       option_of_yojson (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId") _list path;
+     output_key = option_of_yojson (value_for_key output_key_of_yojson "OutputKey") _list path;
      output_bucket_name =
-       (option_of_yojson
-          (value_for_key output_bucket_name_of_yojson "OutputBucketName")
-          _list path);
-     media = (value_for_key media_of_yojson "Media" _list path);
-     media_format =
-       (option_of_yojson (value_for_key media_format_of_yojson "MediaFormat")
-          _list path);
+       option_of_yojson (value_for_key output_bucket_name_of_yojson "OutputBucketName") _list path;
+     media = value_for_key media_of_yojson "Media" _list path;
+     media_format = option_of_yojson (value_for_key media_format_of_yojson "MediaFormat") _list path;
      media_sample_rate_hertz =
-       (option_of_yojson
-          (value_for_key media_sample_rate_hertz_of_yojson
-             "MediaSampleRateHertz") _list path);
+       option_of_yojson
+         (value_for_key media_sample_rate_hertz_of_yojson "MediaSampleRateHertz")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson "TranscriptionJobName"
-          _list path)
-   } : start_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "TranscriptionJobName" _list path;
+   }
+    : start_transcription_job_request)
+
 let medical_media_sample_rate_hertz_of_yojson = int_of_yojson
+
 let medical_transcript_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcript_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "TranscriptFileUri")
-          _list path)
-   } : medical_transcript)
+       option_of_yojson (value_for_key uri_of_yojson "TranscriptFileUri") _list path;
+   }
+    : medical_transcript)
+
 let medical_transcription_setting_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
      max_alternatives =
-       (option_of_yojson
-          (value_for_key max_alternatives_of_yojson "MaxAlternatives") _list
-          path);
+       option_of_yojson (value_for_key max_alternatives_of_yojson "MaxAlternatives") _list path;
      show_alternatives =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ShowAlternatives") _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "ShowAlternatives") _list path;
      channel_identification =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ChannelIdentification") _list
-          path);
+       option_of_yojson (value_for_key boolean__of_yojson "ChannelIdentification") _list path;
      max_speaker_labels =
-       (option_of_yojson
-          (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list
-          path);
+       option_of_yojson (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list path;
      show_speaker_labels =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path)
-   } : medical_transcription_setting)
+       option_of_yojson (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path;
+   }
+    : medical_transcription_setting)
+
 let medical_content_identification_type_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "PHI" -> PHI
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path
-             "MedicalContentIdentificationType" value)
-    | _ ->
-        raise
-          (deserialize_wrong_type_error path
-             "MedicalContentIdentificationType") : medical_content_identification_type) : 
-  medical_content_identification_type)
+        raise (deserialize_unknown_enum_value_error path "MedicalContentIdentificationType" value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalContentIdentificationType")
+     : medical_content_identification_type)
+    : medical_content_identification_type)
+
 let specialty_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "PRIMARYCARE" -> PRIMARYCARE
-    | `String value ->
-        raise (deserialize_unknown_enum_value_error path "Specialty" value)
-    | _ -> raise (deserialize_wrong_type_error path "Specialty") : specialty) : 
-  specialty)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Specialty" value)
+    | _ -> raise (deserialize_wrong_type_error path "Specialty")
+     : specialty)
+    : specialty)
+
 let medical_transcription_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     type_ =
-       (option_of_yojson (value_for_key type__of_yojson "Type") _list path);
-     specialty =
-       (option_of_yojson (value_for_key specialty_of_yojson "Specialty")
-          _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     type_ = option_of_yojson (value_for_key type__of_yojson "Type") _list path;
+     specialty = option_of_yojson (value_for_key specialty_of_yojson "Specialty") _list path;
      content_identification_type =
-       (option_of_yojson
-          (value_for_key medical_content_identification_type_of_yojson
-             "ContentIdentificationType") _list path);
+       option_of_yojson
+         (value_for_key medical_content_identification_type_of_yojson "ContentIdentificationType")
+         _list path;
      settings =
-       (option_of_yojson
-          (value_for_key medical_transcription_setting_of_yojson "Settings")
-          _list path);
+       option_of_yojson
+         (value_for_key medical_transcription_setting_of_yojson "Settings")
+         _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
      transcript =
-       (option_of_yojson
-          (value_for_key medical_transcript_of_yojson "Transcript") _list
-          path);
-     media =
-       (option_of_yojson (value_for_key media_of_yojson "Media") _list path);
-     media_format =
-       (option_of_yojson (value_for_key media_format_of_yojson "MediaFormat")
-          _list path);
+       option_of_yojson (value_for_key medical_transcript_of_yojson "Transcript") _list path;
+     media = option_of_yojson (value_for_key media_of_yojson "Media") _list path;
+     media_format = option_of_yojson (value_for_key media_format_of_yojson "MediaFormat") _list path;
      media_sample_rate_hertz =
-       (option_of_yojson
-          (value_for_key medical_media_sample_rate_hertz_of_yojson
-             "MediaSampleRateHertz") _list path);
+       option_of_yojson
+         (value_for_key medical_media_sample_rate_hertz_of_yojson "MediaSampleRateHertz")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      transcription_job_status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson
-             "TranscriptionJobStatus") _list path);
+       option_of_yojson
+         (value_for_key transcription_job_status_of_yojson "TranscriptionJobStatus")
+         _list path;
      medical_transcription_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "MedicalTranscriptionJobName") _list path)
-   } : medical_transcription_job)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "MedicalTranscriptionJobName")
+         _list path;
+   }
+    : medical_transcription_job)
+
 let start_medical_transcription_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_transcription_job =
-       (option_of_yojson
-          (value_for_key medical_transcription_job_of_yojson
-             "MedicalTranscriptionJob") _list path)
-   } : start_medical_transcription_job_response)
+       option_of_yojson
+         (value_for_key medical_transcription_job_of_yojson "MedicalTranscriptionJob")
+         _list path;
+   }
+    : start_medical_transcription_job_response)
+
 let start_medical_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     type_ = (value_for_key type__of_yojson "Type" _list path);
-     specialty = (value_for_key specialty_of_yojson "Specialty" _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     type_ = value_for_key type__of_yojson "Type" _list path;
+     specialty = value_for_key specialty_of_yojson "Specialty" _list path;
      content_identification_type =
-       (option_of_yojson
-          (value_for_key medical_content_identification_type_of_yojson
-             "ContentIdentificationType") _list path);
+       option_of_yojson
+         (value_for_key medical_content_identification_type_of_yojson "ContentIdentificationType")
+         _list path;
      settings =
-       (option_of_yojson
-          (value_for_key medical_transcription_setting_of_yojson "Settings")
-          _list path);
+       option_of_yojson
+         (value_for_key medical_transcription_setting_of_yojson "Settings")
+         _list path;
      kms_encryption_context =
-       (option_of_yojson
-          (value_for_key kms_encryption_context_map_of_yojson
-             "KMSEncryptionContext") _list path);
+       option_of_yojson
+         (value_for_key kms_encryption_context_map_of_yojson "KMSEncryptionContext")
+         _list path;
      output_encryption_kms_key_id =
-       (option_of_yojson
-          (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId")
-          _list path);
-     output_key =
-       (option_of_yojson (value_for_key output_key_of_yojson "OutputKey")
-          _list path);
-     output_bucket_name =
-       (value_for_key output_bucket_name_of_yojson "OutputBucketName" _list
-          path);
-     media = (value_for_key media_of_yojson "Media" _list path);
-     media_format =
-       (option_of_yojson (value_for_key media_format_of_yojson "MediaFormat")
-          _list path);
+       option_of_yojson (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId") _list path;
+     output_key = option_of_yojson (value_for_key output_key_of_yojson "OutputKey") _list path;
+     output_bucket_name = value_for_key output_bucket_name_of_yojson "OutputBucketName" _list path;
+     media = value_for_key media_of_yojson "Media" _list path;
+     media_format = option_of_yojson (value_for_key media_format_of_yojson "MediaFormat") _list path;
      media_sample_rate_hertz =
-       (option_of_yojson
-          (value_for_key medical_media_sample_rate_hertz_of_yojson
-             "MediaSampleRateHertz") _list path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
+       option_of_yojson
+         (value_for_key medical_media_sample_rate_hertz_of_yojson "MediaSampleRateHertz")
+         _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
      medical_transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson
-          "MedicalTranscriptionJobName" _list path)
-   } : start_medical_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalTranscriptionJobName" _list path;
+   }
+    : start_medical_transcription_job_request)
+
 let medical_scribe_job_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1245,30 +1093,29 @@ let medical_scribe_job_status_of_yojson (tree : t) path =
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "QUEUED" -> QUEUED
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "MedicalScribeJobStatus"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeJobStatus") : 
-     medical_scribe_job_status) : medical_scribe_job_status)
+        raise (deserialize_unknown_enum_value_error path "MedicalScribeJobStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeJobStatus")
+     : medical_scribe_job_status)
+    : medical_scribe_job_status)
+
 let medical_scribe_language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "en-US" -> EN_US
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path
-             "MedicalScribeLanguageCode" value)
-    | _ ->
-        raise (deserialize_wrong_type_error path "MedicalScribeLanguageCode") : 
-     medical_scribe_language_code) : medical_scribe_language_code)
+        raise (deserialize_unknown_enum_value_error path "MedicalScribeLanguageCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeLanguageCode")
+     : medical_scribe_language_code)
+    : medical_scribe_language_code)
+
 let medical_scribe_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     clinical_document_uri =
-       (value_for_key uri_of_yojson "ClinicalDocumentUri" _list path);
-     transcript_file_uri =
-       (value_for_key uri_of_yojson "TranscriptFileUri" _list path)
-   } : medical_scribe_output)
+     clinical_document_uri = value_for_key uri_of_yojson "ClinicalDocumentUri" _list path;
+     transcript_file_uri = value_for_key uri_of_yojson "TranscriptFileUri" _list path;
+   }
+    : medical_scribe_output)
+
 let medical_scribe_note_template_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1280,164 +1127,146 @@ let medical_scribe_note_template_of_yojson (tree : t) path =
     | `String "GIRPP" -> GIRPP
     | `String "HISTORY_AND_PHYSICAL" -> HISTORY_AND_PHYSICAL
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path
-             "MedicalScribeNoteTemplate" value)
-    | _ ->
-        raise (deserialize_wrong_type_error path "MedicalScribeNoteTemplate") : 
-     medical_scribe_note_template) : medical_scribe_note_template)
+        raise (deserialize_unknown_enum_value_error path "MedicalScribeNoteTemplate" value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeNoteTemplate")
+     : medical_scribe_note_template)
+    : medical_scribe_note_template)
+
 let clinical_note_generation_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      note_template =
-       (option_of_yojson
-          (value_for_key medical_scribe_note_template_of_yojson
-             "NoteTemplate") _list path)
-   } : clinical_note_generation_settings)
+       option_of_yojson
+         (value_for_key medical_scribe_note_template_of_yojson "NoteTemplate")
+         _list path;
+   }
+    : clinical_note_generation_settings)
+
 let medical_scribe_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      clinical_note_generation_settings =
-       (option_of_yojson
-          (value_for_key clinical_note_generation_settings_of_yojson
-             "ClinicalNoteGenerationSettings") _list path);
+       option_of_yojson
+         (value_for_key clinical_note_generation_settings_of_yojson "ClinicalNoteGenerationSettings")
+         _list path;
      vocabulary_filter_method =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_method_of_yojson
-             "VocabularyFilterMethod") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_method_of_yojson "VocabularyFilterMethod")
+         _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
      channel_identification =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ChannelIdentification") _list
-          path);
+       option_of_yojson (value_for_key boolean__of_yojson "ChannelIdentification") _list path;
      max_speaker_labels =
-       (option_of_yojson
-          (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list
-          path);
+       option_of_yojson (value_for_key max_speakers_of_yojson "MaxSpeakerLabels") _list path;
      show_speaker_labels =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path)
-   } : medical_scribe_settings)
+       option_of_yojson (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path;
+   }
+    : medical_scribe_settings)
+
 let medical_scribe_channel_id_of_yojson = int_of_yojson
+
 let medical_scribe_participant_role_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "CLINICIAN" -> CLINICIAN
     | `String "PATIENT" -> PATIENT
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path
-             "MedicalScribeParticipantRole" value)
-    | _ ->
-        raise
-          (deserialize_wrong_type_error path "MedicalScribeParticipantRole") : 
-     medical_scribe_participant_role) : medical_scribe_participant_role)
+        raise (deserialize_unknown_enum_value_error path "MedicalScribeParticipantRole" value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeParticipantRole")
+     : medical_scribe_participant_role)
+    : medical_scribe_participant_role)
+
 let medical_scribe_channel_definition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      participant_role =
-       (value_for_key medical_scribe_participant_role_of_yojson
-          "ParticipantRole" _list path);
-     channel_id =
-       (value_for_key medical_scribe_channel_id_of_yojson "ChannelId" _list
-          path)
-   } : medical_scribe_channel_definition)
+       value_for_key medical_scribe_participant_role_of_yojson "ParticipantRole" _list path;
+     channel_id = value_for_key medical_scribe_channel_id_of_yojson "ChannelId" _list path;
+   }
+    : medical_scribe_channel_definition)
+
 let medical_scribe_channel_definitions_of_yojson tree path =
   list_of_yojson medical_scribe_channel_definition_of_yojson tree path
+
 let medical_scribe_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      channel_definitions =
-       (option_of_yojson
-          (value_for_key medical_scribe_channel_definitions_of_yojson
-             "ChannelDefinitions") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_channel_definitions_of_yojson "ChannelDefinitions")
+         _list path;
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      settings =
-       (option_of_yojson
-          (value_for_key medical_scribe_settings_of_yojson "Settings") _list
-          path);
+       option_of_yojson (value_for_key medical_scribe_settings_of_yojson "Settings") _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
      medical_scribe_output =
-       (option_of_yojson
-          (value_for_key medical_scribe_output_of_yojson
-             "MedicalScribeOutput") _list path);
-     media =
-       (option_of_yojson (value_for_key media_of_yojson "Media") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_output_of_yojson "MedicalScribeOutput")
+         _list path;
+     media = option_of_yojson (value_for_key media_of_yojson "Media") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key medical_scribe_language_code_of_yojson
-             "LanguageCode") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_language_code_of_yojson "LanguageCode")
+         _list path;
      medical_scribe_job_status =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_status_of_yojson
-             "MedicalScribeJobStatus") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_job_status_of_yojson "MedicalScribeJobStatus")
+         _list path;
      medical_scribe_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "MedicalScribeJobName") _list path)
-   } : medical_scribe_job)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "MedicalScribeJobName")
+         _list path;
+   }
+    : medical_scribe_job)
+
 let start_medical_scribe_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_scribe_job =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_of_yojson "MedicalScribeJob")
-          _list path)
-   } : start_medical_scribe_job_response)
+       option_of_yojson (value_for_key medical_scribe_job_of_yojson "MedicalScribeJob") _list path;
+   }
+    : start_medical_scribe_job_response)
+
 let start_medical_scribe_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      channel_definitions =
-       (option_of_yojson
-          (value_for_key medical_scribe_channel_definitions_of_yojson
-             "ChannelDefinitions") _list path);
-     settings =
-       (value_for_key medical_scribe_settings_of_yojson "Settings" _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_channel_definitions_of_yojson "ChannelDefinitions")
+         _list path;
+     settings = value_for_key medical_scribe_settings_of_yojson "Settings" _list path;
      data_access_role_arn =
-       (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn"
-          _list path);
+       value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn" _list path;
      kms_encryption_context =
-       (option_of_yojson
-          (value_for_key kms_encryption_context_map_of_yojson
-             "KMSEncryptionContext") _list path);
+       option_of_yojson
+         (value_for_key kms_encryption_context_map_of_yojson "KMSEncryptionContext")
+         _list path;
      output_encryption_kms_key_id =
-       (option_of_yojson
-          (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId")
-          _list path);
-     output_bucket_name =
-       (value_for_key output_bucket_name_of_yojson "OutputBucketName" _list
-          path);
-     media = (value_for_key media_of_yojson "Media" _list path);
+       option_of_yojson (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId") _list path;
+     output_bucket_name = value_for_key output_bucket_name_of_yojson "OutputBucketName" _list path;
+     media = value_for_key media_of_yojson "Media" _list path;
      medical_scribe_job_name =
-       (value_for_key transcription_job_name_of_yojson "MedicalScribeJobName"
-          _list path)
-   } : start_medical_scribe_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalScribeJobName" _list path;
+   }
+    : start_medical_scribe_job_request)
+
 let call_analytics_job_name_of_yojson = string_of_yojson
+
 let call_analytics_job_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1446,484 +1275,411 @@ let call_analytics_job_status_of_yojson (tree : t) path =
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "QUEUED" -> QUEUED
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "CallAnalyticsJobStatus"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsJobStatus") : 
-     call_analytics_job_status) : call_analytics_job_status)
+        raise (deserialize_unknown_enum_value_error path "CallAnalyticsJobStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsJobStatus")
+     : call_analytics_job_status)
+    : call_analytics_job_status)
+
 let call_analytics_feature_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "GENERATIVE_SUMMARIZATION" -> GENERATIVE_SUMMARIZATION
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "CallAnalyticsFeature"
-             value)
-    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsFeature") : 
-     call_analytics_feature) : call_analytics_feature)
+        raise (deserialize_unknown_enum_value_error path "CallAnalyticsFeature" value)
+    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsFeature")
+     : call_analytics_feature)
+    : call_analytics_feature)
+
 let call_analytics_skipped_reason_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "FAILED_SAFETY_GUIDELINES" -> FAILED_SAFETY_GUIDELINES
-    | `String "INSUFFICIENT_CONVERSATION_CONTENT" ->
-        INSUFFICIENT_CONVERSATION_CONTENT
+    | `String "INSUFFICIENT_CONVERSATION_CONTENT" -> INSUFFICIENT_CONVERSATION_CONTENT
     | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path
-             "CallAnalyticsSkippedReasonCode" value)
-    | _ ->
-        raise
-          (deserialize_wrong_type_error path "CallAnalyticsSkippedReasonCode") : 
-     call_analytics_skipped_reason_code) : call_analytics_skipped_reason_code)
+        raise (deserialize_unknown_enum_value_error path "CallAnalyticsSkippedReasonCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsSkippedReasonCode")
+     : call_analytics_skipped_reason_code)
+    : call_analytics_skipped_reason_code)
+
 let call_analytics_skipped_feature_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     message =
-       (option_of_yojson (value_for_key string__of_yojson "Message") _list
-          path);
+     message = option_of_yojson (value_for_key string__of_yojson "Message") _list path;
      reason_code =
-       (option_of_yojson
-          (value_for_key call_analytics_skipped_reason_code_of_yojson
-             "ReasonCode") _list path);
+       option_of_yojson
+         (value_for_key call_analytics_skipped_reason_code_of_yojson "ReasonCode")
+         _list path;
      feature =
-       (option_of_yojson
-          (value_for_key call_analytics_feature_of_yojson "Feature") _list
-          path)
-   } : call_analytics_skipped_feature)
+       option_of_yojson (value_for_key call_analytics_feature_of_yojson "Feature") _list path;
+   }
+    : call_analytics_skipped_feature)
+
 let call_analytics_skipped_feature_list_of_yojson tree path =
   list_of_yojson call_analytics_skipped_feature_of_yojson tree path
+
 let call_analytics_job_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      skipped =
-       (option_of_yojson
-          (value_for_key call_analytics_skipped_feature_list_of_yojson
-             "Skipped") _list path)
-   } : call_analytics_job_details)
+       option_of_yojson
+         (value_for_key call_analytics_skipped_feature_list_of_yojson "Skipped")
+         _list path;
+   }
+    : call_analytics_job_details)
+
 let summarization_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      generate_abstractive_summary =
-       (value_for_key boolean__of_yojson "GenerateAbstractiveSummary" _list
-          path)
-   } : summarization)
+       value_for_key boolean__of_yojson "GenerateAbstractiveSummary" _list path;
+   }
+    : summarization)
+
 let call_analytics_job_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      summarization =
-       (option_of_yojson
-          (value_for_key summarization_of_yojson "Summarization") _list path);
+       option_of_yojson (value_for_key summarization_of_yojson "Summarization") _list path;
      language_id_settings =
-       (option_of_yojson
-          (value_for_key language_id_settings_map_of_yojson
-             "LanguageIdSettings") _list path);
+       option_of_yojson
+         (value_for_key language_id_settings_map_of_yojson "LanguageIdSettings")
+         _list path;
      language_options =
-       (option_of_yojson
-          (value_for_key language_options_of_yojson "LanguageOptions") _list
-          path);
+       option_of_yojson (value_for_key language_options_of_yojson "LanguageOptions") _list path;
      content_redaction =
-       (option_of_yojson
-          (value_for_key content_redaction_of_yojson "ContentRedaction")
-          _list path);
+       option_of_yojson (value_for_key content_redaction_of_yojson "ContentRedaction") _list path;
      language_model_name =
-       (option_of_yojson
-          (value_for_key model_name_of_yojson "LanguageModelName") _list path);
+       option_of_yojson (value_for_key model_name_of_yojson "LanguageModelName") _list path;
      vocabulary_filter_method =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_method_of_yojson
-             "VocabularyFilterMethod") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_method_of_yojson "VocabularyFilterMethod")
+         _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path);
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : call_analytics_job_settings)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : call_analytics_job_settings)
+
 let channel_id_of_yojson = int_of_yojson
+
 let channel_definition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      participant_role =
-       (option_of_yojson
-          (value_for_key participant_role_of_yojson "ParticipantRole") _list
-          path);
-     channel_id =
-       (option_of_yojson (value_for_key channel_id_of_yojson "ChannelId")
-          _list path)
-   } : channel_definition)
-let channel_definitions_of_yojson tree path =
-  list_of_yojson channel_definition_of_yojson tree path
+       option_of_yojson (value_for_key participant_role_of_yojson "ParticipantRole") _list path;
+     channel_id = option_of_yojson (value_for_key channel_id_of_yojson "ChannelId") _list path;
+   }
+    : channel_definition)
+
+let channel_definitions_of_yojson tree path = list_of_yojson channel_definition_of_yojson tree path
+
 let call_analytics_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      channel_definitions =
-       (option_of_yojson
-          (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
-          _list path);
+       option_of_yojson
+         (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
+         _list path;
      settings =
-       (option_of_yojson
-          (value_for_key call_analytics_job_settings_of_yojson "Settings")
-          _list path);
+       option_of_yojson (value_for_key call_analytics_job_settings_of_yojson "Settings") _list path;
      identified_language_score =
-       (option_of_yojson
-          (value_for_key identified_language_score_of_yojson
-             "IdentifiedLanguageScore") _list path);
+       option_of_yojson
+         (value_for_key identified_language_score_of_yojson "IdentifiedLanguageScore")
+         _list path;
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     transcript =
-       (option_of_yojson (value_for_key transcript_of_yojson "Transcript")
-          _list path);
-     media =
-       (option_of_yojson (value_for_key media_of_yojson "Media") _list path);
-     media_format =
-       (option_of_yojson (value_for_key media_format_of_yojson "MediaFormat")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     transcript = option_of_yojson (value_for_key transcript_of_yojson "Transcript") _list path;
+     media = option_of_yojson (value_for_key media_of_yojson "Media") _list path;
+     media_format = option_of_yojson (value_for_key media_format_of_yojson "MediaFormat") _list path;
      media_sample_rate_hertz =
-       (option_of_yojson
-          (value_for_key media_sample_rate_hertz_of_yojson
-             "MediaSampleRateHertz") _list path);
+       option_of_yojson
+         (value_for_key media_sample_rate_hertz_of_yojson "MediaSampleRateHertz")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      call_analytics_job_details =
-       (option_of_yojson
-          (value_for_key call_analytics_job_details_of_yojson
-             "CallAnalyticsJobDetails") _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_details_of_yojson "CallAnalyticsJobDetails")
+         _list path;
      call_analytics_job_status =
-       (option_of_yojson
-          (value_for_key call_analytics_job_status_of_yojson
-             "CallAnalyticsJobStatus") _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_status_of_yojson "CallAnalyticsJobStatus")
+         _list path;
      call_analytics_job_name =
-       (option_of_yojson
-          (value_for_key call_analytics_job_name_of_yojson
-             "CallAnalyticsJobName") _list path)
-   } : call_analytics_job)
+       option_of_yojson
+         (value_for_key call_analytics_job_name_of_yojson "CallAnalyticsJobName")
+         _list path;
+   }
+    : call_analytics_job)
+
 let start_call_analytics_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      call_analytics_job =
-       (option_of_yojson
-          (value_for_key call_analytics_job_of_yojson "CallAnalyticsJob")
-          _list path)
-   } : start_call_analytics_job_response)
+       option_of_yojson (value_for_key call_analytics_job_of_yojson "CallAnalyticsJob") _list path;
+   }
+    : start_call_analytics_job_response)
+
 let start_call_analytics_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      channel_definitions =
-       (option_of_yojson
-          (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
-          _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+       option_of_yojson
+         (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
+         _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      settings =
-       (option_of_yojson
-          (value_for_key call_analytics_job_settings_of_yojson "Settings")
-          _list path);
+       option_of_yojson (value_for_key call_analytics_job_settings_of_yojson "Settings") _list path;
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
      output_encryption_kms_key_id =
-       (option_of_yojson
-          (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId")
-          _list path);
-     output_location =
-       (option_of_yojson (value_for_key uri_of_yojson "OutputLocation") _list
-          path);
-     media = (value_for_key media_of_yojson "Media" _list path);
+       option_of_yojson (value_for_key kms_key_id_of_yojson "OutputEncryptionKMSKeyId") _list path;
+     output_location = option_of_yojson (value_for_key uri_of_yojson "OutputLocation") _list path;
+     media = value_for_key media_of_yojson "Media" _list path;
      call_analytics_job_name =
-       (value_for_key call_analytics_job_name_of_yojson
-          "CallAnalyticsJobName" _list path)
-   } : start_call_analytics_job_request)
+       value_for_key call_analytics_job_name_of_yojson "CallAnalyticsJobName" _list path;
+   }
+    : start_call_analytics_job_request)
+
 let next_token_of_yojson = string_of_yojson
+
 let list_vocabulary_filters_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_filters =
-       (option_of_yojson
-          (value_for_key vocabulary_filters_of_yojson "VocabularyFilters")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_vocabulary_filters_response)
+       option_of_yojson (value_for_key vocabulary_filters_of_yojson "VocabularyFilters") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_vocabulary_filters_response)
+
 let max_results_of_yojson = int_of_yojson
+
 let list_vocabulary_filters_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      name_contains =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson "NameContains")
-          _list path);
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_vocabulary_filters_request)
+       option_of_yojson (value_for_key vocabulary_filter_name_of_yojson "NameContains") _list path;
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_vocabulary_filters_request)
+
 let list_vocabularies_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabularies =
-       (option_of_yojson
-          (value_for_key vocabularies_of_yojson "Vocabularies") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
-     status =
-       (option_of_yojson (value_for_key vocabulary_state_of_yojson "Status")
-          _list path)
-   } : list_vocabularies_response)
+       option_of_yojson (value_for_key vocabularies_of_yojson "Vocabularies") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     status = option_of_yojson (value_for_key vocabulary_state_of_yojson "Status") _list path;
+   }
+    : list_vocabularies_response)
+
 let list_vocabularies_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      name_contains =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "NameContains") _list path);
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "NameContains") _list path;
      state_equals =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "StateEquals") _list path);
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_vocabularies_request)
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "StateEquals") _list path;
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_vocabularies_request)
+
 let list_transcription_jobs_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcription_job_summaries =
-       (option_of_yojson
-          (value_for_key transcription_job_summaries_of_yojson
-             "TranscriptionJobSummaries") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+       option_of_yojson
+         (value_for_key transcription_job_summaries_of_yojson "TranscriptionJobSummaries")
+         _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson "Status") _list
-          path)
-   } : list_transcription_jobs_response)
+       option_of_yojson (value_for_key transcription_job_status_of_yojson "Status") _list path;
+   }
+    : list_transcription_jobs_response)
+
 let list_transcription_jobs_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      job_name_contains =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson "JobNameContains")
-          _list path);
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "JobNameContains")
+         _list path;
      status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson "Status") _list
-          path)
-   } : list_transcription_jobs_request)
+       option_of_yojson (value_for_key transcription_job_status_of_yojson "Status") _list path;
+   }
+    : list_transcription_jobs_request)
+
 let list_tags_for_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      resource_arn =
-       (option_of_yojson
-          (value_for_key transcribe_arn_of_yojson "ResourceArn") _list path)
-   } : list_tags_for_resource_response)
+       option_of_yojson (value_for_key transcribe_arn_of_yojson "ResourceArn") _list path;
+   }
+    : list_tags_for_resource_response)
+
 let list_tags_for_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     resource_arn =
-       (value_for_key transcribe_arn_of_yojson "ResourceArn" _list path)
-   } : list_tags_for_resource_request)
+  ({ resource_arn = value_for_key transcribe_arn_of_yojson "ResourceArn" _list path }
+    : list_tags_for_resource_request)
+
 let list_medical_vocabularies_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabularies =
-       (option_of_yojson
-          (value_for_key vocabularies_of_yojson "Vocabularies") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
-     status =
-       (option_of_yojson (value_for_key vocabulary_state_of_yojson "Status")
-          _list path)
-   } : list_medical_vocabularies_response)
+       option_of_yojson (value_for_key vocabularies_of_yojson "Vocabularies") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     status = option_of_yojson (value_for_key vocabulary_state_of_yojson "Status") _list path;
+   }
+    : list_medical_vocabularies_response)
+
 let list_medical_vocabularies_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      name_contains =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "NameContains") _list path);
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "NameContains") _list path;
      state_equals =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "StateEquals") _list path);
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_medical_vocabularies_request)
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "StateEquals") _list path;
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_medical_vocabularies_request)
+
 let medical_transcription_job_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     type_ =
-       (option_of_yojson (value_for_key type__of_yojson "Type") _list path);
+     type_ = option_of_yojson (value_for_key type__of_yojson "Type") _list path;
      content_identification_type =
-       (option_of_yojson
-          (value_for_key medical_content_identification_type_of_yojson
-             "ContentIdentificationType") _list path);
-     specialty =
-       (option_of_yojson (value_for_key specialty_of_yojson "Specialty")
-          _list path);
+       option_of_yojson
+         (value_for_key medical_content_identification_type_of_yojson "ContentIdentificationType")
+         _list path;
+     specialty = option_of_yojson (value_for_key specialty_of_yojson "Specialty") _list path;
      output_location_type =
-       (option_of_yojson
-          (value_for_key output_location_type_of_yojson "OutputLocationType")
-          _list path);
+       option_of_yojson
+         (value_for_key output_location_type_of_yojson "OutputLocationType")
+         _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      transcription_job_status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson
-             "TranscriptionJobStatus") _list path);
+       option_of_yojson
+         (value_for_key transcription_job_status_of_yojson "TranscriptionJobStatus")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
      medical_transcription_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "MedicalTranscriptionJobName") _list path)
-   } : medical_transcription_job_summary)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "MedicalTranscriptionJobName")
+         _list path;
+   }
+    : medical_transcription_job_summary)
+
 let medical_transcription_job_summaries_of_yojson tree path =
   list_of_yojson medical_transcription_job_summary_of_yojson tree path
+
 let list_medical_transcription_jobs_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_transcription_job_summaries =
-       (option_of_yojson
-          (value_for_key medical_transcription_job_summaries_of_yojson
-             "MedicalTranscriptionJobSummaries") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+       option_of_yojson
+         (value_for_key medical_transcription_job_summaries_of_yojson
+            "MedicalTranscriptionJobSummaries")
+         _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson "Status") _list
-          path)
-   } : list_medical_transcription_jobs_response)
+       option_of_yojson (value_for_key transcription_job_status_of_yojson "Status") _list path;
+   }
+    : list_medical_transcription_jobs_response)
+
 let list_medical_transcription_jobs_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      job_name_contains =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson "JobNameContains")
-          _list path);
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "JobNameContains")
+         _list path;
      status =
-       (option_of_yojson
-          (value_for_key transcription_job_status_of_yojson "Status") _list
-          path)
-   } : list_medical_transcription_jobs_request)
+       option_of_yojson (value_for_key transcription_job_status_of_yojson "Status") _list path;
+   }
+    : list_medical_transcription_jobs_request)
+
 let medical_scribe_job_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      medical_scribe_job_status =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_status_of_yojson
-             "MedicalScribeJobStatus") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_job_status_of_yojson "MedicalScribeJobStatus")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key medical_scribe_language_code_of_yojson
-             "LanguageCode") _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_language_code_of_yojson "LanguageCode")
+         _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
      medical_scribe_job_name =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson
-             "MedicalScribeJobName") _list path)
-   } : medical_scribe_job_summary)
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "MedicalScribeJobName")
+         _list path;
+   }
+    : medical_scribe_job_summary)
+
 let medical_scribe_job_summaries_of_yojson tree path =
   list_of_yojson medical_scribe_job_summary_of_yojson tree path
+
 let list_medical_scribe_jobs_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_scribe_job_summaries =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_summaries_of_yojson
-             "MedicalScribeJobSummaries") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+       option_of_yojson
+         (value_for_key medical_scribe_job_summaries_of_yojson "MedicalScribeJobSummaries")
+         _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      status =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_status_of_yojson "Status") _list
-          path)
-   } : list_medical_scribe_jobs_response)
+       option_of_yojson (value_for_key medical_scribe_job_status_of_yojson "Status") _list path;
+   }
+    : list_medical_scribe_jobs_response)
+
 let list_medical_scribe_jobs_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      job_name_contains =
-       (option_of_yojson
-          (value_for_key transcription_job_name_of_yojson "JobNameContains")
-          _list path);
+       option_of_yojson
+         (value_for_key transcription_job_name_of_yojson "JobNameContains")
+         _list path;
      status =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_status_of_yojson "Status") _list
-          path)
-   } : list_medical_scribe_jobs_request)
+       option_of_yojson (value_for_key medical_scribe_job_status_of_yojson "Status") _list path;
+   }
+    : list_medical_scribe_jobs_request)
+
 let clm_language_code_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
@@ -1934,583 +1690,520 @@ let clm_language_code_of_yojson (tree : t) path =
     | `String "es-US" -> ES_US
     | `String "hi-IN" -> HI_IN
     | `String "en-US" -> EN_US
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "CLMLanguageCode" value)
-    | _ -> raise (deserialize_wrong_type_error path "CLMLanguageCode") : 
-     clm_language_code) : clm_language_code)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "CLMLanguageCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "CLMLanguageCode")
+     : clm_language_code)
+    : clm_language_code)
+
 let base_model_name_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "WideBand" -> WIDE_BAND
     | `String "NarrowBand" -> NARROW_BAND
-    | `String value ->
-        raise
-          (deserialize_unknown_enum_value_error path "BaseModelName" value)
-    | _ -> raise (deserialize_wrong_type_error path "BaseModelName") : 
-     base_model_name) : base_model_name)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "BaseModelName" value)
+    | _ -> raise (deserialize_wrong_type_error path "BaseModelName")
+     : base_model_name)
+    : base_model_name)
+
 let model_status_of_yojson (tree : t) path =
   (let _list = assoc_of_yojson tree path in
    (match tree with
     | `String "COMPLETED" -> COMPLETED
     | `String "FAILED" -> FAILED
     | `String "IN_PROGRESS" -> IN_PROGRESS
-    | `String value ->
-        raise (deserialize_unknown_enum_value_error path "ModelStatus" value)
-    | _ -> raise (deserialize_wrong_type_error path "ModelStatus") : 
-     model_status) : model_status)
+    | `String value -> raise (deserialize_unknown_enum_value_error path "ModelStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ModelStatus")
+     : model_status)
+    : model_status)
+
 let input_data_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn"
-          _list path);
+       value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn" _list path;
      tuning_data_s3_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "TuningDataS3Uri")
-          _list path);
-     s3_uri = (value_for_key uri_of_yojson "S3Uri" _list path)
-   } : input_data_config)
+       option_of_yojson (value_for_key uri_of_yojson "TuningDataS3Uri") _list path;
+     s3_uri = value_for_key uri_of_yojson "S3Uri" _list path;
+   }
+    : input_data_config)
+
 let language_model_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      input_data_config =
-       (option_of_yojson
-          (value_for_key input_data_config_of_yojson "InputDataConfig") _list
-          path);
+       option_of_yojson (value_for_key input_data_config_of_yojson "InputDataConfig") _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      upgrade_availability =
-       (option_of_yojson
-          (value_for_key boolean__of_yojson "UpgradeAvailability") _list path);
-     model_status =
-       (option_of_yojson (value_for_key model_status_of_yojson "ModelStatus")
-          _list path);
+       option_of_yojson (value_for_key boolean__of_yojson "UpgradeAvailability") _list path;
+     model_status = option_of_yojson (value_for_key model_status_of_yojson "ModelStatus") _list path;
      base_model_name =
-       (option_of_yojson
-          (value_for_key base_model_name_of_yojson "BaseModelName") _list
-          path);
+       option_of_yojson (value_for_key base_model_name_of_yojson "BaseModelName") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key clm_language_code_of_yojson "LanguageCode") _list
-          path);
+       option_of_yojson (value_for_key clm_language_code_of_yojson "LanguageCode") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
-     create_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreateTime")
-          _list path);
-     model_name =
-       (option_of_yojson (value_for_key model_name_of_yojson "ModelName")
-          _list path)
-   } : language_model)
-let models_of_yojson tree path =
-  list_of_yojson language_model_of_yojson tree path
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
+     create_time = option_of_yojson (value_for_key date_time_of_yojson "CreateTime") _list path;
+     model_name = option_of_yojson (value_for_key model_name_of_yojson "ModelName") _list path;
+   }
+    : language_model)
+
+let models_of_yojson tree path = list_of_yojson language_model_of_yojson tree path
+
 let list_language_models_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     models =
-       (option_of_yojson (value_for_key models_of_yojson "Models") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_language_models_response)
+     models = option_of_yojson (value_for_key models_of_yojson "Models") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_language_models_response)
+
 let list_language_models_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
-     name_contains =
-       (option_of_yojson (value_for_key model_name_of_yojson "NameContains")
-          _list path);
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     name_contains = option_of_yojson (value_for_key model_name_of_yojson "NameContains") _list path;
      status_equals =
-       (option_of_yojson
-          (value_for_key model_status_of_yojson "StatusEquals") _list path)
-   } : list_language_models_request)
+       option_of_yojson (value_for_key model_status_of_yojson "StatusEquals") _list path;
+   }
+    : list_language_models_request)
+
 let call_analytics_job_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      call_analytics_job_details =
-       (option_of_yojson
-          (value_for_key call_analytics_job_details_of_yojson
-             "CallAnalyticsJobDetails") _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_details_of_yojson "CallAnalyticsJobDetails")
+         _list path;
      call_analytics_job_status =
-       (option_of_yojson
-          (value_for_key call_analytics_job_status_of_yojson
-             "CallAnalyticsJobStatus") _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_status_of_yojson "CallAnalyticsJobStatus")
+         _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      completion_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CompletionTime")
-          _list path);
-     start_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "StartTime")
-          _list path);
-     creation_time =
-       (option_of_yojson (value_for_key date_time_of_yojson "CreationTime")
-          _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "CompletionTime") _list path;
+     start_time = option_of_yojson (value_for_key date_time_of_yojson "StartTime") _list path;
+     creation_time = option_of_yojson (value_for_key date_time_of_yojson "CreationTime") _list path;
      call_analytics_job_name =
-       (option_of_yojson
-          (value_for_key call_analytics_job_name_of_yojson
-             "CallAnalyticsJobName") _list path)
-   } : call_analytics_job_summary)
+       option_of_yojson
+         (value_for_key call_analytics_job_name_of_yojson "CallAnalyticsJobName")
+         _list path;
+   }
+    : call_analytics_job_summary)
+
 let call_analytics_job_summaries_of_yojson tree path =
   list_of_yojson call_analytics_job_summary_of_yojson tree path
+
 let list_call_analytics_jobs_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      call_analytics_job_summaries =
-       (option_of_yojson
-          (value_for_key call_analytics_job_summaries_of_yojson
-             "CallAnalyticsJobSummaries") _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_summaries_of_yojson "CallAnalyticsJobSummaries")
+         _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      status =
-       (option_of_yojson
-          (value_for_key call_analytics_job_status_of_yojson "Status") _list
-          path)
-   } : list_call_analytics_jobs_response)
+       option_of_yojson (value_for_key call_analytics_job_status_of_yojson "Status") _list path;
+   }
+    : list_call_analytics_jobs_response)
+
 let list_call_analytics_jobs_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path);
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      job_name_contains =
-       (option_of_yojson
-          (value_for_key call_analytics_job_name_of_yojson "JobNameContains")
-          _list path);
+       option_of_yojson
+         (value_for_key call_analytics_job_name_of_yojson "JobNameContains")
+         _list path;
      status =
-       (option_of_yojson
-          (value_for_key call_analytics_job_status_of_yojson "Status") _list
-          path)
-   } : list_call_analytics_jobs_request)
+       option_of_yojson (value_for_key call_analytics_job_status_of_yojson "Status") _list path;
+   }
+    : list_call_analytics_jobs_request)
+
 let category_properties_list_of_yojson tree path =
   list_of_yojson category_properties_of_yojson tree path
+
 let list_call_analytics_categories_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      categories =
-       (option_of_yojson
-          (value_for_key category_properties_list_of_yojson "Categories")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_call_analytics_categories_response)
+       option_of_yojson (value_for_key category_properties_list_of_yojson "Categories") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_call_analytics_categories_response)
+
 let list_call_analytics_categories_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     max_results =
-       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
-          _list path);
-     next_token =
-       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
-          _list path)
-   } : list_call_analytics_categories_request)
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+   }
+    : list_call_analytics_categories_request)
+
 let get_vocabulary_filter_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     download_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list
-          path);
+     download_uri = option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path)
-   } : get_vocabulary_filter_response)
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
+   }
+    : get_vocabulary_filter_response)
+
 let get_vocabulary_filter_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_filter_name =
-       (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName"
-          _list path)
-   } : get_vocabulary_filter_request)
+       value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName" _list path;
+   }
+    : get_vocabulary_filter_request)
+
 let get_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     download_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list
-          path);
+     download_uri = option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : get_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : get_vocabulary_response)
+
 let get_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : get_vocabulary_request)
+  ({ vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path }
+    : get_vocabulary_request)
+
 let get_transcription_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcription_job =
-       (option_of_yojson
-          (value_for_key transcription_job_of_yojson "TranscriptionJob")
-          _list path)
-   } : get_transcription_job_response)
+       option_of_yojson (value_for_key transcription_job_of_yojson "TranscriptionJob") _list path;
+   }
+    : get_transcription_job_response)
+
 let get_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson "TranscriptionJobName"
-          _list path)
-   } : get_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "TranscriptionJobName" _list path;
+   }
+    : get_transcription_job_request)
+
 let get_medical_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     download_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list
-          path);
+     download_uri = option_of_yojson (value_for_key uri_of_yojson "DownloadUri") _list path;
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : get_medical_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : get_medical_vocabulary_response)
+
 let get_medical_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : get_medical_vocabulary_request)
+  ({ vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path }
+    : get_medical_vocabulary_request)
+
 let get_medical_transcription_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_transcription_job =
-       (option_of_yojson
-          (value_for_key medical_transcription_job_of_yojson
-             "MedicalTranscriptionJob") _list path)
-   } : get_medical_transcription_job_response)
+       option_of_yojson
+         (value_for_key medical_transcription_job_of_yojson "MedicalTranscriptionJob")
+         _list path;
+   }
+    : get_medical_transcription_job_response)
+
 let get_medical_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson
-          "MedicalTranscriptionJobName" _list path)
-   } : get_medical_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalTranscriptionJobName" _list path;
+   }
+    : get_medical_transcription_job_request)
+
 let get_medical_scribe_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_scribe_job =
-       (option_of_yojson
-          (value_for_key medical_scribe_job_of_yojson "MedicalScribeJob")
-          _list path)
-   } : get_medical_scribe_job_response)
+       option_of_yojson (value_for_key medical_scribe_job_of_yojson "MedicalScribeJob") _list path;
+   }
+    : get_medical_scribe_job_response)
+
 let get_medical_scribe_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_scribe_job_name =
-       (value_for_key transcription_job_name_of_yojson "MedicalScribeJobName"
-          _list path)
-   } : get_medical_scribe_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalScribeJobName" _list path;
+   }
+    : get_medical_scribe_job_request)
+
 let get_call_analytics_job_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      call_analytics_job =
-       (option_of_yojson
-          (value_for_key call_analytics_job_of_yojson "CallAnalyticsJob")
-          _list path)
-   } : get_call_analytics_job_response)
+       option_of_yojson (value_for_key call_analytics_job_of_yojson "CallAnalyticsJob") _list path;
+   }
+    : get_call_analytics_job_response)
+
 let get_call_analytics_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      call_analytics_job_name =
-       (value_for_key call_analytics_job_name_of_yojson
-          "CallAnalyticsJobName" _list path)
-   } : get_call_analytics_job_request)
+       value_for_key call_analytics_job_name_of_yojson "CallAnalyticsJobName" _list path;
+   }
+    : get_call_analytics_job_request)
+
 let get_call_analytics_category_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      category_properties =
-       (option_of_yojson
-          (value_for_key category_properties_of_yojson "CategoryProperties")
-          _list path)
-   } : get_call_analytics_category_response)
+       option_of_yojson
+         (value_for_key category_properties_of_yojson "CategoryProperties")
+         _list path;
+   }
+    : get_call_analytics_category_response)
+
 let get_call_analytics_category_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     category_name =
-       (value_for_key category_name_of_yojson "CategoryName" _list path)
-   } : get_call_analytics_category_request)
+  ({ category_name = value_for_key category_name_of_yojson "CategoryName" _list path }
+    : get_call_analytics_category_request)
+
 let describe_language_model_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      language_model =
-       (option_of_yojson
-          (value_for_key language_model_of_yojson "LanguageModel") _list path)
-   } : describe_language_model_response)
+       option_of_yojson (value_for_key language_model_of_yojson "LanguageModel") _list path;
+   }
+    : describe_language_model_response)
+
 let describe_language_model_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ model_name = (value_for_key model_name_of_yojson "ModelName" _list path)
-   } : describe_language_model_request)
+  ({ model_name = value_for_key model_name_of_yojson "ModelName" _list path }
+    : describe_language_model_request)
+
 let delete_vocabulary_filter_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      vocabulary_filter_name =
-       (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName"
-          _list path)
-   } : delete_vocabulary_filter_request)
+       value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName" _list path;
+   }
+    : delete_vocabulary_filter_request)
+
 let delete_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : delete_vocabulary_request)
+  ({ vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path }
+    : delete_vocabulary_request)
+
 let delete_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson "TranscriptionJobName"
-          _list path)
-   } : delete_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "TranscriptionJobName" _list path;
+   }
+    : delete_transcription_job_request)
+
 let delete_medical_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : delete_medical_vocabulary_request)
+  ({ vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path }
+    : delete_medical_vocabulary_request)
+
 let delete_medical_transcription_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_transcription_job_name =
-       (value_for_key transcription_job_name_of_yojson
-          "MedicalTranscriptionJobName" _list path)
-   } : delete_medical_transcription_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalTranscriptionJobName" _list path;
+   }
+    : delete_medical_transcription_job_request)
+
 let delete_medical_scribe_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      medical_scribe_job_name =
-       (value_for_key transcription_job_name_of_yojson "MedicalScribeJobName"
-          _list path)
-   } : delete_medical_scribe_job_request)
+       value_for_key transcription_job_name_of_yojson "MedicalScribeJobName" _list path;
+   }
+    : delete_medical_scribe_job_request)
+
 let delete_language_model_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ model_name = (value_for_key model_name_of_yojson "ModelName" _list path)
-   } : delete_language_model_request)
+  ({ model_name = value_for_key model_name_of_yojson "ModelName" _list path }
+    : delete_language_model_request)
+
 let delete_call_analytics_job_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let delete_call_analytics_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      call_analytics_job_name =
-       (value_for_key call_analytics_job_name_of_yojson
-          "CallAnalyticsJobName" _list path)
-   } : delete_call_analytics_job_request)
+       value_for_key call_analytics_job_name_of_yojson "CallAnalyticsJobName" _list path;
+   }
+    : delete_call_analytics_job_request)
+
 let delete_call_analytics_category_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let delete_call_analytics_category_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({
-     category_name =
-       (value_for_key category_name_of_yojson "CategoryName" _list path)
-   } : delete_call_analytics_category_request)
+  ({ category_name = value_for_key category_name_of_yojson "CategoryName" _list path }
+    : delete_call_analytics_category_request)
+
 let create_vocabulary_filter_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_filter_name =
-       (option_of_yojson
-          (value_for_key vocabulary_filter_name_of_yojson
-             "VocabularyFilterName") _list path)
-   } : create_vocabulary_filter_response)
+       option_of_yojson
+         (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName")
+         _list path;
+   }
+    : create_vocabulary_filter_response)
+
 let create_vocabulary_filter_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      vocabulary_filter_file_uri =
-       (option_of_yojson
-          (value_for_key uri_of_yojson "VocabularyFilterFileUri") _list path);
-     words =
-       (option_of_yojson (value_for_key words_of_yojson "Words") _list path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
+       option_of_yojson (value_for_key uri_of_yojson "VocabularyFilterFileUri") _list path;
+     words = option_of_yojson (value_for_key words_of_yojson "Words") _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
      vocabulary_filter_name =
-       (value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName"
-          _list path)
-   } : create_vocabulary_filter_request)
+       value_for_key vocabulary_filter_name_of_yojson "VocabularyFilterName" _list path;
+   }
+    : create_vocabulary_filter_request)
+
 let create_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : create_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : create_vocabulary_response)
+
 let create_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      data_access_role_arn =
-       (option_of_yojson
-          (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
-          _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
+       option_of_yojson
+         (value_for_key data_access_role_arn_of_yojson "DataAccessRoleArn")
+         _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      vocabulary_file_uri =
-       (option_of_yojson (value_for_key uri_of_yojson "VocabularyFileUri")
-          _list path);
-     phrases =
-       (option_of_yojson (value_for_key phrases_of_yojson "Phrases") _list
-          path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : create_vocabulary_request)
+       option_of_yojson (value_for_key uri_of_yojson "VocabularyFileUri") _list path;
+     phrases = option_of_yojson (value_for_key phrases_of_yojson "Phrases") _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
+     vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path;
+   }
+    : create_vocabulary_request)
+
 let create_medical_vocabulary_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      failure_reason =
-       (option_of_yojson
-          (value_for_key failure_reason_of_yojson "FailureReason") _list path);
+       option_of_yojson (value_for_key failure_reason_of_yojson "FailureReason") _list path;
      last_modified_time =
-       (option_of_yojson
-          (value_for_key date_time_of_yojson "LastModifiedTime") _list path);
+       option_of_yojson (value_for_key date_time_of_yojson "LastModifiedTime") _list path;
      vocabulary_state =
-       (option_of_yojson
-          (value_for_key vocabulary_state_of_yojson "VocabularyState") _list
-          path);
+       option_of_yojson (value_for_key vocabulary_state_of_yojson "VocabularyState") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key language_code_of_yojson "LanguageCode") _list path);
+       option_of_yojson (value_for_key language_code_of_yojson "LanguageCode") _list path;
      vocabulary_name =
-       (option_of_yojson
-          (value_for_key vocabulary_name_of_yojson "VocabularyName") _list
-          path)
-   } : create_medical_vocabulary_response)
+       option_of_yojson (value_for_key vocabulary_name_of_yojson "VocabularyName") _list path;
+   }
+    : create_medical_vocabulary_response)
+
 let create_medical_vocabulary_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     vocabulary_file_uri =
-       (value_for_key uri_of_yojson "VocabularyFileUri" _list path);
-     language_code =
-       (value_for_key language_code_of_yojson "LanguageCode" _list path);
-     vocabulary_name =
-       (value_for_key vocabulary_name_of_yojson "VocabularyName" _list path)
-   } : create_medical_vocabulary_request)
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     vocabulary_file_uri = value_for_key uri_of_yojson "VocabularyFileUri" _list path;
+     language_code = value_for_key language_code_of_yojson "LanguageCode" _list path;
+     vocabulary_name = value_for_key vocabulary_name_of_yojson "VocabularyName" _list path;
+   }
+    : create_medical_vocabulary_request)
+
 let create_language_model_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     model_status =
-       (option_of_yojson (value_for_key model_status_of_yojson "ModelStatus")
-          _list path);
+     model_status = option_of_yojson (value_for_key model_status_of_yojson "ModelStatus") _list path;
      input_data_config =
-       (option_of_yojson
-          (value_for_key input_data_config_of_yojson "InputDataConfig") _list
-          path);
-     model_name =
-       (option_of_yojson (value_for_key model_name_of_yojson "ModelName")
-          _list path);
+       option_of_yojson (value_for_key input_data_config_of_yojson "InputDataConfig") _list path;
+     model_name = option_of_yojson (value_for_key model_name_of_yojson "ModelName") _list path;
      base_model_name =
-       (option_of_yojson
-          (value_for_key base_model_name_of_yojson "BaseModelName") _list
-          path);
+       option_of_yojson (value_for_key base_model_name_of_yojson "BaseModelName") _list path;
      language_code =
-       (option_of_yojson
-          (value_for_key clm_language_code_of_yojson "LanguageCode") _list
-          path)
-   } : create_language_model_response)
+       option_of_yojson (value_for_key clm_language_code_of_yojson "LanguageCode") _list path;
+   }
+    : create_language_model_response)
+
 let create_language_model_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     input_data_config =
-       (value_for_key input_data_config_of_yojson "InputDataConfig" _list
-          path);
-     model_name = (value_for_key model_name_of_yojson "ModelName" _list path);
-     base_model_name =
-       (value_for_key base_model_name_of_yojson "BaseModelName" _list path);
-     language_code =
-       (value_for_key clm_language_code_of_yojson "LanguageCode" _list path)
-   } : create_language_model_request)
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     input_data_config = value_for_key input_data_config_of_yojson "InputDataConfig" _list path;
+     model_name = value_for_key model_name_of_yojson "ModelName" _list path;
+     base_model_name = value_for_key base_model_name_of_yojson "BaseModelName" _list path;
+     language_code = value_for_key clm_language_code_of_yojson "LanguageCode" _list path;
+   }
+    : create_language_model_request)
+
 let create_call_analytics_category_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      category_properties =
-       (option_of_yojson
-          (value_for_key category_properties_of_yojson "CategoryProperties")
-          _list path)
-   } : create_call_analytics_category_response)
+       option_of_yojson
+         (value_for_key category_properties_of_yojson "CategoryProperties")
+         _list path;
+   }
+    : create_call_analytics_category_response)
+
 let create_call_analytics_category_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     input_type =
-       (option_of_yojson (value_for_key input_type_of_yojson "InputType")
-          _list path);
-     tags =
-       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
-     rules = (value_for_key rule_list_of_yojson "Rules" _list path);
-     category_name =
-       (value_for_key category_name_of_yojson "CategoryName" _list path)
-   } : create_call_analytics_category_request)
+     input_type = option_of_yojson (value_for_key input_type_of_yojson "InputType") _list path;
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     rules = value_for_key rule_list_of_yojson "Rules" _list path;
+     category_name = value_for_key category_name_of_yojson "CategoryName" _list path;
+   }
+    : create_call_analytics_category_request)

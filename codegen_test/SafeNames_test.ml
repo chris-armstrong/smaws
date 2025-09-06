@@ -1,4 +1,4 @@
-open Parselib.Codegen
+open Codegen
 
 let test_symbol_name () =
   Alcotest.(check @@ string) "symbolName" (Util.symbolName "smithy.api#integer") "integer"

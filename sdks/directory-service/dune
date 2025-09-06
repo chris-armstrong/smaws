@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/directory-service/service/2015-04-16/directory-service-2015-04-16.json))
+  (:input
+   ../../api-models-aws/models/directory-service/service/2015-04-16/directory-service-2015-04-16.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_DirectoryService.ml
   Smaws_Client_DirectoryService.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

@@ -1,4 +1,6 @@
 open Base
+module Ast = Smithy_ast
+module Parse = Smaws_parse
 
 let sanitize str = str
 (* |> String.substr_replace_all ~pattern:"\"\"\"" ~with_:"\"\\\"\"" *)

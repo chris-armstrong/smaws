@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/marketplace-agreement/service/2020-03-01/marketplace-agreement-2020-03-01.json))
+  (:input
+   ../../api-models-aws/models/marketplace-agreement/service/2020-03-01/marketplace-agreement-2020-03-01.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_MarketplaceAgreement.ml
   Smaws_Client_MarketplaceAgreement.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

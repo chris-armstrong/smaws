@@ -1,5 +1,5 @@
-open Parselib.Ast.Shape
-open Parselib.Ast.Trait
+open Smithy_ast.Shape
+open Smithy_ast.Trait
 
 let module_doc ~name ~(service : serviceShapeDetails) ~operation_shapes ~structure_shapes o =
   let serviceShapeDetails = extractServiceTrait service.traits in

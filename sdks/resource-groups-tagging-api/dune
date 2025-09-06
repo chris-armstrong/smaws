@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/resource-groups-tagging-api/service/2017-01-26/resource-groups-tagging-api-2017-01-26.json))
+  (:input
+   ../../api-models-aws/models/resource-groups-tagging-api/service/2017-01-26/resource-groups-tagging-api-2017-01-26.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_ResourceGroupsTaggingAPI.ml
   Smaws_Client_ResourceGroupsTaggingAPI.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

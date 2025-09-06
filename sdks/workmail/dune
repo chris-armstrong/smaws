@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/workmail/service/2017-10-01/workmail-2017-10-01.json))
+  (:input
+   ../../api-models-aws/models/workmail/service/2017-10-01/workmail-2017-10-01.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_WorkMail.ml
   Smaws_Client_WorkMail.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

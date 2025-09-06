@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/cloudtrail/service/2013-11-01/cloudtrail-2013-11-01.json))
+  (:input
+   ../../api-models-aws/models/cloudtrail/service/2013-11-01/cloudtrail-2013-11-01.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_CloudTrail.ml
   Smaws_Client_CloudTrail.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

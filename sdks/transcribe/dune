@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/transcribe/service/2017-10-26/transcribe-2017-10-26.json))
+  (:input
+   ../../api-models-aws/models/transcribe/service/2017-10-26/transcribe-2017-10-26.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Transcribe.ml
   Smaws_Client_Transcribe.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

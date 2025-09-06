@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/snowball/service/2016-06-30/snowball-2016-06-30.json))
+  (:input
+   ../../api-models-aws/models/snowball/service/2016-06-30/snowball-2016-06-30.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Snowball.ml
   Smaws_Client_Snowball.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

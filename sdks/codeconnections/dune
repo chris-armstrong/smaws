@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/codeconnections/service/2023-12-01/codeconnections-2023-12-01.json))
+  (:input
+   ../../api-models-aws/models/codeconnections/service/2023-12-01/codeconnections-2023-12-01.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_CodeConnections.ml
   Smaws_Client_CodeConnections.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

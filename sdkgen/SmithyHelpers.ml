@@ -1,5 +1,5 @@
 open Base
-open Parselib.Ast
+open Smithy_ast
 
 let printProtocol (traits : Trait.t list option) =
   traits |> Option.value ~default:[]

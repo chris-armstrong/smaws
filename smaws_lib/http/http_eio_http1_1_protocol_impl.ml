@@ -2,7 +2,7 @@ open Protocol_intf
 
 module Log =
   (val Logs.src_log
-         (Logs.Src.create "awssdklib.http.http_1_1_impl" ~doc:"AwsSdkLib Http implementation")
+         (Logs.Src.create "Smaws_Lib.http.http_1_1_impl" ~doc:"Smaws_Lib Http implementation")
       : Logs.LOG)
 
 let make_http_1_1_body_reader reader =

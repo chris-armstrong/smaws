@@ -1,5 +1,5 @@
-open Parselib
 open Base
+module Ast = Smithy_ast
 
 type t = {
   namespace : string;
@@ -109,11 +109,11 @@ and make_namespace_context ?(should_alias : bool = false) namespace shapes names
 (*     namespace_module_mapping = Map.Poly.empty; *)
 (*   } *)
 
-type error = [ `ParseError of Parse.Json.Decode.jsonParseError | `OutputError of string ]
+type error = [ `ParseError of Smaws_parse.Json.Decode.jsonParseError | `OutputError of string ]
 
 let pp_error ppf = function
   | `ParseError error ->
-      Fmt.pf ppf "Parse error: %s" (Parselib.Parse.Json.Decode.jsonParseErrorToString error)
+      Fmt.pf ppf "Parse error: %s" (Smaws_parse.Json.Decode.jsonParseErrorToString error)
   | `OutputError error -> Fmt.pf ppf "Output error: %s" error
 
 let ( let+ ) r func = Result.map ~f:func r
@@ -133,7 +133,7 @@ let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
 
     NOTE: If you don't specify a namespace mapping then it will not be included in the result. *)
 let create_from_model_file_with_namespaces ~namespace_module_mapping input_filename =
-  match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with
+  match Smaws_parse.Json.Decode.parseJsonFile input_filename Smaws_parse.Smithy.parseModel with
   | Ok shapes ->
       let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in
       let all_namespace_contexts = partition_by_namespace ordered namespace_module_mapping in

@@ -1,7 +1,17 @@
 (library
- (name Parselib)
- (libraries yojson base str fmt ocamlgraph base64 logs markup re ppxlib)
+ (name codegen)
+ (libraries
+  yojson
+  base
+  str
+  fmt
+  ocamlgraph
+  base64
+  logs
+  markup
+  re
+  ppxlib
+  smithy_ast
+  smaws_parse)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq ppx_compare ppxlib.metaquot)))
-
-(include_subdirs qualified)

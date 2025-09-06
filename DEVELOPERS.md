@@ -7,22 +7,28 @@ its libraries and SDKs in your own code.
 ## Base Libraries
 
 All the SDK bindings use the [eio](https://github.com/ocaml-multicore/eio) library for async, leveraging [httpun](https://github.com/anmonteiro/httpun)
- by [@anmonteiro](https://github.com/anmonteiro/) for HTTP communication via the `awssdklib`.
+ by [@anmonteiro](https://github.com/anmonteiro/) for HTTP communication via the `smaws_lib`.
 
 Jane Street [Base](https://opensource.janestreet.com/base/) is used in some of the parsers and code generators, but
-the `awssdklib` shared library used by SDKs has minimal dependencies on
+the `smaws_lib` shared library used by SDKs has minimal dependencies on
 external libraries.
 
 ## Repository layout
 
 ```
-awssdksjsv3/         # git checkout of AWS SDK JS v3, containing Smithy definitions
-awssdklib/           # shared SDK library
-awssdklib/http       # shared SDK library HTTP implementation
+api-models-aws/          # git submodule containing the Smithy definitions for AWS services
 bin/                 # SDK generator binaries
-awssdklib_examples/  # usage examples
+codegen/             # code generation for the SDKs
 library/             # SDK generator libraries
+model_tests/         # Smithy model generation tests
+sdk_examples/        # SDK usage examples
+sdkgen/              # SDK generator
 sdks/                # service SDKs builders
+smithy_ast/          # AST for Smithy
+smaws_parse/         # parsing utilities, including HTML, JSON, and Smithy (JSON)
+smaws_lib/           # shared SDK library
+smaws_lib/http       # shared SDK library HTTP implementation
+smaws_lib_test/      # unit test for smaws_lib
 ```
 
 ## How it works

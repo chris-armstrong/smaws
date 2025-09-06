@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/route53-recovery-cluster/service/2019-12-02/route53-recovery-cluster-2019-12-02.json))
+  (:input
+   ../../api-models-aws/models/route53-recovery-cluster/service/2019-12-02/route53-recovery-cluster-2019-12-02.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Route53RecoveryCluster.ml
   Smaws_Client_Route53RecoveryCluster.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

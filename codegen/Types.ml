@@ -1,4 +1,5 @@
 open Base
+module Ast = Smithy_ast
 
 type t = (string, Ppxlib.core_type) Hashtbl.t
 

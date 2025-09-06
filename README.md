@@ -30,7 +30,7 @@ Please see the [documentation](https://chris-armstrong.github.io/smaws/smaws-cli
 
 ### Examples
 
-You can find examples in the [examples directory](https://github.com/chris-armstrong/smaws/tree/main/awssdklib_examples).
+You can find examples in the [examples directory](https://github.com/chris-armstrong/smaws/tree/main/sdk_examples).
 
 ## Developing
 

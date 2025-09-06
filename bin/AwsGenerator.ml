@@ -1,5 +1,6 @@
 open Base
-open Parselib
+module Parse = Smaws_parse
+module Ast = Smithy_ast
 
 type command =
   | TypesCommand
