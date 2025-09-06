@@ -1,5 +1,5 @@
-open Parselib
 open Base
+module Ast = Smithy_ast
 
 let generate ~service_details output_fmt =
   Fmt.pf output_fmt "module Types = Types@\n";

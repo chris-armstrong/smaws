@@ -16,14 +16,19 @@ external libraries.
 ## Repository layout
 
 ```
-api-models/          # git submodule containing the Smithy definitions for AWS services
+api-models-aws/          # git submodule containing the Smithy definitions for AWS services
+bin/                 # SDK generator binaries
+codegen/             # code generation for the SDKs
+library/             # SDK generator libraries
+model_tests/         # Smithy model generation tests
+sdk_examples/        # SDK usage examples
+sdkgen/              # SDK generator
+sdks/                # service SDKs builders
+smithy_ast/          # AST for Smithy
+smaws_parse/         # parsing utilities, including HTML, JSON, and Smithy (JSON)
 smaws_lib/           # shared SDK library
 smaws_lib/http       # shared SDK library HTTP implementation
-bin/                 # SDK generator binaries
-sdk_examples/  # usage examples
-library/             # SDK generator libraries
-sdks/                # service SDKs builders
-sdkgen/              # SDK generator
+smaws_lib_test/      # unit test for smaws_lib
 ```
 
 ## How it works

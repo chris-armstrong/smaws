@@ -1,179 +1,137 @@
 open Types
 open Service_metadata
-module GetRoutingControlState =
-  struct
-    let error_deserializer tree path =
-      let handler handler tree path =
-        function
-        | (_, "AccessDeniedException") ->
-            `AccessDeniedException
-              (Json_deserializers.access_denied_exception_of_yojson tree path)
-        | (_, "EndpointTemporarilyUnavailableException") ->
-            `EndpointTemporarilyUnavailableException
-              (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson
-                 tree path)
-        | (_, "InternalServerException") ->
-            `InternalServerException
-              (Json_deserializers.internal_server_exception_of_yojson tree
-                 path)
-        | (_, "ResourceNotFoundException") ->
-            `ResourceNotFoundException
-              (Json_deserializers.resource_not_found_exception_of_yojson tree
-                 path)
-        | (_, "ThrottlingException") ->
-            `ThrottlingException
-              (Json_deserializers.throttling_exception_of_yojson tree path)
-        | (_, "ValidationException") ->
-            `ValidationException
-              (Json_deserializers.validation_exception_of_yojson tree path)
-        | _type -> handler tree path _type in
-      Smaws_Lib.Protocols.AwsJson.(error_deserializer
-                                     (handler
-                                        Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
-                                     tree path)
-    let request context (request : get_routing_control_state_request) =
-      let open Smaws_Lib.Context in
-        let input =
-          Json_serializers.get_routing_control_state_request_to_yojson
-            request in
-        Smaws_Lib.Protocols.AwsJson.request
-          ~shape_name:"ToggleCustomerAPIGetRoutingControlState" ~service
-          ~config:context.config ~http:context.http ~input
-          ~output_deserializer:Json_deserializers.get_routing_control_state_response_of_yojson
-          ~error_deserializer
-  end
-module ListRoutingControls =
-  struct
-    let error_deserializer tree path =
-      let handler handler tree path =
-        function
-        | (_, "AccessDeniedException") ->
-            `AccessDeniedException
-              (Json_deserializers.access_denied_exception_of_yojson tree path)
-        | (_, "EndpointTemporarilyUnavailableException") ->
-            `EndpointTemporarilyUnavailableException
-              (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson
-                 tree path)
-        | (_, "InternalServerException") ->
-            `InternalServerException
-              (Json_deserializers.internal_server_exception_of_yojson tree
-                 path)
-        | (_, "ResourceNotFoundException") ->
-            `ResourceNotFoundException
-              (Json_deserializers.resource_not_found_exception_of_yojson tree
-                 path)
-        | (_, "ThrottlingException") ->
-            `ThrottlingException
-              (Json_deserializers.throttling_exception_of_yojson tree path)
-        | (_, "ValidationException") ->
-            `ValidationException
-              (Json_deserializers.validation_exception_of_yojson tree path)
-        | _type -> handler tree path _type in
-      Smaws_Lib.Protocols.AwsJson.(error_deserializer
-                                     (handler
-                                        Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
-                                     tree path)
-    let request context (request : list_routing_controls_request) =
-      let open Smaws_Lib.Context in
-        let input =
-          Json_serializers.list_routing_controls_request_to_yojson request in
-        Smaws_Lib.Protocols.AwsJson.request
-          ~shape_name:"ToggleCustomerAPIListRoutingControls" ~service
-          ~config:context.config ~http:context.http ~input
-          ~output_deserializer:Json_deserializers.list_routing_controls_response_of_yojson
-          ~error_deserializer
-  end
-module UpdateRoutingControlState =
-  struct
-    let error_deserializer tree path =
-      let handler handler tree path =
-        function
-        | (_, "AccessDeniedException") ->
-            `AccessDeniedException
-              (Json_deserializers.access_denied_exception_of_yojson tree path)
-        | (_, "ConflictException") ->
-            `ConflictException
-              (Json_deserializers.conflict_exception_of_yojson tree path)
-        | (_, "EndpointTemporarilyUnavailableException") ->
-            `EndpointTemporarilyUnavailableException
-              (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson
-                 tree path)
-        | (_, "InternalServerException") ->
-            `InternalServerException
-              (Json_deserializers.internal_server_exception_of_yojson tree
-                 path)
-        | (_, "ResourceNotFoundException") ->
-            `ResourceNotFoundException
-              (Json_deserializers.resource_not_found_exception_of_yojson tree
-                 path)
-        | (_, "ThrottlingException") ->
-            `ThrottlingException
-              (Json_deserializers.throttling_exception_of_yojson tree path)
-        | (_, "ValidationException") ->
-            `ValidationException
-              (Json_deserializers.validation_exception_of_yojson tree path)
-        | _type -> handler tree path _type in
-      Smaws_Lib.Protocols.AwsJson.(error_deserializer
-                                     (handler
-                                        Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
-                                     tree path)
-    let request context (request : update_routing_control_state_request) =
-      let open Smaws_Lib.Context in
-        let input =
-          Json_serializers.update_routing_control_state_request_to_yojson
-            request in
-        Smaws_Lib.Protocols.AwsJson.request
-          ~shape_name:"ToggleCustomerAPIUpdateRoutingControlState" ~service
-          ~config:context.config ~http:context.http ~input
-          ~output_deserializer:Json_deserializers.update_routing_control_state_response_of_yojson
-          ~error_deserializer
-  end
-module UpdateRoutingControlStates =
-  struct
-    let error_deserializer tree path =
-      let handler handler tree path =
-        function
-        | (_, "AccessDeniedException") ->
-            `AccessDeniedException
-              (Json_deserializers.access_denied_exception_of_yojson tree path)
-        | (_, "ConflictException") ->
-            `ConflictException
-              (Json_deserializers.conflict_exception_of_yojson tree path)
-        | (_, "EndpointTemporarilyUnavailableException") ->
-            `EndpointTemporarilyUnavailableException
-              (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson
-                 tree path)
-        | (_, "InternalServerException") ->
-            `InternalServerException
-              (Json_deserializers.internal_server_exception_of_yojson tree
-                 path)
-        | (_, "ResourceNotFoundException") ->
-            `ResourceNotFoundException
-              (Json_deserializers.resource_not_found_exception_of_yojson tree
-                 path)
-        | (_, "ServiceLimitExceededException") ->
-            `ServiceLimitExceededException
-              (Json_deserializers.service_limit_exceeded_exception_of_yojson
-                 tree path)
-        | (_, "ThrottlingException") ->
-            `ThrottlingException
-              (Json_deserializers.throttling_exception_of_yojson tree path)
-        | (_, "ValidationException") ->
-            `ValidationException
-              (Json_deserializers.validation_exception_of_yojson tree path)
-        | _type -> handler tree path _type in
-      Smaws_Lib.Protocols.AwsJson.(error_deserializer
-                                     (handler
-                                        Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
-                                     tree path)
-    let request context (request : update_routing_control_states_request) =
-      let open Smaws_Lib.Context in
-        let input =
-          Json_serializers.update_routing_control_states_request_to_yojson
-            request in
-        Smaws_Lib.Protocols.AwsJson.request
-          ~shape_name:"ToggleCustomerAPIUpdateRoutingControlStates" ~service
-          ~config:context.config ~http:context.http ~input
-          ~output_deserializer:Json_deserializers.update_routing_control_states_response_of_yojson
-          ~error_deserializer
-  end
+
+module GetRoutingControlState = struct
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "EndpointTemporarilyUnavailableException" ->
+          `EndpointTemporarilyUnavailableException
+            (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_routing_control_state_request) =
+    let open Smaws_Lib.Context in
+    let input = Json_serializers.get_routing_control_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPIGetRoutingControlState"
+      ~service ~config:context.config ~http:context.http ~input
+      ~output_deserializer:Json_deserializers.get_routing_control_state_response_of_yojson
+      ~error_deserializer
+end
+
+module ListRoutingControls = struct
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "EndpointTemporarilyUnavailableException" ->
+          `EndpointTemporarilyUnavailableException
+            (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_routing_controls_request) =
+    let open Smaws_Lib.Context in
+    let input = Json_serializers.list_routing_controls_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPIListRoutingControls" ~service
+      ~config:context.config ~http:context.http ~input
+      ~output_deserializer:Json_deserializers.list_routing_controls_response_of_yojson
+      ~error_deserializer
+end
+
+module UpdateRoutingControlState = struct
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "EndpointTemporarilyUnavailableException" ->
+          `EndpointTemporarilyUnavailableException
+            (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_routing_control_state_request) =
+    let open Smaws_Lib.Context in
+    let input = Json_serializers.update_routing_control_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPIUpdateRoutingControlState"
+      ~service ~config:context.config ~http:context.http ~input
+      ~output_deserializer:Json_deserializers.update_routing_control_state_response_of_yojson
+      ~error_deserializer
+end
+
+module UpdateRoutingControlStates = struct
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "EndpointTemporarilyUnavailableException" ->
+          `EndpointTemporarilyUnavailableException
+            (Json_deserializers.endpoint_temporarily_unavailable_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ServiceLimitExceededException" ->
+          `ServiceLimitExceededException
+            (Json_deserializers.service_limit_exceeded_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_routing_control_states_request) =
+    let open Smaws_Lib.Context in
+    let input = Json_serializers.update_routing_control_states_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPIUpdateRoutingControlStates"
+      ~service ~config:context.config ~http:context.http ~input
+      ~output_deserializer:Json_deserializers.update_routing_control_states_response_of_yojson
+      ~error_deserializer
+end

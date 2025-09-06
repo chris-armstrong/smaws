@@ -1,5 +1,3 @@
-open Parselib
-
 let generate ~operation_shapes ~structure_shapes ~alias_context
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
   let structure_shapes =

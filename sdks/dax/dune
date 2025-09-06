@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/dax/service/2017-04-19/dax-2017-04-19.json))
+  (:input
+   ../../api-models-aws/models/dax/service/2017-04-19/dax-2017-04-19.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_DAX.ml
   Smaws_Client_DAX.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/opensearchserverless/service/2021-11-01/opensearchserverless-2021-11-01.json))
+  (:input
+   ../../api-models-aws/models/opensearchserverless/service/2021-11-01/opensearchserverless-2021-11-01.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_OpenSearchServerless.ml
   Smaws_Client_OpenSearchServerless.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

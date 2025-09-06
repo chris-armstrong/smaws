@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/apprunner/service/2020-05-15/apprunner-2020-05-15.json))
+  (:input
+   ../../api-models-aws/models/apprunner/service/2020-05-15/apprunner-2020-05-15.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_AppRunner.ml
   Smaws_Client_AppRunner.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

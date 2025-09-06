@@ -1,4 +1,3 @@
-open Parselib
 open Exceptions
 
 let generate ~operation_shapes ~structure_shapes

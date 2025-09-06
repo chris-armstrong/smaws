@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/dynamodb-streams/service/2012-08-10/dynamodb-streams-2012-08-10.json))
+  (:input
+   ../../api-models-aws/models/dynamodb-streams/service/2012-08-10/dynamodb-streams-2012-08-10.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_DynamoDBStreams.ml
   Smaws_Client_DynamoDBStreams.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

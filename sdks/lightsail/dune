@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/lightsail/service/2016-11-28/lightsail-2016-11-28.json))
+  (:input
+   ../../api-models-aws/models/lightsail/service/2016-11-28/lightsail-2016-11-28.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Lightsail.ml
   Smaws_Client_Lightsail.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

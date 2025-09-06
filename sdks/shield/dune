@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/shield/service/2016-06-02/shield-2016-06-02.json))
+  (:input
+   ../../api-models-aws/models/shield/service/2016-06-02/shield-2016-06-02.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_Shield.ml
   Smaws_Client_Shield.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

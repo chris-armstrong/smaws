@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/kinesis-analytics/service/2015-08-14/kinesis-analytics-2015-08-14.json))
+  (:input
+   ../../api-models-aws/models/kinesis-analytics/service/2015-08-14/kinesis-analytics-2015-08-14.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_KinesisAnalytics.ml
   Smaws_Client_KinesisAnalytics.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

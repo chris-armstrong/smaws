@@ -12,4 +12,4 @@
   gen_types
   sdkgen
   SmithyHelpers)
- (libraries Parselib base))
+ (libraries smithy_ast smaws_parse codegen base))

@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/sqs/service/2012-11-05/sqs-2012-11-05.json))
+  (:input
+   ../../api-models-aws/models/sqs/service/2012-11-05/sqs-2012-11-05.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_SQS.ml
   Smaws_Client_SQS.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

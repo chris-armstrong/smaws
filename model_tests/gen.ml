@@ -35,7 +35,7 @@ let main () =
   Stdlib.Printf.printf "Targeting %s\n" namespace;
   match model with
   | Some model ->
-      let module_dir_name = module_name |> Parselib.Codegen.SafeNames.snakeCase in
+      let module_dir_name = module_name |> Codegen.SafeNames.snakeCase in
       let output_dir = Stdlib.Filename.concat output_dir module_dir_name in
       mkdir_if_not_exists output_dir;
       Stdlib.Printf.printf "Writing basics to %s\n" output_dir;

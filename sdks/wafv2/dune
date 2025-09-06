@@ -1,7 +1,8 @@
 (rule
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../api-models-aws/models/wafv2/service/2019-07-29/wafv2-2019-07-29.json))
+  (:input
+   ../../api-models-aws/models/wafv2/service/2019-07-29/wafv2-2019-07-29.json))
  (targets
   builders.ml
   builders.mli
@@ -15,7 +16,7 @@
   operations.mli
   Smaws_Client_WAFV2.ml
   Smaws_Client_WAFV2.mli)
-(mode promote)
+ (mode promote)
  (action
   (run
    %{gen}

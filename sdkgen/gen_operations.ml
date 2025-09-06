@@ -1,5 +1,4 @@
-open Parselib
-open Ast
+open Smithy_ast
 open Exceptions
 
 let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
