@@ -97,7 +97,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       clear_query_suggestions_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -266,7 +266,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_data_source_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -296,7 +296,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_faq_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -310,7 +310,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_index_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -325,7 +325,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_principal_mapping_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -340,7 +340,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_query_suggestions_block_list_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -355,7 +355,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_thesaurus_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -744,7 +744,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_principal_mapping_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -811,7 +811,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_data_source_sync_job_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InternalServerException of internal_server_exception 
@@ -825,7 +825,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       submit_feedback_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InternalServerException of internal_server_exception 
@@ -885,7 +885,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_data_source_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -899,7 +899,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_experience_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -930,7 +930,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_index_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -946,7 +946,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_query_suggestions_block_list_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -961,7 +961,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_query_suggestions_config_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -976,7 +976,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_thesaurus_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 

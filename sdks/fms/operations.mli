@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_admin_account_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -61,7 +61,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_apps_list_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -74,7 +74,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_notification_channel_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -87,7 +87,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_policy_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -101,7 +101,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_protocols_list_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -113,7 +113,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_set_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -126,7 +126,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_admin_account_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 
@@ -457,7 +457,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_admin_account_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidInputException of invalid_input_exception 
@@ -484,7 +484,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_notification_channel_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalErrorException of internal_error_exception 
           | `InvalidOperationException of invalid_operation_exception 

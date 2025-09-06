@@ -41,7 +41,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_aggregation_authorization_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception ])
@@ -53,7 +53,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_config_rule_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigRuleException of no_such_config_rule_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
@@ -64,7 +64,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_configuration_aggregator_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationAggregatorException of
               no_such_configuration_aggregator_exception ])
@@ -76,7 +76,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_configuration_recorder_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
               no_such_configuration_recorder_exception 
@@ -89,7 +89,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_conformance_pack_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConformancePackException of
               no_such_conformance_pack_exception 
@@ -101,7 +101,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_delivery_channel_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LastDeliveryChannelDeleteFailedException of
               last_delivery_channel_delete_failed_exception 
@@ -126,7 +126,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_organization_config_rule_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchOrganizationConfigRuleException of
               no_such_organization_config_rule_exception 
@@ -140,7 +140,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_organization_conformance_pack_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchOrganizationConformancePackException of
               no_such_organization_conformance_pack_exception 
@@ -154,7 +154,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_pending_aggregation_request_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception ])
@@ -195,7 +195,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_config_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoRunningConfigurationRecorderException of
               no_running_configuration_recorder_exception 
@@ -207,7 +207,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_retention_configuration_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 
@@ -722,7 +722,7 @@ module GetComplianceSummaryByConfigRule :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      Smaws_Lib.Smithy_api.unit_ ->
+      Smaws_Lib.Smithy_api.Types.unit_ ->
         (get_compliance_summary_by_config_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error]) result
 end[@@ocaml.doc
@@ -983,7 +983,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_config_rule_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -1021,7 +1021,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_configuration_recorder_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidConfigurationRecorderNameException of
               invalid_configuration_recorder_name_exception 
@@ -1057,7 +1057,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_delivery_channel_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientDeliveryPolicyException of
               insufficient_delivery_policy_exception 
@@ -1179,7 +1179,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_resource_config_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -1278,7 +1278,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_configuration_recorder_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoAvailableDeliveryChannelException of
               no_available_delivery_channel_exception 
@@ -1322,7 +1322,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_configuration_recorder_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
               no_such_configuration_recorder_exception 
@@ -1335,7 +1335,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `TooManyTagsException of too_many_tags_exception 
@@ -1347,7 +1347,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ValidationException of validation_exception ]) result

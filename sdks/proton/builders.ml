@@ -49,8 +49,9 @@ let make_service_template_version
                                template_version_part option)
   ~compatible_environment_templates:(compatible_environment_templates_ :
                                       compatible_environment_template_list)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_template_version_arn)
   ~status:(status_ : template_version_status)
   ~minor_version:(minor_version_ : template_version_part)
@@ -109,8 +110,9 @@ let make_service_template
                          full_template_version_number option)
   ?description:(description_ : description option)
   ?display_name:(display_name_ : display_name option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_template_arn) ~name:(name_ : resource_name) () =
   ({
      pipeline_provisioning = pipeline_provisioning_;
@@ -160,17 +162,19 @@ let make_update_service_sync_config_input
      repository_provider = repository_provider_;
      service_name = service_name_
    } : update_service_sync_config_input)
-let make_sync_blocker_context ~value:(value_ : Smaws_Lib.Smithy_api.string_)
-  ~key:(key_ : Smaws_Lib.Smithy_api.string_) () =
+let make_sync_blocker_context
+  ~value:(value_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~key:(key_ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({ value = value_; key = key_ } : sync_blocker_context)
 let make_sync_blocker
-  ?resolved_at:(resolved_at_ : Smaws_Lib.Smithy_api.timestamp option)
-  ?resolved_reason:(resolved_reason_ : Smaws_Lib.Smithy_api.string_ option)
+  ?resolved_at:(resolved_at_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+  ?resolved_reason:(resolved_reason_ :
+                     Smaws_Lib.Smithy_api.Types.string_ option)
   ?contexts:(contexts_ : sync_blocker_contexts option)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_reason:(created_reason_ : Smaws_Lib.Smithy_api.string_)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_reason:(created_reason_ : Smaws_Lib.Smithy_api.Types.string_)
   ~status:(status_ : blocker_status) ~type_:(type__ : blocker_type)
-  ~id:(id_ : Smaws_Lib.Smithy_api.string_) () =
+  ~id:(id_ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({
      resolved_at = resolved_at_;
      resolved_reason = resolved_reason_;
@@ -191,8 +195,8 @@ let make_update_service_sync_blocker_output
      service_name = service_name_
    } : update_service_sync_blocker_output)
 let make_update_service_sync_blocker_input
-  ~resolved_reason:(resolved_reason_ : Smaws_Lib.Smithy_api.string_)
-  ~id:(id_ : Smaws_Lib.Smithy_api.string_) () =
+  ~resolved_reason:(resolved_reason_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~id:(id_ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({ resolved_reason = resolved_reason_; id = id_ } : update_service_sync_blocker_input)
 let make_service_pipeline
   ?last_succeeded_deployment_id:(last_succeeded_deployment_id_ :
@@ -207,10 +211,10 @@ let make_service_pipeline
   ~template_major_version:(template_major_version_ : template_version_part)
   ~template_name:(template_name_ : resource_name)
   ~last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
   ~last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : arn) () =
   ({
      last_succeeded_deployment_id = last_succeeded_deployment_id_;
@@ -251,8 +255,9 @@ let make_service ?branch_name:(branch_name_ : git_branch_name option)
   ?status_message:(status_message_ : status_message option)
   ?description:(description_ : description option)
   ~spec:(spec_ : spec_contents) ~status:(status_ : service_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~template_name:(template_name_ : resource_name) ~arn:(arn_ : service_arn)
   ~name:(name_ : resource_name) () =
   ({
@@ -278,7 +283,7 @@ let make_service_instance
   ?last_attempted_deployment_id:(last_attempted_deployment_id_ :
                                   deployment_id option)
   ?last_client_request_token:(last_client_request_token_ :
-                               Smaws_Lib.Smithy_api.string_ option)
+                               Smaws_Lib.Smithy_api.Types.string_ option)
   ?spec:(spec_ : spec_contents option)
   ?deployment_status_message:(deployment_status_message_ :
                                status_message option)
@@ -289,10 +294,10 @@ let make_service_instance
   ~environment_name:(environment_name_ : resource_name)
   ~service_name:(service_name_ : resource_name)
   ~last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
   ~last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_instance_arn) ~name:(name_ : resource_name) () =
   ({
      last_succeeded_deployment_id = last_succeeded_deployment_id_;
@@ -344,8 +349,9 @@ let make_environment_template_version
   ?status_message:(status_message_ : status_message option)
   ?recommended_minor_version:(recommended_minor_version_ :
                                template_version_part option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : environment_template_version_arn)
   ~status:(status_ : template_version_status)
   ~minor_version:(minor_version_ : template_version_part)
@@ -390,8 +396,9 @@ let make_environment_template
                          full_template_version_number option)
   ?description:(description_ : description option)
   ?display_name:(display_name_ : display_name option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : environment_template_arn) ~name:(name_ : resource_name) () =
   ({
      provisioning = provisioning_;
@@ -443,10 +450,10 @@ let make_environment
   ~template_name:(template_name_ : resource_name)
   ~arn:(arn_ : environment_arn)
   ~last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
   ~last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~name:(name_ : resource_name) () =
   ({
      last_succeeded_deployment_id = last_succeeded_deployment_id_;
@@ -511,8 +518,9 @@ let make_environment_account_connection
   ?codebuild_role_arn:(codebuild_role_arn_ : role_arn option)
   ?component_role_arn:(component_role_arn_ : role_arn option)
   ~status:(status_ : environment_account_connection_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~requested_at:(requested_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~requested_at:(requested_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~environment_name:(environment_name_ : resource_name)
   ~role_arn:(role_arn_ : arn)
   ~environment_account_id:(environment_account_id_ : aws_account_id)
@@ -555,20 +563,21 @@ let make_component
   ?last_attempted_deployment_id:(last_attempted_deployment_id_ :
                                   deployment_id option)
   ?last_client_request_token:(last_client_request_token_ :
-                               Smaws_Lib.Smithy_api.string_ option)
+                               Smaws_Lib.Smithy_api.Types.string_ option)
   ?service_spec:(service_spec_ : spec_contents option)
   ?deployment_status_message:(deployment_status_message_ :
                                status_message option)
   ?last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp option)
+                                  Smaws_Lib.Smithy_api.Types.timestamp option)
   ?last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp option)
+                                  Smaws_Lib.Smithy_api.Types.timestamp option)
   ?service_instance_name:(service_instance_name_ : resource_name option)
   ?service_name:(service_name_ : resource_name option)
   ?description:(description_ : description option)
   ~deployment_status:(deployment_status_ : deployment_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~environment_name:(environment_name_ : resource_name)
   ~arn:(arn_ : component_arn) ~name:(name_ : resource_name) () =
   ({
@@ -632,7 +641,7 @@ let make_update_account_settings_input
                                  role_arn_or_empty_string option)
   ?delete_pipeline_provisioning_repository:(delete_pipeline_provisioning_repository_
                                              :
-                                             Smaws_Lib.Smithy_api.boolean_
+                                             Smaws_Lib.Smithy_api.Types.boolean_
                                                option)
   ?pipeline_provisioning_repository:(pipeline_provisioning_repository_ :
                                       repository_branch_input option)
@@ -663,8 +672,9 @@ let make_service_template_version_summary
   ?status_message:(status_message_ : status_message option)
   ?recommended_minor_version:(recommended_minor_version_ :
                                template_version_part option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_template_version_arn)
   ~status:(status_ : template_version_status)
   ~minor_version:(minor_version_ : template_version_part)
@@ -688,8 +698,9 @@ let make_service_template_summary
                          full_template_version_number option)
   ?description:(description_ : description option)
   ?display_name:(display_name_ : display_name option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_template_arn) ~name:(name_ : resource_name) () =
   ({
      pipeline_provisioning = pipeline_provisioning_;
@@ -704,8 +715,8 @@ let make_service_template_summary
 let make_service_sync_blocker_summary
   ?latest_blockers:(latest_blockers_ : latest_sync_blockers option)
   ?service_instance_name:(service_instance_name_ :
-                           Smaws_Lib.Smithy_api.string_ option)
-  ~service_name:(service_name_ : Smaws_Lib.Smithy_api.string_) () =
+                           Smaws_Lib.Smithy_api.Types.string_ option)
+  ~service_name:(service_name_ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({
      latest_blockers = latest_blockers_;
      service_instance_name = service_instance_name_;
@@ -715,8 +726,9 @@ let make_service_summary
   ?status_message:(status_message_ : status_message option)
   ?description:(description_ : description option)
   ~status:(status_ : service_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~template_name:(template_name_ : resource_name) ~arn:(arn_ : service_arn)
   ~name:(name_ : resource_name) () =
   ({
@@ -753,10 +765,10 @@ let make_service_instance_summary
   ~environment_name:(environment_name_ : resource_name)
   ~service_name:(service_name_ : resource_name)
   ~last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
   ~last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : service_instance_arn) ~name:(name_ : resource_name) () =
   ({
      last_succeeded_deployment_id = last_succeeded_deployment_id_;
@@ -800,7 +812,8 @@ let make_service_instance_state
      spec = spec_
    } : service_instance_state)
 let make_revision ~branch:(branch_ : git_branch_name)
-  ~directory:(directory_ : Smaws_Lib.Smithy_api.string_) ~sha:(sha_ : sh_a)
+  ~directory:(directory_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~sha:(sha_ : sh_a)
   ~repository_provider:(repository_provider_ : repository_provider)
   ~repository_name:(repository_name_ : repository_name) () =
   ({
@@ -811,16 +824,16 @@ let make_revision ~branch:(branch_ : git_branch_name)
      repository_name = repository_name_
    } : revision)
 let make_resource_sync_event
-  ?external_id:(external_id_ : Smaws_Lib.Smithy_api.string_ option)
-  ~event:(event_ : Smaws_Lib.Smithy_api.string_)
-  ~time:(time_ : Smaws_Lib.Smithy_api.timestamp)
-  ~type_:(type__ : Smaws_Lib.Smithy_api.string_) () =
+  ?external_id:(external_id_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ~event:(event_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~time:(time_ : Smaws_Lib.Smithy_api.Types.timestamp)
+  ~type_:(type__ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({ event = event_; time = time_; external_id = external_id_; type_ = type__
    } : resource_sync_event)
 let make_resource_sync_attempt ~events:(events_ : resource_sync_events)
   ~status:(status_ : resource_sync_status)
-  ~started_at:(started_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~target:(target_ : Smaws_Lib.Smithy_api.string_)
+  ~started_at:(started_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
+  ~target:(target_ : Smaws_Lib.Smithy_api.Types.string_)
   ~target_revision:(target_revision_ : revision)
   ~initial_revision:(initial_revision_ : revision) () =
   ({
@@ -832,11 +845,11 @@ let make_resource_sync_attempt ~events:(events_ : resource_sync_events)
      initial_revision = initial_revision_
    } : resource_sync_attempt)
 let make_resource_counts_summary
-  ?behind_minor:(behind_minor_ : Smaws_Lib.Smithy_api.integer option)
-  ?behind_major:(behind_major_ : Smaws_Lib.Smithy_api.integer option)
-  ?up_to_date:(up_to_date_ : Smaws_Lib.Smithy_api.integer option)
-  ?failed:(failed_ : Smaws_Lib.Smithy_api.integer option)
-  ~total:(total_ : Smaws_Lib.Smithy_api.integer) () =
+  ?behind_minor:(behind_minor_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?behind_major:(behind_major_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?up_to_date:(up_to_date_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?failed:(failed_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ~total:(total_ : Smaws_Lib.Smithy_api.Types.integer) () =
   ({
      behind_minor = behind_minor_;
      behind_major = behind_major_;
@@ -845,17 +858,17 @@ let make_resource_counts_summary
      total = total_
    } : resource_counts_summary)
 let make_repository_sync_event
-  ?external_id:(external_id_ : Smaws_Lib.Smithy_api.string_ option)
-  ~event:(event_ : Smaws_Lib.Smithy_api.string_)
-  ~time:(time_ : Smaws_Lib.Smithy_api.timestamp)
-  ~type_:(type__ : Smaws_Lib.Smithy_api.string_) () =
+  ?external_id:(external_id_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ~event:(event_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~time:(time_ : Smaws_Lib.Smithy_api.Types.timestamp)
+  ~type_:(type__ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({ event = event_; time = time_; external_id = external_id_; type_ = type__
    } : repository_sync_event)
 let make_repository_sync_definition
-  ~directory:(directory_ : Smaws_Lib.Smithy_api.string_)
+  ~directory:(directory_ : Smaws_Lib.Smithy_api.Types.string_)
   ~branch:(branch_ : git_branch_name)
-  ~parent:(parent_ : Smaws_Lib.Smithy_api.string_)
-  ~target:(target_ : Smaws_Lib.Smithy_api.string_) () =
+  ~parent:(parent_ : Smaws_Lib.Smithy_api.Types.string_)
+  ~target:(target_ : Smaws_Lib.Smithy_api.Types.string_) () =
   ({
      directory = directory_;
      branch = branch_;
@@ -864,7 +877,7 @@ let make_repository_sync_definition
    } : repository_sync_definition)
 let make_repository_sync_attempt ~events:(events_ : repository_sync_events)
   ~status:(status_ : repository_sync_status)
-  ~started_at:(started_at_ : Smaws_Lib.Smithy_api.timestamp) () =
+  ~started_at:(started_at_ : Smaws_Lib.Smithy_api.Types.timestamp) () =
   ({ events = events_; status = status_; started_at = started_at_ } : 
   repository_sync_attempt)
 let make_repository_summary ~connection_arn:(connection_arn_ : arn)
@@ -924,12 +937,12 @@ let make_notify_resource_deployment_status_change_input
      resource_arn = resource_arn_
    } : notify_resource_deployment_status_change_input)
 let make_list_tags_for_resource_output
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ~tags:(tags_ : tag_list) () =
   ({ next_token = next_token_; tags = tags_ } : list_tags_for_resource_output)
 let make_list_tags_for_resource_input
   ?max_results:(max_results_ : max_page_results option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ~resource_arn:(resource_arn_ : arn) () =
   ({
      max_results = max_results_;
@@ -1093,10 +1106,10 @@ let make_environment_summary
   ~template_name:(template_name_ : resource_name)
   ~arn:(arn_ : environment_arn)
   ~last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
   ~last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+                                  Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~name:(name_ : resource_name) () =
   ({
      last_succeeded_deployment_id = last_succeeded_deployment_id_;
@@ -1143,8 +1156,9 @@ let make_environment_template_summary
                          full_template_version_number option)
   ?description:(description_ : description option)
   ?display_name:(display_name_ : display_name option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : environment_template_arn) ~name:(name_ : resource_name) () =
   ({
      provisioning = provisioning_;
@@ -1169,8 +1183,9 @@ let make_environment_template_version_summary
   ?status_message:(status_message_ : status_message option)
   ?recommended_minor_version:(recommended_minor_version_ :
                                template_version_part option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~arn:(arn_ : environment_template_version_arn)
   ~status:(status_ : template_version_status)
   ~minor_version:(minor_version_ : template_version_part)
@@ -1233,8 +1248,9 @@ let make_list_environment_outputs_input
 let make_environment_account_connection_summary
   ?component_role_arn:(component_role_arn_ : arn option)
   ~status:(status_ : environment_account_connection_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~requested_at:(requested_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~requested_at:(requested_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~environment_name:(environment_name_ : resource_name)
   ~role_arn:(role_arn_ : arn)
   ~environment_account_id:(environment_account_id_ : aws_account_id)
@@ -1285,15 +1301,16 @@ let make_deployment_summary
   ?component_name:(component_name_ : resource_name option)
   ?service_instance_name:(service_instance_name_ : resource_name option)
   ?service_name:(service_name_ : resource_name option)
-  ?completed_at:(completed_at_ : Smaws_Lib.Smithy_api.timestamp option)
+  ?completed_at:(completed_at_ : Smaws_Lib.Smithy_api.Types.timestamp option)
   ~deployment_status:(deployment_status_ : deployment_status)
   ~environment_name:(environment_name_ : resource_name)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~target_resource_type:(target_resource_type_ :
                           deployment_target_resource_type)
   ~target_resource_created_at:(target_resource_created_at_ :
-                                Smaws_Lib.Smithy_api.timestamp)
+                                Smaws_Lib.Smithy_api.Types.timestamp)
   ~target_arn:(target_arn_ : arn) ~arn:(arn_ : deployment_arn)
   ~id:(id_ : deployment_id) () =
   ({
@@ -1340,14 +1357,15 @@ let make_component_summary
   ?deployment_status_message:(deployment_status_message_ :
                                status_message option)
   ?last_deployment_succeeded_at:(last_deployment_succeeded_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp option)
+                                  Smaws_Lib.Smithy_api.Types.timestamp option)
   ?last_deployment_attempted_at:(last_deployment_attempted_at_ :
-                                  Smaws_Lib.Smithy_api.timestamp option)
+                                  Smaws_Lib.Smithy_api.Types.timestamp option)
   ?service_instance_name:(service_instance_name_ : resource_name option)
   ?service_name:(service_name_ : resource_name option)
   ~deployment_status:(deployment_status_ : deployment_status)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~environment_name:(environment_name_ : resource_name)
   ~arn:(arn_ : component_arn) ~name:(name_ : resource_name) () =
   ({
@@ -1599,20 +1617,21 @@ let make_deployment ?target_state:(target_state_ : deployment_state option)
                                   deployment_id option)
   ?last_attempted_deployment_id:(last_attempted_deployment_id_ :
                                   deployment_id option)
-  ?completed_at:(completed_at_ : Smaws_Lib.Smithy_api.timestamp option)
+  ?completed_at:(completed_at_ : Smaws_Lib.Smithy_api.Types.timestamp option)
   ?deployment_status_message:(deployment_status_message_ :
                                status_message option)
   ?component_name:(component_name_ : resource_name option)
   ?service_instance_name:(service_instance_name_ : resource_name option)
   ?service_name:(service_name_ : resource_name option)
-  ~last_modified_at:(last_modified_at_ : Smaws_Lib.Smithy_api.timestamp)
-  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.timestamp)
+  ~last_modified_at:(last_modified_at_ :
+                      Smaws_Lib.Smithy_api.Types.timestamp)
+  ~created_at:(created_at_ : Smaws_Lib.Smithy_api.Types.timestamp)
   ~deployment_status:(deployment_status_ : deployment_status)
   ~environment_name:(environment_name_ : resource_name)
   ~target_resource_type:(target_resource_type_ :
                           deployment_target_resource_type)
   ~target_resource_created_at:(target_resource_created_at_ :
-                                Smaws_Lib.Smithy_api.timestamp)
+                                Smaws_Lib.Smithy_api.Types.timestamp)
   ~target_arn:(target_arn_ : arn) ~arn:(arn_ : deployment_arn)
   ~id:(id_ : deployment_id) () =
   ({

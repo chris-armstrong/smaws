@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_stream_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -19,7 +19,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_stream_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArgumentException of invalid_argument_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -31,7 +31,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       decrease_stream_retention_period_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -46,7 +46,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_policy_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -61,7 +61,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_stream_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -76,7 +76,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_stream_consumer_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArgumentException of invalid_argument_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -224,7 +224,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       increase_stream_retention_period_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -311,7 +311,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       merge_shards_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -370,7 +370,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_resource_policy_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -399,7 +399,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_stream_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -414,7 +414,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       split_shard_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -429,7 +429,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_stream_encryption_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -450,7 +450,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_stream_encryption_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -480,7 +480,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -495,7 +495,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -525,7 +525,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_stream_mode_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArgumentException of invalid_argument_exception 
           | `LimitExceededException of limit_exceeded_exception 

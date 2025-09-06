@@ -1,17 +1,21 @@
-type unit_ = unit
-type short = int
-type long = int
-type integer = int
-type byte = int
-type float_ = float
-type double = float
-type string_ = string
-type boolean_ = bool
-type char_ = int
-type bigint = int64
-type timestamp = CoreTypes.Timestamp.t
-type document = CoreTypes.Document.t
-type resource = CoreTypes.Resource.t
+module Types = struct
+  type unit_ = unit
+  type short = int
+  type long = int
+  type integer = int
+  type byte = int
+  type float_ = float
+  type double = float
+  type string_ = string
+  type boolean_ = bool
+  type char_ = int
+  type bigint = int64
+  type timestamp = CoreTypes.Timestamp.t
+  type document = CoreTypes.Document.t
+  type resource = CoreTypes.Resource.t
+  type blob = Bytes.t
+  type 'a nullable = 'a CoreTypes.Nullable.t
+end
 
 module Json_serializers = struct
   let unit__to_yojson = Json.SerializeHelpers.unit_to_yojson
@@ -27,6 +31,7 @@ module Json_serializers = struct
   let bigint_to_yojson = Json.SerializeHelpers.big_int_to_yojson
   let timestamp_to_yojson = Json.SerializeHelpers.timestamp_to_yojson
   let document_to_yojson = Json.SerializeHelpers.json_to_yojson
+  let blob_to_yojson = Json.SerializeHelpers.blob_to_yojson
 end
 
 module Json_deserializers = struct
@@ -43,4 +48,5 @@ module Json_deserializers = struct
   let bigint_of_yojson = Json.DeserializeHelpers.big_int_of_yojson
   let timestamp_of_yojson = Json.DeserializeHelpers.timestamp_epoch_seconds_of_yojson
   let document_of_yojson = Json.DeserializeHelpers.json_of_yojson
+  let blob_of_yojson = Json.DeserializeHelpers.blob_of_yojson
 end

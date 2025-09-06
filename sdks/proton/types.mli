@@ -98,10 +98,10 @@ type nonrec service_template_version =
   compatible_environment_templates: compatible_environment_template_list
     [@ocaml.doc
       "An array of compatible environment template names for the major version of a service template.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of a service template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of a service template was created.\n"];
   arn: service_template_version_arn
@@ -183,9 +183,9 @@ type nonrec service_template =
   display_name: display_name option
     [@ocaml.doc
       "The service template name as displayed in the developer interface.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service template was created.\n"];
   arn: service_template_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the service template.\n"];
@@ -252,27 +252,27 @@ type nonrec blocker_status =
   | RESOLVED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec sync_blocker_context =
   {
-  value: Smaws_Lib.Smithy_api.string_
+  value: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The value of the sync blocker context.\n"];
-  key: Smaws_Lib.Smithy_api.string_
+  key: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The key for the sync blocker context.\n"]}[@@ocaml.doc
                                                              "Detailed data of the context of the sync blocker.\n"]
 type nonrec sync_blocker_contexts = sync_blocker_context list[@@ocaml.doc ""]
 type nonrec sync_blocker =
   {
-  resolved_at: Smaws_Lib.Smithy_api.timestamp option
+  resolved_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc "The time the sync blocker was resolved.\n"];
-  resolved_reason: Smaws_Lib.Smithy_api.string_ option
+  resolved_reason: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The reason the sync blocker was resolved.\n"];
   contexts: sync_blocker_contexts option
     [@ocaml.doc "The contexts for the sync blocker.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the sync blocker was created.\n"];
-  created_reason: Smaws_Lib.Smithy_api.string_
+  created_reason: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The reason why the sync blocker was created.\n"];
   status: blocker_status [@ocaml.doc "The status of the sync blocker.\n"];
   type_: blocker_type [@ocaml.doc "The type of the sync blocker.\n"];
-  id: Smaws_Lib.Smithy_api.string_
+  id: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The ID of the sync blocker.\n"]}[@@ocaml.doc
                                                    "Detailed data of the sync blocker.\n"]
 type nonrec update_service_sync_blocker_output =
@@ -289,9 +289,9 @@ type nonrec update_service_sync_blocker_output =
 [@@ocaml.doc ""]
 type nonrec update_service_sync_blocker_input =
   {
-  resolved_reason: Smaws_Lib.Smithy_api.string_
+  resolved_reason: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The reason the service sync blocker was resolved.\n"];
-  id: Smaws_Lib.Smithy_api.string_
+  id: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The ID of the service sync blocker.\n"]}[@@ocaml.doc ""]
 type nonrec deployment_status =
   | IN_PROGRESS [@ocaml.doc ""]
@@ -328,13 +328,13 @@ type nonrec service_pipeline =
   template_name: resource_name
     [@ocaml.doc
       "The name of the service template that was used to create the service pipeline.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the service pipeline was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when a deployment of the service pipeline was last attempted.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service pipeline was created.\n"];
   arn: arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the service pipeline.\n"]}
@@ -401,9 +401,9 @@ type nonrec service =
   status_message: status_message option
     [@ocaml.doc "A service status message.\n"];
   status: service_status [@ocaml.doc "The status of the service.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service was created.\n"];
   template_name: resource_name
     [@ocaml.doc "The name of the service template.\n"];
@@ -427,7 +427,7 @@ type nonrec service_instance =
   last_attempted_deployment_id: deployment_id option
     [@ocaml.doc
       "The ID of the last attempted deployment of this service instance.\n"];
-  last_client_request_token: Smaws_Lib.Smithy_api.string_ option
+  last_client_request_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The last client request token received.\n"];
   spec: spec_contents option
     [@ocaml.doc
@@ -452,13 +452,13 @@ type nonrec service_instance =
   service_name: resource_name
     [@ocaml.doc
       "The name of the service that the service instance belongs to.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the service instance was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when a deployment of the service instance was last attempted.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service instance was created.\n"];
   arn: service_instance_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the service instance.\n"];
@@ -509,10 +509,10 @@ type nonrec environment_template_version =
   {
   schema: template_schema option
     [@ocaml.doc "The schema of the version of an environment template.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of an environment template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of an environment template was created.\n"];
   arn: environment_template_version_arn
@@ -575,10 +575,10 @@ type nonrec environment_template =
   display_name: display_name option
     [@ocaml.doc
       "The name of the environment template as displayed in the developer interface.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the environment template was created.\n"];
   arn: environment_template_arn
     [@ocaml.doc
@@ -657,13 +657,13 @@ type nonrec environment =
       "The Amazon Resource Name (ARN) of the environment template.\n"];
   arn: environment_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the environment.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when a deployment of the environment was last attempted.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the environment was created.\n"];
   description: description option
     [@ocaml.doc "The description of the environment.\n"];
@@ -725,10 +725,10 @@ type nonrec environment_account_connection =
       "The Amazon Resource Name (ARN) of the IAM service role that Proton uses when provisioning directly defined components in the associated environment account. It determines the scope of infrastructure that a component can provision in the account.\n\n The environment account connection must have a [componentRoleArn] to allow directly defined components to be associated with any environments running in the account.\n \n  For more information about components, see {{:https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html}Proton components} in the {i Proton User Guide}.\n  "];
   status: environment_account_connection_status
     [@ocaml.doc "The status of the environment account connection.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment account connection was last modified.\n"];
-  requested_at: Smaws_Lib.Smithy_api.timestamp
+  requested_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment account connection request was made.\n"];
   environment_name: resource_name
@@ -778,7 +778,7 @@ type nonrec component =
   last_attempted_deployment_id: deployment_id option
     [@ocaml.doc
       "The ID of the last attempted deployment of this component.\n"];
-  last_client_request_token: Smaws_Lib.Smithy_api.string_ option
+  last_client_request_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The last token the client requested.\n"];
   service_spec: spec_contents option
     [@ocaml.doc
@@ -788,15 +788,15 @@ type nonrec component =
       "The message associated with the component deployment status.\n"];
   deployment_status: deployment_status
     [@ocaml.doc "The component deployment status.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp option
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc
       "The time when the component was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp option
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc
       "The time when a deployment of the component was last attempted.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the component was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the component was created.\n"];
   service_instance_name: resource_name option
     [@ocaml.doc
@@ -873,7 +873,7 @@ type nonrec update_account_settings_input =
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the service role you want to use for provisioning pipelines. Proton assumes this role for CodeBuild-based provisioning.\n"];
   delete_pipeline_provisioning_repository:
-    Smaws_Lib.Smithy_api.boolean_ option
+    Smaws_Lib.Smithy_api.Types.boolean_ option
     [@ocaml.doc
       "Set to [true] to remove a configured pipeline repository from the account settings. Don't set this field if you are updating the configured pipeline repository.\n"];
   pipeline_provisioning_repository: repository_branch_input option
@@ -938,10 +938,10 @@ type nonrec sort_order =
   | DESCENDING [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec service_template_version_summary =
   {
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of a service template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of a service template was created.\n"];
   arn: service_template_version_arn
@@ -979,9 +979,9 @@ type nonrec service_template_summary =
   display_name: display_name option
     [@ocaml.doc
       "The service template name as displayed in the developer interface.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service template was created.\n"];
   arn: service_template_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the service template.\n"];
@@ -998,10 +998,10 @@ type nonrec service_sync_blocker_summary =
   {
   latest_blockers: latest_sync_blockers option
     [@ocaml.doc "The latest active blockers for the synced service.\n"];
-  service_instance_name: Smaws_Lib.Smithy_api.string_ option
+  service_instance_name: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The name of the service instance that you want sync your service configuration with.\n"];
-  service_name: Smaws_Lib.Smithy_api.string_
+  service_name: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc
       "The name of the service that you want to get the sync blocker summary for. If given a service instance name and a service name, it will return the blockers only applying to the instance that is blocked.\n\n If given only a service name, it will return the blockers that apply to all of the instances. In order to get the blockers for a single instance, you will need to make two distinct calls, one to get the sync blocker summary for the service and the other to get the sync blocker for the service instance.\n "]}
 [@@ocaml.doc
@@ -1013,9 +1013,9 @@ type nonrec service_summary =
   status_message: status_message option
     [@ocaml.doc "A service status message.\n"];
   status: service_status [@ocaml.doc "The status of the service.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service was created.\n"];
   template_name: resource_name
     [@ocaml.doc "The name of the service template.\n"];
@@ -1073,13 +1073,13 @@ type nonrec service_instance_summary =
   service_name: resource_name
     [@ocaml.doc
       "The name of the service that the service instance belongs to.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the service was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when a deployment of the service was last attempted.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the service instance was created.\n"];
   arn: service_instance_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the service instance.\n"];
@@ -1124,7 +1124,7 @@ type nonrec sh_a = string[@@ocaml.doc ""]
 type nonrec revision =
   {
   branch: git_branch_name [@ocaml.doc "The repository branch.\n"];
-  directory: Smaws_Lib.Smithy_api.string_
+  directory: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc
       "The repository directory changed by a commit and push that activated the sync attempt.\n"];
   sha: sh_a
@@ -1141,13 +1141,15 @@ type nonrec resource_sync_status =
   | FAILED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec resource_sync_event =
   {
-  event: Smaws_Lib.Smithy_api.string_ [@ocaml.doc "A resource sync event.\n"];
-  time: Smaws_Lib.Smithy_api.timestamp
+  event: Smaws_Lib.Smithy_api.Types.string_
+    [@ocaml.doc "A resource sync event.\n"];
+  time: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the event occurred.\n"];
-  external_id: Smaws_Lib.Smithy_api.string_ option
+  external_id: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The external ID for the event.\n"];
-  type_: Smaws_Lib.Smithy_api.string_ [@ocaml.doc "The type of event.\n"]}
-[@@ocaml.doc "Detail data for a resource sync event.\n"]
+  type_: Smaws_Lib.Smithy_api.Types.string_
+    [@ocaml.doc "The type of event.\n"]}[@@ocaml.doc
+                                          "Detail data for a resource sync event.\n"]
 type nonrec resource_sync_events = resource_sync_event list[@@ocaml.doc ""]
 type nonrec resource_sync_attempt =
   {
@@ -1155,9 +1157,9 @@ type nonrec resource_sync_attempt =
     [@ocaml.doc "An array of events with detail data.\n"];
   status: resource_sync_status
     [@ocaml.doc "The status of the sync attempt.\n"];
-  started_at: Smaws_Lib.Smithy_api.timestamp
+  started_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the sync attempt started.\n"];
-  target: Smaws_Lib.Smithy_api.string_
+  target: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The resource that is synced to.\n"];
   target_revision: revision
     [@ocaml.doc "Detail data for the target revision.\n"];
@@ -1172,19 +1174,19 @@ type nonrec resource_deployment_status =
   | SUCCEEDED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec resource_counts_summary =
   {
-  behind_minor: Smaws_Lib.Smithy_api.integer option
+  behind_minor: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The number of resources of this type in the Amazon Web Services account that need a minor template version update.\n"];
-  behind_major: Smaws_Lib.Smithy_api.integer option
+  behind_major: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The number of resources of this type in the Amazon Web Services account that need a major template version update.\n"];
-  up_to_date: Smaws_Lib.Smithy_api.integer option
+  up_to_date: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The number of resources of this type in the Amazon Web Services account that are up-to-date with their template.\n"];
-  failed: Smaws_Lib.Smithy_api.integer option
+  failed: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The number of resources of this type in the Amazon Web Services account that failed to deploy.\n"];
-  total: Smaws_Lib.Smithy_api.integer
+  total: Smaws_Lib.Smithy_api.Types.integer
     [@ocaml.doc
       "The total number of resources of this type in the Amazon Web Services account.\n"]}
 [@@ocaml.doc "Summary counts of each Proton resource types.\n"]
@@ -1196,24 +1198,25 @@ type nonrec repository_sync_status =
   | QUEUED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec repository_sync_event =
   {
-  event: Smaws_Lib.Smithy_api.string_
+  event: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "Event detail for a repository sync attempt.\n"];
-  time: Smaws_Lib.Smithy_api.timestamp
+  time: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time that the sync event occurred.\n"];
-  external_id: Smaws_Lib.Smithy_api.string_ option
+  external_id: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The external ID of the sync event.\n"];
-  type_: Smaws_Lib.Smithy_api.string_ [@ocaml.doc "The type of event.\n"]}
-[@@ocaml.doc "Repository sync event detail data for a sync attempt.\n"]
+  type_: Smaws_Lib.Smithy_api.Types.string_
+    [@ocaml.doc "The type of event.\n"]}[@@ocaml.doc
+                                          "Repository sync event detail data for a sync attempt.\n"]
 type nonrec repository_sync_events = repository_sync_event list[@@ocaml.doc
                                                                  ""]
 type nonrec repository_sync_definition =
   {
-  directory: Smaws_Lib.Smithy_api.string_
+  directory: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The directory in the repository.\n"];
   branch: git_branch_name [@ocaml.doc "The repository branch.\n"];
-  parent: Smaws_Lib.Smithy_api.string_
+  parent: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The resource that is synced from.\n"];
-  target: Smaws_Lib.Smithy_api.string_
+  target: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "The resource that is synced to.\n"]}[@@ocaml.doc
                                                        "A repository sync definition.\n"]
 type nonrec repository_sync_definition_list = repository_sync_definition list
@@ -1223,7 +1226,7 @@ type nonrec repository_sync_attempt =
   events: repository_sync_events
     [@ocaml.doc "Detail data for sync attempt events.\n"];
   status: repository_sync_status [@ocaml.doc "The sync attempt status.\n"];
-  started_at: Smaws_Lib.Smithy_api.timestamp
+  started_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the sync attempt started.\n"]}[@@ocaml.doc
                                                                "Detail data for a repository sync attempt activated by a push to a repository.\n"]
 type nonrec repository_summary =
@@ -1310,7 +1313,7 @@ type nonrec next_token = string[@@ocaml.doc ""]
 type nonrec max_page_results = int[@@ocaml.doc ""]
 type nonrec list_tags_for_resource_output =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "A token that indicates the location of the next resource tag in the array of resource tags, after the current requested list of resource tags.\n"];
   tags: tag_list [@ocaml.doc "A list of resource tags with detail data.\n"]}
@@ -1319,7 +1322,7 @@ type nonrec list_tags_for_resource_input =
   {
   max_results: max_page_results option
     [@ocaml.doc "The maximum number of tags to list.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "A token that indicates the location of the next resource tag in the array of resource tags, after the list of resource tags that was previously requested.\n"];
   resource_arn: arn
@@ -1591,13 +1594,13 @@ type nonrec environment_summary =
     [@ocaml.doc "The name of the environment template.\n"];
   arn: environment_arn
     [@ocaml.doc "The Amazon Resource Name (ARN) of the environment.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when a deployment of the environment was last attempted.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the environment was created.\n"];
   description: description option
     [@ocaml.doc "The description of the environment.\n"];
@@ -1646,10 +1649,10 @@ type nonrec environment_template_summary =
   display_name: display_name option
     [@ocaml.doc
       "The name of the environment template as displayed in the developer interface.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the environment template was created.\n"];
   arn: environment_template_arn
     [@ocaml.doc
@@ -1676,10 +1679,10 @@ type nonrec list_environment_templates_input =
 [@@ocaml.doc ""]
 type nonrec environment_template_version_summary =
   {
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of an environment template was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the version of an environment template was created.\n"];
   arn: environment_template_version_arn
@@ -1767,10 +1770,10 @@ type nonrec environment_account_connection_summary =
       "The Amazon Resource Name (ARN) of the IAM service role that Proton uses when provisioning directly defined components in the associated environment account. It determines the scope of infrastructure that a component can provision in the account.\n\n The environment account connection must have a [componentRoleArn] to allow directly defined components to be associated with any environments running in the account.\n \n  For more information about components, see {{:https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html}Proton components} in the {i Proton User Guide}.\n  "];
   status: environment_account_connection_status
     [@ocaml.doc "The status of the environment account connection.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment account connection was last modified.\n"];
-  requested_at: Smaws_Lib.Smithy_api.timestamp
+  requested_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc
       "The time when the environment account connection request was made.\n"];
   environment_name: resource_name
@@ -1851,16 +1854,16 @@ type nonrec deployment_summary =
   environment_name: resource_name
     [@ocaml.doc
       "The name of the environment associated with the deployment.\n"];
-  completed_at: Smaws_Lib.Smithy_api.timestamp option
+  completed_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc "The date and time the deployment was completed.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the deployment was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the deployment was created.\n"];
   target_resource_type: deployment_target_resource_type
     [@ocaml.doc
       "The resource type of the deployment target. It can be an environment, service, service instance, or component.\n"];
-  target_resource_created_at: Smaws_Lib.Smithy_api.timestamp
+  target_resource_created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the target resource was created.\n"];
   target_arn: arn
     [@ocaml.doc
@@ -1911,15 +1914,15 @@ type nonrec component_summary =
       "The message associated with the component deployment status.\n"];
   deployment_status: deployment_status
     [@ocaml.doc "The component deployment status.\n"];
-  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.timestamp option
+  last_deployment_succeeded_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc
       "The time when the component was last deployed successfully.\n"];
-  last_deployment_attempted_at: Smaws_Lib.Smithy_api.timestamp option
+  last_deployment_attempted_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc
       "The time when a deployment of the component was last attempted.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the component was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The time when the component was created.\n"];
   service_instance_name: resource_name option
     [@ocaml.doc
@@ -2291,11 +2294,11 @@ type nonrec deployment =
     [@ocaml.doc "The ID of the last successful deployment.\n"];
   last_attempted_deployment_id: deployment_id option
     [@ocaml.doc "The ID of the last attempted deployment.\n"];
-  completed_at: Smaws_Lib.Smithy_api.timestamp option
+  completed_at: Smaws_Lib.Smithy_api.Types.timestamp option
     [@ocaml.doc "The date and time the deployment was completed.\n"];
-  last_modified_at: Smaws_Lib.Smithy_api.timestamp
+  last_modified_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the deployment was last modified.\n"];
-  created_at: Smaws_Lib.Smithy_api.timestamp
+  created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the deployment was created.\n"];
   deployment_status_message: status_message option
     [@ocaml.doc "The deployment status message.\n"];
@@ -2314,7 +2317,7 @@ type nonrec deployment =
   target_resource_type: deployment_target_resource_type
     [@ocaml.doc
       "The resource type of the deployment target. It can be an environment, service, service instance, or component.\n"];
-  target_resource_created_at: Smaws_Lib.Smithy_api.timestamp
+  target_resource_created_at: Smaws_Lib.Smithy_api.Types.timestamp
     [@ocaml.doc "The date and time the depoyment target was created.\n"];
   target_arn: arn
     [@ocaml.doc

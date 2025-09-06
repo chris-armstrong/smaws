@@ -157,7 +157,7 @@ module GetAccountConfiguration =
                                      (handler
                                         Smaws_Lib.Protocols.AwsJson.Errors.default_handler)
                                      tree path)
-    let request context (request : Smaws_Lib.Smithy_api.unit_) =
+    let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
       let open Smaws_Lib.Context in
         let input =
           Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in

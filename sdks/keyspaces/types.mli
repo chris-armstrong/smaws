@@ -10,7 +10,7 @@ type nonrec view_type =
   | NEW_AND_OLD_IMAGES [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec validation_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "The operation failed due to an invalid or malformed request.\n"]
 type nonrec ar_n = string[@@ocaml.doc ""]
@@ -227,7 +227,7 @@ type nonrec update_table_request =
 [@@ocaml.doc ""]
 type nonrec service_quota_exceeded_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "The operation exceeded the service quota for this resource. For more information on service quotas, see {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/quotas.html}Quotas} in the {i Amazon Keyspaces Developer Guide}.\n"]
 type nonrec resource_not_found_exception =
@@ -235,22 +235,22 @@ type nonrec resource_not_found_exception =
   resource_arn: ar_n option
     [@ocaml.doc
       "The unique identifier in the format of Amazon Resource Name (ARN) for the resource couldn\226\128\153t be found.\n"];
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "The operation tried to access a keyspace, table, or type that doesn't exist. The resource might not be specified correctly, or its status might not be [ACTIVE].\n"]
 type nonrec internal_server_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "Amazon Keyspaces was unable to fully process this request because of an internal server error.\n"]
 type nonrec conflict_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "Amazon Keyspaces couldn't complete the requested action. This error may occur if you try to perform an action and the same or a different action is already in progress, or if you try to create a resource that already exists. \n"]
 type nonrec access_denied_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option
+  message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the error.\n"]}[@@ocaml.doc
                                                  "You don't have sufficient access permissions to perform this action. \n"]
 type nonrec update_keyspace_response =
@@ -609,7 +609,7 @@ type nonrec get_table_auto_scaling_settings_request =
 [@@ocaml.doc ""]
 type nonrec comment =
   {
-  message: Smaws_Lib.Smithy_api.string_
+  message: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "An optional description of the table.\n"]}[@@ocaml.doc
                                                              "An optional comment that describes the table.\n"]
 type nonrec cdc_specification_summary =

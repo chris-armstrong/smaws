@@ -261,42 +261,46 @@ let write_service ~output_dir t =
       SmithyHelpers.printServiceDetails shapes)
 
 let write_serialisers ~output_dir t =
-  let { service_details; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let name, service, service_details =
-    service_details |> Option.value_exn ~message:"no service shape present"
+  let {
+    namespace;
+    service_details;
+    operation_shapes;
+    structure_shapes;
+    namespace_module_mapping;
+    _;
+  } =
+    t
   in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    let current_namespace = Codegen.Util.symbolNamespace name in
-    (* Some *)
-    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
   let filename = "json_serializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_serialisers.generate ~name ~service ~operation_shapes ~structure_shapes
-        ~namespace_resolver output_fmt)
+      Gen_serialisers.generate ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
 
 let write_deserialisers ~output_dir t =
-  let { service_details; operation_shapes; structure_shapes; namespace_module_mapping; _ } = t in
-  let name, service, service_details =
-    service_details |> Option.value_exn ~message:"no service shape present"
+  let {
+    namespace;
+    service_details;
+    operation_shapes;
+    structure_shapes;
+    namespace_module_mapping;
+    _;
+  } =
+    t
   in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    let current_namespace = Codegen.Util.symbolNamespace name in
-    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
   let filename = "json_deserializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_deserialisers.generate ~name ~service ~operation_shapes ~structure_shapes
-        ~namespace_resolver output_fmt)
+      Gen_deserialisers.generate ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
 
 let write_module ~output_dir ~filename t =
   let {
+    namespace;
     service_details;
     operation_shapes;
     structure_shapes;
@@ -306,23 +310,17 @@ let write_module ~output_dir ~filename t =
   } =
     t
   in
-  let name, service, service_details =
-    service_details |> Option.value_exn ~message:"no service shape present"
-  in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    let current_namespace = Codegen.Util.symbolNamespace name in
-    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_module.generate output_fmt)
+        Gen_module.generate ~service_details output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
-        Gen_module.generate_mli ~name ~service ~namespace_resolver ~operation_shapes
+        Gen_module.generate_mli ~service_details ~namespace_resolver ~operation_shapes
           ~structure_shapes ~alias_context output_fmt)
   in
   Result.all_unit [ r1; r2 ]
@@ -331,3 +329,5 @@ let write_module ~output_dir ~filename t =
 
 (** Get the list of operations as (name, operationShapeDetails, targets list *)
 let operations t = t.operation_shapes
+
+let service_details t = t.service_details

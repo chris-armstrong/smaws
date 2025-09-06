@@ -94,7 +94,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_language_model_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -106,7 +106,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_scribe_job_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -118,7 +118,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_transcription_job_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -130,7 +130,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_vocabulary_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -143,7 +143,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_transcription_job_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -155,7 +155,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_vocabulary_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -168,7 +168,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_vocabulary_filter_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 

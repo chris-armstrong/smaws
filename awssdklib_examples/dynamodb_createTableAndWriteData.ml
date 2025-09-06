@@ -49,7 +49,7 @@ let _ =
             Logs.info (fun m ->
                 m "table exists Success %s!"
                   (ctr.table_description
-                  |> Option.map (fun (x : table_description) -> x.table_id)
+                  |> Option.map (fun (x : Types.table_description) -> x.table_id)
                   |> Option.join
                   |> Option.value ~default:"<unknown id>"));
             let* ctr =

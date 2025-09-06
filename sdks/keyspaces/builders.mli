@@ -179,7 +179,8 @@ val make_get_table_auto_scaling_settings_request :
   table_name:table_name ->
     keyspace_name:keyspace_name ->
       unit -> get_table_auto_scaling_settings_request
-val make_comment : message:Smaws_Lib.Smithy_api.string_ -> unit -> comment
+val make_comment :
+  message:Smaws_Lib.Smithy_api.Types.string_ -> unit -> comment
 val make_cdc_specification_summary :
   ?view_type:view_type ->
     status:cdc_status -> unit -> cdc_specification_summary

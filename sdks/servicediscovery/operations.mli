@@ -300,7 +300,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_instance_custom_health_status_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CustomHealthNotFound of custom_health_not_found 
           | `InstanceNotFound of instance_not_found 

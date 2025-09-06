@@ -35,12 +35,26 @@ let main () =
   Stdlib.Printf.printf "Targeting %s\n" namespace;
   match model with
   | Some model ->
-      let output_dir =
-        Stdlib.Filename.concat output_dir (module_name |> Parselib.Codegen.SafeNames.snakeCase)
-      in
+      let module_dir_name = module_name |> Parselib.Codegen.SafeNames.snakeCase in
+      let output_dir = Stdlib.Filename.concat output_dir module_dir_name in
       mkdir_if_not_exists output_dir;
-      Stdlib.Printf.printf "Writing types to %s\n" output_dir;
+      Stdlib.Printf.printf "Writing basics to %s\n" output_dir;
+      let service_details = Sdkgen.service_details model in
       let _ = Sdkgen.write_types ~with_derivings:true ~output_dir model in
+      let _ = Sdkgen.write_serialisers ~output_dir model in
+      let _ = Sdkgen.write_deserialisers ~output_dir model in
+      let _ = Sdkgen.write_builders ~output_dir model in
+      let _ = Sdkgen.write_module ~filename:module_dir_name ~output_dir model in
+      let _ =
+        match service_details with
+        | Some (name, shape, trait) ->
+            Stdlib.Printf.printf "Writing service metadata and operations to %s\n" output_dir;
+            let _ = Sdkgen.write_service ~output_dir model in
+            let _ = Sdkgen.write_service_metadata ~output_dir model in
+            let _ = Sdkgen.write_operations ~output_dir model in
+            ()
+        | None -> ()
+      in
       Ok ()
   | None -> Ok ()
 

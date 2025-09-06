@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_permission_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security  | `OverLimit of over_limit 
@@ -32,7 +32,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       change_message_visibility_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -84,7 +84,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_message_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidIdFormat of invalid_id_format 
@@ -119,7 +119,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_queue_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -217,7 +217,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       purge_queue_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -253,7 +253,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_permission_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -316,7 +316,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       set_queue_attributes_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidAttributeName of invalid_attribute_name 
@@ -346,7 +346,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_queue_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -360,7 +360,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_queue_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 

@@ -28,9 +28,9 @@ type nonrec vpc_endpoint_filters =
                                                            "Filter the results of a [ListVpcEndpoints] request.\n"]
 type nonrec vpc_endpoint_error_detail =
   {
-  error_code: Smaws_Lib.Smithy_api.string_ option
+  error_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The error code for the failed request.\n"];
-  error_message: Smaws_Lib.Smithy_api.string_ option
+  error_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "An error message describing the reason for the failure.\n"];
   id: vpc_endpoint_id option
     [@ocaml.doc "The unique identifier of the VPC endpoint.\n"]}[@@ocaml.doc
@@ -43,11 +43,11 @@ type nonrec security_group_id = string[@@ocaml.doc ""]
 type nonrec security_group_ids = security_group_id list[@@ocaml.doc ""]
 type nonrec vpc_endpoint_detail =
   {
-  failure_message: Smaws_Lib.Smithy_api.string_ option
+  failure_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A message associated with the failure code.\n"];
-  failure_code: Smaws_Lib.Smithy_api.string_ option
+  failure_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A failure code associated with the request.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the endpoint was created.\n"];
   status: vpc_endpoint_status option
     [@ocaml.doc "The current status of the endpoint.\n"];
@@ -68,11 +68,12 @@ type nonrec vpc_endpoint_details = vpc_endpoint_detail list[@@ocaml.doc ""]
 type nonrec vpc_endpoint = Smaws_Lib.CoreTypes.Resource.t[@@ocaml.doc ""]
 type nonrec validation_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option [@ocaml.doc ""]}[@@ocaml.doc
-                                                                 "Thrown when the HTTP request contains invalid input or is missing required input.\n"]
+  message: Smaws_Lib.Smithy_api.Types.string_ option [@ocaml.doc ""]}
+[@@ocaml.doc
+  "Thrown when the HTTP request contains invalid input or is missing required input.\n"]
 type nonrec update_vpc_endpoint_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The timestamp of when the endpoint was last modified.\n"];
   security_group_ids: security_group_ids option
     [@ocaml.doc
@@ -113,12 +114,14 @@ type nonrec update_vpc_endpoint_request =
 [@@ocaml.doc ""]
 type nonrec internal_server_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option [@ocaml.doc ""]}[@@ocaml.doc
-                                                                 "Thrown when an error internal to the service occurs while processing a request.\n"]
+  message: Smaws_Lib.Smithy_api.Types.string_ option [@ocaml.doc ""]}
+[@@ocaml.doc
+  "Thrown when an error internal to the service occurs while processing a request.\n"]
 type nonrec conflict_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option [@ocaml.doc ""]}[@@ocaml.doc
-                                                                 "When creating a resource, thrown when a resource with the same name already exists or is being created. When deleting a resource, thrown when the resource is not in the ACTIVE or FAILED state.\n"]
+  message: Smaws_Lib.Smithy_api.Types.string_ option [@ocaml.doc ""]}
+[@@ocaml.doc
+  "When creating a resource, thrown when a resource with the same name already exists or is being created. When deleting a resource, thrown when the resource is not in the ACTIVE or FAILED state.\n"]
 type nonrec security_policy_type =
   | Encryption [@ocaml.doc ""]
   | Network [@ocaml.doc ""][@@ocaml.doc ""]
@@ -127,11 +130,11 @@ type nonrec policy_version = string[@@ocaml.doc ""]
 type nonrec policy_description = string[@@ocaml.doc ""]
 type nonrec security_policy_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The timestamp of when the policy was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the policy was created.\n"];
-  policy: Smaws_Lib.Smithy_api.document option
+  policy: Smaws_Lib.Smithy_api.Types.document option
     [@ocaml.doc "The JSON policy document without any whitespaces.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the security policy.\n"];
@@ -165,22 +168,23 @@ type nonrec update_security_policy_request =
 [@@ocaml.doc ""]
 type nonrec service_quota_exceeded_exception =
   {
-  quota_code: Smaws_Lib.Smithy_api.string_ option
+  quota_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Service Quotas requirement to identify originating quota."];
-  service_code: Smaws_Lib.Smithy_api.string_
+  service_code: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc
       "Service Quotas requirement to identify originating service."];
-  resource_type: Smaws_Lib.Smithy_api.string_ option
+  resource_type: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Type of the resource affected."];
-  resource_id: Smaws_Lib.Smithy_api.string_ option
+  resource_id: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Identifier of the resource affected."];
-  message: Smaws_Lib.Smithy_api.string_
+  message: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "Description of the error."]}[@@ocaml.doc
                                                "Thrown when you attempt to create more resources than the service allows based on service quotas.\n"]
 type nonrec resource_not_found_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_ option [@ocaml.doc ""]}[@@ocaml.doc
-                                                                 "Thrown when accessing or deleting a resource that does not exist.\n"]
+  message: Smaws_Lib.Smithy_api.Types.string_ option [@ocaml.doc ""]}
+[@@ocaml.doc
+  "Thrown when accessing or deleting a resource that does not exist.\n"]
 type nonrec security_config_id = string[@@ocaml.doc ""]
 type nonrec security_config_type =
   | Saml [@ocaml.doc ""]
@@ -188,7 +192,7 @@ type nonrec security_config_type =
 type nonrec config_description = string[@@ocaml.doc ""]
 type nonrec saml_config_options =
   {
-  session_timeout: Smaws_Lib.Smithy_api.integer option
+  session_timeout: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The session timeout, in minutes. Default is 60 minutes (12 hours).\n"];
   open_search_serverless_entity_id: open_search_serverless_entity_id option
@@ -220,10 +224,10 @@ type nonrec iam_identity_center_config_options =
   user_attribute: iam_identity_center_user_attribute option
     [@ocaml.doc
       "The user attribute for this IAM Identity Center integration. Defaults to [UserId] \n"];
-  application_description: Smaws_Lib.Smithy_api.string_ option
+  application_description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.\n"];
-  application_name: Smaws_Lib.Smithy_api.string_ option
+  application_name: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.\n"];
   application_arn: iam_identity_center_application_arn option
@@ -236,10 +240,10 @@ type nonrec iam_identity_center_config_options =
   "Describes IAM Identity Center options for an OpenSearch Serverless security configuration in the form of a key-value map.\n"]
 type nonrec security_config_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The timestamp of when the configuration was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the configuration was created.\n"];
   iam_identity_center_options: iam_identity_center_config_options option
     [@ocaml.doc
@@ -296,12 +300,12 @@ type nonrec lifecycle_policy_type =
   | Retention [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec lifecycle_policy_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The timestamp of when the lifecycle policy was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the lifecycle policy was created.\n"];
-  policy: Smaws_Lib.Smithy_api.document option
+  policy: Smaws_Lib.Smithy_api.Types.document option
     [@ocaml.doc "The JSON policy document without any whitespaces.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the lifecycle policy.\n"];
@@ -344,13 +348,13 @@ type nonrec collection_type =
   | VECTORSEARCH [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec update_collection_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date and time when the collection was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date and time when the collection was created.\n"];
-  arn: Smaws_Lib.Smithy_api.string_ option
+  arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"];
-  description: Smaws_Lib.Smithy_api.string_ option
+  description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The description of the collection.\n"];
   type_: collection_type option [@ocaml.doc "The collection type.\n"];
   status: collection_status option
@@ -368,7 +372,7 @@ type nonrec update_collection_request =
   client_token: client_token option
     [@ocaml.doc
       "Unique, case-sensitive identifier to ensure idempotency of the request.\n"];
-  description: Smaws_Lib.Smithy_api.string_ option
+  description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A description of the collection.\n"];
   id: collection_id [@ocaml.doc "The unique identifier of the collection.\n"]}
 [@@ocaml.doc ""]
@@ -398,11 +402,11 @@ type nonrec access_policy_type =
   | Data [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec access_policy_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The timestamp of when the policy was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the policy was created.\n"];
-  policy: Smaws_Lib.Smithy_api.document option
+  policy: Smaws_Lib.Smithy_api.Types.document option
     [@ocaml.doc "The JSON policy document without any whitespaces.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the policy.\n"];
@@ -468,9 +472,9 @@ type nonrec standby_replicas =
   | DISABLED [@ocaml.doc ""][@@ocaml.doc ""]
 type nonrec security_policy_summary =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The timestamp of when the policy was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date the policy was created.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the security policy.\n"];
@@ -484,19 +488,19 @@ type nonrec security_policy_summaries = security_policy_summary list[@@ocaml.doc
                                                                     ""]
 type nonrec security_policy_stats =
   {
-  network_policy_count: Smaws_Lib.Smithy_api.long option
+  network_policy_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The number of network policies in the current account.\n"];
-  encryption_policy_count: Smaws_Lib.Smithy_api.long option
+  encryption_policy_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The number of encryption policies in the current account.\n"]}
 [@@ocaml.doc "Statistics for an OpenSearch Serverless security policy.\n"]
 type nonrec security_policy = Smaws_Lib.CoreTypes.Resource.t[@@ocaml.doc ""]
 type nonrec security_config_summary =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The timestamp of when the configuration was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The Epoch time when the security configuration was created.\n"];
   description: config_description option
@@ -513,7 +517,7 @@ type nonrec security_config_summaries = security_config_summary list[@@ocaml.doc
                                                                     ""]
 type nonrec security_config_stats =
   {
-  saml_config_count: Smaws_Lib.Smithy_api.long option
+  saml_config_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The number of security configurations in the current account.\n"]}
 [@@ocaml.doc
@@ -536,19 +540,19 @@ type nonrec list_tags_for_resource_request =
 [@@ocaml.doc ""]
 type nonrec access_policy_stats =
   {
-  data_policy_count: Smaws_Lib.Smithy_api.long option
+  data_policy_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The number of data access policies in the current account.\n"]}
 [@@ocaml.doc "Statistics for an OpenSearch Serverless access policy.\n"]
 type nonrec lifecycle_policy_stats =
   {
-  retention_policy_count: Smaws_Lib.Smithy_api.long option
+  retention_policy_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The number of retention lifecycle policies in the current account.\n"]}
 [@@ocaml.doc "Statistics for an OpenSearch Serverless lifecycle policy.\n"]
 type nonrec get_policies_stats_response =
   {
-  total_policy_count: Smaws_Lib.Smithy_api.long option
+  total_policy_count: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The total number of OpenSearch Serverless security policies and configurations in your account.\n"];
   lifecycle_policy_stats: lifecycle_policy_stats option
@@ -623,10 +627,10 @@ type nonrec lifecycle_policy_details = lifecycle_policy_detail list[@@ocaml.doc
                                                                     ""]
 type nonrec lifecycle_policy_error_detail =
   {
-  error_code: Smaws_Lib.Smithy_api.string_ option
+  error_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The error code for the request. For example, [NOT_FOUND].\n"];
-  error_message: Smaws_Lib.Smithy_api.string_ option
+  error_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "A description of the error. For example, [The specified Lifecycle Policy is not found].\n"];
   name: policy_name option [@ocaml.doc "The name of the lifecycle policy.\n"];
@@ -658,10 +662,10 @@ type nonrec batch_get_lifecycle_policy_request =
 [@@ocaml.doc ""]
 type nonrec effective_lifecycle_policy_detail =
   {
-  no_min_retention_period: Smaws_Lib.Smithy_api.boolean_ option
+  no_min_retention_period: Smaws_Lib.Smithy_api.Types.boolean_ option
     [@ocaml.doc
       "The minimum number of index retention days set. That is an optional param that will return as [true] if the minimum number of days or hours is not set to a index resource.\n"];
-  retention_period: Smaws_Lib.Smithy_api.string_ option
+  retention_period: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The minimum number of index retention in days or hours. This is an optional parameter that will return only if it\226\128\153s set.\n"];
   resource_type: resource_type option
@@ -678,9 +682,9 @@ type nonrec effective_lifecycle_policy_details =
   effective_lifecycle_policy_detail list[@@ocaml.doc ""]
 type nonrec effective_lifecycle_policy_error_detail =
   {
-  error_code: Smaws_Lib.Smithy_api.string_ option
+  error_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The error code for the request.\n"];
-  error_message: Smaws_Lib.Smithy_api.string_ option
+  error_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "A description of the error. For example, [The specified Index resource is not found].\n"];
   resource: resource option
@@ -716,28 +720,28 @@ type nonrec batch_get_effective_lifecycle_policy_request =
 [@@ocaml.doc ""]
 type nonrec collection_detail =
   {
-  failure_message: Smaws_Lib.Smithy_api.string_ option
+  failure_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A message associated with the failure code.\n"];
-  failure_code: Smaws_Lib.Smithy_api.string_ option
+  failure_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A failure code associated with the request.\n"];
-  dashboard_endpoint: Smaws_Lib.Smithy_api.string_ option
+  dashboard_endpoint: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "Collection-specific endpoint used to access OpenSearch Dashboards.\n"];
-  collection_endpoint: Smaws_Lib.Smithy_api.string_ option
+  collection_endpoint: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "Collection-specific endpoint used to submit index, search, and data upload requests to an OpenSearch Serverless collection.\n"];
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date and time when the collection was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The Epoch time when the collection was created.\n"];
   standby_replicas: standby_replicas option
     [@ocaml.doc "Details about an OpenSearch Serverless collection.\n"];
-  kms_key_arn: Smaws_Lib.Smithy_api.string_ option
+  kms_key_arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The ARN of the Amazon Web Services KMS key used to encrypt the collection.\n"];
-  arn: Smaws_Lib.Smithy_api.string_ option
+  arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"];
-  description: Smaws_Lib.Smithy_api.string_ option
+  description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A description of the collection.\n"];
   type_: collection_type option [@ocaml.doc "The type of collection.\n"];
   status: collection_status option
@@ -749,10 +753,10 @@ type nonrec collection_detail =
 type nonrec collection_details = collection_detail list[@@ocaml.doc ""]
 type nonrec collection_error_detail =
   {
-  error_code: Smaws_Lib.Smithy_api.string_ option
+  error_code: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The error code for the request. For example, [NOT_FOUND].\n"];
-  error_message: Smaws_Lib.Smithy_api.string_ option
+  error_message: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "A description of the error. For example, [The specified Collection is not\n                found.] \n"];
   name: collection_name option
@@ -783,12 +787,12 @@ type nonrec batch_get_collection_request =
 [@@ocaml.doc ""]
 type nonrec ocu_limit_exceeded_exception =
   {
-  message: Smaws_Lib.Smithy_api.string_
+  message: Smaws_Lib.Smithy_api.Types.string_
     [@ocaml.doc "Description of the error."]}[@@ocaml.doc
                                                "Thrown when the collection you're attempting to create results in a number of search or indexing OCUs that exceeds the account limit. \n"]
 type nonrec list_vpc_endpoints_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   vpc_endpoint_summaries: vpc_endpoint_summaries option
@@ -797,10 +801,10 @@ type nonrec list_vpc_endpoints_response =
 [@@ocaml.doc ""]
 type nonrec list_vpc_endpoints_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "An optional parameter that specifies the maximum number of results to return. You can use [nextToken] to get the next page of results. The default is 20.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListVpcEndpoints] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListVpcEndpoints] operations, which returns results in the next page. \n"];
   vpc_endpoint_filters: vpc_endpoint_filters option
@@ -809,7 +813,7 @@ type nonrec list_vpc_endpoints_request =
 [@@ocaml.doc ""]
 type nonrec list_security_policies_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   security_policy_summaries: security_policy_summaries option
@@ -817,10 +821,10 @@ type nonrec list_security_policies_response =
 [@@ocaml.doc ""]
 type nonrec list_security_policies_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "An optional parameter that specifies the maximum number of results to return. You can use [nextToken] to get the next page of results. The default is 20.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListSecurityPolicies] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListSecurityPolicies] operations, which returns results in the next page. \n"];
   resource: resource_filter option
@@ -830,7 +834,7 @@ type nonrec list_security_policies_request =
                                                                     ""]
 type nonrec list_security_configs_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   security_config_summaries: security_config_summaries option
@@ -839,20 +843,20 @@ type nonrec list_security_configs_response =
 [@@ocaml.doc ""]
 type nonrec list_security_configs_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "An optional parameter that specifies the maximum number of results to return. You can use [nextToken] to get the next page of results. The default is 20.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListSecurityConfigs] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListSecurityConfigs] operations, which returns results in the next page. \n"];
   type_: security_config_type
     [@ocaml.doc "The type of security configuration.\n"]}[@@ocaml.doc ""]
 type nonrec lifecycle_policy_summary =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc
       "The date and time when the lifecycle policy was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The Epoch time when the lifecycle policy was created.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the lifecycle policy.\n"];
@@ -866,7 +870,7 @@ type nonrec lifecycle_policy_summaries = lifecycle_policy_summary list
 [@@ocaml.doc ""]
 type nonrec list_lifecycle_policies_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   lifecycle_policy_summaries: lifecycle_policy_summaries option
@@ -877,10 +881,10 @@ type nonrec lifecycle_resource_filter = lifecycle_resource list[@@ocaml.doc
                                                                  ""]
 type nonrec list_lifecycle_policies_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "An optional parameter that specifies the maximum number of results to return. You can use use [nextToken] to get the next page of results. The default is 10.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListLifecyclePolicies] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListLifecyclePolicies] operations, which returns results in the next page.\n"];
   resources: lifecycle_resource_filter option
@@ -890,7 +894,7 @@ type nonrec list_lifecycle_policies_request =
 [@@ocaml.doc ""]
 type nonrec collection_summary =
   {
-  arn: Smaws_Lib.Smithy_api.string_ option
+  arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"];
   status: collection_status option
     [@ocaml.doc "The current status of the collection.\n"];
@@ -901,7 +905,7 @@ type nonrec collection_summary =
 type nonrec collection_summaries = collection_summary list[@@ocaml.doc ""]
 type nonrec list_collections_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   collection_summaries: collection_summaries option
@@ -915,10 +919,10 @@ type nonrec collection_filters =
   "A list of filter keys that you can use for LIST, UPDATE, and DELETE requests to OpenSearch Serverless collections.\n"]
 type nonrec list_collections_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "The maximum number of results to return. Default is 20. You can use [nextToken] to get the next page of results.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListCollections] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListCollections] operations, which returns results in the next page.\n"];
   collection_filters: collection_filters option
@@ -927,9 +931,9 @@ type nonrec list_collections_request =
 [@@ocaml.doc ""]
 type nonrec access_policy_summary =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date and time when the collection was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The Epoch time when the access policy was created.\n"];
   description: policy_description option
     [@ocaml.doc "The description of the access policy.\n"];
@@ -944,7 +948,7 @@ type nonrec access_policy_summaries = access_policy_summary list[@@ocaml.doc
                                                                   ""]
 type nonrec list_access_policies_response =
   {
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "When [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.\n"];
   access_policy_summaries: access_policy_summaries option
@@ -952,10 +956,10 @@ type nonrec list_access_policies_response =
                                                                     ""]
 type nonrec list_access_policies_request =
   {
-  max_results: Smaws_Lib.Smithy_api.integer option
+  max_results: Smaws_Lib.Smithy_api.Types.integer option
     [@ocaml.doc
       "An optional parameter that specifies the maximum number of results to return. You can use [nextToken] to get the next page of results. The default is 20.\n"];
-  next_token: Smaws_Lib.Smithy_api.string_ option
+  next_token: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "If your initial [ListAccessPolicies] operation returns a [nextToken], you can include the returned [nextToken] in subsequent [ListAccessPolicies] operations, which returns results in the next page. \n"];
   resource: resource_filter option
@@ -1140,19 +1144,19 @@ type nonrec create_security_config_request =
     [@ocaml.doc "The type of security configuration.\n"]}[@@ocaml.doc ""]
 type nonrec create_collection_detail =
   {
-  last_modified_date: Smaws_Lib.Smithy_api.long option
+  last_modified_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The date and time when the collection was last modified.\n"];
-  created_date: Smaws_Lib.Smithy_api.long option
+  created_date: Smaws_Lib.Smithy_api.Types.long option
     [@ocaml.doc "The Epoch time when the collection was created.\n"];
   standby_replicas: standby_replicas option
     [@ocaml.doc
       "Creates details about an OpenSearch Serverless collection.\n"];
-  kms_key_arn: Smaws_Lib.Smithy_api.string_ option
+  kms_key_arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc
       "The Amazon Resource Name (ARN) of the KMS key with which to encrypt the collection.\n"];
-  arn: Smaws_Lib.Smithy_api.string_ option
+  arn: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"];
-  description: Smaws_Lib.Smithy_api.string_ option
+  description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "A description of the collection.\n"];
   type_: collection_type option [@ocaml.doc "The type of collection.\n"];
   status: collection_status option
@@ -1176,7 +1180,7 @@ type nonrec create_collection_request =
   tags: tags option
     [@ocaml.doc
       "An arbitrary set of tags (key\226\128\147value pairs) to associate with the OpenSearch Serverless collection.\n"];
-  description: Smaws_Lib.Smithy_api.string_ option
+  description: Smaws_Lib.Smithy_api.Types.string_ option
     [@ocaml.doc "Description of the collection.\n"];
   type_: collection_type option [@ocaml.doc "The type of collection.\n"];
   name: collection_name [@ocaml.doc "Name of the collection.\n"]}[@@ocaml.doc

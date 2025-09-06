@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_certificate_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -20,7 +20,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_certificate_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -59,7 +59,7 @@ module GetAccountConfiguration :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      Smaws_Lib.Smithy_api.unit_ ->
+      Smaws_Lib.Smithy_api.Types.unit_ ->
         (get_account_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -123,7 +123,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_account_configuration_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -136,7 +136,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_certificate_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -151,7 +151,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       renew_certificate_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `RequestInProgressException of request_in_progress_exception 
@@ -181,7 +181,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       resend_validation_email_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `InvalidDomainValidationOptionsException of
@@ -211,7 +211,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_certificate_options_request ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidArnException of invalid_arn_exception 
           | `InvalidStateException of invalid_state_exception 

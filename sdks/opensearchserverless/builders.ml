@@ -5,15 +5,16 @@ let make_vpc_endpoint_summary ?status:(status_ : vpc_endpoint_status option)
 let make_vpc_endpoint_filters ?status:(status_ : vpc_endpoint_status option)
   () = ({ status = status_ } : vpc_endpoint_filters)
 let make_vpc_endpoint_error_detail
-  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.string_ option)
-  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.string_ option)
+  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?id:(id_ : vpc_endpoint_id option) () =
   ({ error_code = error_code_; error_message = error_message_; id = id_ } : 
   vpc_endpoint_error_detail)
 let make_vpc_endpoint_detail
-  ?failure_message:(failure_message_ : Smaws_Lib.Smithy_api.string_ option)
-  ?failure_code:(failure_code_ : Smaws_Lib.Smithy_api.string_ option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+  ?failure_message:(failure_message_ :
+                     Smaws_Lib.Smithy_api.Types.string_ option)
+  ?failure_code:(failure_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?status:(status_ : vpc_endpoint_status option)
   ?security_group_ids:(security_group_ids_ : security_group_ids option)
   ?subnet_ids:(subnet_ids_ : subnet_ids option)
@@ -32,7 +33,7 @@ let make_vpc_endpoint_detail
    } : vpc_endpoint_detail)
 let make_update_vpc_endpoint_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
   ?security_group_ids:(security_group_ids_ : security_group_ids option)
   ?subnet_ids:(subnet_ids_ : subnet_ids option)
   ?status:(status_ : vpc_endpoint_status option)
@@ -70,9 +71,9 @@ let make_update_vpc_endpoint_request
    } : update_vpc_endpoint_request)
 let make_security_policy_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
-  ?policy:(policy_ : Smaws_Lib.Smithy_api.document option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+  ?policy:(policy_ : Smaws_Lib.Smithy_api.Types.document option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -106,7 +107,8 @@ let make_update_security_policy_request
      type_ = type__
    } : update_security_policy_request)
 let make_saml_config_options
-  ?session_timeout:(session_timeout_ : Smaws_Lib.Smithy_api.integer option)
+  ?session_timeout:(session_timeout_ :
+                     Smaws_Lib.Smithy_api.Types.integer option)
   ?open_search_serverless_entity_id:(open_search_serverless_entity_id_ :
                                       open_search_serverless_entity_id option)
   ?group_attribute:(group_attribute_ : saml_group_attribute option)
@@ -125,8 +127,9 @@ let make_iam_identity_center_config_options
   ?user_attribute:(user_attribute_ :
                     iam_identity_center_user_attribute option)
   ?application_description:(application_description_ :
-                             Smaws_Lib.Smithy_api.string_ option)
-  ?application_name:(application_name_ : Smaws_Lib.Smithy_api.string_ option)
+                             Smaws_Lib.Smithy_api.Types.string_ option)
+  ?application_name:(application_name_ :
+                      Smaws_Lib.Smithy_api.Types.string_ option)
   ?application_arn:(application_arn_ :
                      iam_identity_center_application_arn option)
   ?instance_arn:(instance_arn_ : iam_identity_center_instance_arn option) ()
@@ -141,8 +144,8 @@ let make_iam_identity_center_config_options
    } : iam_identity_center_config_options)
 let make_security_config_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?iam_identity_center_options:(iam_identity_center_options_ :
                                  iam_identity_center_config_options option)
   ?saml_options:(saml_options_ : saml_config_options option)
@@ -194,9 +197,9 @@ let make_update_security_config_request
    } : update_security_config_request)
 let make_lifecycle_policy_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
-  ?policy:(policy_ : Smaws_Lib.Smithy_api.document option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+  ?policy:(policy_ : Smaws_Lib.Smithy_api.Types.document option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -231,10 +234,10 @@ let make_update_lifecycle_policy_request
    } : update_lifecycle_policy_request)
 let make_update_collection_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
-  ?arn:(arn_ : Smaws_Lib.Smithy_api.string_ option)
-  ?description:(description_ : Smaws_Lib.Smithy_api.string_ option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+  ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?type_:(type__ : collection_type option)
   ?status:(status_ : collection_status option)
   ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) ()
@@ -256,7 +259,7 @@ let make_update_collection_response
   ({ update_collection_detail = update_collection_detail_ } : update_collection_response)
 let make_update_collection_request
   ?client_token:(client_token_ : client_token option)
-  ?description:(description_ : Smaws_Lib.Smithy_api.string_ option)
+  ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ~id:(id_ : collection_id) () =
   ({ client_token = client_token_; description = description_; id = id_ } : 
   update_collection_request)
@@ -283,9 +286,9 @@ let make_update_account_settings_request
   ({ capacity_limits = capacity_limits_ } : update_account_settings_request)
 let make_access_policy_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
-  ?policy:(policy_ : Smaws_Lib.Smithy_api.document option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+  ?policy:(policy_ : Smaws_Lib.Smithy_api.Types.document option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -329,8 +332,8 @@ let make_tag_resource_request ~tags:(tags_ : tags)
   ({ tags = tags_; resource_arn = resource_arn_ } : tag_resource_request)
 let make_security_policy_summary
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -345,9 +348,9 @@ let make_security_policy_summary
    } : security_policy_summary)
 let make_security_policy_stats
   ?network_policy_count:(network_policy_count_ :
-                          Smaws_Lib.Smithy_api.long option)
+                          Smaws_Lib.Smithy_api.Types.long option)
   ?encryption_policy_count:(encryption_policy_count_ :
-                             Smaws_Lib.Smithy_api.long option)
+                             Smaws_Lib.Smithy_api.Types.long option)
   () =
   ({
      network_policy_count = network_policy_count_;
@@ -355,8 +358,8 @@ let make_security_policy_stats
    } : security_policy_stats)
 let make_security_config_summary
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?description:(description_ : config_description option)
   ?config_version:(config_version_ : policy_version option)
   ?type_:(type__ : security_config_type option)
@@ -370,23 +373,25 @@ let make_security_config_summary
      id = id_
    } : security_config_summary)
 let make_security_config_stats
-  ?saml_config_count:(saml_config_count_ : Smaws_Lib.Smithy_api.long option)
+  ?saml_config_count:(saml_config_count_ :
+                       Smaws_Lib.Smithy_api.Types.long option)
   () = ({ saml_config_count = saml_config_count_ } : security_config_stats)
 let make_list_tags_for_resource_response ?tags:(tags_ : tags option) () =
   ({ tags = tags_ } : list_tags_for_resource_response)
 let make_list_tags_for_resource_request ~resource_arn:(resource_arn_ : arn)
   () = ({ resource_arn = resource_arn_ } : list_tags_for_resource_request)
 let make_access_policy_stats
-  ?data_policy_count:(data_policy_count_ : Smaws_Lib.Smithy_api.long option)
+  ?data_policy_count:(data_policy_count_ :
+                       Smaws_Lib.Smithy_api.Types.long option)
   () = ({ data_policy_count = data_policy_count_ } : access_policy_stats)
 let make_lifecycle_policy_stats
   ?retention_policy_count:(retention_policy_count_ :
-                            Smaws_Lib.Smithy_api.long option)
+                            Smaws_Lib.Smithy_api.Types.long option)
   () =
   ({ retention_policy_count = retention_policy_count_ } : lifecycle_policy_stats)
 let make_get_policies_stats_response
   ?total_policy_count:(total_policy_count_ :
-                        Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
   ?lifecycle_policy_stats:(lifecycle_policy_stats_ :
                             lifecycle_policy_stats option)
   ?security_config_stats:(security_config_stats_ :
@@ -455,8 +460,8 @@ let make_batch_get_vpc_endpoint_response
 let make_batch_get_vpc_endpoint_request ~ids:(ids_ : vpc_endpoint_ids) () =
   ({ ids = ids_ } : batch_get_vpc_endpoint_request)
 let make_lifecycle_policy_error_detail
-  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.string_ option)
-  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.string_ option)
+  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?name:(name_ : policy_name option)
   ?type_:(type__ : lifecycle_policy_type option) () =
   ({
@@ -483,8 +488,9 @@ let make_batch_get_lifecycle_policy_request
   ({ identifiers = identifiers_ } : batch_get_lifecycle_policy_request)
 let make_effective_lifecycle_policy_detail
   ?no_min_retention_period:(no_min_retention_period_ :
-                             Smaws_Lib.Smithy_api.boolean_ option)
-  ?retention_period:(retention_period_ : Smaws_Lib.Smithy_api.string_ option)
+                             Smaws_Lib.Smithy_api.Types.boolean_ option)
+  ?retention_period:(retention_period_ :
+                      Smaws_Lib.Smithy_api.Types.string_ option)
   ?resource_type:(resource_type_ : resource_type option)
   ?policy_name:(policy_name_ : policy_name option)
   ?resource:(resource_ : resource option)
@@ -498,8 +504,8 @@ let make_effective_lifecycle_policy_detail
      type_ = type__
    } : effective_lifecycle_policy_detail)
 let make_effective_lifecycle_policy_error_detail
-  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.string_ option)
-  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.string_ option)
+  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?resource:(resource_ : resource option)
   ?type_:(type__ : lifecycle_policy_type option) () =
   ({
@@ -532,19 +538,20 @@ let make_batch_get_effective_lifecycle_policy_request
   () =
   ({ resource_identifiers = resource_identifiers_ } : batch_get_effective_lifecycle_policy_request)
 let make_collection_detail
-  ?failure_message:(failure_message_ : Smaws_Lib.Smithy_api.string_ option)
-  ?failure_code:(failure_code_ : Smaws_Lib.Smithy_api.string_ option)
+  ?failure_message:(failure_message_ :
+                     Smaws_Lib.Smithy_api.Types.string_ option)
+  ?failure_code:(failure_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?dashboard_endpoint:(dashboard_endpoint_ :
-                        Smaws_Lib.Smithy_api.string_ option)
+                        Smaws_Lib.Smithy_api.Types.string_ option)
   ?collection_endpoint:(collection_endpoint_ :
-                         Smaws_Lib.Smithy_api.string_ option)
+                         Smaws_Lib.Smithy_api.Types.string_ option)
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?standby_replicas:(standby_replicas_ : standby_replicas option)
-  ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.string_ option)
-  ?arn:(arn_ : Smaws_Lib.Smithy_api.string_ option)
-  ?description:(description_ : Smaws_Lib.Smithy_api.string_ option)
+  ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?type_:(type__ : collection_type option)
   ?status:(status_ : collection_status option)
   ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) ()
@@ -566,8 +573,8 @@ let make_collection_detail
      id = id_
    } : collection_detail)
 let make_collection_error_detail
-  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.string_ option)
-  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.string_ option)
+  ?error_code:(error_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?error_message:(error_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) ()
   =
   ({
@@ -589,7 +596,7 @@ let make_batch_get_collection_request
   ?ids:(ids_ : collection_ids option) () =
   ({ names = names_; ids = ids_ } : batch_get_collection_request)
 let make_list_vpc_endpoints_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?vpc_endpoint_summaries:(vpc_endpoint_summaries_ :
                             vpc_endpoint_summaries option)
   () =
@@ -598,8 +605,8 @@ let make_list_vpc_endpoints_response
      vpc_endpoint_summaries = vpc_endpoint_summaries_
    } : list_vpc_endpoints_response)
 let make_list_vpc_endpoints_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?vpc_endpoint_filters:(vpc_endpoint_filters_ : vpc_endpoint_filters option)
   () =
   ({
@@ -608,7 +615,7 @@ let make_list_vpc_endpoints_request
      vpc_endpoint_filters = vpc_endpoint_filters_
    } : list_vpc_endpoints_request)
 let make_list_security_policies_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?security_policy_summaries:(security_policy_summaries_ :
                                security_policy_summaries option)
   () =
@@ -617,8 +624,8 @@ let make_list_security_policies_response
      security_policy_summaries = security_policy_summaries_
    } : list_security_policies_response)
 let make_list_security_policies_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?resource:(resource_ : resource_filter option)
   ~type_:(type__ : security_policy_type) () =
   ({
@@ -628,7 +635,7 @@ let make_list_security_policies_request
      type_ = type__
    } : list_security_policies_request)
 let make_list_security_configs_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?security_config_summaries:(security_config_summaries_ :
                                security_config_summaries option)
   () =
@@ -637,15 +644,15 @@ let make_list_security_configs_response
      security_config_summaries = security_config_summaries_
    } : list_security_configs_response)
 let make_list_security_configs_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ~type_:(type__ : security_config_type) () =
   ({ max_results = max_results_; next_token = next_token_; type_ = type__ } : 
   list_security_configs_request)
 let make_lifecycle_policy_summary
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -659,7 +666,7 @@ let make_lifecycle_policy_summary
      type_ = type__
    } : lifecycle_policy_summary)
 let make_list_lifecycle_policies_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?lifecycle_policy_summaries:(lifecycle_policy_summaries_ :
                                 lifecycle_policy_summaries option)
   () =
@@ -668,8 +675,8 @@ let make_list_lifecycle_policies_response
      lifecycle_policy_summaries = lifecycle_policy_summaries_
    } : list_lifecycle_policies_response)
 let make_list_lifecycle_policies_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?resources:(resources_ : lifecycle_resource_filter option)
   ~type_:(type__ : lifecycle_policy_type) () =
   ({
@@ -678,13 +685,14 @@ let make_list_lifecycle_policies_request
      resources = resources_;
      type_ = type__
    } : list_lifecycle_policies_request)
-let make_collection_summary ?arn:(arn_ : Smaws_Lib.Smithy_api.string_ option)
+let make_collection_summary
+  ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?status:(status_ : collection_status option)
   ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) ()
   =
   ({ arn = arn_; status = status_; name = name_; id = id_ } : collection_summary)
 let make_list_collections_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?collection_summaries:(collection_summaries_ : collection_summaries option)
   () =
   ({ next_token = next_token_; collection_summaries = collection_summaries_ } : 
@@ -693,8 +701,8 @@ let make_collection_filters ?status:(status_ : collection_status option)
   ?name:(name_ : collection_name option) () =
   ({ status = status_; name = name_ } : collection_filters)
 let make_list_collections_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?collection_filters:(collection_filters_ : collection_filters option) () =
   ({
      max_results = max_results_;
@@ -703,8 +711,8 @@ let make_list_collections_request
    } : list_collections_request)
 let make_access_policy_summary
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?description:(description_ : policy_description option)
   ?policy_version:(policy_version_ : policy_version option)
   ?name:(name_ : policy_name option)
@@ -718,7 +726,7 @@ let make_access_policy_summary
      type_ = type__
    } : access_policy_summary)
 let make_list_access_policies_response
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?access_policy_summaries:(access_policy_summaries_ :
                              access_policy_summaries option)
   () =
@@ -727,8 +735,8 @@ let make_list_access_policies_response
      access_policy_summaries = access_policy_summaries_
    } : list_access_policies_response)
 let make_list_access_policies_request
-  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.integer option)
-  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.string_ option)
+  ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+  ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?resource:(resource_ : resource_filter option)
   ~type_:(type__ : access_policy_type) () =
   ({
@@ -862,12 +870,12 @@ let make_create_security_config_request
    } : create_security_config_request)
 let make_create_collection_detail
   ?last_modified_date:(last_modified_date_ :
-                        Smaws_Lib.Smithy_api.long option)
-  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.long option)
+                        Smaws_Lib.Smithy_api.Types.long option)
+  ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
   ?standby_replicas:(standby_replicas_ : standby_replicas option)
-  ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.string_ option)
-  ?arn:(arn_ : Smaws_Lib.Smithy_api.string_ option)
-  ?description:(description_ : Smaws_Lib.Smithy_api.string_ option)
+  ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+  ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?type_:(type__ : collection_type option)
   ?status:(status_ : collection_status option)
   ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) ()
@@ -893,7 +901,7 @@ let make_create_collection_request
   ?client_token:(client_token_ : client_token option)
   ?standby_replicas:(standby_replicas_ : standby_replicas option)
   ?tags:(tags_ : tags option)
-  ?description:(description_ : Smaws_Lib.Smithy_api.string_ option)
+  ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
   ?type_:(type__ : collection_type option) ~name:(name_ : collection_name) ()
   =
   ({

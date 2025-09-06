@@ -29,8 +29,8 @@ val make_service_template_version :
           ?recommended_minor_version:template_version_part ->
             compatible_environment_templates:compatible_environment_template_list
               ->
-              last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                created_at:Smaws_Lib.Smithy_api.timestamp ->
+              last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+                created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                   arn:service_template_version_arn ->
                     status:template_version_status ->
                       minor_version:template_version_part ->
@@ -61,8 +61,8 @@ val make_service_template :
       ?recommended_version:full_template_version_number ->
         ?description:description ->
           ?display_name:display_name ->
-            last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-              created_at:Smaws_Lib.Smithy_api.timestamp ->
+            last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+              created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                 arn:service_template_arn ->
                   name:resource_name -> unit -> service_template
 val make_update_service_template_output :
@@ -88,25 +88,25 @@ val make_update_service_sync_config_input :
           service_name:resource_name ->
             unit -> update_service_sync_config_input
 val make_sync_blocker_context :
-  value:Smaws_Lib.Smithy_api.string_ ->
-    key:Smaws_Lib.Smithy_api.string_ -> unit -> sync_blocker_context
+  value:Smaws_Lib.Smithy_api.Types.string_ ->
+    key:Smaws_Lib.Smithy_api.Types.string_ -> unit -> sync_blocker_context
 val make_sync_blocker :
-  ?resolved_at:Smaws_Lib.Smithy_api.timestamp ->
-    ?resolved_reason:Smaws_Lib.Smithy_api.string_ ->
+  ?resolved_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+    ?resolved_reason:Smaws_Lib.Smithy_api.Types.string_ ->
       ?contexts:sync_blocker_contexts ->
-        created_at:Smaws_Lib.Smithy_api.timestamp ->
-          created_reason:Smaws_Lib.Smithy_api.string_ ->
+        created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          created_reason:Smaws_Lib.Smithy_api.Types.string_ ->
             status:blocker_status ->
               type_:blocker_type ->
-                id:Smaws_Lib.Smithy_api.string_ -> unit -> sync_blocker
+                id:Smaws_Lib.Smithy_api.Types.string_ -> unit -> sync_blocker
 val make_update_service_sync_blocker_output :
   ?service_instance_name:resource_name ->
     service_sync_blocker:sync_blocker ->
       service_name:resource_name ->
         unit -> update_service_sync_blocker_output
 val make_update_service_sync_blocker_input :
-  resolved_reason:Smaws_Lib.Smithy_api.string_ ->
-    id:Smaws_Lib.Smithy_api.string_ ->
+  resolved_reason:Smaws_Lib.Smithy_api.Types.string_ ->
+    id:Smaws_Lib.Smithy_api.Types.string_ ->
       unit -> update_service_sync_blocker_input
 val make_service_pipeline :
   ?last_succeeded_deployment_id:deployment_id ->
@@ -117,11 +117,11 @@ val make_service_pipeline :
             template_minor_version:template_version_part ->
               template_major_version:template_version_part ->
                 template_name:resource_name ->
-                  last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp
+                  last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
                     ->
-                    last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp
+                    last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
                       ->
-                      created_at:Smaws_Lib.Smithy_api.timestamp ->
+                      created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                         arn:arn -> unit -> service_pipeline
 val make_update_service_pipeline_output :
   pipeline:service_pipeline -> unit -> update_service_pipeline_output
@@ -140,8 +140,8 @@ val make_service :
             ?description:description ->
               spec:spec_contents ->
                 status:service_status ->
-                  last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                    created_at:Smaws_Lib.Smithy_api.timestamp ->
+                  last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+                    created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                       template_name:resource_name ->
                         arn:service_arn ->
                           name:resource_name -> unit -> service
@@ -150,7 +150,7 @@ val make_update_service_output :
 val make_service_instance :
   ?last_succeeded_deployment_id:deployment_id ->
     ?last_attempted_deployment_id:deployment_id ->
-      ?last_client_request_token:Smaws_Lib.Smithy_api.string_ ->
+      ?last_client_request_token:Smaws_Lib.Smithy_api.Types.string_ ->
         ?spec:spec_contents ->
           ?deployment_status_message:status_message ->
             deployment_status:deployment_status ->
@@ -159,11 +159,12 @@ val make_service_instance :
                   template_name:resource_name ->
                     environment_name:resource_name ->
                       service_name:resource_name ->
-                        last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp
+                        last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
                           ->
-                          last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp
+                          last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
                             ->
-                            created_at:Smaws_Lib.Smithy_api.timestamp ->
+                            created_at:Smaws_Lib.Smithy_api.Types.timestamp
+                              ->
                               arn:service_instance_arn ->
                                 name:resource_name ->
                                   unit -> service_instance
@@ -186,8 +187,8 @@ val make_environment_template_version :
     ?description:description ->
       ?status_message:status_message ->
         ?recommended_minor_version:template_version_part ->
-          last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-            created_at:Smaws_Lib.Smithy_api.timestamp ->
+          last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+            created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
               arn:environment_template_version_arn ->
                 status:template_version_status ->
                   minor_version:template_version_part ->
@@ -210,8 +211,8 @@ val make_environment_template :
       ?recommended_version:full_template_version_number ->
         ?description:description ->
           ?display_name:display_name ->
-            last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-              created_at:Smaws_Lib.Smithy_api.timestamp ->
+            last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+              created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                 arn:environment_template_arn ->
                   name:resource_name -> unit -> environment_template
 val make_update_environment_template_output :
@@ -245,11 +246,11 @@ val make_environment :
                               template_major_version:template_version_part ->
                                 template_name:resource_name ->
                                   arn:environment_arn ->
-                                    last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp
+                                    last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
                                       ->
-                                      last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp
+                                      last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
                                         ->
-                                        created_at:Smaws_Lib.Smithy_api.timestamp
+                                        created_at:Smaws_Lib.Smithy_api.Types.timestamp
                                           ->
                                           name:resource_name ->
                                             unit -> environment
@@ -276,8 +277,8 @@ val make_environment_account_connection :
   ?codebuild_role_arn:role_arn ->
     ?component_role_arn:role_arn ->
       status:environment_account_connection_status ->
-        last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-          requested_at:Smaws_Lib.Smithy_api.timestamp ->
+        last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          requested_at:Smaws_Lib.Smithy_api.Types.timestamp ->
             environment_name:resource_name ->
               role_arn:arn ->
                 environment_account_id:aws_account_id ->
@@ -297,17 +298,20 @@ val make_update_environment_account_connection_input :
 val make_component :
   ?last_succeeded_deployment_id:deployment_id ->
     ?last_attempted_deployment_id:deployment_id ->
-      ?last_client_request_token:Smaws_Lib.Smithy_api.string_ ->
+      ?last_client_request_token:Smaws_Lib.Smithy_api.Types.string_ ->
         ?service_spec:spec_contents ->
           ?deployment_status_message:status_message ->
-            ?last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp ->
-              ?last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp ->
+            ?last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
+              ->
+              ?last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
+                ->
                 ?service_instance_name:resource_name ->
                   ?service_name:resource_name ->
                     ?description:description ->
                       deployment_status:deployment_status ->
-                        last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                          created_at:Smaws_Lib.Smithy_api.timestamp ->
+                        last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp
+                          ->
+                          created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                             environment_name:resource_name ->
                               arn:component_arn ->
                                 name:resource_name -> unit -> component
@@ -331,7 +335,8 @@ val make_update_account_settings_output :
   account_settings:account_settings -> unit -> update_account_settings_output
 val make_update_account_settings_input :
   ?pipeline_codebuild_role_arn:role_arn_or_empty_string ->
-    ?delete_pipeline_provisioning_repository:Smaws_Lib.Smithy_api.boolean_ ->
+    ?delete_pipeline_provisioning_repository:Smaws_Lib.Smithy_api.Types.boolean_
+      ->
       ?pipeline_provisioning_repository:repository_branch_input ->
         ?pipeline_service_role_arn:role_arn_or_empty_string ->
           unit -> update_account_settings_input
@@ -348,8 +353,8 @@ val make_service_template_version_summary :
   ?description:description ->
     ?status_message:status_message ->
       ?recommended_minor_version:template_version_part ->
-        last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-          created_at:Smaws_Lib.Smithy_api.timestamp ->
+        last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
             arn:service_template_version_arn ->
               status:template_version_status ->
                 minor_version:template_version_part ->
@@ -361,21 +366,21 @@ val make_service_template_summary :
     ?recommended_version:full_template_version_number ->
       ?description:description ->
         ?display_name:display_name ->
-          last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-            created_at:Smaws_Lib.Smithy_api.timestamp ->
+          last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+            created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
               arn:service_template_arn ->
                 name:resource_name -> unit -> service_template_summary
 val make_service_sync_blocker_summary :
   ?latest_blockers:latest_sync_blockers ->
-    ?service_instance_name:Smaws_Lib.Smithy_api.string_ ->
-      service_name:Smaws_Lib.Smithy_api.string_ ->
+    ?service_instance_name:Smaws_Lib.Smithy_api.Types.string_ ->
+      service_name:Smaws_Lib.Smithy_api.Types.string_ ->
         unit -> service_sync_blocker_summary
 val make_service_summary :
   ?status_message:status_message ->
     ?description:description ->
       status:service_status ->
-        last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-          created_at:Smaws_Lib.Smithy_api.timestamp ->
+        last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
             template_name:resource_name ->
               arn:service_arn ->
                 name:resource_name -> unit -> service_summary
@@ -394,11 +399,11 @@ val make_service_instance_summary :
               template_name:resource_name ->
                 environment_name:resource_name ->
                   service_name:resource_name ->
-                    last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp
+                    last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
                       ->
-                      last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp
+                      last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
                         ->
-                        created_at:Smaws_Lib.Smithy_api.timestamp ->
+                        created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                           arn:service_instance_arn ->
                             name:resource_name ->
                               unit -> service_instance_summary
@@ -413,44 +418,46 @@ val make_service_instance_state :
               spec:spec_contents -> unit -> service_instance_state
 val make_revision :
   branch:git_branch_name ->
-    directory:Smaws_Lib.Smithy_api.string_ ->
+    directory:Smaws_Lib.Smithy_api.Types.string_ ->
       sha:sh_a ->
         repository_provider:repository_provider ->
           repository_name:repository_name -> unit -> revision
 val make_resource_sync_event :
-  ?external_id:Smaws_Lib.Smithy_api.string_ ->
-    event:Smaws_Lib.Smithy_api.string_ ->
-      time:Smaws_Lib.Smithy_api.timestamp ->
-        type_:Smaws_Lib.Smithy_api.string_ -> unit -> resource_sync_event
+  ?external_id:Smaws_Lib.Smithy_api.Types.string_ ->
+    event:Smaws_Lib.Smithy_api.Types.string_ ->
+      time:Smaws_Lib.Smithy_api.Types.timestamp ->
+        type_:Smaws_Lib.Smithy_api.Types.string_ ->
+          unit -> resource_sync_event
 val make_resource_sync_attempt :
   events:resource_sync_events ->
     status:resource_sync_status ->
-      started_at:Smaws_Lib.Smithy_api.timestamp ->
-        target:Smaws_Lib.Smithy_api.string_ ->
+      started_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+        target:Smaws_Lib.Smithy_api.Types.string_ ->
           target_revision:revision ->
             initial_revision:revision -> unit -> resource_sync_attempt
 val make_resource_counts_summary :
-  ?behind_minor:Smaws_Lib.Smithy_api.integer ->
-    ?behind_major:Smaws_Lib.Smithy_api.integer ->
-      ?up_to_date:Smaws_Lib.Smithy_api.integer ->
-        ?failed:Smaws_Lib.Smithy_api.integer ->
-          total:Smaws_Lib.Smithy_api.integer ->
+  ?behind_minor:Smaws_Lib.Smithy_api.Types.integer ->
+    ?behind_major:Smaws_Lib.Smithy_api.Types.integer ->
+      ?up_to_date:Smaws_Lib.Smithy_api.Types.integer ->
+        ?failed:Smaws_Lib.Smithy_api.Types.integer ->
+          total:Smaws_Lib.Smithy_api.Types.integer ->
             unit -> resource_counts_summary
 val make_repository_sync_event :
-  ?external_id:Smaws_Lib.Smithy_api.string_ ->
-    event:Smaws_Lib.Smithy_api.string_ ->
-      time:Smaws_Lib.Smithy_api.timestamp ->
-        type_:Smaws_Lib.Smithy_api.string_ -> unit -> repository_sync_event
+  ?external_id:Smaws_Lib.Smithy_api.Types.string_ ->
+    event:Smaws_Lib.Smithy_api.Types.string_ ->
+      time:Smaws_Lib.Smithy_api.Types.timestamp ->
+        type_:Smaws_Lib.Smithy_api.Types.string_ ->
+          unit -> repository_sync_event
 val make_repository_sync_definition :
-  directory:Smaws_Lib.Smithy_api.string_ ->
+  directory:Smaws_Lib.Smithy_api.Types.string_ ->
     branch:git_branch_name ->
-      parent:Smaws_Lib.Smithy_api.string_ ->
-        target:Smaws_Lib.Smithy_api.string_ ->
+      parent:Smaws_Lib.Smithy_api.Types.string_ ->
+        target:Smaws_Lib.Smithy_api.Types.string_ ->
           unit -> repository_sync_definition
 val make_repository_sync_attempt :
   events:repository_sync_events ->
     status:repository_sync_status ->
-      started_at:Smaws_Lib.Smithy_api.timestamp ->
+      started_at:Smaws_Lib.Smithy_api.Types.timestamp ->
         unit -> repository_sync_attempt
 val make_repository_summary :
   connection_arn:arn ->
@@ -484,11 +491,11 @@ val make_notify_resource_deployment_status_change_input :
           resource_arn:arn ->
             unit -> notify_resource_deployment_status_change_input
 val make_list_tags_for_resource_output :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     tags:tag_list -> unit -> list_tags_for_resource_output
 val make_list_tags_for_resource_input :
   ?max_results:max_page_results ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       resource_arn:arn -> unit -> list_tags_for_resource_input
 val make_list_services_output :
   ?next_token:next_token ->
@@ -595,11 +602,11 @@ val make_environment_summary :
                         template_major_version:template_version_part ->
                           template_name:resource_name ->
                             arn:environment_arn ->
-                              last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp
+                              last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp
                                 ->
-                                last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp
+                                last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
                                   ->
-                                  created_at:Smaws_Lib.Smithy_api.timestamp
+                                  created_at:Smaws_Lib.Smithy_api.Types.timestamp
                                     ->
                                     name:resource_name ->
                                       unit -> environment_summary
@@ -618,8 +625,8 @@ val make_environment_template_summary :
     ?recommended_version:full_template_version_number ->
       ?description:description ->
         ?display_name:display_name ->
-          last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-            created_at:Smaws_Lib.Smithy_api.timestamp ->
+          last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+            created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
               arn:environment_template_arn ->
                 name:resource_name -> unit -> environment_template_summary
 val make_list_environment_templates_output :
@@ -633,8 +640,8 @@ val make_environment_template_version_summary :
   ?description:description ->
     ?status_message:status_message ->
       ?recommended_minor_version:template_version_part ->
-        last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-          created_at:Smaws_Lib.Smithy_api.timestamp ->
+        last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
             arn:environment_template_version_arn ->
               status:template_version_status ->
                 minor_version:template_version_part ->
@@ -670,8 +677,8 @@ val make_list_environment_outputs_input :
 val make_environment_account_connection_summary :
   ?component_role_arn:arn ->
     status:environment_account_connection_status ->
-      last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-        requested_at:Smaws_Lib.Smithy_api.timestamp ->
+      last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+        requested_at:Smaws_Lib.Smithy_api.Types.timestamp ->
           environment_name:resource_name ->
             role_arn:arn ->
               environment_account_id:aws_account_id ->
@@ -696,13 +703,13 @@ val make_deployment_summary :
       ?component_name:resource_name ->
         ?service_instance_name:resource_name ->
           ?service_name:resource_name ->
-            ?completed_at:Smaws_Lib.Smithy_api.timestamp ->
+            ?completed_at:Smaws_Lib.Smithy_api.Types.timestamp ->
               deployment_status:deployment_status ->
                 environment_name:resource_name ->
-                  last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                    created_at:Smaws_Lib.Smithy_api.timestamp ->
+                  last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+                    created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                       target_resource_type:deployment_target_resource_type ->
-                        target_resource_created_at:Smaws_Lib.Smithy_api.timestamp
+                        target_resource_created_at:Smaws_Lib.Smithy_api.Types.timestamp
                           ->
                           target_arn:arn ->
                             arn:deployment_arn ->
@@ -721,13 +728,14 @@ val make_component_summary :
   ?last_succeeded_deployment_id:deployment_id ->
     ?last_attempted_deployment_id:deployment_id ->
       ?deployment_status_message:status_message ->
-        ?last_deployment_succeeded_at:Smaws_Lib.Smithy_api.timestamp ->
-          ?last_deployment_attempted_at:Smaws_Lib.Smithy_api.timestamp ->
+        ?last_deployment_succeeded_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+          ?last_deployment_attempted_at:Smaws_Lib.Smithy_api.Types.timestamp
+            ->
             ?service_instance_name:resource_name ->
               ?service_name:resource_name ->
                 deployment_status:deployment_status ->
-                  last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                    created_at:Smaws_Lib.Smithy_api.timestamp ->
+                  last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+                    created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                       environment_name:resource_name ->
                         arn:component_arn ->
                           name:resource_name -> unit -> component_summary
@@ -873,18 +881,18 @@ val make_deployment :
     ?initial_state:deployment_state ->
       ?last_succeeded_deployment_id:deployment_id ->
         ?last_attempted_deployment_id:deployment_id ->
-          ?completed_at:Smaws_Lib.Smithy_api.timestamp ->
+          ?completed_at:Smaws_Lib.Smithy_api.Types.timestamp ->
             ?deployment_status_message:status_message ->
               ?component_name:resource_name ->
                 ?service_instance_name:resource_name ->
                   ?service_name:resource_name ->
-                    last_modified_at:Smaws_Lib.Smithy_api.timestamp ->
-                      created_at:Smaws_Lib.Smithy_api.timestamp ->
+                    last_modified_at:Smaws_Lib.Smithy_api.Types.timestamp ->
+                      created_at:Smaws_Lib.Smithy_api.Types.timestamp ->
                         deployment_status:deployment_status ->
                           environment_name:resource_name ->
                             target_resource_type:deployment_target_resource_type
                               ->
-                              target_resource_created_at:Smaws_Lib.Smithy_api.timestamp
+                              target_resource_created_at:Smaws_Lib.Smithy_api.Types.timestamp
                                 ->
                                 target_arn:arn ->
                                   arn:deployment_arn ->

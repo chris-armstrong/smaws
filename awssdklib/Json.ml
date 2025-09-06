@@ -39,6 +39,9 @@ module SerializeHelpers = struct
 
   let timestamp_to_yojson (x : Timestamp.t) : t = `Float (Timestamp.to_float_s x)
   let option_to_yojson (converter : 'a -> t) (x : 'a option) = Option.map converter x
+
+  let nullable_to_yojson (converter : 'a -> t) (x : 'a Nullable.t) : t =
+    match x with Null -> `Null | Value v -> converter v
 end
 
 module DeserializeHelpers = struct
@@ -161,4 +164,7 @@ module DeserializeHelpers = struct
   let option_of_yojson (converter : (string * t) list -> string list -> 'a)
       (tree : (string * t) list) path =
     try Some (converter tree path) with JsonDeserializeError (NoValueError v) -> None
+
+  let nullable_of_yojson (converter : t -> string list -> 'a) (tree : t) path : 'a Nullable.t =
+    try Value (converter tree path) with JsonDeserializeError (NoValueError v) -> Null
 end

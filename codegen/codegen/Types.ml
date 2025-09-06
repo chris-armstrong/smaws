@@ -17,7 +17,8 @@ let type_name ~is_exception_type name =
 let type_ident ctx ~name ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let resolved_name =
     Namespace_resolver.Namespace_resolver.resolve_reference
-      ~symbol_transformer:(fun ~(local : _) x -> [ SafeNames.safeTypeName x ])
+      ~symbol_transformer:(fun ~local x ->
+        if local then [ SafeNames.safeTypeName x ] else [ "Types"; SafeNames.safeTypeName x ])
       namespace_resolver name
   in
   match Longident.unflatten resolved_name with
@@ -70,7 +71,11 @@ let make_basic_type_manifest ctx descriptor
       let is_sparse = Ast.Trait.(hasTrait traits isSparseTrait) in
       let resolved_type =
         if is_sparse then
-          B.ptyp_constr (Location.mknoloc (Longident.Lident "option")) [ basic_type ]
+          B.ptyp_constr
+            (Location.mknoloc
+               (Longident.unflatten [ "Smaws_Lib"; "Smithy_api"; "Types"; "nullable" ]
+               |> Option.value_exn))
+            [ basic_type ]
         else basic_type
       in
       B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ resolved_type ]

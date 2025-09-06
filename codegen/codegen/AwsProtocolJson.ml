@@ -183,13 +183,21 @@ module Serialiser = struct
                   (Nolabel, exp_ident "tree");
                 ]))
     | ListShape x ->
-        Some
-          (exp_fun_untyped "tree"
-             (B.pexp_apply (exp_ident "list_to_yojson")
-                [
-                  (Nolabel, B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)));
-                  (Nolabel, exp_ident "tree");
-                ]))
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let item_transformer =
+          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target))
+        in
+        let transformer =
+          B.pexp_apply (exp_ident "list_to_yojson")
+            [
+              ( Nolabel,
+                if is_sparse then
+                  B.pexp_apply (exp_ident "nullable_to_yojson") [ (Nolabel, item_transformer) ]
+                else item_transformer );
+              (Nolabel, exp_ident "tree");
+            ]
+        in
+        Some (exp_fun_untyped "tree" transformer)
     | OperationShape x -> None
     | ResourceShape -> None
 
@@ -473,13 +481,23 @@ module Deserialiser = struct
                      (Nolabel, exp_ident "path");
                    ])))
     | ListShape x ->
+        let item_type = B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) in
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let wrapped_type =
+          if is_sparse then
+            B.pexp_apply
+              (B.pexp_ident
+                 ([ "nullable_of_yojson" ] |> Longident.unflatten |> Option.value_exn
+                |> Location.mknoloc))
+              [ (Nolabel, item_type) ]
+          else item_type
+        in
         Some
           (exp_fun_untyped "tree"
              (exp_fun_untyped "path"
                 (B.pexp_apply (exp_ident "list_of_yojson")
                    [
-                     ( Nolabel,
-                       B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) );
+                     (Nolabel, wrapped_type);
                      (Nolabel, exp_ident "tree");
                      (Nolabel, exp_ident "path");
                    ])))

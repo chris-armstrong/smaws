@@ -625,7 +625,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidEndpointException of invalid_endpoint_exception 
@@ -678,7 +678,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidEndpointException of invalid_endpoint_exception 

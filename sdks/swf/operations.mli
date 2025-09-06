@@ -48,7 +48,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_activity_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeNotDeprecatedFault of type_not_deprecated_fault 
@@ -60,7 +60,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_workflow_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeNotDeprecatedFault of type_not_deprecated_fault 
@@ -72,7 +72,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deprecate_activity_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeDeprecatedFault of type_deprecated_fault 
@@ -84,7 +84,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deprecate_domain_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DomainDeprecatedFault of domain_deprecated_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 
@@ -96,7 +96,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deprecate_workflow_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeDeprecatedFault of type_deprecated_fault 
@@ -264,7 +264,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_activity_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededFault of limit_exceeded_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 
@@ -277,7 +277,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_domain_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DomainAlreadyExistsFault of domain_already_exists_fault 
           | `LimitExceededFault of limit_exceeded_fault 
@@ -290,7 +290,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_workflow_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededFault of limit_exceeded_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 
@@ -303,7 +303,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       request_cancel_workflow_execution_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -314,7 +314,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       respond_activity_task_canceled_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -325,7 +325,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       respond_activity_task_completed_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -336,7 +336,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       respond_activity_task_failed_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -347,7 +347,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       respond_decision_task_completed_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -358,7 +358,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       signal_workflow_execution_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -386,7 +386,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededFault of limit_exceeded_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 
@@ -399,7 +399,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       terminate_workflow_execution_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `UnknownResourceFault of unknown_resource_fault ]) result
@@ -410,7 +410,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       undeprecate_activity_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeAlreadyExistsFault of type_already_exists_fault 
@@ -422,7 +422,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       undeprecate_domain_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DomainAlreadyExistsFault of domain_already_exists_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 
@@ -434,7 +434,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       undeprecate_workflow_type_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OperationNotPermittedFault of operation_not_permitted_fault 
           | `TypeAlreadyExistsFault of type_already_exists_fault 
@@ -446,7 +446,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (Smaws_Lib.Smithy_api.unit_,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LimitExceededFault of limit_exceeded_fault 
           | `OperationNotPermittedFault of operation_not_permitted_fault 

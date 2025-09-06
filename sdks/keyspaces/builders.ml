@@ -355,8 +355,8 @@ let make_get_table_auto_scaling_settings_request
   ~table_name:(table_name_ : table_name)
   ~keyspace_name:(keyspace_name_ : keyspace_name) () =
   ({ table_name = table_name_; keyspace_name = keyspace_name_ } : get_table_auto_scaling_settings_request)
-let make_comment ~message:(message_ : Smaws_Lib.Smithy_api.string_) () =
-  ({ message = message_ } : comment)
+let make_comment ~message:(message_ : Smaws_Lib.Smithy_api.Types.string_) ()
+  = ({ message = message_ } : comment)
 let make_cdc_specification_summary ?view_type:(view_type_ : view_type option)
   ~status:(status_ : cdc_status) () =
   ({ view_type = view_type_; status = status_ } : cdc_specification_summary)

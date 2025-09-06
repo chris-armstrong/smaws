@@ -6,13 +6,13 @@ val make_vpc_endpoint_summary :
 val make_vpc_endpoint_filters :
   ?status:vpc_endpoint_status -> unit -> vpc_endpoint_filters
 val make_vpc_endpoint_error_detail :
-  ?error_code:Smaws_Lib.Smithy_api.string_ ->
-    ?error_message:Smaws_Lib.Smithy_api.string_ ->
+  ?error_code:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?error_message:Smaws_Lib.Smithy_api.Types.string_ ->
       ?id:vpc_endpoint_id -> unit -> vpc_endpoint_error_detail
 val make_vpc_endpoint_detail :
-  ?failure_message:Smaws_Lib.Smithy_api.string_ ->
-    ?failure_code:Smaws_Lib.Smithy_api.string_ ->
-      ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?failure_message:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?failure_code:Smaws_Lib.Smithy_api.Types.string_ ->
+      ?created_date:Smaws_Lib.Smithy_api.Types.long ->
         ?status:vpc_endpoint_status ->
           ?security_group_ids:security_group_ids ->
             ?subnet_ids:subnet_ids ->
@@ -20,7 +20,7 @@ val make_vpc_endpoint_detail :
                 ?name:vpc_endpoint_name ->
                   ?id:vpc_endpoint_id -> unit -> vpc_endpoint_detail
 val make_update_vpc_endpoint_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
     ?security_group_ids:security_group_ids ->
       ?subnet_ids:subnet_ids ->
         ?status:vpc_endpoint_status ->
@@ -37,9 +37,9 @@ val make_update_vpc_endpoint_request :
           ?add_subnet_ids:subnet_ids ->
             id:vpc_endpoint_id -> unit -> update_vpc_endpoint_request
 val make_security_policy_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
-      ?policy:Smaws_Lib.Smithy_api.document ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+      ?policy:Smaws_Lib.Smithy_api.Types.document ->
         ?description:policy_description ->
           ?policy_version:policy_version ->
             ?name:policy_name ->
@@ -56,7 +56,7 @@ val make_update_security_policy_request :
             type_:security_policy_type ->
               unit -> update_security_policy_request
 val make_saml_config_options :
-  ?session_timeout:Smaws_Lib.Smithy_api.integer ->
+  ?session_timeout:Smaws_Lib.Smithy_api.Types.integer ->
     ?open_search_serverless_entity_id:open_search_serverless_entity_id ->
       ?group_attribute:saml_group_attribute ->
         ?user_attribute:saml_user_attribute ->
@@ -64,14 +64,14 @@ val make_saml_config_options :
 val make_iam_identity_center_config_options :
   ?group_attribute:iam_identity_center_group_attribute ->
     ?user_attribute:iam_identity_center_user_attribute ->
-      ?application_description:Smaws_Lib.Smithy_api.string_ ->
-        ?application_name:Smaws_Lib.Smithy_api.string_ ->
+      ?application_description:Smaws_Lib.Smithy_api.Types.string_ ->
+        ?application_name:Smaws_Lib.Smithy_api.Types.string_ ->
           ?application_arn:iam_identity_center_application_arn ->
             ?instance_arn:iam_identity_center_instance_arn ->
               unit -> iam_identity_center_config_options
 val make_security_config_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?iam_identity_center_options:iam_identity_center_config_options ->
         ?saml_options:saml_config_options ->
           ?description:config_description ->
@@ -94,9 +94,9 @@ val make_update_security_config_request :
           config_version:policy_version ->
             id:security_config_id -> unit -> update_security_config_request
 val make_lifecycle_policy_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
-      ?policy:Smaws_Lib.Smithy_api.document ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+      ?policy:Smaws_Lib.Smithy_api.Types.document ->
         ?description:policy_description ->
           ?policy_version:policy_version ->
             ?name:policy_name ->
@@ -113,10 +113,10 @@ val make_update_lifecycle_policy_request :
             type_:lifecycle_policy_type ->
               unit -> update_lifecycle_policy_request
 val make_update_collection_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
-      ?arn:Smaws_Lib.Smithy_api.string_ ->
-        ?description:Smaws_Lib.Smithy_api.string_ ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+      ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+        ?description:Smaws_Lib.Smithy_api.Types.string_ ->
           ?type_:collection_type ->
             ?status:collection_status ->
               ?name:collection_name ->
@@ -126,7 +126,7 @@ val make_update_collection_response :
     unit -> update_collection_response
 val make_update_collection_request :
   ?client_token:client_token ->
-    ?description:Smaws_Lib.Smithy_api.string_ ->
+    ?description:Smaws_Lib.Smithy_api.Types.string_ ->
       id:collection_id -> unit -> update_collection_request
 val make_capacity_limits :
   ?max_search_capacity_in_oc_u:search_capacity_value ->
@@ -140,9 +140,9 @@ val make_update_account_settings_response :
 val make_update_account_settings_request :
   ?capacity_limits:capacity_limits -> unit -> update_account_settings_request
 val make_access_policy_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
-      ?policy:Smaws_Lib.Smithy_api.document ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+      ?policy:Smaws_Lib.Smithy_api.Types.document ->
         ?description:policy_description ->
           ?policy_version:policy_version ->
             ?name:policy_name ->
@@ -165,37 +165,38 @@ val make_tag_resource_response : unit -> unit
 val make_tag_resource_request :
   tags:tags -> resource_arn:arn -> unit -> tag_resource_request
 val make_security_policy_summary :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?description:policy_description ->
         ?policy_version:policy_version ->
           ?name:policy_name ->
             ?type_:security_policy_type -> unit -> security_policy_summary
 val make_security_policy_stats :
-  ?network_policy_count:Smaws_Lib.Smithy_api.long ->
-    ?encryption_policy_count:Smaws_Lib.Smithy_api.long ->
+  ?network_policy_count:Smaws_Lib.Smithy_api.Types.long ->
+    ?encryption_policy_count:Smaws_Lib.Smithy_api.Types.long ->
       unit -> security_policy_stats
 val make_security_config_summary :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?description:config_description ->
         ?config_version:policy_version ->
           ?type_:security_config_type ->
             ?id:security_config_id -> unit -> security_config_summary
 val make_security_config_stats :
-  ?saml_config_count:Smaws_Lib.Smithy_api.long ->
+  ?saml_config_count:Smaws_Lib.Smithy_api.Types.long ->
     unit -> security_config_stats
 val make_list_tags_for_resource_response :
   ?tags:tags -> unit -> list_tags_for_resource_response
 val make_list_tags_for_resource_request :
   resource_arn:arn -> unit -> list_tags_for_resource_request
 val make_access_policy_stats :
-  ?data_policy_count:Smaws_Lib.Smithy_api.long -> unit -> access_policy_stats
+  ?data_policy_count:Smaws_Lib.Smithy_api.Types.long ->
+    unit -> access_policy_stats
 val make_lifecycle_policy_stats :
-  ?retention_policy_count:Smaws_Lib.Smithy_api.long ->
+  ?retention_policy_count:Smaws_Lib.Smithy_api.Types.long ->
     unit -> lifecycle_policy_stats
 val make_get_policies_stats_response :
-  ?total_policy_count:Smaws_Lib.Smithy_api.long ->
+  ?total_policy_count:Smaws_Lib.Smithy_api.Types.long ->
     ?lifecycle_policy_stats:lifecycle_policy_stats ->
       ?security_config_stats:security_config_stats ->
         ?security_policy_stats:security_policy_stats ->
@@ -233,8 +234,8 @@ val make_batch_get_vpc_endpoint_response :
 val make_batch_get_vpc_endpoint_request :
   ids:vpc_endpoint_ids -> unit -> batch_get_vpc_endpoint_request
 val make_lifecycle_policy_error_detail :
-  ?error_code:Smaws_Lib.Smithy_api.string_ ->
-    ?error_message:Smaws_Lib.Smithy_api.string_ ->
+  ?error_code:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?error_message:Smaws_Lib.Smithy_api.Types.string_ ->
       ?name:policy_name ->
         ?type_:lifecycle_policy_type -> unit -> lifecycle_policy_error_detail
 val make_batch_get_lifecycle_policy_response :
@@ -248,16 +249,16 @@ val make_batch_get_lifecycle_policy_request :
   identifiers:lifecycle_policy_identifiers ->
     unit -> batch_get_lifecycle_policy_request
 val make_effective_lifecycle_policy_detail :
-  ?no_min_retention_period:Smaws_Lib.Smithy_api.boolean_ ->
-    ?retention_period:Smaws_Lib.Smithy_api.string_ ->
+  ?no_min_retention_period:Smaws_Lib.Smithy_api.Types.boolean_ ->
+    ?retention_period:Smaws_Lib.Smithy_api.Types.string_ ->
       ?resource_type:resource_type ->
         ?policy_name:policy_name ->
           ?resource:resource ->
             ?type_:lifecycle_policy_type ->
               unit -> effective_lifecycle_policy_detail
 val make_effective_lifecycle_policy_error_detail :
-  ?error_code:Smaws_Lib.Smithy_api.string_ ->
-    ?error_message:Smaws_Lib.Smithy_api.string_ ->
+  ?error_code:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?error_message:Smaws_Lib.Smithy_api.Types.string_ ->
       ?resource:resource ->
         ?type_:lifecycle_policy_type ->
           unit -> effective_lifecycle_policy_error_detail
@@ -274,23 +275,23 @@ val make_batch_get_effective_lifecycle_policy_request :
   resource_identifiers:lifecycle_policy_resource_identifiers ->
     unit -> batch_get_effective_lifecycle_policy_request
 val make_collection_detail :
-  ?failure_message:Smaws_Lib.Smithy_api.string_ ->
-    ?failure_code:Smaws_Lib.Smithy_api.string_ ->
-      ?dashboard_endpoint:Smaws_Lib.Smithy_api.string_ ->
-        ?collection_endpoint:Smaws_Lib.Smithy_api.string_ ->
-          ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-            ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?failure_message:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?failure_code:Smaws_Lib.Smithy_api.Types.string_ ->
+      ?dashboard_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
+        ?collection_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
+          ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+            ?created_date:Smaws_Lib.Smithy_api.Types.long ->
               ?standby_replicas:standby_replicas ->
-                ?kms_key_arn:Smaws_Lib.Smithy_api.string_ ->
-                  ?arn:Smaws_Lib.Smithy_api.string_ ->
-                    ?description:Smaws_Lib.Smithy_api.string_ ->
+                ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+                  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+                    ?description:Smaws_Lib.Smithy_api.Types.string_ ->
                       ?type_:collection_type ->
                         ?status:collection_status ->
                           ?name:collection_name ->
                             ?id:collection_id -> unit -> collection_detail
 val make_collection_error_detail :
-  ?error_code:Smaws_Lib.Smithy_api.string_ ->
-    ?error_message:Smaws_Lib.Smithy_api.string_ ->
+  ?error_code:Smaws_Lib.Smithy_api.Types.string_ ->
+    ?error_message:Smaws_Lib.Smithy_api.Types.string_ ->
       ?name:collection_name ->
         ?id:collection_id -> unit -> collection_error_detail
 val make_batch_get_collection_response :
@@ -301,79 +302,79 @@ val make_batch_get_collection_request :
   ?names:collection_names ->
     ?ids:collection_ids -> unit -> batch_get_collection_request
 val make_list_vpc_endpoints_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?vpc_endpoint_summaries:vpc_endpoint_summaries ->
       unit -> list_vpc_endpoints_response
 val make_list_vpc_endpoints_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       ?vpc_endpoint_filters:vpc_endpoint_filters ->
         unit -> list_vpc_endpoints_request
 val make_list_security_policies_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?security_policy_summaries:security_policy_summaries ->
       unit -> list_security_policies_response
 val make_list_security_policies_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       ?resource:resource_filter ->
         type_:security_policy_type -> unit -> list_security_policies_request
 val make_list_security_configs_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?security_config_summaries:security_config_summaries ->
       unit -> list_security_configs_response
 val make_list_security_configs_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       type_:security_config_type -> unit -> list_security_configs_request
 val make_lifecycle_policy_summary :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?description:policy_description ->
         ?policy_version:policy_version ->
           ?name:policy_name ->
             ?type_:lifecycle_policy_type -> unit -> lifecycle_policy_summary
 val make_list_lifecycle_policies_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?lifecycle_policy_summaries:lifecycle_policy_summaries ->
       unit -> list_lifecycle_policies_response
 val make_list_lifecycle_policies_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       ?resources:lifecycle_resource_filter ->
         type_:lifecycle_policy_type ->
           unit -> list_lifecycle_policies_request
 val make_collection_summary :
-  ?arn:Smaws_Lib.Smithy_api.string_ ->
+  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
     ?status:collection_status ->
       ?name:collection_name ->
         ?id:collection_id -> unit -> collection_summary
 val make_list_collections_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?collection_summaries:collection_summaries ->
       unit -> list_collections_response
 val make_collection_filters :
   ?status:collection_status ->
     ?name:collection_name -> unit -> collection_filters
 val make_list_collections_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       ?collection_filters:collection_filters ->
         unit -> list_collections_request
 val make_access_policy_summary :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?description:policy_description ->
         ?policy_version:policy_version ->
           ?name:policy_name ->
             ?type_:access_policy_type -> unit -> access_policy_summary
 val make_list_access_policies_response :
-  ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
     ?access_policy_summaries:access_policy_summaries ->
       unit -> list_access_policies_response
 val make_list_access_policies_request :
-  ?max_results:Smaws_Lib.Smithy_api.integer ->
-    ?next_token:Smaws_Lib.Smithy_api.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+    ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
       ?resource:resource_filter ->
         type_:access_policy_type -> unit -> list_access_policies_request
 val make_get_security_policy_response :
@@ -462,12 +463,12 @@ val make_create_security_config_request :
             type_:security_config_type ->
               unit -> create_security_config_request
 val make_create_collection_detail :
-  ?last_modified_date:Smaws_Lib.Smithy_api.long ->
-    ?created_date:Smaws_Lib.Smithy_api.long ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+    ?created_date:Smaws_Lib.Smithy_api.Types.long ->
       ?standby_replicas:standby_replicas ->
-        ?kms_key_arn:Smaws_Lib.Smithy_api.string_ ->
-          ?arn:Smaws_Lib.Smithy_api.string_ ->
-            ?description:Smaws_Lib.Smithy_api.string_ ->
+        ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+          ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+            ?description:Smaws_Lib.Smithy_api.Types.string_ ->
               ?type_:collection_type ->
                 ?status:collection_status ->
                   ?name:collection_name ->
@@ -479,7 +480,7 @@ val make_create_collection_request :
   ?client_token:client_token ->
     ?standby_replicas:standby_replicas ->
       ?tags:tags ->
-        ?description:Smaws_Lib.Smithy_api.string_ ->
+        ?description:Smaws_Lib.Smithy_api.Types.string_ ->
           ?type_:collection_type ->
             name:collection_name -> unit -> create_collection_request
 val make_create_access_policy_response :
