@@ -241,18 +241,19 @@ let tag_resource_input_of_yojson tree path =
    } : tag_resource_input)
 let base_unit_of_yojson = unit_of_yojson
 let sync_metadata_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CREATED" -> CREATED
-   | `String "RUNNING" -> RUNNING
-   | `String "FAILED" -> FAILED
-   | `String "PARTIALLY_FAILED" -> PARTIALLY_FAILED
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SyncMetadataStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "SyncMetadataStatus") : 
-  sync_metadata_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CREATED" -> CREATED
+    | `String "RUNNING" -> RUNNING
+    | `String "FAILED" -> FAILED
+    | `String "PARTIALLY_FAILED" -> PARTIALLY_FAILED
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SyncMetadataStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "SyncMetadataStatus") : 
+     sync_metadata_status) : sync_metadata_status)
 let start_virtual_machines_metadata_sync_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -408,16 +409,17 @@ let list_tags_for_resource_input_of_yojson tree path =
    } : list_tags_for_resource_input)
 let kms_key_arn_of_yojson = string_of_yojson
 let hypervisor_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PENDING" -> PENDING
-   | `String "ONLINE" -> ONLINE
-   | `String "OFFLINE" -> OFFLINE
-   | `String "ERROR" -> ERROR
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "HypervisorState" value)
-   | _ -> raise (deserialize_wrong_type_error path "HypervisorState") : 
-  hypervisor_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PENDING" -> PENDING
+    | `String "ONLINE" -> ONLINE
+    | `String "OFFLINE" -> OFFLINE
+    | `String "ERROR" -> ERROR
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "HypervisorState" value)
+    | _ -> raise (deserialize_wrong_type_error path "HypervisorState") : 
+     hypervisor_state) : hypervisor_state)
 let hypervisor_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -458,11 +460,13 @@ let list_hypervisors_input_of_yojson tree path =
           _list path)
    } : list_hypervisors_input)
 let gateway_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "BACKUP_VM" -> BACKUP_VM
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "GatewayType" value)
-   | _ -> raise (deserialize_wrong_type_error path "GatewayType") : gateway_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "BACKUP_VM" -> BACKUP_VM
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "GatewayType" value)
+    | _ -> raise (deserialize_wrong_type_error path "GatewayType") : 
+     gateway_type) : gateway_type)
 let hypervisor_id_of_yojson = string_of_yojson
 let gateway_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -757,3 +761,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

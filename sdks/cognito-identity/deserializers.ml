@@ -154,12 +154,14 @@ let untag_resource_input_of_yojson tree path =
 let identity_id_of_yojson = string_of_yojson
 let base_unit_of_yojson = unit_of_yojson
 let error_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INTERNAL_SERVER_ERROR" -> INTERNAL_SERVER_ERROR
-   | `String "ACCESS_DENIED" -> ACCESS_DENIED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
-   | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "InternalServerError" -> INTERNAL_SERVER_ERROR
+    | `String "AccessDenied" -> ACCESS_DENIED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code) : 
+  error_code)
 let unprocessed_identity_id_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -262,39 +264,42 @@ let role_type_of_yojson = string_of_yojson
 let roles_map_of_yojson tree path =
   map_of_yojson role_type_of_yojson arn_string_of_yojson tree path
 let role_mapping_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RULES" -> RULES
-   | `String "TOKEN" -> TOKEN
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RoleMappingType" value)
-   | _ -> raise (deserialize_wrong_type_error path "RoleMappingType") : 
-  role_mapping_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Rules" -> RULES
+    | `String "Token" -> TOKEN
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RoleMappingType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RoleMappingType") : 
+     role_mapping_type) : role_mapping_type)
 let ambiguous_role_resolution_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DENY" -> DENY
-   | `String "AUTHENTICATED_ROLE" -> AUTHENTICATED_ROLE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AmbiguousRoleResolutionType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "AmbiguousRoleResolutionType") : 
-  ambiguous_role_resolution_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Deny" -> DENY
+    | `String "AuthenticatedRole" -> AUTHENTICATED_ROLE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AmbiguousRoleResolutionType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "AmbiguousRoleResolutionType") : 
+     ambiguous_role_resolution_type) : ambiguous_role_resolution_type)
 let claim_name_of_yojson = string_of_yojson
 let mapping_rule_match_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NOT_EQUAL" -> NOT_EQUAL
-   | `String "STARTS_WITH" -> STARTS_WITH
-   | `String "CONTAINS" -> CONTAINS
-   | `String "EQUALS" -> EQUALS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "MappingRuleMatchType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "MappingRuleMatchType") : 
-  mapping_rule_match_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NotEqual" -> NOT_EQUAL
+    | `String "StartsWith" -> STARTS_WITH
+    | `String "Contains" -> CONTAINS
+    | `String "Equals" -> EQUALS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MappingRuleMatchType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "MappingRuleMatchType") : 
+     mapping_rule_match_type) : mapping_rule_match_type)
 let claim_value_of_yojson = string_of_yojson
 let mapping_rule_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -743,3 +748,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

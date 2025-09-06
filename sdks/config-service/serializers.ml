@@ -23,6 +23,52 @@ let aws_region_to_yojson = string_to_yojson
 let resource_id_to_yojson = string_to_yojson
 let resource_type_to_yojson (x : resource_type) =
   match x with
+  | TransferProfile -> `String "AWS::Transfer::Profile"
+  | SecurityHubStandard -> `String "AWS::SecurityHub::Standard"
+  | SageMakerInferenceExperiment ->
+      `String "AWS::SageMaker::InferenceExperiment"
+  | S3ExpressDirectoryBucket -> `String "AWS::S3Express::DirectoryBucket"
+  | S3ExpressBucketPolicy -> `String "AWS::S3Express::BucketPolicy"
+  | S3StorageLensGroup -> `String "AWS::S3::StorageLensGroup"
+  | Route53ProfilesProfile -> `String "AWS::Route53Profiles::Profile"
+  | RedshiftEndpointAuthorization ->
+      `String "AWS::Redshift::EndpointAuthorization"
+  | OpenSearchServerlessVpcEndpoint ->
+      `String "AWS::OpenSearchServerless::VpcEndpoint"
+  | OpenSearchServerlessCollection ->
+      `String "AWS::OpenSearchServerless::Collection"
+  | MemoryDBSubnetGroup -> `String "AWS::MemoryDB::SubnetGroup"
+  | MediaConnectGateway -> `String "AWS::MediaConnect::Gateway"
+  | MSKVpcConnection -> `String "AWS::MSK::VpcConnection"
+  | MSKClusterPolicy -> `String "AWS::MSK::ClusterPolicy"
+  | InspectorV2Activation -> `String "AWS::InspectorV2::Activation"
+  | IAMOIDCProvider -> `String "AWS::IAM::OIDCProvider"
+  | EvidentlySegment -> `String "AWS::Evidently::Segment"
+  | EC2VPNConnectionRoute -> `String "AWS::EC2::VPNConnectionRoute"
+  | EC2VPCEndpointConnectionNotification ->
+      `String "AWS::EC2::VPCEndpointConnectionNotification"
+  | EC2VPCBlockPublicAccessOptions ->
+      `String "AWS::EC2::VPCBlockPublicAccessOptions"
+  | EC2VPCBlockPublicAccessExclusion ->
+      `String "AWS::EC2::VPCBlockPublicAccessExclusion"
+  | EC2SnapshotBlockPublicAccess ->
+      `String "AWS::EC2::SnapshotBlockPublicAccess"
+  | EC2InstanceConnectEndpoint -> `String "AWS::EC2::InstanceConnectEndpoint"
+  | EC2IPAMResourceDiscoveryAssociation ->
+      `String "AWS::EC2::IPAMResourceDiscoveryAssociation"
+  | EC2IPAMResourceDiscovery -> `String "AWS::EC2::IPAMResourceDiscovery"
+  | EC2EIPAssociation -> `String "AWS::EC2::EIPAssociation"
+  | EC2ClientVpnTargetNetworkAssociation ->
+      `String "AWS::EC2::ClientVpnTargetNetworkAssociation"
+  | ConnectUser -> `String "AWS::Connect::User"
+  | ConnectRule -> `String "AWS::Connect::Rule"
+  | CognitoIdentityPool -> `String "AWS::Cognito::IdentityPool"
+  | BedrockKnowledgeBase -> `String "AWS::Bedrock::KnowledgeBase"
+  | BedrockGuardrail -> `String "AWS::Bedrock::Guardrail"
+  | AppSyncApiCache -> `String "AWS::AppSync::ApiCache"
+  | AppIntegrationsApplication -> `String "AWS::AppIntegrations::Application"
+  | AppConfigExtensionAssociation ->
+      `String "AWS::AppConfig::ExtensionAssociation"
   | SSMDocument -> `String "AWS::SSM::Document"
   | Route53ResolverFirewallRuleGroup ->
       `String "AWS::Route53Resolver::FirewallRuleGroup"
@@ -502,6 +548,10 @@ let aggregate_resource_identifier_to_yojson
     ("SourceAccountId", (Some (account_id_to_yojson x.source_account_id)))]
 let unprocessed_resource_identifier_list_to_yojson tree =
   list_to_yojson aggregate_resource_identifier_to_yojson tree
+let unmodifiable_entity_exception_to_yojson
+  (x : unmodifiable_entity_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
 let too_many_tags_exception_to_yojson (x : too_many_tags_exception) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
@@ -778,6 +828,21 @@ let put_stored_query_request_to_yojson (x : put_stored_query_request) =
   assoc_to_yojson
     [("Tags", (option_to_yojson tags_list_to_yojson x.tags));
     ("StoredQuery", (Some (stored_query_to_yojson x.stored_query)))]
+let conflict_exception_to_yojson (x : conflict_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let put_service_linked_configuration_recorder_response_to_yojson
+  (x : put_service_linked_configuration_recorder_response) =
+  assoc_to_yojson
+    [("Name", (option_to_yojson recorder_name_to_yojson x.name));
+    ("Arn", (option_to_yojson amazon_resource_name_to_yojson x.arn))]
+let service_principal_to_yojson = string_to_yojson
+let put_service_linked_configuration_recorder_request_to_yojson
+  (x : put_service_linked_configuration_recorder_request) =
+  assoc_to_yojson
+    [("Tags", (option_to_yojson tags_list_to_yojson x.tags));
+    ("ServicePrincipal",
+      (Some (service_principal_to_yojson x.service_principal)))]
 let max_number_of_retention_configurations_exceeded_exception_to_yojson
   (x : max_number_of_retention_configurations_exceeded_exception) =
   assoc_to_yojson
@@ -1356,19 +1421,27 @@ let recording_mode_to_yojson (x : recording_mode) =
           x.recording_mode_overrides));
     ("recordingFrequency",
       (Some (recording_frequency_to_yojson x.recording_frequency)))]
+let recording_scope_to_yojson (x : recording_scope) =
+  match x with | PAID -> `String "PAID" | INTERNAL -> `String "INTERNAL"
 let configuration_recorder_to_yojson (x : configuration_recorder) =
   assoc_to_yojson
-    [("recordingMode",
-       (option_to_yojson recording_mode_to_yojson x.recording_mode));
+    [("servicePrincipal",
+       (option_to_yojson service_principal_to_yojson x.service_principal));
+    ("recordingScope",
+      (option_to_yojson recording_scope_to_yojson x.recording_scope));
+    ("recordingMode",
+      (option_to_yojson recording_mode_to_yojson x.recording_mode));
     ("recordingGroup",
       (option_to_yojson recording_group_to_yojson x.recording_group));
     ("roleARN", (option_to_yojson string__to_yojson x.role_ar_n));
-    ("name", (option_to_yojson recorder_name_to_yojson x.name))]
+    ("name", (option_to_yojson recorder_name_to_yojson x.name));
+    ("arn", (option_to_yojson amazon_resource_name_to_yojson x.arn))]
 let put_configuration_recorder_request_to_yojson
   (x : put_configuration_recorder_request) =
   assoc_to_yojson
-    [("ConfigurationRecorder",
-       (Some (configuration_recorder_to_yojson x.configuration_recorder)))]
+    [("Tags", (option_to_yojson tags_list_to_yojson x.tags));
+    ("ConfigurationRecorder",
+      (Some (configuration_recorder_to_yojson x.configuration_recorder)))]
 let configuration_aggregator_arn_to_yojson = string_to_yojson
 let account_aggregation_source_account_list_to_yojson tree =
   list_to_yojson account_id_to_yojson tree
@@ -1392,10 +1465,39 @@ let organization_aggregation_source_to_yojson
     ("AwsRegions",
       (option_to_yojson aggregator_region_list_to_yojson x.aws_regions));
     ("RoleArn", (Some (string__to_yojson x.role_arn)))]
+let aggregator_filter_type_to_yojson (x : aggregator_filter_type) =
+  match x with | INCLUDE -> `String "INCLUDE"
+let resource_type_value_to_yojson = string_to_yojson
+let resource_type_value_list_to_yojson tree =
+  list_to_yojson resource_type_value_to_yojson tree
+let aggregator_filter_resource_type_to_yojson
+  (x : aggregator_filter_resource_type) =
+  assoc_to_yojson
+    [("Value", (option_to_yojson resource_type_value_list_to_yojson x.value));
+    ("Type", (option_to_yojson aggregator_filter_type_to_yojson x.type_))]
+let service_principal_value_to_yojson = string_to_yojson
+let service_principal_value_list_to_yojson tree =
+  list_to_yojson service_principal_value_to_yojson tree
+let aggregator_filter_service_principal_to_yojson
+  (x : aggregator_filter_service_principal) =
+  assoc_to_yojson
+    [("Value",
+       (option_to_yojson service_principal_value_list_to_yojson x.value));
+    ("Type", (option_to_yojson aggregator_filter_type_to_yojson x.type_))]
+let aggregator_filters_to_yojson (x : aggregator_filters) =
+  assoc_to_yojson
+    [("ServicePrincipal",
+       (option_to_yojson aggregator_filter_service_principal_to_yojson
+          x.service_principal));
+    ("ResourceType",
+      (option_to_yojson aggregator_filter_resource_type_to_yojson
+         x.resource_type))]
 let configuration_aggregator_to_yojson (x : configuration_aggregator) =
   assoc_to_yojson
-    [("CreatedBy",
-       (option_to_yojson string_with_char_limit256_to_yojson x.created_by));
+    [("AggregatorFilters",
+       (option_to_yojson aggregator_filters_to_yojson x.aggregator_filters));
+    ("CreatedBy",
+      (option_to_yojson string_with_char_limit256_to_yojson x.created_by));
     ("LastUpdatedTime",
       (option_to_yojson date_to_yojson x.last_updated_time));
     ("CreationTime", (option_to_yojson date_to_yojson x.creation_time));
@@ -1420,7 +1522,9 @@ let put_configuration_aggregator_response_to_yojson
 let put_configuration_aggregator_request_to_yojson
   (x : put_configuration_aggregator_request) =
   assoc_to_yojson
-    [("Tags", (option_to_yojson tags_list_to_yojson x.tags));
+    [("AggregatorFilters",
+       (option_to_yojson aggregator_filters_to_yojson x.aggregator_filters));
+    ("Tags", (option_to_yojson tags_list_to_yojson x.tags));
     ("OrganizationAggregationSource",
       (option_to_yojson organization_aggregation_source_to_yojson
          x.organization_aggregation_source));
@@ -1694,6 +1798,50 @@ let list_conformance_pack_compliance_scores_request_to_yojson
     ("SortOrder", (option_to_yojson sort_order_to_yojson x.sort_order));
     ("Filters",
       (option_to_yojson conformance_pack_compliance_scores_filters_to_yojson
+         x.filters))]
+let configuration_recorder_summary_to_yojson
+  (x : configuration_recorder_summary) =
+  assoc_to_yojson
+    [("recordingScope", (Some (recording_scope_to_yojson x.recording_scope)));
+    ("servicePrincipal",
+      (option_to_yojson service_principal_to_yojson x.service_principal));
+    ("name", (Some (recorder_name_to_yojson x.name)));
+    ("arn", (Some (amazon_resource_name_to_yojson x.arn)))]
+let configuration_recorder_summaries_to_yojson tree =
+  list_to_yojson configuration_recorder_summary_to_yojson tree
+let list_configuration_recorders_response_to_yojson
+  (x : list_configuration_recorders_response) =
+  assoc_to_yojson
+    [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("ConfigurationRecorderSummaries",
+      (Some
+         (configuration_recorder_summaries_to_yojson
+            x.configuration_recorder_summaries)))]
+let configuration_recorder_filter_name_to_yojson
+  (x : configuration_recorder_filter_name) =
+  match x with | RecordingScope -> `String "recordingScope"
+let configuration_recorder_filter_value_to_yojson = string_to_yojson
+let configuration_recorder_filter_values_to_yojson tree =
+  list_to_yojson configuration_recorder_filter_value_to_yojson tree
+let configuration_recorder_filter_to_yojson
+  (x : configuration_recorder_filter) =
+  assoc_to_yojson
+    [("filterValue",
+       (option_to_yojson configuration_recorder_filter_values_to_yojson
+          x.filter_value));
+    ("filterName",
+      (option_to_yojson configuration_recorder_filter_name_to_yojson
+         x.filter_name))]
+let configuration_recorder_filter_list_to_yojson tree =
+  list_to_yojson configuration_recorder_filter_to_yojson tree
+let max_results_to_yojson = int_to_yojson
+let list_configuration_recorders_request_to_yojson
+  (x : list_configuration_recorders_request) =
+  assoc_to_yojson
+    [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("Filters",
+      (option_to_yojson configuration_recorder_filter_list_to_yojson
          x.filters))]
 let discovered_resource_identifier_list_to_yojson tree =
   list_to_yojson aggregate_resource_identifier_to_yojson tree
@@ -2407,6 +2555,18 @@ let get_aggregate_compliance_details_by_config_rule_request_to_yojson
       (Some
          (configuration_aggregator_name_to_yojson
             x.configuration_aggregator_name)))]
+let disassociate_resource_types_response_to_yojson
+  (x : disassociate_resource_types_response) =
+  assoc_to_yojson
+    [("ConfigurationRecorder",
+       (Some (configuration_recorder_to_yojson x.configuration_recorder)))]
+let disassociate_resource_types_request_to_yojson
+  (x : disassociate_resource_types_request) =
+  assoc_to_yojson
+    [("ResourceTypes",
+       (Some (resource_type_list_to_yojson x.resource_types)));
+    ("ConfigurationRecorderArn",
+      (Some (amazon_resource_name_to_yojson x.configuration_recorder_arn)))]
 let no_such_retention_configuration_exception_to_yojson
   (x : no_such_retention_configuration_exception) =
   assoc_to_yojson
@@ -2932,14 +3092,17 @@ let describe_conformance_pack_compliance_request_to_yojson
       (Some (conformance_pack_name_to_yojson x.conformance_pack_name)))]
 let recorder_status_to_yojson (x : recorder_status) =
   match x with
+  | NotApplicable -> `String "NotApplicable"
   | Failure -> `String "Failure"
   | Success -> `String "Success"
   | Pending -> `String "Pending"
 let configuration_recorder_status_to_yojson
   (x : configuration_recorder_status) =
   assoc_to_yojson
-    [("lastStatusChangeTime",
-       (option_to_yojson date_to_yojson x.last_status_change_time));
+    [("servicePrincipal",
+       (option_to_yojson service_principal_to_yojson x.service_principal));
+    ("lastStatusChangeTime",
+      (option_to_yojson date_to_yojson x.last_status_change_time));
     ("lastErrorMessage",
       (option_to_yojson string__to_yojson x.last_error_message));
     ("lastErrorCode", (option_to_yojson string__to_yojson x.last_error_code));
@@ -2948,7 +3111,8 @@ let configuration_recorder_status_to_yojson
     ("recording", (option_to_yojson boolean__to_yojson x.recording));
     ("lastStopTime", (option_to_yojson date_to_yojson x.last_stop_time));
     ("lastStartTime", (option_to_yojson date_to_yojson x.last_start_time));
-    ("name", (option_to_yojson string__to_yojson x.name))]
+    ("name", (option_to_yojson string__to_yojson x.name));
+    ("arn", (option_to_yojson amazon_resource_name_to_yojson x.arn))]
 let configuration_recorder_status_list_to_yojson tree =
   list_to_yojson configuration_recorder_status_to_yojson tree
 let describe_configuration_recorder_status_response_to_yojson
@@ -2962,9 +3126,12 @@ let configuration_recorder_name_list_to_yojson tree =
 let describe_configuration_recorder_status_request_to_yojson
   (x : describe_configuration_recorder_status_request) =
   assoc_to_yojson
-    [("ConfigurationRecorderNames",
-       (option_to_yojson configuration_recorder_name_list_to_yojson
-          x.configuration_recorder_names))]
+    [("Arn", (option_to_yojson amazon_resource_name_to_yojson x.arn));
+    ("ServicePrincipal",
+      (option_to_yojson service_principal_to_yojson x.service_principal));
+    ("ConfigurationRecorderNames",
+      (option_to_yojson configuration_recorder_name_list_to_yojson
+         x.configuration_recorder_names))]
 let configuration_recorder_list_to_yojson tree =
   list_to_yojson configuration_recorder_to_yojson tree
 let describe_configuration_recorders_response_to_yojson
@@ -2976,9 +3143,12 @@ let describe_configuration_recorders_response_to_yojson
 let describe_configuration_recorders_request_to_yojson
   (x : describe_configuration_recorders_request) =
   assoc_to_yojson
-    [("ConfigurationRecorderNames",
-       (option_to_yojson configuration_recorder_name_list_to_yojson
-          x.configuration_recorder_names))]
+    [("Arn", (option_to_yojson amazon_resource_name_to_yojson x.arn));
+    ("ServicePrincipal",
+      (option_to_yojson service_principal_to_yojson x.service_principal));
+    ("ConfigurationRecorderNames",
+      (option_to_yojson configuration_recorder_name_list_to_yojson
+         x.configuration_recorder_names))]
 let aggregated_source_type_to_yojson (x : aggregated_source_type) =
   match x with
   | ORGANIZATION -> `String "ORGANIZATION"
@@ -3287,6 +3457,16 @@ let deliver_config_snapshot_request_to_yojson
 let delete_stored_query_response_to_yojson = unit_to_yojson
 let delete_stored_query_request_to_yojson (x : delete_stored_query_request) =
   assoc_to_yojson [("QueryName", (Some (query_name_to_yojson x.query_name)))]
+let delete_service_linked_configuration_recorder_response_to_yojson
+  (x : delete_service_linked_configuration_recorder_response) =
+  assoc_to_yojson
+    [("Name", (Some (recorder_name_to_yojson x.name)));
+    ("Arn", (Some (amazon_resource_name_to_yojson x.arn)))]
+let delete_service_linked_configuration_recorder_request_to_yojson
+  (x : delete_service_linked_configuration_recorder_request) =
+  assoc_to_yojson
+    [("ServicePrincipal",
+       (Some (service_principal_to_yojson x.service_principal)))]
 let delete_retention_configuration_request_to_yojson
   (x : delete_retention_configuration_request) =
   assoc_to_yojson
@@ -3471,9 +3651,26 @@ let batch_get_aggregate_resource_config_request_to_yojson
       (Some
          (configuration_aggregator_name_to_yojson
             x.configuration_aggregator_name)))]
+let associate_resource_types_response_to_yojson
+  (x : associate_resource_types_response) =
+  assoc_to_yojson
+    [("ConfigurationRecorder",
+       (Some (configuration_recorder_to_yojson x.configuration_recorder)))]
+let associate_resource_types_request_to_yojson
+  (x : associate_resource_types_request) =
+  assoc_to_yojson
+    [("ResourceTypes",
+       (Some (resource_type_list_to_yojson x.resource_types)));
+    ("ConfigurationRecorderArn",
+      (Some (amazon_resource_name_to_yojson x.configuration_recorder_arn)))]
 let base_string_to_yojson = string_to_yojson
 let base_boolean_to_yojson = bool_to_yojson
 let base_integer_to_yojson = int_to_yojson
 let base_timestamp_to_yojson = timestamp_to_yojson
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

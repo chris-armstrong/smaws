@@ -1,19 +1,21 @@
 (rule
-  (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/snowball.json))
+  (:input ../../api-models-aws/models/snowball/service/2016-06-30/snowball-2016-06-30.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
   types.ml
   types.mli
   operations.ml
   operations.mli
   Smaws_Client_Snowball.ml
   Smaws_Client_Snowball.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -24,6 +26,7 @@
    -targets
    builders
    types
+   service_metadata
    serializers
    deserializers
    operations
@@ -35,8 +38,9 @@
  (modules
   Smaws_Client_Snowball
   types
-  serializers
-  deserializers
+  service_metadata
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))

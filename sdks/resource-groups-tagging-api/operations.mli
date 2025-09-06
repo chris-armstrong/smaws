@@ -3,7 +3,7 @@ module DescribeReportCreation :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      describe_report_creation_input ->
         (describe_report_creation_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConstraintViolationException of constraint_violation_exception 
@@ -72,7 +72,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_report_creation_input ->
-        (unit,
+        (start_report_creation_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

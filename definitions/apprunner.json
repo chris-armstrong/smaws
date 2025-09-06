@@ -1260,7 +1260,7 @@
         "ConfigurationSource": {
           "target": "com.amazonaws.apprunner#ConfigurationSource",
           "traits": {
-            "smithy.api#documentation": "<p>The source of the App Runner configuration. Values are interpreted as follows:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>REPOSITORY</code> – App Runner reads configuration values from the <code>apprunner.yaml</code> file in the source code repository and\n          ignores <code>CodeConfigurationValues</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>API</code> – App Runner uses configuration values provided in <code>CodeConfigurationValues</code> and ignores the\n            <code>apprunner.yaml</code> file in the source code repository.</p>\n            </li>\n         </ul>",
+            "smithy.api#documentation": "<p>The source of the App Runner configuration. Values are interpreted as follows:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>REPOSITORY</code> \u2013 App Runner reads configuration values from the <code>apprunner.yaml</code> file in the source code repository and\n          ignores <code>CodeConfigurationValues</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>API</code> \u2013 App Runner uses configuration values provided in <code>CodeConfigurationValues</code> and ignores the\n            <code>apprunner.yaml</code> file in the source code repository.</p>\n            </li>\n         </ul>",
             "smithy.api#required": {}
           }
         },
@@ -1937,7 +1937,7 @@
         "IngressVpcConfiguration": {
           "target": "com.amazonaws.apprunner#IngressVpcConfiguration",
           "traits": {
-            "smithy.api#documentation": "<p>Specifications for the customer’s Amazon VPC and the related Amazon Web Services PrivateLink VPC endpoint that are used to create the VPC Ingress Connection\n      resource.</p>",
+            "smithy.api#documentation": "<p>Specifications for the customer\u2019s Amazon VPC and the related Amazon Web Services PrivateLink VPC endpoint that are used to create the VPC Ingress Connection\n      resource.</p>",
             "smithy.api#required": {}
           }
         },
@@ -3048,7 +3048,7 @@
         "StartCommand": {
           "target": "com.amazonaws.apprunner#StartCommand",
           "traits": {
-            "smithy.api#documentation": "<p>An optional command that App Runner runs to start the application in the source image. If specified, this command overrides the Docker image’s default start\n      command.</p>"
+            "smithy.api#documentation": "<p>An optional command that App Runner runs to start the application in the source image. If specified, this command overrides the Docker image\u2019s default start\n      command.</p>"
           }
         },
         "Port": {
@@ -4514,6 +4514,12 @@
           "traits": {
             "smithy.api#enumValue": "NODEJS_18"
           }
+        },
+        "NODEJS_22": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "NODEJS_22"
+          }
         }
       }
     },
@@ -4630,7 +4636,7 @@
         "Status": {
           "target": "com.amazonaws.apprunner#ServiceStatus",
           "traits": {
-            "smithy.api#documentation": "<p>The current state of the App Runner service. These particular values mean the following.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CREATE_FAILED</code> – The service failed to create. The failed service isn't usable, and still counts towards your service quota. To\n          troubleshoot this failure, read the failure events and logs, change any parameters that need to be fixed, and rebuild your service using\n            <code>UpdateService</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETE_FAILED</code> – The service failed to delete and can't be successfully recovered. Retry the service deletion call to ensure\n          that all related resources are removed.</p>\n            </li>\n         </ul>",
+            "smithy.api#documentation": "<p>The current state of the App Runner service. These particular values mean the following.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CREATE_FAILED</code> \u2013 The service failed to create. The failed service isn't usable, and still counts towards your service quota. To\n          troubleshoot this failure, read the failure events and logs, change any parameters that need to be fixed, and rebuild your service using\n            <code>UpdateService</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETE_FAILED</code> \u2013 The service failed to delete and can't be successfully recovered. Retry the service deletion call to ensure\n          that all related resources are removed.</p>\n            </li>\n         </ul>",
             "smithy.api#required": {}
           }
         },
@@ -4842,7 +4848,7 @@
         "Status": {
           "target": "com.amazonaws.apprunner#ServiceStatus",
           "traits": {
-            "smithy.api#documentation": "<p>The current state of the App Runner service. These particular values mean the following.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CREATE_FAILED</code> – The service failed to create. The failed service isn't usable, and still counts towards your service quota. To\n          troubleshoot this failure, read the failure events and logs, change any parameters that need to be fixed, and rebuild your service using\n            <code>UpdateService</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETE_FAILED</code> – The service failed to delete and can't be successfully recovered. Retry the service deletion call to ensure\n          that all related resources are removed.</p>\n            </li>\n         </ul>"
+            "smithy.api#documentation": "<p>The current state of the App Runner service. These particular values mean the following.</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CREATE_FAILED</code> \u2013 The service failed to create. The failed service isn't usable, and still counts towards your service quota. To\n          troubleshoot this failure, read the failure events and logs, change any parameters that need to be fixed, and rebuild your service using\n            <code>UpdateService</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>DELETE_FAILED</code> \u2013 The service failed to delete and can't be successfully recovered. Retry the service deletion call to ensure\n          that all related resources are removed.</p>\n            </li>\n         </ul>"
           }
         }
       },
@@ -5399,7 +5405,7 @@
         "IngressVpcConfiguration": {
           "target": "com.amazonaws.apprunner#IngressVpcConfiguration",
           "traits": {
-            "smithy.api#documentation": "<p>Specifications for the customer’s Amazon VPC and the related Amazon Web Services PrivateLink VPC endpoint that are used to update the VPC Ingress Connection\n      resource.</p>",
+            "smithy.api#documentation": "<p>Specifications for the customer\u2019s Amazon VPC and the related Amazon Web Services PrivateLink VPC endpoint that are used to update the VPC Ingress Connection\n      resource.</p>",
             "smithy.api#required": {}
           }
         }
@@ -5587,7 +5593,7 @@
         "IngressVpcConfiguration": {
           "target": "com.amazonaws.apprunner#IngressVpcConfiguration",
           "traits": {
-            "smithy.api#documentation": "<p>Specifications for the customer’s VPC and related PrivateLink VPC endpoint that are used to associate with the VPC Ingress Connection resource.</p>"
+            "smithy.api#documentation": "<p>Specifications for the customer\u2019s VPC and related PrivateLink VPC endpoint that are used to associate with the VPC Ingress Connection resource.</p>"
           }
         },
         "CreatedAt": {

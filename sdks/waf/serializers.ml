@@ -1,7 +1,6 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
 let error_message_to_yojson = string_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let match_field_type_to_yojson (x : match_field_type) =
   match x with
   | ALL_QUERY_ARGS -> `String "ALL_QUERY_ARGS"
@@ -1594,9 +1593,3 @@ let create_byte_match_set_request_to_yojson
   assoc_to_yojson
     [("ChangeToken", (Some (change_token_to_yojson x.change_token)));
     ("Name", (Some (resource_name_to_yojson x.name)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson

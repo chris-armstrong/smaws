@@ -1,4 +1,17 @@
 open Types
+module AssociateResourceTypes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      associate_resource_types_request ->
+        (associate_resource_types_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `ConflictException of conflict_exception 
+          | `NoSuchConfigurationRecorderException of
+              no_such_configuration_recorder_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Adds all resource types specified in the [ResourceTypes] list to the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} of specified configuration recorder and includes those resource types when recording.\n\n For this operation, the specified configuration recorder must use a {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} that is either [INCLUSION_BY_RESOURCE_TYPES] or [EXCLUSION_BY_RESOURCE_TYPES].\n "]
 module BatchGetAggregateResourceConfig :
 sig
   val request :
@@ -28,7 +41,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_aggregation_authorization_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception ])
@@ -40,18 +53,18 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_config_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigRuleException of no_such_config_rule_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
 end[@@ocaml.doc
-     "Deletes the specified Config rule and all of its evaluation results.\n\n Config sets the state of a rule to [DELETING] until the deletion is complete. You cannot update a rule while it is in this state. If you make a [PutConfigRule] or [DeleteConfigRule] request for the rule, you will receive a [ResourceInUseException].\n \n  You can check the state of a rule by using the [DescribeConfigRules] request.\n  "]
+     "Deletes the specified Config rule and all of its evaluation results.\n\n Config sets the state of a rule to [DELETING] until the deletion is complete. You cannot update a rule while it is in this state. If you make a [PutConfigRule] or [DeleteConfigRule] request for the rule, you will receive a [ResourceInUseException].\n \n  You can check the state of a rule by using the [DescribeConfigRules] request.\n  \n     {b Recommendation: Stop recording resource compliance before deleting rules} \n    \n     It is highly recommended that you stop recording for the [AWS::Config::ResourceCompliance] resource type before you delete rules in your account. Deleting rules creates CIs for [AWS::Config::ResourceCompliance] and can affect your Config {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html}configuration recorder} costs. If you are deleting rules which evaluate a large number of resource types, this can lead to a spike in the number of CIs recorded.\n     \n      Best practice:\n      \n       {ol\n             {-  Stop recording [AWS::Config::ResourceCompliance] \n                 \n                  }\n             {-  Delete rule(s)\n                 \n                  }\n             {-  Turn on recording for [AWS::Config::ResourceCompliance] \n                 \n                  }\n             }\n   "]
 module DeleteConfigurationAggregator :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_configuration_aggregator_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationAggregatorException of
               no_such_configuration_aggregator_exception ])
@@ -63,19 +76,20 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_configuration_recorder_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
-              no_such_configuration_recorder_exception ])
+              no_such_configuration_recorder_exception 
+          | `UnmodifiableEntityException of unmodifiable_entity_exception ])
           result
 end[@@ocaml.doc
-     "Deletes the configuration recorder.\n\n After the configuration recorder is deleted, Config will not record resource configuration changes until you create a new configuration recorder.\n \n  This action does not delete the configuration information that was previously recorded. You will be able to access the previously recorded information by using the [GetResourceConfigHistory] action, but you will not be able to access this information in the Config console until you create a new configuration recorder.\n  "]
+     "Deletes the customer managed configuration recorder.\n\n This operation does not delete the configuration information that was previously recorded. You will be able to access the previously recorded information by using the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_GetResourceConfigHistory.html}GetResourceConfigHistory} operation, but you will not be able to access this information in the Config console until you have created a new customer managed configuration recorder.\n "]
 module DeleteConformancePack :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_conformance_pack_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConformancePackException of
               no_such_conformance_pack_exception 
@@ -87,7 +101,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_delivery_channel_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `LastDeliveryChannelDeleteFailedException of
               last_delivery_channel_delete_failed_exception 
@@ -95,13 +109,13 @@ sig
               no_such_delivery_channel_exception ])
           result
 end[@@ocaml.doc
-     "Deletes the delivery channel.\n\n Before you can delete the delivery channel, you must stop the configuration recorder by using the [StopConfigurationRecorder] action.\n "]
+     "Deletes the delivery channel.\n\n Before you can delete the delivery channel, you must stop the customer managed configuration recorder. You can use the [StopConfigurationRecorder] operation to stop the customer managed configuration recorder.\n "]
 module DeleteEvaluationResults :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_evaluation_results_request ->
-        (unit,
+        (delete_evaluation_results_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigRuleException of no_such_config_rule_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
@@ -112,7 +126,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_organization_config_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchOrganizationConfigRuleException of
               no_such_organization_config_rule_exception 
@@ -126,7 +140,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_organization_conformance_pack_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchOrganizationConformancePackException of
               no_such_organization_conformance_pack_exception 
@@ -140,7 +154,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_pending_aggregation_request_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception ])
@@ -152,7 +166,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_remediation_configuration_request ->
-        (unit,
+        (delete_remediation_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -181,7 +195,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_config_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoRunningConfigurationRecorderException of
               no_running_configuration_recorder_exception 
@@ -193,7 +207,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_retention_configuration_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 
@@ -201,12 +215,25 @@ sig
               no_such_retention_configuration_exception ])
           result
 end[@@ocaml.doc "Deletes the retention configuration.\n"]
+module DeleteServiceLinkedConfigurationRecorder :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_service_linked_configuration_recorder_request ->
+        (delete_service_linked_configuration_recorder_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `ConflictException of conflict_exception 
+          | `NoSuchConfigurationRecorderException of
+              no_such_configuration_recorder_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Deletes an existing service-linked configuration recorder.\n\n This operation does not delete the configuration information that was previously recorded. You will be able to access the previously recorded information by using the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_GetResourceConfigHistory.html}GetResourceConfigHistory} operation, but you will not be able to access this information in the Config console until you have created a new service-linked configuration recorder for the same service.\n \n    {b The recording scope determines if you receive configuration items} \n   \n    The recording scope is set by the service that is linked to the configuration recorder and determines whether you receive configuration items (CIs) in the delivery channel. If the recording scope is internal, you will not receive CIs in the delivery channel.\n    \n     "]
 module DeleteStoredQuery :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_stored_query_request ->
-        (unit,
+        (delete_stored_query_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ValidationException of validation_exception ]) result
@@ -255,7 +282,7 @@ sig
               no_such_configuration_aggregator_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns a list of the conformance packs and their associated compliance status with the count of compliant and noncompliant Config rules within each conformance pack. Also returns the total rule count which includes compliant rules, noncompliant rules, and rules that cannot be evaluated due to insufficient data.\n\n  The results can return an empty result page, but if you have a [nextToken], the results are displayed on the next page.\n  \n   "]
+     "Returns a list of the existing and deleted conformance packs and their associated compliance status with the count of compliant and noncompliant Config rules within each conformance pack. Also returns the total rule count which includes compliant rules, noncompliant rules, and rules that cannot be evaluated due to insufficient data.\n\n  The results can return an empty result page, but if you have a [nextToken], the results are displayed on the next page.\n  \n   "]
 module DescribeAggregationAuthorizations :
 sig
   val request :
@@ -283,7 +310,7 @@ sig
           | `NoSuchConfigRuleException of no_such_config_rule_exception ])
           result
 end[@@ocaml.doc
-     "Indicates whether the specified Config rules are compliant. If a rule is noncompliant, this action returns the number of Amazon Web Services resources that do not comply with the rule.\n\n A rule is compliant if all of the evaluated resources comply with it. It is noncompliant if any of these resources do not comply.\n \n  If Config has no current evaluation results for the rule, it returns [INSUFFICIENT_DATA]. This result might indicate one of the following conditions:\n  \n   {ul\n         {-  Config has never invoked an evaluation for the rule. To check whether it has, use the [DescribeConfigRuleEvaluationStatus] action to get the [LastSuccessfulInvocationTime] and [LastFailedInvocationTime].\n             \n              }\n         {-  The rule's Lambda function is failing to send evaluation results to Config. Verify that the role you assigned to your configuration recorder includes the [config:PutEvaluations] permission. If the rule is a custom rule, verify that the Lambda execution role includes the [config:PutEvaluations] permission.\n             \n              }\n         {-  The rule's Lambda function has returned [NOT_APPLICABLE] for all evaluation results. This can occur if the resources were deleted or removed from the rule's scope.\n             \n              }\n         }\n  "]
+     "Indicates whether the specified Config rules are compliant. If a rule is noncompliant, this operation returns the number of Amazon Web Services resources that do not comply with the rule.\n\n A rule is compliant if all of the evaluated resources comply with it. It is noncompliant if any of these resources do not comply.\n \n  If Config has no current evaluation results for the rule, it returns [INSUFFICIENT_DATA]. This result might indicate one of the following conditions:\n  \n   {ul\n         {-  Config has never invoked an evaluation for the rule. To check whether it has, use the [DescribeConfigRuleEvaluationStatus] action to get the [LastSuccessfulInvocationTime] and [LastFailedInvocationTime].\n             \n              }\n         {-  The rule's Lambda function is failing to send evaluation results to Config. Verify that the role you assigned to your configuration recorder includes the [config:PutEvaluations] permission. If the rule is a custom rule, verify that the Lambda execution role includes the [config:PutEvaluations] permission.\n             \n              }\n         {-  The rule's Lambda function has returned [NOT_APPLICABLE] for all evaluation results. This can occur if the resources were deleted or removed from the rule's scope.\n             \n              }\n         }\n  "]
 module DescribeComplianceByResource :
 sig
   val request :
@@ -296,7 +323,7 @@ sig
               invalid_parameter_value_exception ])
           result
 end[@@ocaml.doc
-     "Indicates whether the specified Amazon Web Services resources are compliant. If a resource is noncompliant, this action returns the number of Config rules that the resource does not comply with.\n\n A resource is compliant if it complies with all the Config rules that evaluate it. It is noncompliant if it does not comply with one or more of these rules.\n \n  If Config has no current evaluation results for the resource, it returns [INSUFFICIENT_DATA]. This result might indicate one of the following conditions about the rules that evaluate the resource:\n  \n   {ul\n         {-  Config has never invoked an evaluation for the rule. To check whether it has, use the [DescribeConfigRuleEvaluationStatus] action to get the [LastSuccessfulInvocationTime] and [LastFailedInvocationTime].\n             \n              }\n         {-  The rule's Lambda function is failing to send evaluation results to Config. Verify that the role that you assigned to your configuration recorder includes the [config:PutEvaluations] permission. If the rule is a custom rule, verify that the Lambda execution role includes the [config:PutEvaluations] permission.\n             \n              }\n         {-  The rule's Lambda function has returned [NOT_APPLICABLE] for all evaluation results. This can occur if the resources were deleted or removed from the rule's scope.\n             \n              }\n         }\n  "]
+     "Indicates whether the specified Amazon Web Services resources are compliant. If a resource is noncompliant, this operation returns the number of Config rules that the resource does not comply with.\n\n A resource is compliant if it complies with all the Config rules that evaluate it. It is noncompliant if it does not comply with one or more of these rules.\n \n  If Config has no current evaluation results for the resource, it returns [INSUFFICIENT_DATA]. This result might indicate one of the following conditions about the rules that evaluate the resource:\n  \n   {ul\n         {-  Config has never invoked an evaluation for the rule. To check whether it has, use the [DescribeConfigRuleEvaluationStatus] action to get the [LastSuccessfulInvocationTime] and [LastFailedInvocationTime].\n             \n              }\n         {-  The rule's Lambda function is failing to send evaluation results to Config. Verify that the role that you assigned to your configuration recorder includes the [config:PutEvaluations] permission. If the rule is a custom rule, verify that the Lambda execution role includes the [config:PutEvaluations] permission.\n             \n              }\n         {-  The rule's Lambda function has returned [NOT_APPLICABLE] for all evaluation results. This can occur if the resources were deleted or removed from the rule's scope.\n             \n              }\n         }\n  "]
 module DescribeConfigRuleEvaluationStatus :
 sig
   val request :
@@ -339,7 +366,7 @@ sig
               no_such_configuration_aggregator_exception ])
           result
 end[@@ocaml.doc
-     "Returns the details of one or more configuration aggregators. If the configuration aggregator is not specified, this action returns the details for all the configuration aggregators associated with the account. \n"]
+     "Returns the details of one or more configuration aggregators. If the configuration aggregator is not specified, this operation returns the details for all the configuration aggregators associated with the account. \n"]
 module DescribeConfigurationAggregatorSourcesStatus :
 sig
   val request :
@@ -364,10 +391,10 @@ sig
         (describe_configuration_recorders_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
-              no_such_configuration_recorder_exception ])
-          result
+              no_such_configuration_recorder_exception 
+          | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns the details for the specified configuration recorders. If the configuration recorder is not specified, this action returns the details for all configuration recorders associated with the account.\n\n  You can specify only one configuration recorder for each Amazon Web Services Region for each account.\n  \n   "]
+     "Returns details for the configuration recorder you specify.\n\n If a configuration recorder is not specified, this operation returns details for the customer managed configuration recorder configured for the account, if applicable.\n \n   When making a request to this operation, you can only specify one configuration recorder.\n   \n    "]
 module DescribeConfigurationRecorderStatus :
 sig
   val request :
@@ -376,10 +403,10 @@ sig
         (describe_configuration_recorder_status_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
-              no_such_configuration_recorder_exception ])
-          result
+              no_such_configuration_recorder_exception 
+          | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns the current status of the specified configuration recorder as well as the status of the last recording event for the recorder. If a configuration recorder is not specified, this action returns the status of all configuration recorders associated with the account.\n\n  >You can specify only one configuration recorder for each Amazon Web Services Region for each account. For a detailed status of recording events over time, add your Config events to Amazon CloudWatch metrics and use CloudWatch metrics.\n  \n   "]
+     "Returns the current status of the configuration recorder you specify as well as the status of the last recording event for the configuration recorders.\n\n For a detailed status of recording events over time, add your Config events to Amazon CloudWatch metrics and use CloudWatch metrics.\n \n  If a configuration recorder is not specified, this operation returns the status for the customer managed configuration recorder configured for the account, if applicable.\n  \n    When making a request to this operation, you can only specify one configuration recorder.\n    \n     "]
 module DescribeConformancePackCompliance :
 sig
   val request :
@@ -438,7 +465,7 @@ sig
               no_such_delivery_channel_exception ])
           result
 end[@@ocaml.doc
-     "Returns details about the specified delivery channel. If a delivery channel is not specified, this action returns the details of all delivery channels associated with the account.\n\n  Currently, you can specify only one delivery channel per region in your account.\n  \n   "]
+     "Returns details about the specified delivery channel. If a delivery channel is not specified, this operation returns the details of all delivery channels associated with the account.\n\n  Currently, you can specify only one delivery channel per region in your account.\n  \n   "]
 module DescribeDeliveryChannelStatus :
 sig
   val request :
@@ -450,7 +477,7 @@ sig
               no_such_delivery_channel_exception ])
           result
 end[@@ocaml.doc
-     "Returns the current status of the specified delivery channel. If a delivery channel is not specified, this action returns the current status of all delivery channels associated with the account.\n\n  Currently, you can specify only one delivery channel per region in your account.\n  \n   "]
+     "Returns the current status of the specified delivery channel. If a delivery channel is not specified, this operation returns the current status of all delivery channels associated with the account.\n\n  Currently, you can specify only one delivery channel per region in your account.\n  \n   "]
 module DescribeOrganizationConfigRules :
 sig
   val request :
@@ -579,7 +606,20 @@ sig
               no_such_retention_configuration_exception ])
           result
 end[@@ocaml.doc
-     "Returns the details of one or more retention configurations. If the retention configuration name is not specified, this action returns the details for all the retention configurations for that account.\n\n  Currently, Config supports only one retention configuration per region in your account.\n  \n   "]
+     "Returns the details of one or more retention configurations. If the retention configuration name is not specified, this operation returns the details for all the retention configurations for that account.\n\n  Currently, Config supports only one retention configuration per region in your account.\n  \n   "]
+module DisassociateResourceTypes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disassociate_resource_types_request ->
+        (disassociate_resource_types_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `ConflictException of conflict_exception 
+          | `NoSuchConfigurationRecorderException of
+              no_such_configuration_recorder_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Removes all resource types specified in the [ResourceTypes] list from the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html}RecordingGroup} of configuration recorder and excludes these resource types when recording.\n\n For this operation, the configuration recorder must use a {{:https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html}RecordingStrategy} that is either [INCLUSION_BY_RESOURCE_TYPES] or [EXCLUSION_BY_RESOURCE_TYPES].\n "]
 module GetAggregateComplianceDetailsByConfigRule :
 sig
   val request :
@@ -651,7 +691,7 @@ sig
               resource_not_discovered_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Returns configuration item that is aggregated for your specific resource in a specific source account and region.\n"]
+     "Returns configuration item that is aggregated for your specific resource in a specific source account and region.\n\n  The API does not return results for deleted resources.\n  \n   "]
 module GetComplianceDetailsByConfigRule :
 sig
   val request :
@@ -682,7 +722,7 @@ module GetComplianceSummaryByConfigRule :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      Smaws_Lib.Smithy_api.Types.unit_ ->
         (get_compliance_summary_by_config_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error]) result
 end[@@ocaml.doc
@@ -852,6 +892,16 @@ sig
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
      "Accepts a resource type and returns a list of resource identifiers that are aggregated for a specific resource type across accounts and regions. A resource identifier includes the resource type, ID, (if available) the custom resource name, source account, and source region. You can narrow the results to include only resources that have specific resource IDs, or a resource name, or source account ID, or source region.\n\n For example, if the input consists of accountID 12345678910 and the region is us-east-1 for resource type [AWS::EC2::Instance] then the API returns all the EC2 instance identifiers of accountID 12345678910 and region us-east-1.\n "]
+module ListConfigurationRecorders :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_configuration_recorders_request ->
+        (list_configuration_recorders_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Returns a list of configuration recorders depending on the filters you specify.\n"]
 module ListConformancePackComplianceScores :
 sig
   val request :
@@ -927,13 +977,13 @@ sig
               invalid_parameter_value_exception ])
           result
 end[@@ocaml.doc
-     "Authorizes the aggregator account and region to collect data from the source account and region. \n\n   [PutAggregationAuthorization] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n  \n   "]
+     "Authorizes the aggregator account and region to collect data from the source account and region. \n\n   {b Tags are added at creation and cannot be updated with this operation} \n  \n    [PutAggregationAuthorization] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n   \n    Use {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} to update tags after creation.\n    \n     "]
 module PutConfigRule :
 sig
   val request :
     Smaws_Lib.Context.t ->
       put_config_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -945,7 +995,7 @@ sig
               no_available_configuration_recorder_exception 
           | `ResourceInUseException of resource_in_use_exception ]) result
 end[@@ocaml.doc
-     "Adds or updates an Config rule to evaluate if your Amazon Web Services resources comply with your desired configurations. For information on how many Config rules you can have per account, see {{:https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html} {b Service Limits} } in the {i Config Developer Guide}.\n\n There are two types of rules: {i Config Managed Rules} and {i Config Custom Rules}. You can use [PutConfigRule] to create both Config Managed Rules and Config Custom Rules.\n \n  Config Managed Rules are predefined, customizable rules created by Config. For a list of managed rules, see {{:https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html}List of Config Managed Rules}. If you are adding an Config managed rule, you must specify the rule's identifier for the [SourceIdentifier] key.\n  \n   Config Custom Rules are rules that you create from scratch. There are two ways to create Config custom rules: with Lambda functions ({{:https://docs.aws.amazon.com/config/latest/developerguide/gettingstarted-concepts.html#gettingstarted-concepts-function} Lambda Developer Guide}) and with Guard ({{:https://github.com/aws-cloudformation/cloudformation-guard}Guard GitHub Repository}), a policy-as-code language. Config custom rules created with Lambda are called {i Config Custom Lambda Rules} and Config custom rules created with Guard are called {i Config Custom Policy Rules}.\n   \n    If you are adding a new Config Custom Lambda rule, you first need to create an Lambda function that the rule invokes to evaluate your resources. When you use [PutConfigRule] to add a Custom Lambda rule to Config, you must specify the Amazon Resource Name (ARN) that Lambda assigns to the function. You specify the ARN in the [SourceIdentifier] key. This key is part of the [Source] object, which is part of the [ConfigRule] object. \n    \n     For any new Config rule that you add, specify the [ConfigRuleName] in the [ConfigRule] object. Do not specify the [ConfigRuleArn] or the [ConfigRuleId]. These values are generated by Config for new rules.\n     \n      If you are updating a rule that you added previously, you can specify the rule by [ConfigRuleName], [ConfigRuleId], or [ConfigRuleArn] in the [ConfigRule] data type that you use in this request.\n      \n       For more information about developing and using Config rules, see {{:https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config.html}Evaluating Resources with Config Rules} in the {i Config Developer Guide}.\n       \n          [PutConfigRule] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n         \n          "]
+     "Adds or updates an Config rule to evaluate if your Amazon Web Services resources comply with your desired configurations. For information on how many Config rules you can have per account, see {{:https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html} {b Service Limits} } in the {i Config Developer Guide}.\n\n There are two types of rules: {i Config Managed Rules} and {i Config Custom Rules}. You can use [PutConfigRule] to create both Config Managed Rules and Config Custom Rules.\n \n  Config Managed Rules are predefined, customizable rules created by Config. For a list of managed rules, see {{:https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html}List of Config Managed Rules}. If you are adding an Config managed rule, you must specify the rule's identifier for the [SourceIdentifier] key.\n  \n   Config Custom Rules are rules that you create from scratch. There are two ways to create Config custom rules: with Lambda functions ({{:https://docs.aws.amazon.com/config/latest/developerguide/gettingstarted-concepts.html#gettingstarted-concepts-function} Lambda Developer Guide}) and with Guard ({{:https://github.com/aws-cloudformation/cloudformation-guard}Guard GitHub Repository}), a policy-as-code language. Config custom rules created with Lambda are called {i Config Custom Lambda Rules} and Config custom rules created with Guard are called {i Config Custom Policy Rules}.\n   \n    If you are adding a new Config Custom Lambda rule, you first need to create an Lambda function that the rule invokes to evaluate your resources. When you use [PutConfigRule] to add a Custom Lambda rule to Config, you must specify the Amazon Resource Name (ARN) that Lambda assigns to the function. You specify the ARN in the [SourceIdentifier] key. This key is part of the [Source] object, which is part of the [ConfigRule] object. \n    \n     For any new Config rule that you add, specify the [ConfigRuleName] in the [ConfigRule] object. Do not specify the [ConfigRuleArn] or the [ConfigRuleId]. These values are generated by Config for new rules.\n     \n      If you are updating a rule that you added previously, you can specify the rule by [ConfigRuleName], [ConfigRuleId], or [ConfigRuleArn] in the [ConfigRule] data type that you use in this request.\n      \n       For more information about developing and using Config rules, see {{:https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config.html}Evaluating Resources with Config Rules} in the {i Config Developer Guide}.\n       \n          {b Tags are added at creation and cannot be updated with this operation} \n         \n           [PutConfigRule] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n          \n           Use {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} to update tags after creation.\n           \n            "]
 module PutConfigurationAggregator :
 sig
   val request :
@@ -965,13 +1015,13 @@ sig
               organization_all_features_not_enabled_exception ])
           result
 end[@@ocaml.doc
-     "Creates and updates the configuration aggregator with the selected source accounts and regions. The source account can be individual account(s) or an organization.\n\n  [accountIds] that are passed will be replaced with existing accounts. If you want to add additional accounts into the aggregator, call [DescribeConfigurationAggregators] to get the previous accounts and then append new ones.\n \n   Config should be enabled in source accounts and regions you want to aggregate.\n   \n    If your source type is an organization, you must be signed in to the management account or a registered delegated administrator and all the features must be enabled in your organization. If the caller is a management account, Config calls [EnableAwsServiceAccess] API to enable integration between Config and Organizations. If the caller is a registered delegated administrator, Config calls [ListDelegatedAdministrators] API to verify whether the caller is a valid delegated administrator.\n    \n     To register a delegated administrator, see {{:https://docs.aws.amazon.com/config/latest/developerguide/set-up-aggregator-cli.html#register-a-delegated-administrator-cli}Register a Delegated Administrator} in the {i Config developer guide}. \n     \n         [PutConfigurationAggregator] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n        \n         "]
+     "Creates and updates the configuration aggregator with the selected source accounts and regions. The source account can be individual account(s) or an organization.\n\n  [accountIds] that are passed will be replaced with existing accounts. If you want to add additional accounts into the aggregator, call [DescribeConfigurationAggregators] to get the previous accounts and then append new ones.\n \n   Config should be enabled in source accounts and regions you want to aggregate.\n   \n    If your source type is an organization, you must be signed in to the management account or a registered delegated administrator and all the features must be enabled in your organization. If the caller is a management account, Config calls [EnableAwsServiceAccess] API to enable integration between Config and Organizations. If the caller is a registered delegated administrator, Config calls [ListDelegatedAdministrators] API to verify whether the caller is a valid delegated administrator.\n    \n     To register a delegated administrator, see {{:https://docs.aws.amazon.com/config/latest/developerguide/set-up-aggregator-cli.html#register-a-delegated-administrator-cli}Register a Delegated Administrator} in the {i Config developer guide}. \n     \n         {b Tags are added at creation and cannot be updated with this operation} \n        \n          [PutConfigurationAggregator] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n         \n          Use {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} to update tags after creation.\n          \n           "]
 module PutConfigurationRecorder :
 sig
   val request :
     Smaws_Lib.Context.t ->
       put_configuration_recorder_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidConfigurationRecorderNameException of
               invalid_configuration_recorder_name_exception 
@@ -980,9 +1030,10 @@ sig
           | `InvalidRoleException of invalid_role_exception 
           | `MaxNumberOfConfigurationRecordersExceededException of
               max_number_of_configuration_recorders_exceeded_exception 
+          | `UnmodifiableEntityException of unmodifiable_entity_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Creates a new configuration recorder to record configuration changes for specified resource types.\n\n You can also use this action to change the [roleARN] or the [recordingGroup] of an existing recorder. For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b Managing the Configuration Recorder} } in the {i Config Developer Guide}.\n \n   You can specify only one configuration recorder for each Amazon Web Services Region for each account.\n   \n    If the configuration recorder does not have the [recordingGroup] field specified, the default is to record all supported resource types.\n    \n     "]
+     "Creates or updates the customer managed configuration recorder.\n\n You can use this operation to create a new customer managed configuration recorder or to update the [roleARN] and the [recordingGroup] for an existing customer managed configuration recorder.\n \n  To start the customer managed configuration recorder and begin recording configuration changes for the resource types you specify, use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_StartConfigurationRecorder.html}StartConfigurationRecorder} operation.\n  \n   For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b Working with the Configuration Recorder} } in the {i Config Developer Guide}.\n   \n      {b One customer managed configuration recorder per account per Region} \n     \n      You can create only one customer managed configuration recorder for each account for each Amazon Web Services Region.\n      \n        {b Default is to record all supported resource types, excluding the global IAM resource types} \n       \n        If you have not specified values for the [recordingGroup] field, the default for the customer managed configuration recorder is to record all supported resource types, excluding the global IAM resource types: [AWS::IAM::Group], [AWS::IAM::Policy], [AWS::IAM::Role], and [AWS::IAM::User].\n        \n          {b Tags are added at creation and cannot be updated} \n         \n           [PutConfigurationRecorder] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different tags values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, tags will not be updated, even if they are different.\n          \n           Use {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} to update tags after creation.\n           \n            "]
 module PutConformancePack :
 sig
   val request :
@@ -1006,7 +1057,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_delivery_channel_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientDeliveryPolicyException of
               insufficient_delivery_policy_exception 
@@ -1021,7 +1072,7 @@ sig
               no_available_configuration_recorder_exception 
           | `NoSuchBucketException of no_such_bucket_exception ]) result
 end[@@ocaml.doc
-     "Creates a delivery channel object to deliver configuration information and other compliance information to an Amazon S3 bucket and Amazon SNS topic. For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html}Notifications that Config Sends to an Amazon SNS topic}.\n\n Before you can create a delivery channel, you must create a configuration recorder.\n \n  You can use this action to change the Amazon S3 bucket or an Amazon SNS topic of the existing delivery channel. To change the Amazon S3 bucket or an Amazon SNS topic, call this action and specify the changed values for the S3 bucket and the SNS topic. If you specify a different value for either the S3 bucket or the SNS topic, this action will keep the existing value for the parameter that is not changed.\n  \n    You can have only one delivery channel per region in your account.\n    \n     "]
+     "Creates or updates a delivery channel to deliver configuration information and other compliance information.\n\n You can use this operation to create a new delivery channel or to update the Amazon S3 bucket and the Amazon SNS topic of an existing delivery channel.\n \n  For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/manage-delivery-channel.html} {b Working with the Delivery Channel} } in the {i Config Developer Guide.} \n  \n     {b One delivery channel per account per Region} \n    \n     You can have only one delivery channel for each account for each Amazon Web Services Region.\n     \n      "]
 module PutEvaluations :
 sig
   val request :
@@ -1035,13 +1086,13 @@ sig
           | `NoSuchConfigRuleException of no_such_config_rule_exception ])
           result
 end[@@ocaml.doc
-     "Used by an Lambda function to deliver evaluation results to Config. This action is required in every Lambda function that is invoked by an Config rule.\n"]
+     "Used by an Lambda function to deliver evaluation results to Config. This operation is required in every Lambda function that is invoked by an Config rule.\n"]
 module PutExternalEvaluation :
 sig
   val request :
     Smaws_Lib.Context.t ->
       put_external_evaluation_request ->
-        (unit,
+        (put_external_evaluation_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 
@@ -1122,13 +1173,13 @@ sig
               invalid_parameter_value_exception ])
           result
 end[@@ocaml.doc
-     "A remediation exception is when a specified resource is no longer considered for auto-remediation. This API adds a new exception or updates an existing exception for a specified resource with a specified Config rule. \n\n   {b Exceptions block auto remediation} \n  \n   Config generates a remediation exception when a problem occurs running a remediation action for a specified resource. Remediation exceptions blocks auto-remediation until the exception is cleared.\n   \n       {b Manual remediation is recommended when placing an exception} \n      \n       When placing an exception on an Amazon Web Services resource, it is recommended that remediation is set as manual remediation until the given Config rule for the specified resource evaluates the resource as [NON_COMPLIANT]. Once the resource has been evaluated as [NON_COMPLIANT], you can add remediation exceptions and change the remediation type back from Manual to Auto if you want to use auto-remediation. Otherwise, using auto-remediation before a [NON_COMPLIANT] evaluation result can delete resources before the exception is applied.\n       \n           {b Exceptions can only be performed on non-compliant resources} \n          \n           Placing an exception can only be performed on resources that are [NON_COMPLIANT]. If you use this API for [COMPLIANT] resources or resources that are [NOT_APPLICABLE], a remediation exception will not be generated. For more information on the conditions that initiate the possible Config evaluation results, see {{:https://docs.aws.amazon.com/config/latest/developerguide/config-concepts.html#aws-config-rules}Concepts | Config Rules} in the {i Config Developer Guide}.\n           \n               {b Auto remediation can be initiated even for compliant resources} \n              \n               If you enable auto remediation for a specific Config rule using the {{:https://docs.aws.amazon.com/config/latest/APIReference/emAPI_PutRemediationConfigurations.html}PutRemediationConfigurations} API or the Config console, it initiates the remediation process for all non-compliant resources for that specific rule. The auto remediation process relies on the compliance data snapshot which is captured on a periodic basis. Any non-compliant resource that is updated between the snapshot schedule will continue to be remediated based on the last known compliance data snapshot.\n               \n                This means that in some cases auto remediation can be initiated even for compliant resources, since the bootstrap processor uses a database that can have stale evaluation results based on the last known compliance data snapshot.\n                \n                 "]
+     "A remediation exception is when a specified resource is no longer considered for auto-remediation. This API adds a new exception or updates an existing exception for a specified resource with a specified Config rule. \n\n   {b Exceptions block auto remediation} \n  \n   Config generates a remediation exception when a problem occurs running a remediation action for a specified resource. Remediation exceptions blocks auto-remediation until the exception is cleared.\n   \n       {b Manual remediation is recommended when placing an exception} \n      \n       When placing an exception on an Amazon Web Services resource, it is recommended that remediation is set as manual remediation until the given Config rule for the specified resource evaluates the resource as [NON_COMPLIANT]. Once the resource has been evaluated as [NON_COMPLIANT], you can add remediation exceptions and change the remediation type back from Manual to Auto if you want to use auto-remediation. Otherwise, using auto-remediation before a [NON_COMPLIANT] evaluation result can delete resources before the exception is applied.\n       \n           {b Exceptions can only be performed on non-compliant resources} \n          \n           Placing an exception can only be performed on resources that are [NON_COMPLIANT]. If you use this API for [COMPLIANT] resources or resources that are [NOT_APPLICABLE], a remediation exception will not be generated. For more information on the conditions that initiate the possible Config evaluation results, see {{:https://docs.aws.amazon.com/config/latest/developerguide/config-concepts.html#aws-config-rules}Concepts | Config Rules} in the {i Config Developer Guide}.\n           \n               {b Exceptions cannot be placed on service-linked remediation actions} \n              \n               You cannot place an exception on service-linked remediation actions, such as remediation actions put by an organizational conformance pack.\n               \n                   {b Auto remediation can be initiated even for compliant resources} \n                  \n                   If you enable auto remediation for a specific Config rule using the {{:https://docs.aws.amazon.com/config/latest/APIReference/emAPI_PutRemediationConfigurations.html}PutRemediationConfigurations} API or the Config console, it initiates the remediation process for all non-compliant resources for that specific rule. The auto remediation process relies on the compliance data snapshot which is captured on a periodic basis. Any non-compliant resource that is updated between the snapshot schedule will continue to be remediated based on the last known compliance data snapshot.\n                   \n                    This means that in some cases auto remediation can be initiated even for compliant resources, since the bootstrap processor uses a database that can have stale evaluation results based on the last known compliance data snapshot.\n                    \n                     "]
 module PutResourceConfig :
 sig
   val request :
     Smaws_Lib.Context.t ->
       put_resource_config_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InsufficientPermissionsException of
               insufficient_permissions_exception 
@@ -1153,6 +1204,20 @@ sig
           result
 end[@@ocaml.doc
      "Creates and updates the retention configuration with details about retention period (number of days) that Config stores your historical information. The API creates the [RetentionConfiguration] object and names the object as {b default}. When you have a [RetentionConfiguration] object named {b default}, calling the API modifies the default object. \n\n  Currently, Config supports only one retention configuration per region in your account.\n  \n   "]
+module PutServiceLinkedConfigurationRecorder :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      put_service_linked_configuration_recorder_request ->
+        (put_service_linked_configuration_recorder_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `ConflictException of conflict_exception 
+          | `InsufficientPermissionsException of
+              insufficient_permissions_exception 
+          | `LimitExceededException of limit_exceeded_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Creates a service-linked configuration recorder that is linked to a specific Amazon Web Services service based on the [ServicePrincipal] you specify.\n\n The configuration recorder's [name], [recordingGroup], [recordingMode], and [recordingScope] is set by the service that is linked to the configuration recorder.\n \n  For more information, see {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b Working with the Configuration Recorder} } in the {i Config Developer Guide}.\n  \n   This API creates a service-linked role [AWSServiceRoleForConfig] in your account. The service-linked role is created only when the role does not exist in your account.\n   \n      {b The recording scope determines if you receive configuration items} \n     \n      The recording scope is set by the service that is linked to the configuration recorder and determines whether you receive configuration items (CIs) in the delivery channel. If the recording scope is internal, you will not receive CIs in the delivery channel.\n      \n        {b Tags are added at creation and cannot be updated with this operation} \n       \n        Use {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} to update tags after creation.\n        \n         "]
 module PutStoredQuery :
 sig
   val request :
@@ -1165,7 +1230,7 @@ sig
           | `TooManyTagsException of too_many_tags_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Saves a new query or updates an existing saved query. The [QueryName] must be unique for a single Amazon Web Services account and a single Amazon Web Services Region. You can create upto 300 queries in a single Amazon Web Services account and a single Amazon Web Services Region.\n\n   [PutStoredQuery] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n  \n   "]
+     "Saves a new query or updates an existing saved query. The [QueryName] must be unique for a single Amazon Web Services account and a single Amazon Web Services Region. You can create upto 300 queries in a single Amazon Web Services account and a single Amazon Web Services Region.\n\n   {b Tags are added at creation and cannot be updated} \n  \n    [PutStoredQuery] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if one was already created. If a following request has different [tags] values, Config will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n   \n    "]
 module SelectAggregateResourceConfig :
 sig
   val request :
@@ -1199,7 +1264,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_config_rules_evaluation_request ->
-        (unit,
+        (start_config_rules_evaluation_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterValueException of
               invalid_parameter_value_exception 
@@ -1213,15 +1278,16 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_configuration_recorder_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoAvailableDeliveryChannelException of
               no_available_delivery_channel_exception 
           | `NoSuchConfigurationRecorderException of
-              no_such_configuration_recorder_exception ])
+              no_such_configuration_recorder_exception 
+          | `UnmodifiableEntityException of unmodifiable_entity_exception ])
           result
 end[@@ocaml.doc
-     "Starts recording configurations of the Amazon Web Services resources you have selected to record in your Amazon Web Services account.\n\n You must have created at least one delivery channel to successfully start the configuration recorder.\n "]
+     "Starts the customer managed configuration recorder. The customer managed configuration recorder will begin recording configuration changes for the resource types you specify.\n\n You must have created a delivery channel to successfully start the customer managed configuration recorder. You can use the {{:https://docs.aws.amazon.com/config/latest/APIReference/API_PutDeliveryChannel.html}PutDeliveryChannel} operation to create a delivery channel.\n "]
 module StartRemediationExecution :
 sig
   val request :
@@ -1256,31 +1322,32 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_configuration_recorder_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `NoSuchConfigurationRecorderException of
-              no_such_configuration_recorder_exception ])
+              no_such_configuration_recorder_exception 
+          | `UnmodifiableEntityException of unmodifiable_entity_exception ])
           result
 end[@@ocaml.doc
-     "Stops recording configurations of the Amazon Web Services resources you have selected to record in your Amazon Web Services account.\n"]
+     "Stops the customer managed configuration recorder. The customer managed configuration recorder will stop recording configuration changes for the resource types you have specified.\n"]
 module TagResource :
 sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `TooManyTagsException of too_many_tags_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. If existing tags are specified, however, then their values will be updated. When a resource is deleted, the tags associated with that resource are deleted as well.\n"]
+     "Associates the specified tags to a resource with the specified [ResourceArn]. If existing tags on a resource are not specified in the request parameters, they are not changed. If existing tags are specified, however, then their values will be updated. When a resource is deleted, the tags associated with that resource are deleted as well.\n"]
 module UntagResource :
 sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception 
           | `ValidationException of validation_exception ]) result

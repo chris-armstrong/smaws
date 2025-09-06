@@ -1,19 +1,21 @@
 (rule
- (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/route53-recovery-cluster.json))
+  (:input ../../api-models-aws/models/route53-recovery-cluster/service/2019-12-02/route53-recovery-cluster-2019-12-02.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
   types.ml
   types.mli
   operations.ml
   operations.mli
   Smaws_Client_Route53RecoveryCluster.ml
   Smaws_Client_Route53RecoveryCluster.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -24,6 +26,7 @@
    -targets
    builders
    types
+   service_metadata
    serializers
    deserializers
    operations
@@ -35,13 +38,9 @@
  (modules
   Smaws_Client_Route53RecoveryCluster
   types
-  serializers
-  deserializers
+  service_metadata
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))
-
-(env
- (dev
-  (flags
-   (:standard -w -33))))

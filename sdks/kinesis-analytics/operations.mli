@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_application_cloud_watch_logging_option_request ->
-        (unit,
+        (add_application_cloud_watch_logging_option_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -20,7 +20,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_application_input_request ->
-        (unit,
+        (add_application_input_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CodeValidationException of code_validation_exception 
           | `ConcurrentModificationException of
@@ -37,7 +37,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_application_input_processing_configuration_request ->
-        (unit,
+        (add_application_input_processing_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -53,7 +53,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_application_output_request ->
-        (unit,
+        (add_application_output_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -69,7 +69,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_application_reference_data_source_request ->
-        (unit,
+        (add_application_reference_data_source_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -101,7 +101,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_request ->
-        (unit,
+        (delete_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -116,7 +116,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_cloud_watch_logging_option_request ->
-        (unit,
+        (delete_application_cloud_watch_logging_option_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -132,7 +132,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_input_processing_configuration_request ->
-        (unit,
+        (delete_application_input_processing_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -148,7 +148,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_output_request ->
-        (unit,
+        (delete_application_output_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -164,7 +164,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_reference_data_source_request ->
-        (unit,
+        (delete_application_reference_data_source_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -231,7 +231,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       start_application_request ->
-        (unit,
+        (start_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -247,7 +247,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_application_request ->
-        (unit,
+        (stop_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceInUseException of resource_in_use_exception 
           | `ResourceNotFoundException of resource_not_found_exception 
@@ -260,7 +260,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -275,7 +275,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -290,7 +290,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_application_request ->
-        (unit,
+        (update_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CodeValidationException of code_validation_exception 
           | `ConcurrentModificationException of

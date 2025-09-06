@@ -69,7 +69,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_call_analytics_category_request ->
-        (unit,
+        (delete_call_analytics_category_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -82,7 +82,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_call_analytics_job_request ->
-        (unit,
+        (delete_call_analytics_job_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -94,7 +94,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_language_model_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -106,7 +106,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_scribe_job_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -118,7 +118,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_transcription_job_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -130,7 +130,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_medical_vocabulary_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -143,7 +143,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_transcription_job_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -155,7 +155,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_vocabulary_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -168,7 +168,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_vocabulary_filter_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `InternalFailureException of internal_failure_exception 
@@ -426,7 +426,7 @@ sig
           | `InternalFailureException of internal_failure_exception 
           | `LimitExceededException of limit_exceeded_exception ]) result
 end[@@ocaml.doc
-     "Transcribes the audio from a customer service call and applies any additional Request Parameters you choose to include in your request.\n\n In addition to many standard transcription features, Call Analytics provides you with call characteristics, call summarization, speaker sentiment, and optional redaction of your text transcript and your audio file. You can also apply custom categories to flag specified conditions. To learn more about these features and insights, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html}Analyzing call center audio with Call Analytics}.\n \n  If you want to apply categories to your Call Analytics job, you must create them before submitting your job request. Categories cannot be retroactively applied to a job. To create a new category, use the operation. To learn more about Call Analytics categories, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html}Creating categories for post-call transcriptions} and {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html}Creating categories for real-time transcriptions}.\n  \n   To make a [StartCallAnalyticsJob] request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the [Media] parameter.\n   \n    Note that job queuing is enabled by default for Call Analytics jobs.\n    \n     You must include the following parameters in your [StartCallAnalyticsJob] request:\n     \n      {ul\n            {-   [region]: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to {{:https://docs.aws.amazon.com/general/latest/gr/transcribe.html}Amazon Transcribe endpoints and quotas}.\n                \n                 }\n            {-   [CallAnalyticsJobName]: A custom name that you create for your transcription job that's unique within your Amazon Web Services account.\n                \n                 }\n            {-   [DataAccessRoleArn]: The Amazon Resource Name (ARN) of an IAM role that has permissions to access the Amazon S3 bucket that contains your input files.\n                \n                 }\n            {-   [Media] ([MediaFileUri] or [RedactedMediaFileUri]): The Amazon S3 location of your media file.\n                \n                 }\n            }\n    With Call Analytics, you can redact the audio contained in your media file by including [RedactedMediaFileUri], instead of [MediaFileUri], to specify the location of your input audio. If you choose to redact your audio, you can find your redacted media at the location specified in the [RedactedMediaFileUri] field of your response.\n    \n     "]
+     "Transcribes the audio from a customer service call and applies any additional Request Parameters you choose to include in your request.\n\n In addition to many standard transcription features, Call Analytics provides you with call characteristics, call summarization, speaker sentiment, and optional redaction of your text transcript and your audio file. You can also apply custom categories to flag specified conditions. To learn more about these features and insights, refer to {{:https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html}Analyzing call center audio with Call Analytics}.\n \n  If you want to apply categories to your Call Analytics job, you must create them before submitting your job request. Categories cannot be retroactively applied to a job. To create a new category, use the operation. To learn more about Call Analytics categories, see {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html}Creating categories for post-call transcriptions} and {{:https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html}Creating categories for real-time transcriptions}.\n  \n   To make a [StartCallAnalyticsJob] request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the [Media] parameter.\n   \n    Job queuing is available for Call Analytics jobs. If you pass a [DataAccessRoleArn] in your request and you exceed your Concurrent Job Limit, your job will automatically be added to a queue to be processed once your concurrent job count is below the limit.\n    \n     You must include the following parameters in your [StartCallAnalyticsJob] request:\n     \n      {ul\n            {-   [region]: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to {{:https://docs.aws.amazon.com/general/latest/gr/transcribe.html}Amazon Transcribe endpoints and quotas}.\n                \n                 }\n            {-   [CallAnalyticsJobName]: A custom name that you create for your transcription job that's unique within your Amazon Web Services account.\n                \n                 }\n            {-   [Media] ([MediaFileUri] or [RedactedMediaFileUri]): The Amazon S3 location of your media file.\n                \n                 }\n            }\n    With Call Analytics, you can redact the audio contained in your media file by including [RedactedMediaFileUri], instead of [MediaFileUri], to specify the location of your input audio. If you choose to redact your audio, you can find your redacted media at the location specified in the [RedactedMediaFileUri] field of your response.\n    \n     "]
 module StartMedicalScribeJob :
 sig
   val request :
@@ -471,7 +471,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `ConflictException of conflict_exception 
@@ -485,7 +485,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `BadRequestException of bad_request_exception 
           | `ConflictException of conflict_exception 

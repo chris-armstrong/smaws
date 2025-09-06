@@ -2101,3 +2101,8 @@ let accept_environment_account_connection_input_to_yojson
     [("id", (Some (environment_account_connection_id_to_yojson x.id)))]
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

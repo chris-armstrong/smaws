@@ -4,6 +4,13 @@ let truncated_to_yojson = bool_to_yojson
 let included_details_to_yojson = bool_to_yojson
 let version_weight_to_yojson = int_to_yojson
 let version_description_to_yojson = string_to_yojson
+let variable_value_to_yojson = string_to_yojson
+let variable_name_to_yojson = string_to_yojson
+let variable_name_list_to_yojson tree =
+  list_to_yojson variable_name_to_yojson tree
+let state_name_to_yojson = string_to_yojson
+let variable_references_to_yojson tree =
+  map_to_yojson state_name_to_yojson variable_name_list_to_yojson tree
 let base_unit_to_yojson = unit_to_yojson
 let validation_exception_reason_to_yojson (x : validation_exception_reason) =
   match x with
@@ -19,9 +26,10 @@ let validation_exception_to_yojson (x : validation_exception) =
     [("reason",
        (option_to_yojson validation_exception_reason_to_yojson x.reason));
     ("message", (option_to_yojson error_message_to_yojson x.message))]
+let validate_state_machine_definition_truncated_to_yojson = bool_to_yojson
 let validate_state_machine_definition_severity_to_yojson
   (x : validate_state_machine_definition_severity) =
-  match x with | ERROR -> `String "ERROR"
+  match x with | WARNING -> `String "WARNING" | ERROR -> `String "ERROR"
 let validate_state_machine_definition_result_code_to_yojson
   (x : validate_state_machine_definition_result_code) =
   match x with | FAIL -> `String "FAIL" | OK -> `String "OK"
@@ -45,13 +53,17 @@ let validate_state_machine_definition_diagnostic_list_to_yojson tree =
 let validate_state_machine_definition_output_to_yojson
   (x : validate_state_machine_definition_output) =
   assoc_to_yojson
-    [("diagnostics",
-       (Some
-          (validate_state_machine_definition_diagnostic_list_to_yojson
-             x.diagnostics)));
+    [("truncated",
+       (option_to_yojson
+          validate_state_machine_definition_truncated_to_yojson x.truncated));
+    ("diagnostics",
+      (Some
+         (validate_state_machine_definition_diagnostic_list_to_yojson
+            x.diagnostics)));
     ("result",
       (Some
          (validate_state_machine_definition_result_code_to_yojson x.result)))]
+let validate_state_machine_definition_max_result_to_yojson = int_to_yojson
 let definition_to_yojson = string_to_yojson
 let state_machine_type_to_yojson (x : state_machine_type) =
   match x with
@@ -60,7 +72,14 @@ let state_machine_type_to_yojson (x : state_machine_type) =
 let validate_state_machine_definition_input_to_yojson
   (x : validate_state_machine_definition_input) =
   assoc_to_yojson
-    [("type", (option_to_yojson state_machine_type_to_yojson x.type_));
+    [("maxResults",
+       (option_to_yojson
+          validate_state_machine_definition_max_result_to_yojson
+          x.max_results));
+    ("severity",
+      (option_to_yojson validate_state_machine_definition_severity_to_yojson
+         x.severity));
+    ("type", (option_to_yojson state_machine_type_to_yojson x.type_));
     ("definition", (Some (definition_to_yojson x.definition)))]
 let timestamp__to_yojson = timestamp_to_yojson
 let revision_id_to_yojson = string_to_yojson
@@ -101,10 +120,26 @@ let tracing_configuration_to_yojson (x : tracing_configuration) =
   assoc_to_yojson
     [("enabled", (option_to_yojson enabled_to_yojson x.enabled))]
 let publish_to_yojson = bool_to_yojson
+let kms_key_id_to_yojson = string_to_yojson
+let kms_data_key_reuse_period_seconds_to_yojson = int_to_yojson
+let encryption_type_to_yojson (x : encryption_type) =
+  match x with
+  | CUSTOMER_MANAGED_KMS_KEY -> `String "CUSTOMER_MANAGED_KMS_KEY"
+  | AWS_OWNED_KEY -> `String "AWS_OWNED_KEY"
+let encryption_configuration_to_yojson (x : encryption_configuration) =
+  assoc_to_yojson
+    [("type", (Some (encryption_type_to_yojson x.type_)));
+    ("kmsDataKeyReusePeriodSeconds",
+      (option_to_yojson kms_data_key_reuse_period_seconds_to_yojson
+         x.kms_data_key_reuse_period_seconds));
+    ("kmsKeyId", (option_to_yojson kms_key_id_to_yojson x.kms_key_id))]
 let update_state_machine_input_to_yojson (x : update_state_machine_input) =
   assoc_to_yojson
-    [("versionDescription",
-       (option_to_yojson version_description_to_yojson x.version_description));
+    [("encryptionConfiguration",
+       (option_to_yojson encryption_configuration_to_yojson
+          x.encryption_configuration));
+    ("versionDescription",
+      (option_to_yojson version_description_to_yojson x.version_description));
     ("publish", (option_to_yojson publish_to_yojson x.publish));
     ("tracingConfiguration",
       (option_to_yojson tracing_configuration_to_yojson
@@ -162,12 +197,22 @@ let service_quota_exceeded_exception_to_yojson
 let missing_required_parameter_to_yojson (x : missing_required_parameter) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
+let kms_throttling_exception_to_yojson (x : kms_throttling_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let kms_access_denied_exception_to_yojson (x : kms_access_denied_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
 let invalid_tracing_configuration_to_yojson
   (x : invalid_tracing_configuration) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let invalid_logging_configuration_to_yojson
   (x : invalid_logging_configuration) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let invalid_encryption_configuration_to_yojson
+  (x : invalid_encryption_configuration) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let invalid_definition_to_yojson (x : invalid_definition) =
@@ -232,8 +277,9 @@ let inspection_data_response_to_yojson (x : inspection_data_response) =
     ("protocol", (option_to_yojson http_protocol_to_yojson x.protocol))]
 let inspection_data_to_yojson (x : inspection_data) =
   assoc_to_yojson
-    [("response",
-       (option_to_yojson inspection_data_response_to_yojson x.response));
+    [("variables", (option_to_yojson sensitive_data_to_yojson x.variables));
+    ("response",
+      (option_to_yojson inspection_data_response_to_yojson x.response));
     ("request",
       (option_to_yojson inspection_data_request_to_yojson x.request));
     ("afterResultPath",
@@ -245,8 +291,9 @@ let inspection_data_to_yojson (x : inspection_data) =
       (option_to_yojson sensitive_data_to_yojson x.after_parameters));
     ("afterInputPath",
       (option_to_yojson sensitive_data_to_yojson x.after_input_path));
+    ("afterArguments",
+      (option_to_yojson sensitive_data_to_yojson x.after_arguments));
     ("input", (option_to_yojson sensitive_data_to_yojson x.input))]
-let state_name_to_yojson = string_to_yojson
 let test_execution_status_to_yojson (x : test_execution_status) =
   match x with
   | CAUGHT_ERROR -> `String "CAUGHT_ERROR"
@@ -270,12 +317,13 @@ let inspection_level_to_yojson (x : inspection_level) =
 let reveal_secrets_to_yojson = bool_to_yojson
 let test_state_input_to_yojson (x : test_state_input) =
   assoc_to_yojson
-    [("revealSecrets",
-       (option_to_yojson reveal_secrets_to_yojson x.reveal_secrets));
+    [("variables", (option_to_yojson sensitive_data_to_yojson x.variables));
+    ("revealSecrets",
+      (option_to_yojson reveal_secrets_to_yojson x.reveal_secrets));
     ("inspectionLevel",
       (option_to_yojson inspection_level_to_yojson x.inspection_level));
     ("input", (option_to_yojson sensitive_data_to_yojson x.input));
-    ("roleArn", (Some (arn_to_yojson x.role_arn)));
+    ("roleArn", (option_to_yojson arn_to_yojson x.role_arn));
     ("definition", (Some (definition_to_yojson x.definition)))]
 let invalid_execution_input_to_yojson (x : invalid_execution_input) =
   assoc_to_yojson
@@ -381,6 +429,18 @@ let stop_execution_input_to_yojson (x : stop_execution_input) =
     [("cause", (option_to_yojson sensitive_cause_to_yojson x.cause));
     ("error", (option_to_yojson sensitive_error_to_yojson x.error));
     ("executionArn", (Some (arn_to_yojson x.execution_arn)))]
+let kms_key_state_to_yojson (x : kms_key_state) =
+  match x with
+  | CREATING -> `String "CREATING"
+  | UNAVAILABLE -> `String "UNAVAILABLE"
+  | PENDING_IMPORT -> `String "PENDING_IMPORT"
+  | PENDING_DELETION -> `String "PENDING_DELETION"
+  | DISABLED -> `String "DISABLED"
+let kms_invalid_state_exception_to_yojson (x : kms_invalid_state_exception) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message));
+    ("kmsKeyState",
+      (option_to_yojson kms_key_state_to_yojson x.kms_key_state))]
 let execution_does_not_exist_to_yojson (x : execution_does_not_exist) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
@@ -422,11 +482,21 @@ let state_machine_alias_list_item_to_yojson
       (Some (long_arn_to_yojson x.state_machine_alias_arn)))]
 let state_machine_alias_list_to_yojson tree =
   list_to_yojson state_machine_alias_list_item_to_yojson tree
+let assigned_variables_to_yojson tree =
+  map_to_yojson variable_name_to_yojson variable_value_to_yojson tree
+let assigned_variables_details_to_yojson (x : assigned_variables_details) =
+  assoc_to_yojson
+    [("truncated", (option_to_yojson truncated_to_yojson x.truncated))]
 let state_exited_event_details_to_yojson (x : state_exited_event_details) =
   assoc_to_yojson
-    [("outputDetails",
-       (option_to_yojson history_event_execution_data_details_to_yojson
-          x.output_details));
+    [("assignedVariablesDetails",
+       (option_to_yojson assigned_variables_details_to_yojson
+          x.assigned_variables_details));
+    ("assignedVariables",
+      (option_to_yojson assigned_variables_to_yojson x.assigned_variables));
+    ("outputDetails",
+      (option_to_yojson history_event_execution_data_details_to_yojson
+         x.output_details));
     ("output", (option_to_yojson sensitive_data_to_yojson x.output));
     ("name", (Some (name_to_yojson x.name)))]
 let state_entered_event_details_to_yojson (x : state_entered_event_details) =
@@ -471,10 +541,15 @@ let start_sync_execution_output_to_yojson (x : start_sync_execution_output) =
     ("name", (option_to_yojson name_to_yojson x.name));
     ("stateMachineArn", (option_to_yojson arn_to_yojson x.state_machine_arn));
     ("executionArn", (Some (arn_to_yojson x.execution_arn)))]
+let included_data_to_yojson (x : included_data) =
+  match x with
+  | METADATA_ONLY -> `String "METADATA_ONLY"
+  | ALL_DATA -> `String "ALL_DATA"
 let start_sync_execution_input_to_yojson (x : start_sync_execution_input) =
   assoc_to_yojson
-    [("traceHeader",
-       (option_to_yojson trace_header_to_yojson x.trace_header));
+    [("includedData",
+       (option_to_yojson included_data_to_yojson x.included_data));
+    ("traceHeader", (option_to_yojson trace_header_to_yojson x.trace_header));
     ("input", (option_to_yojson sensitive_data_to_yojson x.input));
     ("name", (option_to_yojson name_to_yojson x.name));
     ("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
@@ -768,6 +843,7 @@ let include_execution_data_get_execution_history_to_yojson = bool_to_yojson
 let identity_to_yojson = string_to_yojson
 let history_event_type_to_yojson (x : history_event_type) =
   match x with
+  | EvaluationFailed -> `String "EvaluationFailed"
   | MapRunRedriven -> `String "MapRunRedriven"
   | ExecutionRedriven -> `String "ExecutionRedriven"
   | MapRunSucceeded -> `String "MapRunSucceeded"
@@ -907,11 +983,23 @@ let execution_redriven_event_details_to_yojson
   assoc_to_yojson
     [("redriveCount",
        (option_to_yojson redrive_count_to_yojson x.redrive_count))]
+let evaluation_failure_location_to_yojson = string_to_yojson
+let evaluation_failed_event_details_to_yojson
+  (x : evaluation_failed_event_details) =
+  assoc_to_yojson
+    [("state", (Some (state_name_to_yojson x.state)));
+    ("location",
+      (option_to_yojson evaluation_failure_location_to_yojson x.location));
+    ("cause", (option_to_yojson sensitive_cause_to_yojson x.cause));
+    ("error", (option_to_yojson sensitive_error_to_yojson x.error))]
 let history_event_to_yojson (x : history_event) =
   assoc_to_yojson
-    [("mapRunRedrivenEventDetails",
-       (option_to_yojson map_run_redriven_event_details_to_yojson
-          x.map_run_redriven_event_details));
+    [("evaluationFailedEventDetails",
+       (option_to_yojson evaluation_failed_event_details_to_yojson
+          x.evaluation_failed_event_details));
+    ("mapRunRedrivenEventDetails",
+      (option_to_yojson map_run_redriven_event_details_to_yojson
+         x.map_run_redriven_event_details));
     ("mapRunFailedEventDetails",
       (option_to_yojson map_run_failed_event_details_to_yojson
          x.map_run_failed_event_details));
@@ -1064,8 +1152,13 @@ let execution_redrive_status_to_yojson (x : execution_redrive_status) =
 let describe_state_machine_output_to_yojson
   (x : describe_state_machine_output) =
   assoc_to_yojson
-    [("description",
-       (option_to_yojson version_description_to_yojson x.description));
+    [("variableReferences",
+       (option_to_yojson variable_references_to_yojson x.variable_references));
+    ("encryptionConfiguration",
+      (option_to_yojson encryption_configuration_to_yojson
+         x.encryption_configuration));
+    ("description",
+      (option_to_yojson version_description_to_yojson x.description));
     ("revisionId", (option_to_yojson revision_id_to_yojson x.revision_id));
     ("label", (option_to_yojson map_run_label_to_yojson x.label));
     ("tracingConfiguration",
@@ -1084,11 +1177,18 @@ let describe_state_machine_output_to_yojson
 let describe_state_machine_input_to_yojson (x : describe_state_machine_input)
   =
   assoc_to_yojson
-    [("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
+    [("includedData",
+       (option_to_yojson included_data_to_yojson x.included_data));
+    ("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
 let describe_state_machine_for_execution_output_to_yojson
   (x : describe_state_machine_for_execution_output) =
   assoc_to_yojson
-    [("revisionId", (option_to_yojson revision_id_to_yojson x.revision_id));
+    [("variableReferences",
+       (option_to_yojson variable_references_to_yojson x.variable_references));
+    ("encryptionConfiguration",
+      (option_to_yojson encryption_configuration_to_yojson
+         x.encryption_configuration));
+    ("revisionId", (option_to_yojson revision_id_to_yojson x.revision_id));
     ("label", (option_to_yojson map_run_label_to_yojson x.label));
     ("mapRunArn", (option_to_yojson long_arn_to_yojson x.map_run_arn));
     ("tracingConfiguration",
@@ -1104,7 +1204,10 @@ let describe_state_machine_for_execution_output_to_yojson
     ("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
 let describe_state_machine_for_execution_input_to_yojson
   (x : describe_state_machine_for_execution_input) =
-  assoc_to_yojson [("executionArn", (Some (arn_to_yojson x.execution_arn)))]
+  assoc_to_yojson
+    [("includedData",
+       (option_to_yojson included_data_to_yojson x.included_data));
+    ("executionArn", (Some (arn_to_yojson x.execution_arn)))]
 let describe_state_machine_alias_output_to_yojson
   (x : describe_state_machine_alias_output) =
   assoc_to_yojson
@@ -1177,10 +1280,16 @@ let describe_execution_output_to_yojson (x : describe_execution_output) =
     ("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)));
     ("executionArn", (Some (arn_to_yojson x.execution_arn)))]
 let describe_execution_input_to_yojson (x : describe_execution_input) =
-  assoc_to_yojson [("executionArn", (Some (arn_to_yojson x.execution_arn)))]
+  assoc_to_yojson
+    [("includedData",
+       (option_to_yojson included_data_to_yojson x.included_data));
+    ("executionArn", (Some (arn_to_yojson x.execution_arn)))]
 let describe_activity_output_to_yojson (x : describe_activity_output) =
   assoc_to_yojson
-    [("creationDate", (Some (timestamp__to_yojson x.creation_date)));
+    [("encryptionConfiguration",
+       (option_to_yojson encryption_configuration_to_yojson
+          x.encryption_configuration));
+    ("creationDate", (Some (timestamp__to_yojson x.creation_date)));
     ("name", (Some (name_to_yojson x.name)));
     ("activityArn", (Some (arn_to_yojson x.activity_arn)))]
 let describe_activity_input_to_yojson (x : describe_activity_input) =
@@ -1212,8 +1321,11 @@ let create_state_machine_output_to_yojson (x : create_state_machine_output) =
     ("stateMachineArn", (Some (arn_to_yojson x.state_machine_arn)))]
 let create_state_machine_input_to_yojson (x : create_state_machine_input) =
   assoc_to_yojson
-    [("versionDescription",
-       (option_to_yojson version_description_to_yojson x.version_description));
+    [("encryptionConfiguration",
+       (option_to_yojson encryption_configuration_to_yojson
+          x.encryption_configuration));
+    ("versionDescription",
+      (option_to_yojson version_description_to_yojson x.version_description));
     ("publish", (option_to_yojson publish_to_yojson x.publish));
     ("tracingConfiguration",
       (option_to_yojson tracing_configuration_to_yojson
@@ -1247,9 +1359,15 @@ let create_activity_output_to_yojson (x : create_activity_output) =
     ("activityArn", (Some (arn_to_yojson x.activity_arn)))]
 let create_activity_input_to_yojson (x : create_activity_input) =
   assoc_to_yojson
-    [("tags", (option_to_yojson tag_list_to_yojson x.tags));
+    [("encryptionConfiguration",
+       (option_to_yojson encryption_configuration_to_yojson
+          x.encryption_configuration));
+    ("tags", (option_to_yojson tag_list_to_yojson x.tags));
     ("name", (Some (name_to_yojson x.name)))]
 let activity_limit_exceeded_to_yojson (x : activity_limit_exceeded) =
+  assoc_to_yojson
+    [("message", (option_to_yojson error_message_to_yojson x.message))]
+let activity_already_exists_to_yojson (x : activity_already_exists) =
   assoc_to_yojson
     [("message", (option_to_yojson error_message_to_yojson x.message))]
 let base_string_to_yojson = string_to_yojson
@@ -1258,3 +1376,8 @@ let base_integer_to_yojson = int_to_yojson
 let base_timestamp_to_yojson = timestamp_to_yojson
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

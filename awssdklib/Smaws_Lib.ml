@@ -10,3 +10,4 @@ module Protocols = Protocols
 module Protocols_gen = Protocols_gen
 module Service = Service
 module Sign = Sign
+module Smithy_api = Smithy_api

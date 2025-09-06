@@ -1,0 +1,25 @@
+(rule
+ (targets
+  (dir json))
+ (mode promote)
+ (deps
+  (:gen ../gen.exe)
+  (:input ../../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input} . aws.protocoltests.json)))
+
+(rule
+ (targets
+  (dir shared))
+ (mode promote)
+ (deps
+  (:gen ../gen.exe)
+  (:input ../../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input} . aws.protocoltests.shared)))
+
+(include_subdirs qualified)
+
+(library
+ (name Model_tests_protocols)
+ (libraries Smaws_Lib))

@@ -35,7 +35,6 @@ let kinesis_firehose_input_update_to_yojson
        (option_to_yojson role_ar_n_to_yojson x.role_arn_update));
     ("ResourceARNUpdate",
       (option_to_yojson resource_ar_n_to_yojson x.resource_arn_update))]
-let base_unit_to_yojson = unit_to_yojson
 let record_format_type_to_yojson (x : record_format_type) =
   match x with | CSV -> `String "CSV" | JSON -> `String "JSON"
 let record_row_path_to_yojson = string_to_yojson
@@ -762,9 +761,3 @@ let add_application_cloud_watch_logging_option_request_to_yojson
          (application_version_id_to_yojson x.current_application_version_id)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson

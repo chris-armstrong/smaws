@@ -4,12 +4,14 @@ let untag_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let base_unit_of_yojson = unit_of_yojson
 let service_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DOCDB" -> DOCDB
-   | `String "RDS" -> RDS
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ServiceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ServiceType") : service_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DOCDB" -> DOCDB
+    | `String "RDS" -> RDS
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ServiceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ServiceType") : 
+     service_type) : service_type)
 let amazon_resource_name_of_yojson = string_of_yojson
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
@@ -46,12 +48,14 @@ let internal_service_error_of_yojson tree path =
           _list path)
    } : internal_service_error)
 let text_format_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MARKDOWN" -> MARKDOWN
-   | `String "PLAIN_TEXT" -> PLAIN_TEXT
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "TextFormat" value)
-   | _ -> raise (deserialize_wrong_type_error path "TextFormat") : text_format)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MARKDOWN" -> MARKDOWN
+    | `String "PLAIN_TEXT" -> PLAIN_TEXT
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "TextFormat" value)
+    | _ -> raise (deserialize_wrong_type_error path "TextFormat") : text_format) : 
+  text_format)
 let tag_value_of_yojson = string_of_yojson
 let tag_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
@@ -73,13 +77,15 @@ let tag_resource_request_of_yojson tree path =
    } : tag_resource_request)
 let string__of_yojson = string_of_yojson
 let severity_of_yojson (tree : t) path =
-  (match tree with
-   | `String "HIGH" -> HIGH
-   | `String "MEDIUM" -> MEDIUM
-   | `String "LOW" -> LOW
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Severity" value)
-   | _ -> raise (deserialize_wrong_type_error path "Severity") : severity)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "HIGH" -> HIGH
+    | `String "MEDIUM" -> MEDIUM
+    | `String "LOW" -> LOW
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Severity" value)
+    | _ -> raise (deserialize_wrong_type_error path "Severity") : severity) : 
+  severity)
 let sanitized_string_of_yojson = string_of_yojson
 let sanitized_string_list_of_yojson tree path =
   list_of_yojson sanitized_string_of_yojson tree path
@@ -134,14 +140,15 @@ let recommendation_of_yojson tree path =
 let recommendation_list_of_yojson tree path =
   list_of_yojson recommendation_of_yojson tree path
 let period_alignment_of_yojson (tree : t) path =
-  (match tree with
-   | `String "START_TIME" -> START_TIME
-   | `String "END_TIME" -> END_TIME
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "PeriodAlignment" value)
-   | _ -> raise (deserialize_wrong_type_error path "PeriodAlignment") : 
-  period_alignment)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "START_TIME" -> START_TIME
+    | `String "END_TIME" -> END_TIME
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "PeriodAlignment" value)
+    | _ -> raise (deserialize_wrong_type_error path "PeriodAlignment") : 
+     period_alignment) : period_alignment)
 let list_tags_for_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -158,15 +165,16 @@ let list_tags_for_resource_request_of_yojson tree path =
    } : list_tags_for_resource_request)
 let iso_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let analysis_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "RUNNING" -> RUNNING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AnalysisStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "AnalysisStatus") : 
-  analysis_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "RUNNING" -> RUNNING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AnalysisStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "AnalysisStatus") : 
+     analysis_status) : analysis_status)
 let analysis_report_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -299,15 +307,17 @@ let list_available_resource_dimensions_response_of_yojson tree path =
 let dimensions_metric_list_of_yojson tree path =
   list_of_yojson sanitized_string_of_yojson tree path
 let fine_grained_action_of_yojson (tree : t) path =
-  (match tree with
-   | `String "GET_RESOURCE_METRICS" -> GET_RESOURCE_METRICS
-   | `String "GET_DIMENSION_KEY_DETAILS" -> GET_DIMENSION_KEY_DETAILS
-   | `String "DESCRIBE_DIMENSION_KEYS" -> DESCRIBE_DIMENSION_KEYS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "FineGrainedAction" value)
-   | _ -> raise (deserialize_wrong_type_error path "FineGrainedAction") : 
-  fine_grained_action)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "GetResourceMetrics" -> GET_RESOURCE_METRICS
+    | `String "GetDimensionKeyDetails" -> GET_DIMENSION_KEY_DETAILS
+    | `String "DescribeDimensionKeys" -> DESCRIBE_DIMENSION_KEYS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "FineGrainedAction"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "FineGrainedAction") : 
+     fine_grained_action) : fine_grained_action)
 let authorized_actions_list_of_yojson tree path =
   list_of_yojson fine_grained_action_of_yojson tree path
 let list_available_resource_dimensions_request_of_yojson tree path =
@@ -430,18 +440,19 @@ let get_resource_metrics_request_of_yojson tree path =
        (value_for_key service_type_of_yojson "ServiceType" _list path)
    } : get_resource_metrics_request)
 let feature_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UNKNOWN" -> UNKNOWN
-   | `String "DISABLED_PENDING_REBOOT" -> DISABLED_PENDING_REBOOT
-   | `String "ENABLED_PENDING_REBOOT" -> ENABLED_PENDING_REBOOT
-   | `String "UNSUPPORTED" -> UNSUPPORTED
-   | `String "DISABLED" -> DISABLED
-   | `String "ENABLED" -> ENABLED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "FeatureStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "FeatureStatus") : 
-  feature_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNKNOWN" -> UNKNOWN
+    | `String "DISABLED_PENDING_REBOOT" -> DISABLED_PENDING_REBOOT
+    | `String "ENABLED_PENDING_REBOOT" -> ENABLED_PENDING_REBOOT
+    | `String "UNSUPPORTED" -> UNSUPPORTED
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "FeatureStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "FeatureStatus") : 
+     feature_status) : feature_status)
 let feature_metadata_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -472,12 +483,14 @@ let get_resource_metadata_request_of_yojson tree path =
    } : get_resource_metadata_request)
 let analysis_report_id_of_yojson = string_of_yojson
 let context_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CONTEXTUAL" -> CONTEXTUAL
-   | `String "CAUSAL" -> CAUSAL
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ContextType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ContextType") : context_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CONTEXTUAL" -> CONTEXTUAL
+    | `String "CAUSAL" -> CAUSAL
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ContextType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ContextType") : 
+     context_type) : context_type)
 let descriptive_string_of_yojson = string_of_yojson
 let descriptive_map_of_yojson tree path =
   map_of_yojson descriptive_string_of_yojson descriptive_string_of_yojson
@@ -487,6 +500,9 @@ let performance_insights_metric_of_yojson tree path =
   ({
      value =
        (option_of_yojson (value_for_key double_of_yojson "Value") _list path);
+     filter =
+       (option_of_yojson (value_for_key descriptive_map_of_yojson "Filter")
+          _list path);
      dimensions =
        (option_of_yojson
           (value_for_key descriptive_map_of_yojson "Dimensions") _list path);
@@ -583,13 +599,14 @@ let get_performance_analysis_report_response_of_yojson tree path =
           path)
    } : get_performance_analysis_report_response)
 let accept_language_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EN_US" -> EN_US
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AcceptLanguage" value)
-   | _ -> raise (deserialize_wrong_type_error path "AcceptLanguage") : 
-  accept_language)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "EN_US" -> EN_US
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AcceptLanguage" value)
+    | _ -> raise (deserialize_wrong_type_error path "AcceptLanguage") : 
+     accept_language) : accept_language)
 let get_performance_analysis_report_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -609,14 +626,16 @@ let get_performance_analysis_report_request_of_yojson tree path =
        (value_for_key service_type_of_yojson "ServiceType" _list path)
    } : get_performance_analysis_report_request)
 let detail_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UNAVAILABLE" -> UNAVAILABLE
-   | `String "PROCESSING" -> PROCESSING
-   | `String "AVAILABLE" -> AVAILABLE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "DetailStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "DetailStatus") : 
-  detail_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNAVAILABLE" -> UNAVAILABLE
+    | `String "PROCESSING" -> PROCESSING
+    | `String "AVAILABLE" -> AVAILABLE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DetailStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "DetailStatus") : 
+     detail_status) : detail_status)
 let dimension_key_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -775,3 +794,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

@@ -4,125 +4,130 @@ let word_of_yojson = string_of_yojson
 let words_of_yojson tree path = list_of_yojson word_of_yojson tree path
 let base_unit_of_yojson = unit_of_yojson
 let vocabulary_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "READY" -> READY
-   | `String "PENDING" -> PENDING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "VocabularyState" value)
-   | _ -> raise (deserialize_wrong_type_error path "VocabularyState") : 
-  vocabulary_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "READY" -> READY
+    | `String "PENDING" -> PENDING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "VocabularyState" value)
+    | _ -> raise (deserialize_wrong_type_error path "VocabularyState") : 
+     vocabulary_state) : vocabulary_state)
 let vocabulary_name_of_yojson = string_of_yojson
 let language_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ZU_ZA" -> ZU_ZA
-   | `String "WO_SN" -> WO_SN
-   | `String "UZ_UZ" -> UZ_UZ
-   | `String "UK_UA" -> UK_UA
-   | `String "UG_CN" -> UG_CN
-   | `String "TT_RU" -> TT_RU
-   | `String "TL_PH" -> TL_PH
-   | `String "SW_UG" -> SW_UG
-   | `String "SW_TZ" -> SW_TZ
-   | `String "SW_RW" -> SW_RW
-   | `String "SW_KE" -> SW_KE
-   | `String "SW_BI" -> SW_BI
-   | `String "SU_ID" -> SU_ID
-   | `String "SR_RS" -> SR_RS
-   | `String "SO_SO" -> SO_SO
-   | `String "SL_SI" -> SL_SI
-   | `String "SK_SK" -> SK_SK
-   | `String "SI_LK" -> SI_LK
-   | `String "RW_RW" -> RW_RW
-   | `String "RO_RO" -> RO_RO
-   | `String "PS_AF" -> PS_AF
-   | `String "PL_PL" -> PL_PL
-   | `String "PA_IN" -> PA_IN
-   | `String "OR_IN" -> OR_IN
-   | `String "NO_NO" -> NO_NO
-   | `String "MT_MT" -> MT_MT
-   | `String "MR_IN" -> MR_IN
-   | `String "MN_MN" -> MN_MN
-   | `String "ML_IN" -> ML_IN
-   | `String "MK_MK" -> MK_MK
-   | `String "MI_NZ" -> MI_NZ
-   | `String "MHR_RU" -> MHR_RU
-   | `String "LV_LV" -> LV_LV
-   | `String "LT_LT" -> LT_LT
-   | `String "LG_IN" -> LG_IN
-   | `String "KY_KG" -> KY_KG
-   | `String "KN_IN" -> KN_IN
-   | `String "KK_KZ" -> KK_KZ
-   | `String "KAB_DZ" -> KAB_DZ
-   | `String "KA_GE" -> KA_GE
-   | `String "IS_IS" -> IS_IS
-   | `String "HY_AM" -> HY_AM
-   | `String "HU_HU" -> HU_HU
-   | `String "HR_HR" -> HR_HR
-   | `String "HA_NG" -> HA_NG
-   | `String "GU_IN" -> GU_IN
-   | `String "GL_ES" -> GL_ES
-   | `String "FI_FI" -> FI_FI
-   | `String "EU_ES" -> EU_ES
-   | `String "ET_ET" -> ET_ET
-   | `String "EL_GR" -> EL_GR
-   | `String "CY_WL" -> CY_WL
-   | `String "CS_CZ" -> CS_CZ
-   | `String "CKB_IR" -> CKB_IR
-   | `String "CKB_IQ" -> CKB_IQ
-   | `String "CA_ES" -> CA_ES
-   | `String "BS_BA" -> BS_BA
-   | `String "BN_IN" -> BN_IN
-   | `String "BG_BG" -> BG_BG
-   | `String "BE_BY" -> BE_BY
-   | `String "BA_RU" -> BA_RU
-   | `String "AZ_AZ" -> AZ_AZ
-   | `String "AST_ES" -> AST_ES
-   | `String "AB_GE" -> AB_GE
-   | `String "SV_SE" -> SV_SE
-   | `String "VI_VN" -> VI_VN
-   | `String "EN_NZ" -> EN_NZ
-   | `String "EN_ZA" -> EN_ZA
-   | `String "TH_TH" -> TH_TH
-   | `String "ZH_TW" -> ZH_TW
-   | `String "ZH_CN" -> ZH_CN
-   | `String "TR_TR" -> TR_TR
-   | `String "TE_IN" -> TE_IN
-   | `String "TA_IN" -> TA_IN
-   | `String "RU_RU" -> RU_RU
-   | `String "PT_PT" -> PT_PT
-   | `String "PT_BR" -> PT_BR
-   | `String "NL_NL" -> NL_NL
-   | `String "MS_MY" -> MS_MY
-   | `String "KO_KR" -> KO_KR
-   | `String "JA_JP" -> JA_JP
-   | `String "IT_IT" -> IT_IT
-   | `String "ID_ID" -> ID_ID
-   | `String "HI_IN" -> HI_IN
-   | `String "HE_IL" -> HE_IL
-   | `String "FR_FR" -> FR_FR
-   | `String "FR_CA" -> FR_CA
-   | `String "FA_IR" -> FA_IR
-   | `String "ES_US" -> ES_US
-   | `String "ES_ES" -> ES_ES
-   | `String "EN_WL" -> EN_WL
-   | `String "EN_US" -> EN_US
-   | `String "EN_IN" -> EN_IN
-   | `String "EN_IE" -> EN_IE
-   | `String "EN_GB" -> EN_GB
-   | `String "EN_AU" -> EN_AU
-   | `String "EN_AB" -> EN_AB
-   | `String "DE_DE" -> DE_DE
-   | `String "DE_CH" -> DE_CH
-   | `String "DA_DK" -> DA_DK
-   | `String "AR_SA" -> AR_SA
-   | `String "AR_AE" -> AR_AE
-   | `String "AF_ZA" -> AF_ZA
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "LanguageCode" value)
-   | _ -> raise (deserialize_wrong_type_error path "LanguageCode") : 
-  language_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "zu-ZA" -> ZU_ZA
+    | `String "zh-HK" -> ZH_HK
+    | `String "wo-SN" -> WO_SN
+    | `String "uz-UZ" -> UZ_UZ
+    | `String "uk-UA" -> UK_UA
+    | `String "ug-CN" -> UG_CN
+    | `String "tt-RU" -> TT_RU
+    | `String "tl-PH" -> TL_PH
+    | `String "sw-UG" -> SW_UG
+    | `String "sw-TZ" -> SW_TZ
+    | `String "sw-RW" -> SW_RW
+    | `String "sw-KE" -> SW_KE
+    | `String "sw-BI" -> SW_BI
+    | `String "su-ID" -> SU_ID
+    | `String "sr-RS" -> SR_RS
+    | `String "so-SO" -> SO_SO
+    | `String "sl-SI" -> SL_SI
+    | `String "sk-SK" -> SK_SK
+    | `String "si-LK" -> SI_LK
+    | `String "rw-RW" -> RW_RW
+    | `String "ro-RO" -> RO_RO
+    | `String "ps-AF" -> PS_AF
+    | `String "pl-PL" -> PL_PL
+    | `String "pa-IN" -> PA_IN
+    | `String "or-IN" -> OR_IN
+    | `String "no-NO" -> NO_NO
+    | `String "mt-MT" -> MT_MT
+    | `String "mr-IN" -> MR_IN
+    | `String "mn-MN" -> MN_MN
+    | `String "ml-IN" -> ML_IN
+    | `String "mk-MK" -> MK_MK
+    | `String "mi-NZ" -> MI_NZ
+    | `String "mhr-RU" -> MHR_RU
+    | `String "lv-LV" -> LV_LV
+    | `String "lt-LT" -> LT_LT
+    | `String "lg-IN" -> LG_IN
+    | `String "ky-KG" -> KY_KG
+    | `String "kn-IN" -> KN_IN
+    | `String "kk-KZ" -> KK_KZ
+    | `String "kab-DZ" -> KAB_DZ
+    | `String "ka-GE" -> KA_GE
+    | `String "is-IS" -> IS_IS
+    | `String "hy-AM" -> HY_AM
+    | `String "hu-HU" -> HU_HU
+    | `String "hr-HR" -> HR_HR
+    | `String "ha-NG" -> HA_NG
+    | `String "gu-IN" -> GU_IN
+    | `String "gl-ES" -> GL_ES
+    | `String "fi-FI" -> FI_FI
+    | `String "eu-ES" -> EU_ES
+    | `String "et-ET" -> ET_ET
+    | `String "et-EE" -> ET_EE
+    | `String "el-GR" -> EL_GR
+    | `String "cy-WL" -> CY_WL
+    | `String "cs-CZ" -> CS_CZ
+    | `String "ckb-IR" -> CKB_IR
+    | `String "ckb-IQ" -> CKB_IQ
+    | `String "ca-ES" -> CA_ES
+    | `String "bs-BA" -> BS_BA
+    | `String "bn-IN" -> BN_IN
+    | `String "bg-BG" -> BG_BG
+    | `String "be-BY" -> BE_BY
+    | `String "ba-RU" -> BA_RU
+    | `String "az-AZ" -> AZ_AZ
+    | `String "ast-ES" -> AST_ES
+    | `String "ab-GE" -> AB_GE
+    | `String "sv-SE" -> SV_SE
+    | `String "vi-VN" -> VI_VN
+    | `String "en-NZ" -> EN_NZ
+    | `String "en-ZA" -> EN_ZA
+    | `String "th-TH" -> TH_TH
+    | `String "zh-TW" -> ZH_TW
+    | `String "zh-CN" -> ZH_CN
+    | `String "tr-TR" -> TR_TR
+    | `String "te-IN" -> TE_IN
+    | `String "ta-IN" -> TA_IN
+    | `String "ru-RU" -> RU_RU
+    | `String "pt-PT" -> PT_PT
+    | `String "pt-BR" -> PT_BR
+    | `String "nl-NL" -> NL_NL
+    | `String "ms-MY" -> MS_MY
+    | `String "ko-KR" -> KO_KR
+    | `String "ja-JP" -> JA_JP
+    | `String "it-IT" -> IT_IT
+    | `String "id-ID" -> ID_ID
+    | `String "hi-IN" -> HI_IN
+    | `String "he-IL" -> HE_IL
+    | `String "fr-FR" -> FR_FR
+    | `String "fr-CA" -> FR_CA
+    | `String "fa-IR" -> FA_IR
+    | `String "es-US" -> ES_US
+    | `String "es-ES" -> ES_ES
+    | `String "en-WL" -> EN_WL
+    | `String "en-US" -> EN_US
+    | `String "en-IN" -> EN_IN
+    | `String "en-IE" -> EN_IE
+    | `String "en-GB" -> EN_GB
+    | `String "en-AU" -> EN_AU
+    | `String "en-AB" -> EN_AB
+    | `String "de-DE" -> DE_DE
+    | `String "de-CH" -> DE_CH
+    | `String "da-DK" -> DA_DK
+    | `String "ar-SA" -> AR_SA
+    | `String "ar-AE" -> AR_AE
+    | `String "af-ZA" -> AF_ZA
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LanguageCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "LanguageCode") : 
+     language_code) : language_code)
 let date_time_of_yojson = timestamp_epoch_seconds_of_yojson
 let vocabulary_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -160,16 +165,17 @@ let vocabulary_filter_info_of_yojson tree path =
 let vocabulary_filters_of_yojson tree path =
   list_of_yojson vocabulary_filter_info_of_yojson tree path
 let vocabulary_filter_method_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TAG" -> TAG
-   | `String "MASK" -> MASK
-   | `String "REMOVE" -> REMOVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "VocabularyFilterMethod"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "VocabularyFilterMethod") : 
-  vocabulary_filter_method)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "tag" -> TAG
+    | `String "mask" -> MASK
+    | `String "remove" -> REMOVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "VocabularyFilterMethod"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "VocabularyFilterMethod") : 
+     vocabulary_filter_method) : vocabulary_filter_method)
 let vocabularies_of_yojson tree path =
   list_of_yojson vocabulary_info_of_yojson tree path
 let uri_of_yojson = string_of_yojson
@@ -365,14 +371,15 @@ let non_talk_time_filter_of_yojson tree path =
           path)
    } : non_talk_time_filter)
 let participant_role_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CUSTOMER" -> CUSTOMER
-   | `String "AGENT" -> AGENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ParticipantRole" value)
-   | _ -> raise (deserialize_wrong_type_error path "ParticipantRole") : 
-  participant_role)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CUSTOMER" -> CUSTOMER
+    | `String "AGENT" -> AGENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ParticipantRole" value)
+    | _ -> raise (deserialize_wrong_type_error path "ParticipantRole") : 
+     participant_role) : participant_role)
 let interruption_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -397,14 +404,15 @@ let interruption_filter_of_yojson tree path =
           path)
    } : interruption_filter)
 let transcript_filter_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EXACT" -> EXACT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "TranscriptFilterType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "TranscriptFilterType") : 
-  transcript_filter_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "EXACT" -> EXACT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "TranscriptFilterType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "TranscriptFilterType") : 
+     transcript_filter_type) : transcript_filter_type)
 let non_empty_string_of_yojson = string_of_yojson
 let string_target_list_of_yojson tree path =
   list_of_yojson non_empty_string_of_yojson tree path
@@ -433,16 +441,17 @@ let transcript_filter_of_yojson tree path =
           _list path)
    } : transcript_filter)
 let sentiment_value_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MIXED" -> MIXED
-   | `String "NEUTRAL" -> NEUTRAL
-   | `String "NEGATIVE" -> NEGATIVE
-   | `String "POSITIVE" -> POSITIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SentimentValue" value)
-   | _ -> raise (deserialize_wrong_type_error path "SentimentValue") : 
-  sentiment_value)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MIXED" -> MIXED
+    | `String "NEUTRAL" -> NEUTRAL
+    | `String "NEGATIVE" -> NEGATIVE
+    | `String "POSITIVE" -> POSITIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SentimentValue" value)
+    | _ -> raise (deserialize_wrong_type_error path "SentimentValue") : 
+     sentiment_value) : sentiment_value)
 let sentiment_value_list_of_yojson tree path =
   list_of_yojson sentiment_value_of_yojson tree path
 let sentiment_filter_of_yojson tree path =
@@ -472,31 +481,45 @@ let rule_of_yojson (tree : t) path =
     match _list with
     | (key, value_)::_ -> (key, value_)
     | _ -> raise (deserialize_wrong_type_error path "union") in
-  match key with
-  | "SentimentFilter" ->
-      SentimentFilter (sentiment_filter_of_yojson value_ path)
-  | "TranscriptFilter" ->
-      TranscriptFilter (transcript_filter_of_yojson value_ path)
-  | "InterruptionFilter" ->
-      InterruptionFilter (interruption_filter_of_yojson value_ path)
-  | "NonTalkTimeFilter" ->
-      NonTalkTimeFilter (non_talk_time_filter_of_yojson value_ path)
-  | _ as unknown ->
-      raise (deserialize_unknown_enum_value_error path "Rule" unknown)
+  (match key with
+   | "SentimentFilter" ->
+       SentimentFilter (sentiment_filter_of_yojson value_ path)
+   | "TranscriptFilter" ->
+       TranscriptFilter (transcript_filter_of_yojson value_ path)
+   | "InterruptionFilter" ->
+       InterruptionFilter (interruption_filter_of_yojson value_ path)
+   | "NonTalkTimeFilter" ->
+       NonTalkTimeFilter (non_talk_time_filter_of_yojson value_ path)
+   | _ as unknown ->
+       raise (deserialize_unknown_enum_value_error path "Rule" unknown) : 
+    rule)
 let rule_list_of_yojson tree path = list_of_yojson rule_of_yojson tree path
+let tag_key_of_yojson = string_of_yojson
+let tag_value_of_yojson = string_of_yojson
+let tag_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     value = (value_for_key tag_value_of_yojson "Value" _list path);
+     key = (value_for_key tag_key_of_yojson "Key" _list path)
+   } : tag)
+let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let input_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "POST_CALL" -> POST_CALL
-   | `String "REAL_TIME" -> REAL_TIME
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "InputType" value)
-   | _ -> raise (deserialize_wrong_type_error path "InputType") : input_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "POST_CALL" -> POST_CALL
+    | `String "REAL_TIME" -> REAL_TIME
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "InputType" value)
+    | _ -> raise (deserialize_wrong_type_error path "InputType") : input_type) : 
+  input_type)
 let category_properties_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      input_type =
        (option_of_yojson (value_for_key input_type_of_yojson "InputType")
           _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
      last_update_time =
        (option_of_yojson (value_for_key date_time_of_yojson "LastUpdateTime")
           _list path);
@@ -531,7 +554,6 @@ let update_call_analytics_category_request_of_yojson tree path =
 let untag_resource_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let transcribe_arn_of_yojson = string_of_yojson
-let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path =
   list_of_yojson tag_key_of_yojson tree path
 let untag_resource_request_of_yojson tree path =
@@ -542,71 +564,78 @@ let untag_resource_request_of_yojson tree path =
        (value_for_key transcribe_arn_of_yojson "ResourceArn" _list path)
    } : untag_resource_request)
 let type__of_yojson (tree : t) path =
-  (match tree with
-   | `String "DICTATION" -> DICTATION
-   | `String "CONVERSATION" -> CONVERSATION
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Type" value)
-   | _ -> raise (deserialize_wrong_type_error path "Type") : type_)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DICTATION" -> DICTATION
+    | `String "CONVERSATION" -> CONVERSATION
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Type" value)
+    | _ -> raise (deserialize_wrong_type_error path "Type") : type_) : 
+  type_)
 let transcription_job_name_of_yojson = string_of_yojson
 let transcription_job_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "QUEUED" -> QUEUED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "TranscriptionJobStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "TranscriptionJobStatus") : 
-  transcription_job_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "QUEUED" -> QUEUED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "TranscriptionJobStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "TranscriptionJobStatus") : 
+     transcription_job_status) : transcription_job_status)
 let output_location_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SERVICE_BUCKET" -> SERVICE_BUCKET
-   | `String "CUSTOMER_BUCKET" -> CUSTOMER_BUCKET
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OutputLocationType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "OutputLocationType") : 
-  output_location_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SERVICE_BUCKET" -> SERVICE_BUCKET
+    | `String "CUSTOMER_BUCKET" -> CUSTOMER_BUCKET
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OutputLocationType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "OutputLocationType") : 
+     output_location_type) : output_location_type)
 let redaction_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PII" -> PII
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RedactionType" value)
-   | _ -> raise (deserialize_wrong_type_error path "RedactionType") : 
-  redaction_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PII" -> PII
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RedactionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RedactionType") : 
+     redaction_type) : redaction_type)
 let redaction_output_of_yojson (tree : t) path =
-  (match tree with
-   | `String "REDACTED_AND_UNREDACTED" -> REDACTED_AND_UNREDACTED
-   | `String "REDACTED" -> REDACTED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RedactionOutput" value)
-   | _ -> raise (deserialize_wrong_type_error path "RedactionOutput") : 
-  redaction_output)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "redacted_and_unredacted" -> REDACTED_AND_UNREDACTED
+    | `String "redacted" -> REDACTED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RedactionOutput" value)
+    | _ -> raise (deserialize_wrong_type_error path "RedactionOutput") : 
+     redaction_output) : redaction_output)
 let pii_entity_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ALL" -> ALL
-   | `String "SSN" -> SSN
-   | `String "PHONE" -> PHONE
-   | `String "NAME" -> NAME
-   | `String "ADDRESS" -> ADDRESS
-   | `String "EMAIL" -> EMAIL
-   | `String "PIN" -> PIN
-   | `String "CREDIT_DEBIT_EXPIRY" -> CREDIT_DEBIT_EXPIRY
-   | `String "CREDIT_DEBIT_CVV" -> CREDIT_DEBIT_CVV
-   | `String "CREDIT_DEBIT_NUMBER" -> CREDIT_DEBIT_NUMBER
-   | `String "BANK_ROUTING" -> BANK_ROUTING
-   | `String "BANK_ACCOUNT_NUMBER" -> BANK_ACCOUNT_NUMBER
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "PiiEntityType" value)
-   | _ -> raise (deserialize_wrong_type_error path "PiiEntityType") : 
-  pii_entity_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ALL" -> ALL
+    | `String "SSN" -> SSN
+    | `String "PHONE" -> PHONE
+    | `String "NAME" -> NAME
+    | `String "ADDRESS" -> ADDRESS
+    | `String "EMAIL" -> EMAIL
+    | `String "PIN" -> PIN
+    | `String "CREDIT_DEBIT_EXPIRY" -> CREDIT_DEBIT_EXPIRY
+    | `String "CREDIT_DEBIT_CVV" -> CREDIT_DEBIT_CVV
+    | `String "CREDIT_DEBIT_NUMBER" -> CREDIT_DEBIT_NUMBER
+    | `String "BANK_ROUTING" -> BANK_ROUTING
+    | `String "BANK_ACCOUNT_NUMBER" -> BANK_ACCOUNT_NUMBER
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "PiiEntityType" value)
+    | _ -> raise (deserialize_wrong_type_error path "PiiEntityType") : 
+     pii_entity_type) : pii_entity_type)
 let pii_entity_types_of_yojson tree path =
   list_of_yojson pii_entity_type_of_yojson tree path
 let content_redaction_of_yojson tree path =
@@ -645,13 +674,14 @@ let language_code_item_of_yojson tree path =
 let language_code_list_of_yojson tree path =
   list_of_yojson language_code_item_of_yojson tree path
 let toxicity_category_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ALL" -> ALL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ToxicityCategory" value)
-   | _ -> raise (deserialize_wrong_type_error path "ToxicityCategory") : 
-  toxicity_category)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ALL" -> ALL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ToxicityCategory" value)
+    | _ -> raise (deserialize_wrong_type_error path "ToxicityCategory") : 
+     toxicity_category) : toxicity_category)
 let toxicity_categories_of_yojson tree path =
   list_of_yojson toxicity_category_of_yojson tree path
 let toxicity_detection_settings_of_yojson tree path =
@@ -724,18 +754,20 @@ let transcription_job_summaries_of_yojson tree path =
   list_of_yojson transcription_job_summary_of_yojson tree path
 let media_sample_rate_hertz_of_yojson = int_of_yojson
 let media_format_of_yojson (tree : t) path =
-  (match tree with
-   | `String "M4A" -> M4A
-   | `String "WEBM" -> WEBM
-   | `String "AMR" -> AMR
-   | `String "OGG" -> OGG
-   | `String "FLAC" -> FLAC
-   | `String "WAV" -> WAV
-   | `String "MP4" -> MP4
-   | `String "MP3" -> MP3
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MediaFormat" value)
-   | _ -> raise (deserialize_wrong_type_error path "MediaFormat") : media_format)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "m4a" -> M4A
+    | `String "webm" -> WEBM
+    | `String "amr" -> AMR
+    | `String "ogg" -> OGG
+    | `String "flac" -> FLAC
+    | `String "wav" -> WAV
+    | `String "mp4" -> MP4
+    | `String "mp3" -> MP3
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MediaFormat" value)
+    | _ -> raise (deserialize_wrong_type_error path "MediaFormat") : 
+     media_format) : media_format)
 let media_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -807,23 +839,16 @@ let job_execution_settings_of_yojson tree path =
    } : job_execution_settings)
 let language_options_of_yojson tree path =
   list_of_yojson language_code_of_yojson tree path
-let tag_value_of_yojson = string_of_yojson
-let tag_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     value = (value_for_key tag_value_of_yojson "Value" _list path);
-     key = (value_for_key tag_key_of_yojson "Key" _list path)
-   } : tag)
-let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let subtitle_format_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SRT" -> SRT
-   | `String "VTT" -> VTT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SubtitleFormat" value)
-   | _ -> raise (deserialize_wrong_type_error path "SubtitleFormat") : 
-  subtitle_format)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "srt" -> SRT
+    | `String "vtt" -> VTT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SubtitleFormat" value)
+    | _ -> raise (deserialize_wrong_type_error path "SubtitleFormat") : 
+     subtitle_format) : subtitle_format)
 let subtitle_formats_of_yojson tree path =
   list_of_yojson subtitle_format_of_yojson tree path
 let subtitle_file_uris_of_yojson tree path =
@@ -1087,22 +1112,26 @@ let medical_transcription_setting_of_yojson tree path =
           (value_for_key boolean__of_yojson "ShowSpeakerLabels") _list path)
    } : medical_transcription_setting)
 let medical_content_identification_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PHI" -> PHI
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MedicalContentIdentificationType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "MedicalContentIdentificationType") : medical_content_identification_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PHI" -> PHI
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MedicalContentIdentificationType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "MedicalContentIdentificationType") : medical_content_identification_type) : 
+  medical_content_identification_type)
 let specialty_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PRIMARYCARE" -> PRIMARYCARE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Specialty" value)
-   | _ -> raise (deserialize_wrong_type_error path "Specialty") : specialty)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PRIMARYCARE" -> PRIMARYCARE
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Specialty" value)
+    | _ -> raise (deserialize_wrong_type_error path "Specialty") : specialty) : 
+  specialty)
 let medical_transcription_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1210,27 +1239,29 @@ let start_medical_transcription_job_request_of_yojson tree path =
           "MedicalTranscriptionJobName" _list path)
    } : start_medical_transcription_job_request)
 let medical_scribe_job_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "QUEUED" -> QUEUED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "MedicalScribeJobStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "MedicalScribeJobStatus") : 
-  medical_scribe_job_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "QUEUED" -> QUEUED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MedicalScribeJobStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "MedicalScribeJobStatus") : 
+     medical_scribe_job_status) : medical_scribe_job_status)
 let medical_scribe_language_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EN_US" -> EN_US
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MedicalScribeLanguageCode" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "MedicalScribeLanguageCode") : 
-  medical_scribe_language_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "en-US" -> EN_US
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MedicalScribeLanguageCode" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "MedicalScribeLanguageCode") : 
+     medical_scribe_language_code) : medical_scribe_language_code)
 let medical_scribe_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1239,9 +1270,38 @@ let medical_scribe_output_of_yojson tree path =
      transcript_file_uri =
        (value_for_key uri_of_yojson "TranscriptFileUri" _list path)
    } : medical_scribe_output)
+let medical_scribe_note_template_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PHYSICAL_SOAP" -> PHYSICAL_SOAP
+    | `String "BEHAVIORAL_SOAP" -> BEHAVIORAL_SOAP
+    | `String "DAP" -> DAP
+    | `String "SIRP" -> SIRP
+    | `String "BIRP" -> BIRP
+    | `String "GIRPP" -> GIRPP
+    | `String "HISTORY_AND_PHYSICAL" -> HISTORY_AND_PHYSICAL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MedicalScribeNoteTemplate" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "MedicalScribeNoteTemplate") : 
+     medical_scribe_note_template) : medical_scribe_note_template)
+let clinical_note_generation_settings_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     note_template =
+       (option_of_yojson
+          (value_for_key medical_scribe_note_template_of_yojson
+             "NoteTemplate") _list path)
+   } : clinical_note_generation_settings)
 let medical_scribe_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     clinical_note_generation_settings =
+       (option_of_yojson
+          (value_for_key clinical_note_generation_settings_of_yojson
+             "ClinicalNoteGenerationSettings") _list path);
      vocabulary_filter_method =
        (option_of_yojson
           (value_for_key vocabulary_filter_method_of_yojson
@@ -1268,17 +1328,18 @@ let medical_scribe_settings_of_yojson tree path =
    } : medical_scribe_settings)
 let medical_scribe_channel_id_of_yojson = int_of_yojson
 let medical_scribe_participant_role_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CLINICIAN" -> CLINICIAN
-   | `String "PATIENT" -> PATIENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MedicalScribeParticipantRole" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "MedicalScribeParticipantRole") : 
-  medical_scribe_participant_role)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CLINICIAN" -> CLINICIAN
+    | `String "PATIENT" -> PATIENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MedicalScribeParticipantRole" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "MedicalScribeParticipantRole") : 
+     medical_scribe_participant_role) : medical_scribe_participant_role)
 let medical_scribe_channel_definition_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1379,39 +1440,42 @@ let start_medical_scribe_job_request_of_yojson tree path =
    } : start_medical_scribe_job_request)
 let call_analytics_job_name_of_yojson = string_of_yojson
 let call_analytics_job_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "QUEUED" -> QUEUED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CallAnalyticsJobStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsJobStatus") : 
-  call_analytics_job_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "QUEUED" -> QUEUED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CallAnalyticsJobStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsJobStatus") : 
+     call_analytics_job_status) : call_analytics_job_status)
 let call_analytics_feature_of_yojson (tree : t) path =
-  (match tree with
-   | `String "GENERATIVE_SUMMARIZATION" -> GENERATIVE_SUMMARIZATION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CallAnalyticsFeature"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsFeature") : 
-  call_analytics_feature)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "GENERATIVE_SUMMARIZATION" -> GENERATIVE_SUMMARIZATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CallAnalyticsFeature"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "CallAnalyticsFeature") : 
+     call_analytics_feature) : call_analytics_feature)
 let call_analytics_skipped_reason_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED_SAFETY_GUIDELINES" -> FAILED_SAFETY_GUIDELINES
-   | `String "INSUFFICIENT_CONVERSATION_CONTENT" ->
-       INSUFFICIENT_CONVERSATION_CONTENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CallAnalyticsSkippedReasonCode" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "CallAnalyticsSkippedReasonCode") : 
-  call_analytics_skipped_reason_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED_SAFETY_GUIDELINES" -> FAILED_SAFETY_GUIDELINES
+    | `String "INSUFFICIENT_CONVERSATION_CONTENT" ->
+        INSUFFICIENT_CONVERSATION_CONTENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CallAnalyticsSkippedReasonCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "CallAnalyticsSkippedReasonCode") : 
+     call_analytics_skipped_reason_code) : call_analytics_skipped_reason_code)
 let call_analytics_skipped_feature_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1495,6 +1559,8 @@ let channel_definitions_of_yojson tree path =
 let call_analytics_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
      channel_definitions =
        (option_of_yojson
           (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
@@ -1566,6 +1632,8 @@ let start_call_analytics_job_request_of_yojson tree path =
        (option_of_yojson
           (value_for_key channel_definitions_of_yojson "ChannelDefinitions")
           _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
      settings =
        (option_of_yojson
           (value_for_key call_analytics_job_settings_of_yojson "Settings")
@@ -1858,36 +1926,40 @@ let list_medical_scribe_jobs_request_of_yojson tree path =
           path)
    } : list_medical_scribe_jobs_request)
 let clm_language_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "JA_JP" -> JA_JP
-   | `String "DE_DE" -> DE_DE
-   | `String "EN_AU" -> EN_AU
-   | `String "EN_GB" -> EN_GB
-   | `String "ES_US" -> ES_US
-   | `String "HI_IN" -> HI_IN
-   | `String "EN_US" -> EN_US
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CLMLanguageCode" value)
-   | _ -> raise (deserialize_wrong_type_error path "CLMLanguageCode") : 
-  clm_language_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ja-JP" -> JA_JP
+    | `String "de-DE" -> DE_DE
+    | `String "en-AU" -> EN_AU
+    | `String "en-GB" -> EN_GB
+    | `String "es-US" -> ES_US
+    | `String "hi-IN" -> HI_IN
+    | `String "en-US" -> EN_US
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CLMLanguageCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "CLMLanguageCode") : 
+     clm_language_code) : clm_language_code)
 let base_model_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "WIDE_BAND" -> WIDE_BAND
-   | `String "NARROW_BAND" -> NARROW_BAND
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "BaseModelName" value)
-   | _ -> raise (deserialize_wrong_type_error path "BaseModelName") : 
-  base_model_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "WideBand" -> WIDE_BAND
+    | `String "NarrowBand" -> NARROW_BAND
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "BaseModelName" value)
+    | _ -> raise (deserialize_wrong_type_error path "BaseModelName") : 
+     base_model_name) : base_model_name)
 let model_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ModelStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ModelStatus") : model_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ModelStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ModelStatus") : 
+     model_status) : model_status)
 let input_data_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2437,6 +2509,8 @@ let create_call_analytics_category_request_of_yojson tree path =
      input_type =
        (option_of_yojson (value_for_key input_type_of_yojson "InputType")
           _list path);
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path);
      rules = (value_for_key rule_list_of_yojson "Rules" _list path);
      category_name =
        (value_for_key category_name_of_yojson "CategoryName" _list path)
@@ -2447,3 +2521,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

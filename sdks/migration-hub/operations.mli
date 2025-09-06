@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_created_artifact_request ->
-        (unit,
+        (associate_created_artifact_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -22,7 +22,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_discovered_resource_request ->
-        (unit,
+        (associate_discovered_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -36,12 +36,29 @@ sig
           | `UnauthorizedOperation of unauthorized_operation ]) result
 end[@@ocaml.doc
      "Associates a discovered resource ID from Application Discovery Service with a migration task.\n"]
+module AssociateSourceResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      associate_source_resource_request ->
+        (associate_source_resource_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `DryRunOperation of dry_run_operation 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception 
+          | `UnauthorizedOperation of unauthorized_operation ]) result
+end[@@ocaml.doc
+     "Associates a source resource with a migration task. For example, the source resource can be a source server, an application, or a migration wave.\n"]
 module CreateProgressUpdateStream :
 sig
   val request :
     Smaws_Lib.Context.t ->
       create_progress_update_stream_request ->
-        (unit,
+        (create_progress_update_stream_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -58,7 +75,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_progress_update_stream_request ->
-        (unit,
+        (delete_progress_update_stream_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -108,7 +125,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_created_artifact_request ->
-        (unit,
+        (disassociate_created_artifact_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -126,7 +143,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_discovered_resource_request ->
-        (unit,
+        (disassociate_discovered_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -139,12 +156,29 @@ sig
           | `UnauthorizedOperation of unauthorized_operation ]) result
 end[@@ocaml.doc
      "Disassociate an Application Discovery Service discovered resource from a migration task.\n"]
+module DisassociateSourceResource :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disassociate_source_resource_request ->
+        (disassociate_source_resource_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `DryRunOperation of dry_run_operation 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception 
+          | `UnauthorizedOperation of unauthorized_operation ]) result
+end[@@ocaml.doc
+     "Removes the association between a source resource and a migration task.\n"]
 module ImportMigrationTask :
 sig
   val request :
     Smaws_Lib.Context.t ->
       import_migration_task_request ->
-        (unit,
+        (import_migration_task_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -204,6 +238,21 @@ sig
           | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc
      "Lists discovered resources associated with the given [MigrationTask].\n"]
+module ListMigrationTaskUpdates :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_migration_task_updates_request ->
+        (list_migration_task_updates_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception ]) result
+end[@@ocaml.doc
+     "This is a paginated API that returns all the migration-task states for the specified [MigrationTaskName] and [ProgressUpdateStream].\n"]
 module ListMigrationTasks :
 sig
   val request :
@@ -236,12 +285,27 @@ sig
           | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc
      "Lists progress update streams associated with the user account making this call.\n"]
+module ListSourceResources :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_source_resources_request ->
+        (list_source_resources_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `InvalidInputException of invalid_input_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceUnavailableException of service_unavailable_exception 
+          | `ThrottlingException of throttling_exception ]) result
+end[@@ocaml.doc
+     "Lists all the source resource that are associated with the specified [MigrationTaskName] and [ProgressUpdateStream].\n"]
 module NotifyApplicationState :
 sig
   val request :
     Smaws_Lib.Context.t ->
       notify_application_state_request ->
-        (unit,
+        (notify_application_state_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -260,7 +324,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       notify_migration_task_state_request ->
-        (unit,
+        (notify_migration_task_state_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 
@@ -278,7 +342,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_resource_attributes_request ->
-        (unit,
+        (put_resource_attributes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `DryRunOperation of dry_run_operation 

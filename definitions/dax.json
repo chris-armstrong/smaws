@@ -2681,7 +2681,7 @@
         "TopicStatus": {
           "target": "com.amazonaws.dax#String",
           "traits": {
-            "smithy.api#documentation": "<p>The current state of the topic. A value of “active” means that notifications will\n        be sent to the topic. A value of “inactive” means that notifications will not be sent to the\n        topic.</p>"
+            "smithy.api#documentation": "<p>The current state of the topic. A value of \u201cactive\u201d means that notifications will\n        be sent to the topic. A value of \u201cinactive\u201d means that notifications will not be sent to the\n        topic.</p>"
           }
         }
       },
@@ -3581,7 +3581,7 @@
         "NotificationTopicStatus": {
           "target": "com.amazonaws.dax#String",
           "traits": {
-            "smithy.api#documentation": "<p>The current state of the topic. A value of “active” means that notifications will\n        be sent to the topic. A value of “inactive” means that notifications will not be sent to the\n        topic.</p>"
+            "smithy.api#documentation": "<p>The current state of the topic. A value of \u201cactive\u201d means that notifications will\n        be sent to the topic. A value of \u201cinactive\u201d means that notifications will not be sent to the\n        topic.</p>"
           }
         },
         "ParameterGroupName": {

@@ -9,14 +9,15 @@ let setup_domain_name_list_of_yojson tree path =
   list_of_yojson setup_domain_name_of_yojson tree path
 let base_unit_of_yojson = unit_of_yojson
 let certificate_provider_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LetsEncrypt" -> LetsEncrypt
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CertificateProvider"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "CertificateProvider") : 
-  certificate_provider)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LetsEncrypt" -> LetsEncrypt
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CertificateProvider"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "CertificateProvider") : 
+     certificate_provider) : certificate_provider)
 let setup_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -34,25 +35,27 @@ let setup_request_of_yojson tree path =
    } : setup_request)
 let iso_date_of_yojson = timestamp_epoch_seconds_of_yojson
 let region_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EU_NORTH_1" -> EU_NORTH_1
-   | `String "AP_NORTHEAST_2" -> AP_NORTHEAST_2
-   | `String "AP_NORTHEAST_1" -> AP_NORTHEAST_1
-   | `String "AP_SOUTHEAST_2" -> AP_SOUTHEAST_2
-   | `String "AP_SOUTHEAST_1" -> AP_SOUTHEAST_1
-   | `String "AP_SOUTH_1" -> AP_SOUTH_1
-   | `String "CA_CENTRAL_1" -> CA_CENTRAL_1
-   | `String "EU_CENTRAL_1" -> EU_CENTRAL_1
-   | `String "EU_WEST_3" -> EU_WEST_3
-   | `String "EU_WEST_2" -> EU_WEST_2
-   | `String "EU_WEST_1" -> EU_WEST_1
-   | `String "US_WEST_2" -> US_WEST_2
-   | `String "US_WEST_1" -> US_WEST_1
-   | `String "US_EAST_2" -> US_EAST_2
-   | `String "US_EAST_1" -> US_EAST_1
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "RegionName" value)
-   | _ -> raise (deserialize_wrong_type_error path "RegionName") : region_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "eu-north-1" -> EU_NORTH_1
+    | `String "ap-northeast-2" -> AP_NORTHEAST_2
+    | `String "ap-northeast-1" -> AP_NORTHEAST_1
+    | `String "ap-southeast-2" -> AP_SOUTHEAST_2
+    | `String "ap-southeast-1" -> AP_SOUTHEAST_1
+    | `String "ap-south-1" -> AP_SOUTH_1
+    | `String "ca-central-1" -> CA_CENTRAL_1
+    | `String "eu-central-1" -> EU_CENTRAL_1
+    | `String "eu-west-3" -> EU_WEST_3
+    | `String "eu-west-2" -> EU_WEST_2
+    | `String "eu-west-1" -> EU_WEST_1
+    | `String "us-west-2" -> US_WEST_2
+    | `String "us-west-1" -> US_WEST_1
+    | `String "us-east-2" -> US_EAST_2
+    | `String "us-east-1" -> US_EAST_1
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "RegionName" value)
+    | _ -> raise (deserialize_wrong_type_error path "RegionName") : region_name) : 
+  region_name)
 let resource_location_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -64,31 +67,33 @@ let resource_location_of_yojson tree path =
           _list path)
    } : resource_location)
 let resource_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Bucket" -> Bucket
-   | `String "Certificate" -> Certificate
-   | `String "Distribution" -> Distribution
-   | `String "ContactMethod" -> ContactMethod
-   | `String "Alarm" -> Alarm
-   | `String "CloudFormationStackRecord" -> CloudFormationStackRecord
-   | `String "ExportSnapshotRecord" -> ExportSnapshotRecord
-   | `String "RelationalDatabaseSnapshot" -> RelationalDatabaseSnapshot
-   | `String "RelationalDatabase" -> RelationalDatabase
-   | `String "DiskSnapshot" -> DiskSnapshot
-   | `String "Disk" -> Disk
-   | `String "LoadBalancerTlsCertificate" -> LoadBalancerTlsCertificate
-   | `String "LoadBalancer" -> LoadBalancer
-   | `String "PeeredVpc" -> PeeredVpc
-   | `String "Domain" -> Domain
-   | `String "InstanceSnapshot" -> InstanceSnapshot
-   | `String "KeyPair" -> KeyPair
-   | `String "StaticIp" -> StaticIp
-   | `String "Instance" -> Instance
-   | `String "ContainerService" -> ContainerService
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ResourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
-  resource_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Bucket" -> Bucket
+    | `String "Certificate" -> Certificate
+    | `String "Distribution" -> Distribution
+    | `String "ContactMethod" -> ContactMethod
+    | `String "Alarm" -> Alarm
+    | `String "CloudFormationStackRecord" -> CloudFormationStackRecord
+    | `String "ExportSnapshotRecord" -> ExportSnapshotRecord
+    | `String "RelationalDatabaseSnapshot" -> RelationalDatabaseSnapshot
+    | `String "RelationalDatabase" -> RelationalDatabase
+    | `String "DiskSnapshot" -> DiskSnapshot
+    | `String "Disk" -> Disk
+    | `String "LoadBalancerTlsCertificate" -> LoadBalancerTlsCertificate
+    | `String "LoadBalancer" -> LoadBalancer
+    | `String "PeeredVpc" -> PeeredVpc
+    | `String "Domain" -> Domain
+    | `String "InstanceSnapshot" -> InstanceSnapshot
+    | `String "KeyPair" -> KeyPair
+    | `String "StaticIp" -> StaticIp
+    | `String "Instance" -> Instance
+    | `String "ContainerService" -> ContainerService
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
+     resource_type) : resource_type)
 let setup_history_resource_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -109,13 +114,15 @@ let setup_history_resource_of_yojson tree path =
           path)
    } : setup_history_resource)
 let setup_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "InProgress" -> InProgress
-   | `String "Failed" -> Failed
-   | `String "Succeeded" -> Succeeded
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SetupStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "SetupStatus") : setup_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "inProgress" -> InProgress
+    | `String "failed" -> Failed
+    | `String "succeeded" -> Succeeded
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SetupStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "SetupStatus") : 
+     setup_status) : setup_status)
 let setup_execution_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -172,133 +179,140 @@ let float__of_yojson = float_of_yojson
 let double_of_yojson = double_of_yojson
 let boolean__of_yojson = bool_of_yojson
 let viewer_minimum_tls_protocol_version_enum_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TLSv12_2021" -> TLSv12_2021
-   | `String "TLSv12_2019" -> TLSv12_2019
-   | `String "TLSv12_2018" -> TLSv12_2018
-   | `String "TLSv11_2016" -> TLSv11_2016
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ViewerMinimumTlsProtocolVersionEnum" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ViewerMinimumTlsProtocolVersionEnum") : viewer_minimum_tls_protocol_version_enum)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TLSv1.2_2021" -> TLSv12_2021
+    | `String "TLSv1.2_2019" -> TLSv12_2019
+    | `String "TLSv1.2_2018" -> TLSv12_2018
+    | `String "TLSv1.1_2016" -> TLSv11_2016
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ViewerMinimumTlsProtocolVersionEnum" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ViewerMinimumTlsProtocolVersionEnum") : viewer_minimum_tls_protocol_version_enum) : 
+  viewer_minimum_tls_protocol_version_enum)
 let operation_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SetupInstanceHttps" -> SetupInstanceHttps
-   | `String "StopGUISession" -> StopGUISession
-   | `String "StartGUISession" -> StartGUISession
-   | `String "UpdateInstanceMetadataOptions" -> UpdateInstanceMetadataOptions
-   | `String "SetResourceAccessForBucket" -> SetResourceAccessForBucket
-   | `String "UpdateBucket" -> UpdateBucket
-   | `String "UpdateBucketBundle" -> UpdateBucketBundle
-   | `String "DeleteBucketAccessKey" -> DeleteBucketAccessKey
-   | `String "CreateBucketAccessKey" -> CreateBucketAccessKey
-   | `String "DeleteBucket" -> DeleteBucket
-   | `String "CreateBucket" -> CreateBucket
-   | `String "DeleteContainerImage" -> DeleteContainerImage
-   | `String "RegisterContainerImage" -> RegisterContainerImage
-   | `String "CreateContainerServiceRegistryLogin" ->
-       CreateContainerServiceRegistryLogin
-   | `String "CreateContainerServiceDeployment" ->
-       CreateContainerServiceDeployment
-   | `String "DeleteContainerService" -> DeleteContainerService
-   | `String "UpdateContainerService" -> UpdateContainerService
-   | `String "CreateContainerService" -> CreateContainerService
-   | `String "DeleteCertificate" -> DeleteCertificate
-   | `String "CreateCertificate" -> CreateCertificate
-   | `String "SetIpAddressType" -> SetIpAddressType
-   | `String "UpdateDistributionBundle" -> UpdateDistributionBundle
-   | `String "DetachCertificateFromDistribution" ->
-       DetachCertificateFromDistribution
-   | `String "AttachCertificateToDistribution" ->
-       AttachCertificateToDistribution
-   | `String "ResetDistributionCache" -> ResetDistributionCache
-   | `String "DeleteDistribution" -> DeleteDistribution
-   | `String "UpdateDistribution" -> UpdateDistribution
-   | `String "CreateDistribution" -> CreateDistribution
-   | `String "DeleteContactMethod" -> DeleteContactMethod
-   | `String "SendContactMethodVerification" -> SendContactMethodVerification
-   | `String "GetContactMethods" -> GetContactMethods
-   | `String "CreateContactMethod" -> CreateContactMethod
-   | `String "TestAlarm" -> TestAlarm
-   | `String "DeleteAlarm" -> DeleteAlarm
-   | `String "GetAlarms" -> GetAlarms
-   | `String "PutAlarm" -> PutAlarm
-   | `String "DisableAddOn" -> DisableAddOn
-   | `String "EnableAddOn" -> EnableAddOn
-   | `String "StopRelationalDatabase" -> StopRelationalDatabase
-   | `String "RebootRelationalDatabase" -> RebootRelationalDatabase
-   | `String "StartRelationalDatabase" -> StartRelationalDatabase
-   | `String "UpdateRelationalDatabaseParameters" ->
-       UpdateRelationalDatabaseParameters
-   | `String "DeleteRelationalDatabaseSnapshot" ->
-       DeleteRelationalDatabaseSnapshot
-   | `String "CreateRelationalDatabaseSnapshot" ->
-       CreateRelationalDatabaseSnapshot
-   | `String "CreateRelationalDatabaseFromSnapshot" ->
-       CreateRelationalDatabaseFromSnapshot
-   | `String "DeleteRelationalDatabase" -> DeleteRelationalDatabase
-   | `String "UpdateRelationalDatabase" -> UpdateRelationalDatabase
-   | `String "CreateRelationalDatabase" -> CreateRelationalDatabase
-   | `String "CreateDiskFromSnapshot" -> CreateDiskFromSnapshot
-   | `String "DeleteDiskSnapshot" -> DeleteDiskSnapshot
-   | `String "CreateDiskSnapshot" -> CreateDiskSnapshot
-   | `String "DetachDisk" -> DetachDisk
-   | `String "AttachDisk" -> AttachDisk
-   | `String "DeleteDisk" -> DeleteDisk
-   | `String "CreateDisk" -> CreateDisk
-   | `String "AttachLoadBalancerTlsCertificate" ->
-       AttachLoadBalancerTlsCertificate
-   | `String "DeleteLoadBalancerTlsCertificate" ->
-       DeleteLoadBalancerTlsCertificate
-   | `String "CreateLoadBalancerTlsCertificate" ->
-       CreateLoadBalancerTlsCertificate
-   | `String "UpdateLoadBalancerAttribute" -> UpdateLoadBalancerAttribute
-   | `String "DetachInstancesFromLoadBalancer" ->
-       DetachInstancesFromLoadBalancer
-   | `String "AttachInstancesToLoadBalancer" -> AttachInstancesToLoadBalancer
-   | `String "DeleteLoadBalancer" -> DeleteLoadBalancer
-   | `String "CreateLoadBalancer" -> CreateLoadBalancer
-   | `String "CreateInstancesFromSnapshot" -> CreateInstancesFromSnapshot
-   | `String "DeleteInstanceSnapshot" -> DeleteInstanceSnapshot
-   | `String "CreateInstanceSnapshot" -> CreateInstanceSnapshot
-   | `String "DeleteDomain" -> DeleteDomain
-   | `String "CreateDomain" -> CreateDomain
-   | `String "DeleteDomainEntry" -> DeleteDomainEntry
-   | `String "UpdateDomainEntry" -> UpdateDomainEntry
-   | `String "DetachStaticIp" -> DetachStaticIp
-   | `String "AttachStaticIp" -> AttachStaticIp
-   | `String "ReleaseStaticIp" -> ReleaseStaticIp
-   | `String "AllocateStaticIp" -> AllocateStaticIp
-   | `String "CloseInstancePublicPorts" -> CloseInstancePublicPorts
-   | `String "PutInstancePublicPorts" -> PutInstancePublicPorts
-   | `String "OpenInstancePublicPorts" -> OpenInstancePublicPorts
-   | `String "RebootInstance" -> RebootInstance
-   | `String "StartInstance" -> StartInstance
-   | `String "StopInstance" -> StopInstance
-   | `String "CreateInstance" -> CreateInstance
-   | `String "DeleteInstance" -> DeleteInstance
-   | `String "DeleteKnownHostKeys" -> DeleteKnownHostKeys
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OperationType" value)
-   | _ -> raise (deserialize_wrong_type_error path "OperationType") : 
-  operation_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SetupInstanceHttps" -> SetupInstanceHttps
+    | `String "StopGUISession" -> StopGUISession
+    | `String "StartGUISession" -> StartGUISession
+    | `String "UpdateInstanceMetadataOptions" ->
+        UpdateInstanceMetadataOptions
+    | `String "SetResourceAccessForBucket" -> SetResourceAccessForBucket
+    | `String "UpdateBucket" -> UpdateBucket
+    | `String "UpdateBucketBundle" -> UpdateBucketBundle
+    | `String "DeleteBucketAccessKey" -> DeleteBucketAccessKey
+    | `String "CreateBucketAccessKey" -> CreateBucketAccessKey
+    | `String "DeleteBucket" -> DeleteBucket
+    | `String "CreateBucket" -> CreateBucket
+    | `String "DeleteContainerImage" -> DeleteContainerImage
+    | `String "RegisterContainerImage" -> RegisterContainerImage
+    | `String "CreateContainerServiceRegistryLogin" ->
+        CreateContainerServiceRegistryLogin
+    | `String "CreateContainerServiceDeployment" ->
+        CreateContainerServiceDeployment
+    | `String "DeleteContainerService" -> DeleteContainerService
+    | `String "UpdateContainerService" -> UpdateContainerService
+    | `String "CreateContainerService" -> CreateContainerService
+    | `String "DeleteCertificate" -> DeleteCertificate
+    | `String "CreateCertificate" -> CreateCertificate
+    | `String "SetIpAddressType" -> SetIpAddressType
+    | `String "UpdateDistributionBundle" -> UpdateDistributionBundle
+    | `String "DetachCertificateFromDistribution" ->
+        DetachCertificateFromDistribution
+    | `String "AttachCertificateToDistribution" ->
+        AttachCertificateToDistribution
+    | `String "ResetDistributionCache" -> ResetDistributionCache
+    | `String "DeleteDistribution" -> DeleteDistribution
+    | `String "UpdateDistribution" -> UpdateDistribution
+    | `String "CreateDistribution" -> CreateDistribution
+    | `String "DeleteContactMethod" -> DeleteContactMethod
+    | `String "SendContactMethodVerification" ->
+        SendContactMethodVerification
+    | `String "GetContactMethods" -> GetContactMethods
+    | `String "CreateContactMethod" -> CreateContactMethod
+    | `String "TestAlarm" -> TestAlarm
+    | `String "DeleteAlarm" -> DeleteAlarm
+    | `String "GetAlarms" -> GetAlarms
+    | `String "PutAlarm" -> PutAlarm
+    | `String "DisableAddOn" -> DisableAddOn
+    | `String "EnableAddOn" -> EnableAddOn
+    | `String "StopRelationalDatabase" -> StopRelationalDatabase
+    | `String "RebootRelationalDatabase" -> RebootRelationalDatabase
+    | `String "StartRelationalDatabase" -> StartRelationalDatabase
+    | `String "UpdateRelationalDatabaseParameters" ->
+        UpdateRelationalDatabaseParameters
+    | `String "DeleteRelationalDatabaseSnapshot" ->
+        DeleteRelationalDatabaseSnapshot
+    | `String "CreateRelationalDatabaseSnapshot" ->
+        CreateRelationalDatabaseSnapshot
+    | `String "CreateRelationalDatabaseFromSnapshot" ->
+        CreateRelationalDatabaseFromSnapshot
+    | `String "DeleteRelationalDatabase" -> DeleteRelationalDatabase
+    | `String "UpdateRelationalDatabase" -> UpdateRelationalDatabase
+    | `String "CreateRelationalDatabase" -> CreateRelationalDatabase
+    | `String "CreateDiskFromSnapshot" -> CreateDiskFromSnapshot
+    | `String "DeleteDiskSnapshot" -> DeleteDiskSnapshot
+    | `String "CreateDiskSnapshot" -> CreateDiskSnapshot
+    | `String "DetachDisk" -> DetachDisk
+    | `String "AttachDisk" -> AttachDisk
+    | `String "DeleteDisk" -> DeleteDisk
+    | `String "CreateDisk" -> CreateDisk
+    | `String "AttachLoadBalancerTlsCertificate" ->
+        AttachLoadBalancerTlsCertificate
+    | `String "DeleteLoadBalancerTlsCertificate" ->
+        DeleteLoadBalancerTlsCertificate
+    | `String "CreateLoadBalancerTlsCertificate" ->
+        CreateLoadBalancerTlsCertificate
+    | `String "UpdateLoadBalancerAttribute" -> UpdateLoadBalancerAttribute
+    | `String "DetachInstancesFromLoadBalancer" ->
+        DetachInstancesFromLoadBalancer
+    | `String "AttachInstancesToLoadBalancer" ->
+        AttachInstancesToLoadBalancer
+    | `String "DeleteLoadBalancer" -> DeleteLoadBalancer
+    | `String "CreateLoadBalancer" -> CreateLoadBalancer
+    | `String "CreateInstancesFromSnapshot" -> CreateInstancesFromSnapshot
+    | `String "DeleteInstanceSnapshot" -> DeleteInstanceSnapshot
+    | `String "CreateInstanceSnapshot" -> CreateInstanceSnapshot
+    | `String "DeleteDomain" -> DeleteDomain
+    | `String "CreateDomain" -> CreateDomain
+    | `String "DeleteDomainEntry" -> DeleteDomainEntry
+    | `String "UpdateDomainEntry" -> UpdateDomainEntry
+    | `String "DetachStaticIp" -> DetachStaticIp
+    | `String "AttachStaticIp" -> AttachStaticIp
+    | `String "ReleaseStaticIp" -> ReleaseStaticIp
+    | `String "AllocateStaticIp" -> AllocateStaticIp
+    | `String "CloseInstancePublicPorts" -> CloseInstancePublicPorts
+    | `String "PutInstancePublicPorts" -> PutInstancePublicPorts
+    | `String "OpenInstancePublicPorts" -> OpenInstancePublicPorts
+    | `String "RebootInstance" -> RebootInstance
+    | `String "StartInstance" -> StartInstance
+    | `String "StopInstance" -> StopInstance
+    | `String "CreateInstance" -> CreateInstance
+    | `String "DeleteInstance" -> DeleteInstance
+    | `String "DeleteKnownHostKeys" -> DeleteKnownHostKeys
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OperationType" value)
+    | _ -> raise (deserialize_wrong_type_error path "OperationType") : 
+     operation_type) : operation_type)
 let operation_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Succeeded" -> Succeeded
-   | `String "Completed" -> Completed
-   | `String "Failed" -> Failed
-   | `String "Started" -> Started
-   | `String "NotStarted" -> NotStarted
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OperationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "OperationStatus") : 
-  operation_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Succeeded" -> Succeeded
+    | `String "Completed" -> Completed
+    | `String "Failed" -> Failed
+    | `String "Started" -> Started
+    | `String "NotStarted" -> NotStarted
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OperationStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "OperationStatus") : 
+     operation_status) : operation_status)
 let operation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -540,20 +554,21 @@ let update_load_balancer_attribute_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : update_load_balancer_attribute_result)
 let load_balancer_attribute_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TlsPolicyName" -> TlsPolicyName
-   | `String "HttpsRedirectionEnabled" -> HttpsRedirectionEnabled
-   | `String "SessionStickiness_LB_CookieDurationSeconds" ->
-       SessionStickiness_LB_CookieDurationSeconds
-   | `String "SessionStickinessEnabled" -> SessionStickinessEnabled
-   | `String "HealthCheckPath" -> HealthCheckPath
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerAttributeName" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "LoadBalancerAttributeName") : 
-  load_balancer_attribute_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TlsPolicyName" -> TlsPolicyName
+    | `String "HttpsRedirectionEnabled" -> HttpsRedirectionEnabled
+    | `String "SessionStickiness_LB_CookieDurationSeconds" ->
+        SessionStickiness_LB_CookieDurationSeconds
+    | `String "SessionStickinessEnabled" -> SessionStickinessEnabled
+    | `String "HealthCheckPath" -> HealthCheckPath
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerAttributeName" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "LoadBalancerAttributeName") : 
+     load_balancer_attribute_name) : load_balancer_attribute_name)
 let string_max256_of_yojson = string_of_yojson
 let update_load_balancer_attribute_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -574,29 +589,34 @@ let update_instance_metadata_options_result_of_yojson tree path =
           _list path)
    } : update_instance_metadata_options_result)
 let http_tokens_of_yojson (tree : t) path =
-  (match tree with
-   | `String "required" -> Required
-   | `String "optional" -> Optional
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "HttpTokens" value)
-   | _ -> raise (deserialize_wrong_type_error path "HttpTokens") : http_tokens)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "required" -> Required
+    | `String "optional" -> Optional
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "HttpTokens" value)
+    | _ -> raise (deserialize_wrong_type_error path "HttpTokens") : http_tokens) : 
+  http_tokens)
 let http_endpoint_of_yojson (tree : t) path =
-  (match tree with
-   | `String "enabled" -> Enabled
-   | `String "disabled" -> Disabled
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "HttpEndpoint" value)
-   | _ -> raise (deserialize_wrong_type_error path "HttpEndpoint") : 
-  http_endpoint)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "enabled" -> Enabled
+    | `String "disabled" -> Disabled
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "HttpEndpoint" value)
+    | _ -> raise (deserialize_wrong_type_error path "HttpEndpoint") : 
+     http_endpoint) : http_endpoint)
 let http_protocol_ipv6_of_yojson (tree : t) path =
-  (match tree with
-   | `String "enabled" -> Enabled
-   | `String "disabled" -> Disabled
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "HttpProtocolIpv6" value)
-   | _ -> raise (deserialize_wrong_type_error path "HttpProtocolIpv6") : 
-  http_protocol_ipv6)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "enabled" -> Enabled
+    | `String "disabled" -> Disabled
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "HttpProtocolIpv6" value)
+    | _ -> raise (deserialize_wrong_type_error path "HttpProtocolIpv6") : 
+     http_protocol_ipv6) : http_protocol_ipv6)
 let update_instance_metadata_options_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -668,16 +688,17 @@ let update_distribution_result_of_yojson tree path =
           _list path)
    } : update_distribution_result)
 let origin_protocol_policy_enum_of_yojson (tree : t) path =
-  (match tree with
-   | `String "HTTPSOnly" -> HTTPSOnly
-   | `String "HTTPOnly" -> HTTPOnly
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "OriginProtocolPolicyEnum" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "OriginProtocolPolicyEnum") : 
-  origin_protocol_policy_enum)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "https-only" -> HTTPSOnly
+    | `String "http-only" -> HTTPOnly
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "OriginProtocolPolicyEnum" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "OriginProtocolPolicyEnum") : 
+     origin_protocol_policy_enum) : origin_protocol_policy_enum)
 let input_origin_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -696,13 +717,15 @@ let input_origin_of_yojson tree path =
           path)
    } : input_origin)
 let behavior_enum_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CacheSetting" -> CacheSetting
-   | `String "DontCacheSetting" -> DontCacheSetting
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "BehaviorEnum" value)
-   | _ -> raise (deserialize_wrong_type_error path "BehaviorEnum") : 
-  behavior_enum)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "cache" -> CacheSetting
+    | `String "dont-cache" -> DontCacheSetting
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "BehaviorEnum" value)
+    | _ -> raise (deserialize_wrong_type_error path "BehaviorEnum") : 
+     behavior_enum) : behavior_enum)
 let cache_behavior_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -711,15 +734,16 @@ let cache_behavior_of_yojson tree path =
           _list path)
    } : cache_behavior)
 let forward_values_of_yojson (tree : t) path =
-  (match tree with
-   | `String "all" -> All
-   | `String "allowList" -> AllowList
-   | `String "none" -> None
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ForwardValues" value)
-   | _ -> raise (deserialize_wrong_type_error path "ForwardValues") : 
-  forward_values)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "all" -> All
+    | `String "allow-list" -> AllowList
+    | `String "none" -> None
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ForwardValues" value)
+    | _ -> raise (deserialize_wrong_type_error path "ForwardValues") : 
+     forward_values) : forward_values)
 let string_list_of_yojson tree path =
   list_of_yojson string__of_yojson tree path
 let cookie_object_of_yojson tree path =
@@ -733,25 +757,27 @@ let cookie_object_of_yojson tree path =
           _list path)
    } : cookie_object)
 let header_enum_of_yojson (tree : t) path =
-  (match tree with
-   | `String "referer" -> Referer
-   | `String "origin" -> Origin
-   | `String "host" -> Host
-   | `String "cloudFrontViewerCountry" -> CloudFrontViewerCountry
-   | `String "cloudFrontIsTabletViewer" -> CloudFrontIsTabletViewer
-   | `String "cloudFrontIsSmartTVViewer" -> CloudFrontIsSmartTVViewer
-   | `String "cloudFrontIsMobileViewer" -> CloudFrontIsMobileViewer
-   | `String "cloudFrontIsDesktopViewer" -> CloudFrontIsDesktopViewer
-   | `String "cloudFrontForwardedProto" -> CloudFrontForwardedProto
-   | `String "authorization" -> Authorization
-   | `String "acceptLanguage" -> AcceptLanguage
-   | `String "acceptEncoding" -> AcceptEncoding
-   | `String "acceptDatetime" -> AcceptDatetime
-   | `String "acceptCharset" -> AcceptCharset
-   | `String "accept" -> Accept
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "HeaderEnum" value)
-   | _ -> raise (deserialize_wrong_type_error path "HeaderEnum") : header_enum)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Referer" -> Referer
+    | `String "Origin" -> Origin
+    | `String "Host" -> Host
+    | `String "CloudFront-Viewer-Country" -> CloudFrontViewerCountry
+    | `String "CloudFront-Is-Tablet-Viewer" -> CloudFrontIsTabletViewer
+    | `String "CloudFront-Is-SmartTV-Viewer" -> CloudFrontIsSmartTVViewer
+    | `String "CloudFront-Is-Mobile-Viewer" -> CloudFrontIsMobileViewer
+    | `String "CloudFront-Is-Desktop-Viewer" -> CloudFrontIsDesktopViewer
+    | `String "CloudFront-Forwarded-Proto" -> CloudFrontForwardedProto
+    | `String "Authorization" -> Authorization
+    | `String "Accept-Language" -> AcceptLanguage
+    | `String "Accept-Encoding" -> AcceptEncoding
+    | `String "Accept-Datetime" -> AcceptDatetime
+    | `String "Accept-Charset" -> AcceptCharset
+    | `String "Accept" -> Accept
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "HeaderEnum" value)
+    | _ -> raise (deserialize_wrong_type_error path "HeaderEnum") : header_enum) : 
+  header_enum)
 let header_forward_list_of_yojson tree path =
   list_of_yojson header_enum_of_yojson tree path
 let header_object_of_yojson tree path =
@@ -888,54 +914,58 @@ let tag_of_yojson tree path =
    } : tag)
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 let container_service_power_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "xlarge" -> Xlarge
-   | `String "large" -> Large
-   | `String "medium" -> Medium
-   | `String "small" -> Small
-   | `String "micro" -> Micro
-   | `String "nano" -> Nano
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContainerServicePowerName" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ContainerServicePowerName") : 
-  container_service_power_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "xlarge" -> Xlarge
+    | `String "large" -> Large
+    | `String "medium" -> Medium
+    | `String "small" -> Small
+    | `String "micro" -> Micro
+    | `String "nano" -> Nano
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContainerServicePowerName" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ContainerServicePowerName") : 
+     container_service_power_name) : container_service_power_name)
 let container_service_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DEPLOYING" -> DEPLOYING
-   | `String "DISABLED" -> DISABLED
-   | `String "DELETING" -> DELETING
-   | `String "UPDATING" -> UPDATING
-   | `String "RUNNING" -> RUNNING
-   | `String "READY" -> READY
-   | `String "PENDING" -> PENDING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ContainerServiceState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ContainerServiceState") : 
-  container_service_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DEPLOYING" -> DEPLOYING
+    | `String "DISABLED" -> DISABLED
+    | `String "DELETING" -> DELETING
+    | `String "UPDATING" -> UPDATING
+    | `String "RUNNING" -> RUNNING
+    | `String "READY" -> READY
+    | `String "PENDING" -> PENDING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ContainerServiceState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ContainerServiceState") : 
+     container_service_state) : container_service_state)
 let container_service_state_detail_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UNKNOWN_ERROR" -> UNKNOWN_ERROR
-   | `String "CERTIFICATE_LIMIT_EXCEEDED" -> CERTIFICATE_LIMIT_EXCEEDED
-   | `String "ACTIVATING_DEPLOYMENT" -> ACTIVATING_DEPLOYMENT
-   | `String "EVALUATING_HEALTH_CHECK" -> EVALUATING_HEALTH_CHECK
-   | `String "CREATING_DEPLOYMENT" -> CREATING_DEPLOYMENT
-   | `String "PROVISIONING_SERVICE" -> PROVISIONING_SERVICE
-   | `String "PROVISIONING_CERTIFICATE" -> PROVISIONING_CERTIFICATE
-   | `String "CREATING_NETWORK_INFRASTRUCTURE" ->
-       CREATING_NETWORK_INFRASTRUCTURE
-   | `String "CREATING_SYSTEM_RESOURCES" -> CREATING_SYSTEM_RESOURCES
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContainerServiceStateDetailCode" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ContainerServiceStateDetailCode") : 
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNKNOWN_ERROR" -> UNKNOWN_ERROR
+    | `String "CERTIFICATE_LIMIT_EXCEEDED" -> CERTIFICATE_LIMIT_EXCEEDED
+    | `String "ACTIVATING_DEPLOYMENT" -> ACTIVATING_DEPLOYMENT
+    | `String "EVALUATING_HEALTH_CHECK" -> EVALUATING_HEALTH_CHECK
+    | `String "CREATING_DEPLOYMENT" -> CREATING_DEPLOYMENT
+    | `String "PROVISIONING_SERVICE" -> PROVISIONING_SERVICE
+    | `String "PROVISIONING_CERTIFICATE" -> PROVISIONING_CERTIFICATE
+    | `String "CREATING_NETWORK_INFRASTRUCTURE" ->
+        CREATING_NETWORK_INFRASTRUCTURE
+    | `String "CREATING_SYSTEM_RESOURCES" -> CREATING_SYSTEM_RESOURCES
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContainerServiceStateDetailCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ContainerServiceStateDetailCode") : container_service_state_detail_code) : 
   container_service_state_detail_code)
 let container_service_state_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -950,34 +980,37 @@ let container_service_state_detail_of_yojson tree path =
    } : container_service_state_detail)
 let container_service_scale_of_yojson = int_of_yojson
 let container_service_deployment_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "INACTIVE" -> INACTIVE
-   | `String "ACTIVE" -> ACTIVE
-   | `String "ACTIVATING" -> ACTIVATING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContainerServiceDeploymentState" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ContainerServiceDeploymentState") : 
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "INACTIVE" -> INACTIVE
+    | `String "ACTIVE" -> ACTIVE
+    | `String "ACTIVATING" -> ACTIVATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContainerServiceDeploymentState" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ContainerServiceDeploymentState") : container_service_deployment_state) : 
   container_service_deployment_state)
 let environment_of_yojson tree path =
   map_of_yojson string__of_yojson string__of_yojson tree path
 let container_service_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UDP" -> UDP
-   | `String "TCP" -> TCP
-   | `String "HTTPS" -> HTTPS
-   | `String "HTTP" -> HTTP
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContainerServiceProtocol" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ContainerServiceProtocol") : 
-  container_service_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UDP" -> UDP
+    | `String "TCP" -> TCP
+    | `String "HTTPS" -> HTTPS
+    | `String "HTTP" -> HTTP
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContainerServiceProtocol" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ContainerServiceProtocol") : 
+     container_service_protocol) : container_service_protocol)
 let port_map_of_yojson tree path =
   map_of_yojson string__of_yojson container_service_protocol_of_yojson tree
     path
@@ -1197,12 +1230,14 @@ let update_container_service_request_of_yojson tree path =
           path)
    } : update_container_service_request)
 let access_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Private" -> Private
-   | `String "Public" -> Public
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "AccessType" value)
-   | _ -> raise (deserialize_wrong_type_error path "AccessType") : access_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "private" -> Private
+    | `String "public" -> Public
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "AccessType" value)
+    | _ -> raise (deserialize_wrong_type_error path "AccessType") : access_type) : 
+  access_type)
 let access_rules_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1383,16 +1418,17 @@ let unpeer_vpc_result_of_yojson tree path =
 let unpeer_vpc_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let treat_missing_data_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Missing" -> Missing
-   | `String "Ignore" -> Ignore
-   | `String "NotBreaching" -> NotBreaching
-   | `String "Breaching" -> Breaching
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "TreatMissingData" value)
-   | _ -> raise (deserialize_wrong_type_error path "TreatMissingData") : 
-  treat_missing_data)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "missing" -> Missing
+    | `String "ignore" -> Ignore
+    | `String "notBreaching" -> NotBreaching
+    | `String "breaching" -> Breaching
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "TreatMissingData" value)
+    | _ -> raise (deserialize_wrong_type_error path "TreatMissingData") : 
+     treat_missing_data) : treat_missing_data)
 let time_period_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1411,13 +1447,15 @@ let test_alarm_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : test_alarm_result)
 let alarm_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INSUFFICIENT_DATA" -> INSUFFICIENT_DATA
-   | `String "ALARM" -> ALARM
-   | `String "OK" -> OK
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "AlarmState" value)
-   | _ -> raise (deserialize_wrong_type_error path "AlarmState") : alarm_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INSUFFICIENT_DATA" -> INSUFFICIENT_DATA
+    | `String "ALARM" -> ALARM
+    | `String "OK" -> OK
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "AlarmState" value)
+    | _ -> raise (deserialize_wrong_type_error path "AlarmState") : alarm_state) : 
+  alarm_state)
 let test_alarm_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1502,27 +1540,31 @@ let stop_gui_session_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "resourceName" _list path)
    } : stop_gui_session_request)
 let status_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Inactive" -> Inactive
-   | `String "Active" -> Active
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "StatusType" value)
-   | _ -> raise (deserialize_wrong_type_error path "StatusType") : status_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Inactive" -> Inactive
+    | `String "Active" -> Active
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "StatusType" value)
+    | _ -> raise (deserialize_wrong_type_error path "StatusType") : status_type) : 
+  status_type)
 let status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FailedStoppingGUISession" -> FailedStoppingGUISession
-   | `String "FailedStartingGUISession" -> FailedStartingGUISession
-   | `String "FailedInstanceCreation" -> FailedInstanceCreation
-   | `String "SettingUpInstance" -> SettingUpInstance
-   | `String "Stopping" -> Stopping
-   | `String "Stopped" -> Stopped
-   | `String "Starting" -> Starting
-   | `String "Started" -> Started
-   | `String "NotStarted" -> NotStarted
-   | `String "StartExpired" -> StartExpired
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Status" value)
-   | _ -> raise (deserialize_wrong_type_error path "Status") : status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "failedStoppingGUISession" -> FailedStoppingGUISession
+    | `String "failedStartingGUISession" -> FailedStartingGUISession
+    | `String "failedInstanceCreation" -> FailedInstanceCreation
+    | `String "settingUpInstance" -> SettingUpInstance
+    | `String "stopping" -> Stopping
+    | `String "stopped" -> Stopped
+    | `String "starting" -> Starting
+    | `String "started" -> Started
+    | `String "notStarted" -> NotStarted
+    | `String "startExpired" -> StartExpired
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Status" value)
+    | _ -> raise (deserialize_wrong_type_error path "Status") : status) : 
+  status)
 let ip_address_of_yojson = string_of_yojson
 let static_ip_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1628,15 +1670,16 @@ let set_resource_access_for_bucket_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : set_resource_access_for_bucket_result)
 let resource_bucket_access_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Deny" -> Deny
-   | `String "Allow" -> Allow
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ResourceBucketAccess"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceBucketAccess") : 
-  resource_bucket_access)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "deny" -> Deny
+    | `String "allow" -> Allow
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceBucketAccess"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceBucketAccess") : 
+     resource_bucket_access) : resource_bucket_access)
 let set_resource_access_for_bucket_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1655,15 +1698,16 @@ let set_ip_address_type_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : set_ip_address_type_result)
 let ip_address_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "IPV6" -> IPV6
-   | `String "IPV4" -> IPV4
-   | `String "DUALSTACK" -> DUALSTACK
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "IpAddressType" value)
-   | _ -> raise (deserialize_wrong_type_error path "IpAddressType") : 
-  ip_address_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ipv6" -> IPV6
+    | `String "ipv4" -> IPV4
+    | `String "dualstack" -> DUALSTACK
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "IpAddressType" value)
+    | _ -> raise (deserialize_wrong_type_error path "IpAddressType") : 
+     ip_address_type) : ip_address_type)
 let set_ip_address_type_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1702,16 +1746,18 @@ let send_contact_method_verification_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : send_contact_method_verification_result)
 let contact_method_verification_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Email" -> Email
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContactMethodVerificationProtocol" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ContactMethodVerificationProtocol") : contact_method_verification_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Email" -> Email
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContactMethodVerificationProtocol" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ContactMethodVerificationProtocol") : contact_method_verification_protocol) : 
+  contact_method_verification_protocol)
 let send_contact_method_verification_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1721,21 +1767,25 @@ let send_contact_method_verification_request_of_yojson tree path =
    } : send_contact_method_verification_request)
 let revocation_reason_of_yojson = string_of_yojson
 let pricing_unit_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Queries" -> Queries
-   | `String "Bundles" -> Bundles
-   | `String "GBMo" -> GBMo
-   | `String "Hrs" -> Hrs
-   | `String "GB" -> GB
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "PricingUnit" value)
-   | _ -> raise (deserialize_wrong_type_error path "PricingUnit") : pricing_unit)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Queries" -> Queries
+    | `String "Bundles" -> Bundles
+    | `String "GB-Mo" -> GBMo
+    | `String "Hrs" -> Hrs
+    | `String "GB" -> GB
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "PricingUnit" value)
+    | _ -> raise (deserialize_wrong_type_error path "PricingUnit") : 
+     pricing_unit) : pricing_unit)
 let currency_of_yojson (tree : t) path =
-  (match tree with
-   | `String "USD" -> USD
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Currency" value)
-   | _ -> raise (deserialize_wrong_type_error path "Currency") : currency)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "USD" -> USD
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Currency" value)
+    | _ -> raise (deserialize_wrong_type_error path "Currency") : currency) : 
+  currency)
 let estimate_by_time_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1825,17 +1875,19 @@ let reset_distribution_cache_request_of_yojson tree path =
    } : reset_distribution_cache_request)
 let request_failure_reason_of_yojson = string_of_yojson
 let dns_record_creation_state_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Started" -> Started
-   | `String "Succeeded" -> Succeeded
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "DnsRecordCreationStateCode" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "DnsRecordCreationStateCode") : 
-  dns_record_creation_state_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> Failed
+    | `String "STARTED" -> Started
+    | `String "SUCCEEDED" -> Succeeded
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "DnsRecordCreationStateCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "DnsRecordCreationStateCode") : 
+     dns_record_creation_state_code) : dns_record_creation_state_code)
 let dns_record_creation_state_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1848,18 +1900,20 @@ let dns_record_creation_state_of_yojson tree path =
           _list path)
    } : dns_record_creation_state)
 let certificate_domain_validation_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Success" -> Success
-   | `String "Failed" -> Failed
-   | `String "PendingValidation" -> PendingValidation
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CertificateDomainValidationStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "CertificateDomainValidationStatus") : certificate_domain_validation_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SUCCESS" -> Success
+    | `String "FAILED" -> Failed
+    | `String "PENDING_VALIDATION" -> PendingValidation
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CertificateDomainValidationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "CertificateDomainValidationStatus") : certificate_domain_validation_status) : 
+  certificate_domain_validation_status)
 let domain_validation_record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1882,16 +1936,17 @@ let domain_validation_record_of_yojson tree path =
 let domain_validation_record_list_of_yojson tree path =
   list_of_yojson domain_validation_record_of_yojson tree path
 let renewal_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Success" -> Success
-   | `String "PendingValidation" -> PendingValidation
-   | `String "PendingAutoRenewal" -> PendingAutoRenewal
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RenewalStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "RenewalStatus") : 
-  renewal_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Failed" -> Failed
+    | `String "Success" -> Success
+    | `String "PendingValidation" -> PendingValidation
+    | `String "PendingAutoRenewal" -> PendingAutoRenewal
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RenewalStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "RenewalStatus") : 
+     renewal_status) : renewal_status)
 let renewal_status_reason_of_yojson = string_of_yojson
 let renewal_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1980,34 +2035,37 @@ let relational_database_snapshot_of_yojson tree path =
 let relational_database_snapshot_list_of_yojson tree path =
   list_of_yojson relational_database_snapshot_of_yojson tree path
 let relational_database_password_version_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PENDING" -> PENDING
-   | `String "PREVIOUS" -> PREVIOUS
-   | `String "CURRENT" -> CURRENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RelationalDatabasePasswordVersion" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "RelationalDatabasePasswordVersion") : relational_database_password_version)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PENDING" -> PENDING
+    | `String "PREVIOUS" -> PREVIOUS
+    | `String "CURRENT" -> CURRENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RelationalDatabasePasswordVersion" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "RelationalDatabasePasswordVersion") : relational_database_password_version) : 
+  relational_database_password_version)
 let relational_database_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NetworkTransmitThroughput" -> NetworkTransmitThroughput
-   | `String "NetworkReceiveThroughput" -> NetworkReceiveThroughput
-   | `String "FreeStorageSpace" -> FreeStorageSpace
-   | `String "DiskQueueDepth" -> DiskQueueDepth
-   | `String "DatabaseConnections" -> DatabaseConnections
-   | `String "CPUUtilization" -> CPUUtilization
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RelationalDatabaseMetricName" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "RelationalDatabaseMetricName") : 
-  relational_database_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NetworkTransmitThroughput" -> NetworkTransmitThroughput
+    | `String "NetworkReceiveThroughput" -> NetworkReceiveThroughput
+    | `String "FreeStorageSpace" -> FreeStorageSpace
+    | `String "DiskQueueDepth" -> DiskQueueDepth
+    | `String "DatabaseConnections" -> DatabaseConnections
+    | `String "CPUUtilization" -> CPUUtilization
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RelationalDatabaseMetricName" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "RelationalDatabaseMetricName") : 
+     relational_database_metric_name) : relational_database_metric_name)
 let relational_database_hardware_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2177,15 +2235,16 @@ let relational_database_event_of_yojson tree path =
 let relational_database_event_list_of_yojson tree path =
   list_of_yojson relational_database_event_of_yojson tree path
 let relational_database_engine_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MYSQL" -> MYSQL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RelationalDatabaseEngine" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "RelationalDatabaseEngine") : 
-  relational_database_engine)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "mysql" -> MYSQL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RelationalDatabaseEngine" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "RelationalDatabaseEngine") : 
+     relational_database_engine) : relational_database_engine)
 let relational_database_bundle_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2245,18 +2304,20 @@ let relational_database_blueprint_of_yojson tree path =
 let relational_database_blueprint_list_of_yojson tree path =
   list_of_yojson relational_database_blueprint_of_yojson tree path
 let name_servers_update_state_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Started" -> Started
-   | `String "Failed" -> Failed
-   | `String "Pending" -> Pending
-   | `String "Succeeded" -> Succeeded
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "NameServersUpdateStateCode" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "NameServersUpdateStateCode") : 
-  name_servers_update_state_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "STARTED" -> Started
+    | `String "FAILED" -> Failed
+    | `String "PENDING" -> Pending
+    | `String "SUCCEEDED" -> Succeeded
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "NameServersUpdateStateCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "NameServersUpdateStateCode") : 
+     name_servers_update_state_code) : name_servers_update_state_code)
 let name_servers_update_state_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2269,19 +2330,20 @@ let name_servers_update_state_of_yojson tree path =
           _list path)
    } : name_servers_update_state)
 let r53_hosted_zone_deletion_state_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Started" -> Started
-   | `String "Failed" -> Failed
-   | `String "Pending" -> Pending
-   | `String "Succeeded" -> Succeeded
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "R53HostedZoneDeletionStateCode" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "R53HostedZoneDeletionStateCode") : 
-  r53_hosted_zone_deletion_state_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "STARTED" -> Started
+    | `String "FAILED" -> Failed
+    | `String "PENDING" -> Pending
+    | `String "SUCCEEDED" -> Succeeded
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "R53HostedZoneDeletionStateCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "R53HostedZoneDeletionStateCode") : 
+     r53_hosted_zone_deletion_state_code) : r53_hosted_zone_deletion_state_code)
 let r53_hosted_zone_deletion_state_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2374,13 +2436,15 @@ let region_of_yojson tree path =
 let region_list_of_yojson tree path =
   list_of_yojson region_of_yojson tree path
 let record_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Succeeded" -> Succeeded
-   | `String "Started" -> Started
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "RecordState" value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordState") : record_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Failed" -> Failed
+    | `String "Succeeded" -> Succeeded
+    | `String "Started" -> Started
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "RecordState" value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordState") : 
+     record_state) : record_state)
 let reboot_relational_database_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2417,17 +2481,18 @@ let put_instance_public_ports_result_of_yojson tree path =
    } : put_instance_public_ports_result)
 let port_of_yojson = int_of_yojson
 let network_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ICMPV6" -> ICMPV6
-   | `String "ICMP" -> ICMP
-   | `String "UDP" -> UDP
-   | `String "ALL" -> ALL
-   | `String "TCP" -> TCP
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "NetworkProtocol" value)
-   | _ -> raise (deserialize_wrong_type_error path "NetworkProtocol") : 
-  network_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "icmpv6" -> ICMPV6
+    | `String "icmp" -> ICMP
+    | `String "udp" -> UDP
+    | `String "all" -> ALL
+    | `String "tcp" -> TCP
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "NetworkProtocol" value)
+    | _ -> raise (deserialize_wrong_type_error path "NetworkProtocol") : 
+     network_protocol) : network_protocol)
 let port_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2466,57 +2531,62 @@ let put_alarm_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : put_alarm_result)
 let metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "BurstCapacityPercentage" -> BurstCapacityPercentage
-   | `String "BurstCapacityTime" -> BurstCapacityTime
-   | `String "NetworkTransmitThroughput" -> NetworkTransmitThroughput
-   | `String "NetworkReceiveThroughput" -> NetworkReceiveThroughput
-   | `String "FreeStorageSpace" -> FreeStorageSpace
-   | `String "DiskQueueDepth" -> DiskQueueDepth
-   | `String "DatabaseConnections" -> DatabaseConnections
-   | `String "RequestCount" -> RequestCount
-   | `String "RejectedConnectionCount" -> RejectedConnectionCount
-   | `String "InstanceResponseTime" -> InstanceResponseTime
-   | `String "HTTPCode_Instance_5XX_Count" -> HTTPCode_Instance_5XX_Count
-   | `String "HTTPCode_Instance_4XX_Count" -> HTTPCode_Instance_4XX_Count
-   | `String "HTTPCode_Instance_3XX_Count" -> HTTPCode_Instance_3XX_Count
-   | `String "HTTPCode_Instance_2XX_Count" -> HTTPCode_Instance_2XX_Count
-   | `String "HTTPCode_LB_5XX_Count" -> HTTPCode_LB_5XX_Count
-   | `String "HTTPCode_LB_4XX_Count" -> HTTPCode_LB_4XX_Count
-   | `String "UnhealthyHostCount" -> UnhealthyHostCount
-   | `String "HealthyHostCount" -> HealthyHostCount
-   | `String "ClientTLSNegotiationErrorCount" ->
-       ClientTLSNegotiationErrorCount
-   | `String "StatusCheckFailed_System" -> StatusCheckFailed_System
-   | `String "StatusCheckFailed_Instance" -> StatusCheckFailed_Instance
-   | `String "StatusCheckFailed" -> StatusCheckFailed
-   | `String "NetworkOut" -> NetworkOut
-   | `String "NetworkIn" -> NetworkIn
-   | `String "CPUUtilization" -> CPUUtilization
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MetricName" value)
-   | _ -> raise (deserialize_wrong_type_error path "MetricName") : metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "BurstCapacityPercentage" -> BurstCapacityPercentage
+    | `String "BurstCapacityTime" -> BurstCapacityTime
+    | `String "NetworkTransmitThroughput" -> NetworkTransmitThroughput
+    | `String "NetworkReceiveThroughput" -> NetworkReceiveThroughput
+    | `String "FreeStorageSpace" -> FreeStorageSpace
+    | `String "DiskQueueDepth" -> DiskQueueDepth
+    | `String "DatabaseConnections" -> DatabaseConnections
+    | `String "RequestCount" -> RequestCount
+    | `String "RejectedConnectionCount" -> RejectedConnectionCount
+    | `String "InstanceResponseTime" -> InstanceResponseTime
+    | `String "HTTPCode_Instance_5XX_Count" -> HTTPCode_Instance_5XX_Count
+    | `String "HTTPCode_Instance_4XX_Count" -> HTTPCode_Instance_4XX_Count
+    | `String "HTTPCode_Instance_3XX_Count" -> HTTPCode_Instance_3XX_Count
+    | `String "HTTPCode_Instance_2XX_Count" -> HTTPCode_Instance_2XX_Count
+    | `String "HTTPCode_LB_5XX_Count" -> HTTPCode_LB_5XX_Count
+    | `String "HTTPCode_LB_4XX_Count" -> HTTPCode_LB_4XX_Count
+    | `String "UnhealthyHostCount" -> UnhealthyHostCount
+    | `String "HealthyHostCount" -> HealthyHostCount
+    | `String "ClientTLSNegotiationErrorCount" ->
+        ClientTLSNegotiationErrorCount
+    | `String "StatusCheckFailed_System" -> StatusCheckFailed_System
+    | `String "StatusCheckFailed_Instance" -> StatusCheckFailed_Instance
+    | `String "StatusCheckFailed" -> StatusCheckFailed
+    | `String "NetworkOut" -> NetworkOut
+    | `String "NetworkIn" -> NetworkIn
+    | `String "CPUUtilization" -> CPUUtilization
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MetricName" value)
+    | _ -> raise (deserialize_wrong_type_error path "MetricName") : metric_name) : 
+  metric_name)
 let comparison_operator_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LessThanOrEqualToThreshold" -> LessThanOrEqualToThreshold
-   | `String "LessThanThreshold" -> LessThanThreshold
-   | `String "GreaterThanThreshold" -> GreaterThanThreshold
-   | `String "GreaterThanOrEqualToThreshold" -> GreaterThanOrEqualToThreshold
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ComparisonOperator"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ComparisonOperator") : 
-  comparison_operator)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LessThanOrEqualToThreshold" -> LessThanOrEqualToThreshold
+    | `String "LessThanThreshold" -> LessThanThreshold
+    | `String "GreaterThanThreshold" -> GreaterThanThreshold
+    | `String "GreaterThanOrEqualToThreshold" ->
+        GreaterThanOrEqualToThreshold
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ComparisonOperator"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ComparisonOperator") : 
+     comparison_operator) : comparison_operator)
 let contact_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SMS" -> SMS
-   | `String "Email" -> Email
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ContactProtocol" value)
-   | _ -> raise (deserialize_wrong_type_error path "ContactProtocol") : 
-  contact_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SMS" -> SMS
+    | `String "Email" -> Email
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ContactProtocol" value)
+    | _ -> raise (deserialize_wrong_type_error path "ContactProtocol") : 
+     contact_protocol) : contact_protocol)
 let contact_protocols_list_of_yojson tree path =
   list_of_yojson contact_protocol_of_yojson tree path
 let notification_trigger_list_of_yojson tree path =
@@ -2557,34 +2627,38 @@ let put_alarm_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "alarmName" _list path)
    } : put_alarm_request)
 let port_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Closed" -> Closed
-   | `String "Open" -> Open
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "PortState" value)
-   | _ -> raise (deserialize_wrong_type_error path "PortState") : port_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "closed" -> Closed
+    | `String "open" -> Open
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "PortState" value)
+    | _ -> raise (deserialize_wrong_type_error path "PortState") : port_state) : 
+  port_state)
 let port_list_of_yojson tree path = list_of_yojson port_of_yojson tree path
 let port_info_source_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Closed" -> Closed
-   | `String "None" -> None
-   | `String "Instance" -> Instance
-   | `String "Default" -> Default
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "PortInfoSourceType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "PortInfoSourceType") : 
-  port_info_source_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CLOSED" -> Closed
+    | `String "NONE" -> None
+    | `String "INSTANCE" -> Instance
+    | `String "DEFAULT" -> Default
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "PortInfoSourceType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "PortInfoSourceType") : 
+     port_info_source_type) : port_info_source_type)
 let port_access_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Private" -> Private
-   | `String "Public" -> Public
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "PortAccessType" value)
-   | _ -> raise (deserialize_wrong_type_error path "PortAccessType") : 
-  port_access_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Private" -> Private
+    | `String "Public" -> Public
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "PortAccessType" value)
+    | _ -> raise (deserialize_wrong_type_error path "PortAccessType") : 
+     port_access_type) : port_access_type)
 let peer_vpc_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2659,49 +2733,52 @@ let monitored_resource_info_of_yojson tree path =
           path)
    } : monitored_resource_info)
 let metric_unit_of_yojson (tree : t) path =
-  (match tree with
-   | `String "None" -> None
-   | `String "CountSecond" -> CountSecond
-   | `String "TerabitsSecond" -> TerabitsSecond
-   | `String "GigabitsSecond" -> GigabitsSecond
-   | `String "MegabitsSecond" -> MegabitsSecond
-   | `String "KilobitsSecond" -> KilobitsSecond
-   | `String "BitsSecond" -> BitsSecond
-   | `String "TerabytesSecond" -> TerabytesSecond
-   | `String "GigabytesSecond" -> GigabytesSecond
-   | `String "MegabytesSecond" -> MegabytesSecond
-   | `String "KilobytesSecond" -> KilobytesSecond
-   | `String "BytesSecond" -> BytesSecond
-   | `String "Count" -> Count
-   | `String "Percent" -> Percent
-   | `String "Terabits" -> Terabits
-   | `String "Gigabits" -> Gigabits
-   | `String "Megabits" -> Megabits
-   | `String "Kilobits" -> Kilobits
-   | `String "Bits" -> Bits
-   | `String "Terabytes" -> Terabytes
-   | `String "Gigabytes" -> Gigabytes
-   | `String "Megabytes" -> Megabytes
-   | `String "Kilobytes" -> Kilobytes
-   | `String "Bytes" -> Bytes
-   | `String "Milliseconds" -> Milliseconds
-   | `String "Microseconds" -> Microseconds
-   | `String "Seconds" -> Seconds
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MetricUnit" value)
-   | _ -> raise (deserialize_wrong_type_error path "MetricUnit") : metric_unit)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "None" -> None
+    | `String "Count/Second" -> CountSecond
+    | `String "Terabits/Second" -> TerabitsSecond
+    | `String "Gigabits/Second" -> GigabitsSecond
+    | `String "Megabits/Second" -> MegabitsSecond
+    | `String "Kilobits/Second" -> KilobitsSecond
+    | `String "Bits/Second" -> BitsSecond
+    | `String "Terabytes/Second" -> TerabytesSecond
+    | `String "Gigabytes/Second" -> GigabytesSecond
+    | `String "Megabytes/Second" -> MegabytesSecond
+    | `String "Kilobytes/Second" -> KilobytesSecond
+    | `String "Bytes/Second" -> BytesSecond
+    | `String "Count" -> Count
+    | `String "Percent" -> Percent
+    | `String "Terabits" -> Terabits
+    | `String "Gigabits" -> Gigabits
+    | `String "Megabits" -> Megabits
+    | `String "Kilobits" -> Kilobits
+    | `String "Bits" -> Bits
+    | `String "Terabytes" -> Terabytes
+    | `String "Gigabytes" -> Gigabytes
+    | `String "Megabytes" -> Megabytes
+    | `String "Kilobytes" -> Kilobytes
+    | `String "Bytes" -> Bytes
+    | `String "Milliseconds" -> Milliseconds
+    | `String "Microseconds" -> Microseconds
+    | `String "Seconds" -> Seconds
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MetricUnit" value)
+    | _ -> raise (deserialize_wrong_type_error path "MetricUnit") : metric_unit) : 
+  metric_unit)
 let metric_statistic_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SampleCount" -> SampleCount
-   | `String "Average" -> Average
-   | `String "Sum" -> Sum
-   | `String "Maximum" -> Maximum
-   | `String "Minimum" -> Minimum
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "MetricStatistic" value)
-   | _ -> raise (deserialize_wrong_type_error path "MetricStatistic") : 
-  metric_statistic)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SampleCount" -> SampleCount
+    | `String "Average" -> Average
+    | `String "Sum" -> Sum
+    | `String "Maximum" -> Maximum
+    | `String "Minimum" -> Minimum
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MetricStatistic" value)
+    | _ -> raise (deserialize_wrong_type_error path "MetricStatistic") : 
+     metric_statistic) : metric_statistic)
 let metric_statistic_list_of_yojson tree path =
   list_of_yojson metric_statistic_of_yojson tree path
 let metric_period_of_yojson = int_of_yojson
@@ -2777,71 +2854,79 @@ let load_balancer_tls_certificate_summary_of_yojson tree path =
 let load_balancer_tls_certificate_summary_list_of_yojson tree path =
   list_of_yojson load_balancer_tls_certificate_summary_of_yojson tree path
 let load_balancer_tls_certificate_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unknown" -> Unknown
-   | `String "Failed" -> Failed
-   | `String "Revoked" -> Revoked
-   | `String "ValidationTimedOut" -> ValidationTimedOut
-   | `String "Expired" -> Expired
-   | `String "Inactive" -> Inactive
-   | `String "Issued" -> Issued
-   | `String "PendingValidation" -> PendingValidation
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateStatus") : load_balancer_tls_certificate_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNKNOWN" -> Unknown
+    | `String "FAILED" -> Failed
+    | `String "REVOKED" -> Revoked
+    | `String "VALIDATION_TIMED_OUT" -> ValidationTimedOut
+    | `String "EXPIRED" -> Expired
+    | `String "INACTIVE" -> Inactive
+    | `String "ISSUED" -> Issued
+    | `String "PENDING_VALIDATION" -> PendingValidation
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateStatus") : load_balancer_tls_certificate_status) : 
+  load_balancer_tls_certificate_status)
 let load_balancer_tls_certificate_revocation_reason_of_yojson (tree : t) path
   =
-  (match tree with
-   | `String "AACompromise" -> AACompromise
-   | `String "PrivilegeWithdrawn" -> PrivilegeWithdrawn
-   | `String "RemoveFromCrl" -> RemoveFromCrl
-   | `String "CertificateHold" -> CertificateHold
-   | `String "CessationOfOperation" -> CessationOfOperation
-   | `String "Superceded" -> Superceded
-   | `String "AffiliationChanged" -> AffiliationChanged
-   | `String "CaCompromise" -> CaCompromise
-   | `String "KeyCompromise" -> KeyCompromise
-   | `String "Unspecified" -> Unspecified
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateRevocationReason" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateRevocationReason") : load_balancer_tls_certificate_revocation_reason)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "A_A_COMPROMISE" -> AACompromise
+    | `String "PRIVILEGE_WITHDRAWN" -> PrivilegeWithdrawn
+    | `String "REMOVE_FROM_CRL" -> RemoveFromCrl
+    | `String "CERTIFICATE_HOLD" -> CertificateHold
+    | `String "CESSATION_OF_OPERATION" -> CessationOfOperation
+    | `String "SUPERCEDED" -> Superceded
+    | `String "AFFILIATION_CHANGED" -> AffiliationChanged
+    | `String "CA_COMPROMISE" -> CaCompromise
+    | `String "KEY_COMPROMISE" -> KeyCompromise
+    | `String "UNSPECIFIED" -> Unspecified
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateRevocationReason" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateRevocationReason") : load_balancer_tls_certificate_revocation_reason) : 
+  load_balancer_tls_certificate_revocation_reason)
 let load_balancer_tls_certificate_renewal_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Success" -> Success
-   | `String "PendingValidation" -> PendingValidation
-   | `String "PendingAutoRenewal" -> PendingAutoRenewal
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateRenewalStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateRenewalStatus") : load_balancer_tls_certificate_renewal_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> Failed
+    | `String "SUCCESS" -> Success
+    | `String "PENDING_VALIDATION" -> PendingValidation
+    | `String "PENDING_AUTO_RENEWAL" -> PendingAutoRenewal
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateRenewalStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateRenewalStatus") : load_balancer_tls_certificate_renewal_status) : 
+  load_balancer_tls_certificate_renewal_status)
 let load_balancer_tls_certificate_domain_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Success" -> Success
-   | `String "Failed" -> Failed
-   | `String "PendingValidation" -> PendingValidation
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateDomainStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateDomainStatus") : load_balancer_tls_certificate_domain_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SUCCESS" -> Success
+    | `String "FAILED" -> Failed
+    | `String "PENDING_VALIDATION" -> PendingValidation
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateDomainStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateDomainStatus") : load_balancer_tls_certificate_domain_status) : 
+  load_balancer_tls_certificate_domain_status)
 let load_balancer_tls_certificate_domain_validation_option_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -2876,18 +2961,20 @@ let load_balancer_tls_certificate_renewal_summary_of_yojson tree path =
    } : load_balancer_tls_certificate_renewal_summary)
 let load_balancer_tls_certificate_dns_record_creation_state_code_of_yojson
   (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Started" -> Started
-   | `String "Succeeded" -> Succeeded
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateDnsRecordCreationStateCode" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateDnsRecordCreationStateCode") : 
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> Failed
+    | `String "STARTED" -> Started
+    | `String "SUCCEEDED" -> Succeeded
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateDnsRecordCreationStateCode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateDnsRecordCreationStateCode") : 
+     load_balancer_tls_certificate_dns_record_creation_state_code) : 
   load_balancer_tls_certificate_dns_record_creation_state_code)
 let load_balancer_tls_certificate_dns_record_creation_state_of_yojson tree
   path =
@@ -2935,21 +3022,23 @@ let load_balancer_tls_certificate_domain_validation_record_list_of_yojson
     load_balancer_tls_certificate_domain_validation_record_of_yojson tree
     path
 let load_balancer_tls_certificate_failure_reason_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Other" -> Other
-   | `String "InvalidPublicDomain" -> InvalidPublicDomain
-   | `String "DomainNotAllowed" -> DomainNotAllowed
-   | `String "AdditionalVerificationRequired" ->
-       AdditionalVerificationRequired
-   | `String "NoAvailableContacts" -> NoAvailableContacts
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LoadBalancerTlsCertificateFailureReason" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "LoadBalancerTlsCertificateFailureReason") : load_balancer_tls_certificate_failure_reason)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OTHER" -> Other
+    | `String "INVALID_PUBLIC_DOMAIN" -> InvalidPublicDomain
+    | `String "DOMAIN_NOT_ALLOWED" -> DomainNotAllowed
+    | `String "ADDITIONAL_VERIFICATION_REQUIRED" ->
+        AdditionalVerificationRequired
+    | `String "NO_AVAILABLE_CONTACTS" -> NoAvailableContacts
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LoadBalancerTlsCertificateFailureReason" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "LoadBalancerTlsCertificateFailureReason") : load_balancer_tls_certificate_failure_reason) : 
+  load_balancer_tls_certificate_failure_reason)
 let load_balancer_tls_certificate_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3044,82 +3133,88 @@ let load_balancer_tls_certificate_of_yojson tree path =
 let load_balancer_tls_certificate_list_of_yojson tree path =
   list_of_yojson load_balancer_tls_certificate_of_yojson tree path
 let load_balancer_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unknown" -> Unknown
-   | `String "Failed" -> Failed
-   | `String "ActiveImpaired" -> ActiveImpaired
-   | `String "Provisioning" -> Provisioning
-   | `String "Active" -> Active
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "LoadBalancerState" value)
-   | _ -> raise (deserialize_wrong_type_error path "LoadBalancerState") : 
-  load_balancer_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "unknown" -> Unknown
+    | `String "failed" -> Failed
+    | `String "active_impaired" -> ActiveImpaired
+    | `String "provisioning" -> Provisioning
+    | `String "active" -> Active
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LoadBalancerState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "LoadBalancerState") : 
+     load_balancer_state) : load_balancer_state)
 let load_balancer_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "HTTP" -> HTTP
-   | `String "HTTP_HTTPS" -> HTTP_HTTPS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "LoadBalancerProtocol"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "LoadBalancerProtocol") : 
-  load_balancer_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "HTTP" -> HTTP
+    | `String "HTTP_HTTPS" -> HTTP_HTTPS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LoadBalancerProtocol"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "LoadBalancerProtocol") : 
+     load_balancer_protocol) : load_balancer_protocol)
 let load_balancer_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RequestCount" -> RequestCount
-   | `String "RejectedConnectionCount" -> RejectedConnectionCount
-   | `String "InstanceResponseTime" -> InstanceResponseTime
-   | `String "HTTPCode_Instance_5XX_Count" -> HTTPCode_Instance_5XX_Count
-   | `String "HTTPCode_Instance_4XX_Count" -> HTTPCode_Instance_4XX_Count
-   | `String "HTTPCode_Instance_3XX_Count" -> HTTPCode_Instance_3XX_Count
-   | `String "HTTPCode_Instance_2XX_Count" -> HTTPCode_Instance_2XX_Count
-   | `String "HTTPCode_LB_5XX_Count" -> HTTPCode_LB_5XX_Count
-   | `String "HTTPCode_LB_4XX_Count" -> HTTPCode_LB_4XX_Count
-   | `String "UnhealthyHostCount" -> UnhealthyHostCount
-   | `String "HealthyHostCount" -> HealthyHostCount
-   | `String "ClientTLSNegotiationErrorCount" ->
-       ClientTLSNegotiationErrorCount
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "LoadBalancerMetricName"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "LoadBalancerMetricName") : 
-  load_balancer_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RequestCount" -> RequestCount
+    | `String "RejectedConnectionCount" -> RejectedConnectionCount
+    | `String "InstanceResponseTime" -> InstanceResponseTime
+    | `String "HTTPCode_Instance_5XX_Count" -> HTTPCode_Instance_5XX_Count
+    | `String "HTTPCode_Instance_4XX_Count" -> HTTPCode_Instance_4XX_Count
+    | `String "HTTPCode_Instance_3XX_Count" -> HTTPCode_Instance_3XX_Count
+    | `String "HTTPCode_Instance_2XX_Count" -> HTTPCode_Instance_2XX_Count
+    | `String "HTTPCode_LB_5XX_Count" -> HTTPCode_LB_5XX_Count
+    | `String "HTTPCode_LB_4XX_Count" -> HTTPCode_LB_4XX_Count
+    | `String "UnhealthyHostCount" -> UnhealthyHostCount
+    | `String "HealthyHostCount" -> HealthyHostCount
+    | `String "ClientTLSNegotiationErrorCount" ->
+        ClientTLSNegotiationErrorCount
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LoadBalancerMetricName"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "LoadBalancerMetricName") : 
+     load_balancer_metric_name) : load_balancer_metric_name)
 let instance_health_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unavailable" -> Unavailable
-   | `String "Draining" -> Draining
-   | `String "Unused" -> Unused
-   | `String "Unhealthy" -> Unhealthy
-   | `String "Healthy" -> Healthy
-   | `String "Initial" -> Initial
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceHealthState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceHealthState") : 
-  instance_health_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "unavailable" -> Unavailable
+    | `String "draining" -> Draining
+    | `String "unused" -> Unused
+    | `String "unhealthy" -> Unhealthy
+    | `String "healthy" -> Healthy
+    | `String "initial" -> Initial
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceHealthState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceHealthState") : 
+     instance_health_state) : instance_health_state)
 let instance_health_reason_of_yojson (tree : t) path =
-  (match tree with
-   | `String "InstanceIpUnusable" -> InstanceIpUnusable
-   | `String "InstanceInvalidState" -> InstanceInvalidState
-   | `String "InstanceDeregistrationInProgress" ->
-       InstanceDeregistrationInProgress
-   | `String "InstanceNotInUse" -> InstanceNotInUse
-   | `String "InstanceNotRegistered" -> InstanceNotRegistered
-   | `String "InstanceFailedHealthChecks" -> InstanceFailedHealthChecks
-   | `String "InstanceTimeout" -> InstanceTimeout
-   | `String "InstanceResponseCodeMismatch" -> InstanceResponseCodeMismatch
-   | `String "LbInternalError" -> LbInternalError
-   | `String "LbInitialHealthChecking" -> LbInitialHealthChecking
-   | `String "LbRegistrationInProgress" -> LbRegistrationInProgress
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceHealthReason"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceHealthReason") : 
-  instance_health_reason)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Instance.IpUnusable" -> InstanceIpUnusable
+    | `String "Instance.InvalidState" -> InstanceInvalidState
+    | `String "Instance.DeregistrationInProgress" ->
+        InstanceDeregistrationInProgress
+    | `String "Instance.NotInUse" -> InstanceNotInUse
+    | `String "Instance.NotRegistered" -> InstanceNotRegistered
+    | `String "Instance.FailedHealthChecks" -> InstanceFailedHealthChecks
+    | `String "Instance.Timeout" -> InstanceTimeout
+    | `String "Instance.ResponseCodeMismatch" -> InstanceResponseCodeMismatch
+    | `String "Lb.InternalError" -> LbInternalError
+    | `String "Lb.InitialHealthChecking" -> LbInitialHealthChecking
+    | `String "Lb.RegistrationInProgress" -> LbRegistrationInProgress
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceHealthReason"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceHealthReason") : 
+     instance_health_reason) : instance_health_reason)
 let instance_health_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3782,16 +3877,17 @@ let get_instance_state_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "instanceName" _list path)
    } : get_instance_state_request)
 let instance_snapshot_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Available" -> Available
-   | `String "Error" -> Error
-   | `String "Pending" -> Pending
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceSnapshotState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceSnapshotState") : 
-  instance_snapshot_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "available" -> Available
+    | `String "error" -> Error
+    | `String "pending" -> Pending
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceSnapshotState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceSnapshotState") : 
+     instance_snapshot_state) : instance_snapshot_state)
 let add_on_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3818,26 +3914,29 @@ let add_on_of_yojson tree path =
 let add_on_list_of_yojson tree path =
   list_of_yojson add_on_of_yojson tree path
 let disk_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unknown" -> Unknown
-   | `String "InUse" -> InUse
-   | `String "Available" -> Available
-   | `String "Error" -> Error
-   | `String "Pending" -> Pending
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "DiskState" value)
-   | _ -> raise (deserialize_wrong_type_error path "DiskState") : disk_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "unknown" -> Unknown
+    | `String "in-use" -> InUse
+    | `String "available" -> Available
+    | `String "error" -> Error
+    | `String "pending" -> Pending
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "DiskState" value)
+    | _ -> raise (deserialize_wrong_type_error path "DiskState") : disk_state) : 
+  disk_state)
 let auto_mount_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NotMounted" -> NotMounted
-   | `String "Mounted" -> Mounted
-   | `String "Pending" -> Pending
-   | `String "Failed" -> Failed
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AutoMountStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "AutoMountStatus") : 
-  auto_mount_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NotMounted" -> NotMounted
+    | `String "Mounted" -> Mounted
+    | `String "Pending" -> Pending
+    | `String "Failed" -> Failed
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AutoMountStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "AutoMountStatus") : 
+     auto_mount_status) : auto_mount_status)
 let disk_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4001,14 +4100,15 @@ let instance_hardware_of_yojson tree path =
           path)
    } : instance_hardware)
 let access_direction_of_yojson (tree : t) path =
-  (match tree with
-   | `String "outbound" -> Outbound
-   | `String "inbound" -> Inbound
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AccessDirection" value)
-   | _ -> raise (deserialize_wrong_type_error path "AccessDirection") : 
-  access_direction)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "outbound" -> Outbound
+    | `String "inbound" -> Inbound
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AccessDirection" value)
+    | _ -> raise (deserialize_wrong_type_error path "AccessDirection") : 
+     access_direction) : access_direction)
 let instance_port_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4057,15 +4157,16 @@ let instance_networking_of_yojson tree path =
           path)
    } : instance_networking)
 let instance_metadata_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "applied" -> Applied
-   | `String "pending" -> Pending
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceMetadataState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceMetadataState") : 
-  instance_metadata_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "applied" -> Applied
+    | `String "pending" -> Pending
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceMetadataState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceMetadataState") : 
+     instance_metadata_state) : instance_metadata_state)
 let instance_metadata_options_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4221,22 +4322,23 @@ let get_instance_port_states_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "instanceName" _list path)
    } : get_instance_port_states_request)
 let instance_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MetadataNoToken" -> MetadataNoToken
-   | `String "BurstCapacityPercentage" -> BurstCapacityPercentage
-   | `String "BurstCapacityTime" -> BurstCapacityTime
-   | `String "StatusCheckFailed_System" -> StatusCheckFailed_System
-   | `String "StatusCheckFailed_Instance" -> StatusCheckFailed_Instance
-   | `String "StatusCheckFailed" -> StatusCheckFailed
-   | `String "NetworkOut" -> NetworkOut
-   | `String "NetworkIn" -> NetworkIn
-   | `String "CPUUtilization" -> CPUUtilization
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceMetricName"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceMetricName") : 
-  instance_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MetadataNoToken" -> MetadataNoToken
+    | `String "BurstCapacityPercentage" -> BurstCapacityPercentage
+    | `String "BurstCapacityTime" -> BurstCapacityTime
+    | `String "StatusCheckFailed_System" -> StatusCheckFailed_System
+    | `String "StatusCheckFailed_Instance" -> StatusCheckFailed_Instance
+    | `String "StatusCheckFailed" -> StatusCheckFailed
+    | `String "NetworkOut" -> NetworkOut
+    | `String "NetworkIn" -> NetworkIn
+    | `String "CPUUtilization" -> CPUUtilization
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceMetricName"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceMetricName") : 
+     instance_metric_name) : instance_metric_name)
 let get_instance_metric_data_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4264,15 +4366,16 @@ let get_instance_metric_data_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "instanceName" _list path)
    } : get_instance_metric_data_request)
 let instance_access_protocol_of_yojson (tree : t) path =
-  (match tree with
-   | `String "rdp" -> Rdp
-   | `String "ssh" -> Ssh
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstanceAccessProtocol"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InstanceAccessProtocol") : 
-  instance_access_protocol)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "rdp" -> Rdp
+    | `String "ssh" -> Ssh
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstanceAccessProtocol"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InstanceAccessProtocol") : 
+     instance_access_protocol) : instance_access_protocol)
 let host_key_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4371,17 +4474,18 @@ let get_instance_request_of_yojson tree path =
        (value_for_key resource_name_of_yojson "instanceName" _list path)
    } : get_instance_request)
 let export_snapshot_record_source_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DiskSnapshot" -> DiskSnapshot
-   | `String "InstanceSnapshot" -> InstanceSnapshot
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ExportSnapshotRecordSourceType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ExportSnapshotRecordSourceType") : 
-  export_snapshot_record_source_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DiskSnapshot" -> DiskSnapshot
+    | `String "InstanceSnapshot" -> InstanceSnapshot
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ExportSnapshotRecordSourceType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "ExportSnapshotRecordSourceType") : 
+     export_snapshot_record_source_type) : export_snapshot_record_source_type)
 let disk_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4676,19 +4780,20 @@ let get_distributions_request_of_yojson tree path =
           path)
    } : get_distributions_request)
 let distribution_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Http5xxErrorRate" -> Http5xxErrorRate
-   | `String "Http4xxErrorRate" -> Http4xxErrorRate
-   | `String "TotalErrorRate" -> TotalErrorRate
-   | `String "BytesUploaded" -> BytesUploaded
-   | `String "BytesDownloaded" -> BytesDownloaded
-   | `String "Requests" -> Requests
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DistributionMetricName"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "DistributionMetricName") : 
-  distribution_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Http5xxErrorRate" -> Http5xxErrorRate
+    | `String "Http4xxErrorRate" -> Http4xxErrorRate
+    | `String "TotalErrorRate" -> TotalErrorRate
+    | `String "BytesUploaded" -> BytesUploaded
+    | `String "BytesDownloaded" -> BytesDownloaded
+    | `String "Requests" -> Requests
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DistributionMetricName"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "DistributionMetricName") : 
+     distribution_metric_name) : distribution_metric_name)
 let get_distribution_metric_data_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4765,16 +4870,18 @@ let get_distribution_bundles_result_of_yojson tree path =
 let get_distribution_bundles_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let disk_snapshot_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unknown" -> Unknown
-   | `String "Error" -> Error
-   | `String "Completed" -> Completed
-   | `String "Pending" -> Pending
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DiskSnapshotState" value)
-   | _ -> raise (deserialize_wrong_type_error path "DiskSnapshotState") : 
-  disk_snapshot_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "unknown" -> Unknown
+    | `String "error" -> Error
+    | `String "completed" -> Completed
+    | `String "pending" -> Pending
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DiskSnapshotState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "DiskSnapshotState") : 
+     disk_snapshot_state) : disk_snapshot_state)
 let disk_snapshot_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4954,16 +5061,18 @@ let get_container_service_powers_result_of_yojson tree path =
 let get_container_service_powers_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let container_service_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "MemoryUtilization" -> MemoryUtilization
-   | `String "CPUUtilization" -> CPUUtilization
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContainerServiceMetricName" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ContainerServiceMetricName") : 
-  container_service_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "MemoryUtilization" -> MemoryUtilization
+    | `String "CPUUtilization" -> CPUUtilization
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContainerServiceMetricName" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "ContainerServiceMetricName") : 
+     container_service_metric_name) : container_service_metric_name)
 let get_container_service_metric_data_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5084,16 +5193,17 @@ let get_container_api_metadata_result_of_yojson tree path =
 let get_container_api_metadata_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let contact_method_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Invalid" -> Invalid
-   | `String "Valid" -> Valid
-   | `String "PendingVerification" -> PendingVerification
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ContactMethodStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ContactMethodStatus") : 
-  contact_method_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Invalid" -> Invalid
+    | `String "Valid" -> Valid
+    | `String "PendingVerification" -> PendingVerification
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ContactMethodStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ContactMethodStatus") : 
+     contact_method_status) : contact_method_status)
 let contact_method_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5145,16 +5255,18 @@ let get_contact_methods_request_of_yojson tree path =
           path)
    } : get_contact_methods_request)
 let cloud_formation_stack_record_source_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ExportSnapshotRecord" -> ExportSnapshotRecord
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CloudFormationStackRecordSourceType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "CloudFormationStackRecordSourceType") : cloud_formation_stack_record_source_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ExportSnapshotRecord" -> ExportSnapshotRecord
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CloudFormationStackRecordSourceType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "CloudFormationStackRecordSourceType") : cloud_formation_stack_record_source_type) : 
+  cloud_formation_stack_record_source_type)
 let cloud_formation_stack_record_source_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5224,19 +5336,21 @@ let get_cloud_formation_stack_records_request_of_yojson tree path =
    } : get_cloud_formation_stack_records_request)
 let certificate_name_of_yojson = string_of_yojson
 let certificate_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failed" -> Failed
-   | `String "Revoked" -> Revoked
-   | `String "ValidationTimedOut" -> ValidationTimedOut
-   | `String "Expired" -> Expired
-   | `String "Inactive" -> Inactive
-   | `String "Issued" -> Issued
-   | `String "PendingValidation" -> PendingValidation
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CertificateStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "CertificateStatus") : 
-  certificate_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> Failed
+    | `String "REVOKED" -> Revoked
+    | `String "VALIDATION_TIMED_OUT" -> ValidationTimedOut
+    | `String "EXPIRED" -> Expired
+    | `String "INACTIVE" -> Inactive
+    | `String "ISSUED" -> Issued
+    | `String "PENDING_VALIDATION" -> PendingValidation
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CertificateStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "CertificateStatus") : 
+     certificate_status) : certificate_status)
 let in_use_resource_count_of_yojson = int_of_yojson
 let key_algorithm_of_yojson = string_of_yojson
 let issuer_c_a_of_yojson = string_of_yojson
@@ -5371,22 +5485,25 @@ let get_certificates_request_of_yojson tree path =
              "certificateStatuses") _list path)
    } : get_certificates_request)
 let instance_platform_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Windows" -> Windows
-   | `String "LinuxUnix" -> LinuxUnix
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InstancePlatform" value)
-   | _ -> raise (deserialize_wrong_type_error path "InstancePlatform") : 
-  instance_platform)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "WINDOWS" -> Windows
+    | `String "LINUX_UNIX" -> LinuxUnix
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InstancePlatform" value)
+    | _ -> raise (deserialize_wrong_type_error path "InstancePlatform") : 
+     instance_platform) : instance_platform)
 let instance_platform_list_of_yojson tree path =
   list_of_yojson instance_platform_of_yojson tree path
 let app_category_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LfR" -> LfR
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "AppCategory" value)
-   | _ -> raise (deserialize_wrong_type_error path "AppCategory") : app_category)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LfR" -> LfR
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "AppCategory" value)
+    | _ -> raise (deserialize_wrong_type_error path "AppCategory") : 
+     app_category) : app_category)
 let app_category_list_of_yojson tree path =
   list_of_yojson app_category_of_yojson tree path
 let bundle_of_yojson tree path =
@@ -5462,30 +5579,32 @@ let get_bundles_request_of_yojson tree path =
 let bucket_list_of_yojson tree path =
   list_of_yojson bucket_of_yojson tree path
 let account_level_bpa_sync_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Defaulted" -> Defaulted
-   | `String "NeverSynced" -> NeverSynced
-   | `String "Failed" -> Failed
-   | `String "InSync" -> InSync
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AccountLevelBpaSyncStatus" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "AccountLevelBpaSyncStatus") : 
-  account_level_bpa_sync_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Defaulted" -> Defaulted
+    | `String "NeverSynced" -> NeverSynced
+    | `String "Failed" -> Failed
+    | `String "InSync" -> InSync
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AccountLevelBpaSyncStatus" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "AccountLevelBpaSyncStatus") : 
+     account_level_bpa_sync_status) : account_level_bpa_sync_status)
 let bpa_status_message_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Unknown" -> Unknown
-   | `String "DEFAULTED_FOR_SLR_MISSING_ON_HOLD" ->
-       DEFAULTED_FOR_SLR_MISSING_ON_HOLD
-   | `String "SYNC_ON_HOLD" -> SYNC_ON_HOLD
-   | `String "DEFAULTED_FOR_SLR_MISSING" -> DEFAULTED_FOR_SLR_MISSING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "BPAStatusMessage" value)
-   | _ -> raise (deserialize_wrong_type_error path "BPAStatusMessage") : 
-  bpa_status_message)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Unknown" -> Unknown
+    | `String "DEFAULTED_FOR_SLR_MISSING_ON_HOLD" ->
+        DEFAULTED_FOR_SLR_MISSING_ON_HOLD
+    | `String "SYNC_ON_HOLD" -> SYNC_ON_HOLD
+    | `String "DEFAULTED_FOR_SLR_MISSING" -> DEFAULTED_FOR_SLR_MISSING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "BPAStatusMessage" value)
+    | _ -> raise (deserialize_wrong_type_error path "BPAStatusMessage") : 
+     bpa_status_message) : bpa_status_message)
 let account_level_bpa_sync_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5532,14 +5651,15 @@ let get_buckets_request_of_yojson tree path =
           _list path)
    } : get_buckets_request)
 let bucket_metric_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NumberOfObjects" -> NumberOfObjects
-   | `String "BucketSizeBytes" -> BucketSizeBytes
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "BucketMetricName" value)
-   | _ -> raise (deserialize_wrong_type_error path "BucketMetricName") : 
-  bucket_metric_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NumberOfObjects" -> NumberOfObjects
+    | `String "BucketSizeBytes" -> BucketSizeBytes
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "BucketMetricName" value)
+    | _ -> raise (deserialize_wrong_type_error path "BucketMetricName") : 
+     bucket_metric_name) : bucket_metric_name)
 let get_bucket_metric_data_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5656,14 +5776,15 @@ let get_bucket_access_keys_request_of_yojson tree path =
        (value_for_key bucket_name_of_yojson "bucketName" _list path)
    } : get_bucket_access_keys_request)
 let blueprint_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "app" -> App
-   | `String "os" -> Os
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "BlueprintType" value)
-   | _ -> raise (deserialize_wrong_type_error path "BlueprintType") : 
-  blueprint_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "app" -> App
+    | `String "os" -> Os
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "BlueprintType" value)
+    | _ -> raise (deserialize_wrong_type_error path "BlueprintType") : 
+     blueprint_type) : blueprint_type)
 let blueprint_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5733,17 +5854,18 @@ let get_blueprints_request_of_yojson tree path =
           _list path)
    } : get_blueprints_request)
 let auto_snapshot_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NOT_FOUND" -> NOT_FOUND
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "FAILED" -> FAILED
-   | `String "SUCCESS" -> SUCCESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AutoSnapshotStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "AutoSnapshotStatus") : 
-  auto_snapshot_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NotFound" -> NOT_FOUND
+    | `String "InProgress" -> IN_PROGRESS
+    | `String "Failed" -> FAILED
+    | `String "Success" -> SUCCESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AutoSnapshotStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "AutoSnapshotStatus") : 
+     auto_snapshot_status) : auto_snapshot_status)
 let attached_disk_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5926,12 +6048,14 @@ let enable_add_on_result_of_yojson tree path =
           (value_for_key operation_list_of_yojson "operations") _list path)
    } : enable_add_on_result)
 let add_on_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "StopInstanceOnIdle" -> StopInstanceOnIdle
-   | `String "AutoSnapshot" -> AutoSnapshot
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "AddOnType" value)
-   | _ -> raise (deserialize_wrong_type_error path "AddOnType") : add_on_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "StopInstanceOnIdle" -> StopInstanceOnIdle
+    | `String "AutoSnapshot" -> AutoSnapshot
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "AddOnType" value)
+    | _ -> raise (deserialize_wrong_type_error path "AddOnType") : add_on_type) : 
+  add_on_type)
 let auto_snapshot_add_on_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -7196,3 +7320,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

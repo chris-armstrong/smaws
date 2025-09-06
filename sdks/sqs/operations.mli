@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security  | `OverLimit of over_limit 
@@ -32,17 +32,17 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       change_message_visibility_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
-          | `MessageNotInflight of unit 
+          | `MessageNotInflight of message_not_inflight 
           | `QueueDoesNotExist of queue_does_not_exist 
           | `ReceiptHandleIsInvalid of receipt_handle_is_invalid 
           | `RequestThrottled of request_throttled 
           | `UnsupportedOperation of unsupported_operation ]) result
 end[@@ocaml.doc
-     "Changes the visibility timeout of a specified message in a queue to a new value. The default visibility timeout for a message is 30 seconds. The minimum is 0 seconds. The maximum is 12 hours. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility Timeout} in the {i Amazon SQS Developer Guide}.\n\n For example, if the default timeout for a queue is 60 seconds, 15 seconds have elapsed since you received the message, and you send a ChangeMessageVisibility call with [VisibilityTimeout] set to 10 seconds, the 10 seconds begin to count from the time that you make the [ChangeMessageVisibility] call. Thus, any attempt to change the visibility timeout or to delete that message 10 seconds after you initially change the visibility timeout (a total of 25 seconds) might result in an error.\n \n  An Amazon SQS message has three basic states:\n  \n   {ol\n         {-  Sent to a queue by a producer.\n             \n              }\n         {-  Received from the queue by a consumer.\n             \n              }\n         {-  Deleted from the queue.\n             \n              }\n         }\n   A message is considered to be {i stored} after it is sent to a queue by a producer, but not yet received from the queue by a consumer (that is, between states 1 and 2). There is no limit to the number of stored messages. A message is considered to be {i in flight} after it is received from a queue by a consumer, but not yet deleted from the queue (that is, between states 2 and 3). There is a limit to the number of in flight messages.\n   \n    Limits that apply to in flight messages are unrelated to the {i unlimited} number of stored messages.\n    \n     For most standard queues (depending on queue traffic and message backlog), there can be a maximum of approximately 120,000 in flight messages (received from a queue by a consumer, but not yet deleted from the queue). If you reach this limit, Amazon SQS returns the [OverLimit] error message. To avoid reaching the limit, you should delete messages from the queue after they're processed. You can also increase the number of queues you use to process your messages. To request a limit increase, {{:https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=service-code-sqs}file a support request}.\n     \n      For FIFO queues, there can be a maximum of 20,000 in flight messages (received from a queue by a consumer, but not yet deleted from the queue). If you reach this limit, Amazon SQS returns no error messages.\n      \n        If you attempt to set the [VisibilityTimeout] to a value greater than the maximum time left, Amazon SQS returns an error. Amazon SQS doesn't automatically recalculate and increase the timeout to the maximum remaining time.\n        \n         Unlike with a queue, when you change the visibility timeout for a specific message the timeout value is applied immediately but isn't saved in memory for that message. If you don't delete a message after it is received, the visibility timeout for the message reverts to the original timeout value (not to the value you set using the [ChangeMessageVisibility] action) the next time the message is received.\n         \n          "]
+     "Changes the visibility timeout of a specified message in a queue to a new value. The default visibility timeout for a message is 30 seconds. The minimum is 0 seconds. The maximum is 12 hours. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility Timeout} in the {i Amazon SQS Developer Guide}.\n\n For example, if the default timeout for a queue is 60 seconds, 15 seconds have elapsed since you received the message, and you send a ChangeMessageVisibility call with [VisibilityTimeout] set to 10 seconds, the 10 seconds begin to count from the time that you make the [ChangeMessageVisibility] call. Thus, any attempt to change the visibility timeout or to delete that message 10 seconds after you initially change the visibility timeout (a total of 25 seconds) might result in an error.\n \n  An Amazon SQS message has three basic states:\n  \n   {ol\n         {-  Sent to a queue by a producer.\n             \n              }\n         {-  Received from the queue by a consumer.\n             \n              }\n         {-  Deleted from the queue.\n             \n              }\n         }\n   A message is considered to be {i stored} after it is sent to a queue by a producer, but not yet received from the queue by a consumer (that is, between states 1 and 2). There is no limit to the number of stored messages. A message is considered to be {i in flight} after it is received from a queue by a consumer, but not yet deleted from the queue (that is, between states 2 and 3). There is a limit to the number of in flight messages.\n   \n    Limits that apply to in flight messages are unrelated to the {i unlimited} number of stored messages.\n    \n     For most standard queues (depending on queue traffic and message backlog), there can be a maximum of approximately 120,000 in flight messages (received from a queue by a consumer, but not yet deleted from the queue). If you reach this limit, Amazon SQS returns the [OverLimit] error message. To avoid reaching the limit, you should delete messages from the queue after they're processed. You can also increase the number of queues you use to process your messages. To request a limit increase, {{:https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=service-code-sqs}file a support request}.\n     \n      For FIFO queues, there can be a maximum of 120,000 in flight messages (received from a queue by a consumer, but not yet deleted from the queue). If you reach this limit, Amazon SQS returns no error messages.\n      \n        If you attempt to set the [VisibilityTimeout] to a value greater than the maximum time left, Amazon SQS returns an error. Amazon SQS doesn't automatically recalculate and increase the timeout to the maximum remaining time.\n        \n         Unlike with a queue, when you change the visibility timeout for a specific message the timeout value is applied immediately but isn't saved in memory for that message. If you don't delete a message after it is received, the visibility timeout for the message reverts to the original timeout value (not to the value you set using the [ChangeMessageVisibility] action) the next time the message is received.\n         \n          "]
 module ChangeMessageVisibilityBatch :
 sig
   val request :
@@ -78,22 +78,23 @@ sig
           | `RequestThrottled of request_throttled 
           | `UnsupportedOperation of unsupported_operation ]) result
 end[@@ocaml.doc
-     "Creates a new standard or FIFO queue. You can pass one or more attributes in the request. Keep the following in mind:\n\n {ul\n       {-  If you don't specify the [FifoQueue] attribute, Amazon SQS creates a standard queue.\n           \n             You can't change the queue type after you create it and you can't convert an existing standard queue into a FIFO queue. You must either create a new FIFO queue for your application or delete your existing standard queue and recreate it as a FIFO queue. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html#FIFO-queues-moving}Moving From a Standard Queue to a FIFO Queue} in the {i Amazon SQS Developer Guide}. \n             \n               }\n       {-  If you don't provide a value for an attribute, the queue is created with the default value for the attribute.\n           \n            }\n       {-  If you delete a queue, you must wait at least 60 seconds before creating a queue with the same name.\n           \n            }\n       }\n   To successfully create a new queue, you must provide a queue name that adheres to the {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/limits-queues.html}limits related to queues} and is unique within the scope of your queues.\n   \n     After you create a queue, you must wait at least one second after the queue is created to be able to use the queue.\n     \n       To get the queue URL, use the \n       {[\n        [GetQueueUrl] \n       ]}\n        action. \n       {[\n        [GetQueueUrl] \n       ]}\n        requires only the [QueueName] parameter. be aware of existing queue names:\n       \n        {ul\n              {-  If you provide the name of an existing queue along with the exact names and values of all the queue's attributes, [CreateQueue] returns the queue URL for the existing queue.\n                  \n                   }\n              {-  If the queue name, attribute names, or attribute values don't match an existing queue, [CreateQueue] returns an error.\n                  \n                   }\n              }\n    Cross-account permissions don't apply to this action. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n    \n     "]
+     "Creates a new standard or FIFO queue. You can pass one or more attributes in the request. Keep the following in mind:\n\n {ul\n       {-  If you don't specify the [FifoQueue] attribute, Amazon SQS creates a standard queue.\n           \n             You can't change the queue type after you create it and you can't convert an existing standard queue into a FIFO queue. You must either create a new FIFO queue for your application or delete your existing standard queue and recreate it as a FIFO queue. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html#FIFO-queues-moving}Moving From a Standard Queue to a FIFO Queue} in the {i Amazon SQS Developer Guide}. \n             \n               }\n       {-  If you don't provide a value for an attribute, the queue is created with the default value for the attribute.\n           \n            }\n       {-  If you delete a queue, you must wait at least 60 seconds before creating a queue with the same name.\n           \n            }\n       }\n   To successfully create a new queue, you must provide a queue name that adheres to the {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/limits-queues.html}limits related to queues} and is unique within the scope of your queues.\n   \n     After you create a queue, you must wait at least one second after the queue is created to be able to use the queue.\n     \n       To retrieve the URL of a queue, use the {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueUrl.html} [GetQueueUrl] } action. This action only requires the {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html#API_CreateQueue_RequestSyntax} [QueueName] } parameter.\n       \n        When creating queues, keep the following points in mind:\n        \n         {ul\n               {-  If you specify the name of an existing queue and provide the exact same names and values for all its attributes, the {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html} [CreateQueue] } action will return the URL of the existing queue instead of creating a new one.\n                   \n                    }\n               {-  If you attempt to create a queue with a name that already exists but with different attribute names or values, the [CreateQueue] action will return an error. This ensures that existing queues are not inadvertently altered.\n                   \n                    }\n               }\n    Cross-account permissions don't apply to this action. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n    \n     "]
 module DeleteMessage :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_message_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `InvalidAddress of invalid_address  | `InvalidIdFormat of unit 
+          | `InvalidAddress of invalid_address 
+          | `InvalidIdFormat of invalid_id_format 
           | `InvalidSecurity of invalid_security 
           | `QueueDoesNotExist of queue_does_not_exist 
           | `ReceiptHandleIsInvalid of receipt_handle_is_invalid 
           | `RequestThrottled of request_throttled 
           | `UnsupportedOperation of unsupported_operation ]) result
 end[@@ocaml.doc
-     "Deletes the specified message from the specified queue. To select the message to delete, use the [ReceiptHandle] of the message ({i not} the [MessageId] which you receive when you send the message). Amazon SQS can delete a message from a queue even if a visibility timeout setting causes the message to be locked by another consumer. Amazon SQS automatically deletes messages left in a queue longer than the retention period configured for the queue. \n\n  The [ReceiptHandle] is associated with a {i specific instance} of receiving a message. If you receive a message more than once, the [ReceiptHandle] is different each time you receive a message. When you use the [DeleteMessage] action, you must provide the most recently received [ReceiptHandle] for the message (otherwise, the request succeeds, but the message will not be deleted).\n  \n   For standard queues, it is possible to receive a message even after you delete it. This might happen on rare occasions if one of the servers which stores a copy of the message is unavailable when you send the request to delete the message. The copy remains on the server and might be returned to you during a subsequent receive request. You should ensure that your application is idempotent, so that receiving a message more than once does not cause issues.\n   \n    "]
+     "Deletes the specified message from the specified queue. To select the message to delete, use the [ReceiptHandle] of the message ({i not} the [MessageId] which you receive when you send the message). Amazon SQS can delete a message from a queue even if a visibility timeout setting causes the message to be locked by another consumer. Amazon SQS automatically deletes messages left in a queue longer than the retention period configured for the queue. \n\n  Each time you receive a message, meaning when a consumer retrieves a message from the queue, it comes with a unique [ReceiptHandle]. If you receive the same message more than once, you will get a different [ReceiptHandle] each time. When you want to delete a message using the [DeleteMessage] action, you must use the [ReceiptHandle] from the most recent time you received the message. If you use an old [ReceiptHandle], the request will succeed, but the message might not be deleted. \n  \n   For standard queues, it is possible to receive a message even after you delete it. This might happen on rare occasions if one of the servers which stores a copy of the message is unavailable when you send the request to delete the message. The copy remains on the server and might be returned to you during a subsequent receive request. You should ensure that your application is idempotent, so that receiving a message more than once does not cause issues.\n   \n    "]
 module DeleteMessageBatch :
 sig
   val request :
@@ -118,7 +119,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_queue_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -155,7 +156,7 @@ sig
           | `RequestThrottled of request_throttled 
           | `UnsupportedOperation of unsupported_operation ]) result
 end[@@ocaml.doc
-     "Returns the URL of an existing Amazon SQS queue.\n\n To access a queue that belongs to another AWS account, use the [QueueOwnerAWSAccountId] parameter to specify the account ID of the queue's owner. The queue's owner must grant you permission to access the queue. For more information about shared queue access, see \n {[\n  [AddPermission] \n ]}\n  or see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-writing-an-sqs-policy.html#write-messages-to-shared-queue}Allow Developers to Write Messages to a Shared Queue} in the {i Amazon SQS Developer Guide}. \n "]
+     "The [GetQueueUrl] API returns the URL of an existing Amazon SQS queue. This is useful when you know the queue's name but need to retrieve its URL for further operations.\n\n To access a queue owned by another Amazon Web Services account, use the [QueueOwnerAWSAccountId] parameter to specify the account ID of the queue's owner. Note that the queue owner must grant you the necessary permissions to access the queue. For more information about accessing shared queues, see the \n {[\n  [AddPermission] \n ]}\n  API or {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-writing-an-sqs-policy.html#write-messages-to-shared-queue}Allow developers to write messages to a shared queue} in the {i Amazon SQS Developer Guide}. \n "]
 module ListDeadLetterSourceQueues :
 sig
   val request :
@@ -216,7 +217,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       purge_queue_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -246,13 +247,13 @@ sig
           | `RequestThrottled of request_throttled 
           | `UnsupportedOperation of unsupported_operation ]) result
 end[@@ocaml.doc
-     "Retrieves one or more messages (up to 10), from the specified queue. Using the [WaitTimeSeconds] parameter enables long-poll support. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html}Amazon SQS Long Polling} in the {i Amazon SQS Developer Guide}. \n\n Short poll is the default behavior where a weighted random set of machines is sampled on a [ReceiveMessage] call. Thus, only the messages on the sampled machines are returned. If the number of messages in the queue is small (fewer than 1,000), you most likely get fewer messages than you requested per [ReceiveMessage] call. If the number of messages in the queue is extremely small, you might not receive any messages in a particular [ReceiveMessage] response. If this happens, repeat the request. \n \n  For each message returned, the response includes the following:\n  \n   {ul\n         {-  The message body.\n             \n              }\n         {-  An MD5 digest of the message body. For information about MD5, see {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n             \n              }\n         {-  The [MessageId] you received when you sent the message to the queue.\n             \n              }\n         {-  The receipt handle.\n             \n              }\n         {-  The message attributes.\n             \n              }\n         {-  An MD5 digest of the message attributes.\n             \n              }\n         }\n   The receipt handle is the identifier you must provide when deleting the message. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html}Queue and Message Identifiers} in the {i Amazon SQS Developer Guide}.\n   \n    You can provide the [VisibilityTimeout] parameter in your request. The parameter is applied to the messages that Amazon SQS returns in the response. If you don't include the parameter, the overall visibility timeout for the queue is used for the returned messages. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility Timeout} in the {i Amazon SQS Developer Guide}.\n    \n     A message that isn't deleted or a message whose visibility isn't extended before the visibility timeout expires counts as a failed receive. Depending on the configuration of the queue, the message might be sent to the dead-letter queue.\n     \n       In the future, new attributes might be added. If you write code that calls this action, we recommend that you structure your code so that it can handle new attributes gracefully.\n       \n        "]
+     "Retrieves one or more messages (up to 10), from the specified queue. Using the [WaitTimeSeconds] parameter enables long-poll support. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html}Amazon SQS Long Polling} in the {i Amazon SQS Developer Guide}. \n\n Short poll is the default behavior where a weighted random set of machines is sampled on a [ReceiveMessage] call. Therefore, only the messages on the sampled machines are returned. If the number of messages in the queue is small (fewer than 1,000), you most likely get fewer messages than you requested per [ReceiveMessage] call. If the number of messages in the queue is extremely small, you might not receive any messages in a particular [ReceiveMessage] response. If this happens, repeat the request.\n \n  For each message returned, the response includes the following:\n  \n   {ul\n         {-  The message body.\n             \n              }\n         {-  An MD5 digest of the message body. For information about MD5, see {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n             \n              }\n         {-  The [MessageId] you received when you sent the message to the queue.\n             \n              }\n         {-  The receipt handle.\n             \n              }\n         {-  The message attributes.\n             \n              }\n         {-  An MD5 digest of the message attributes.\n             \n              }\n         }\n   The receipt handle is the identifier you must provide when deleting the message. For more information, see {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html}Queue and Message Identifiers} in the {i Amazon SQS Developer Guide}.\n   \n    You can provide the [VisibilityTimeout] parameter in your request. The parameter is applied to the messages that Amazon SQS returns in the response. If you don't include the parameter, the overall visibility timeout for the queue is used for the returned messages. The default visibility timeout for a queue is 30 seconds. \n    \n      In the future, new attributes might be added. If you write code that calls this action, we recommend that you structure your code so that it can handle new attributes gracefully.\n      \n       "]
 module RemovePermission :
 sig
   val request :
     Smaws_Lib.Context.t ->
       remove_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -315,7 +316,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       set_queue_attributes_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidAttributeName of invalid_attribute_name 
@@ -345,7 +346,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_queue_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 
@@ -359,7 +360,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_queue_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidAddress of invalid_address 
           | `InvalidSecurity of invalid_security 

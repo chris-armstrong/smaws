@@ -3,12 +3,14 @@ open Types
 let status_code_of_yojson = int_of_yojson
 let base_unit_of_yojson = unit_of_yojson
 let error_code_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INVALID_PARAMETER_EXCEPTION" -> INVALID_PARAMETER_EXCEPTION
-   | `String "INTERNAL_SERVICE_EXCEPTION" -> INTERNAL_SERVICE_EXCEPTION
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
-   | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "InvalidParameterException" -> INVALID_PARAMETER_EXCEPTION
+    | `String "InternalServiceException" -> INTERNAL_SERVICE_EXCEPTION
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
+    | _ -> raise (deserialize_wrong_type_error path "ErrorCode") : error_code) : 
+  error_code)
 let error_message_of_yojson = string_of_yojson
 let failure_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -71,14 +73,16 @@ let internal_service_exception_of_yojson tree path =
           (value_for_key exception_message_of_yojson "Message") _list path)
    } : internal_service_exception)
 let target_id_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ROOT" -> ROOT
-   | `String "OU" -> OU
-   | `String "ACCOUNT" -> ACCOUNT
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "TargetIdType" value)
-   | _ -> raise (deserialize_wrong_type_error path "TargetIdType") : 
-  target_id_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ROOT" -> ROOT
+    | `String "OU" -> OU
+    | `String "ACCOUNT" -> ACCOUNT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "TargetIdType" value)
+    | _ -> raise (deserialize_wrong_type_error path "TargetIdType") : 
+     target_id_type) : target_id_type)
 let target_id_of_yojson = string_of_yojson
 let target_id_filter_list_of_yojson tree path =
   list_of_yojson target_id_of_yojson tree path
@@ -328,15 +332,16 @@ let get_compliance_summary_output_of_yojson tree path =
 let region_filter_list_of_yojson tree path =
   list_of_yojson region_of_yojson tree path
 let group_by_attribute_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
-   | `String "REGION" -> REGION
-   | `String "TARGET_ID" -> TARGET_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "GroupByAttribute" value)
-   | _ -> raise (deserialize_wrong_type_error path "GroupByAttribute") : 
-  group_by_attribute)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
+    | `String "REGION" -> REGION
+    | `String "TARGET_ID" -> TARGET_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "GroupByAttribute" value)
+    | _ -> raise (deserialize_wrong_type_error path "GroupByAttribute") : 
+     group_by_attribute) : group_by_attribute)
 let group_by_of_yojson tree path =
   list_of_yojson group_by_attribute_of_yojson tree path
 let max_results_get_compliance_summary_of_yojson = int_of_yojson
@@ -394,3 +399,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

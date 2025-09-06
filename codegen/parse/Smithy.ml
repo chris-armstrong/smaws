@@ -75,6 +75,101 @@ let parseStaticContextParams value =
   in
   Result.map x ~f:(fun x -> Trait.RulesStaticContextParams x)
 
+let parseOperationContextParams value =
+  let x =
+    value
+    |> parseRecord (fun name ocf ->
+           ocf |> parseObject |> field "path" |> parseString
+           |> Result.map ~f:(fun path -> (name, ({ path } : Trait.operationContextParam))))
+  in
+  Result.map x ~f:(fun x -> Trait.RulesOperationContextParams x)
+
+let parseIdRef value =
+  let object_ = value |> parseObject in
+  let failWhenMissing = object_ |> field "failWhenMissing" |> parseBool |> optional in
+  let selector = object_ |> field "selector" |> parseString |> optional in
+  let errorMessage = object_ |> field "errorMessage" |> parseString |> optional in
+  map3 failWhenMissing selector errorMessage (fun failWhenMissing selector errorMessage ->
+      Trait.IdRefTrait { failWhenMissing; selector; errorMessage })
+
+let parseEnumValue value =
+  let value_ =
+    value
+    |> Result.bind ~f:(fun ({ tree; path } : jsonTreeRef) ->
+           match tree with
+           | `String x -> Ok (`String x)
+           | `Int x -> Ok (`Int x)
+           | _ -> Error (WrongType (path, "expected a string or integer")))
+  in
+  value_ |> Result.map ~f:(fun value_ -> Trait.EnumValueTrait value_)
+
+let parseTestHttpRequestTests value =
+  let ( let+ ) r f = Result.bind ~f r in
+  let open Trait in
+  let+ tests =
+    parseArray
+      (fun value ->
+        let value = parseObject value in
+        let+ id = value |> field "id" |> parseString in
+        let+ protocol = value |> field "protocol" |> parseString in
+        let+ method_ = value |> field "method" |> parseString in
+        let+ uri = value |> field "uri" |> parseString in
+        let+ host = optional (value |> field "host") |> mapOptional parseString in
+        let+ resolvedHost = optional (value |> field "resolvedHost") |> mapOptional parseString in
+        let+ authScheme = optional (value |> field "authScheme") |> mapOptional parseString in
+        let+ queryParams =
+          optional (value |> field "queryParams") |> mapOptional (parseArray parseString)
+        in
+        let+ forbidQueryParams =
+          optional (value |> field "forbidQueryParams") |> mapOptional (parseArray parseString)
+        in
+        let+ headers =
+          optional (value |> field "headers")
+          |> mapOptional
+               (parseRecord (fun name value_ ->
+                    let value_ = value_ |> parseString in
+                    map2 (Ok name) value_ (fun name value_ -> (name, value_))))
+        in
+        let+ forbidHeaders =
+          optional (value |> field "forbidHeaders") |> mapOptional (parseArray parseString)
+        in
+        let+ body = optional (value |> field "body") |> mapOptional parseString in
+        let+ bodyMediaType = optional (value |> field "bodyMediaType") |> mapOptional parseString in
+        let+ params = optional (value |> field "params") |> mapOptional raw in
+        let+ vendorParams = optional (value |> field "vendorParams") |> mapOptional raw in
+        let+ vendorParamsShape =
+          optional (value |> field "vendorParamsShape") |> mapOptional parseString
+        in
+
+        let+ documentation = optional (value |> field "documentation") |> mapOptional parseString in
+        let+ tags = optional (value |> field "tags") |> mapOptional (parseArray parseString) in
+        Ok
+          {
+            id;
+            protocol;
+            method_;
+            uri;
+            host;
+            resolvedHost;
+            authScheme;
+            queryParams;
+            forbidQueryParams;
+            headers;
+            forbidHeaders;
+            body;
+            bodyMediaType;
+            params;
+            vendorParams;
+            vendorParamsShape;
+            documentation;
+            tags;
+            appliesTo = None;
+            (* TODO: parse appliesTo correctly *)
+          })
+      value
+  in
+  Ok (Trait.TestHttpRequestTests tests)
+
 let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
   let open Result in
   let traitValue =
@@ -200,11 +295,14 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
         value |> parseObject |> field "name" |> parseString
         |> map ~f:(fun contextParam -> Trait.RulesContextParam contextParam)
     | "smithy.rules#staticContextParams" -> value |> parseStaticContextParams
+    | "smithy.rules#operationContextParams" -> value |> parseOperationContextParams
     | "smithy.api#default" -> Ok Trait.DefaultTrait
-    | "smithy.api#enumValue" ->
-        value |> parseString |> map ~f:(fun enumValue -> Trait.EnumValueTrait enumValue)
+    | "smithy.api#enumValue" -> value |> parseEnumValue
     | "smithy.test#smokeTests" -> Ok Trait.TestSmokeTests
-    | _ -> raise (UnknownTrait name)
+    | "smithy.api#private" -> Ok Trait.PrivateTrait
+    | "smithy.api#idRef" -> value |> parseIdRef
+    | "smithy.test#httpRequestTests" -> value |> parseTestHttpRequestTests
+    | unknownTrait -> Ok (Trait.UnspecifiedTrait (unknownTrait, value |> Json.Decode.raw_exn))
   in
   traitValue
 
@@ -220,7 +318,7 @@ let parseMember name value =
   let traits_ = optional (parseRecord parseTrait (member |> field "traits")) in
   map2 target_ traits_ (fun target traits ->
       let open Shape in
-      { name; target; traits })
+      ({ name; target; traits } : member))
 
 let parseMembers value = parseRecord parseMember value
 
@@ -280,7 +378,7 @@ let parseStringShape shapeDict =
                       {
                         name = Option.value ~default:enumPair.value enumPair.name;
                         target = "smithy.api#Unit";
-                        traits = Some [ Trait.EnumValueTrait enumPair.value ];
+                        traits = Some [ Trait.EnumValueTrait (`String enumPair.value) ];
                       });
             }
       | None -> Shape.StringShape { traits = Some traits })
@@ -361,6 +459,8 @@ let parseShape name shape =
         | "blob" -> parsePrimitive shapeDict >>| fun primitive -> Shape.BlobShape primitive
         | "boolean" -> parsePrimitive shapeDict >>| fun primitive -> Shape.BooleanShape primitive
         | "integer" -> parsePrimitive shapeDict >>| fun primitive -> Shape.IntegerShape primitive
+        | "short" -> parsePrimitive shapeDict >>| fun primitive -> Shape.ShortShape primitive
+        | "byte" -> parsePrimitive shapeDict >>| fun primitive -> Shape.ByteShape primitive
         | "string" -> parseStringShape shapeDict
         | "map" -> parseMapShape shapeDict
         | "union" -> parseUnionShape shapeDict
@@ -370,7 +470,8 @@ let parseShape name shape =
         | "double" -> parsePrimitive shapeDict >>| fun primitive -> Shape.DoubleShape primitive
         | "float" -> parsePrimitive shapeDict >>| fun primitive -> Shape.FloatShape primitive
         | "set" -> parseSetShape shapeDict
-        | "enum" -> parseEnumShape shapeDict
+        (* TODO: these are technically different but they have the same shape and as long as the model is well-formed, this should give the right result *)
+        | "intEnum" | "enum" -> parseEnumShape shapeDict
         | "document" -> parseDocumentShape shapeDict
         | _ -> Error (CustomError ({js|unknown shape type |js} ^ typeValue))
       in

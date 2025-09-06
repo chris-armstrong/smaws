@@ -4,11 +4,12 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_resource_request ->
-        (unit,
+        (add_tags_to_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
-          | `TooManyTagsError of unit 
+          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceType of invalid_resource_type 
+          | `TooManyTagsError of too_many_tags_error 
           | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
      "Adds or overwrites one or more tags for the specified resource. {i Tags} are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:\n\n {ul\n       {-   [Key=Owner,Value=DbAdmin] \n           \n            }\n       {-   [Key=Owner,Value=SysAdmin] \n           \n            }\n       {-   [Key=Owner,Value=Dev] \n           \n            }\n       {-   [Key=Stack,Value=Production] \n           \n            }\n       {-   [Key=Stack,Value=Pre-Production] \n           \n            }\n       {-   [Key=Stack,Value=Test] \n           \n            }\n       }\n   Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.\n   \n    We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.\n    \n     For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}Tag your Amazon EC2 resources} in the {i Amazon EC2 User Guide}.\n     "]
@@ -30,17 +31,17 @@ sig
               ops_item_related_item_already_exists_exception ])
           result
 end[@@ocaml.doc
-     "Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are capabilities of Amazon Web Services Systems Manager.\n"]
+     "Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are tools in Amazon Web Services Systems Manager.\n"]
 module CancelCommand :
 sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_command_request ->
-        (unit,
+        (cancel_command_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `DuplicateInstanceId of unit 
+          | `DuplicateInstanceId of duplicate_instance_id 
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of unit 
+          | `InvalidCommandId of invalid_command_id 
           | `InvalidInstanceId of invalid_instance_id ]) result
 end[@@ocaml.doc
      "Attempts to cancel the command specified by the Command ID. There is no guarantee that the command will be terminated and the underlying process stopped.\n"]
@@ -65,7 +66,7 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidParameters of invalid_parameters ]) result
 end[@@ocaml.doc
-     "Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager capabilities. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances.html}Setting up Amazon Web Services Systems Manager for hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}. \n\n  Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called {i managed nodes}.\n  \n   "]
+     "Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager tools. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-hybrid-multicloud.html}Using Amazon Web Services Systems Manager in hybrid and multicloud environments} in the {i Amazon Web Services Systems Manager User Guide}. \n\n  Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called {i managed nodes}.\n  \n   "]
 module CreateAssociation :
 sig
   val request :
@@ -73,20 +74,20 @@ sig
       create_association_request ->
         (create_association_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociationAlreadyExists of unit 
-          | `AssociationLimitExceeded of unit 
+          | `AssociationAlreadyExists of association_already_exists 
+          | `AssociationLimitExceeded of association_limit_exceeded 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidOutputLocation of unit 
+          | `InvalidOutputLocation of invalid_output_location 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTag of invalid_tag  | `InvalidTarget of invalid_target 
           | `InvalidTargetMaps of invalid_target_maps 
           | `UnsupportedPlatformType of unsupported_platform_type ]) result
 end[@@ocaml.doc
-     "A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a capability of Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service. \n"]
+     "A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a tool in Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service. \n"]
 module CreateAssociationBatch :
 sig
   val request :
@@ -94,13 +95,13 @@ sig
       create_association_batch_request ->
         (create_association_batch_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociationLimitExceeded of unit 
-          | `DuplicateInstanceId of unit 
+          | `AssociationLimitExceeded of association_limit_exceeded 
+          | `DuplicateInstanceId of duplicate_instance_id 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidOutputLocation of unit 
+          | `InvalidOutputLocation of invalid_output_location 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTarget of invalid_target 
@@ -120,9 +121,10 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidDocumentContent of invalid_document_content 
           | `InvalidDocumentSchemaVersion of invalid_document_schema_version 
-          | `MaxDocumentSizeExceeded of max_document_size_exceeded ]) result
+          | `MaxDocumentSizeExceeded of max_document_size_exceeded 
+          | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
-     "Creates a Amazon Web Services Systems Manager (SSM document). An SSM document defines the actions that Systems Manager performs on your managed nodes. For more information about SSM documents, including information about supported schemas, features, and syntax, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-ssm-docs.html}Amazon Web Services Systems Manager Documents} in the {i Amazon Web Services Systems Manager User Guide}.\n"]
+     "Creates a Amazon Web Services Systems Manager (SSM document). An SSM document defines the actions that Systems Manager performs on your managed nodes. For more information about SSM documents, including information about supported schemas, features, and syntax, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html}Amazon Web Services Systems Manager Documents} in the {i Amazon Web Services Systems Manager User Guide}.\n"]
 module CreateMaintenanceWindow :
 sig
   val request :
@@ -193,7 +195,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_resource_data_sync_request ->
-        (unit,
+        (create_resource_data_sync_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncAlreadyExistsException of
@@ -204,13 +206,13 @@ sig
               resource_data_sync_invalid_configuration_exception ])
           result
 end[@@ocaml.doc
-     "A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: [SyncToDestination] and [SyncFromSource].\n\n You can configure Systems Manager Inventory to use the [SyncToDestination] type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-datasync.html}Configuring resource data sync for Inventory} in the {i Amazon Web Services Systems Manager User Guide}.\n \n  You can configure Systems Manager Explorer to use the [SyncFromSource] type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or [EntireOrganization] by using Organizations. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html}Setting up Systems Manager Explorer to display data from multiple accounts and Regions} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the [ListResourceDataSync].\n   \n     By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. \n     \n      "]
+     "A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: [SyncToDestination] and [SyncFromSource].\n\n You can configure Systems Manager Inventory to use the [SyncToDestination] type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-create-resource-data-sync.html}Creating a resource data sync for Inventory} in the {i Amazon Web Services Systems Manager User Guide}.\n \n  You can configure Systems Manager Explorer to use the [SyncFromSource] type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or [EntireOrganization] by using Organizations. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html}Setting up Systems Manager Explorer to display data from multiple accounts and Regions} in the {i Amazon Web Services Systems Manager User Guide}.\n  \n   A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the [ListResourceDataSync].\n   \n     By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. \n     \n      "]
 module DeleteActivation :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_activation_request ->
-        (unit,
+        (delete_activation_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidActivation of invalid_activation 
@@ -223,7 +225,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_association_request ->
-        (unit,
+        (delete_association_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AssociationDoesNotExist of association_does_not_exist 
           | `InternalServerError of internal_server_error 
@@ -237,12 +239,13 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_document_request ->
-        (unit,
+        (delete_document_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `AssociatedInstances of unit 
+          | `AssociatedInstances of associated_instances 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
-          | `InvalidDocumentOperation of invalid_document_operation ]) result
+          | `InvalidDocumentOperation of invalid_document_operation 
+          | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
      "Deletes the Amazon Web Services Systems Manager document (SSM document) and all managed node associations to the document.\n\n Before you delete the document, we recommend that you use [DeleteAssociation] to disassociate all managed nodes that are associated with the document.\n "]
 module DeleteInventory :
@@ -276,7 +279,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_ops_item_request ->
-        (unit,
+        (delete_ops_item_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemInvalidParameterException of
@@ -289,7 +292,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_ops_metadata_request ->
-        (unit,
+        (delete_ops_metadata_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsMetadataInvalidArgumentException of
@@ -302,7 +305,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_parameter_request ->
-        (unit,
+        (delete_parameter_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ParameterNotFound of parameter_not_found ]) result
@@ -333,7 +336,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_data_sync_request ->
-        (unit,
+        (delete_resource_data_sync_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncInvalidConfigurationException of
@@ -348,7 +351,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_policy_request ->
-        (unit,
+        (delete_resource_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `MalformedResourcePolicyDocumentException of
@@ -368,12 +371,12 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_managed_instance_request ->
-        (unit,
+        (deregister_managed_instance_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidInstanceId of invalid_instance_id ]) result
 end[@@ocaml.doc
-     "Removes the server or virtual machine from the list of registered servers. You can reregister the node again at any time. If you don't plan to use Run Command on the server, we suggest uninstalling SSM Agent first.\n"]
+     "Removes the server or virtual machine from the list of registered servers.\n\n If you want to reregister an on-premises server, edge device, or VM, you must use a different Activation Code and Activation ID than used to register the machine previously. The Activation Code and Activation ID must not have already been used on the maximum number of activations specified when they were created. For more information, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-deregister-hybrid-nodes.html}Deregistering managed nodes in a hybrid and multicloud environment} in the {i Amazon Web Services Systems Manager User Guide}.\n "]
 module DeregisterPatchBaselineForPatchGroup :
 sig
   val request :
@@ -382,7 +385,7 @@ sig
         (deregister_patch_baseline_for_patch_group_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit ]) result
+          | `InvalidResourceId of invalid_resource_id ]) result
 end[@@ocaml.doc "Removes a patch group from a patch baseline.\n"]
 module DeregisterTargetFromMaintenanceWindow :
 sig
@@ -464,7 +467,7 @@ sig
         (describe_automation_executions_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -479,7 +482,7 @@ sig
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -540,7 +543,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit 
+          | `InvalidResourceId of invalid_resource_id 
           | `UnsupportedOperatingSystem of unsupported_operating_system ])
           result
 end[@@ocaml.doc
@@ -564,13 +567,13 @@ sig
         (describe_instance_information_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidInstanceInformationFilterValue of
               invalid_instance_information_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
-     "Provides information about one or more of your managed nodes, including the operating system platform, SSM Agent version, association status, and IP address. This operation does not return information for nodes that are either Stopped or Terminated.\n\n If you specify one or more node IDs, the operation returns information for those managed nodes. If you don't specify node IDs, it returns information for all your managed nodes. If you specify a node ID that isn't valid or a node that you don't own, you receive an error.\n \n   The [IamRole] field returned for this API operation is the Identity and Access Management (IAM) role assigned to on-premises managed nodes. This operation does not return the IAM role for EC2 instances.\n   \n    "]
+     "Provides information about one or more of your managed nodes, including the operating system platform, SSM Agent version, association status, and IP address. This operation does not return information for nodes that are either Stopped or Terminated.\n\n If you specify one or more node IDs, the operation returns information for those managed nodes. If you don't specify node IDs, it returns information for all your managed nodes. If you specify a node ID that isn't valid or a node that you don't own, you receive an error.\n \n   The [IamRole] field returned for this API operation is the role assigned to an Amazon EC2 instance configured with a Systems Manager Quick Setup host management configuration or the role assigned to an on-premises managed node.\n   \n    "]
 module DescribeInstancePatchStates :
 sig
   val request :
@@ -617,7 +620,7 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidActivationId of invalid_activation_id 
           | `InvalidDocument of invalid_document 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidInstancePropertyFilterValue of
               invalid_instance_property_filter_value 
@@ -738,7 +741,7 @@ sig
         (describe_parameters_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidFilterOption of invalid_filter_option 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidNextToken of invalid_next_token ]) result
@@ -784,7 +787,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error ]) result
 end[@@ocaml.doc
-     "Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as [CreatePatchBaseline], [UpdatePatchBaseline], [DescribeAvailablePatches], and [DescribePatchBaselines].\n\n The following section lists the properties that can be used in filters for each major operating system type:\n \n   AMAZON_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                 \n                   AMAZON_LINUX_2  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                   \n                                     CENTOS  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                             \n                                               DEBIAN  Valid properties: [PRODUCT] | [PRIORITY] \n                                                       \n                                                         MACOS  Valid properties: [PRODUCT] | [CLASSIFICATION] \n                                                                \n                                                                  ORACLE_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                                                                \n                                                                                  REDHAT_ENTERPRISE_LINUX  \nValid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n\n  SUSE  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n        \n          UBUNTU  Valid properties: [PRODUCT] | [PRIORITY] \n                  \n                    WINDOWS  Valid properties: [PRODUCT] | [PRODUCT_FAMILY] | [CLASSIFICATION] | [MSRC_SEVERITY] \n                             \n                               "]
+     "Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as [CreatePatchBaseline], [UpdatePatchBaseline], [DescribeAvailablePatches], and [DescribePatchBaselines].\n\n The following section lists the properties that can be used in filters for each major operating system type:\n \n   AMAZON_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                 \n                   AMAZON_LINUX_2  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                   \n                                     AMAZON_LINUX_2023  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                                        \n                                                          CENTOS  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                                                  \n                                                                    DEBIAN  Valid properties: [PRODUCT] | [PRIORITY] \n                                                                            \n                                                                              MACOS  \nValid properties: [PRODUCT] | [CLASSIFICATION] \n\n  ORACLE_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                \n                  REDHAT_ENTERPRISE_LINUX  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                           \n                                             SUSE  Valid properties: [PRODUCT] | [CLASSIFICATION] | [SEVERITY] \n                                                   \n                                                     UBUNTU  Valid properties: [PRODUCT] | [PRIORITY] \n                                                             \n                                                               WINDOWS  Valid properties: [PRODUCT] | [PRODUCT_FAMILY] | [CLASSIFICATION] | [MSRC_SEVERITY] \n                                                                        \n                                                                          "]
 module DescribeSessions :
 sig
   val request :
@@ -793,7 +796,7 @@ sig
         (describe_sessions_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
      "Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.\n"]
@@ -802,7 +805,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_ops_item_related_item_request ->
-        (unit,
+        (disassociate_ops_item_related_item_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemConflictException of ops_item_conflict_exception 
@@ -813,7 +816,21 @@ sig
               ops_item_related_item_association_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a capability of Amazon Web Services Systems Manager.\n"]
+     "Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a tool in Amazon Web Services Systems Manager.\n"]
+module GetAccessToken :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_access_token_request ->
+        (get_access_token_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ThrottlingException of throttling_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Returns a credentials set to be used with just-in-time node access.\n"]
 module GetAutomationExecution :
 sig
   val request :
@@ -839,7 +856,7 @@ sig
           | `UnsupportedCalendarException of unsupported_calendar_exception ])
           result
 end[@@ocaml.doc
-     "Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, [GetCalendarState] returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, [GetCalendarState] uses the current time. Change Calendar entries have two possible states: [OPEN] or [CLOSED].\n\n If you specify more than one calendar in a request, the command returns the status of [OPEN] only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is [CLOSED].\n \n  For more information about Change Calendar, a capability of Amazon Web Services Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n  "]
+     "Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, [GetCalendarState] returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, [GetCalendarState] uses the current time. Change Calendar entries have two possible states: [OPEN] or [CLOSED].\n\n If you specify more than one calendar in a request, the command returns the status of [OPEN] only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is [CLOSED].\n \n  For more information about Change Calendar, a tool in Amazon Web Services Systems Manager, see {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html}Amazon Web Services Systems Manager Change Calendar} in the {i Amazon Web Services Systems Manager User Guide}.\n  "]
 module GetCommandInvocation :
 sig
   val request :
@@ -848,12 +865,12 @@ sig
         (get_command_invocation_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of unit 
+          | `InvalidCommandId of invalid_command_id 
           | `InvalidInstanceId of invalid_instance_id 
-          | `InvalidPluginName of unit  | `InvocationDoesNotExist of unit ])
-          result
+          | `InvalidPluginName of invalid_plugin_name 
+          | `InvocationDoesNotExist of invocation_does_not_exist ]) result
 end[@@ocaml.doc
-     "Returns detailed information about command execution for an invocation or plugin.\n\n  [GetCommandInvocation] only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use [ListCommandInvocations]. To get the command execution status across managed nodes, use [ListCommands].\n "]
+     "Returns detailed information about command execution for an invocation or plugin. The Run Command API follows an eventual consistency model, due to the distributed nature of the system supporting the API. This means that the result of an API command you run that affects your resources might not be immediately visible to all subsequent commands you run. You should keep this in mind when you carry out an API command that immediately follows a previous API command.\n\n  [GetCommandInvocation] only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use [ListCommandInvocations]. To get the command execution status across managed nodes, use [ListCommands].\n "]
 module GetConnectionStatus :
 sig
   val request :
@@ -887,7 +904,7 @@ sig
           | `UnsupportedOperatingSystem of unsupported_operating_system ])
           result
 end[@@ocaml.doc
-     "Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the [AWS-RunPatchBaseline] Systems Manager document (SSM document).\n\n  If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a capability of Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the [AWS-RunShellScript] document or the [AWS-RunPowerShellScript] document.\n  \n   "]
+     "Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the [AWS-RunPatchBaseline] Systems Manager document (SSM document).\n\n  If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a tool in Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the [AWS-RunShellScript] document or the [AWS-RunPowerShellScript] document.\n  \n   "]
 module GetDocument :
 sig
   val request :
@@ -900,6 +917,18 @@ sig
           | `InvalidDocumentVersion of invalid_document_version ]) result
 end[@@ocaml.doc
      "Gets the contents of the specified Amazon Web Services Systems Manager document (SSM document).\n"]
+module GetExecutionPreview :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_execution_preview_request ->
+        (get_execution_preview_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InternalServerError of internal_server_error 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     "Initiates the process of retrieving an existing preview that shows the effects that running a specified Automation runbook would have on the targeted resources.\n"]
 module GetInventory :
 sig
   val request :
@@ -1076,13 +1105,13 @@ sig
         (get_parameters_by_path_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidFilterOption of invalid_filter_option 
           | `InvalidFilterValue of invalid_filter_value 
           | `InvalidKeyId of invalid_key_id 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
-     "Retrieve information about one or more parameters in a specific hierarchy. \n\n Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.\n "]
+     "Retrieve information about one or more parameters under a specified level in a hierarchy. \n\n Request results are returned on a best-effort basis. If you specify [MaxResults] in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of [MaxResults]. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call to get the next set of results.\n "]
 module GetPatchBaseline :
 sig
   val request :
@@ -1092,7 +1121,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit ]) result
+          | `InvalidResourceId of invalid_resource_id ]) result
 end[@@ocaml.doc "Retrieves information about a patch baseline.\n"]
 module GetPatchBaselineForPatchGroup :
 sig
@@ -1165,7 +1194,7 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
-     "Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a capability of Amazon Web Services Systems Manager.\n"]
+     "Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a tool in Amazon Web Services Systems Manager.\n"]
 module ListCommandInvocations :
 sig
   val request :
@@ -1174,7 +1203,8 @@ sig
         (list_command_invocations_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of unit  | `InvalidFilterKey of unit 
+          | `InvalidCommandId of invalid_command_id 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -1187,7 +1217,8 @@ sig
         (list_commands_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidCommandId of unit  | `InvalidFilterKey of unit 
+          | `InvalidCommandId of invalid_command_id 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
@@ -1202,8 +1233,8 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidFilter of invalid_filter 
           | `InvalidNextToken of invalid_next_token 
-          | `InvalidResourceId of unit  | `InvalidResourceType of unit ])
-          result
+          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceType of invalid_resource_type ]) result
 end[@@ocaml.doc
      "For a specified resource ID, this API operation returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter.\n"]
 module ListComplianceSummaries :
@@ -1250,7 +1281,7 @@ sig
         (list_documents_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidFilterKey of unit 
+          | `InvalidFilterKey of invalid_filter_key 
           | `InvalidNextToken of invalid_next_token ]) result
 end[@@ocaml.doc
      "Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results of this request by using a filter.\n"]
@@ -1268,6 +1299,39 @@ sig
           | `InvalidTypeNameException of invalid_type_name_exception ])
           result
 end[@@ocaml.doc "A list of inventory items returned by the request.\n"]
+module ListNodes :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_nodes_request ->
+        (list_nodes_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InternalServerError of internal_server_error 
+          | `InvalidFilter of invalid_filter 
+          | `InvalidNextToken of invalid_next_token 
+          | `ResourceDataSyncNotFoundException of
+              resource_data_sync_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Takes in filters and returns a list of managed nodes matching the filter criteria.\n"]
+module ListNodesSummary :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_nodes_summary_request ->
+        (list_nodes_summary_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InternalServerError of internal_server_error 
+          | `InvalidAggregatorException of invalid_aggregator_exception 
+          | `InvalidFilter of invalid_filter 
+          | `InvalidNextToken of invalid_next_token 
+          | `ResourceDataSyncNotFoundException of
+              resource_data_sync_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Generates a summary of managed instance/node metadata based on the filters and aggregators you specify. Results are grouped by the input aggregator you specify.\n"]
 module ListOpsItemEvents :
 sig
   val request :
@@ -1296,7 +1360,7 @@ sig
               ops_item_invalid_parameter_exception ])
           result
 end[@@ocaml.doc
-     "Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a capability of Amazon Web Services Systems Manager.\n"]
+     "Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a tool in Amazon Web Services Systems Manager.\n"]
 module ListOpsMetadata :
 sig
   val request :
@@ -1344,8 +1408,8 @@ sig
         (list_tags_for_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit  | `InvalidResourceType of unit ])
-          result
+          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceType of invalid_resource_type ]) result
 end[@@ocaml.doc
      "Returns a list of the tags assigned to the specified resource.\n\n For information about the ID format for each supported resource type, see [AddTagsToResource].\n "]
 module ModifyDocumentPermission :
@@ -1353,7 +1417,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       modify_document_permission_request ->
-        (unit,
+        (modify_document_permission_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DocumentLimitExceeded of document_limit_exceeded 
           | `DocumentPermissionLimit of document_permission_limit 
@@ -1367,13 +1431,14 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_compliance_items_request ->
-        (unit,
+        (put_compliance_items_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ComplianceTypeCountLimitExceededException of
               compliance_type_count_limit_exceeded_exception 
           | `InternalServerError of internal_server_error 
           | `InvalidItemContentException of invalid_item_content_exception 
-          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
+          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceType of invalid_resource_type 
           | `ItemSizeLimitExceededException of
               item_size_limit_exceeded_exception 
           | `TotalSizeLimitExceededException of
@@ -1439,7 +1504,7 @@ sig
               policies_limit_exceeded_exception 
           | `TooManyUpdates of too_many_updates 
           | `UnsupportedParameterType of unsupported_parameter_type ]) result
-end[@@ocaml.doc "Add a parameter to the system.\n"]
+end[@@ocaml.doc "Create or update a parameter in Parameter Store.\n"]
 module PutResourcePolicy :
 sig
   val request :
@@ -1471,7 +1536,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit ]) result
+          | `InvalidResourceId of invalid_resource_id ]) result
 end[@@ocaml.doc
      "Defines the default patch baseline for the relevant operating system.\n\n To reset the Amazon Web Services-predefined patch baseline as the default, specify the full patch baseline Amazon Resource Name (ARN) as the baseline ID value. For example, for CentOS, specify [arn:aws:ssm:us-east-2:733109147000:patchbaseline/pb-0574b43a65ea646ed] instead of [pb-0574b43a65ea646ed].\n "]
 module RegisterPatchBaselineForPatchGroup :
@@ -1484,7 +1549,7 @@ sig
           | `AlreadyExistsException of already_exists_exception 
           | `DoesNotExistException of does_not_exist_exception 
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit 
+          | `InvalidResourceId of invalid_resource_id 
           | `ResourceLimitExceededException of
               resource_limit_exceeded_exception ])
           result
@@ -1523,10 +1588,11 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_resource_request ->
-        (unit,
+        (remove_tags_from_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
-          | `InvalidResourceId of unit  | `InvalidResourceType of unit 
+          | `InvalidResourceId of invalid_resource_id 
+          | `InvalidResourceType of invalid_resource_type 
           | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc "Removes tag keys from the specified resource.\n"]
 module ResetServiceSetting :
@@ -1557,7 +1623,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_automation_signal_request ->
-        (unit,
+        (send_automation_signal_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
@@ -1576,24 +1642,40 @@ sig
       send_command_request ->
         (send_command_result,
           [> Smaws_Lib.Protocols.AwsJson.error
-          | `DuplicateInstanceId of unit 
+          | `DuplicateInstanceId of duplicate_instance_id 
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
           | `InvalidInstanceId of invalid_instance_id 
           | `InvalidNotificationConfig of invalid_notification_config 
-          | `InvalidOutputFolder of unit 
+          | `InvalidOutputFolder of invalid_output_folder 
           | `InvalidParameters of invalid_parameters 
           | `InvalidRole of invalid_role 
           | `MaxDocumentSizeExceeded of max_document_size_exceeded 
           | `UnsupportedPlatformType of unsupported_platform_type ]) result
 end[@@ocaml.doc "Runs commands on one or more managed nodes.\n"]
+module StartAccessRequest :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      start_access_request_request ->
+        (start_access_request_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `InternalServerError of internal_server_error 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ServiceQuotaExceededException of
+              service_quota_exceeded_exception 
+          | `ThrottlingException of throttling_exception 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Starts the workflow for just-in-time node access sessions.\n"]
 module StartAssociationsOnce :
 sig
   val request :
     Smaws_Lib.Context.t ->
       start_associations_once_request ->
-        (unit,
+        (start_associations_once_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AssociationDoesNotExist of association_does_not_exist 
           | `InvalidAssociation of invalid_association ]) result
@@ -1640,6 +1722,17 @@ sig
           result
 end[@@ocaml.doc
      "Creates a change request for Change Manager. The Automation runbooks specified in the change request run only after all required approvals for the change request have been received.\n"]
+module StartExecutionPreview :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      start_execution_preview_request ->
+        (start_execution_preview_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InternalServerError of internal_server_error 
+          | `ValidationException of validation_exception ]) result
+end[@@ocaml.doc
+     "Initiates the process of creating a preview showing the effects that running a specified Automation runbook would have on the targeted resources.\n"]
 module StartSession :
 sig
   val request :
@@ -1657,7 +1750,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_automation_execution_request ->
-        (unit,
+        (stop_automation_execution_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AutomationExecutionNotFoundException of
               automation_execution_not_found_exception 
@@ -1702,7 +1795,7 @@ sig
           | `InvalidAssociationVersion of invalid_association_version 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentVersion of invalid_document_version 
-          | `InvalidOutputLocation of unit 
+          | `InvalidOutputLocation of invalid_output_location 
           | `InvalidParameters of invalid_parameters 
           | `InvalidSchedule of invalid_schedule 
           | `InvalidTarget of invalid_target 
@@ -1722,8 +1815,8 @@ sig
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidInstanceId of invalid_instance_id 
-          | `StatusUnchanged of unit  | `TooManyUpdates of too_many_updates ])
-          result
+          | `StatusUnchanged of status_unchanged 
+          | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
      "Updates the status of the Amazon Web Services Systems Manager document (SSM document) associated with the specified managed node.\n\n  [UpdateAssociationStatus] is primarily used by the Amazon Web Services Systems Manager Agent (SSM Agent) to report status updates about your associations and is only used for associations created with the [InstanceId] legacy parameter.\n "]
 module UpdateDocument :
@@ -1762,12 +1855,13 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_document_metadata_request ->
-        (unit,
+        (update_document_metadata_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidDocument of invalid_document 
           | `InvalidDocumentOperation of invalid_document_operation 
-          | `InvalidDocumentVersion of invalid_document_version ]) result
+          | `InvalidDocumentVersion of invalid_document_version 
+          | `TooManyUpdates of too_many_updates ]) result
 end[@@ocaml.doc
      "Updates information related to approval reviews for a specific version of a change template in Change Manager.\n"]
 module UpdateMaintenanceWindow :
@@ -1808,7 +1902,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_managed_instance_role_request ->
-        (unit,
+        (update_managed_instance_role_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `InvalidInstanceId of invalid_instance_id ]) result
@@ -1819,7 +1913,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_ops_item_request ->
-        (unit,
+        (update_ops_item_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `OpsItemAccessDeniedException of ops_item_access_denied_exception 
@@ -1868,7 +1962,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_resource_data_sync_request ->
-        (unit,
+        (update_resource_data_sync_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ResourceDataSyncConflictException of
@@ -1885,7 +1979,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_service_setting_request ->
-        (unit,
+        (update_service_setting_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServerError of internal_server_error 
           | `ServiceSettingNotFound of service_setting_not_found 

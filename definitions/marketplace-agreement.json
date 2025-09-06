@@ -34,7 +34,7 @@
           "name": "aws-marketplace"
         },
         "aws.protocols#awsJson1_0": {},
-        "smithy.api#documentation": "<p>AWS Marketplace is a curated digital catalog that customers can use to find, buy, deploy, and manage third-party software, data, and services to build solutions and run their businesses. The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers manage their product-related agreements, including listing, searching, and filtering agreements.</p>\n         <p>To manage agreements in AWS Marketplace, you must ensure that your AWS Identity and\n         Access Management (IAM) policies and roles are set up. The user must have the required\n         policies/permissions that allow them to carry out the actions in AWS:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>DescribeAgreement</code> – Grants permission to users to obtain detailed\n               meta data about any of their agreements.</p>\n            </li>\n            <li>\n               <p>\n                  <code>GetAgreementTerms</code> – Grants permission to users to obtain details\n               about the terms of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SearchAgreements</code> – Grants permission to users to search through all\n               their agreements.</p>\n            </li>\n         </ul>",
+        "smithy.api#documentation": "<p>AWS Marketplace is a curated digital catalog that customers can use to find, buy, deploy, and manage third-party software, data, and services to build solutions and run their businesses. The AWS Marketplace Agreement Service provides an API interface that helps AWS Marketplace sellers manage their product-related agreements, including listing, searching, and filtering agreements.</p>\n         <p>To manage agreements in AWS Marketplace, you must ensure that your AWS Identity and\n         Access Management (IAM) policies and roles are set up. The user must have the required\n         policies/permissions that allow them to carry out the actions in AWS:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>DescribeAgreement</code> \u2013 Grants permission to users to obtain detailed\n               meta data about any of their agreements.</p>\n            </li>\n            <li>\n               <p>\n                  <code>GetAgreementTerms</code> \u2013 Grants permission to users to obtain details\n               about the terms of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SearchAgreements</code> \u2013 Grants permission to users to search through all\n               their agreements.</p>\n            </li>\n         </ul>",
         "smithy.api#paginated": {
           "inputToken": "nextToken",
           "outputToken": "nextToken",
@@ -767,7 +767,7 @@
         "freeTrialPricingTerm": {
           "target": "com.amazonaws.marketplaceagreement#FreeTrialPricingTerm",
           "traits": {
-            "smithy.api#documentation": "<p>Defines a short-term free pricing model where the buyers aren’t charged anything within a specified limit.</p>"
+            "smithy.api#documentation": "<p>Defines a short-term free pricing model where the buyers aren\u2019t charged anything within a specified limit.</p>"
           }
         },
         "fixedUpfrontPricingTerm": {
@@ -923,7 +923,7 @@
         "endTime": {
           "target": "com.amazonaws.marketplaceagreement#Timestamp",
           "traits": {
-            "smithy.api#documentation": "<p>The date and time when the agreement ends. The field is <code>null</code> for\n         pay-as-you-go agreements, which don’t have end dates.</p>"
+            "smithy.api#documentation": "<p>The date and time when the agreement ends. The field is <code>null</code> for\n         pay-as-you-go agreements, which don\u2019t have end dates.</p>"
           }
         },
         "agreementType": {
@@ -1194,7 +1194,7 @@
         "endTime": {
           "target": "com.amazonaws.marketplaceagreement#Timestamp",
           "traits": {
-            "smithy.api#documentation": "<p>The date and time when the agreement ends. The field is <code>null</code> for\n         pay-as-you-go agreements, which don’t have end dates.</p>"
+            "smithy.api#documentation": "<p>The date and time when the agreement ends. The field is <code>null</code> for\n         pay-as-you-go agreements, which don\u2019t have end dates.</p>"
           }
         },
         "acceptanceTime": {
@@ -1224,7 +1224,7 @@
         "status": {
           "target": "com.amazonaws.marketplaceagreement#AgreementStatus",
           "traits": {
-            "smithy.api#documentation": "<p>The current status of the agreement.</p>\n         <p>Statuses include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ACTIVE</code> – The terms of the agreement are active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ARCHIVED</code> – The agreement ended without a specified reason.</p>\n            </li>\n            <li>\n               <p>\n                  <code>CANCELLED</code> – The acceptor ended the agreement before the defined end\n               date.</p>\n            </li>\n            <li>\n               <p>\n                  <code>EXPIRED</code> – The agreement ended on the defined end date.</p>\n            </li>\n            <li>\n               <p>\n                  <code>RENEWED</code> – The agreement was renewed into a new agreement (for\n               example, an auto-renewal).</p>\n            </li>\n            <li>\n               <p>\n                  <code>REPLACED</code> – The agreement was replaced using an agreement replacement\n               offer.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ROLLED_BACK</code> (Only applicable to inactive agreement revisions) – The\n               agreement revision has been rolled back because of an error. An earlier revision is\n               now active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SUPERCEDED</code> (Only applicable to inactive agreement revisions) – The\n               agreement revision is no longer active and another agreement revision is now\n               active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TERMINATED</code> – The agreement ended before the defined end date because\n               of an AWS termination (for example, a payment failure).</p>\n            </li>\n         </ul>"
+            "smithy.api#documentation": "<p>The current status of the agreement.</p>\n         <p>Statuses include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ACTIVE</code> \u2013 The terms of the agreement are active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ARCHIVED</code> \u2013 The agreement ended without a specified reason.</p>\n            </li>\n            <li>\n               <p>\n                  <code>CANCELLED</code> \u2013 The acceptor ended the agreement before the defined end\n               date.</p>\n            </li>\n            <li>\n               <p>\n                  <code>EXPIRED</code> \u2013 The agreement ended on the defined end date.</p>\n            </li>\n            <li>\n               <p>\n                  <code>RENEWED</code> \u2013 The agreement was renewed into a new agreement (for\n               example, an auto-renewal).</p>\n            </li>\n            <li>\n               <p>\n                  <code>REPLACED</code> \u2013 The agreement was replaced using an agreement replacement\n               offer.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ROLLED_BACK</code> (Only applicable to inactive agreement revisions) \u2013 The\n               agreement revision has been rolled back because of an error. An earlier revision is\n               now active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SUPERCEDED</code> (Only applicable to inactive agreement revisions) \u2013 The\n               agreement revision is no longer active and another agreement revision is now\n               active.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TERMINATED</code> \u2013 The agreement ended before the defined end date because\n               of an AWS termination (for example, a payment failure).</p>\n            </li>\n         </ul>"
           }
         }
       },
@@ -1272,7 +1272,7 @@
         "type": {
           "target": "com.amazonaws.marketplaceagreement#BoundedString",
           "traits": {
-            "smithy.api#documentation": "<p>Category of the document. Document types include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CustomEula</code> – A custom EULA provided by you as seller. A URL for a\n               EULA stored in an accessible Amazon S3 bucket is required for this document\n               type.</p>\n            </li>\n            <li>\n               <p>\n                  <code>CustomDsa</code> – A custom Data Subscription Agreement (DSA) provided by\n               you as seller. A URL for a DSA stored in an accessible Amazon S3 bucket is required\n               for this document type.</p>\n            </li>\n            <li>\n               <p>\n                  <code>StandardEula</code> – The Standard Contract for AWS Marketplace (SCMP). For\n               more information about SCMP, see the AWS Marketplace Seller Guide. You don’t provide\n               a URL for this type because it’s managed by AWS Marketplace.</p>\n            </li>\n            <li>\n               <p>\n                  <code>StandardDsa</code> – DSA for AWS Marketplace. For more information about the\n               DSA, see the AWS Data Exchange User Guide. You don’t provide a URL for this type\n               because it’s managed by AWS Marketplace.</p>\n            </li>\n         </ul>"
+            "smithy.api#documentation": "<p>Category of the document. Document types include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CustomEula</code> \u2013 A custom EULA provided by you as seller. A URL for a\n               EULA stored in an accessible Amazon S3 bucket is required for this document\n               type.</p>\n            </li>\n            <li>\n               <p>\n                  <code>CustomDsa</code> \u2013 A custom Data Subscription Agreement (DSA) provided by\n               you as seller. A URL for a DSA stored in an accessible Amazon S3 bucket is required\n               for this document type.</p>\n            </li>\n            <li>\n               <p>\n                  <code>StandardEula</code> \u2013 The Standard Contract for AWS Marketplace (SCMP). For\n               more information about SCMP, see the AWS Marketplace Seller Guide. You don\u2019t provide\n               a URL for this type because it\u2019s managed by AWS Marketplace.</p>\n            </li>\n            <li>\n               <p>\n                  <code>StandardDsa</code> \u2013 DSA for AWS Marketplace. For more information about the\n               DSA, see the AWS Data Exchange User Guide. You don\u2019t provide a URL for this type\n               because it\u2019s managed by AWS Marketplace.</p>\n            </li>\n         </ul>"
           }
         },
         "url": {
@@ -1441,7 +1441,7 @@
         "duration": {
           "target": "com.amazonaws.marketplaceagreement#BoundedString",
           "traits": {
-            "smithy.api#documentation": "<p>Duration of the free trial period (5–31 days). </p>"
+            "smithy.api#documentation": "<p>Duration of the free trial period (5\u201331 days). </p>"
           }
         },
         "grants": {
@@ -1452,7 +1452,7 @@
         }
       },
       "traits": {
-        "smithy.api#documentation": "<p>Defines a short-term free pricing model where the buyers aren’t charged anything within\n         a specified limit.</p>"
+        "smithy.api#documentation": "<p>Defines a short-term free pricing model where the buyers aren\u2019t charged anything within\n         a specified limit.</p>"
       }
     },
     "com.amazonaws.marketplaceagreement#GetAgreementTerms": {
@@ -1481,7 +1481,7 @@
         }
       ],
       "traits": {
-        "smithy.api#documentation": "<p>Obtains details about the terms in an agreement that you participated in as proposer or\n         acceptor.</p>\n         <p>The details include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>TermType</code> – The type of term, such as <code>LegalTerm</code>,\n                  <code>RenewalTerm</code>, or <code>ConfigurableUpfrontPricingTerm</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TermID</code> – The ID of the particular term, which is common between offer\n               and agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TermPayload</code> – The key information contained in the term, such as the\n               EULA for <code>LegalTerm</code> or pricing and dimensions for various pricing terms,\n               such as <code>ConfigurableUpfrontPricingTerm</code> or\n                  <code>UsageBasedPricingTerm</code>.</p>\n            </li>\n         </ul>\n         <ul>\n            <li>\n               <p>\n                  <code>Configuration</code> – The buyer/acceptor's selection at the time of\n               agreement creation, such as the number of units purchased for a dimension or setting\n               the <code>EnableAutoRenew</code> flag.</p>\n            </li>\n         </ul>",
+        "smithy.api#documentation": "<p>Obtains details about the terms in an agreement that you participated in as proposer or\n         acceptor.</p>\n         <p>The details include:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>TermType</code> \u2013 The type of term, such as <code>LegalTerm</code>,\n                  <code>RenewalTerm</code>, or <code>ConfigurableUpfrontPricingTerm</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TermID</code> \u2013 The ID of the particular term, which is common between offer\n               and agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>TermPayload</code> \u2013 The key information contained in the term, such as the\n               EULA for <code>LegalTerm</code> or pricing and dimensions for various pricing terms,\n               such as <code>ConfigurableUpfrontPricingTerm</code> or\n                  <code>UsageBasedPricingTerm</code>.</p>\n            </li>\n         </ul>\n         <ul>\n            <li>\n               <p>\n                  <code>Configuration</code> \u2013 The buyer/acceptor's selection at the time of\n               agreement creation, such as the number of units purchased for a dimension or setting\n               the <code>EnableAutoRenew</code> flag.</p>\n            </li>\n         </ul>",
         "smithy.api#paginated": {}
       }
     },
@@ -1708,7 +1708,7 @@
         "price": {
           "target": "com.amazonaws.marketplaceagreement#BoundedString",
           "traits": {
-            "smithy.api#documentation": "<p>Per unit price for the product dimension that’s used for calculating the amount to be charged.</p>"
+            "smithy.api#documentation": "<p>Per unit price for the product dimension that\u2019s used for calculating the amount to be charged.</p>"
           }
         }
       },
@@ -1942,7 +1942,7 @@
         "filters": {
           "target": "com.amazonaws.marketplaceagreement#FilterList",
           "traits": {
-            "smithy.api#documentation": "<p>The filter name and value pair used to return a specific list of results.</p>\n         <p>The following filters are supported:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ResourceIdentifier</code> – The unique identifier of the resource.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ResourceType</code> – Type of the resource, which is the product\n                  (<code>AmiProduct</code>, <code>ContainerProduct</code>, or\n                  <code>SaaSProduct</code>).</p>\n            </li>\n            <li>\n               <p>\n                  <code>PartyType</code> – The party type (either <code>Acceptor</code> or\n                  <code>Proposer</code>) of the caller. For agreements where the caller is the\n               proposer, use the <code>Proposer</code> filter. For agreements where the caller is\n               the acceptor, use the <code>Acceptor</code> filter.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AcceptorAccountId</code> – The AWS account ID of the party accepting the\n               agreement terms.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OfferId</code> – The unique identifier of the offer in which the terms are\n               registered in the agreement token.</p>\n            </li>\n            <li>\n               <p>\n                  <code>Status</code> – The current status of the agreement. Values include\n                  <code>ACTIVE</code>, <code>ARCHIVED</code>, <code>CANCELLED</code>,\n                  <code>EXPIRED</code>, <code>RENEWED</code>, <code>REPLACED</code>, and\n                  <code>TERMINATED</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>BeforeEndTime</code> – A date used to filter agreements with a date before\n               the <code>endTime</code> of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AfterEndTime</code> – A date used to filter agreements with a date after the\n                  <code>endTime</code> of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AgreementType</code> – The type of agreement. Values include\n                  <code>PurchaseAgreement</code> or <code>VendorInsightsAgreement</code>.</p>\n            </li>\n         </ul>"
+            "smithy.api#documentation": "<p>The filter name and value pair used to return a specific list of results.</p>\n         <p>The following filters are supported:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ResourceIdentifier</code> \u2013 The unique identifier of the resource.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ResourceType</code> \u2013 Type of the resource, which is the product\n                  (<code>AmiProduct</code>, <code>ContainerProduct</code>, or\n                  <code>SaaSProduct</code>).</p>\n            </li>\n            <li>\n               <p>\n                  <code>PartyType</code> \u2013 The party type (either <code>Acceptor</code> or\n                  <code>Proposer</code>) of the caller. For agreements where the caller is the\n               proposer, use the <code>Proposer</code> filter. For agreements where the caller is\n               the acceptor, use the <code>Acceptor</code> filter.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AcceptorAccountId</code> \u2013 The AWS account ID of the party accepting the\n               agreement terms.</p>\n            </li>\n            <li>\n               <p>\n                  <code>OfferId</code> \u2013 The unique identifier of the offer in which the terms are\n               registered in the agreement token.</p>\n            </li>\n            <li>\n               <p>\n                  <code>Status</code> \u2013 The current status of the agreement. Values include\n                  <code>ACTIVE</code>, <code>ARCHIVED</code>, <code>CANCELLED</code>,\n                  <code>EXPIRED</code>, <code>RENEWED</code>, <code>REPLACED</code>, and\n                  <code>TERMINATED</code>.</p>\n            </li>\n            <li>\n               <p>\n                  <code>BeforeEndTime</code> \u2013 A date used to filter agreements with a date before\n               the <code>endTime</code> of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AfterEndTime</code> \u2013 A date used to filter agreements with a date after the\n                  <code>endTime</code> of an agreement.</p>\n            </li>\n            <li>\n               <p>\n                  <code>AgreementType</code> \u2013 The type of agreement. Values include\n                  <code>PurchaseAgreement</code> or <code>VendorInsightsAgreement</code>.</p>\n            </li>\n         </ul>"
           }
         },
         "sort": {
@@ -2295,19 +2295,19 @@
         "agreementDuration": {
           "target": "com.amazonaws.marketplaceagreement#BoundedString",
           "traits": {
-            "smithy.api#documentation": "<p>Defines the duration that the agreement remains active. If\n            <code>AgreementStartDate</code> isn’t provided, the agreement duration is relative to\n         the agreement signature time. The duration is represented in the ISO_8601 format.</p>"
+            "smithy.api#documentation": "<p>Defines the duration that the agreement remains active. If\n            <code>AgreementStartDate</code> isn\u2019t provided, the agreement duration is relative to\n         the agreement signature time. The duration is represented in the ISO_8601 format.</p>"
           }
         },
         "agreementStartDate": {
           "target": "com.amazonaws.marketplaceagreement#Timestamp",
           "traits": {
-            "smithy.api#documentation": "<p>Defines the date when agreement starts. The agreement starts at 00:00:00.000 UTC on the\n         date provided. If <code>AgreementStartDate</code> isn’t provided, the agreement start date\n         is determined based on agreement signature time.</p>"
+            "smithy.api#documentation": "<p>Defines the date when agreement starts. The agreement starts at 00:00:00.000 UTC on the\n         date provided. If <code>AgreementStartDate</code> isn\u2019t provided, the agreement start date\n         is determined based on agreement signature time.</p>"
           }
         },
         "agreementEndDate": {
           "target": "com.amazonaws.marketplaceagreement#Timestamp",
           "traits": {
-            "smithy.api#documentation": "<p>Defines the date when the agreement ends. The agreement ends at 23:59:59.999 UTC on the\n         date provided. If <code>AgreementEndDate</code> isn’t provided, the agreement end date is\n         determined by the validity of individual terms.</p>"
+            "smithy.api#documentation": "<p>Defines the date when the agreement ends. The agreement ends at 23:59:59.999 UTC on the\n         date provided. If <code>AgreementEndDate</code> isn\u2019t provided, the agreement end date is\n         determined by the validity of individual terms.</p>"
           }
         }
       },

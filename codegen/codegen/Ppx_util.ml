@@ -25,6 +25,7 @@ let sigi_open names =
 
 let exp_ident name = B.pexp_ident (lident_noloc name)
 let exp_str name = B.pexp_constant (Pconst_string (name, loc, None))
+let exp_int value = B.pexp_constant (Pconst_integer (value |> Int.to_string, None))
 
 let exp_fun arg_name arg_type exp =
   B.pexp_fun Nolabel None
@@ -32,6 +33,14 @@ let exp_fun arg_name arg_type exp =
        (B.ppat_var (Location.mknoloc arg_name))
        (B.ptyp_constr (lident_noloc arg_type) []))
     exp
+
+let exp_fun_with_return_type return_type arg_name arg_type exp =
+  let func_param =
+    B.pparam_val Nolabel None
+      (* (B.ptyp_constr (lident_noloc arg_type) []) *)
+      (B.ppat_var (Location.mknoloc arg_name))
+  in
+  B.pexp_function [ func_param ] (Some return_type) exp
 
 let exp_fun_untyped arg_name exp =
   B.pexp_fun Nolabel None (B.ppat_var (Location.mknoloc arg_name)) exp

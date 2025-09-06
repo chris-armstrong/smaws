@@ -1,5 +1,36 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
+let query_alias_of_yojson = string_of_yojson
+let query_statement_of_yojson = string_of_yojson
+let query_parameter_of_yojson = string_of_yojson
+let query_parameters_of_yojson tree path =
+  list_of_yojson query_parameter_of_yojson tree path
+let view_properties_value_of_yojson = string_of_yojson
+let view_properties_key_of_yojson = string_of_yojson
+let view_properties_map_of_yojson tree path =
+  map_of_yojson view_properties_key_of_yojson view_properties_value_of_yojson
+    tree path
+let widget_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     view_properties =
+       (option_of_yojson
+          (value_for_key view_properties_map_of_yojson "ViewProperties")
+          _list path);
+     query_parameters =
+       (option_of_yojson
+          (value_for_key query_parameters_of_yojson "QueryParameters") _list
+          path);
+     query_statement =
+       (option_of_yojson
+          (value_for_key query_statement_of_yojson "QueryStatement") _list
+          path);
+     query_alias =
+       (option_of_yojson (value_for_key query_alias_of_yojson "QueryAlias")
+          _list path)
+   } : widget)
+let widget_list_of_yojson tree path =
+  list_of_yojson widget_of_yojson tree path
 let string__of_yojson = string_of_yojson
 let boolean__of_yojson = bool_of_yojson
 let update_trail_response_of_yojson tree path =
@@ -324,19 +355,20 @@ let event_data_store_arn_of_yojson = string_of_yojson
 let event_data_store_name_of_yojson = string_of_yojson
 let base_unit_of_yojson = unit_of_yojson
 let event_data_store_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "STOPPED_INGESTION" -> STOPPED_INGESTION
-   | `String "STOPPING_INGESTION" -> STOPPING_INGESTION
-   | `String "STARTING_INGESTION" -> STARTING_INGESTION
-   | `String "PENDING_DELETION" -> PENDING_DELETION
-   | `String "ENABLED" -> ENABLED
-   | `String "CREATED" -> CREATED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "EventDataStoreStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "EventDataStoreStatus") : 
-  event_data_store_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "STOPPED_INGESTION" -> STOPPED_INGESTION
+    | `String "STOPPING_INGESTION" -> STOPPING_INGESTION
+    | `String "STARTING_INGESTION" -> STARTING_INGESTION
+    | `String "PENDING_DELETION" -> PENDING_DELETION
+    | `String "ENABLED" -> ENABLED
+    | `String "CREATED" -> CREATED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "EventDataStoreStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "EventDataStoreStatus") : 
+     event_data_store_status) : event_data_store_status)
 let selector_name_of_yojson = string_of_yojson
 let selector_field_of_yojson = string_of_yojson
 let operator_value_of_yojson = string_of_yojson
@@ -384,23 +416,26 @@ let termination_protection_enabled_of_yojson = bool_of_yojson
 let date_of_yojson = timestamp_epoch_seconds_of_yojson
 let event_data_store_kms_key_id_of_yojson = string_of_yojson
 let billing_mode_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FIXED_RETENTION_PRICING" -> FIXED_RETENTION_PRICING
-   | `String "EXTENDABLE_RETENTION_PRICING" -> EXTENDABLE_RETENTION_PRICING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "BillingMode" value)
-   | _ -> raise (deserialize_wrong_type_error path "BillingMode") : billing_mode)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FIXED_RETENTION_PRICING" -> FIXED_RETENTION_PRICING
+    | `String "EXTENDABLE_RETENTION_PRICING" -> EXTENDABLE_RETENTION_PRICING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "BillingMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "BillingMode") : 
+     billing_mode) : billing_mode)
 let federation_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DISABLED" -> DISABLED
-   | `String "DISABLING" -> DISABLING
-   | `String "ENABLED" -> ENABLED
-   | `String "ENABLING" -> ENABLING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "FederationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "FederationStatus") : 
-  federation_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DISABLED" -> DISABLED
+    | `String "DISABLING" -> DISABLING
+    | `String "ENABLED" -> ENABLED
+    | `String "ENABLING" -> ENABLING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "FederationStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "FederationStatus") : 
+     federation_status) : federation_status)
 let federation_role_arn_of_yojson = string_of_yojson
 let update_event_data_store_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -533,18 +568,167 @@ let event_data_store_already_exists_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "Message")
           _list path)
    } : event_data_store_already_exists_exception)
+let dashboard_arn_of_yojson = string_of_yojson
+let dashboard_name_of_yojson = string_of_yojson
+let dashboard_type_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CUSTOM" -> CUSTOM
+    | `String "MANAGED" -> MANAGED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DashboardType" value)
+    | _ -> raise (deserialize_wrong_type_error path "DashboardType") : 
+     dashboard_type) : dashboard_type)
+let refresh_schedule_frequency_unit_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DAYS" -> DAYS
+    | `String "HOURS" -> HOURS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RefreshScheduleFrequencyUnit" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "RefreshScheduleFrequencyUnit") : 
+     refresh_schedule_frequency_unit) : refresh_schedule_frequency_unit)
+let refresh_schedule_frequency_value_of_yojson = int_of_yojson
+let refresh_schedule_frequency_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     value =
+       (option_of_yojson
+          (value_for_key refresh_schedule_frequency_value_of_yojson "Value")
+          _list path);
+     unit_ =
+       (option_of_yojson
+          (value_for_key refresh_schedule_frequency_unit_of_yojson "Unit")
+          _list path)
+   } : refresh_schedule_frequency)
+let refresh_schedule_status_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RefreshScheduleStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RefreshScheduleStatus") : 
+     refresh_schedule_status) : refresh_schedule_status)
+let time_of_day_of_yojson = string_of_yojson
+let refresh_schedule_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     time_of_day =
+       (option_of_yojson (value_for_key time_of_day_of_yojson "TimeOfDay")
+          _list path);
+     status =
+       (option_of_yojson
+          (value_for_key refresh_schedule_status_of_yojson "Status") _list
+          path);
+     frequency =
+       (option_of_yojson
+          (value_for_key refresh_schedule_frequency_of_yojson "Frequency")
+          _list path)
+   } : refresh_schedule)
+let update_dashboard_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     updated_timestamp =
+       (option_of_yojson (value_for_key date_of_yojson "UpdatedTimestamp")
+          _list path);
+     created_timestamp =
+       (option_of_yojson (value_for_key date_of_yojson "CreatedTimestamp")
+          _list path);
+     termination_protection_enabled =
+       (option_of_yojson
+          (value_for_key termination_protection_enabled_of_yojson
+             "TerminationProtectionEnabled") _list path);
+     refresh_schedule =
+       (option_of_yojson
+          (value_for_key refresh_schedule_of_yojson "RefreshSchedule") _list
+          path);
+     widgets =
+       (option_of_yojson (value_for_key widget_list_of_yojson "Widgets")
+          _list path);
+     type_ =
+       (option_of_yojson (value_for_key dashboard_type_of_yojson "Type")
+          _list path);
+     name =
+       (option_of_yojson (value_for_key dashboard_name_of_yojson "Name")
+          _list path);
+     dashboard_arn =
+       (option_of_yojson
+          (value_for_key dashboard_arn_of_yojson "DashboardArn") _list path)
+   } : update_dashboard_response)
+let request_widget_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     view_properties =
+       (value_for_key view_properties_map_of_yojson "ViewProperties" _list
+          path);
+     query_parameters =
+       (option_of_yojson
+          (value_for_key query_parameters_of_yojson "QueryParameters") _list
+          path);
+     query_statement =
+       (value_for_key query_statement_of_yojson "QueryStatement" _list path)
+   } : request_widget)
+let request_widget_list_of_yojson tree path =
+  list_of_yojson request_widget_of_yojson tree path
+let update_dashboard_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     termination_protection_enabled =
+       (option_of_yojson
+          (value_for_key termination_protection_enabled_of_yojson
+             "TerminationProtectionEnabled") _list path);
+     refresh_schedule =
+       (option_of_yojson
+          (value_for_key refresh_schedule_of_yojson "RefreshSchedule") _list
+          path);
+     widgets =
+       (option_of_yojson
+          (value_for_key request_widget_list_of_yojson "Widgets") _list path);
+     dashboard_id =
+       (value_for_key dashboard_arn_of_yojson "DashboardId" _list path)
+   } : update_dashboard_request)
+let service_quota_exceeded_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : service_quota_exceeded_exception)
+let resource_not_found_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : resource_not_found_exception)
+let invalid_query_statement_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : invalid_query_statement_exception)
 let channel_arn_of_yojson = string_of_yojson
 let channel_name_of_yojson = string_of_yojson
 let source_of_yojson = string_of_yojson
 let destination_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AWS_SERVICE" -> AWS_SERVICE
-   | `String "EVENT_DATA_STORE" -> EVENT_DATA_STORE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DestinationType" value)
-   | _ -> raise (deserialize_wrong_type_error path "DestinationType") : 
-  destination_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWS_SERVICE" -> AWS_SERVICE
+    | `String "EVENT_DATA_STORE" -> EVENT_DATA_STORE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DestinationType" value)
+    | _ -> raise (deserialize_wrong_type_error path "DestinationType") : 
+     destination_type) : destination_type)
 let location_of_yojson = string_of_yojson
 let destination_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -609,6 +793,15 @@ let channel_already_exists_exception_of_yojson tree path =
           _list path)
    } : channel_already_exists_exception)
 let uui_d_of_yojson = string_of_yojson
+let type__of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RequestContext" -> RequestContext
+    | `String "TagContext" -> TagContext
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Type" value)
+    | _ -> raise (deserialize_wrong_type_error path "Type") : type_) : 
+  type_)
 let trail_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -730,16 +923,18 @@ let import_source_of_yojson tree path =
 let import_destinations_of_yojson tree path =
   list_of_yojson event_data_store_arn_of_yojson tree path
 let import_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "COMPLETED" -> COMPLETED
-   | `String "STOPPED" -> STOPPED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "INITIALIZING" -> INITIALIZING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ImportStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ImportStatus") : 
-  import_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "COMPLETED" -> COMPLETED
+    | `String "STOPPED" -> STOPPED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "INITIALIZING" -> INITIALIZING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ImportStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ImportStatus") : 
+     import_status) : import_status)
 let long_of_yojson = long_of_yojson
 let import_statistics_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -820,21 +1015,25 @@ let invalid_event_data_store_status_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "Message")
           _list path)
    } : invalid_event_data_store_status_exception)
+let account_id_of_yojson = string_of_yojson
 let start_query_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
      query_id =
        (option_of_yojson (value_for_key uui_d_of_yojson "QueryId") _list path)
    } : start_query_response)
-let query_statement_of_yojson = string_of_yojson
 let delivery_s3_uri_of_yojson = string_of_yojson
-let query_alias_of_yojson = string_of_yojson
-let query_parameter_of_yojson = string_of_yojson
-let query_parameters_of_yojson tree path =
-  list_of_yojson query_parameter_of_yojson tree path
 let start_query_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
      query_parameters =
        (option_of_yojson
           (value_for_key query_parameters_of_yojson "QueryParameters") _list
@@ -858,13 +1057,6 @@ let max_concurrent_queries_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "Message")
           _list path)
    } : max_concurrent_queries_exception)
-let invalid_query_statement_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key error_message_of_yojson "Message")
-          _list path)
-   } : invalid_query_statement_exception)
 let start_logging_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let start_logging_request_of_yojson tree path =
@@ -942,6 +1134,29 @@ let start_event_data_store_ingestion_request_of_yojson tree path =
        (value_for_key event_data_store_arn_of_yojson "EventDataStore" _list
           path)
    } : start_event_data_store_ingestion_request)
+let refresh_id_of_yojson = string_of_yojson
+let start_dashboard_refresh_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     refresh_id =
+       (option_of_yojson (value_for_key refresh_id_of_yojson "RefreshId")
+          _list path)
+   } : start_dashboard_refresh_response)
+let query_parameter_value_of_yojson = string_of_yojson
+let query_parameter_key_of_yojson = string_of_yojson
+let query_parameter_values_of_yojson tree path =
+  map_of_yojson query_parameter_key_of_yojson query_parameter_value_of_yojson
+    tree path
+let start_dashboard_refresh_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     query_parameter_values =
+       (option_of_yojson
+          (value_for_key query_parameter_values_of_yojson
+             "QueryParameterValues") _list path);
+     dashboard_id =
+       (value_for_key dashboard_arn_of_yojson "DashboardId" _list path)
+   } : start_dashboard_refresh_request)
 let source_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -953,6 +1168,58 @@ let source_config_of_yojson tree path =
        (option_of_yojson
           (value_for_key boolean__of_yojson "ApplyToAllRegions") _list path)
    } : source_config)
+let sample_query_name_of_yojson = string_of_yojson
+let sample_query_description_of_yojson = string_of_yojson
+let sample_query_sq_l_of_yojson = string_of_yojson
+let sample_query_relevance_of_yojson = float_of_yojson
+let search_sample_queries_search_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     relevance =
+       (option_of_yojson
+          (value_for_key sample_query_relevance_of_yojson "Relevance") _list
+          path);
+     sq_l =
+       (option_of_yojson (value_for_key sample_query_sq_l_of_yojson "SQL")
+          _list path);
+     description =
+       (option_of_yojson
+          (value_for_key sample_query_description_of_yojson "Description")
+          _list path);
+     name =
+       (option_of_yojson (value_for_key sample_query_name_of_yojson "Name")
+          _list path)
+   } : search_sample_queries_search_result)
+let search_sample_queries_search_results_of_yojson tree path =
+  list_of_yojson search_sample_queries_search_result_of_yojson tree path
+let search_sample_queries_search_phrase_of_yojson = string_of_yojson
+let pagination_token_of_yojson = string_of_yojson
+let search_sample_queries_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson
+          (value_for_key pagination_token_of_yojson "NextToken") _list path);
+     search_results =
+       (option_of_yojson
+          (value_for_key search_sample_queries_search_results_of_yojson
+             "SearchResults") _list path)
+   } : search_sample_queries_response)
+let search_sample_queries_max_results_of_yojson = int_of_yojson
+let search_sample_queries_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson
+          (value_for_key pagination_token_of_yojson "NextToken") _list path);
+     max_results =
+       (option_of_yojson
+          (value_for_key search_sample_queries_max_results_of_yojson
+             "MaxResults") _list path);
+     search_phrase =
+       (value_for_key search_sample_queries_search_phrase_of_yojson
+          "SearchPhrase" _list path)
+   } : search_sample_queries_request)
 let restore_event_data_store_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1047,13 +1314,6 @@ let resource_policy_not_found_exception_of_yojson tree path =
           _list path)
    } : resource_policy_not_found_exception)
 let resource_policy_of_yojson = string_of_yojson
-let resource_not_found_exception_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     message =
-       (option_of_yojson (value_for_key error_message_of_yojson "Message")
-          _list path)
-   } : resource_not_found_exception)
 let resource_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1093,7 +1353,6 @@ let invalid_tag_parameter_exception_of_yojson tree path =
    } : invalid_tag_parameter_exception)
 let register_organization_delegated_admin_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
-let account_id_of_yojson = string_of_yojson
 let register_organization_delegated_admin_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1107,6 +1366,13 @@ let not_organization_management_account_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "Message")
           _list path)
    } : not_organization_management_account_exception)
+let insufficient_iam_access_permission_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : insufficient_iam_access_permission_exception)
 let delegated_admin_account_limit_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1136,26 +1402,29 @@ let account_not_found_exception_of_yojson tree path =
           _list path)
    } : account_not_found_exception)
 let read_write_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "All" -> All
-   | `String "WriteOnly" -> WriteOnly
-   | `String "ReadOnly" -> ReadOnly
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ReadWriteType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ReadWriteType") : 
-  read_write_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "All" -> All
+    | `String "WriteOnly" -> WriteOnly
+    | `String "ReadOnly" -> ReadOnly
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ReadWriteType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ReadWriteType") : 
+     read_write_type) : read_write_type)
 let query_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TIMED_OUT" -> TIMED_OUT
-   | `String "CANCELLED" -> CANCELLED
-   | `String "FAILED" -> FAILED
-   | `String "FINISHED" -> FINISHED
-   | `String "RUNNING" -> RUNNING
-   | `String "QUEUED" -> QUEUED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "QueryStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "QueryStatus") : query_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TIMED_OUT" -> TIMED_OUT
+    | `String "CANCELLED" -> CANCELLED
+    | `String "FAILED" -> FAILED
+    | `String "FINISHED" -> FINISHED
+    | `String "RUNNING" -> RUNNING
+    | `String "QUEUED" -> QUEUED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "QueryStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "QueryStatus") : 
+     query_status) : query_status)
 let integer__of_yojson = int_of_yojson
 let query_statistics_for_describe_query_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1222,6 +1491,10 @@ let queries_of_yojson tree path = list_of_yojson query_of_yojson tree path
 let put_resource_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     delegated_admin_resource_policy =
+       (option_of_yojson
+          (value_for_key resource_policy_of_yojson
+             "DelegatedAdminResourcePolicy") _list path);
      resource_policy =
        (option_of_yojson
           (value_for_key resource_policy_of_yojson "ResourcePolicy") _list
@@ -1239,12 +1512,14 @@ let put_resource_policy_request_of_yojson tree path =
        (value_for_key resource_arn_of_yojson "ResourceArn" _list path)
    } : put_resource_policy_request)
 let insight_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ApiErrorRateInsight" -> ApiErrorRateInsight
-   | `String "ApiCallRateInsight" -> ApiCallRateInsight
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "InsightType" value)
-   | _ -> raise (deserialize_wrong_type_error path "InsightType") : insight_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ApiErrorRateInsight" -> ApiErrorRateInsight
+    | `String "ApiCallRateInsight" -> ApiCallRateInsight
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "InsightType" value)
+    | _ -> raise (deserialize_wrong_type_error path "InsightType") : 
+     insight_type) : insight_type)
 let insight_selector_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1355,6 +1630,55 @@ let put_event_selectors_request_of_yojson tree path =
           path);
      trail_name = (value_for_key string__of_yojson "TrailName" _list path)
    } : put_event_selectors_request)
+let max_event_size_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Large" -> Large
+    | `String "Standard" -> Standard
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MaxEventSize" value)
+    | _ -> raise (deserialize_wrong_type_error path "MaxEventSize") : 
+     max_event_size) : max_event_size)
+let operator_target_list_member_of_yojson = string_of_yojson
+let operator_target_list_of_yojson tree path =
+  list_of_yojson operator_target_list_member_of_yojson tree path
+let context_key_selector_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     equals =
+       (value_for_key operator_target_list_of_yojson "Equals" _list path);
+     type_ = (value_for_key type__of_yojson "Type" _list path)
+   } : context_key_selector)
+let context_key_selectors_of_yojson tree path =
+  list_of_yojson context_key_selector_of_yojson tree path
+let put_event_configuration_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     context_key_selectors =
+       (option_of_yojson
+          (value_for_key context_key_selectors_of_yojson
+             "ContextKeySelectors") _list path);
+     max_event_size =
+       (option_of_yojson
+          (value_for_key max_event_size_of_yojson "MaxEventSize") _list path);
+     event_data_store_arn =
+       (option_of_yojson
+          (value_for_key event_data_store_arn_of_yojson "EventDataStoreArn")
+          _list path)
+   } : put_event_configuration_response)
+let put_event_configuration_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     context_key_selectors =
+       (value_for_key context_key_selectors_of_yojson "ContextKeySelectors"
+          _list path);
+     max_event_size =
+       (value_for_key max_event_size_of_yojson "MaxEventSize" _list path);
+     event_data_store =
+       (option_of_yojson (value_for_key string__of_yojson "EventDataStore")
+          _list path)
+   } : put_event_configuration_request)
 let byte_buffer_of_yojson = blob_of_yojson
 let public_key_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1374,6 +1698,7 @@ let public_key_of_yojson tree path =
    } : public_key)
 let public_key_list_of_yojson tree path =
   list_of_yojson public_key_of_yojson tree path
+let prompt_of_yojson = string_of_yojson
 let partition_key_type_of_yojson = string_of_yojson
 let partition_key_name_of_yojson = string_of_yojson
 let partition_key_of_yojson tree path =
@@ -1384,7 +1709,6 @@ let partition_key_of_yojson tree path =
    } : partition_key)
 let partition_key_list_of_yojson tree path =
   list_of_yojson partition_key_of_yojson tree path
-let pagination_token_of_yojson = string_of_yojson
 let next_token_of_yojson = string_of_yojson
 let maximum_number_of_trails_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1439,21 +1763,22 @@ let lookup_events_response_of_yojson tree path =
           path)
    } : lookup_events_response)
 let lookup_attribute_key_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ACCESS_KEY_ID" -> ACCESS_KEY_ID
-   | `String "EVENT_SOURCE" -> EVENT_SOURCE
-   | `String "RESOURCE_NAME" -> RESOURCE_NAME
-   | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
-   | `String "USERNAME" -> USERNAME
-   | `String "READ_ONLY" -> READ_ONLY
-   | `String "EVENT_NAME" -> EVENT_NAME
-   | `String "EVENT_ID" -> EVENT_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "LookupAttributeKey"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "LookupAttributeKey") : 
-  lookup_attribute_key)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AccessKeyId" -> ACCESS_KEY_ID
+    | `String "EventSource" -> EVENT_SOURCE
+    | `String "ResourceName" -> RESOURCE_NAME
+    | `String "ResourceType" -> RESOURCE_TYPE
+    | `String "Username" -> USERNAME
+    | `String "ReadOnly" -> READ_ONLY
+    | `String "EventName" -> EVENT_NAME
+    | `String "EventId" -> EVENT_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "LookupAttributeKey"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "LookupAttributeKey") : 
+     lookup_attribute_key) : lookup_attribute_key)
 let lookup_attribute_value_of_yojson = string_of_yojson
 let lookup_attribute_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1468,13 +1793,14 @@ let lookup_attribute_of_yojson tree path =
 let lookup_attributes_list_of_yojson tree path =
   list_of_yojson lookup_attribute_of_yojson tree path
 let event_category_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Insight" -> Insight
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "EventCategory" value)
-   | _ -> raise (deserialize_wrong_type_error path "EventCategory") : 
-  event_category)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "insight" -> Insight
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "EventCategory" value)
+    | _ -> raise (deserialize_wrong_type_error path "EventCategory") : 
+     event_category) : event_category)
 let lookup_events_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1681,15 +2007,16 @@ let list_insights_metric_data_response_of_yojson tree path =
    } : list_insights_metric_data_response)
 let insights_metric_period_of_yojson = int_of_yojson
 let insights_metric_data_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "NON_ZERO_DATA" -> NON_ZERO_DATA
-   | `String "FILL_WITH_ZEROS" -> FILL_WITH_ZEROS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InsightsMetricDataType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InsightsMetricDataType") : 
-  insights_metric_data_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NonZeroData" -> NON_ZERO_DATA
+    | `String "FillWithZeros" -> FILL_WITH_ZEROS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InsightsMetricDataType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InsightsMetricDataType") : 
+     insights_metric_data_type) : insights_metric_data_type)
 let insights_metric_max_results_of_yojson = int_of_yojson
 let list_insights_metric_data_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1776,16 +2103,17 @@ let list_imports_request_of_yojson tree path =
              "MaxResults") _list path)
    } : list_imports_request)
 let import_failure_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "RETRY" -> RETRY
-   | `String "FAILED" -> FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ImportFailureStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ImportFailureStatus") : 
-  import_failure_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "RETRY" -> RETRY
+    | `String "FAILED" -> FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ImportFailureStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ImportFailureStatus") : 
+     import_failure_status) : import_failure_status)
 let import_failure_list_item_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1894,6 +2222,46 @@ let list_event_data_stores_request_of_yojson tree path =
        (option_of_yojson
           (value_for_key pagination_token_of_yojson "NextToken") _list path)
    } : list_event_data_stores_request)
+let dashboard_detail_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     type_ =
+       (option_of_yojson (value_for_key dashboard_type_of_yojson "Type")
+          _list path);
+     dashboard_arn =
+       (option_of_yojson
+          (value_for_key dashboard_arn_of_yojson "DashboardArn") _list path)
+   } : dashboard_detail)
+let dashboards_of_yojson tree path =
+  list_of_yojson dashboard_detail_of_yojson tree path
+let list_dashboards_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson
+          (value_for_key pagination_token_of_yojson "NextToken") _list path);
+     dashboards =
+       (option_of_yojson (value_for_key dashboards_of_yojson "Dashboards")
+          _list path)
+   } : list_dashboards_response)
+let list_dashboards_max_results_count_of_yojson = int_of_yojson
+let list_dashboards_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       (option_of_yojson
+          (value_for_key list_dashboards_max_results_count_of_yojson
+             "MaxResults") _list path);
+     next_token =
+       (option_of_yojson
+          (value_for_key pagination_token_of_yojson "NextToken") _list path);
+     type_ =
+       (option_of_yojson (value_for_key dashboard_type_of_yojson "Type")
+          _list path);
+     name_prefix =
+       (option_of_yojson
+          (value_for_key dashboard_name_of_yojson "NamePrefix") _list path)
+   } : list_dashboards_request)
 let channel_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2051,6 +2419,10 @@ let get_trail_request_of_yojson tree path =
 let get_resource_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     delegated_admin_resource_policy =
+       (option_of_yojson
+          (value_for_key resource_policy_of_yojson
+             "DelegatedAdminResourcePolicy") _list path);
      resource_policy =
        (option_of_yojson
           (value_for_key resource_policy_of_yojson "ResourcePolicy") _list
@@ -2089,6 +2461,10 @@ let get_query_results_response_of_yojson tree path =
 let get_query_results_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
      max_query_results =
        (option_of_yojson
           (value_for_key max_query_results_of_yojson "MaxQueryResults") _list
@@ -2253,6 +2629,84 @@ let get_event_data_store_request_of_yojson tree path =
        (value_for_key event_data_store_arn_of_yojson "EventDataStore" _list
           path)
    } : get_event_data_store_request)
+let get_event_configuration_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     context_key_selectors =
+       (option_of_yojson
+          (value_for_key context_key_selectors_of_yojson
+             "ContextKeySelectors") _list path);
+     max_event_size =
+       (option_of_yojson
+          (value_for_key max_event_size_of_yojson "MaxEventSize") _list path);
+     event_data_store_arn =
+       (option_of_yojson
+          (value_for_key event_data_store_arn_of_yojson "EventDataStoreArn")
+          _list path)
+   } : get_event_configuration_response)
+let get_event_configuration_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     event_data_store =
+       (option_of_yojson (value_for_key string__of_yojson "EventDataStore")
+          _list path)
+   } : get_event_configuration_request)
+let dashboard_status_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DELETING" -> DELETING
+    | `String "UPDATED" -> UPDATED
+    | `String "UPDATING" -> UPDATING
+    | `String "CREATED" -> CREATED
+    | `String "CREATING" -> CREATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DashboardStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "DashboardStatus") : 
+     dashboard_status) : dashboard_status)
+let get_dashboard_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     termination_protection_enabled =
+       (option_of_yojson
+          (value_for_key termination_protection_enabled_of_yojson
+             "TerminationProtectionEnabled") _list path);
+     last_refresh_failure_reason =
+       (option_of_yojson
+          (value_for_key error_message_of_yojson "LastRefreshFailureReason")
+          _list path);
+     last_refresh_id =
+       (option_of_yojson (value_for_key refresh_id_of_yojson "LastRefreshId")
+          _list path);
+     updated_timestamp =
+       (option_of_yojson (value_for_key date_of_yojson "UpdatedTimestamp")
+          _list path);
+     created_timestamp =
+       (option_of_yojson (value_for_key date_of_yojson "CreatedTimestamp")
+          _list path);
+     refresh_schedule =
+       (option_of_yojson
+          (value_for_key refresh_schedule_of_yojson "RefreshSchedule") _list
+          path);
+     widgets =
+       (option_of_yojson (value_for_key widget_list_of_yojson "Widgets")
+          _list path);
+     status =
+       (option_of_yojson (value_for_key dashboard_status_of_yojson "Status")
+          _list path);
+     type_ =
+       (option_of_yojson (value_for_key dashboard_type_of_yojson "Type")
+          _list path);
+     dashboard_arn =
+       (option_of_yojson
+          (value_for_key dashboard_arn_of_yojson "DashboardArn") _list path)
+   } : get_dashboard_response)
+let get_dashboard_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dashboard_id =
+       (value_for_key dashboard_arn_of_yojson "DashboardId" _list path)
+   } : get_dashboard_request)
 let get_channel_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2279,6 +2733,38 @@ let get_channel_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ channel = (value_for_key channel_arn_of_yojson "Channel" _list path) } : 
     get_channel_request)
+let generate_response_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "Message")
+          _list path)
+   } : generate_response_exception)
+let generate_query_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
+     query_alias =
+       (option_of_yojson (value_for_key query_alias_of_yojson "QueryAlias")
+          _list path);
+     query_statement =
+       (option_of_yojson
+          (value_for_key query_statement_of_yojson "QueryStatement") _list
+          path)
+   } : generate_query_response)
+let event_data_store_list_of_yojson tree path =
+  list_of_yojson event_data_store_arn_of_yojson tree path
+let generate_query_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     prompt = (value_for_key prompt_of_yojson "Prompt" _list path);
+     event_data_stores =
+       (value_for_key event_data_store_list_of_yojson "EventDataStores" _list
+          path)
+   } : generate_query_request)
 let event_data_store_termination_protected_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2371,24 +2857,31 @@ let describe_trails_request_of_yojson tree path =
           path)
    } : describe_trails_request)
 let delivery_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UNKNOWN" -> UNKNOWN
-   | `String "CANCELLED" -> CANCELLED
-   | `String "ACCESS_DENIED_SIGNING_FILE" -> ACCESS_DENIED_SIGNING_FILE
-   | `String "ACCESS_DENIED" -> ACCESS_DENIED
-   | `String "RESOURCE_NOT_FOUND" -> RESOURCE_NOT_FOUND
-   | `String "PENDING" -> PENDING
-   | `String "FAILED_SIGNING_FILE" -> FAILED_SIGNING_FILE
-   | `String "FAILED" -> FAILED
-   | `String "SUCCESS" -> SUCCESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DeliveryStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "DeliveryStatus") : 
-  delivery_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNKNOWN" -> UNKNOWN
+    | `String "CANCELLED" -> CANCELLED
+    | `String "ACCESS_DENIED_SIGNING_FILE" -> ACCESS_DENIED_SIGNING_FILE
+    | `String "ACCESS_DENIED" -> ACCESS_DENIED
+    | `String "RESOURCE_NOT_FOUND" -> RESOURCE_NOT_FOUND
+    | `String "PENDING" -> PENDING
+    | `String "FAILED_SIGNING_FILE" -> FAILED_SIGNING_FILE
+    | `String "FAILED" -> FAILED
+    | `String "SUCCESS" -> SUCCESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DeliveryStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "DeliveryStatus") : 
+     delivery_status) : delivery_status)
 let describe_query_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
+     prompt =
+       (option_of_yojson (value_for_key prompt_of_yojson "Prompt") _list path);
      delivery_status =
        (option_of_yojson
           (value_for_key delivery_status_of_yojson "DeliveryStatus") _list
@@ -2416,6 +2909,13 @@ let describe_query_response_of_yojson tree path =
 let describe_query_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
+     refresh_id =
+       (option_of_yojson (value_for_key refresh_id_of_yojson "RefreshId")
+          _list path);
      query_alias =
        (option_of_yojson (value_for_key query_alias_of_yojson "QueryAlias")
           _list path);
@@ -2471,6 +2971,14 @@ let channel_exists_for_eds_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "Message")
           _list path)
    } : channel_exists_for_eds_exception)
+let delete_dashboard_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let delete_dashboard_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dashboard_id =
+       (value_for_key dashboard_arn_of_yojson "DashboardId" _list path)
+   } : delete_dashboard_request)
 let delete_channel_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let delete_channel_request_of_yojson tree path =
@@ -2649,6 +3157,52 @@ let create_event_data_store_request_of_yojson tree path =
              "AdvancedEventSelectors") _list path);
      name = (value_for_key event_data_store_name_of_yojson "Name" _list path)
    } : create_event_data_store_request)
+let create_dashboard_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     termination_protection_enabled =
+       (option_of_yojson
+          (value_for_key termination_protection_enabled_of_yojson
+             "TerminationProtectionEnabled") _list path);
+     refresh_schedule =
+       (option_of_yojson
+          (value_for_key refresh_schedule_of_yojson "RefreshSchedule") _list
+          path);
+     tags_list =
+       (option_of_yojson (value_for_key tags_list_of_yojson "TagsList") _list
+          path);
+     widgets =
+       (option_of_yojson (value_for_key widget_list_of_yojson "Widgets")
+          _list path);
+     type_ =
+       (option_of_yojson (value_for_key dashboard_type_of_yojson "Type")
+          _list path);
+     name =
+       (option_of_yojson (value_for_key dashboard_name_of_yojson "Name")
+          _list path);
+     dashboard_arn =
+       (option_of_yojson
+          (value_for_key dashboard_arn_of_yojson "DashboardArn") _list path)
+   } : create_dashboard_response)
+let create_dashboard_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     widgets =
+       (option_of_yojson
+          (value_for_key request_widget_list_of_yojson "Widgets") _list path);
+     termination_protection_enabled =
+       (option_of_yojson
+          (value_for_key termination_protection_enabled_of_yojson
+             "TerminationProtectionEnabled") _list path);
+     tags_list =
+       (option_of_yojson (value_for_key tags_list_of_yojson "TagsList") _list
+          path);
+     refresh_schedule =
+       (option_of_yojson
+          (value_for_key refresh_schedule_of_yojson "RefreshSchedule") _list
+          path);
+     name = (value_for_key dashboard_name_of_yojson "Name" _list path)
+   } : create_dashboard_request)
 let create_channel_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2688,6 +3242,10 @@ let channel_max_limit_exceeded_exception_of_yojson tree path =
 let cancel_query_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
      query_status =
        (value_for_key query_status_of_yojson "QueryStatus" _list path);
      query_id = (value_for_key uui_d_of_yojson "QueryId" _list path)
@@ -2695,6 +3253,10 @@ let cancel_query_response_of_yojson tree path =
 let cancel_query_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_data_store_owner_account_id =
+       (option_of_yojson
+          (value_for_key account_id_of_yojson "EventDataStoreOwnerAccountId")
+          _list path);
      query_id = (value_for_key uui_d_of_yojson "QueryId" _list path);
      event_data_store =
        (option_of_yojson
@@ -2715,3 +3277,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

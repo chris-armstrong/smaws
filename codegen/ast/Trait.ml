@@ -34,6 +34,31 @@ type staticContextParamValue =
 [@@deriving show, equal]
 
 type staticContextParams = (string * staticContextParamValue) list [@@deriving show, equal]
+type operationContextParam = { path : string } [@@deriving show, equal]
+type operationContextParams = (string * operationContextParam) list [@@deriving show, equal]
+
+type httpRequestTest = {
+  id : string;
+  protocol : string;
+  method_ : string;
+  uri : string;
+  host : string option;
+  resolvedHost : string option;
+  authScheme : string option;
+  queryParams : string list option;
+  forbidQueryParams : string list option;
+  headers : (string * string) list option;
+  forbidHeaders : string list option;
+  body : string option;
+  bodyMediaType : string option;
+  params : Yojson.Basic.t option;
+  vendorParams : Yojson.Basic.t option;
+  vendorParamsShape : string option;
+  documentation : string option;
+  tags : string list option;
+  appliesTo : [ `Client | `Server ] option;
+}
+[@@deriving show, equal]
 
 type t =
   | ApiTitleTrait of string
@@ -70,7 +95,7 @@ type t =
   | DocumentationTrait of string
   | EndpointTrait
   | EnumTrait of enumPair list
-  | EnumValueTrait of string
+  | EnumValueTrait of [ `String of string | `Int of int ]
   | ErrorTrait of errorTraitType
   | EventPayloadTrait
   | ExamplesTrait
@@ -106,6 +131,7 @@ type t =
   | RulesEndpointTests
   | RulesContextParam of string
   | RulesStaticContextParams of staticContextParams
+  | RulesOperationContextParams of operationContextParams
   | SensitiveTrait
   | ServiceTrait of serviceDetails
   | SparseTrait
@@ -118,6 +144,14 @@ type t =
   | XmlAttributeTrait
   | XmlFlattenedTrait
   | XmlNameTrait of string
+  | PrivateTrait
+  | TestHttpRequestTests of httpRequestTest list
+  | IdRefTrait of {
+      failWhenMissing : bool option;
+      selector : string option;
+      errorMessage : string option;
+    }
+  | UnspecifiedTrait of string * Yojson.Basic.t
 [@@deriving show, equal]
 
 let isEnumTrait trait = match trait with EnumTrait _ -> true | _ -> false

@@ -446,7 +446,7 @@ module GetAccountSettings :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_account_settings_input ->
         (get_account_settings_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -567,7 +567,7 @@ module GetResourcesSummary :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_resources_summary_input ->
         (get_resources_summary_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
@@ -982,7 +982,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       notify_resource_deployment_status_change_input ->
-        (unit,
+        (notify_resource_deployment_status_change_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -1014,7 +1014,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (unit,
+        (tag_resource_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 
@@ -1029,7 +1029,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (unit,
+        (untag_resource_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ConflictException of conflict_exception 

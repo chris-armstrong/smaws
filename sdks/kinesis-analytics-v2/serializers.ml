@@ -223,6 +223,8 @@ let application_description_to_yojson = string_to_yojson
 let application_name_to_yojson = string_to_yojson
 let runtime_environment_to_yojson (x : runtime_environment) =
   match x with
+  | FLINK_1_20 -> `String "FLINK-1_20"
+  | FLINK_1_19 -> `String "FLINK-1_19"
   | FLINK_1_18 -> `String "FLINK-1_18"
   | ZEPPELIN_FLINK_3_0 -> `String "ZEPPELIN-FLINK-3_0"
   | FLINK_1_15 -> `String "FLINK-1_15"
@@ -562,6 +564,11 @@ let application_snapshot_configuration_description_to_yojson
   assoc_to_yojson
     [("SnapshotsEnabled",
        (Some (boolean_object_to_yojson x.snapshots_enabled)))]
+let application_system_rollback_configuration_description_to_yojson
+  (x : application_system_rollback_configuration_description) =
+  assoc_to_yojson
+    [("RollbackEnabled",
+       (Some (boolean_object_to_yojson x.rollback_enabled)))]
 let application_configuration_description_to_yojson
   (x : application_configuration_description) =
   assoc_to_yojson
@@ -572,6 +579,10 @@ let application_configuration_description_to_yojson
     ("VpcConfigurationDescriptions",
       (option_to_yojson vpc_configuration_descriptions_to_yojson
          x.vpc_configuration_descriptions));
+    ("ApplicationSystemRollbackConfigurationDescription",
+      (option_to_yojson
+         application_system_rollback_configuration_description_to_yojson
+         x.application_system_rollback_configuration_description));
     ("ApplicationSnapshotConfigurationDescription",
       (option_to_yojson
          application_snapshot_configuration_description_to_yojson
@@ -628,6 +639,9 @@ let application_detail_to_yojson (x : application_detail) =
          x.application_version_rolled_back_to));
     ("ConditionalToken",
       (option_to_yojson conditional_token_to_yojson x.conditional_token));
+    ("ApplicationVersionCreateTimestamp",
+      (option_to_yojson timestamp__to_yojson
+         x.application_version_create_timestamp));
     ("ApplicationVersionRolledBackFrom",
       (option_to_yojson application_version_id_to_yojson
          x.application_version_rolled_back_from));
@@ -662,10 +676,13 @@ let application_detail_to_yojson (x : application_detail) =
       (option_to_yojson application_description_to_yojson
          x.application_description));
     ("ApplicationARN", (Some (resource_ar_n_to_yojson x.application_ar_n)))]
+let operation_id_to_yojson = string_to_yojson
 let update_application_response_to_yojson (x : update_application_response) =
   assoc_to_yojson
-    [("ApplicationDetail",
-       (Some (application_detail_to_yojson x.application_detail)))]
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("ApplicationDetail",
+      (Some (application_detail_to_yojson x.application_detail)))]
 let input_lambda_processor_update_to_yojson
   (x : input_lambda_processor_update) =
   assoc_to_yojson
@@ -867,6 +884,11 @@ let application_snapshot_configuration_update_to_yojson
   assoc_to_yojson
     [("SnapshotsEnabledUpdate",
        (Some (boolean_object_to_yojson x.snapshots_enabled_update)))]
+let application_system_rollback_configuration_update_to_yojson
+  (x : application_system_rollback_configuration_update) =
+  assoc_to_yojson
+    [("RollbackEnabledUpdate",
+       (Some (boolean_object_to_yojson x.rollback_enabled_update)))]
 let application_configuration_update_to_yojson
   (x : application_configuration_update) =
   assoc_to_yojson
@@ -876,6 +898,10 @@ let application_configuration_update_to_yojson
     ("VpcConfigurationUpdates",
       (option_to_yojson vpc_configuration_updates_to_yojson
          x.vpc_configuration_updates));
+    ("ApplicationSystemRollbackConfigurationUpdate",
+      (option_to_yojson
+         application_system_rollback_configuration_update_to_yojson
+         x.application_system_rollback_configuration_update));
     ("ApplicationSnapshotConfigurationUpdate",
       (option_to_yojson application_snapshot_configuration_update_to_yojson
          x.application_snapshot_configuration_update));
@@ -1027,13 +1053,19 @@ let tag_resource_request_to_yojson (x : tag_resource_request) =
     [("Tags", (Some (tags_to_yojson x.tags)));
     ("ResourceARN",
       (Some (kinesis_analytics_ar_n_to_yojson x.resource_ar_n)))]
-let stop_application_response_to_yojson = unit_to_yojson
+let stop_application_response_to_yojson (x : stop_application_response) =
+  assoc_to_yojson
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id))]
 let stop_application_request_to_yojson (x : stop_application_request) =
   assoc_to_yojson
     [("Force", (option_to_yojson boolean_object_to_yojson x.force));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
-let start_application_response_to_yojson = unit_to_yojson
+let start_application_response_to_yojson (x : start_application_response) =
+  assoc_to_yojson
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id))]
 let sql_run_configuration_to_yojson (x : sql_run_configuration) =
   assoc_to_yojson
     [("InputStartingPositionConfiguration",
@@ -1164,8 +1196,10 @@ let s3_configuration_to_yojson (x : s3_configuration) =
 let rollback_application_response_to_yojson
   (x : rollback_application_response) =
   assoc_to_yojson
-    [("ApplicationDetail",
-       (Some (application_detail_to_yojson x.application_detail)))]
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("ApplicationDetail",
+      (Some (application_detail_to_yojson x.application_detail)))]
 let rollback_application_request_to_yojson (x : rollback_application_request)
   =
   assoc_to_yojson
@@ -1192,6 +1226,23 @@ let parallelism_configuration_to_yojson (x : parallelism_configuration) =
     ("Parallelism", (option_to_yojson parallelism_to_yojson x.parallelism));
     ("ConfigurationType",
       (Some (configuration_type_to_yojson x.configuration_type)))]
+let operation_status_to_yojson (x : operation_status) =
+  match x with
+  | FAILED -> `String "FAILED"
+  | SUCCESSFUL -> `String "SUCCESSFUL"
+  | CANCELLED -> `String "CANCELLED"
+  | IN_PROGRESS -> `String "IN_PROGRESS"
+let error_string_to_yojson = string_to_yojson
+let error_info_to_yojson (x : error_info) =
+  assoc_to_yojson
+    [("ErrorString",
+       (option_to_yojson error_string_to_yojson x.error_string))]
+let operation_failure_details_to_yojson (x : operation_failure_details) =
+  assoc_to_yojson
+    [("ErrorInfo", (option_to_yojson error_info_to_yojson x.error_info));
+    ("RollbackOperationId",
+      (option_to_yojson operation_id_to_yojson x.rollback_operation_id))]
+let operation_to_yojson = string_to_yojson
 let next_token_to_yojson = string_to_yojson
 let monitoring_configuration_to_yojson (x : monitoring_configuration) =
   assoc_to_yojson
@@ -1276,6 +1327,36 @@ let list_application_snapshots_request_to_yojson
       (option_to_yojson list_snapshots_input_limit_to_yojson x.limit));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
+let application_operation_info_to_yojson (x : application_operation_info) =
+  assoc_to_yojson
+    [("OperationStatus",
+       (option_to_yojson operation_status_to_yojson x.operation_status));
+    ("EndTime", (option_to_yojson timestamp__to_yojson x.end_time));
+    ("StartTime", (option_to_yojson timestamp__to_yojson x.start_time));
+    ("OperationId", (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("Operation", (option_to_yojson operation_to_yojson x.operation))]
+let application_operation_info_list_to_yojson tree =
+  list_to_yojson application_operation_info_to_yojson tree
+let list_application_operations_response_to_yojson
+  (x : list_application_operations_response) =
+  assoc_to_yojson
+    [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("ApplicationOperationInfoList",
+      (option_to_yojson application_operation_info_list_to_yojson
+         x.application_operation_info_list))]
+let list_application_operations_input_limit_to_yojson = int_to_yojson
+let list_application_operations_request_to_yojson
+  (x : list_application_operations_request) =
+  assoc_to_yojson
+    [("OperationStatus",
+       (option_to_yojson operation_status_to_yojson x.operation_status));
+    ("Operation", (option_to_yojson operation_to_yojson x.operation));
+    ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("Limit",
+      (option_to_yojson list_application_operations_input_limit_to_yojson
+         x.limit));
+    ("ApplicationName",
+      (Some (application_name_to_yojson x.application_name)))]
 let discover_input_schema_response_to_yojson
   (x : discover_input_schema_response) =
   assoc_to_yojson
@@ -1327,6 +1408,41 @@ let describe_application_snapshot_request_to_yojson
     [("SnapshotName", (Some (snapshot_name_to_yojson x.snapshot_name)));
     ("ApplicationName",
       (Some (application_name_to_yojson x.application_name)))]
+let application_version_change_details_to_yojson
+  (x : application_version_change_details) =
+  assoc_to_yojson
+    [("ApplicationVersionUpdatedTo",
+       (Some
+          (application_version_id_to_yojson x.application_version_updated_to)));
+    ("ApplicationVersionUpdatedFrom",
+      (Some
+         (application_version_id_to_yojson x.application_version_updated_from)))]
+let application_operation_info_details_to_yojson
+  (x : application_operation_info_details) =
+  assoc_to_yojson
+    [("OperationFailureDetails",
+       (option_to_yojson operation_failure_details_to_yojson
+          x.operation_failure_details));
+    ("ApplicationVersionChangeDetails",
+      (option_to_yojson application_version_change_details_to_yojson
+         x.application_version_change_details));
+    ("OperationStatus",
+      (Some (operation_status_to_yojson x.operation_status)));
+    ("EndTime", (Some (timestamp__to_yojson x.end_time)));
+    ("StartTime", (Some (timestamp__to_yojson x.start_time)));
+    ("Operation", (Some (operation_to_yojson x.operation)))]
+let describe_application_operation_response_to_yojson
+  (x : describe_application_operation_response) =
+  assoc_to_yojson
+    [("ApplicationOperationInfoDetails",
+       (option_to_yojson application_operation_info_details_to_yojson
+          x.application_operation_info_details))]
+let describe_application_operation_request_to_yojson
+  (x : describe_application_operation_request) =
+  assoc_to_yojson
+    [("OperationId", (Some (operation_id_to_yojson x.operation_id)));
+    ("ApplicationName",
+      (Some (application_name_to_yojson x.application_name)))]
 let describe_application_response_to_yojson
   (x : describe_application_response) =
   assoc_to_yojson
@@ -1343,9 +1459,11 @@ let describe_application_request_to_yojson (x : describe_application_request)
 let delete_application_vpc_configuration_response_to_yojson
   (x : delete_application_vpc_configuration_response) =
   assoc_to_yojson
-    [("ApplicationVersionId",
-       (option_to_yojson application_version_id_to_yojson
-          x.application_version_id));
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("ApplicationVersionId",
+      (option_to_yojson application_version_id_to_yojson
+         x.application_version_id));
     ("ApplicationARN",
       (option_to_yojson resource_ar_n_to_yojson x.application_ar_n))]
 let delete_application_vpc_configuration_request_to_yojson
@@ -1422,9 +1540,11 @@ let delete_application_input_processing_configuration_request_to_yojson
 let delete_application_cloud_watch_logging_option_response_to_yojson
   (x : delete_application_cloud_watch_logging_option_response) =
   assoc_to_yojson
-    [("CloudWatchLoggingOptionDescriptions",
-       (option_to_yojson cloud_watch_logging_option_descriptions_to_yojson
-          x.cloud_watch_logging_option_descriptions));
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("CloudWatchLoggingOptionDescriptions",
+      (option_to_yojson cloud_watch_logging_option_descriptions_to_yojson
+         x.cloud_watch_logging_option_descriptions));
     ("ApplicationVersionId",
       (option_to_yojson application_version_id_to_yojson
          x.application_version_id));
@@ -1518,6 +1638,11 @@ let application_snapshot_configuration_to_yojson
   assoc_to_yojson
     [("SnapshotsEnabled",
        (Some (boolean_object_to_yojson x.snapshots_enabled)))]
+let application_system_rollback_configuration_to_yojson
+  (x : application_system_rollback_configuration) =
+  assoc_to_yojson
+    [("RollbackEnabled",
+       (Some (boolean_object_to_yojson x.rollback_enabled)))]
 let application_configuration_to_yojson (x : application_configuration) =
   assoc_to_yojson
     [("ZeppelinApplicationConfiguration",
@@ -1525,6 +1650,9 @@ let application_configuration_to_yojson (x : application_configuration) =
           x.zeppelin_application_configuration));
     ("VpcConfigurations",
       (option_to_yojson vpc_configurations_to_yojson x.vpc_configurations));
+    ("ApplicationSystemRollbackConfiguration",
+      (option_to_yojson application_system_rollback_configuration_to_yojson
+         x.application_system_rollback_configuration));
     ("ApplicationSnapshotConfiguration",
       (option_to_yojson application_snapshot_configuration_to_yojson
          x.application_snapshot_configuration));
@@ -1568,9 +1696,11 @@ let create_application_request_to_yojson (x : create_application_request) =
 let add_application_vpc_configuration_response_to_yojson
   (x : add_application_vpc_configuration_response) =
   assoc_to_yojson
-    [("VpcConfigurationDescription",
-       (option_to_yojson vpc_configuration_description_to_yojson
-          x.vpc_configuration_description));
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("VpcConfigurationDescription",
+      (option_to_yojson vpc_configuration_description_to_yojson
+         x.vpc_configuration_description));
     ("ApplicationVersionId",
       (option_to_yojson application_version_id_to_yojson
          x.application_version_id));
@@ -1675,9 +1805,11 @@ let add_application_input_request_to_yojson
 let add_application_cloud_watch_logging_option_response_to_yojson
   (x : add_application_cloud_watch_logging_option_response) =
   assoc_to_yojson
-    [("CloudWatchLoggingOptionDescriptions",
-       (option_to_yojson cloud_watch_logging_option_descriptions_to_yojson
-          x.cloud_watch_logging_option_descriptions));
+    [("OperationId",
+       (option_to_yojson operation_id_to_yojson x.operation_id));
+    ("CloudWatchLoggingOptionDescriptions",
+      (option_to_yojson cloud_watch_logging_option_descriptions_to_yojson
+         x.cloud_watch_logging_option_descriptions));
     ("ApplicationVersionId",
       (option_to_yojson application_version_id_to_yojson
          x.application_version_id));
@@ -1702,3 +1834,8 @@ let base_integer_to_yojson = int_to_yojson
 let base_timestamp_to_yojson = timestamp_to_yojson
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

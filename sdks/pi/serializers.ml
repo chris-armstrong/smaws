@@ -282,6 +282,7 @@ let descriptive_map_to_yojson tree =
 let performance_insights_metric_to_yojson (x : performance_insights_metric) =
   assoc_to_yojson
     [("Value", (option_to_yojson double_to_yojson x.value));
+    ("Filter", (option_to_yojson descriptive_map_to_yojson x.filter));
     ("Dimensions", (option_to_yojson descriptive_map_to_yojson x.dimensions));
     ("DisplayName",
       (option_to_yojson descriptive_string_to_yojson x.display_name));
@@ -439,3 +440,8 @@ let base_integer_to_yojson = int_to_yojson
 let base_timestamp_to_yojson = timestamp_to_yojson
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

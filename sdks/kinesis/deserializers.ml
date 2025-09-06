@@ -9,14 +9,15 @@ let validation_exception_of_yojson tree path =
           _list path)
    } : validation_exception)
 let stream_ar_n_of_yojson = string_of_yojson
-let base_unit_of_yojson = unit_of_yojson
 let stream_mode_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ON_DEMAND" -> ON_DEMAND
-   | `String "PROVISIONED" -> PROVISIONED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "StreamMode" value)
-   | _ -> raise (deserialize_wrong_type_error path "StreamMode") : stream_mode)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ON_DEMAND" -> ON_DEMAND
+    | `String "PROVISIONED" -> PROVISIONED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "StreamMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "StreamMode") : stream_mode) : 
+  stream_mode)
 let stream_mode_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -81,11 +82,13 @@ let update_shard_count_output_of_yojson tree path =
           _list path)
    } : update_shard_count_output)
 let scaling_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UNIFORM_SCALING" -> UNIFORM_SCALING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ScalingType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ScalingType") : scaling_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UNIFORM_SCALING" -> UNIFORM_SCALING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ScalingType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ScalingType") : 
+     scaling_type) : scaling_type)
 let update_shard_count_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -108,11 +111,28 @@ let access_denied_exception_of_yojson tree path =
        (option_of_yojson (value_for_key error_message_of_yojson "message")
           _list path)
    } : access_denied_exception)
+let tag_key_of_yojson = string_of_yojson
+let tag_key_list_of_yojson tree path =
+  list_of_yojson tag_key_of_yojson tree path
+let resource_ar_n_of_yojson = string_of_yojson
+let untag_resource_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource_ar_n =
+       (value_for_key resource_ar_n_of_yojson "ResourceARN" _list path);
+     tag_keys = (value_for_key tag_key_list_of_yojson "TagKeys" _list path)
+   } : untag_resource_input)
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let tag_value_of_yojson = string_of_yojson
-let tag_key_of_yojson = string_of_yojson
 let tag_map_of_yojson tree path =
   map_of_yojson tag_key_of_yojson tag_value_of_yojson tree path
+let tag_resource_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource_ar_n =
+       (value_for_key resource_ar_n_of_yojson "ResourceARN" _list path);
+     tags = (value_for_key tag_map_of_yojson "Tags" _list path)
+   } : tag_resource_input)
 let tag_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -122,20 +142,19 @@ let tag_of_yojson tree path =
      key = (value_for_key tag_key_of_yojson "Key" _list path)
    } : tag)
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
-let tag_key_list_of_yojson tree path =
-  list_of_yojson tag_key_of_yojson tree path
 let sequence_number_of_yojson = string_of_yojson
 let data_of_yojson = blob_of_yojson
 let partition_key_of_yojson = string_of_yojson
 let encryption_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "KMS" -> KMS
-   | `String "NONE" -> NONE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "EncryptionType" value)
-   | _ -> raise (deserialize_wrong_type_error path "EncryptionType") : 
-  encryption_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "KMS" -> KMS
+    | `String "NONE" -> NONE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "EncryptionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "EncryptionType") : 
+     encryption_type) : encryption_type)
 let record_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -248,36 +267,37 @@ let subscribe_to_shard_event_stream_of_yojson (tree : t) path =
     match _list with
     | (key, value_)::_ -> (key, value_)
     | _ -> raise (deserialize_wrong_type_error path "union") in
-  match key with
-  | "InternalFailureException" ->
-      InternalFailureException
-        (internal_failure_exception_of_yojson value_ path)
-  | "KMSThrottlingException" ->
-      KMSThrottlingException (kms_throttling_exception_of_yojson value_ path)
-  | "KMSOptInRequired" ->
-      KMSOptInRequired (kms_opt_in_required_of_yojson value_ path)
-  | "KMSNotFoundException" ->
-      KMSNotFoundException (kms_not_found_exception_of_yojson value_ path)
-  | "KMSAccessDeniedException" ->
-      KMSAccessDeniedException
-        (kms_access_denied_exception_of_yojson value_ path)
-  | "KMSInvalidStateException" ->
-      KMSInvalidStateException
-        (kms_invalid_state_exception_of_yojson value_ path)
-  | "KMSDisabledException" ->
-      KMSDisabledException (kms_disabled_exception_of_yojson value_ path)
-  | "ResourceInUseException" ->
-      ResourceInUseException
-        (resource_in_use_exception_of_yojson value_ path)
-  | "ResourceNotFoundException" ->
-      ResourceNotFoundException
-        (resource_not_found_exception_of_yojson value_ path)
-  | "SubscribeToShardEvent" ->
-      SubscribeToShardEvent (subscribe_to_shard_event_of_yojson value_ path)
-  | _ as unknown ->
-      raise
-        (deserialize_unknown_enum_value_error path
-           "SubscribeToShardEventStream" unknown)
+  (match key with
+   | "InternalFailureException" ->
+       InternalFailureException
+         (internal_failure_exception_of_yojson value_ path)
+   | "KMSThrottlingException" ->
+       KMSThrottlingException
+         (kms_throttling_exception_of_yojson value_ path)
+   | "KMSOptInRequired" ->
+       KMSOptInRequired (kms_opt_in_required_of_yojson value_ path)
+   | "KMSNotFoundException" ->
+       KMSNotFoundException (kms_not_found_exception_of_yojson value_ path)
+   | "KMSAccessDeniedException" ->
+       KMSAccessDeniedException
+         (kms_access_denied_exception_of_yojson value_ path)
+   | "KMSInvalidStateException" ->
+       KMSInvalidStateException
+         (kms_invalid_state_exception_of_yojson value_ path)
+   | "KMSDisabledException" ->
+       KMSDisabledException (kms_disabled_exception_of_yojson value_ path)
+   | "ResourceInUseException" ->
+       ResourceInUseException
+         (resource_in_use_exception_of_yojson value_ path)
+   | "ResourceNotFoundException" ->
+       ResourceNotFoundException
+         (resource_not_found_exception_of_yojson value_ path)
+   | "SubscribeToShardEvent" ->
+       SubscribeToShardEvent (subscribe_to_shard_event_of_yojson value_ path)
+   | _ as unknown ->
+       raise
+         (deserialize_unknown_enum_value_error path
+            "SubscribeToShardEventStream" unknown) : subscribe_to_shard_event_stream)
 let subscribe_to_shard_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -287,17 +307,19 @@ let subscribe_to_shard_output_of_yojson tree path =
    } : subscribe_to_shard_output)
 let consumer_ar_n_of_yojson = string_of_yojson
 let shard_iterator_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
-   | `String "LATEST" -> LATEST
-   | `String "TRIM_HORIZON" -> TRIM_HORIZON
-   | `String "AFTER_SEQUENCE_NUMBER" -> AFTER_SEQUENCE_NUMBER
-   | `String "AT_SEQUENCE_NUMBER" -> AT_SEQUENCE_NUMBER
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ShardIteratorType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ShardIteratorType") : 
-  shard_iterator_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
+    | `String "LATEST" -> LATEST
+    | `String "TRIM_HORIZON" -> TRIM_HORIZON
+    | `String "AFTER_SEQUENCE_NUMBER" -> AFTER_SEQUENCE_NUMBER
+    | `String "AT_SEQUENCE_NUMBER" -> AT_SEQUENCE_NUMBER
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ShardIteratorType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ShardIteratorType") : 
+     shard_iterator_type) : shard_iterator_type)
 let starting_position_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -321,15 +343,17 @@ let subscribe_to_shard_input_of_yojson tree path =
        (value_for_key consumer_ar_n_of_yojson "ConsumerARN" _list path)
    } : subscribe_to_shard_input)
 let stream_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATING" -> UPDATING
-   | `String "ACTIVE" -> ACTIVE
-   | `String "DELETING" -> DELETING
-   | `String "CREATING" -> CREATING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "StreamStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "StreamStatus") : 
-  stream_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATING" -> UPDATING
+    | `String "ACTIVE" -> ACTIVE
+    | `String "DELETING" -> DELETING
+    | `String "CREATING" -> CREATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "StreamStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "StreamStatus") : 
+     stream_status) : stream_status)
 let stream_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -354,20 +378,22 @@ let stream_name_list_of_yojson tree path =
   list_of_yojson stream_name_of_yojson tree path
 let retention_period_hours_of_yojson = int_of_yojson
 let metrics_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ALL" -> ALL
-   | `String "ITERATOR_AGE_MILLISECONDS" -> ITERATOR_AGE_MILLISECONDS
-   | `String "READ_PROVISIONED_THROUGHPUT_EXCEEDED" ->
-       READ_PROVISIONED_THROUGHPUT_EXCEEDED
-   | `String "WRITE_PROVISIONED_THROUGHPUT_EXCEEDED" ->
-       WRITE_PROVISIONED_THROUGHPUT_EXCEEDED
-   | `String "OUTGOING_RECORDS" -> OUTGOING_RECORDS
-   | `String "OUTGOING_BYTES" -> OUTGOING_BYTES
-   | `String "INCOMING_RECORDS" -> INCOMING_RECORDS
-   | `String "INCOMING_BYTES" -> INCOMING_BYTES
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MetricsName" value)
-   | _ -> raise (deserialize_wrong_type_error path "MetricsName") : metrics_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ALL" -> ALL
+    | `String "IteratorAgeMilliseconds" -> ITERATOR_AGE_MILLISECONDS
+    | `String "ReadProvisionedThroughputExceeded" ->
+        READ_PROVISIONED_THROUGHPUT_EXCEEDED
+    | `String "WriteProvisionedThroughputExceeded" ->
+        WRITE_PROVISIONED_THROUGHPUT_EXCEEDED
+    | `String "OutgoingRecords" -> OUTGOING_RECORDS
+    | `String "OutgoingBytes" -> OUTGOING_BYTES
+    | `String "IncomingRecords" -> INCOMING_RECORDS
+    | `String "IncomingBytes" -> INCOMING_BYTES
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MetricsName" value)
+    | _ -> raise (deserialize_wrong_type_error path "MetricsName") : 
+     metrics_name) : metrics_name)
 let metrics_name_list_of_yojson tree path =
   list_of_yojson metrics_name_of_yojson tree path
 let enhanced_metrics_of_yojson tree path =
@@ -523,18 +549,19 @@ let split_shard_input_of_yojson tree path =
    } : split_shard_input)
 let shard_iterator_of_yojson = string_of_yojson
 let shard_filter_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FROM_TIMESTAMP" -> FROM_TIMESTAMP
-   | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
-   | `String "AT_LATEST" -> AT_LATEST
-   | `String "FROM_TRIM_HORIZON" -> FROM_TRIM_HORIZON
-   | `String "AT_TRIM_HORIZON" -> AT_TRIM_HORIZON
-   | `String "AFTER_SHARD_ID" -> AFTER_SHARD_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ShardFilterType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ShardFilterType") : 
-  shard_filter_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FROM_TIMESTAMP" -> FROM_TIMESTAMP
+    | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
+    | `String "AT_LATEST" -> AT_LATEST
+    | `String "FROM_TRIM_HORIZON" -> FROM_TRIM_HORIZON
+    | `String "AT_TRIM_HORIZON" -> AT_TRIM_HORIZON
+    | `String "AFTER_SHARD_ID" -> AFTER_SHARD_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ShardFilterType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ShardFilterType") : 
+     shard_filter_type) : shard_filter_type)
 let shard_filter_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -546,7 +573,6 @@ let shard_filter_of_yojson tree path =
           path);
      type_ = (value_for_key shard_filter_type_of_yojson "Type" _list path)
    } : shard_filter)
-let resource_ar_n_of_yojson = string_of_yojson
 let remove_tags_from_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -560,15 +586,16 @@ let remove_tags_from_stream_input_of_yojson tree path =
    } : remove_tags_from_stream_input)
 let consumer_name_of_yojson = string_of_yojson
 let consumer_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ACTIVE" -> ACTIVE
-   | `String "DELETING" -> DELETING
-   | `String "CREATING" -> CREATING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConsumerStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ConsumerStatus") : 
-  consumer_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ACTIVE" -> ACTIVE
+    | `String "DELETING" -> DELETING
+    | `String "CREATING" -> CREATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConsumerStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ConsumerStatus") : 
+     consumer_status) : consumer_status)
 let consumer_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -589,6 +616,8 @@ let register_stream_consumer_output_of_yojson tree path =
 let register_stream_consumer_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags =
+       (option_of_yojson (value_for_key tag_map_of_yojson "Tags") _list path);
      consumer_name =
        (value_for_key consumer_name_of_yojson "ConsumerName" _list path);
      stream_ar_n =
@@ -742,6 +771,18 @@ let list_tags_for_stream_input_of_yojson tree path =
        (option_of_yojson (value_for_key stream_name_of_yojson "StreamName")
           _list path)
    } : list_tags_for_stream_input)
+let list_tags_for_resource_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     tags =
+       (option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path)
+   } : list_tags_for_resource_output)
+let list_tags_for_resource_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource_ar_n =
+       (value_for_key resource_ar_n_of_yojson "ResourceARN" _list path)
+   } : list_tags_for_resource_input)
 let list_streams_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1125,6 +1166,8 @@ let decrease_stream_retention_period_input_of_yojson tree path =
 let create_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags =
+       (option_of_yojson (value_for_key tag_map_of_yojson "Tags") _list path);
      stream_mode_details =
        (option_of_yojson
           (value_for_key stream_mode_details_of_yojson "StreamModeDetails")
@@ -1147,9 +1190,3 @@ let add_tags_to_stream_input_of_yojson tree path =
        (option_of_yojson (value_for_key stream_name_of_yojson "StreamName")
           _list path)
    } : add_tags_to_stream_input)
-let base_string_of_yojson = string_of_yojson
-let base_boolean_of_yojson = bool_of_yojson
-let base_integer_of_yojson = int_of_yojson
-let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
-let base_long_of_yojson = long_of_yojson
-let base_document_of_yojson = json_of_yojson

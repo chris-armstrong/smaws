@@ -3,14 +3,16 @@ open Types
 let zip_file_content_of_yojson = blob_of_yojson
 let base_unit_of_yojson = unit_of_yojson
 let log_level_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DEBUG" -> DEBUG
-   | `String "ERROR" -> ERROR
-   | `String "WARN" -> WARN
-   | `String "INFO" -> INFO
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "LogLevel" value)
-   | _ -> raise (deserialize_wrong_type_error path "LogLevel") : log_level)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DEBUG" -> DEBUG
+    | `String "ERROR" -> ERROR
+    | `String "WARN" -> WARN
+    | `String "INFO" -> INFO
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "LogLevel" value)
+    | _ -> raise (deserialize_wrong_type_error path "LogLevel") : log_level) : 
+  log_level)
 let zeppelin_monitoring_configuration_update_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -63,13 +65,15 @@ let deploy_as_application_configuration_update_of_yojson tree path =
              "S3ContentLocationUpdate") _list path)
    } : deploy_as_application_configuration_update)
 let artifact_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DEPENDENCY_JAR" -> DEPENDENCY_JAR
-   | `String "UDF" -> UDF
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ArtifactType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ArtifactType") : 
-  artifact_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DEPENDENCY_JAR" -> DEPENDENCY_JAR
+    | `String "UDF" -> UDF
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ArtifactType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ArtifactType") : 
+     artifact_type) : artifact_type)
 let file_key_of_yojson = string_of_yojson
 let object_version_of_yojson = string_of_yojson
 let s3_content_location_of_yojson tree path =
@@ -293,52 +297,59 @@ let vpc_configuration_description_of_yojson tree path =
 let vpc_configuration_descriptions_of_yojson tree path =
   list_of_yojson vpc_configuration_description_of_yojson tree path
 let url_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ZEPPELIN_UI_URL" -> ZEPPELIN_UI_URL
-   | `String "FLINK_DASHBOARD_URL" -> FLINK_DASHBOARD_URL
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "UrlType" value)
-   | _ -> raise (deserialize_wrong_type_error path "UrlType") : url_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ZEPPELIN_UI_URL" -> ZEPPELIN_UI_URL
+    | `String "FLINK_DASHBOARD_URL" -> FLINK_DASHBOARD_URL
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "UrlType" value)
+    | _ -> raise (deserialize_wrong_type_error path "UrlType") : url_type) : 
+  url_type)
 let resource_ar_n_of_yojson = string_of_yojson
 let application_description_of_yojson = string_of_yojson
 let application_name_of_yojson = string_of_yojson
 let runtime_environment_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FLINK_1_18" -> FLINK_1_18
-   | `String "ZEPPELIN_FLINK_3_0" -> ZEPPELIN_FLINK_3_0
-   | `String "FLINK_1_15" -> FLINK_1_15
-   | `String "ZEPPELIN_FLINK_2_0" -> ZEPPELIN_FLINK_2_0
-   | `String "FLINK_1_13" -> FLINK_1_13
-   | `String "FLINK_1_11" -> FLINK_1_11
-   | `String "ZEPPELIN_FLINK_1_0" -> ZEPPELIN_FLINK_1_0
-   | `String "FLINK_1_8" -> FLINK_1_8
-   | `String "FLINK_1_6" -> FLINK_1_6
-   | `String "SQL_1_0" -> SQL_1_0
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RuntimeEnvironment"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RuntimeEnvironment") : 
-  runtime_environment)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FLINK-1_20" -> FLINK_1_20
+    | `String "FLINK-1_19" -> FLINK_1_19
+    | `String "FLINK-1_18" -> FLINK_1_18
+    | `String "ZEPPELIN-FLINK-3_0" -> ZEPPELIN_FLINK_3_0
+    | `String "FLINK-1_15" -> FLINK_1_15
+    | `String "ZEPPELIN-FLINK-2_0" -> ZEPPELIN_FLINK_2_0
+    | `String "FLINK-1_13" -> FLINK_1_13
+    | `String "FLINK-1_11" -> FLINK_1_11
+    | `String "ZEPPELIN-FLINK-1_0" -> ZEPPELIN_FLINK_1_0
+    | `String "FLINK-1_8" -> FLINK_1_8
+    | `String "FLINK-1_6" -> FLINK_1_6
+    | `String "SQL-1_0" -> SQL_1_0
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RuntimeEnvironment"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RuntimeEnvironment") : 
+     runtime_environment) : runtime_environment)
 let role_ar_n_of_yojson = string_of_yojson
 let application_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ROLLED_BACK" -> ROLLED_BACK
-   | `String "MAINTENANCE" -> MAINTENANCE
-   | `String "ROLLING_BACK" -> ROLLING_BACK
-   | `String "FORCE_STOPPING" -> FORCE_STOPPING
-   | `String "AUTOSCALING" -> AUTOSCALING
-   | `String "UPDATING" -> UPDATING
-   | `String "RUNNING" -> RUNNING
-   | `String "READY" -> READY
-   | `String "STOPPING" -> STOPPING
-   | `String "STARTING" -> STARTING
-   | `String "DELETING" -> DELETING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ApplicationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
-  application_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ROLLED_BACK" -> ROLLED_BACK
+    | `String "MAINTENANCE" -> MAINTENANCE
+    | `String "ROLLING_BACK" -> ROLLING_BACK
+    | `String "FORCE_STOPPING" -> FORCE_STOPPING
+    | `String "AUTOSCALING" -> AUTOSCALING
+    | `String "UPDATING" -> UPDATING
+    | `String "RUNNING" -> RUNNING
+    | `String "READY" -> READY
+    | `String "STOPPING" -> STOPPING
+    | `String "STARTING" -> STARTING
+    | `String "DELETING" -> DELETING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ApplicationStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
+     application_status) : application_status)
 let application_version_id_of_yojson = long_of_yojson
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let in_app_stream_name_of_yojson = string_of_yojson
@@ -380,14 +391,15 @@ let kinesis_firehose_input_description_of_yojson tree path =
        (value_for_key resource_ar_n_of_yojson "ResourceARN" _list path)
    } : kinesis_firehose_input_description)
 let record_format_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CSV" -> CSV
-   | `String "JSON" -> JSON
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecordFormatType" value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordFormatType") : 
-  record_format_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CSV" -> CSV
+    | `String "JSON" -> JSON
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecordFormatType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordFormatType") : 
+     record_format_type) : record_format_type)
 let record_row_path_of_yojson = string_of_yojson
 let json_mapping_parameters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -469,16 +481,17 @@ let input_parallelism_of_yojson tree path =
           path)
    } : input_parallelism)
 let input_starting_position_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
-   | `String "TRIM_HORIZON" -> TRIM_HORIZON
-   | `String "NOW" -> NOW
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InputStartingPosition"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InputStartingPosition") : 
-  input_starting_position)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
+    | `String "TRIM_HORIZON" -> TRIM_HORIZON
+    | `String "NOW" -> NOW
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InputStartingPosition"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InputStartingPosition") : 
+     input_starting_position) : input_starting_position)
 let input_starting_position_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -631,14 +644,15 @@ let sql_application_configuration_description_of_yojson tree path =
           _list path)
    } : sql_application_configuration_description)
 let code_content_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ZIPFILE" -> ZIPFILE
-   | `String "PLAINTEXT" -> PLAINTEXT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CodeContentType" value)
-   | _ -> raise (deserialize_wrong_type_error path "CodeContentType") : 
-  code_content_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ZIPFILE" -> ZIPFILE
+    | `String "PLAINTEXT" -> PLAINTEXT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CodeContentType" value)
+    | _ -> raise (deserialize_wrong_type_error path "CodeContentType") : 
+     code_content_type) : code_content_type)
 let text_content_of_yojson = string_of_yojson
 let code_m_d5_of_yojson = string_of_yojson
 let code_size_of_yojson = long_of_yojson
@@ -681,16 +695,17 @@ let application_code_configuration_description_of_yojson tree path =
           path)
    } : application_code_configuration_description)
 let application_restore_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RESTORE_FROM_CUSTOM_SNAPSHOT" -> RESTORE_FROM_CUSTOM_SNAPSHOT
-   | `String "RESTORE_FROM_LATEST_SNAPSHOT" -> RESTORE_FROM_LATEST_SNAPSHOT
-   | `String "SKIP_RESTORE_FROM_SNAPSHOT" -> SKIP_RESTORE_FROM_SNAPSHOT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ApplicationRestoreType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ApplicationRestoreType") : 
-  application_restore_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RESTORE_FROM_CUSTOM_SNAPSHOT" -> RESTORE_FROM_CUSTOM_SNAPSHOT
+    | `String "RESTORE_FROM_LATEST_SNAPSHOT" -> RESTORE_FROM_LATEST_SNAPSHOT
+    | `String "SKIP_RESTORE_FROM_SNAPSHOT" -> SKIP_RESTORE_FROM_SNAPSHOT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ApplicationRestoreType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ApplicationRestoreType") : 
+     application_restore_type) : application_restore_type)
 let snapshot_name_of_yojson = string_of_yojson
 let application_restore_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -724,14 +739,16 @@ let run_configuration_description_of_yojson tree path =
              "ApplicationRestoreConfigurationDescription") _list path)
    } : run_configuration_description)
 let configuration_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CUSTOM" -> CUSTOM
-   | `String "DEFAULT" -> DEFAULT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConfigurationType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ConfigurationType") : 
-  configuration_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CUSTOM" -> CUSTOM
+    | `String "DEFAULT" -> DEFAULT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConfigurationType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ConfigurationType") : 
+     configuration_type) : configuration_type)
 let checkpoint_interval_of_yojson = long_of_yojson
 let min_pause_between_checkpoints_of_yojson = long_of_yojson
 let checkpoint_configuration_description_of_yojson tree path =
@@ -755,15 +772,17 @@ let checkpoint_configuration_description_of_yojson tree path =
           _list path)
    } : checkpoint_configuration_description)
 let metrics_level_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PARALLELISM" -> PARALLELISM
-   | `String "OPERATOR" -> OPERATOR
-   | `String "TASK" -> TASK
-   | `String "APPLICATION" -> APPLICATION
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MetricsLevel" value)
-   | _ -> raise (deserialize_wrong_type_error path "MetricsLevel") : 
-  metrics_level)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PARALLELISM" -> PARALLELISM
+    | `String "OPERATOR" -> OPERATOR
+    | `String "TASK" -> TASK
+    | `String "APPLICATION" -> APPLICATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MetricsLevel" value)
+    | _ -> raise (deserialize_wrong_type_error path "MetricsLevel") : 
+     metrics_level) : metrics_level)
 let monitoring_configuration_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -852,6 +871,13 @@ let application_snapshot_configuration_description_of_yojson tree path =
      snapshots_enabled =
        (value_for_key boolean_object_of_yojson "SnapshotsEnabled" _list path)
    } : application_snapshot_configuration_description)
+let application_system_rollback_configuration_description_of_yojson tree path
+  =
+  let _list = assoc_of_yojson tree path in
+  ({
+     rollback_enabled =
+       (value_for_key boolean_object_of_yojson "RollbackEnabled" _list path)
+   } : application_system_rollback_configuration_description)
 let application_configuration_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -864,6 +890,11 @@ let application_configuration_description_of_yojson tree path =
        (option_of_yojson
           (value_for_key vpc_configuration_descriptions_of_yojson
              "VpcConfigurationDescriptions") _list path);
+     application_system_rollback_configuration_description =
+       (option_of_yojson
+          (value_for_key
+             application_system_rollback_configuration_description_of_yojson
+             "ApplicationSystemRollbackConfigurationDescription") _list path);
      application_snapshot_configuration_description =
        (option_of_yojson
           (value_for_key
@@ -920,14 +951,15 @@ let application_maintenance_configuration_description_of_yojson tree path =
    } : application_maintenance_configuration_description)
 let conditional_token_of_yojson = string_of_yojson
 let application_mode_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INTERACTIVE" -> INTERACTIVE
-   | `String "STREAMING" -> STREAMING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ApplicationMode" value)
-   | _ -> raise (deserialize_wrong_type_error path "ApplicationMode") : 
-  application_mode)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INTERACTIVE" -> INTERACTIVE
+    | `String "STREAMING" -> STREAMING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ApplicationMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "ApplicationMode") : 
+     application_mode) : application_mode)
 let application_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -943,6 +975,10 @@ let application_detail_of_yojson tree path =
        (option_of_yojson
           (value_for_key conditional_token_of_yojson "ConditionalToken")
           _list path);
+     application_version_create_timestamp =
+       (option_of_yojson
+          (value_for_key timestamp__of_yojson
+             "ApplicationVersionCreateTimestamp") _list path);
      application_version_rolled_back_from =
        (option_of_yojson
           (value_for_key application_version_id_of_yojson
@@ -993,9 +1029,13 @@ let application_detail_of_yojson tree path =
      application_ar_n =
        (value_for_key resource_ar_n_of_yojson "ApplicationARN" _list path)
    } : application_detail)
+let operation_id_of_yojson = string_of_yojson
 let update_application_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      application_detail =
        (value_for_key application_detail_of_yojson "ApplicationDetail" _list
           path)
@@ -1293,6 +1333,13 @@ let application_snapshot_configuration_update_of_yojson tree path =
        (value_for_key boolean_object_of_yojson "SnapshotsEnabledUpdate" _list
           path)
    } : application_snapshot_configuration_update)
+let application_system_rollback_configuration_update_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     rollback_enabled_update =
+       (value_for_key boolean_object_of_yojson "RollbackEnabledUpdate" _list
+          path)
+   } : application_system_rollback_configuration_update)
 let application_configuration_update_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1304,6 +1351,11 @@ let application_configuration_update_of_yojson tree path =
        (option_of_yojson
           (value_for_key vpc_configuration_updates_of_yojson
              "VpcConfigurationUpdates") _list path);
+     application_system_rollback_configuration_update =
+       (option_of_yojson
+          (value_for_key
+             application_system_rollback_configuration_update_of_yojson
+             "ApplicationSystemRollbackConfigurationUpdate") _list path);
      application_snapshot_configuration_update =
        (option_of_yojson
           (value_for_key application_snapshot_configuration_update_of_yojson
@@ -1539,7 +1591,12 @@ let tag_resource_request_of_yojson tree path =
           path)
    } : tag_resource_request)
 let stop_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path)
+   } : stop_application_response)
 let stop_application_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1550,7 +1607,12 @@ let stop_application_request_of_yojson tree path =
        (value_for_key application_name_of_yojson "ApplicationName" _list path)
    } : stop_application_request)
 let start_application_response_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in (() : unit)
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path)
+   } : start_application_response)
 let sql_run_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1713,16 +1775,17 @@ let sql_application_configuration_of_yojson tree path =
        (option_of_yojson (value_for_key inputs_of_yojson "Inputs") _list path)
    } : sql_application_configuration)
 let snapshot_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "DELETING" -> DELETING
-   | `String "READY" -> READY
-   | `String "CREATING" -> CREATING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "SnapshotStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "SnapshotStatus") : 
-  snapshot_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "DELETING" -> DELETING
+    | `String "READY" -> READY
+    | `String "CREATING" -> CREATING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "SnapshotStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "SnapshotStatus") : 
+     snapshot_status) : snapshot_status)
 let snapshot_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1762,6 +1825,9 @@ let s3_configuration_of_yojson tree path =
 let rollback_application_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      application_detail =
        (value_for_key application_detail_of_yojson "ApplicationDetail" _list
           path)
@@ -1805,6 +1871,38 @@ let parallelism_configuration_of_yojson tree path =
        (value_for_key configuration_type_of_yojson "ConfigurationType" _list
           path)
    } : parallelism_configuration)
+let operation_status_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "SUCCESSFUL" -> SUCCESSFUL
+    | `String "CANCELLED" -> CANCELLED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OperationStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "OperationStatus") : 
+     operation_status) : operation_status)
+let error_string_of_yojson = string_of_yojson
+let error_info_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     error_string =
+       (option_of_yojson (value_for_key error_string_of_yojson "ErrorString")
+          _list path)
+   } : error_info)
+let operation_failure_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     error_info =
+       (option_of_yojson (value_for_key error_info_of_yojson "ErrorInfo")
+          _list path);
+     rollback_operation_id =
+       (option_of_yojson
+          (value_for_key operation_id_of_yojson "RollbackOperationId") _list
+          path)
+   } : operation_failure_details)
+let operation_of_yojson = string_of_yojson
 let next_token_of_yojson = string_of_yojson
 let monitoring_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1939,6 +2037,60 @@ let list_application_snapshots_request_of_yojson tree path =
      application_name =
        (value_for_key application_name_of_yojson "ApplicationName" _list path)
    } : list_application_snapshots_request)
+let application_operation_info_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_status =
+       (option_of_yojson
+          (value_for_key operation_status_of_yojson "OperationStatus") _list
+          path);
+     end_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "EndTime") _list
+          path);
+     start_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "StartTime")
+          _list path);
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
+     operation =
+       (option_of_yojson (value_for_key operation_of_yojson "Operation")
+          _list path)
+   } : application_operation_info)
+let application_operation_info_list_of_yojson tree path =
+  list_of_yojson application_operation_info_of_yojson tree path
+let list_application_operations_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     application_operation_info_list =
+       (option_of_yojson
+          (value_for_key application_operation_info_list_of_yojson
+             "ApplicationOperationInfoList") _list path)
+   } : list_application_operations_response)
+let list_application_operations_input_limit_of_yojson = int_of_yojson
+let list_application_operations_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_status =
+       (option_of_yojson
+          (value_for_key operation_status_of_yojson "OperationStatus") _list
+          path);
+     operation =
+       (option_of_yojson (value_for_key operation_of_yojson "Operation")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     limit =
+       (option_of_yojson
+          (value_for_key list_application_operations_input_limit_of_yojson
+             "Limit") _list path);
+     application_name =
+       (value_for_key application_name_of_yojson "ApplicationName" _list path)
+   } : list_application_operations_request)
 let discover_input_schema_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2010,6 +2162,49 @@ let describe_application_snapshot_request_of_yojson tree path =
      application_name =
        (value_for_key application_name_of_yojson "ApplicationName" _list path)
    } : describe_application_snapshot_request)
+let application_version_change_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     application_version_updated_to =
+       (value_for_key application_version_id_of_yojson
+          "ApplicationVersionUpdatedTo" _list path);
+     application_version_updated_from =
+       (value_for_key application_version_id_of_yojson
+          "ApplicationVersionUpdatedFrom" _list path)
+   } : application_version_change_details)
+let application_operation_info_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_failure_details =
+       (option_of_yojson
+          (value_for_key operation_failure_details_of_yojson
+             "OperationFailureDetails") _list path);
+     application_version_change_details =
+       (option_of_yojson
+          (value_for_key application_version_change_details_of_yojson
+             "ApplicationVersionChangeDetails") _list path);
+     operation_status =
+       (value_for_key operation_status_of_yojson "OperationStatus" _list path);
+     end_time = (value_for_key timestamp__of_yojson "EndTime" _list path);
+     start_time = (value_for_key timestamp__of_yojson "StartTime" _list path);
+     operation = (value_for_key operation_of_yojson "Operation" _list path)
+   } : application_operation_info_details)
+let describe_application_operation_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     application_operation_info_details =
+       (option_of_yojson
+          (value_for_key application_operation_info_details_of_yojson
+             "ApplicationOperationInfoDetails") _list path)
+   } : describe_application_operation_response)
+let describe_application_operation_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     operation_id =
+       (value_for_key operation_id_of_yojson "OperationId" _list path);
+     application_name =
+       (value_for_key application_name_of_yojson "ApplicationName" _list path)
+   } : describe_application_operation_request)
 let describe_application_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2030,6 +2225,9 @@ let describe_application_request_of_yojson tree path =
 let delete_application_vpc_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      application_version_id =
        (option_of_yojson
           (value_for_key application_version_id_of_yojson
@@ -2136,6 +2334,9 @@ let delete_application_cloud_watch_logging_option_response_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      cloud_watch_logging_option_descriptions =
        (option_of_yojson
           (value_for_key cloud_watch_logging_option_descriptions_of_yojson
@@ -2283,6 +2484,12 @@ let application_snapshot_configuration_of_yojson tree path =
      snapshots_enabled =
        (value_for_key boolean_object_of_yojson "SnapshotsEnabled" _list path)
    } : application_snapshot_configuration)
+let application_system_rollback_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     rollback_enabled =
+       (value_for_key boolean_object_of_yojson "RollbackEnabled" _list path)
+   } : application_system_rollback_configuration)
 let application_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2294,6 +2501,10 @@ let application_configuration_of_yojson tree path =
        (option_of_yojson
           (value_for_key vpc_configurations_of_yojson "VpcConfigurations")
           _list path);
+     application_system_rollback_configuration =
+       (option_of_yojson
+          (value_for_key application_system_rollback_configuration_of_yojson
+             "ApplicationSystemRollbackConfiguration") _list path);
      application_snapshot_configuration =
        (option_of_yojson
           (value_for_key application_snapshot_configuration_of_yojson
@@ -2355,6 +2566,9 @@ let create_application_request_of_yojson tree path =
 let add_application_vpc_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      vpc_configuration_description =
        (option_of_yojson
           (value_for_key vpc_configuration_description_of_yojson
@@ -2496,6 +2710,9 @@ let add_application_input_request_of_yojson tree path =
 let add_application_cloud_watch_logging_option_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     operation_id =
+       (option_of_yojson (value_for_key operation_id_of_yojson "OperationId")
+          _list path);
      cloud_watch_logging_option_descriptions =
        (option_of_yojson
           (value_for_key cloud_watch_logging_option_descriptions_of_yojson
@@ -2531,3 +2748,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

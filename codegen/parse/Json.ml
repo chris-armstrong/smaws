@@ -82,6 +82,10 @@ module Decode = struct
         | `Float num -> Ok num
         | _ -> Error (WrongType (path, "number")))
 
+  let parseBool x =
+    Result.bind x ~f:(fun [@u] { tree; path } ->
+        match tree with `Bool i -> Ok i | _ -> Error (WrongType (path, "bool")))
+
   let parseInteger x =
     Result.bind x ~f:(fun [@u] { tree; path } ->
         match tree with `Int i -> Ok i | _ -> Error (WrongType (path, "integer")))
@@ -106,6 +110,11 @@ module Decode = struct
   let raw (recordObject : (jsonTreeRef, jsonParseError) Result.t) =
     let open Result in
     recordObject >>= fun { tree; path } -> Ok tree
+
+  let raw_exn (recordObject : (jsonTreeRef, jsonParseError) Result.t) =
+    match raw recordObject with
+    | Ok tree -> tree
+    | Error error -> failwith "unable to extract raw JSON value"
 
   let field fieldName objectRef =
     let open Result in

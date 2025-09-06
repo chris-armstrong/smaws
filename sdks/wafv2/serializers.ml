@@ -8,7 +8,6 @@ let single_query_argument_to_yojson (x : single_query_argument) =
 let all_query_arguments_to_yojson = unit_to_yojson
 let uri_path_to_yojson = unit_to_yojson
 let query_string_to_yojson = unit_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let oversize_handling_to_yojson (x : oversize_handling) =
   match x with
   | NO_MATCH -> `String "NO_MATCH"
@@ -94,10 +93,22 @@ let ja3_fingerprint_to_yojson (x : ja3_fingerprint) =
   assoc_to_yojson
     [("FallbackBehavior",
        (Some (fallback_behavior_to_yojson x.fallback_behavior)))]
+let ja4_fingerprint_to_yojson (x : ja4_fingerprint) =
+  assoc_to_yojson
+    [("FallbackBehavior",
+       (Some (fallback_behavior_to_yojson x.fallback_behavior)))]
+let uri_fragment_to_yojson (x : uri_fragment) =
+  assoc_to_yojson
+    [("FallbackBehavior",
+       (option_to_yojson fallback_behavior_to_yojson x.fallback_behavior))]
 let field_to_match_to_yojson (x : field_to_match) =
   assoc_to_yojson
-    [("JA3Fingerprint",
-       (option_to_yojson ja3_fingerprint_to_yojson x.ja3_fingerprint));
+    [("UriFragment",
+       (option_to_yojson uri_fragment_to_yojson x.uri_fragment));
+    ("JA4Fingerprint",
+      (option_to_yojson ja4_fingerprint_to_yojson x.ja4_fingerprint));
+    ("JA3Fingerprint",
+      (option_to_yojson ja3_fingerprint_to_yojson x.ja3_fingerprint));
     ("HeaderOrder", (option_to_yojson header_order_to_yojson x.header_order));
     ("Cookies", (option_to_yojson cookies_to_yojson x.cookies));
     ("Headers", (option_to_yojson headers_to_yojson x.headers));
@@ -608,10 +619,26 @@ let rate_limit_uri_path_to_yojson (x : rate_limit_uri_path) =
   assoc_to_yojson
     [("TextTransformations",
        (Some (text_transformations_to_yojson x.text_transformations)))]
+let rate_limit_ja3_fingerprint_to_yojson (x : rate_limit_ja3_fingerprint) =
+  assoc_to_yojson
+    [("FallbackBehavior",
+       (Some (fallback_behavior_to_yojson x.fallback_behavior)))]
+let rate_limit_ja4_fingerprint_to_yojson (x : rate_limit_ja4_fingerprint) =
+  assoc_to_yojson
+    [("FallbackBehavior",
+       (Some (fallback_behavior_to_yojson x.fallback_behavior)))]
+let rate_limit_asn_to_yojson = unit_to_yojson
 let rate_based_statement_custom_key_to_yojson
   (x : rate_based_statement_custom_key) =
   assoc_to_yojson
-    [("UriPath", (option_to_yojson rate_limit_uri_path_to_yojson x.uri_path));
+    [("ASN", (option_to_yojson rate_limit_asn_to_yojson x.as_n));
+    ("JA4Fingerprint",
+      (option_to_yojson rate_limit_ja4_fingerprint_to_yojson
+         x.ja4_fingerprint));
+    ("JA3Fingerprint",
+      (option_to_yojson rate_limit_ja3_fingerprint_to_yojson
+         x.ja3_fingerprint));
+    ("UriPath", (option_to_yojson rate_limit_uri_path_to_yojson x.uri_path));
     ("LabelNamespace",
       (option_to_yojson rate_limit_label_namespace_to_yojson
          x.label_namespace));
@@ -784,11 +811,48 @@ let aws_managed_rules_acfp_rule_set_to_yojson
       (Some
          (registration_page_path_string_to_yojson x.registration_page_path)));
     ("CreationPath", (Some (creation_path_string_to_yojson x.creation_path)))]
+let usage_of_action_to_yojson (x : usage_of_action) =
+  match x with
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
+let sensitivity_to_act_to_yojson (x : sensitivity_to_act) =
+  match x with
+  | HIGH -> `String "HIGH"
+  | MEDIUM -> `String "MEDIUM"
+  | LOW -> `String "LOW"
+let regex_pattern_string_to_yojson = string_to_yojson
+let regex_to_yojson (x : regex) =
+  assoc_to_yojson
+    [("RegexString",
+       (option_to_yojson regex_pattern_string_to_yojson x.regex_string))]
+let regular_expression_list_to_yojson tree =
+  list_to_yojson regex_to_yojson tree
+let client_side_action_to_yojson (x : client_side_action) =
+  assoc_to_yojson
+    [("ExemptUriRegularExpressions",
+       (option_to_yojson regular_expression_list_to_yojson
+          x.exempt_uri_regular_expressions));
+    ("Sensitivity",
+      (option_to_yojson sensitivity_to_act_to_yojson x.sensitivity));
+    ("UsageOfAction", (Some (usage_of_action_to_yojson x.usage_of_action)))]
+let client_side_action_config_to_yojson (x : client_side_action_config) =
+  assoc_to_yojson
+    [("Challenge", (Some (client_side_action_to_yojson x.challenge)))]
+let aws_managed_rules_anti_d_do_s_rule_set_to_yojson
+  (x : aws_managed_rules_anti_d_do_s_rule_set) =
+  assoc_to_yojson
+    [("SensitivityToBlock",
+       (option_to_yojson sensitivity_to_act_to_yojson x.sensitivity_to_block));
+    ("ClientSideActionConfig",
+      (Some (client_side_action_config_to_yojson x.client_side_action_config)))]
 let managed_rule_group_config_to_yojson (x : managed_rule_group_config) =
   assoc_to_yojson
-    [("AWSManagedRulesACFPRuleSet",
-       (option_to_yojson aws_managed_rules_acfp_rule_set_to_yojson
-          x.aws_managed_rules_acfp_rule_set));
+    [("AWSManagedRulesAntiDDoSRuleSet",
+       (option_to_yojson aws_managed_rules_anti_d_do_s_rule_set_to_yojson
+          x.aws_managed_rules_anti_d_do_s_rule_set));
+    ("AWSManagedRulesACFPRuleSet",
+      (option_to_yojson aws_managed_rules_acfp_rule_set_to_yojson
+         x.aws_managed_rules_acfp_rule_set));
     ("AWSManagedRulesATPRuleSet",
       (option_to_yojson aws_managed_rules_atp_rule_set_to_yojson
          x.aws_managed_rules_atp_rule_set));
@@ -811,13 +875,19 @@ let label_match_statement_to_yojson (x : label_match_statement) =
   assoc_to_yojson
     [("Key", (Some (label_match_key_to_yojson x.key)));
     ("Scope", (Some (label_match_scope_to_yojson x.scope)))]
-let regex_pattern_string_to_yojson = string_to_yojson
 let regex_match_statement_to_yojson (x : regex_match_statement) =
   assoc_to_yojson
     [("TextTransformations",
        (Some (text_transformations_to_yojson x.text_transformations)));
     ("FieldToMatch", (Some (field_to_match_to_yojson x.field_to_match)));
     ("RegexString", (Some (regex_pattern_string_to_yojson x.regex_string)))]
+let as_n_to_yojson = long_to_yojson
+let asn_list_to_yojson tree = list_to_yojson as_n_to_yojson tree
+let asn_match_statement_to_yojson (x : asn_match_statement) =
+  assoc_to_yojson
+    [("ForwardedIPConfig",
+       (option_to_yojson forwarded_ip_config_to_yojson x.forwarded_ip_config));
+    ("AsnList", (Some (asn_list_to_yojson x.asn_list)))]
 let rec and_statement_to_yojson (x : and_statement) =
   assoc_to_yojson
     [("Statements", (Some (statements_to_yojson x.statements)))]
@@ -861,9 +931,11 @@ and rate_based_statement_to_yojson (x : rate_based_statement) =
     ("Limit", (Some (rate_limit_to_yojson x.limit)))]
 and statement_to_yojson (x : statement) =
   assoc_to_yojson
-    [("RegexMatchStatement",
-       (option_to_yojson regex_match_statement_to_yojson
-          x.regex_match_statement));
+    [("AsnMatchStatement",
+       (option_to_yojson asn_match_statement_to_yojson x.asn_match_statement));
+    ("RegexMatchStatement",
+      (option_to_yojson regex_match_statement_to_yojson
+         x.regex_match_statement));
     ("LabelMatchStatement",
       (option_to_yojson label_match_statement_to_yojson
          x.label_match_statement));
@@ -945,6 +1017,39 @@ let rule_to_yojson (x : rule) =
     ("Priority", (Some (rule_priority_to_yojson x.priority)));
     ("Name", (Some (entity_name_to_yojson x.name)))]
 let rules_to_yojson tree = list_to_yojson rule_to_yojson tree
+let field_to_protect_type_to_yojson (x : field_to_protect_type) =
+  match x with
+  | BODY -> `String "BODY"
+  | QUERY_STRING -> `String "QUERY_STRING"
+  | SINGLE_QUERY_ARGUMENT -> `String "SINGLE_QUERY_ARGUMENT"
+  | SINGLE_COOKIE -> `String "SINGLE_COOKIE"
+  | SINGLE_HEADER -> `String "SINGLE_HEADER"
+let field_to_protect_key_name_to_yojson = string_to_yojson
+let field_to_protect_keys_to_yojson tree =
+  list_to_yojson field_to_protect_key_name_to_yojson tree
+let field_to_protect_to_yojson (x : field_to_protect) =
+  assoc_to_yojson
+    [("FieldKeys",
+       (option_to_yojson field_to_protect_keys_to_yojson x.field_keys));
+    ("FieldType", (Some (field_to_protect_type_to_yojson x.field_type)))]
+let data_protection_action_to_yojson (x : data_protection_action) =
+  match x with
+  | HASH -> `String "HASH"
+  | SUBSTITUTION -> `String "SUBSTITUTION"
+let data_protection_to_yojson (x : data_protection) =
+  assoc_to_yojson
+    [("ExcludeRateBasedDetails",
+       (option_to_yojson boolean__to_yojson x.exclude_rate_based_details));
+    ("ExcludeRuleMatchDetails",
+      (option_to_yojson boolean__to_yojson x.exclude_rule_match_details));
+    ("Action", (Some (data_protection_action_to_yojson x.action)));
+    ("Field", (Some (field_to_protect_to_yojson x.field)))]
+let data_protections_to_yojson tree =
+  list_to_yojson data_protection_to_yojson tree
+let data_protection_config_to_yojson (x : data_protection_config) =
+  assoc_to_yojson
+    [("DataProtections",
+       (Some (data_protections_to_yojson x.data_protections)))]
 let consumed_capacity_to_yojson = long_to_yojson
 let firewall_manager_statement_to_yojson (x : firewall_manager_statement) =
   assoc_to_yojson
@@ -1006,10 +1111,40 @@ let association_config_to_yojson (x : association_config) =
   assoc_to_yojson
     [("RequestBody",
        (option_to_yojson request_body_to_yojson x.request_body))]
+let low_reputation_mode_to_yojson (x : low_reputation_mode) =
+  match x with
+  | ALWAYS_ON -> `String "ALWAYS_ON"
+  | ACTIVE_UNDER_DDOS -> `String "ACTIVE_UNDER_DDOS"
+let on_source_d_do_s_protection_config_to_yojson
+  (x : on_source_d_do_s_protection_config) =
+  assoc_to_yojson
+    [("ALBLowReputationMode",
+       (Some (low_reputation_mode_to_yojson x.alb_low_reputation_mode)))]
+let attribute_name_to_yojson = string_to_yojson
+let attribute_value_to_yojson = string_to_yojson
+let attribute_values_to_yojson tree =
+  list_to_yojson attribute_value_to_yojson tree
+let application_attribute_to_yojson (x : application_attribute) =
+  assoc_to_yojson
+    [("Values", (option_to_yojson attribute_values_to_yojson x.values));
+    ("Name", (option_to_yojson attribute_name_to_yojson x.name))]
+let application_attributes_to_yojson tree =
+  list_to_yojson application_attribute_to_yojson tree
+let application_config_to_yojson (x : application_config) =
+  assoc_to_yojson
+    [("Attributes",
+       (option_to_yojson application_attributes_to_yojson x.attributes))]
 let web_ac_l_to_yojson (x : web_ac_l) =
   assoc_to_yojson
-    [("AssociationConfig",
-       (option_to_yojson association_config_to_yojson x.association_config));
+    [("ApplicationConfig",
+       (option_to_yojson application_config_to_yojson x.application_config));
+    ("OnSourceDDoSProtectionConfig",
+      (option_to_yojson on_source_d_do_s_protection_config_to_yojson
+         x.on_source_d_do_s_protection_config));
+    ("RetrofittedByFirewallManager",
+      (option_to_yojson boolean__to_yojson x.retrofitted_by_firewall_manager));
+    ("AssociationConfig",
+      (option_to_yojson association_config_to_yojson x.association_config));
     ("TokenDomains",
       (option_to_yojson token_domains_to_yojson x.token_domains));
     ("ChallengeConfig",
@@ -1030,6 +1165,9 @@ let web_ac_l_to_yojson (x : web_ac_l) =
       (option_to_yojson firewall_manager_rule_groups_to_yojson
          x.pre_process_firewall_manager_rule_groups));
     ("Capacity", (option_to_yojson consumed_capacity_to_yojson x.capacity));
+    ("DataProtectionConfig",
+      (option_to_yojson data_protection_config_to_yojson
+         x.data_protection_config));
     ("VisibilityConfig",
       (Some (visibility_config_to_yojson x.visibility_config)));
     ("Rules", (option_to_yojson rules_to_yojson x.rules));
@@ -1091,6 +1229,8 @@ let waf_invalid_permission_policy_exception_to_yojson
     [("Message", (option_to_yojson error_message_to_yojson x.message))]
 let parameter_exception_field_to_yojson (x : parameter_exception_field) =
   match x with
+  | LOW_REPUTATION_MODE -> `String "LOW_REPUTATION_MODE"
+  | DATA_PROTECTION_CONFIG -> `String "DATA_PROTECTION_CONFIG"
   | ACP_RULE_SET_RESPONSE_INSPECTION ->
       `String "ACP_RULE_SET_RESPONSE_INSPECTION"
   | CUSTOM_KEYS -> `String "CUSTOM_KEYS"
@@ -1220,8 +1360,11 @@ let scope_to_yojson (x : scope) =
   | CLOUDFRONT -> `String "CLOUDFRONT"
 let update_web_acl_request_to_yojson (x : update_web_acl_request) =
   assoc_to_yojson
-    [("AssociationConfig",
-       (option_to_yojson association_config_to_yojson x.association_config));
+    [("OnSourceDDoSProtectionConfig",
+       (option_to_yojson on_source_d_do_s_protection_config_to_yojson
+          x.on_source_d_do_s_protection_config));
+    ("AssociationConfig",
+      (option_to_yojson association_config_to_yojson x.association_config));
     ("TokenDomains",
       (option_to_yojson token_domains_to_yojson x.token_domains));
     ("ChallengeConfig",
@@ -1232,6 +1375,9 @@ let update_web_acl_request_to_yojson (x : update_web_acl_request) =
       (option_to_yojson custom_response_bodies_to_yojson
          x.custom_response_bodies));
     ("LockToken", (Some (lock_token_to_yojson x.lock_token)));
+    ("DataProtectionConfig",
+      (option_to_yojson data_protection_config_to_yojson
+         x.data_protection_config));
     ("VisibilityConfig",
       (Some (visibility_config_to_yojson x.visibility_config)));
     ("Rules", (option_to_yojson rules_to_yojson x.rules));
@@ -1264,12 +1410,6 @@ let update_regex_pattern_set_response_to_yojson
   assoc_to_yojson
     [("NextLockToken",
        (option_to_yojson lock_token_to_yojson x.next_lock_token))]
-let regex_to_yojson (x : regex) =
-  assoc_to_yojson
-    [("RegexString",
-       (option_to_yojson regex_pattern_string_to_yojson x.regex_string))]
-let regular_expression_list_to_yojson tree =
-  list_to_yojson regex_to_yojson tree
 let update_regex_pattern_set_request_to_yojson
   (x : update_regex_pattern_set_request) =
   assoc_to_yojson
@@ -1453,6 +1593,7 @@ let rule_group_to_yojson (x : rule_group) =
     ("Name", (Some (entity_name_to_yojson x.name)))]
 let resource_type_to_yojson (x : resource_type) =
   match x with
+  | AMPLIFY -> `String "AMPLIFY"
   | VERIFIED_ACCESS_INSTANCE -> `String "VERIFIED_ACCESS_INSTANCE"
   | APP_RUNNER_SERVICE -> `String "APP_RUNNER_SERVICE"
   | COGNITIO_USER_POOL -> `String "COGNITO_USER_POOL"
@@ -1874,9 +2015,10 @@ let get_web_acl_response_to_yojson (x : get_web_acl_response) =
     ("WebACL", (option_to_yojson web_ac_l_to_yojson x.web_ac_l))]
 let get_web_acl_request_to_yojson (x : get_web_acl_request) =
   assoc_to_yojson
-    [("Id", (Some (entity_id_to_yojson x.id)));
-    ("Scope", (Some (scope_to_yojson x.scope)));
-    ("Name", (Some (entity_name_to_yojson x.name)))]
+    [("ARN", (option_to_yojson resource_arn_to_yojson x.ar_n));
+    ("Id", (option_to_yojson entity_id_to_yojson x.id));
+    ("Scope", (option_to_yojson scope_to_yojson x.scope));
+    ("Name", (option_to_yojson entity_name_to_yojson x.name))]
 let get_web_acl_for_resource_response_to_yojson
   (x : get_web_acl_for_resource_response) =
   assoc_to_yojson
@@ -2124,8 +2266,13 @@ let create_web_acl_response_to_yojson (x : create_web_acl_response) =
     [("Summary", (option_to_yojson web_acl_summary_to_yojson x.summary))]
 let create_web_acl_request_to_yojson (x : create_web_acl_request) =
   assoc_to_yojson
-    [("AssociationConfig",
-       (option_to_yojson association_config_to_yojson x.association_config));
+    [("ApplicationConfig",
+       (option_to_yojson application_config_to_yojson x.application_config));
+    ("OnSourceDDoSProtectionConfig",
+      (option_to_yojson on_source_d_do_s_protection_config_to_yojson
+         x.on_source_d_do_s_protection_config));
+    ("AssociationConfig",
+      (option_to_yojson association_config_to_yojson x.association_config));
     ("TokenDomains",
       (option_to_yojson token_domains_to_yojson x.token_domains));
     ("ChallengeConfig",
@@ -2136,6 +2283,9 @@ let create_web_acl_request_to_yojson (x : create_web_acl_request) =
       (option_to_yojson custom_response_bodies_to_yojson
          x.custom_response_bodies));
     ("Tags", (option_to_yojson tag_list_to_yojson x.tags));
+    ("DataProtectionConfig",
+      (option_to_yojson data_protection_config_to_yojson
+         x.data_protection_config));
     ("VisibilityConfig",
       (Some (visibility_config_to_yojson x.visibility_config)));
     ("Rules", (option_to_yojson rules_to_yojson x.rules));
@@ -2211,9 +2361,3 @@ let associate_web_acl_request_to_yojson (x : associate_web_acl_request) =
   assoc_to_yojson
     [("ResourceArn", (Some (resource_arn_to_yojson x.resource_arn)));
     ("WebACLArn", (Some (resource_arn_to_yojson x.web_acl_arn)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson

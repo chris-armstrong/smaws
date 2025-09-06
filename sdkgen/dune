@@ -1,0 +1,15 @@
+(library
+ (name sdkgen)
+ (modules
+  exceptions
+  gen_builders
+  gen_deserialisers
+  gen_doc
+  gen_module
+  gen_operations
+  gen_serialisers
+  gen_service_metadata
+  gen_types
+  sdkgen
+  SmithyHelpers)
+ (libraries Parselib base))

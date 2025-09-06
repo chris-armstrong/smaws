@@ -1,5 +1,5 @@
 (executable
  (name AwsGenerator)
- (libraries yojson Parselib fmt ppxlib)
+ (libraries yojson Parselib fmt ppxlib sdkgen)
  (preprocess
   (pps ppxlib.metaquot)))

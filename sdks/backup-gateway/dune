@@ -1,19 +1,21 @@
 (rule
-  (mode promote)
  (deps
   (:gen ../../bin/AwsGenerator.exe)
-  (:input ../../definitions/backup-gateway.json))
+  (:input ../../api-models-aws/models/backup-gateway/service/2021-01-01/backup-gateway-2021-01-01.json))
  (targets
   builders.ml
   builders.mli
-  serializers.ml
-  deserializers.ml
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
   types.ml
   types.mli
   operations.ml
   operations.mli
   Smaws_Client_BackupGateway.ml
   Smaws_Client_BackupGateway.mli)
+(mode promote)
  (action
   (run
    %{gen}
@@ -24,6 +26,7 @@
    -targets
    builders
    types
+   service_metadata
    serializers
    deserializers
    operations
@@ -35,8 +38,9 @@
  (modules
   Smaws_Client_BackupGateway
   types
-  serializers
-  deserializers
+  service_metadata
+  json_serializers
+  json_deserializers
   operations
   builders)
  (libraries smaws-lib))

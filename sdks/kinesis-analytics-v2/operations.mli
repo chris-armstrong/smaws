@@ -136,7 +136,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_application_snapshot_request ->
-        (unit,
+        (create_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -153,7 +153,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_request ->
-        (unit,
+        (delete_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -236,7 +236,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_application_snapshot_request ->
-        (unit,
+        (delete_application_snapshot_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -277,6 +277,19 @@ sig
           result
 end[@@ocaml.doc
      "Returns information about a specific Managed Service for Apache Flink application.\n\n If you want to retrieve a list of all applications in your account, use the [ListApplications] operation.\n "]
+module DescribeApplicationOperation :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_application_operation_request ->
+        (describe_application_operation_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Returns information about a specific operation performed on a Managed Service for Apache Flink application"]
 module DescribeApplicationSnapshot :
 sig
   val request :
@@ -321,6 +334,19 @@ sig
           result
 end[@@ocaml.doc
      "Infers a schema for a SQL-based Kinesis Data Analytics application by evaluating sample records on the specified streaming source (Kinesis data stream or Kinesis Data Firehose delivery stream) or Amazon S3 object. In the response, the operation returns the inferred schema and also the sample records that the operation used to infer the schema.\n\n  You can use the inferred schema when configuring a streaming source for your application. When you create an application using the Kinesis Data Analytics console, the console uses this operation to infer a schema and show it in the console user interface. \n "]
+module ListApplicationOperations :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_application_operations_request ->
+        (list_application_operations_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidArgumentException of invalid_argument_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Lists information about operations performed on a Managed Service for Apache Flink application"]
 module ListApplicationSnapshots :
 sig
   val request :
@@ -386,13 +412,13 @@ sig
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
 end[@@ocaml.doc
-     "Reverts the application to the previous running version. You can roll back an application if you suspect it is stuck in a transient status. \n\n You can roll back an application only if it is in the [UPDATING] or [AUTOSCALING] status.\n \n  When you rollback an application, it loads state data from the last successful snapshot. If the application has no snapshots, Managed Service for Apache Flink rejects the rollback request.\n  \n   This action is not supported for Managed Service for Apache Flink for SQL applications.\n   "]
+     "Reverts the application to the previous running version. You can roll back an application if you suspect it is stuck in a transient status or in the running status. \n\n You can roll back an application only if it is in the [UPDATING], [AUTOSCALING], or [RUNNING] statuses.\n \n  When you rollback an application, it loads state data from the last successful snapshot. If the application has no snapshots, Managed Service for Apache Flink rejects the rollback request.\n  "]
 module StartApplication :
 sig
   val request :
     Smaws_Lib.Context.t ->
       start_application_request ->
-        (unit,
+        (start_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidApplicationConfigurationException of
               invalid_application_configuration_exception 
@@ -408,7 +434,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       stop_application_request ->
-        (unit,
+        (stop_application_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -426,7 +452,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -441,7 +467,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 

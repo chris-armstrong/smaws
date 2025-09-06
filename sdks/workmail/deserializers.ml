@@ -61,21 +61,27 @@ let update_user_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let organization_id_of_yojson = string_of_yojson
 let entity_identifier_of_yojson = string_of_yojson
-let base_unit_of_yojson = unit_of_yojson
 let user_role_of_yojson (tree : t) path =
-  (match tree with
-   | `String "REMOTE_USER" -> REMOTE_USER
-   | `String "SYSTEM_USER" -> SYSTEM_USER
-   | `String "RESOURCE" -> RESOURCE
-   | `String "USER" -> USER
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "UserRole" value)
-   | _ -> raise (deserialize_wrong_type_error path "UserRole") : user_role)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "REMOTE_USER" -> REMOTE_USER
+    | `String "SYSTEM_USER" -> SYSTEM_USER
+    | `String "RESOURCE" -> RESOURCE
+    | `String "USER" -> USER
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "UserRole" value)
+    | _ -> raise (deserialize_wrong_type_error path "UserRole") : user_role) : 
+  user_role)
 let user_attribute_of_yojson = string_of_yojson
 let boolean_object_of_yojson = bool_of_yojson
+let identity_provider_user_id_for_update_of_yojson = string_of_yojson
 let update_user_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     identity_provider_user_id =
+       (option_of_yojson
+          (value_for_key identity_provider_user_id_for_update_of_yojson
+             "IdentityProviderUserId") _list path);
      office =
        (option_of_yojson (value_for_key user_attribute_of_yojson "Office")
           _list path);
@@ -183,13 +189,15 @@ let booking_options_of_yojson tree path =
    } : booking_options)
 let new_resource_description_of_yojson = string_of_yojson
 let resource_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EQUIPMENT" -> EQUIPMENT
-   | `String "ROOM" -> ROOM
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ResourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
-  resource_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "EQUIPMENT" -> EQUIPMENT
+    | `String "ROOM" -> ROOM
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
+     resource_type) : resource_type)
 let update_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -234,17 +242,18 @@ let mobile_device_access_rule_id_of_yojson = string_of_yojson
 let mobile_device_access_rule_name_of_yojson = string_of_yojson
 let mobile_device_access_rule_description_of_yojson = string_of_yojson
 let mobile_device_access_rule_effect_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DENY" -> DENY
-   | `String "ALLOW" -> ALLOW
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MobileDeviceAccessRuleEffect" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "MobileDeviceAccessRuleEffect") : 
-  mobile_device_access_rule_effect)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DENY" -> DENY
+    | `String "ALLOW" -> ALLOW
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MobileDeviceAccessRuleEffect" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "MobileDeviceAccessRuleEffect") : 
+     mobile_device_access_rule_effect) : mobile_device_access_rule_effect)
 let device_type_of_yojson = string_of_yojson
 let device_type_list_of_yojson tree path =
   list_of_yojson device_type_of_yojson tree path
@@ -339,27 +348,30 @@ let update_impersonation_role_response_of_yojson tree path =
 let impersonation_role_id_of_yojson = string_of_yojson
 let impersonation_role_name_of_yojson = string_of_yojson
 let impersonation_role_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "READ_ONLY" -> READ_ONLY
-   | `String "FULL_ACCESS" -> FULL_ACCESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ImpersonationRoleType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ImpersonationRoleType") : 
-  impersonation_role_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "READ_ONLY" -> READ_ONLY
+    | `String "FULL_ACCESS" -> FULL_ACCESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ImpersonationRoleType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ImpersonationRoleType") : 
+     impersonation_role_type) : impersonation_role_type)
 let impersonation_role_description_of_yojson = string_of_yojson
 let impersonation_rule_id_of_yojson = string_of_yojson
 let impersonation_rule_name_of_yojson = string_of_yojson
 let impersonation_rule_description_of_yojson = string_of_yojson
 let access_effect_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DENY" -> DENY
-   | `String "ALLOW" -> ALLOW
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "AccessEffect" value)
-   | _ -> raise (deserialize_wrong_type_error path "AccessEffect") : 
-  access_effect)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DENY" -> DENY
+    | `String "ALLOW" -> ALLOW
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AccessEffect" value)
+    | _ -> raise (deserialize_wrong_type_error path "AccessEffect") : 
+     access_effect) : access_effect)
 let target_users_of_yojson tree path =
   list_of_yojson entity_identifier_of_yojson tree path
 let impersonation_rule_of_yojson tree path =
@@ -627,25 +639,28 @@ let put_retention_policy_response_of_yojson tree path =
 let short_string_of_yojson = string_of_yojson
 let policy_description_of_yojson = string_of_yojson
 let folder_name_of_yojson (tree : t) path =
-  (match tree with
-   | `String "JUNK_EMAIL" -> JUNK_EMAIL
-   | `String "DRAFTS" -> DRAFTS
-   | `String "SENT_ITEMS" -> SENT_ITEMS
-   | `String "DELETED_ITEMS" -> DELETED_ITEMS
-   | `String "INBOX" -> INBOX
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "FolderName" value)
-   | _ -> raise (deserialize_wrong_type_error path "FolderName") : folder_name)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "JUNK_EMAIL" -> JUNK_EMAIL
+    | `String "DRAFTS" -> DRAFTS
+    | `String "SENT_ITEMS" -> SENT_ITEMS
+    | `String "DELETED_ITEMS" -> DELETED_ITEMS
+    | `String "INBOX" -> INBOX
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "FolderName" value)
+    | _ -> raise (deserialize_wrong_type_error path "FolderName") : folder_name) : 
+  folder_name)
 let retention_action_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PERMANENTLY_DELETE" -> PERMANENTLY_DELETE
-   | `String "DELETE" -> DELETE
-   | `String "NONE" -> NONE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RetentionAction" value)
-   | _ -> raise (deserialize_wrong_type_error path "RetentionAction") : 
-  retention_action)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PERMANENTLY_DELETE" -> PERMANENTLY_DELETE
+    | `String "DELETE" -> DELETE
+    | `String "NONE" -> NONE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RetentionAction" value)
+    | _ -> raise (deserialize_wrong_type_error path "RetentionAction") : 
+     retention_action) : retention_action)
 let retention_period_of_yojson = int_of_yojson
 let folder_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -697,15 +712,16 @@ let put_mobile_device_access_override_request_of_yojson tree path =
 let put_mailbox_permissions_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let permission_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SEND_ON_BEHALF" -> SEND_ON_BEHALF
-   | `String "SEND_AS" -> SEND_AS
-   | `String "FULL_ACCESS" -> FULL_ACCESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "PermissionType" value)
-   | _ -> raise (deserialize_wrong_type_error path "PermissionType") : 
-  permission_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SEND_ON_BEHALF" -> SEND_ON_BEHALF
+    | `String "SEND_AS" -> SEND_AS
+    | `String "FULL_ACCESS" -> FULL_ACCESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "PermissionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "PermissionType") : 
+     permission_type) : permission_type)
 let permission_values_of_yojson tree path =
   list_of_yojson permission_type_of_yojson tree path
 let put_mailbox_permissions_request_of_yojson tree path =
@@ -731,6 +747,74 @@ let put_inbound_dmarc_settings_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : put_inbound_dmarc_settings_request)
+let put_identity_provider_configuration_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let identity_provider_authentication_mode_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "IDENTITY_PROVIDER_AND_DIRECTORY" ->
+        IDENTITY_PROVIDER_AND_DIRECTORY
+    | `String "IDENTITY_PROVIDER_ONLY" -> IDENTITY_PROVIDER_ONLY
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "IdentityProviderAuthenticationMode" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "IdentityProviderAuthenticationMode") : identity_provider_authentication_mode) : 
+  identity_provider_authentication_mode)
+let instance_arn_of_yojson = string_of_yojson
+let application_arn_of_yojson = string_of_yojson
+let identity_center_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     application_arn =
+       (value_for_key application_arn_of_yojson "ApplicationArn" _list path);
+     instance_arn =
+       (value_for_key instance_arn_of_yojson "InstanceArn" _list path)
+   } : identity_center_configuration)
+let personal_access_token_configuration_status_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INACTIVE" -> INACTIVE
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "PersonalAccessTokenConfigurationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "PersonalAccessTokenConfigurationStatus") : personal_access_token_configuration_status) : 
+  personal_access_token_configuration_status)
+let personal_access_token_lifetime_in_days_of_yojson = int_of_yojson
+let personal_access_token_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     lifetime_in_days =
+       (option_of_yojson
+          (value_for_key personal_access_token_lifetime_in_days_of_yojson
+             "LifetimeInDays") _list path);
+     status =
+       (value_for_key personal_access_token_configuration_status_of_yojson
+          "Status" _list path)
+   } : personal_access_token_configuration)
+let put_identity_provider_configuration_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     personal_access_token_configuration =
+       (value_for_key personal_access_token_configuration_of_yojson
+          "PersonalAccessTokenConfiguration" _list path);
+     identity_center_configuration =
+       (value_for_key identity_center_configuration_of_yojson
+          "IdentityCenterConfiguration" _list path);
+     authentication_mode =
+       (value_for_key identity_provider_authentication_mode_of_yojson
+          "AuthenticationMode" _list path);
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : put_identity_provider_configuration_request)
 let put_email_monitoring_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let log_group_arn_of_yojson = string_of_yojson
@@ -747,15 +831,17 @@ let put_access_control_rule_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let access_control_rule_name_of_yojson = string_of_yojson
 let access_control_rule_effect_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DENY" -> DENY
-   | `String "ALLOW" -> ALLOW
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AccessControlRuleEffect"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "AccessControlRuleEffect") : 
-  access_control_rule_effect)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DENY" -> DENY
+    | `String "ALLOW" -> ALLOW
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AccessControlRuleEffect" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "AccessControlRuleEffect") : 
+     access_control_rule_effect) : access_control_rule_effect)
 let access_control_rule_description_of_yojson = string_of_yojson
 let ip_range_of_yojson = string_of_yojson
 let ip_range_list_of_yojson tree path =
@@ -809,17 +895,29 @@ let put_access_control_rule_request_of_yojson tree path =
    } : put_access_control_rule_request)
 let user_name_of_yojson = string_of_yojson
 let entity_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DELETED" -> DELETED
-   | `String "DISABLED" -> DISABLED
-   | `String "ENABLED" -> ENABLED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "EntityState" value)
-   | _ -> raise (deserialize_wrong_type_error path "EntityState") : entity_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DELETED" -> DELETED
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EntityState" value)
+    | _ -> raise (deserialize_wrong_type_error path "EntityState") : 
+     entity_state) : entity_state)
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
+let identity_provider_user_id_of_yojson = string_of_yojson
+let identity_provider_identity_store_id_of_yojson = string_of_yojson
 let user_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     identity_provider_identity_store_id =
+       (option_of_yojson
+          (value_for_key identity_provider_identity_store_id_of_yojson
+             "IdentityProviderIdentityStoreId") _list path);
+     identity_provider_user_id =
+       (option_of_yojson
+          (value_for_key identity_provider_user_id_of_yojson
+             "IdentityProviderUserId") _list path);
      disabled_date =
        (option_of_yojson (value_for_key timestamp__of_yojson "DisabledDate")
           _list path);
@@ -857,9 +955,14 @@ let list_users_response_of_yojson tree path =
        (option_of_yojson (value_for_key users_of_yojson "Users") _list path)
    } : list_users_response)
 let max_results_of_yojson = int_of_yojson
+let identity_provider_user_id_prefix_of_yojson = string_of_yojson
 let list_users_filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     identity_provider_user_id_prefix =
+       (option_of_yojson
+          (value_for_key identity_provider_user_id_prefix_of_yojson
+             "IdentityProviderUserIdPrefix") _list path);
      state =
        (option_of_yojson (value_for_key entity_state_of_yojson "State") _list
           path);
@@ -973,12 +1076,14 @@ let list_resources_request_of_yojson tree path =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : list_resources_request)
 let member_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "USER" -> USER
-   | `String "GROUP" -> GROUP
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MemberType" value)
-   | _ -> raise (deserialize_wrong_type_error path "MemberType") : member_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "USER" -> USER
+    | `String "GROUP" -> GROUP
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MemberType" value)
+    | _ -> raise (deserialize_wrong_type_error path "MemberType") : member_type) : 
+  member_type)
 let delegate_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1011,6 +1116,67 @@ let list_resource_delegates_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : list_resource_delegates_request)
+let personal_access_token_id_of_yojson = string_of_yojson
+let personal_access_token_name_of_yojson = string_of_yojson
+let personal_access_token_scope_of_yojson = string_of_yojson
+let personal_access_token_scope_list_of_yojson tree path =
+  list_of_yojson personal_access_token_scope_of_yojson tree path
+let personal_access_token_summary_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     scopes =
+       (option_of_yojson
+          (value_for_key personal_access_token_scope_list_of_yojson "Scopes")
+          _list path);
+     expires_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "ExpiresTime")
+          _list path);
+     date_last_used =
+       (option_of_yojson (value_for_key timestamp__of_yojson "DateLastUsed")
+          _list path);
+     date_created =
+       (option_of_yojson (value_for_key timestamp__of_yojson "DateCreated")
+          _list path);
+     name =
+       (option_of_yojson
+          (value_for_key personal_access_token_name_of_yojson "Name") _list
+          path);
+     user_id =
+       (option_of_yojson
+          (value_for_key work_mail_identifier_of_yojson "UserId") _list path);
+     personal_access_token_id =
+       (option_of_yojson
+          (value_for_key personal_access_token_id_of_yojson
+             "PersonalAccessTokenId") _list path)
+   } : personal_access_token_summary)
+let personal_access_token_summary_list_of_yojson tree path =
+  list_of_yojson personal_access_token_summary_of_yojson tree path
+let list_personal_access_tokens_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     personal_access_token_summaries =
+       (option_of_yojson
+          (value_for_key personal_access_token_summary_list_of_yojson
+             "PersonalAccessTokenSummaries") _list path);
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path)
+   } : list_personal_access_tokens_response)
+let list_personal_access_tokens_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     user_id =
+       (option_of_yojson (value_for_key entity_identifier_of_yojson "UserId")
+          _list path);
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : list_personal_access_tokens_request)
 let organization_name_of_yojson = string_of_yojson
 let organization_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1256,17 +1422,18 @@ let list_mailbox_permissions_request_of_yojson tree path =
    } : list_mailbox_permissions_request)
 let percentage_of_yojson = int_of_yojson
 let mailbox_export_job_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CANCELLED" -> CANCELLED
-   | `String "FAILED" -> FAILED
-   | `String "COMPLETED" -> COMPLETED
-   | `String "RUNNING" -> RUNNING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "MailboxExportJobState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "MailboxExportJobState") : 
-  mailbox_export_job_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CANCELLED" -> CANCELLED
+    | `String "FAILED" -> FAILED
+    | `String "COMPLETED" -> COMPLETED
+    | `String "RUNNING" -> RUNNING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MailboxExportJobState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "MailboxExportJobState") : 
+     mailbox_export_job_state) : mailbox_export_job_state)
 let mailbox_export_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1522,16 +1689,17 @@ let list_group_members_request_of_yojson tree path =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : list_group_members_request)
 let availability_provider_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LAMBDA" -> LAMBDA
-   | `String "EWS" -> EWS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AvailabilityProviderType" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "AvailabilityProviderType") : 
-  availability_provider_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LAMBDA" -> LAMBDA
+    | `String "EWS" -> EWS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AvailabilityProviderType" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "AvailabilityProviderType") : 
+     availability_provider_type) : availability_provider_type)
 let redacted_ews_availability_provider_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1683,6 +1851,43 @@ let list_access_control_rules_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : list_access_control_rules_request)
+let get_personal_access_token_metadata_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     scopes =
+       (option_of_yojson
+          (value_for_key personal_access_token_scope_list_of_yojson "Scopes")
+          _list path);
+     expires_time =
+       (option_of_yojson (value_for_key timestamp__of_yojson "ExpiresTime")
+          _list path);
+     date_last_used =
+       (option_of_yojson (value_for_key timestamp__of_yojson "DateLastUsed")
+          _list path);
+     date_created =
+       (option_of_yojson (value_for_key timestamp__of_yojson "DateCreated")
+          _list path);
+     name =
+       (option_of_yojson
+          (value_for_key personal_access_token_name_of_yojson "Name") _list
+          path);
+     user_id =
+       (option_of_yojson
+          (value_for_key work_mail_identifier_of_yojson "UserId") _list path);
+     personal_access_token_id =
+       (option_of_yojson
+          (value_for_key personal_access_token_id_of_yojson
+             "PersonalAccessTokenId") _list path)
+   } : get_personal_access_token_metadata_response)
+let get_personal_access_token_metadata_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     personal_access_token_id =
+       (value_for_key personal_access_token_id_of_yojson
+          "PersonalAccessTokenId" _list path);
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : get_personal_access_token_metadata_request)
 let get_mobile_device_access_override_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1776,18 +1981,19 @@ let dns_record_of_yojson tree path =
 let dns_records_of_yojson tree path =
   list_of_yojson dns_record_of_yojson tree path
 let dns_record_verification_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "VERIFIED" -> VERIFIED
-   | `String "PENDING" -> PENDING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "DnsRecordVerificationStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "DnsRecordVerificationStatus") : 
-  dns_record_verification_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "VERIFIED" -> VERIFIED
+    | `String "PENDING" -> PENDING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "DnsRecordVerificationStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "DnsRecordVerificationStatus") : 
+     dns_record_verification_status) : dns_record_verification_status)
 let get_mail_domain_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1993,6 +2199,14 @@ let disassociate_delegate_from_resource_request_of_yojson tree path =
 let describe_user_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     identity_provider_identity_store_id =
+       (option_of_yojson
+          (value_for_key identity_provider_identity_store_id_of_yojson
+             "IdentityProviderIdentityStoreId") _list path);
+     identity_provider_user_id =
+       (option_of_yojson
+          (value_for_key identity_provider_user_id_of_yojson
+             "IdentityProviderUserId") _list path);
      office =
        (option_of_yojson (value_for_key user_attribute_of_yojson "Office")
           _list path);
@@ -2230,6 +2444,28 @@ let describe_inbound_dmarc_settings_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : describe_inbound_dmarc_settings_request)
+let describe_identity_provider_configuration_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     personal_access_token_configuration =
+       (option_of_yojson
+          (value_for_key personal_access_token_configuration_of_yojson
+             "PersonalAccessTokenConfiguration") _list path);
+     identity_center_configuration =
+       (option_of_yojson
+          (value_for_key identity_center_configuration_of_yojson
+             "IdentityCenterConfiguration") _list path);
+     authentication_mode =
+       (option_of_yojson
+          (value_for_key identity_provider_authentication_mode_of_yojson
+             "AuthenticationMode") _list path)
+   } : describe_identity_provider_configuration_response)
+let describe_identity_provider_configuration_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : describe_identity_provider_configuration_request)
 let describe_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2265,13 +2501,15 @@ let describe_group_request_of_yojson tree path =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : describe_group_request)
 let entity_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RESOURCE" -> RESOURCE
-   | `String "USER" -> USER
-   | `String "GROUP" -> GROUP
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "EntityType" value)
-   | _ -> raise (deserialize_wrong_type_error path "EntityType") : entity_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RESOURCE" -> RESOURCE
+    | `String "USER" -> USER
+    | `String "GROUP" -> GROUP
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EntityType" value)
+    | _ -> raise (deserialize_wrong_type_error path "EntityType") : entity_type) : 
+  entity_type)
 let describe_entity_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2364,6 +2602,17 @@ let delete_resource_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : delete_resource_request)
+let delete_personal_access_token_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let delete_personal_access_token_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     personal_access_token_id =
+       (value_for_key personal_access_token_id_of_yojson
+          "PersonalAccessTokenId" _list path);
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : delete_personal_access_token_request)
 let delete_organization_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2377,6 +2626,10 @@ let delete_organization_response_of_yojson tree path =
 let delete_organization_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     delete_identity_center_application =
+       (option_of_yojson
+          (value_for_key boolean__of_yojson "DeleteIdentityCenterApplication")
+          _list path);
      force_delete =
        (option_of_yojson (value_for_key boolean__of_yojson "ForceDelete")
           _list path);
@@ -2434,6 +2687,22 @@ let delete_impersonation_role_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : delete_impersonation_role_request)
+let delete_identity_provider_configuration_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let delete_identity_provider_configuration_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     organization_id =
+       (value_for_key organization_id_of_yojson "OrganizationId" _list path)
+   } : delete_identity_provider_configuration_request)
+let delete_identity_center_application_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in (() : unit)
+let delete_identity_center_application_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     application_arn =
+       (value_for_key application_arn_of_yojson "ApplicationArn" _list path)
+   } : delete_identity_center_application_request)
 let delete_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let delete_group_request_of_yojson tree path =
@@ -2500,6 +2769,10 @@ let create_user_response_of_yojson tree path =
 let create_user_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     identity_provider_user_id =
+       (option_of_yojson
+          (value_for_key identity_provider_user_id_of_yojson
+             "IdentityProviderUserId") _list path);
      hidden_from_global_address_list =
        (option_of_yojson
           (value_for_key boolean__of_yojson "HiddenFromGlobalAddressList")
@@ -2681,6 +2954,28 @@ let create_impersonation_role_request_of_yojson tree path =
           (value_for_key idempotency_client_token_of_yojson "ClientToken")
           _list path)
    } : create_impersonation_role_request)
+let create_identity_center_application_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     application_arn =
+       (option_of_yojson
+          (value_for_key application_arn_of_yojson "ApplicationArn") _list
+          path)
+   } : create_identity_center_application_response)
+let identity_center_application_name_of_yojson = string_of_yojson
+let create_identity_center_application_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     client_token =
+       (option_of_yojson
+          (value_for_key idempotency_client_token_of_yojson "ClientToken")
+          _list path);
+     instance_arn =
+       (value_for_key instance_arn_of_yojson "InstanceArn" _list path);
+     name =
+       (value_for_key identity_center_application_name_of_yojson "Name" _list
+          path)
+   } : create_identity_center_application_request)
 let create_group_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2790,9 +3085,3 @@ let associate_delegate_to_resource_request_of_yojson tree path =
      organization_id =
        (value_for_key organization_id_of_yojson "OrganizationId" _list path)
    } : associate_delegate_to_resource_request)
-let base_string_of_yojson = string_of_yojson
-let base_boolean_of_yojson = bool_of_yojson
-let base_integer_of_yojson = int_of_yojson
-let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
-let base_long_of_yojson = long_of_yojson
-let base_document_of_yojson = json_of_yojson

@@ -41,11 +41,18 @@ let trigger_resource_update_on_to_yojson (x : trigger_resource_update_on) =
   match x with
   | FILE_CHANGE -> `String "FILE_CHANGE"
   | ANY_CHANGE -> `String "ANY_CHANGE"
+let pull_request_comment_to_yojson (x : pull_request_comment) =
+  match x with
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
 let sync_configuration_to_yojson (x : sync_configuration) =
   assoc_to_yojson
-    [("TriggerResourceUpdateOn",
-       (option_to_yojson trigger_resource_update_on_to_yojson
-          x.trigger_resource_update_on));
+    [("PullRequestComment",
+       (option_to_yojson pull_request_comment_to_yojson
+          x.pull_request_comment));
+    ("TriggerResourceUpdateOn",
+      (option_to_yojson trigger_resource_update_on_to_yojson
+         x.trigger_resource_update_on));
     ("PublishDeploymentStatus",
       (option_to_yojson publish_deployment_status_to_yojson
          x.publish_deployment_status));
@@ -68,9 +75,12 @@ let update_sync_configuration_output_to_yojson
 let update_sync_configuration_input_to_yojson
   (x : update_sync_configuration_input) =
   assoc_to_yojson
-    [("TriggerResourceUpdateOn",
-       (option_to_yojson trigger_resource_update_on_to_yojson
-          x.trigger_resource_update_on));
+    [("PullRequestComment",
+       (option_to_yojson pull_request_comment_to_yojson
+          x.pull_request_comment));
+    ("TriggerResourceUpdateOn",
+      (option_to_yojson trigger_resource_update_on_to_yojson
+         x.trigger_resource_update_on));
     ("PublishDeploymentStatus",
       (option_to_yojson publish_deployment_status_to_yojson
          x.publish_deployment_status));
@@ -528,9 +538,12 @@ let create_sync_configuration_output_to_yojson
 let create_sync_configuration_input_to_yojson
   (x : create_sync_configuration_input) =
   assoc_to_yojson
-    [("TriggerResourceUpdateOn",
-       (option_to_yojson trigger_resource_update_on_to_yojson
-          x.trigger_resource_update_on));
+    [("PullRequestComment",
+       (option_to_yojson pull_request_comment_to_yojson
+          x.pull_request_comment));
+    ("TriggerResourceUpdateOn",
+      (option_to_yojson trigger_resource_update_on_to_yojson
+         x.trigger_resource_update_on));
     ("PublishDeploymentStatus",
       (option_to_yojson publish_deployment_status_to_yojson
          x.publish_deployment_status));
@@ -584,3 +597,8 @@ let base_integer_to_yojson = int_to_yojson
 let base_timestamp_to_yojson = timestamp_to_yojson
 let base_long_to_yojson = long_to_yojson
 let base_document_to_yojson = json_to_yojson
+let base_float_to_yojson = float_to_yojson
+let base_double_to_yojson = double_to_yojson
+let base_short_to_yojson = short_to_yojson
+let base_blob_to_yojson = blob_to_yojson
+let base_byte_to_yojson = byte_to_yojson

@@ -33,452 +33,540 @@ let account_id_of_yojson = string_of_yojson
 let aws_region_of_yojson = string_of_yojson
 let resource_id_of_yojson = string_of_yojson
 let resource_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SSMDocument" -> SSMDocument
-   | `String "Route53ResolverFirewallRuleGroup" ->
-       Route53ResolverFirewallRuleGroup
-   | `String "RedshiftEndpointAccess" -> RedshiftEndpointAccess
-   | `String "RDSOptionGroup" -> RDSOptionGroup
-   | `String "QuickSightTheme" -> QuickSightTheme
-   | `String "QuickSightTemplate" -> QuickSightTemplate
-   | `String "QuickSightDataSource" -> QuickSightDataSource
-   | `String "M2Environment" -> M2Environment
-   | `String "KMSAlias" -> KMSAlias
-   | `String "ImageBuilderImageRecipe" -> ImageBuilderImageRecipe
-   | `String "GroundStationDataflowEndpointGroup" ->
-       GroundStationDataflowEndpointGroup
-   | `String "GrafanaWorkspace" -> GrafanaWorkspace
-   | `String "EC2NetworkInsightsAnalysis" -> EC2NetworkInsightsAnalysis
-   | `String "EC2NetworkInsightsAccessScope" -> EC2NetworkInsightsAccessScope
-   | `String "CognitoUserPoolGroup" -> CognitoUserPoolGroup
-   | `String "CognitoUserPoolClient" -> CognitoUserPoolClient
-   | `String "CognitoUserPool" -> CognitoUserPool
-   | `String "AppStreamFleet" -> AppStreamFleet
-   | `String "ResourceExplorer2Index" -> ResourceExplorer2Index
-   | `String "NetworkManagerConnectPeer" -> NetworkManagerConnectPeer
-   | `String "LambdaCodeSigningConfig" -> LambdaCodeSigningConfig
-   | `String "KafkaConnectConnector" -> KafkaConnectConnector
-   | `String "IoTTwinMakerSyncJob" -> IoTTwinMakerSyncJob
-   | `String "IoTCACertificate" -> IoTCACertificate
-   | `String "IAMInstanceProfile" -> IAMInstanceProfile
-   | `String "ECSCapacityProvider" -> ECSCapacityProvider
-   | `String "EC2TransitGatewayMulticastDomain" ->
-       EC2TransitGatewayMulticastDomain
-   | `String "EC2TransitGatewayConnect" -> EC2TransitGatewayConnect
-   | `String "EC2IPAMPool" -> EC2IPAMPool
-   | `String "EC2CarrierGateway" -> EC2CarrierGateway
-   | `String "ConnectQuickConnect" -> ConnectQuickConnect
-   | `String "ConnectInstance" -> ConnectInstance
-   | `String "AppMeshMesh" -> AppMeshMesh
-   | `String "AppMeshGatewayRoute" -> AppMeshGatewayRoute
-   | `String "ACMPCACertificateAuthorityActivation" ->
-       ACMPCACertificateAuthorityActivation
-   | `String "BatchSchedulingPolicy" -> BatchSchedulingPolicy
-   | `String "Route53ResolverResolverQueryLoggingConfig" ->
-       Route53ResolverResolverQueryLoggingConfig
-   | `String "CodeGuruProfilerProfilingGroup" ->
-       CodeGuruProfilerProfilingGroup
-   | `String "APSRuleGroupsNamespace" -> APSRuleGroupsNamespace
-   | `String "MediaConnectFlowSource" -> MediaConnectFlowSource
-   | `String "TransferCertificate" -> TransferCertificate
-   | `String "ServiceDiscoveryInstance" -> ServiceDiscoveryInstance
-   | `String "Route53ResolverResolverQueryLoggingConfigAssociation" ->
-       Route53ResolverResolverQueryLoggingConfigAssociation
-   | `String "InspectorV2Filter" -> InspectorV2Filter
-   | `String "IoTProvisioningTemplate" -> IoTProvisioningTemplate
-   | `String "IoTWirelessFuotaTask" -> IoTWirelessFuotaTask
-   | `String "IoTJobTemplate" -> IoTJobTemplate
-   | `String "AppStreamStack" -> AppStreamStack
-   | `String "MSKBatchScramSecret" -> MSKBatchScramSecret
-   | `String "SageMakerFeatureGroup" -> SageMakerFeatureGroup
-   | `String "CodeBuildReportGroup" -> CodeBuildReportGroup
-   | `String "IoTTwinMakerComponentType" -> IoTTwinMakerComponentType
-   | `String "PersonalizeDatasetGroup" -> PersonalizeDatasetGroup
-   | `String "IoTWirelessMulticastGroup" -> IoTWirelessMulticastGroup
-   | `String "NetworkManagerLinkAssociation" -> NetworkManagerLinkAssociation
-   | `String "NetworkManagerCustomerGatewayAssociation" ->
-       NetworkManagerCustomerGatewayAssociation
-   | `String "S3AccessPoint" -> S3AccessPoint
-   | `String "PinpointEmailChannel" -> PinpointEmailChannel
-   | `String "LogsDestination" -> LogsDestination
-   | `String "KinesisVideoStream" -> KinesisVideoStream
-   | `String "KendraIndex" -> KendraIndex
-   | `String "EC2ClientVpnEndpoint" -> EC2ClientVpnEndpoint
-   | `String "EC2CapacityReservation" -> EC2CapacityReservation
-   | `String "DMSEndpoint" -> DMSEndpoint
-   | `String "CustomerProfilesObjectType" -> CustomerProfilesObjectType
-   | `String "AppRunnerService" -> AppRunnerService
-   | `String "AppMeshVirtualRouter" -> AppMeshVirtualRouter
-   | `String "AppMeshVirtualGateway" -> AppMeshVirtualGateway
-   | `String "AppConfigHostedConfigurationVersion" ->
-       AppConfigHostedConfigurationVersion
-   | `String "ACMPCACertificateAuthority" -> ACMPCACertificateAuthority
-   | `String "ResilienceHubApp" -> ResilienceHubApp
-   | `String "PinpointEventStream" -> PinpointEventStream
-   | `String "PinpointEmailTemplate" -> PinpointEmailTemplate
-   | `String "PersonalizeSolution" -> PersonalizeSolution
-   | `String "PersonalizeSchema" -> PersonalizeSchema
-   | `String "PersonalizeDataset" -> PersonalizeDataset
-   | `String "MSKConfiguration" -> MSKConfiguration
-   | `String "MediaTailorPlaybackConfiguration" ->
-       MediaTailorPlaybackConfiguration
-   | `String "MediaConnectFlowVpcInterface" -> MediaConnectFlowVpcInterface
-   | `String "MediaConnectFlowEntitlement" -> MediaConnectFlowEntitlement
-   | `String "GroundStationMissionProfile" -> GroundStationMissionProfile
-   | `String "GreengrassV2ComponentVersion" -> GreengrassV2ComponentVersion
-   | `String "ForecastDatasetGroup" -> ForecastDatasetGroup
-   | `String "EvidentlyLaunch" -> EvidentlyLaunch
-   | `String "EC2IPAMScope" -> EC2IPAMScope
-   | `String "AthenaPreparedStatement" -> AthenaPreparedStatement
-   | `String "AppMeshRoute" -> AppMeshRoute
-   | `String "AppIntegrationsEventIntegration" ->
-       AppIntegrationsEventIntegration
-   | `String "AmplifyBranch" -> AmplifyBranch
-   | `String "KinesisFirehoseDeliveryStream" -> KinesisFirehoseDeliveryStream
-   | `String "TransferConnector" -> TransferConnector
-   | `String "TransferAgreement" -> TransferAgreement
-   | `String "SageMakerDomain" -> SageMakerDomain
-   | `String "PinpointInAppTemplate" -> PinpointInAppTemplate
-   | `String "PinpointCampaign" -> PinpointCampaign
-   | `String "IAMServerCertificate" -> IAMServerCertificate
-   | `String "IAMSAMLProvider" -> IAMSAMLProvider
-   | `String "ForecastDataset" -> ForecastDataset
-   | `String "EvidentlyProject" -> EvidentlyProject
-   | `String "EC2SpotFleet" -> EC2SpotFleet
-   | `String "EC2PrefixList" -> EC2PrefixList
-   | `String "CodeArtifactRepository" -> CodeArtifactRepository
-   | `String "AppStreamApplication" -> AppStreamApplication
-   | `String "AppRunnerVpcConnector" -> AppRunnerVpcConnector
-   | `String "AppMeshVirtualService" -> AppMeshVirtualService
-   | `String "AppMeshVirtualNode" -> AppMeshVirtualNode
-   | `String "AmplifyApp" -> AmplifyApp
-   | `String "SignerSigningProfile" -> SignerSigningProfile
-   | `String "CassandraKeyspace" -> CassandraKeyspace
-   | `String "ECSTaskSet" -> ECSTaskSet
-   | `String "SageMakerImage" -> SageMakerImage
-   | `String "SageMakerAppImageConfig" -> SageMakerAppImageConfig
-   | `String "Route53ResolverFirewallRuleGroupAssociation" ->
-       Route53ResolverFirewallRuleGroupAssociation
-   | `String "RedshiftScheduledAction" -> RedshiftScheduledAction
-   | `String "PinpointApp" -> PinpointApp
-   | `String "PanoramaPackage" -> PanoramaPackage
-   | `String "NetworkManagerSite" -> NetworkManagerSite
-   | `String "NetworkManagerLink" -> NetworkManagerLink
-   | `String "NetworkManagerGlobalNetwork" -> NetworkManagerGlobalNetwork
-   | `String "NetworkManagerDevice" -> NetworkManagerDevice
-   | `String "IoTWirelessServiceProfile" -> IoTWirelessServiceProfile
-   | `String "IoTFleetMetric" -> IoTFleetMetric
-   | `String "ImageBuilderImagePipeline" -> ImageBuilderImagePipeline
-   | `String "GroundStationConfig" -> GroundStationConfig
-   | `String "ECRPullThroughCacheRule" -> ECRPullThroughCacheRule
-   | `String "EC2SubnetRouteTableAssociation" ->
-       EC2SubnetRouteTableAssociation
-   | `String "EC2EC2Fleet" -> EC2EC2Fleet
-   | `String "DeviceFarmProject" -> DeviceFarmProject
-   | `String "DeviceFarmInstanceProfile" -> DeviceFarmInstanceProfile
-   | `String "CloudWatchMetricStream" -> CloudWatchMetricStream
-   | `String "AuditManagerAssessment" -> AuditManagerAssessment
-   | `String "AppFlowFlow" -> AppFlowFlow
-   | `String "AppConfigDeploymentStrategy" -> AppConfigDeploymentStrategy
-   | `String "ConnectPhoneNumber" -> ConnectPhoneNumber
-   | `String "AutoScalingWarmPool" -> AutoScalingWarmPool
-   | `String "CustomerProfilesDomain" -> CustomerProfilesDomain
-   | `String "NetworkManagerTransitGatewayRegistration" ->
-       NetworkManagerTransitGatewayRegistration
-   | `String "IoTTwinMakerScene" -> IoTTwinMakerScene
-   | `String "EC2IPAM" -> EC2IPAM
-   | `String "EC2TrafficMirrorFilter" -> EC2TrafficMirrorFilter
-   | `String "EC2NetworkInsightsPath" -> EC2NetworkInsightsPath
-   | `String "EC2DHCPOptions" -> EC2DHCPOptions
-   | `String "EventsRule" -> EventsRule
-   | `String "PinpointApplicationSettings" -> PinpointApplicationSettings
-   | `String "PinpointSegment" -> PinpointSegment
-   | `String "HealthLakeFHIRDatastore" -> HealthLakeFHIRDatastore
-   | `String "RoboMakerRobotApplication" -> RoboMakerRobotApplication
-   | `String "RoboMakerSimulationApplication" ->
-       RoboMakerSimulationApplication
-   | `String "Route53RecoveryReadinessResourceSet" ->
-       Route53RecoveryReadinessResourceSet
-   | `String "Route53RecoveryControlRoutingControl" ->
-       Route53RecoveryControlRoutingControl
-   | `String "Route53RecoveryControlControlPanel" ->
-       Route53RecoveryControlControlPanel
-   | `String "Route53RecoveryControlSafetyRule" ->
-       Route53RecoveryControlSafetyRule
-   | `String "Route53RecoveryControlCluster" -> Route53RecoveryControlCluster
-   | `String "LookoutVisionProject" -> LookoutVisionProject
-   | `String "AppStreamDirectoryConfig" -> AppStreamDirectoryConfig
-   | `String "KinesisVideoSignalingChannel" -> KinesisVideoSignalingChannel
-   | `String "MediaPackagePackagingConfiguration" ->
-       MediaPackagePackagingConfiguration
-   | `String "EventSchemasSchema" -> EventSchemasSchema
-   | `String "EventsConnection" -> EventsConnection
-   | `String "IoTScheduledAudit" -> IoTScheduledAudit
-   | `String "S3StorageLens" -> S3StorageLens
-   | `String "EC2TrafficMirrorTarget" -> EC2TrafficMirrorTarget
-   | `String "IoTAccountAuditConfiguration" -> IoTAccountAuditConfiguration
-   | `String "LookoutMetricsAlert" -> LookoutMetricsAlert
-   | `String "LexBotAlias" -> LexBotAlias
-   | `String "IoTSiteWiseGateway" -> IoTSiteWiseGateway
-   | `String "EC2TrafficMirrorSession" -> EC2TrafficMirrorSession
-   | `String "RoboMakerRobotApplicationVersion" ->
-       RoboMakerRobotApplicationVersion
-   | `String "Route53ResolverFirewallDomainList" ->
-       Route53ResolverFirewallDomainList
-   | `String "IoTCustomMetric" -> IoTCustomMetric
-   | `String "CodeGuruReviewerRepositoryAssociation" ->
-       CodeGuruReviewerRepositoryAssociation
-   | `String "LexBot" -> LexBot
-   | `String "BudgetsBudgetsAction" -> BudgetsBudgetsAction
-   | `String "DeviceFarmTestGridProject" -> DeviceFarmTestGridProject
-   | `String "S3MultiRegionAccessPoint" -> S3MultiRegionAccessPoint
-   | `String "RDSGlobalCluster" -> RDSGlobalCluster
-   | `String "KinesisAnalyticsV2Application" -> KinesisAnalyticsV2Application
-   | `String "IVSPlaybackKeyPair" -> IVSPlaybackKeyPair
-   | `String "IVSRecordingConfiguration" -> IVSRecordingConfiguration
-   | `String "IVSChannel" -> IVSChannel
-   | `String "IoTSiteWiseAssetModel" -> IoTSiteWiseAssetModel
-   | `String "IoTSiteWisePortal" -> IoTSiteWisePortal
-   | `String "IoTSiteWiseProject" -> IoTSiteWiseProject
-   | `String "IoTSiteWiseDashboard" -> IoTSiteWiseDashboard
-   | `String "IoTAnalyticsChannel" -> IoTAnalyticsChannel
-   | `String "IoTAnalyticsPipeline" -> IoTAnalyticsPipeline
-   | `String "IoTAnalyticsDataset" -> IoTAnalyticsDataset
-   | `String "IoTTwinMakerEntity" -> IoTTwinMakerEntity
-   | `String "IoTTwinMakerWorkspace" -> IoTTwinMakerWorkspace
-   | `String "IoTMitigationAction" -> IoTMitigationAction
-   | `String "IoTPolicy" -> IoTPolicy
-   | `String "GlueMLTransform" -> GlueMLTransform
-   | `String "EKSAddon" -> EKSAddon
-   | `String "EKSIdentityProviderConfig" -> EKSIdentityProviderConfig
-   | `String "TransferWorkflow" -> TransferWorkflow
-   | `String "ResilienceHubResiliencyPolicy" -> ResilienceHubResiliencyPolicy
-   | `String "Route53RecoveryReadinessRecoveryGroup" ->
-       Route53RecoveryReadinessRecoveryGroup
-   | `String "MediaPackagePackagingGroup" -> MediaPackagePackagingGroup
-   | `String "LightsailStaticIp" -> LightsailStaticIp
-   | `String "LightsailBucket" -> LightsailBucket
-   | `String "IoTAnalyticsDatastore" -> IoTAnalyticsDatastore
-   | `String "IoTDimension" -> IoTDimension
-   | `String "IoTRoleAlias" -> IoTRoleAlias
-   | `String "IoTSecurityProfile" -> IoTSecurityProfile
-   | `String "IoTAuthorizer" -> IoTAuthorizer
-   | `String "FraudDetectorOutcome" -> FraudDetectorOutcome
-   | `String "FraudDetectorVariable" -> FraudDetectorVariable
-   | `String "FraudDetectorEntityType" -> FraudDetectorEntityType
-   | `String "FraudDetectorLabel" -> FraudDetectorLabel
-   | `String "EventSchemasDiscoverer" -> EventSchemasDiscoverer
-   | `String "EventSchemasRegistryPolicy" -> EventSchemasRegistryPolicy
-   | `String "EventSchemasRegistry" -> EventSchemasRegistry
-   | `String "Cloud9EnvironmentEC2" -> Cloud9EnvironmentEC2
-   | `String "AppConfigConfigurationProfile" -> AppConfigConfigurationProfile
-   | `String "AppConfigEnvironment" -> AppConfigEnvironment
-   | `String "AmazonMQBroker" -> AmazonMQBroker
-   | `String "SESTemplate" -> SESTemplate
-   | `String "GuardDutyFilter" -> GuardDutyFilter
-   | `String "SESReceiptFilter" -> SESReceiptFilter
-   | `String "DataSyncLocationFSxWindows" -> DataSyncLocationFSxWindows
-   | `String "FISExperimentTemplate" -> FISExperimentTemplate
-   | `String "LightsailDisk" -> LightsailDisk
-   | `String "EventsApiDestination" -> EventsApiDestination
-   | `String "EventsArchive" -> EventsArchive
-   | `String "SESReceiptRuleSet" -> SESReceiptRuleSet
-   | `String "EventsEndpoint" -> EventsEndpoint
-   | `String "RUMAppMonitor" -> RUMAppMonitor
-   | `String "LightsailCertificate" -> LightsailCertificate
-   | `String "BackupReportPlan" -> BackupReportPlan
-   | `String "ECRRegistryPolicy" -> ECRRegistryPolicy
-   | `String "Route53RecoveryReadinessReadinessCheck" ->
-       Route53RecoveryReadinessReadinessCheck
-   | `String "Route53RecoveryReadinessCell" -> Route53RecoveryReadinessCell
-   | `String "GlueClassifier" -> GlueClassifier
-   | `String "DataSyncLocationHDFS" -> DataSyncLocationHDFS
-   | `String "DataSyncLocationObjectStorage" -> DataSyncLocationObjectStorage
-   | `String "ImageBuilderInfrastructureConfiguration" ->
-       ImageBuilderInfrastructureConfiguration
-   | `String "ImageBuilderDistributionConfiguration" ->
-       ImageBuilderDistributionConfiguration
-   | `String "ImageBuilderContainerRecipe" -> ImageBuilderContainerRecipe
-   | `String "EventsEventBus" -> EventsEventBus
-   | `String "ServiceDiscoveryHttpNamespace" -> ServiceDiscoveryHttpNamespace
-   | `String "IoTEventsAlarmModel" -> IoTEventsAlarmModel
-   | `String "IoTEventsDetectorModel" -> IoTEventsDetectorModel
-   | `String "IoTEventsInput" -> IoTEventsInput
-   | `String "Route53HostedZone" -> Route53HostedZone
-   | `String "SESConfigurationSet" -> SESConfigurationSet
-   | `String "SESContactList" -> SESContactList
-   | `String "ServiceDiscoveryPublicDnsNamespace" ->
-       ServiceDiscoveryPublicDnsNamespace
-   | `String "ServiceDiscoveryService" -> ServiceDiscoveryService
-   | `String "SageMakerNotebookInstanceLifecycleConfig" ->
-       SageMakerNotebookInstanceLifecycleConfig
-   | `String "SageMakerWorkteam" -> SageMakerWorkteam
-   | `String "GuardDutyIPSet" -> GuardDutyIPSet
-   | `String "GuardDutyThreatIntelSet" -> GuardDutyThreatIntelSet
-   | `String "GlueJob" -> GlueJob
-   | `String "EKSFargateProfile" -> EKSFargateProfile
-   | `String "NetworkInsightsAccessScopeAnalysis" ->
-       NetworkInsightsAccessScopeAnalysis
-   | `String "DataSyncLocationNFS" -> DataSyncLocationNFS
-   | `String "DataSyncTask" -> DataSyncTask
-   | `String "DataSyncLocationEFS" -> DataSyncLocationEFS
-   | `String "DataSyncLocationS3" -> DataSyncLocationS3
-   | `String "DataSyncLocationFSxLustre" -> DataSyncLocationFSxLustre
-   | `String "DataSyncLocationSMB" -> DataSyncLocationSMB
-   | `String "AppSyncGraphQLApi" -> AppSyncGraphQLApi
-   | `String "AppConfigApplication" -> AppConfigApplication
-   | `String "DMSCertificate" -> DMSCertificate
-   | `String "TransitGatewayRouteTable" -> TransitGatewayRouteTable
-   | `String "TransitGatewayAttachment" -> TransitGatewayAttachment
-   | `String "GlobalAcceleratorListener" -> GlobalAcceleratorListener
-   | `String "GlobalAcceleratorEndpointGroup" ->
-       GlobalAcceleratorEndpointGroup
-   | `String "GlobalAcceleratorAccelerator" -> GlobalAcceleratorAccelerator
-   | `String "DetectiveGraph" -> DetectiveGraph
-   | `String "AthenaDataCatalog" -> AthenaDataCatalog
-   | `String "AthenaWorkGroup" -> AthenaWorkGroup
-   | `String "AccessAnalyzerAnalyzer" -> AccessAnalyzerAnalyzer
-   | `String "BatchComputeEnvironment" -> BatchComputeEnvironment
-   | `String "BatchJobQueue" -> BatchJobQueue
-   | `String "StepFunctionsStateMachine" -> StepFunctionsStateMachine
-   | `String "ListenerV2" -> ListenerV2
-   | `String "SageMakerModel" -> SageMakerModel
-   | `String "WorkSpacesConnectionAlias" -> WorkSpacesConnectionAlias
-   | `String "WorkSpacesWorkspace" -> WorkSpacesWorkspace
-   | `String "StepFunctionsActivity" -> StepFunctionsActivity
-   | `String "MSKCluster" -> MSKCluster
-   | `String "DMSEventSubscription" -> DMSEventSubscription
-   | `String "DMSReplicationSubnetGroup" -> DMSReplicationSubnetGroup
-   | `String "Route53ResolverResolverRuleAssociation" ->
-       Route53ResolverResolverRuleAssociation
-   | `String "Route53ResolverResolverRule" -> Route53ResolverResolverRule
-   | `String "Route53ResolverResolverEndpoint" ->
-       Route53ResolverResolverEndpoint
-   | `String "SageMakerCodeRepository" -> SageMakerCodeRepository
-   | `String "EMRSecurityConfiguration" -> EMRSecurityConfiguration
-   | `String "GuardDutyDetector" -> GuardDutyDetector
-   | `String "ECRPublicRepository" -> ECRPublicRepository
-   | `String "LaunchTemplate" -> LaunchTemplate
-   | `String "CodeDeployDeploymentGroup" -> CodeDeployDeploymentGroup
-   | `String "CodeDeployDeploymentConfig" -> CodeDeployDeploymentConfig
-   | `String "CodeDeployApplication" -> CodeDeployApplication
-   | `String "KinesisStreamConsumer" -> KinesisStreamConsumer
-   | `String "KinesisStream" -> KinesisStream
-   | `String "TransitGateway" -> TransitGateway
-   | `String "OpenSearchDomain" -> OpenSearchDomain
-   | `String "EKSCluster" -> EKSCluster
-   | `String "EFSFileSystem" -> EFSFileSystem
-   | `String "EFSAccessPoint" -> EFSAccessPoint
-   | `String "ECSTaskDefinition" -> ECSTaskDefinition
-   | `String "ECSService" -> ECSService
-   | `String "ECSCluster" -> ECSCluster
-   | `String "ECRRepository" -> ECRRepository
-   | `String "BackupRecoveryPoint" -> BackupRecoveryPoint
-   | `String "BackupVault" -> BackupVault
-   | `String "BackupSelection" -> BackupSelection
-   | `String "BackupPlan" -> BackupPlan
-   | `String "FileData" -> FileData
-   | `String "Topic" -> Topic
-   | `String "Secret" -> Secret
-   | `String "QLDBLedger" -> QLDBLedger
-   | `String "Key" -> Key
-   | `String "Queue" -> Queue
-   | `String "Portfolio" -> Portfolio
-   | `String "CloudFormationProduct" -> CloudFormationProduct
-   | `String "CloudFormationProvisionedProduct" ->
-       CloudFormationProvisionedProduct
-   | `String "Pipeline" -> Pipeline
-   | `String "Api" -> Api
-   | `String "StageV2" -> StageV2
-   | `String "RestApi" -> RestApi
-   | `String "Stage" -> Stage
-   | `String "ResourceCompliance" -> ResourceCompliance
-   | `String "ConformancePackCompliance" -> ConformancePackCompliance
-   | `String "RegionalProtection" -> RegionalProtection
-   | `String "Protection" -> Protection
-   | `String "PatchCompliance" -> PatchCompliance
-   | `String "AssociationCompliance" -> AssociationCompliance
-   | `String "EncryptionConfig" -> EncryptionConfig
-   | `String "ManagedRuleSetV2" -> ManagedRuleSetV2
-   | `String "RegexPatternSetV2" -> RegexPatternSetV2
-   | `String "IPSetV2" -> IPSetV2
-   | `String "RuleGroupV2" -> RuleGroupV2
-   | `String "WebACLV2" -> WebACLV2
-   | `String "Environment" -> Environment
-   | `String "ApplicationVersion" -> ApplicationVersion
-   | `String "Application" -> Application
-   | `String "NetworkFirewallRuleGroup" -> NetworkFirewallRuleGroup
-   | `String "NetworkFirewallFirewallPolicy" -> NetworkFirewallFirewallPolicy
-   | `String "NetworkFirewallFirewall" -> NetworkFirewallFirewall
-   | `String "Function" -> Function
-   | `String "StreamingDistribution" -> StreamingDistribution
-   | `String "Distribution" -> Distribution
-   | `String "RegionalWebACL" -> RegionalWebACL
-   | `String "RegionalRuleGroup" -> RegionalRuleGroup
-   | `String "RegionalRule" -> RegionalRule
-   | `String "RegionalRateBasedRule" -> RegionalRateBasedRule
-   | `String "WebACL" -> WebACL
-   | `String "RuleGroup" -> RuleGroup
-   | `String "Rule" -> Rule
-   | `String "RateBasedRule" -> RateBasedRule
-   | `String "Project" -> Project
-   | `String "Table" -> Table
-   | `String "ScheduledAction" -> ScheduledAction
-   | `String "ScalingPolicy" -> ScalingPolicy
-   | `String "LaunchConfiguration" -> LaunchConfiguration
-   | `String "AutoScalingGroup" -> AutoScalingGroup
-   | `String "LoadBalancer" -> LoadBalancer
-   | `String "Stack" -> Stack
-   | `String "Alarm" -> Alarm
-   | `String "ManagedInstanceInventory" -> ManagedInstanceInventory
-   | `String "RedshiftEventSubscription" -> RedshiftEventSubscription
-   | `String "ClusterSubnetGroup" -> ClusterSubnetGroup
-   | `String "ClusterSecurityGroup" -> ClusterSecurityGroup
-   | `String "ClusterParameterGroup" -> ClusterParameterGroup
-   | `String "ClusterSnapshot" -> ClusterSnapshot
-   | `String "Cluster" -> Cluster
-   | `String "AccountPublicAccessBlock" -> AccountPublicAccessBlock
-   | `String "Bucket" -> Bucket
-   | `String "EventSubscription" -> EventSubscription
-   | `String "DBClusterSnapshot" -> DBClusterSnapshot
-   | `String "DBCluster" -> DBCluster
-   | `String "DBSnapshot" -> DBSnapshot
-   | `String "DBSecurityGroup" -> DBSecurityGroup
-   | `String "DBSubnetGroup" -> DBSubnetGroup
-   | `String "DBInstance" -> DBInstance
-   | `String "Certificate" -> Certificate
-   | `String "LoadBalancerV2" -> LoadBalancerV2
-   | `String "User" -> User
-   | `String "Role" -> Role
-   | `String "Policy" -> Policy
-   | `String "Group" -> Group
-   | `String "Domain" -> Domain
-   | `String "VPCPeeringConnection" -> VPCPeeringConnection
-   | `String "FlowLog" -> FlowLog
-   | `String "VPCEndpointService" -> VPCEndpointService
-   | `String "VPCEndpoint" -> VPCEndpoint
-   | `String "EgressOnlyInternetGateway" -> EgressOnlyInternetGateway
-   | `String "NatGateway" -> NatGateway
-   | `String "RegisteredHAInstance" -> RegisteredHAInstance
-   | `String "VPNGateway" -> VPNGateway
-   | `String "VPNConnection" -> VPNConnection
-   | `String "VPC" -> VPC
-   | `String "Volume" -> Volume
-   | `String "Trail" -> Trail
-   | `String "Subnet" -> Subnet
-   | `String "SecurityGroup" -> SecurityGroup
-   | `String "RouteTable" -> RouteTable
-   | `String "NetworkInterface" -> NetworkInterface
-   | `String "NetworkAcl" -> NetworkAcl
-   | `String "InternetGateway" -> InternetGateway
-   | `String "Instance" -> Instance
-   | `String "Host" -> Host
-   | `String "EIP" -> EIP
-   | `String "CustomerGateway" -> CustomerGateway
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ResourceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
-  resource_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWS::Transfer::Profile" -> TransferProfile
+    | `String "AWS::SecurityHub::Standard" -> SecurityHubStandard
+    | `String "AWS::SageMaker::InferenceExperiment" ->
+        SageMakerInferenceExperiment
+    | `String "AWS::S3Express::DirectoryBucket" -> S3ExpressDirectoryBucket
+    | `String "AWS::S3Express::BucketPolicy" -> S3ExpressBucketPolicy
+    | `String "AWS::S3::StorageLensGroup" -> S3StorageLensGroup
+    | `String "AWS::Route53Profiles::Profile" -> Route53ProfilesProfile
+    | `String "AWS::Redshift::EndpointAuthorization" ->
+        RedshiftEndpointAuthorization
+    | `String "AWS::OpenSearchServerless::VpcEndpoint" ->
+        OpenSearchServerlessVpcEndpoint
+    | `String "AWS::OpenSearchServerless::Collection" ->
+        OpenSearchServerlessCollection
+    | `String "AWS::MemoryDB::SubnetGroup" -> MemoryDBSubnetGroup
+    | `String "AWS::MediaConnect::Gateway" -> MediaConnectGateway
+    | `String "AWS::MSK::VpcConnection" -> MSKVpcConnection
+    | `String "AWS::MSK::ClusterPolicy" -> MSKClusterPolicy
+    | `String "AWS::InspectorV2::Activation" -> InspectorV2Activation
+    | `String "AWS::IAM::OIDCProvider" -> IAMOIDCProvider
+    | `String "AWS::Evidently::Segment" -> EvidentlySegment
+    | `String "AWS::EC2::VPNConnectionRoute" -> EC2VPNConnectionRoute
+    | `String "AWS::EC2::VPCEndpointConnectionNotification" ->
+        EC2VPCEndpointConnectionNotification
+    | `String "AWS::EC2::VPCBlockPublicAccessOptions" ->
+        EC2VPCBlockPublicAccessOptions
+    | `String "AWS::EC2::VPCBlockPublicAccessExclusion" ->
+        EC2VPCBlockPublicAccessExclusion
+    | `String "AWS::EC2::SnapshotBlockPublicAccess" ->
+        EC2SnapshotBlockPublicAccess
+    | `String "AWS::EC2::InstanceConnectEndpoint" ->
+        EC2InstanceConnectEndpoint
+    | `String "AWS::EC2::IPAMResourceDiscoveryAssociation" ->
+        EC2IPAMResourceDiscoveryAssociation
+    | `String "AWS::EC2::IPAMResourceDiscovery" -> EC2IPAMResourceDiscovery
+    | `String "AWS::EC2::EIPAssociation" -> EC2EIPAssociation
+    | `String "AWS::EC2::ClientVpnTargetNetworkAssociation" ->
+        EC2ClientVpnTargetNetworkAssociation
+    | `String "AWS::Connect::User" -> ConnectUser
+    | `String "AWS::Connect::Rule" -> ConnectRule
+    | `String "AWS::Cognito::IdentityPool" -> CognitoIdentityPool
+    | `String "AWS::Bedrock::KnowledgeBase" -> BedrockKnowledgeBase
+    | `String "AWS::Bedrock::Guardrail" -> BedrockGuardrail
+    | `String "AWS::AppSync::ApiCache" -> AppSyncApiCache
+    | `String "AWS::AppIntegrations::Application" ->
+        AppIntegrationsApplication
+    | `String "AWS::AppConfig::ExtensionAssociation" ->
+        AppConfigExtensionAssociation
+    | `String "AWS::SSM::Document" -> SSMDocument
+    | `String "AWS::Route53Resolver::FirewallRuleGroup" ->
+        Route53ResolverFirewallRuleGroup
+    | `String "AWS::Redshift::EndpointAccess" -> RedshiftEndpointAccess
+    | `String "AWS::RDS::OptionGroup" -> RDSOptionGroup
+    | `String "AWS::QuickSight::Theme" -> QuickSightTheme
+    | `String "AWS::QuickSight::Template" -> QuickSightTemplate
+    | `String "AWS::QuickSight::DataSource" -> QuickSightDataSource
+    | `String "AWS::M2::Environment" -> M2Environment
+    | `String "AWS::KMS::Alias" -> KMSAlias
+    | `String "AWS::ImageBuilder::ImageRecipe" -> ImageBuilderImageRecipe
+    | `String "AWS::GroundStation::DataflowEndpointGroup" ->
+        GroundStationDataflowEndpointGroup
+    | `String "AWS::Grafana::Workspace" -> GrafanaWorkspace
+    | `String "AWS::EC2::NetworkInsightsAnalysis" ->
+        EC2NetworkInsightsAnalysis
+    | `String "AWS::EC2::NetworkInsightsAccessScope" ->
+        EC2NetworkInsightsAccessScope
+    | `String "AWS::Cognito::UserPoolGroup" -> CognitoUserPoolGroup
+    | `String "AWS::Cognito::UserPoolClient" -> CognitoUserPoolClient
+    | `String "AWS::Cognito::UserPool" -> CognitoUserPool
+    | `String "AWS::AppStream::Fleet" -> AppStreamFleet
+    | `String "AWS::ResourceExplorer2::Index" -> ResourceExplorer2Index
+    | `String "AWS::NetworkManager::ConnectPeer" -> NetworkManagerConnectPeer
+    | `String "AWS::Lambda::CodeSigningConfig" -> LambdaCodeSigningConfig
+    | `String "AWS::KafkaConnect::Connector" -> KafkaConnectConnector
+    | `String "AWS::IoTTwinMaker::SyncJob" -> IoTTwinMakerSyncJob
+    | `String "AWS::IoT::CACertificate" -> IoTCACertificate
+    | `String "AWS::IAM::InstanceProfile" -> IAMInstanceProfile
+    | `String "AWS::ECS::CapacityProvider" -> ECSCapacityProvider
+    | `String "AWS::EC2::TransitGatewayMulticastDomain" ->
+        EC2TransitGatewayMulticastDomain
+    | `String "AWS::EC2::TransitGatewayConnect" -> EC2TransitGatewayConnect
+    | `String "AWS::EC2::IPAMPool" -> EC2IPAMPool
+    | `String "AWS::EC2::CarrierGateway" -> EC2CarrierGateway
+    | `String "AWS::Connect::QuickConnect" -> ConnectQuickConnect
+    | `String "AWS::Connect::Instance" -> ConnectInstance
+    | `String "AWS::AppMesh::Mesh" -> AppMeshMesh
+    | `String "AWS::AppMesh::GatewayRoute" -> AppMeshGatewayRoute
+    | `String "AWS::ACMPCA::CertificateAuthorityActivation" ->
+        ACMPCACertificateAuthorityActivation
+    | `String "AWS::Batch::SchedulingPolicy" -> BatchSchedulingPolicy
+    | `String "AWS::Route53Resolver::ResolverQueryLoggingConfig" ->
+        Route53ResolverResolverQueryLoggingConfig
+    | `String "AWS::CodeGuruProfiler::ProfilingGroup" ->
+        CodeGuruProfilerProfilingGroup
+    | `String "AWS::APS::RuleGroupsNamespace" -> APSRuleGroupsNamespace
+    | `String "AWS::MediaConnect::FlowSource" -> MediaConnectFlowSource
+    | `String "AWS::Transfer::Certificate" -> TransferCertificate
+    | `String "AWS::ServiceDiscovery::Instance" -> ServiceDiscoveryInstance
+    | `String "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation"
+        -> Route53ResolverResolverQueryLoggingConfigAssociation
+    | `String "AWS::InspectorV2::Filter" -> InspectorV2Filter
+    | `String "AWS::IoT::ProvisioningTemplate" -> IoTProvisioningTemplate
+    | `String "AWS::IoTWireless::FuotaTask" -> IoTWirelessFuotaTask
+    | `String "AWS::IoT::JobTemplate" -> IoTJobTemplate
+    | `String "AWS::AppStream::Stack" -> AppStreamStack
+    | `String "AWS::MSK::BatchScramSecret" -> MSKBatchScramSecret
+    | `String "AWS::SageMaker::FeatureGroup" -> SageMakerFeatureGroup
+    | `String "AWS::CodeBuild::ReportGroup" -> CodeBuildReportGroup
+    | `String "AWS::IoTTwinMaker::ComponentType" -> IoTTwinMakerComponentType
+    | `String "AWS::Personalize::DatasetGroup" -> PersonalizeDatasetGroup
+    | `String "AWS::IoTWireless::MulticastGroup" -> IoTWirelessMulticastGroup
+    | `String "AWS::NetworkManager::LinkAssociation" ->
+        NetworkManagerLinkAssociation
+    | `String "AWS::NetworkManager::CustomerGatewayAssociation" ->
+        NetworkManagerCustomerGatewayAssociation
+    | `String "AWS::S3::AccessPoint" -> S3AccessPoint
+    | `String "AWS::Pinpoint::EmailChannel" -> PinpointEmailChannel
+    | `String "AWS::Logs::Destination" -> LogsDestination
+    | `String "AWS::KinesisVideo::Stream" -> KinesisVideoStream
+    | `String "AWS::Kendra::Index" -> KendraIndex
+    | `String "AWS::EC2::ClientVpnEndpoint" -> EC2ClientVpnEndpoint
+    | `String "AWS::EC2::CapacityReservation" -> EC2CapacityReservation
+    | `String "AWS::DMS::Endpoint" -> DMSEndpoint
+    | `String "AWS::CustomerProfiles::ObjectType" ->
+        CustomerProfilesObjectType
+    | `String "AWS::AppRunner::Service" -> AppRunnerService
+    | `String "AWS::AppMesh::VirtualRouter" -> AppMeshVirtualRouter
+    | `String "AWS::AppMesh::VirtualGateway" -> AppMeshVirtualGateway
+    | `String "AWS::AppConfig::HostedConfigurationVersion" ->
+        AppConfigHostedConfigurationVersion
+    | `String "AWS::ACMPCA::CertificateAuthority" ->
+        ACMPCACertificateAuthority
+    | `String "AWS::ResilienceHub::App" -> ResilienceHubApp
+    | `String "AWS::Pinpoint::EventStream" -> PinpointEventStream
+    | `String "AWS::Pinpoint::EmailTemplate" -> PinpointEmailTemplate
+    | `String "AWS::Personalize::Solution" -> PersonalizeSolution
+    | `String "AWS::Personalize::Schema" -> PersonalizeSchema
+    | `String "AWS::Personalize::Dataset" -> PersonalizeDataset
+    | `String "AWS::MSK::Configuration" -> MSKConfiguration
+    | `String "AWS::MediaTailor::PlaybackConfiguration" ->
+        MediaTailorPlaybackConfiguration
+    | `String "AWS::MediaConnect::FlowVpcInterface" ->
+        MediaConnectFlowVpcInterface
+    | `String "AWS::MediaConnect::FlowEntitlement" ->
+        MediaConnectFlowEntitlement
+    | `String "AWS::GroundStation::MissionProfile" ->
+        GroundStationMissionProfile
+    | `String "AWS::GreengrassV2::ComponentVersion" ->
+        GreengrassV2ComponentVersion
+    | `String "AWS::Forecast::DatasetGroup" -> ForecastDatasetGroup
+    | `String "AWS::Evidently::Launch" -> EvidentlyLaunch
+    | `String "AWS::EC2::IPAMScope" -> EC2IPAMScope
+    | `String "AWS::Athena::PreparedStatement" -> AthenaPreparedStatement
+    | `String "AWS::AppMesh::Route" -> AppMeshRoute
+    | `String "AWS::AppIntegrations::EventIntegration" ->
+        AppIntegrationsEventIntegration
+    | `String "AWS::Amplify::Branch" -> AmplifyBranch
+    | `String "AWS::KinesisFirehose::DeliveryStream" ->
+        KinesisFirehoseDeliveryStream
+    | `String "AWS::Transfer::Connector" -> TransferConnector
+    | `String "AWS::Transfer::Agreement" -> TransferAgreement
+    | `String "AWS::SageMaker::Domain" -> SageMakerDomain
+    | `String "AWS::Pinpoint::InAppTemplate" -> PinpointInAppTemplate
+    | `String "AWS::Pinpoint::Campaign" -> PinpointCampaign
+    | `String "AWS::IAM::ServerCertificate" -> IAMServerCertificate
+    | `String "AWS::IAM::SAMLProvider" -> IAMSAMLProvider
+    | `String "AWS::Forecast::Dataset" -> ForecastDataset
+    | `String "AWS::Evidently::Project" -> EvidentlyProject
+    | `String "AWS::EC2::SpotFleet" -> EC2SpotFleet
+    | `String "AWS::EC2::PrefixList" -> EC2PrefixList
+    | `String "AWS::CodeArtifact::Repository" -> CodeArtifactRepository
+    | `String "AWS::AppStream::Application" -> AppStreamApplication
+    | `String "AWS::AppRunner::VpcConnector" -> AppRunnerVpcConnector
+    | `String "AWS::AppMesh::VirtualService" -> AppMeshVirtualService
+    | `String "AWS::AppMesh::VirtualNode" -> AppMeshVirtualNode
+    | `String "AWS::Amplify::App" -> AmplifyApp
+    | `String "AWS::Signer::SigningProfile" -> SignerSigningProfile
+    | `String "AWS::Cassandra::Keyspace" -> CassandraKeyspace
+    | `String "AWS::ECS::TaskSet" -> ECSTaskSet
+    | `String "AWS::SageMaker::Image" -> SageMakerImage
+    | `String "AWS::SageMaker::AppImageConfig" -> SageMakerAppImageConfig
+    | `String "AWS::Route53Resolver::FirewallRuleGroupAssociation" ->
+        Route53ResolverFirewallRuleGroupAssociation
+    | `String "AWS::Redshift::ScheduledAction" -> RedshiftScheduledAction
+    | `String "AWS::Pinpoint::App" -> PinpointApp
+    | `String "AWS::Panorama::Package" -> PanoramaPackage
+    | `String "AWS::NetworkManager::Site" -> NetworkManagerSite
+    | `String "AWS::NetworkManager::Link" -> NetworkManagerLink
+    | `String "AWS::NetworkManager::GlobalNetwork" ->
+        NetworkManagerGlobalNetwork
+    | `String "AWS::NetworkManager::Device" -> NetworkManagerDevice
+    | `String "AWS::IoTWireless::ServiceProfile" -> IoTWirelessServiceProfile
+    | `String "AWS::IoT::FleetMetric" -> IoTFleetMetric
+    | `String "AWS::ImageBuilder::ImagePipeline" -> ImageBuilderImagePipeline
+    | `String "AWS::GroundStation::Config" -> GroundStationConfig
+    | `String "AWS::ECR::PullThroughCacheRule" -> ECRPullThroughCacheRule
+    | `String "AWS::EC2::SubnetRouteTableAssociation" ->
+        EC2SubnetRouteTableAssociation
+    | `String "AWS::EC2::EC2Fleet" -> EC2EC2Fleet
+    | `String "AWS::DeviceFarm::Project" -> DeviceFarmProject
+    | `String "AWS::DeviceFarm::InstanceProfile" -> DeviceFarmInstanceProfile
+    | `String "AWS::CloudWatch::MetricStream" -> CloudWatchMetricStream
+    | `String "AWS::AuditManager::Assessment" -> AuditManagerAssessment
+    | `String "AWS::AppFlow::Flow" -> AppFlowFlow
+    | `String "AWS::AppConfig::DeploymentStrategy" ->
+        AppConfigDeploymentStrategy
+    | `String "AWS::Connect::PhoneNumber" -> ConnectPhoneNumber
+    | `String "AWS::AutoScaling::WarmPool" -> AutoScalingWarmPool
+    | `String "AWS::CustomerProfiles::Domain" -> CustomerProfilesDomain
+    | `String "AWS::NetworkManager::TransitGatewayRegistration" ->
+        NetworkManagerTransitGatewayRegistration
+    | `String "AWS::IoTTwinMaker::Scene" -> IoTTwinMakerScene
+    | `String "AWS::EC2::IPAM" -> EC2IPAM
+    | `String "AWS::EC2::TrafficMirrorFilter" -> EC2TrafficMirrorFilter
+    | `String "AWS::EC2::NetworkInsightsPath" -> EC2NetworkInsightsPath
+    | `String "AWS::EC2::DHCPOptions" -> EC2DHCPOptions
+    | `String "AWS::Events::Rule" -> EventsRule
+    | `String "AWS::Pinpoint::ApplicationSettings" ->
+        PinpointApplicationSettings
+    | `String "AWS::Pinpoint::Segment" -> PinpointSegment
+    | `String "AWS::HealthLake::FHIRDatastore" -> HealthLakeFHIRDatastore
+    | `String "AWS::RoboMaker::RobotApplication" -> RoboMakerRobotApplication
+    | `String "AWS::RoboMaker::SimulationApplication" ->
+        RoboMakerSimulationApplication
+    | `String "AWS::Route53RecoveryReadiness::ResourceSet" ->
+        Route53RecoveryReadinessResourceSet
+    | `String "AWS::Route53RecoveryControl::RoutingControl" ->
+        Route53RecoveryControlRoutingControl
+    | `String "AWS::Route53RecoveryControl::ControlPanel" ->
+        Route53RecoveryControlControlPanel
+    | `String "AWS::Route53RecoveryControl::SafetyRule" ->
+        Route53RecoveryControlSafetyRule
+    | `String "AWS::Route53RecoveryControl::Cluster" ->
+        Route53RecoveryControlCluster
+    | `String "AWS::LookoutVision::Project" -> LookoutVisionProject
+    | `String "AWS::AppStream::DirectoryConfig" -> AppStreamDirectoryConfig
+    | `String "AWS::KinesisVideo::SignalingChannel" ->
+        KinesisVideoSignalingChannel
+    | `String "AWS::MediaPackage::PackagingConfiguration" ->
+        MediaPackagePackagingConfiguration
+    | `String "AWS::EventSchemas::Schema" -> EventSchemasSchema
+    | `String "AWS::Events::Connection" -> EventsConnection
+    | `String "AWS::IoT::ScheduledAudit" -> IoTScheduledAudit
+    | `String "AWS::S3::StorageLens" -> S3StorageLens
+    | `String "AWS::EC2::TrafficMirrorTarget" -> EC2TrafficMirrorTarget
+    | `String "AWS::IoT::AccountAuditConfiguration" ->
+        IoTAccountAuditConfiguration
+    | `String "AWS::LookoutMetrics::Alert" -> LookoutMetricsAlert
+    | `String "AWS::Lex::BotAlias" -> LexBotAlias
+    | `String "AWS::IoTSiteWise::Gateway" -> IoTSiteWiseGateway
+    | `String "AWS::EC2::TrafficMirrorSession" -> EC2TrafficMirrorSession
+    | `String "AWS::RoboMaker::RobotApplicationVersion" ->
+        RoboMakerRobotApplicationVersion
+    | `String "AWS::Route53Resolver::FirewallDomainList" ->
+        Route53ResolverFirewallDomainList
+    | `String "AWS::IoT::CustomMetric" -> IoTCustomMetric
+    | `String "AWS::CodeGuruReviewer::RepositoryAssociation" ->
+        CodeGuruReviewerRepositoryAssociation
+    | `String "AWS::Lex::Bot" -> LexBot
+    | `String "AWS::Budgets::BudgetsAction" -> BudgetsBudgetsAction
+    | `String "AWS::DeviceFarm::TestGridProject" -> DeviceFarmTestGridProject
+    | `String "AWS::S3::MultiRegionAccessPoint" -> S3MultiRegionAccessPoint
+    | `String "AWS::RDS::GlobalCluster" -> RDSGlobalCluster
+    | `String "AWS::KinesisAnalyticsV2::Application" ->
+        KinesisAnalyticsV2Application
+    | `String "AWS::IVS::PlaybackKeyPair" -> IVSPlaybackKeyPair
+    | `String "AWS::IVS::RecordingConfiguration" -> IVSRecordingConfiguration
+    | `String "AWS::IVS::Channel" -> IVSChannel
+    | `String "AWS::IoTSiteWise::AssetModel" -> IoTSiteWiseAssetModel
+    | `String "AWS::IoTSiteWise::Portal" -> IoTSiteWisePortal
+    | `String "AWS::IoTSiteWise::Project" -> IoTSiteWiseProject
+    | `String "AWS::IoTSiteWise::Dashboard" -> IoTSiteWiseDashboard
+    | `String "AWS::IoTAnalytics::Channel" -> IoTAnalyticsChannel
+    | `String "AWS::IoTAnalytics::Pipeline" -> IoTAnalyticsPipeline
+    | `String "AWS::IoTAnalytics::Dataset" -> IoTAnalyticsDataset
+    | `String "AWS::IoTTwinMaker::Entity" -> IoTTwinMakerEntity
+    | `String "AWS::IoTTwinMaker::Workspace" -> IoTTwinMakerWorkspace
+    | `String "AWS::IoT::MitigationAction" -> IoTMitigationAction
+    | `String "AWS::IoT::Policy" -> IoTPolicy
+    | `String "AWS::Glue::MLTransform" -> GlueMLTransform
+    | `String "AWS::EKS::Addon" -> EKSAddon
+    | `String "AWS::EKS::IdentityProviderConfig" -> EKSIdentityProviderConfig
+    | `String "AWS::Transfer::Workflow" -> TransferWorkflow
+    | `String "AWS::ResilienceHub::ResiliencyPolicy" ->
+        ResilienceHubResiliencyPolicy
+    | `String "AWS::Route53RecoveryReadiness::RecoveryGroup" ->
+        Route53RecoveryReadinessRecoveryGroup
+    | `String "AWS::MediaPackage::PackagingGroup" ->
+        MediaPackagePackagingGroup
+    | `String "AWS::Lightsail::StaticIp" -> LightsailStaticIp
+    | `String "AWS::Lightsail::Bucket" -> LightsailBucket
+    | `String "AWS::IoTAnalytics::Datastore" -> IoTAnalyticsDatastore
+    | `String "AWS::IoT::Dimension" -> IoTDimension
+    | `String "AWS::IoT::RoleAlias" -> IoTRoleAlias
+    | `String "AWS::IoT::SecurityProfile" -> IoTSecurityProfile
+    | `String "AWS::IoT::Authorizer" -> IoTAuthorizer
+    | `String "AWS::FraudDetector::Outcome" -> FraudDetectorOutcome
+    | `String "AWS::FraudDetector::Variable" -> FraudDetectorVariable
+    | `String "AWS::FraudDetector::EntityType" -> FraudDetectorEntityType
+    | `String "AWS::FraudDetector::Label" -> FraudDetectorLabel
+    | `String "AWS::EventSchemas::Discoverer" -> EventSchemasDiscoverer
+    | `String "AWS::EventSchemas::RegistryPolicy" ->
+        EventSchemasRegistryPolicy
+    | `String "AWS::EventSchemas::Registry" -> EventSchemasRegistry
+    | `String "AWS::Cloud9::EnvironmentEC2" -> Cloud9EnvironmentEC2
+    | `String "AWS::AppConfig::ConfigurationProfile" ->
+        AppConfigConfigurationProfile
+    | `String "AWS::AppConfig::Environment" -> AppConfigEnvironment
+    | `String "AWS::AmazonMQ::Broker" -> AmazonMQBroker
+    | `String "AWS::SES::Template" -> SESTemplate
+    | `String "AWS::GuardDuty::Filter" -> GuardDutyFilter
+    | `String "AWS::SES::ReceiptFilter" -> SESReceiptFilter
+    | `String "AWS::DataSync::LocationFSxWindows" ->
+        DataSyncLocationFSxWindows
+    | `String "AWS::FIS::ExperimentTemplate" -> FISExperimentTemplate
+    | `String "AWS::Lightsail::Disk" -> LightsailDisk
+    | `String "AWS::Events::ApiDestination" -> EventsApiDestination
+    | `String "AWS::Events::Archive" -> EventsArchive
+    | `String "AWS::SES::ReceiptRuleSet" -> SESReceiptRuleSet
+    | `String "AWS::Events::Endpoint" -> EventsEndpoint
+    | `String "AWS::RUM::AppMonitor" -> RUMAppMonitor
+    | `String "AWS::Lightsail::Certificate" -> LightsailCertificate
+    | `String "AWS::Backup::ReportPlan" -> BackupReportPlan
+    | `String "AWS::ECR::RegistryPolicy" -> ECRRegistryPolicy
+    | `String "AWS::Route53RecoveryReadiness::ReadinessCheck" ->
+        Route53RecoveryReadinessReadinessCheck
+    | `String "AWS::Route53RecoveryReadiness::Cell" ->
+        Route53RecoveryReadinessCell
+    | `String "AWS::Glue::Classifier" -> GlueClassifier
+    | `String "AWS::DataSync::LocationHDFS" -> DataSyncLocationHDFS
+    | `String "AWS::DataSync::LocationObjectStorage" ->
+        DataSyncLocationObjectStorage
+    | `String "AWS::ImageBuilder::InfrastructureConfiguration" ->
+        ImageBuilderInfrastructureConfiguration
+    | `String "AWS::ImageBuilder::DistributionConfiguration" ->
+        ImageBuilderDistributionConfiguration
+    | `String "AWS::ImageBuilder::ContainerRecipe" ->
+        ImageBuilderContainerRecipe
+    | `String "AWS::Events::EventBus" -> EventsEventBus
+    | `String "AWS::ServiceDiscovery::HttpNamespace" ->
+        ServiceDiscoveryHttpNamespace
+    | `String "AWS::IoTEvents::AlarmModel" -> IoTEventsAlarmModel
+    | `String "AWS::IoTEvents::DetectorModel" -> IoTEventsDetectorModel
+    | `String "AWS::IoTEvents::Input" -> IoTEventsInput
+    | `String "AWS::Route53::HostedZone" -> Route53HostedZone
+    | `String "AWS::SES::ConfigurationSet" -> SESConfigurationSet
+    | `String "AWS::SES::ContactList" -> SESContactList
+    | `String "AWS::ServiceDiscovery::PublicDnsNamespace" ->
+        ServiceDiscoveryPublicDnsNamespace
+    | `String "AWS::ServiceDiscovery::Service" -> ServiceDiscoveryService
+    | `String "AWS::SageMaker::NotebookInstanceLifecycleConfig" ->
+        SageMakerNotebookInstanceLifecycleConfig
+    | `String "AWS::SageMaker::Workteam" -> SageMakerWorkteam
+    | `String "AWS::GuardDuty::IPSet" -> GuardDutyIPSet
+    | `String "AWS::GuardDuty::ThreatIntelSet" -> GuardDutyThreatIntelSet
+    | `String "AWS::Glue::Job" -> GlueJob
+    | `String "AWS::EKS::FargateProfile" -> EKSFargateProfile
+    | `String "AWS::EC2::NetworkInsightsAccessScopeAnalysis" ->
+        NetworkInsightsAccessScopeAnalysis
+    | `String "AWS::DataSync::LocationNFS" -> DataSyncLocationNFS
+    | `String "AWS::DataSync::Task" -> DataSyncTask
+    | `String "AWS::DataSync::LocationEFS" -> DataSyncLocationEFS
+    | `String "AWS::DataSync::LocationS3" -> DataSyncLocationS3
+    | `String "AWS::DataSync::LocationFSxLustre" -> DataSyncLocationFSxLustre
+    | `String "AWS::DataSync::LocationSMB" -> DataSyncLocationSMB
+    | `String "AWS::AppSync::GraphQLApi" -> AppSyncGraphQLApi
+    | `String "AWS::AppConfig::Application" -> AppConfigApplication
+    | `String "AWS::DMS::Certificate" -> DMSCertificate
+    | `String "AWS::EC2::TransitGatewayRouteTable" ->
+        TransitGatewayRouteTable
+    | `String "AWS::EC2::TransitGatewayAttachment" ->
+        TransitGatewayAttachment
+    | `String "AWS::GlobalAccelerator::Listener" -> GlobalAcceleratorListener
+    | `String "AWS::GlobalAccelerator::EndpointGroup" ->
+        GlobalAcceleratorEndpointGroup
+    | `String "AWS::GlobalAccelerator::Accelerator" ->
+        GlobalAcceleratorAccelerator
+    | `String "AWS::Detective::Graph" -> DetectiveGraph
+    | `String "AWS::Athena::DataCatalog" -> AthenaDataCatalog
+    | `String "AWS::Athena::WorkGroup" -> AthenaWorkGroup
+    | `String "AWS::AccessAnalyzer::Analyzer" -> AccessAnalyzerAnalyzer
+    | `String "AWS::Batch::ComputeEnvironment" -> BatchComputeEnvironment
+    | `String "AWS::Batch::JobQueue" -> BatchJobQueue
+    | `String "AWS::StepFunctions::StateMachine" -> StepFunctionsStateMachine
+    | `String "AWS::ElasticLoadBalancingV2::Listener" -> ListenerV2
+    | `String "AWS::SageMaker::Model" -> SageMakerModel
+    | `String "AWS::WorkSpaces::ConnectionAlias" -> WorkSpacesConnectionAlias
+    | `String "AWS::WorkSpaces::Workspace" -> WorkSpacesWorkspace
+    | `String "AWS::StepFunctions::Activity" -> StepFunctionsActivity
+    | `String "AWS::MSK::Cluster" -> MSKCluster
+    | `String "AWS::DMS::EventSubscription" -> DMSEventSubscription
+    | `String "AWS::DMS::ReplicationSubnetGroup" -> DMSReplicationSubnetGroup
+    | `String "AWS::Route53Resolver::ResolverRuleAssociation" ->
+        Route53ResolverResolverRuleAssociation
+    | `String "AWS::Route53Resolver::ResolverRule" ->
+        Route53ResolverResolverRule
+    | `String "AWS::Route53Resolver::ResolverEndpoint" ->
+        Route53ResolverResolverEndpoint
+    | `String "AWS::SageMaker::CodeRepository" -> SageMakerCodeRepository
+    | `String "AWS::EMR::SecurityConfiguration" -> EMRSecurityConfiguration
+    | `String "AWS::GuardDuty::Detector" -> GuardDutyDetector
+    | `String "AWS::ECR::PublicRepository" -> ECRPublicRepository
+    | `String "AWS::EC2::LaunchTemplate" -> LaunchTemplate
+    | `String "AWS::CodeDeploy::DeploymentGroup" -> CodeDeployDeploymentGroup
+    | `String "AWS::CodeDeploy::DeploymentConfig" ->
+        CodeDeployDeploymentConfig
+    | `String "AWS::CodeDeploy::Application" -> CodeDeployApplication
+    | `String "AWS::Kinesis::StreamConsumer" -> KinesisStreamConsumer
+    | `String "AWS::Kinesis::Stream" -> KinesisStream
+    | `String "AWS::EC2::TransitGateway" -> TransitGateway
+    | `String "AWS::OpenSearch::Domain" -> OpenSearchDomain
+    | `String "AWS::EKS::Cluster" -> EKSCluster
+    | `String "AWS::EFS::FileSystem" -> EFSFileSystem
+    | `String "AWS::EFS::AccessPoint" -> EFSAccessPoint
+    | `String "AWS::ECS::TaskDefinition" -> ECSTaskDefinition
+    | `String "AWS::ECS::Service" -> ECSService
+    | `String "AWS::ECS::Cluster" -> ECSCluster
+    | `String "AWS::ECR::Repository" -> ECRRepository
+    | `String "AWS::Backup::RecoveryPoint" -> BackupRecoveryPoint
+    | `String "AWS::Backup::BackupVault" -> BackupVault
+    | `String "AWS::Backup::BackupSelection" -> BackupSelection
+    | `String "AWS::Backup::BackupPlan" -> BackupPlan
+    | `String "AWS::SSM::FileData" -> FileData
+    | `String "AWS::SNS::Topic" -> Topic
+    | `String "AWS::SecretsManager::Secret" -> Secret
+    | `String "AWS::QLDB::Ledger" -> QLDBLedger
+    | `String "AWS::KMS::Key" -> Key
+    | `String "AWS::SQS::Queue" -> Queue
+    | `String "AWS::ServiceCatalog::Portfolio" -> Portfolio
+    | `String "AWS::ServiceCatalog::CloudFormationProduct" ->
+        CloudFormationProduct
+    | `String "AWS::ServiceCatalog::CloudFormationProvisionedProduct" ->
+        CloudFormationProvisionedProduct
+    | `String "AWS::CodePipeline::Pipeline" -> Pipeline
+    | `String "AWS::ApiGatewayV2::Api" -> Api
+    | `String "AWS::ApiGatewayV2::Stage" -> StageV2
+    | `String "AWS::ApiGateway::RestApi" -> RestApi
+    | `String "AWS::ApiGateway::Stage" -> Stage
+    | `String "AWS::Config::ResourceCompliance" -> ResourceCompliance
+    | `String "AWS::Config::ConformancePackCompliance" ->
+        ConformancePackCompliance
+    | `String "AWS::ShieldRegional::Protection" -> RegionalProtection
+    | `String "AWS::Shield::Protection" -> Protection
+    | `String "AWS::SSM::PatchCompliance" -> PatchCompliance
+    | `String "AWS::SSM::AssociationCompliance" -> AssociationCompliance
+    | `String "AWS::XRay::EncryptionConfig" -> EncryptionConfig
+    | `String "AWS::WAFv2::ManagedRuleSet" -> ManagedRuleSetV2
+    | `String "AWS::WAFv2::RegexPatternSet" -> RegexPatternSetV2
+    | `String "AWS::WAFv2::IPSet" -> IPSetV2
+    | `String "AWS::WAFv2::RuleGroup" -> RuleGroupV2
+    | `String "AWS::WAFv2::WebACL" -> WebACLV2
+    | `String "AWS::ElasticBeanstalk::Environment" -> Environment
+    | `String "AWS::ElasticBeanstalk::ApplicationVersion" ->
+        ApplicationVersion
+    | `String "AWS::ElasticBeanstalk::Application" -> Application
+    | `String "AWS::NetworkFirewall::RuleGroup" -> NetworkFirewallRuleGroup
+    | `String "AWS::NetworkFirewall::FirewallPolicy" ->
+        NetworkFirewallFirewallPolicy
+    | `String "AWS::NetworkFirewall::Firewall" -> NetworkFirewallFirewall
+    | `String "AWS::Lambda::Function" -> Function
+    | `String "AWS::CloudFront::StreamingDistribution" ->
+        StreamingDistribution
+    | `String "AWS::CloudFront::Distribution" -> Distribution
+    | `String "AWS::WAFRegional::WebACL" -> RegionalWebACL
+    | `String "AWS::WAFRegional::RuleGroup" -> RegionalRuleGroup
+    | `String "AWS::WAFRegional::Rule" -> RegionalRule
+    | `String "AWS::WAFRegional::RateBasedRule" -> RegionalRateBasedRule
+    | `String "AWS::WAF::WebACL" -> WebACL
+    | `String "AWS::WAF::RuleGroup" -> RuleGroup
+    | `String "AWS::WAF::Rule" -> Rule
+    | `String "AWS::WAF::RateBasedRule" -> RateBasedRule
+    | `String "AWS::CodeBuild::Project" -> Project
+    | `String "AWS::DynamoDB::Table" -> Table
+    | `String "AWS::AutoScaling::ScheduledAction" -> ScheduledAction
+    | `String "AWS::AutoScaling::ScalingPolicy" -> ScalingPolicy
+    | `String "AWS::AutoScaling::LaunchConfiguration" -> LaunchConfiguration
+    | `String "AWS::AutoScaling::AutoScalingGroup" -> AutoScalingGroup
+    | `String "AWS::ElasticLoadBalancing::LoadBalancer" -> LoadBalancer
+    | `String "AWS::CloudFormation::Stack" -> Stack
+    | `String "AWS::CloudWatch::Alarm" -> Alarm
+    | `String "AWS::SSM::ManagedInstanceInventory" ->
+        ManagedInstanceInventory
+    | `String "AWS::Redshift::EventSubscription" -> RedshiftEventSubscription
+    | `String "AWS::Redshift::ClusterSubnetGroup" -> ClusterSubnetGroup
+    | `String "AWS::Redshift::ClusterSecurityGroup" -> ClusterSecurityGroup
+    | `String "AWS::Redshift::ClusterParameterGroup" -> ClusterParameterGroup
+    | `String "AWS::Redshift::ClusterSnapshot" -> ClusterSnapshot
+    | `String "AWS::Redshift::Cluster" -> Cluster
+    | `String "AWS::S3::AccountPublicAccessBlock" -> AccountPublicAccessBlock
+    | `String "AWS::S3::Bucket" -> Bucket
+    | `String "AWS::RDS::EventSubscription" -> EventSubscription
+    | `String "AWS::RDS::DBClusterSnapshot" -> DBClusterSnapshot
+    | `String "AWS::RDS::DBCluster" -> DBCluster
+    | `String "AWS::RDS::DBSnapshot" -> DBSnapshot
+    | `String "AWS::RDS::DBSecurityGroup" -> DBSecurityGroup
+    | `String "AWS::RDS::DBSubnetGroup" -> DBSubnetGroup
+    | `String "AWS::RDS::DBInstance" -> DBInstance
+    | `String "AWS::ACM::Certificate" -> Certificate
+    | `String "AWS::ElasticLoadBalancingV2::LoadBalancer" -> LoadBalancerV2
+    | `String "AWS::IAM::User" -> User
+    | `String "AWS::IAM::Role" -> Role
+    | `String "AWS::IAM::Policy" -> Policy
+    | `String "AWS::IAM::Group" -> Group
+    | `String "AWS::Elasticsearch::Domain" -> Domain
+    | `String "AWS::EC2::VPCPeeringConnection" -> VPCPeeringConnection
+    | `String "AWS::EC2::FlowLog" -> FlowLog
+    | `String "AWS::EC2::VPCEndpointService" -> VPCEndpointService
+    | `String "AWS::EC2::VPCEndpoint" -> VPCEndpoint
+    | `String "AWS::EC2::EgressOnlyInternetGateway" ->
+        EgressOnlyInternetGateway
+    | `String "AWS::EC2::NatGateway" -> NatGateway
+    | `String "AWS::EC2::RegisteredHAInstance" -> RegisteredHAInstance
+    | `String "AWS::EC2::VPNGateway" -> VPNGateway
+    | `String "AWS::EC2::VPNConnection" -> VPNConnection
+    | `String "AWS::EC2::VPC" -> VPC
+    | `String "AWS::EC2::Volume" -> Volume
+    | `String "AWS::CloudTrail::Trail" -> Trail
+    | `String "AWS::EC2::Subnet" -> Subnet
+    | `String "AWS::EC2::SecurityGroup" -> SecurityGroup
+    | `String "AWS::EC2::RouteTable" -> RouteTable
+    | `String "AWS::EC2::NetworkInterface" -> NetworkInterface
+    | `String "AWS::EC2::NetworkAcl" -> NetworkAcl
+    | `String "AWS::EC2::InternetGateway" -> InternetGateway
+    | `String "AWS::EC2::Instance" -> Instance
+    | `String "AWS::EC2::Host" -> Host
+    | `String "AWS::EC2::EIP" -> EIP
+    | `String "AWS::EC2::CustomerGateway" -> CustomerGateway
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceType") : 
+     resource_type) : resource_type)
 let resource_name_of_yojson = string_of_yojson
 let aggregate_resource_identifier_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -497,6 +585,13 @@ let aggregate_resource_identifier_of_yojson tree path =
    } : aggregate_resource_identifier)
 let unprocessed_resource_identifier_list_of_yojson tree path =
   list_of_yojson aggregate_resource_identifier_of_yojson tree path
+let unmodifiable_entity_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : unmodifiable_entity_exception)
 let too_many_tags_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -615,22 +710,24 @@ let no_such_configuration_recorder_exception_of_yojson tree path =
           _list path)
    } : no_such_configuration_recorder_exception)
 let member_account_rule_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATE_FAILED" -> UPDATE_FAILED
-   | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
-   | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
-   | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
-   | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "MemberAccountRuleStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "MemberAccountRuleStatus") : 
-  member_account_rule_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATE_FAILED" -> UPDATE_FAILED
+    | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
+    | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
+    | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
+    | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MemberAccountRuleStatus" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "MemberAccountRuleStatus") : 
+     member_account_rule_status) : member_account_rule_status)
 let status_detail_filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -662,15 +759,17 @@ let start_resource_evaluation_response_of_yojson tree path =
 let base_resource_id_of_yojson = string_of_yojson
 let resource_configuration_of_yojson = string_of_yojson
 let resource_configuration_schema_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CFN_RESOURCE_SCHEMA" -> CFN_RESOURCE_SCHEMA
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ResourceConfigurationSchemaType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ResourceConfigurationSchemaType") : 
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CFN_RESOURCE_SCHEMA" -> CFN_RESOURCE_SCHEMA
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ResourceConfigurationSchemaType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ResourceConfigurationSchemaType") : resource_configuration_schema_type) : 
   resource_configuration_schema_type)
 let resource_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -698,14 +797,15 @@ let evaluation_context_of_yojson tree path =
              "EvaluationContextIdentifier") _list path)
    } : evaluation_context)
 let evaluation_mode_of_yojson (tree : t) path =
-  (match tree with
-   | `String "PROACTIVE" -> PROACTIVE
-   | `String "DETECTIVE" -> DETECTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "EvaluationMode" value)
-   | _ -> raise (deserialize_wrong_type_error path "EvaluationMode") : 
-  evaluation_mode)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PROACTIVE" -> PROACTIVE
+    | `String "DETECTIVE" -> DETECTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "EvaluationMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "EvaluationMode") : 
+     evaluation_mode) : evaluation_mode)
 let evaluation_timeout_of_yojson = int_of_yojson
 let client_token_of_yojson = string_of_yojson
 let start_resource_evaluation_request_of_yojson tree path =
@@ -958,6 +1058,34 @@ let put_stored_query_request_of_yojson tree path =
      stored_query =
        (value_for_key stored_query_of_yojson "StoredQuery" _list path)
    } : put_stored_query_request)
+let conflict_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     message =
+       (option_of_yojson (value_for_key error_message_of_yojson "message")
+          _list path)
+   } : conflict_exception)
+let put_service_linked_configuration_recorder_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     name =
+       (option_of_yojson (value_for_key recorder_name_of_yojson "Name") _list
+          path);
+     arn =
+       (option_of_yojson (value_for_key amazon_resource_name_of_yojson "Arn")
+          _list path)
+   } : put_service_linked_configuration_recorder_response)
+let service_principal_of_yojson = string_of_yojson
+let put_service_linked_configuration_recorder_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     tags =
+       (option_of_yojson (value_for_key tags_list_of_yojson "Tags") _list
+          path);
+     service_principal =
+       (value_for_key service_principal_of_yojson "ServicePrincipal" _list
+          path)
+   } : put_service_linked_configuration_recorder_request)
 let max_number_of_retention_configurations_exceeded_exception_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -1102,22 +1230,25 @@ let put_remediation_exceptions_request_of_yojson tree path =
        (value_for_key config_rule_name_of_yojson "ConfigRuleName" _list path)
    } : put_remediation_exceptions_request)
 let remediation_target_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SSM_DOCUMENT" -> SSM_DOCUMENT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RemediationTargetType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RemediationTargetType") : 
-  remediation_target_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SSM_DOCUMENT" -> SSM_DOCUMENT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RemediationTargetType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RemediationTargetType") : 
+     remediation_target_type) : remediation_target_type)
 let resource_value_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "RESOURCE_ID" -> RESOURCE_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ResourceValueType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceValueType") : 
-  resource_value_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "RESOURCE_ID" -> RESOURCE_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceValueType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceValueType") : 
+     resource_value_type) : resource_value_type)
 let resource_value_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ value = (value_for_key resource_value_type_of_yojson "Value" _list path)
@@ -1342,19 +1473,20 @@ let put_organization_config_rule_response_of_yojson tree path =
    } : put_organization_config_rule_response)
 let organization_config_rule_name_of_yojson = string_of_yojson
 let maximum_execution_frequency_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TwentyFour_Hours" -> TwentyFour_Hours
-   | `String "Twelve_Hours" -> Twelve_Hours
-   | `String "Six_Hours" -> Six_Hours
-   | `String "Three_Hours" -> Three_Hours
-   | `String "One_Hour" -> One_Hour
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "MaximumExecutionFrequency" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "MaximumExecutionFrequency") : 
-  maximum_execution_frequency)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TwentyFour_Hours" -> TwentyFour_Hours
+    | `String "Twelve_Hours" -> Twelve_Hours
+    | `String "Six_Hours" -> Six_Hours
+    | `String "Three_Hours" -> Three_Hours
+    | `String "One_Hour" -> One_Hour
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MaximumExecutionFrequency" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "MaximumExecutionFrequency") : 
+     maximum_execution_frequency) : maximum_execution_frequency)
 let resource_types_scope_of_yojson tree path =
   list_of_yojson string_with_char_limit256_of_yojson tree path
 let organization_managed_rule_metadata_of_yojson tree path =
@@ -1393,20 +1525,22 @@ let organization_managed_rule_metadata_of_yojson tree path =
              "Description") _list path)
    } : organization_managed_rule_metadata)
 let organization_config_rule_trigger_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SCHEDULED_NOTIFICATION" -> SCHEDULED_NOTIFICATION
-   | `String "OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION" ->
-       OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
-   | `String "CONFIGURATION_ITEM_CHANGE_NOTIFICATION" ->
-       CONFIGURATION_ITEM_CHANGE_NOTIFICATION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "OrganizationConfigRuleTriggerType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "OrganizationConfigRuleTriggerType") : organization_config_rule_trigger_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ScheduledNotification" -> SCHEDULED_NOTIFICATION
+    | `String "OversizedConfigurationItemChangeNotification" ->
+        OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
+    | `String "ConfigurationItemChangeNotification" ->
+        CONFIGURATION_ITEM_CHANGE_NOTIFICATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "OrganizationConfigRuleTriggerType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "OrganizationConfigRuleTriggerType") : organization_config_rule_trigger_type) : 
+  organization_config_rule_trigger_type)
 let organization_config_rule_trigger_types_of_yojson tree path =
   list_of_yojson organization_config_rule_trigger_type_of_yojson tree path
 let organization_custom_rule_metadata_of_yojson tree path =
@@ -1448,19 +1582,21 @@ let organization_custom_rule_metadata_of_yojson tree path =
              "Description") _list path)
    } : organization_custom_rule_metadata)
 let organization_config_rule_trigger_type_no_s_n_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION" ->
-       OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
-   | `String "CONFIGURATION_ITEM_CHANGE_NOTIFICATION" ->
-       CONFIGURATION_ITEM_CHANGE_NOTIFICATION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "OrganizationConfigRuleTriggerTypeNoSN" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "OrganizationConfigRuleTriggerTypeNoSN") : organization_config_rule_trigger_type_no_s_n)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OversizedConfigurationItemChangeNotification" ->
+        OVERSIZED_CONFIGURATION_ITEM_CHANGE_NOTIFCATION
+    | `String "ConfigurationItemChangeNotification" ->
+        CONFIGURATION_ITEM_CHANGE_NOTIFICATION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "OrganizationConfigRuleTriggerTypeNoSN" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "OrganizationConfigRuleTriggerTypeNoSN") : organization_config_rule_trigger_type_no_s_n) : 
+  organization_config_rule_trigger_type_no_s_n)
 let organization_config_rule_trigger_type_no_s_ns_of_yojson tree path =
   list_of_yojson organization_config_rule_trigger_type_no_s_n_of_yojson tree
     path
@@ -1539,16 +1675,17 @@ let put_organization_config_rule_request_of_yojson tree path =
 let put_external_evaluation_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let compliance_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Insufficient_Data" -> Insufficient_Data
-   | `String "Not_Applicable" -> Not_Applicable
-   | `String "Non_Compliant" -> Non_Compliant
-   | `String "Compliant" -> Compliant
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ComplianceType" value)
-   | _ -> raise (deserialize_wrong_type_error path "ComplianceType") : 
-  compliance_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INSUFFICIENT_DATA" -> Insufficient_Data
+    | `String "NOT_APPLICABLE" -> Not_Applicable
+    | `String "NON_COMPLIANT" -> Non_Compliant
+    | `String "COMPLIANT" -> Compliant
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ComplianceType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ComplianceType") : 
+     compliance_type) : compliance_type)
 let ordering_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let external_evaluation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1816,16 +1953,17 @@ let exclusion_by_resource_types_of_yojson tree path =
           path)
    } : exclusion_by_resource_types)
 let recording_strategy_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EXCLUSION_BY_RESOURCE_TYPES" -> EXCLUSION_BY_RESOURCE_TYPES
-   | `String "INCLUSION_BY_RESOURCE_TYPES" -> INCLUSION_BY_RESOURCE_TYPES
-   | `String "ALL_SUPPORTED_RESOURCE_TYPES" -> ALL_SUPPORTED_RESOURCE_TYPES
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecordingStrategyType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordingStrategyType") : 
-  recording_strategy_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "EXCLUSION_BY_RESOURCE_TYPES" -> EXCLUSION_BY_RESOURCE_TYPES
+    | `String "INCLUSION_BY_RESOURCE_TYPES" -> INCLUSION_BY_RESOURCE_TYPES
+    | `String "ALL_SUPPORTED_RESOURCE_TYPES" -> ALL_SUPPORTED_RESOURCE_TYPES
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecordingStrategyType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordingStrategyType") : 
+     recording_strategy_type) : recording_strategy_type)
 let recording_strategy_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1858,15 +1996,16 @@ let recording_group_of_yojson tree path =
           (value_for_key all_supported_of_yojson "allSupported") _list path)
    } : recording_group)
 let recording_frequency_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DAILY" -> DAILY
-   | `String "CONTINUOUS" -> CONTINUOUS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecordingFrequency"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordingFrequency") : 
-  recording_frequency)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DAILY" -> DAILY
+    | `String "CONTINUOUS" -> CONTINUOUS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecordingFrequency"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordingFrequency") : 
+     recording_frequency) : recording_frequency)
 let description_of_yojson = string_of_yojson
 let recording_mode_resource_types_list_of_yojson tree path =
   list_of_yojson resource_type_of_yojson tree path
@@ -1896,9 +2035,27 @@ let recording_mode_of_yojson tree path =
        (value_for_key recording_frequency_of_yojson "recordingFrequency"
           _list path)
    } : recording_mode)
+let recording_scope_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "PAID" -> PAID
+    | `String "INTERNAL" -> INTERNAL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecordingScope" value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordingScope") : 
+     recording_scope) : recording_scope)
 let configuration_recorder_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     service_principal =
+       (option_of_yojson
+          (value_for_key service_principal_of_yojson "servicePrincipal")
+          _list path);
+     recording_scope =
+       (option_of_yojson
+          (value_for_key recording_scope_of_yojson "recordingScope") _list
+          path);
      recording_mode =
        (option_of_yojson
           (value_for_key recording_mode_of_yojson "recordingMode") _list path);
@@ -1911,11 +2068,17 @@ let configuration_recorder_of_yojson tree path =
           path);
      name =
        (option_of_yojson (value_for_key recorder_name_of_yojson "name") _list
-          path)
+          path);
+     arn =
+       (option_of_yojson (value_for_key amazon_resource_name_of_yojson "arn")
+          _list path)
    } : configuration_recorder)
 let put_configuration_recorder_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags =
+       (option_of_yojson (value_for_key tags_list_of_yojson "Tags") _list
+          path);
      configuration_recorder =
        (value_for_key configuration_recorder_of_yojson
           "ConfigurationRecorder" _list path)
@@ -1953,9 +2116,63 @@ let organization_aggregation_source_of_yojson tree path =
           path);
      role_arn = (value_for_key string__of_yojson "RoleArn" _list path)
    } : organization_aggregation_source)
+let aggregator_filter_type_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INCLUDE" -> INCLUDE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AggregatorFilterType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "AggregatorFilterType") : 
+     aggregator_filter_type) : aggregator_filter_type)
+let resource_type_value_of_yojson = string_of_yojson
+let resource_type_value_list_of_yojson tree path =
+  list_of_yojson resource_type_value_of_yojson tree path
+let aggregator_filter_resource_type_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     value =
+       (option_of_yojson
+          (value_for_key resource_type_value_list_of_yojson "Value") _list
+          path);
+     type_ =
+       (option_of_yojson
+          (value_for_key aggregator_filter_type_of_yojson "Type") _list path)
+   } : aggregator_filter_resource_type)
+let service_principal_value_of_yojson = string_of_yojson
+let service_principal_value_list_of_yojson tree path =
+  list_of_yojson service_principal_value_of_yojson tree path
+let aggregator_filter_service_principal_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     value =
+       (option_of_yojson
+          (value_for_key service_principal_value_list_of_yojson "Value")
+          _list path);
+     type_ =
+       (option_of_yojson
+          (value_for_key aggregator_filter_type_of_yojson "Type") _list path)
+   } : aggregator_filter_service_principal)
+let aggregator_filters_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     service_principal =
+       (option_of_yojson
+          (value_for_key aggregator_filter_service_principal_of_yojson
+             "ServicePrincipal") _list path);
+     resource_type =
+       (option_of_yojson
+          (value_for_key aggregator_filter_resource_type_of_yojson
+             "ResourceType") _list path)
+   } : aggregator_filters)
 let configuration_aggregator_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     aggregator_filters =
+       (option_of_yojson
+          (value_for_key aggregator_filters_of_yojson "AggregatorFilters")
+          _list path);
      created_by =
        (option_of_yojson
           (value_for_key string_with_char_limit256_of_yojson "CreatedBy")
@@ -1994,6 +2211,10 @@ let put_configuration_aggregator_response_of_yojson tree path =
 let put_configuration_aggregator_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     aggregator_filters =
+       (option_of_yojson
+          (value_for_key aggregator_filters_of_yojson "AggregatorFilters")
+          _list path);
      tags =
        (option_of_yojson (value_for_key tags_list_of_yojson "Tags") _list
           path);
@@ -2040,31 +2261,37 @@ let scope_of_yojson tree path =
              "ComplianceResourceTypes") _list path)
    } : scope)
 let owner_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Custom_Policy" -> Custom_Policy
-   | `String "Aws" -> Aws
-   | `String "Custom_Lambda" -> Custom_Lambda
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "Owner" value)
-   | _ -> raise (deserialize_wrong_type_error path "Owner") : owner)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CUSTOM_POLICY" -> Custom_Policy
+    | `String "AWS" -> Aws
+    | `String "CUSTOM_LAMBDA" -> Custom_Lambda
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "Owner" value)
+    | _ -> raise (deserialize_wrong_type_error path "Owner") : owner) : 
+  owner)
 let event_source_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Aws_Config" -> Aws_Config
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "EventSource" value)
-   | _ -> raise (deserialize_wrong_type_error path "EventSource") : event_source)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "aws.config" -> Aws_Config
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EventSource" value)
+    | _ -> raise (deserialize_wrong_type_error path "EventSource") : 
+     event_source) : event_source)
 let message_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OversizedConfigurationItemChangeNotification" ->
-       OversizedConfigurationItemChangeNotification
-   | `String "ScheduledNotification" -> ScheduledNotification
-   | `String "ConfigurationSnapshotDeliveryCompleted" ->
-       ConfigurationSnapshotDeliveryCompleted
-   | `String "ConfigurationItemChangeNotification" ->
-       ConfigurationItemChangeNotification
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "MessageType" value)
-   | _ -> raise (deserialize_wrong_type_error path "MessageType") : message_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OversizedConfigurationItemChangeNotification" ->
+        OversizedConfigurationItemChangeNotification
+    | `String "ScheduledNotification" -> ScheduledNotification
+    | `String "ConfigurationSnapshotDeliveryCompleted" ->
+        ConfigurationSnapshotDeliveryCompleted
+    | `String "ConfigurationItemChangeNotification" ->
+        ConfigurationItemChangeNotification
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MessageType" value)
+    | _ -> raise (deserialize_wrong_type_error path "MessageType") : 
+     message_type) : message_type)
 let source_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2110,16 +2337,17 @@ let source_of_yojson tree path =
      owner = (value_for_key owner_of_yojson "Owner" _list path)
    } : source)
 let config_rule_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "EVALUATING" -> EVALUATING
-   | `String "DELETING_RESULTS" -> DELETING_RESULTS
-   | `String "DELETING" -> DELETING
-   | `String "ACTIVE" -> ACTIVE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConfigRuleState" value)
-   | _ -> raise (deserialize_wrong_type_error path "ConfigRuleState") : 
-  config_rule_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "EVALUATING" -> EVALUATING
+    | `String "DELETING_RESULTS" -> DELETING_RESULTS
+    | `String "DELETING" -> DELETING
+    | `String "ACTIVE" -> ACTIVE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConfigRuleState" value)
+    | _ -> raise (deserialize_wrong_type_error path "ConfigRuleState") : 
+     config_rule_state) : config_rule_state)
 let evaluation_mode_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2420,18 +2648,22 @@ let conformance_pack_compliance_scores_filters_of_yojson tree path =
           "ConformancePackNames" _list path)
    } : conformance_pack_compliance_scores_filters)
 let sort_order_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DESCENDING" -> DESCENDING
-   | `String "ASCENDING" -> ASCENDING
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SortOrder" value)
-   | _ -> raise (deserialize_wrong_type_error path "SortOrder") : sort_order)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DESCENDING" -> DESCENDING
+    | `String "ASCENDING" -> ASCENDING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SortOrder" value)
+    | _ -> raise (deserialize_wrong_type_error path "SortOrder") : sort_order) : 
+  sort_order)
 let sort_by_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SCORE" -> SCORE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "SortBy" value)
-   | _ -> raise (deserialize_wrong_type_error path "SortBy") : sort_by)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SCORE" -> SCORE
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "SortBy" value)
+    | _ -> raise (deserialize_wrong_type_error path "SortBy") : sort_by) : 
+  sort_by)
 let page_size_limit_of_yojson = int_of_yojson
 let list_conformance_pack_compliance_scores_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2453,6 +2685,75 @@ let list_conformance_pack_compliance_scores_request_of_yojson tree path =
           (value_for_key conformance_pack_compliance_scores_filters_of_yojson
              "Filters") _list path)
    } : list_conformance_pack_compliance_scores_request)
+let configuration_recorder_summary_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     recording_scope =
+       (value_for_key recording_scope_of_yojson "recordingScope" _list path);
+     service_principal =
+       (option_of_yojson
+          (value_for_key service_principal_of_yojson "servicePrincipal")
+          _list path);
+     name = (value_for_key recorder_name_of_yojson "name" _list path);
+     arn = (value_for_key amazon_resource_name_of_yojson "arn" _list path)
+   } : configuration_recorder_summary)
+let configuration_recorder_summaries_of_yojson tree path =
+  list_of_yojson configuration_recorder_summary_of_yojson tree path
+let list_configuration_recorders_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     configuration_recorder_summaries =
+       (value_for_key configuration_recorder_summaries_of_yojson
+          "ConfigurationRecorderSummaries" _list path)
+   } : list_configuration_recorders_response)
+let configuration_recorder_filter_name_of_yojson (tree : t) path =
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "recordingScope" -> RecordingScope
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ConfigurationRecorderFilterName" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ConfigurationRecorderFilterName") : configuration_recorder_filter_name) : 
+  configuration_recorder_filter_name)
+let configuration_recorder_filter_value_of_yojson = string_of_yojson
+let configuration_recorder_filter_values_of_yojson tree path =
+  list_of_yojson configuration_recorder_filter_value_of_yojson tree path
+let configuration_recorder_filter_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     filter_value =
+       (option_of_yojson
+          (value_for_key configuration_recorder_filter_values_of_yojson
+             "filterValue") _list path);
+     filter_name =
+       (option_of_yojson
+          (value_for_key configuration_recorder_filter_name_of_yojson
+             "filterName") _list path)
+   } : configuration_recorder_filter)
+let configuration_recorder_filter_list_of_yojson tree path =
+  list_of_yojson configuration_recorder_filter_of_yojson tree path
+let max_results_of_yojson = int_of_yojson
+let list_configuration_recorders_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       (option_of_yojson (value_for_key next_token_of_yojson "NextToken")
+          _list path);
+     max_results =
+       (option_of_yojson (value_for_key max_results_of_yojson "MaxResults")
+          _list path);
+     filters =
+       (option_of_yojson
+          (value_for_key configuration_recorder_filter_list_of_yojson
+             "Filters") _list path)
+   } : list_configuration_recorders_request)
 let discovered_resource_identifier_list_of_yojson tree path =
   list_of_yojson aggregate_resource_identifier_of_yojson tree path
 let list_aggregate_discovered_resources_response_of_yojson tree path =
@@ -2511,17 +2812,18 @@ let get_stored_query_request_of_yojson tree path =
   ({ query_name = (value_for_key query_name_of_yojson "QueryName" _list path)
    } : get_stored_query_request)
 let resource_evaluation_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "FAILED" -> FAILED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ResourceEvaluationStatus" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "ResourceEvaluationStatus") : 
-  resource_evaluation_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "FAILED" -> FAILED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ResourceEvaluationStatus" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ResourceEvaluationStatus") : 
+     resource_evaluation_status) : resource_evaluation_status)
 let evaluation_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2581,18 +2883,20 @@ let resource_not_discovered_exception_of_yojson tree path =
 let configuration_item_capture_time_of_yojson =
   timestamp_epoch_seconds_of_yojson
 let configuration_item_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ResourceDeletedNotRecorded" -> ResourceDeletedNotRecorded
-   | `String "ResourceDeleted" -> ResourceDeleted
-   | `String "ResourceNotRecorded" -> ResourceNotRecorded
-   | `String "ResourceDiscovered" -> ResourceDiscovered
-   | `String "OK" -> OK
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConfigurationItemStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ConfigurationItemStatus") : 
-  configuration_item_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ResourceDeletedNotRecorded" -> ResourceDeletedNotRecorded
+    | `String "ResourceDeleted" -> ResourceDeleted
+    | `String "ResourceNotRecorded" -> ResourceNotRecorded
+    | `String "ResourceDiscovered" -> ResourceDiscovered
+    | `String "OK" -> OK
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ConfigurationItemStatus" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ConfigurationItemStatus") : 
+     configuration_item_status) : configuration_item_status)
 let configuration_state_id_of_yojson = string_of_yojson
 let configuration_item_md5_hash_of_yojson = string_of_yojson
 let ar_n_of_yojson = string_of_yojson
@@ -2711,15 +3015,16 @@ let get_resource_config_history_response_of_yojson tree path =
 let later_time_of_yojson = timestamp_epoch_seconds_of_yojson
 let earlier_time_of_yojson = timestamp_epoch_seconds_of_yojson
 let chronological_order_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Forward" -> Forward
-   | `String "Reverse" -> Reverse
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ChronologicalOrder"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ChronologicalOrder") : 
-  chronological_order)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Forward" -> Forward
+    | `String "Reverse" -> Reverse
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ChronologicalOrder"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ChronologicalOrder") : 
+     chronological_order) : chronological_order)
 let get_resource_config_history_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2772,24 +3077,26 @@ let no_such_organization_conformance_pack_exception_of_yojson tree path =
           _list path)
    } : no_such_organization_conformance_pack_exception)
 let organization_resource_detailed_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATE_FAILED" -> UPDATE_FAILED
-   | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
-   | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
-   | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
-   | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "OrganizationResourceDetailedStatus" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "OrganizationResourceDetailedStatus") : organization_resource_detailed_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATE_FAILED" -> UPDATE_FAILED
+    | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
+    | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
+    | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
+    | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "OrganizationResourceDetailedStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "OrganizationResourceDetailedStatus") : organization_resource_detailed_status) : 
+  organization_resource_detailed_status)
 let organization_conformance_pack_detailed_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2973,18 +3280,19 @@ let no_such_conformance_pack_exception_of_yojson tree path =
           _list path)
    } : no_such_conformance_pack_exception)
 let conformance_pack_compliance_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "INSUFFICIENT_DATA" -> INSUFFICIENT_DATA
-   | `String "NON_COMPLIANT" -> NON_COMPLIANT
-   | `String "COMPLIANT" -> COMPLIANT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ConformancePackComplianceType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ConformancePackComplianceType") : 
-  conformance_pack_compliance_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "INSUFFICIENT_DATA" -> INSUFFICIENT_DATA
+    | `String "NON_COMPLIANT" -> NON_COMPLIANT
+    | `String "COMPLIANT" -> COMPLIANT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ConformancePackComplianceType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "ConformancePackComplianceType") : 
+     conformance_pack_compliance_type) : conformance_pack_compliance_type)
 let conformance_pack_compliance_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3363,16 +3671,17 @@ let resource_count_filters_of_yojson tree path =
           (value_for_key resource_type_of_yojson "ResourceType") _list path)
    } : resource_count_filters)
 let resource_count_group_key_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AWS_REGION" -> AWS_REGION
-   | `String "ACCOUNT_ID" -> ACCOUNT_ID
-   | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ResourceCountGroupKey"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ResourceCountGroupKey") : 
-  resource_count_group_key)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWS_REGION" -> AWS_REGION
+    | `String "ACCOUNT_ID" -> ACCOUNT_ID
+    | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ResourceCountGroupKey"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ResourceCountGroupKey") : 
+     resource_count_group_key) : resource_count_group_key)
 let group_by_api_limit_of_yojson = int_of_yojson
 let get_aggregate_discovered_resource_counts_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -3453,17 +3762,19 @@ let aggregate_conformance_pack_compliance_summary_filters_of_yojson tree path
    } : aggregate_conformance_pack_compliance_summary_filters)
 let aggregate_conformance_pack_compliance_summary_group_key_of_yojson
   (tree : t) path =
-  (match tree with
-   | `String "AWS_REGION" -> AWS_REGION
-   | `String "ACCOUNT_ID" -> ACCOUNT_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AggregateConformancePackComplianceSummaryGroupKey" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "AggregateConformancePackComplianceSummaryGroupKey") : aggregate_conformance_pack_compliance_summary_group_key)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWS_REGION" -> AWS_REGION
+    | `String "ACCOUNT_ID" -> ACCOUNT_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AggregateConformancePackComplianceSummaryGroupKey" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "AggregateConformancePackComplianceSummaryGroupKey") : aggregate_conformance_pack_compliance_summary_group_key) : 
+  aggregate_conformance_pack_compliance_summary_group_key)
 let get_aggregate_conformance_pack_compliance_summary_request_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -3528,17 +3839,19 @@ let config_rule_compliance_summary_filters_of_yojson tree path =
           _list path)
    } : config_rule_compliance_summary_filters)
 let config_rule_compliance_summary_group_key_of_yojson (tree : t) path =
-  (match tree with
-   | `String "AWS_REGION" -> AWS_REGION
-   | `String "ACCOUNT_ID" -> ACCOUNT_ID
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ConfigRuleComplianceSummaryGroupKey" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ConfigRuleComplianceSummaryGroupKey") : config_rule_compliance_summary_group_key)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "AWS_REGION" -> AWS_REGION
+    | `String "ACCOUNT_ID" -> ACCOUNT_ID
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ConfigRuleComplianceSummaryGroupKey" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ConfigRuleComplianceSummaryGroupKey") : config_rule_compliance_summary_group_key) : 
+  config_rule_compliance_summary_group_key)
 let get_aggregate_config_rule_compliance_summary_request_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
@@ -3624,6 +3937,22 @@ let get_aggregate_compliance_details_by_config_rule_request_of_yojson tree
        (value_for_key configuration_aggregator_name_of_yojson
           "ConfigurationAggregatorName" _list path)
    } : get_aggregate_compliance_details_by_config_rule_request)
+let disassociate_resource_types_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     configuration_recorder =
+       (value_for_key configuration_recorder_of_yojson
+          "ConfigurationRecorder" _list path)
+   } : disassociate_resource_types_response)
+let disassociate_resource_types_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource_types =
+       (value_for_key resource_type_list_of_yojson "ResourceTypes" _list path);
+     configuration_recorder_arn =
+       (value_for_key amazon_resource_name_of_yojson
+          "ConfigurationRecorderArn" _list path)
+   } : disassociate_resource_types_request)
 let no_such_retention_configuration_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3658,31 +3987,33 @@ let describe_retention_configurations_request_of_yojson tree path =
              "RetentionConfigurationNames") _list path)
    } : describe_retention_configurations_request)
 let remediation_execution_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "IN_PROGRESS" -> IN_PROGRESS
-   | `String "QUEUED" -> QUEUED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RemediationExecutionState" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "RemediationExecutionState") : 
-  remediation_execution_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "IN_PROGRESS" -> IN_PROGRESS
+    | `String "QUEUED" -> QUEUED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RemediationExecutionState" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "RemediationExecutionState") : 
+     remediation_execution_state) : remediation_execution_state)
 let remediation_execution_step_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "FAILED" -> FAILED
-   | `String "PENDING" -> PENDING
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RemediationExecutionStepState" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "RemediationExecutionStepState") : 
-  remediation_execution_step_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "FAILED" -> FAILED
+    | `String "PENDING" -> PENDING
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RemediationExecutionStepState" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "RemediationExecutionStepState") : 
+     remediation_execution_step_state) : remediation_execution_step_state)
 let remediation_execution_step_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3833,23 +4164,25 @@ let describe_pending_aggregation_requests_request_of_yojson tree path =
           _list path)
    } : describe_pending_aggregation_requests_request)
 let organization_resource_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATE_FAILED" -> UPDATE_FAILED
-   | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
-   | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
-   | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
-   | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "OrganizationResourceStatus" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "OrganizationResourceStatus") : 
-  organization_resource_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATE_FAILED" -> UPDATE_FAILED
+    | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
+    | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
+    | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
+    | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "OrganizationResourceStatus" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "OrganizationResourceStatus") : 
+     organization_resource_status) : organization_resource_status)
 let organization_conformance_pack_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -3956,22 +4289,23 @@ let describe_organization_conformance_packs_request_of_yojson tree path =
              "OrganizationConformancePackNames") _list path)
    } : describe_organization_conformance_packs_request)
 let organization_rule_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATE_FAILED" -> UPDATE_FAILED
-   | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
-   | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
-   | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
-   | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "OrganizationRuleStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "OrganizationRuleStatus") : 
-  organization_rule_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATE_FAILED" -> UPDATE_FAILED
+    | `String "UPDATE_IN_PROGRESS" -> UPDATE_IN_PROGRESS
+    | `String "UPDATE_SUCCESSFUL" -> UPDATE_SUCCESSFUL
+    | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETE_SUCCESSFUL" -> DELETE_SUCCESSFUL
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
+    | `String "CREATE_SUCCESSFUL" -> CREATE_SUCCESSFUL
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "OrganizationRuleStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "OrganizationRuleStatus") : 
+     organization_rule_status) : organization_rule_status)
 let organization_config_rule_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4129,15 +4463,16 @@ let no_such_delivery_channel_exception_of_yojson tree path =
           _list path)
    } : no_such_delivery_channel_exception)
 let delivery_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Not_Applicable" -> Not_Applicable
-   | `String "Failure" -> Failure
-   | `String "Success" -> Success
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DeliveryStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "DeliveryStatus") : 
-  delivery_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "Not_Applicable" -> Not_Applicable
+    | `String "Failure" -> Failure
+    | `String "Success" -> Success
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DeliveryStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "DeliveryStatus") : 
+     delivery_status) : delivery_status)
 let config_export_delivery_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -4234,18 +4569,19 @@ let describe_delivery_channels_request_of_yojson tree path =
    } : describe_delivery_channels_request)
 let conformance_pack_id_of_yojson = string_of_yojson
 let conformance_pack_state_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DELETE_FAILED" -> DELETE_FAILED
-   | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
-   | `String "CREATE_FAILED" -> CREATE_FAILED
-   | `String "CREATE_COMPLETE" -> CREATE_COMPLETE
-   | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ConformancePackState"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ConformancePackState") : 
-  conformance_pack_state)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DELETE_FAILED" -> DELETE_FAILED
+    | `String "DELETE_IN_PROGRESS" -> DELETE_IN_PROGRESS
+    | `String "CREATE_FAILED" -> CREATE_FAILED
+    | `String "CREATE_COMPLETE" -> CREATE_COMPLETE
+    | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ConformancePackState"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ConformancePackState") : 
+     conformance_pack_state) : conformance_pack_state)
 let stack_arn_of_yojson = string_of_yojson
 let conformance_pack_status_reason_of_yojson = string_of_yojson
 let conformance_pack_status_detail_of_yojson tree path =
@@ -4430,18 +4766,24 @@ let describe_conformance_pack_compliance_request_of_yojson tree path =
           _list path)
    } : describe_conformance_pack_compliance_request)
 let recorder_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "Failure" -> Failure
-   | `String "Success" -> Success
-   | `String "Pending" -> Pending
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecorderStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "RecorderStatus") : 
-  recorder_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "NotApplicable" -> NotApplicable
+    | `String "Failure" -> Failure
+    | `String "Success" -> Success
+    | `String "Pending" -> Pending
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecorderStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "RecorderStatus") : 
+     recorder_status) : recorder_status)
 let configuration_recorder_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     service_principal =
+       (option_of_yojson
+          (value_for_key service_principal_of_yojson "servicePrincipal")
+          _list path);
      last_status_change_time =
        (option_of_yojson
           (value_for_key date_of_yojson "lastStatusChangeTime") _list path);
@@ -4464,7 +4806,10 @@ let configuration_recorder_status_of_yojson tree path =
        (option_of_yojson (value_for_key date_of_yojson "lastStartTime") _list
           path);
      name =
-       (option_of_yojson (value_for_key string__of_yojson "name") _list path)
+       (option_of_yojson (value_for_key string__of_yojson "name") _list path);
+     arn =
+       (option_of_yojson (value_for_key amazon_resource_name_of_yojson "arn")
+          _list path)
    } : configuration_recorder_status)
 let configuration_recorder_status_list_of_yojson tree path =
   list_of_yojson configuration_recorder_status_of_yojson tree path
@@ -4481,6 +4826,13 @@ let configuration_recorder_name_list_of_yojson tree path =
 let describe_configuration_recorder_status_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     arn =
+       (option_of_yojson (value_for_key amazon_resource_name_of_yojson "Arn")
+          _list path);
+     service_principal =
+       (option_of_yojson
+          (value_for_key service_principal_of_yojson "ServicePrincipal")
+          _list path);
      configuration_recorder_names =
        (option_of_yojson
           (value_for_key configuration_recorder_name_list_of_yojson
@@ -4499,33 +4851,43 @@ let describe_configuration_recorders_response_of_yojson tree path =
 let describe_configuration_recorders_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     arn =
+       (option_of_yojson (value_for_key amazon_resource_name_of_yojson "Arn")
+          _list path);
+     service_principal =
+       (option_of_yojson
+          (value_for_key service_principal_of_yojson "ServicePrincipal")
+          _list path);
      configuration_recorder_names =
        (option_of_yojson
           (value_for_key configuration_recorder_name_list_of_yojson
              "ConfigurationRecorderNames") _list path)
    } : describe_configuration_recorders_request)
 let aggregated_source_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ORGANIZATION" -> ORGANIZATION
-   | `String "ACCOUNT" -> ACCOUNT
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "AggregatedSourceType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "AggregatedSourceType") : 
-  aggregated_source_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ORGANIZATION" -> ORGANIZATION
+    | `String "ACCOUNT" -> ACCOUNT
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "AggregatedSourceType"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "AggregatedSourceType") : 
+     aggregated_source_type) : aggregated_source_type)
 let aggregated_source_status_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OUTDATED" -> OUTDATED
-   | `String "SUCCEEDED" -> SUCCEEDED
-   | `String "FAILED" -> FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "AggregatedSourceStatusType" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "AggregatedSourceStatusType") : 
-  aggregated_source_status_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OUTDATED" -> OUTDATED
+    | `String "SUCCEEDED" -> SUCCEEDED
+    | `String "FAILED" -> FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "AggregatedSourceStatusType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "AggregatedSourceStatusType") : 
+     aggregated_source_status_type) : aggregated_source_status_type)
 let aggregated_source_status_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5028,6 +5390,21 @@ let delete_stored_query_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ query_name = (value_for_key query_name_of_yojson "QueryName" _list path)
    } : delete_stored_query_request)
+let delete_service_linked_configuration_recorder_response_of_yojson tree path
+  =
+  let _list = assoc_of_yojson tree path in
+  ({
+     name = (value_for_key recorder_name_of_yojson "Name" _list path);
+     arn = (value_for_key amazon_resource_name_of_yojson "Arn" _list path)
+   } : delete_service_linked_configuration_recorder_response)
+let delete_service_linked_configuration_recorder_request_of_yojson tree path
+  =
+  let _list = assoc_of_yojson tree path in
+  ({
+     service_principal =
+       (value_for_key service_principal_of_yojson "ServicePrincipal" _list
+          path)
+   } : delete_service_linked_configuration_recorder_request)
 let delete_retention_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -5282,9 +5659,30 @@ let batch_get_aggregate_resource_config_request_of_yojson tree path =
        (value_for_key configuration_aggregator_name_of_yojson
           "ConfigurationAggregatorName" _list path)
    } : batch_get_aggregate_resource_config_request)
+let associate_resource_types_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     configuration_recorder =
+       (value_for_key configuration_recorder_of_yojson
+          "ConfigurationRecorder" _list path)
+   } : associate_resource_types_response)
+let associate_resource_types_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource_types =
+       (value_for_key resource_type_list_of_yojson "ResourceTypes" _list path);
+     configuration_recorder_arn =
+       (value_for_key amazon_resource_name_of_yojson
+          "ConfigurationRecorderArn" _list path)
+   } : associate_resource_types_request)
 let base_string_of_yojson = string_of_yojson
 let base_boolean_of_yojson = bool_of_yojson
 let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

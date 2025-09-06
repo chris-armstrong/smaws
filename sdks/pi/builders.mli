@@ -1,207 +1,211 @@
-open Smaws_Lib
 open Types
 val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
-  tag_keys:string list ->
-    resource_ar_n:string ->
+  tag_keys:tag_key_list ->
+    resource_ar_n:amazon_resource_name ->
       service_type:service_type -> unit -> untag_resource_request
 val make_tag_resource_response : unit -> unit
-val make_tag : value:string -> key:string -> unit -> tag
+val make_tag : value:tag_value -> key:tag_key -> unit -> tag
 val make_tag_resource_request :
-  tags:tag list ->
-    resource_ar_n:string ->
+  tags:tag_list ->
+    resource_ar_n:amazon_resource_name ->
       service_type:service_type -> unit -> tag_resource_request
 val make_response_resource_metric :
-  ?unit_:string ->
-    ?description:string -> ?metric:string -> unit -> response_resource_metric
+  ?unit_:string_ ->
+    ?description:description ->
+      ?metric:string_ -> unit -> response_resource_metric
 val make_response_resource_metric_key :
   ?dimensions:dimension_map ->
-    metric:string -> unit -> response_resource_metric_key
+    metric:string_ -> unit -> response_resource_metric_key
 val make_response_partition_key :
   dimensions:dimension_map -> unit -> response_partition_key
 val make_recommendation :
-  ?recommendation_description:string ->
-    ?recommendation_id:string -> unit -> recommendation
+  ?recommendation_description:markdown_string ->
+    ?recommendation_id:string_ -> unit -> recommendation
 val make_list_tags_for_resource_response :
-  ?tags:tag list -> unit -> list_tags_for_resource_response
+  ?tags:tag_list -> unit -> list_tags_for_resource_response
 val make_list_tags_for_resource_request :
-  resource_ar_n:string ->
+  resource_ar_n:amazon_resource_name ->
     service_type:service_type -> unit -> list_tags_for_resource_request
 val make_analysis_report_summary :
-  ?tags:tag list ->
+  ?tags:tag_list ->
     ?status:analysis_status ->
-      ?end_time:CoreTypes.Timestamp.t ->
-        ?start_time:CoreTypes.Timestamp.t ->
-          ?create_time:CoreTypes.Timestamp.t ->
-            ?analysis_report_id:string -> unit -> analysis_report_summary
+      ?end_time:iso_timestamp ->
+        ?start_time:iso_timestamp ->
+          ?create_time:iso_timestamp ->
+            ?analysis_report_id:string_ -> unit -> analysis_report_summary
 val make_list_performance_analysis_reports_response :
-  ?next_token:string ->
-    ?analysis_reports:analysis_report_summary list ->
+  ?next_token:next_token ->
+    ?analysis_reports:analysis_report_summary_list ->
       unit -> list_performance_analysis_reports_response
 val make_list_performance_analysis_reports_request :
-  ?list_tags:bool ->
-    ?max_results:int ->
-      ?next_token:string ->
-        identifier:string ->
+  ?list_tags:boolean_ ->
+    ?max_results:max_results ->
+      ?next_token:next_token ->
+        identifier:identifier_string ->
           service_type:service_type ->
             unit -> list_performance_analysis_reports_request
 val make_list_available_resource_metrics_response :
-  ?next_token:string ->
-    ?metrics:response_resource_metric list ->
+  ?next_token:next_token ->
+    ?metrics:response_resource_metric_list ->
       unit -> list_available_resource_metrics_response
 val make_list_available_resource_metrics_request :
-  ?max_results:int ->
-    ?next_token:string ->
-      metric_types:string list ->
-        identifier:string ->
+  ?max_results:max_results ->
+    ?next_token:next_token ->
+      metric_types:metric_type_list ->
+        identifier:identifier_string ->
           service_type:service_type ->
             unit -> list_available_resource_metrics_request
-val make_dimension_detail : ?identifier:string -> unit -> dimension_detail
+val make_dimension_detail : ?identifier:string_ -> unit -> dimension_detail
 val make_dimension_group_detail :
-  ?dimensions:dimension_detail list ->
-    ?group:string -> unit -> dimension_group_detail
+  ?dimensions:dimension_detail_list ->
+    ?group:string_ -> unit -> dimension_group_detail
 val make_metric_dimension_groups :
-  ?groups:dimension_group_detail list ->
-    ?metric:string -> unit -> metric_dimension_groups
+  ?groups:dimension_group_detail_list ->
+    ?metric:string_ -> unit -> metric_dimension_groups
 val make_list_available_resource_dimensions_response :
-  ?next_token:string ->
-    ?metric_dimensions:metric_dimension_groups list ->
+  ?next_token:next_token ->
+    ?metric_dimensions:metric_dimensions_list ->
       unit -> list_available_resource_dimensions_response
 val make_list_available_resource_dimensions_request :
-  ?authorized_actions:fine_grained_action list ->
-    ?next_token:string ->
-      ?max_results:int ->
-        metrics:string list ->
-          identifier:string ->
+  ?authorized_actions:authorized_actions_list ->
+    ?next_token:next_token ->
+      ?max_results:max_results ->
+        metrics:dimensions_metric_list ->
+          identifier:identifier_string ->
             service_type:service_type ->
               unit -> list_available_resource_dimensions_request
 val make_data_point :
-  value:float -> timestamp_:CoreTypes.Timestamp.t -> unit -> data_point
+  value:double -> timestamp:iso_timestamp -> unit -> data_point
 val make_metric_key_data_points :
-  ?data_points:data_point list ->
+  ?data_points:data_points_list ->
     ?key:response_resource_metric_key -> unit -> metric_key_data_points
 val make_get_resource_metrics_response :
-  ?next_token:string ->
-    ?metric_list:metric_key_data_points list ->
-      ?identifier:string ->
-        ?aligned_end_time:CoreTypes.Timestamp.t ->
-          ?aligned_start_time:CoreTypes.Timestamp.t ->
+  ?next_token:next_token ->
+    ?metric_list:metric_key_data_points_list ->
+      ?identifier:string_ ->
+        ?aligned_end_time:iso_timestamp ->
+          ?aligned_start_time:iso_timestamp ->
             unit -> get_resource_metrics_response
 val make_dimension_group :
-  ?limit:int ->
-    ?dimensions:string list -> group:string -> unit -> dimension_group
+  ?limit:limit ->
+    ?dimensions:sanitized_string_list ->
+      group:sanitized_string -> unit -> dimension_group
 val make_metric_query :
   ?filter:metric_query_filter_map ->
-    ?group_by:dimension_group -> metric:string -> unit -> metric_query
+    ?group_by:dimension_group ->
+      metric:sanitized_string -> unit -> metric_query
 val make_get_resource_metrics_request :
   ?period_alignment:period_alignment ->
-    ?next_token:string ->
-      ?max_results:int ->
-        ?period_in_seconds:int ->
-          end_time:CoreTypes.Timestamp.t ->
-            start_time:CoreTypes.Timestamp.t ->
-              metric_queries:metric_query list ->
-                identifier:string ->
+    ?next_token:next_token ->
+      ?max_results:max_results ->
+        ?period_in_seconds:integer ->
+          end_time:iso_timestamp ->
+            start_time:iso_timestamp ->
+              metric_queries:metric_query_list ->
+                identifier:identifier_string ->
                   service_type:service_type ->
                     unit -> get_resource_metrics_request
 val make_feature_metadata :
   ?status:feature_status -> unit -> feature_metadata
 val make_get_resource_metadata_response :
   ?features:feature_metadata_map ->
-    ?identifier:string -> unit -> get_resource_metadata_response
+    ?identifier:string_ -> unit -> get_resource_metadata_response
 val make_get_resource_metadata_request :
-  identifier:string ->
+  identifier:identifier_string ->
     service_type:service_type -> unit -> get_resource_metadata_request
 val make_performance_insights_metric :
-  ?value:float ->
-    ?dimensions:descriptive_map ->
-      ?display_name:string ->
-        ?metric:string -> unit -> performance_insights_metric
+  ?value:double ->
+    ?filter:descriptive_map ->
+      ?dimensions:descriptive_map ->
+        ?display_name:descriptive_string ->
+          ?metric:descriptive_string -> unit -> performance_insights_metric
 val make_data :
   ?performance_insights_metric:performance_insights_metric -> unit -> data
 val make_insight :
-  ?baseline_data:data list ->
-    ?insight_data:data list ->
-      ?recommendations:recommendation list ->
-        ?description:string ->
-          ?supporting_insights:insight list ->
+  ?baseline_data:data_list ->
+    ?insight_data:data_list ->
+      ?recommendations:recommendation_list ->
+        ?description:markdown_string ->
+          ?supporting_insights:insight_list ->
             ?severity:severity ->
-              ?end_time:CoreTypes.Timestamp.t ->
-                ?start_time:CoreTypes.Timestamp.t ->
+              ?end_time:iso_timestamp ->
+                ?start_time:iso_timestamp ->
                   ?context:context_type ->
-                    ?insight_type:string ->
-                      insight_id:string -> unit -> insight
+                    ?insight_type:string_ ->
+                      insight_id:string_ -> unit -> insight
 val make_analysis_report :
-  ?insights:insight list ->
+  ?insights:insight_list ->
     ?status:analysis_status ->
-      ?end_time:CoreTypes.Timestamp.t ->
-        ?start_time:CoreTypes.Timestamp.t ->
-          ?create_time:CoreTypes.Timestamp.t ->
+      ?end_time:iso_timestamp ->
+        ?start_time:iso_timestamp ->
+          ?create_time:iso_timestamp ->
             ?service_type:service_type ->
-              ?identifier:string ->
-                analysis_report_id:string -> unit -> analysis_report
+              ?identifier:identifier_string ->
+                analysis_report_id:analysis_report_id ->
+                  unit -> analysis_report
 val make_get_performance_analysis_report_response :
   ?analysis_report:analysis_report ->
     unit -> get_performance_analysis_report_response
 val make_get_performance_analysis_report_request :
   ?accept_language:accept_language ->
     ?text_format:text_format ->
-      analysis_report_id:string ->
-        identifier:string ->
+      analysis_report_id:analysis_report_id ->
+        identifier:identifier_string ->
           service_type:service_type ->
             unit -> get_performance_analysis_report_request
 val make_dimension_key_detail :
   ?status:detail_status ->
-    ?dimension:string -> ?value:string -> unit -> dimension_key_detail
+    ?dimension:string_ -> ?value:string_ -> unit -> dimension_key_detail
 val make_get_dimension_key_details_response :
-  ?dimensions:dimension_key_detail list ->
+  ?dimensions:dimension_key_detail_list ->
     unit -> get_dimension_key_details_response
 val make_get_dimension_key_details_request :
-  ?requested_dimensions:string list ->
-    group_identifier:string ->
-      group:string ->
-        identifier:string ->
+  ?requested_dimensions:requested_dimension_list ->
+    group_identifier:request_string ->
+      group:request_string ->
+        identifier:identifier_string ->
           service_type:service_type ->
             unit -> get_dimension_key_details_request
 val make_dimension_key_description :
-  ?partitions:float list ->
+  ?partitions:metric_values_list ->
     ?additional_metrics:additional_metrics_map ->
-      ?total:float ->
+      ?total:double ->
         ?dimensions:dimension_map -> unit -> dimension_key_description
 val make_describe_dimension_keys_response :
-  ?next_token:string ->
-    ?keys:dimension_key_description list ->
-      ?partition_keys:response_partition_key list ->
-        ?aligned_end_time:CoreTypes.Timestamp.t ->
-          ?aligned_start_time:CoreTypes.Timestamp.t ->
+  ?next_token:next_token ->
+    ?keys:dimension_key_description_list ->
+      ?partition_keys:response_partition_key_list ->
+        ?aligned_end_time:iso_timestamp ->
+          ?aligned_start_time:iso_timestamp ->
             unit -> describe_dimension_keys_response
 val make_describe_dimension_keys_request :
-  ?next_token:string ->
-    ?max_results:int ->
+  ?next_token:next_token ->
+    ?max_results:max_results ->
       ?filter:metric_query_filter_map ->
         ?partition_by:dimension_group ->
-          ?additional_metrics:string list ->
-            ?period_in_seconds:int ->
+          ?additional_metrics:additional_metrics_list ->
+            ?period_in_seconds:integer ->
               group_by:dimension_group ->
-                metric:string ->
-                  end_time:CoreTypes.Timestamp.t ->
-                    start_time:CoreTypes.Timestamp.t ->
-                      identifier:string ->
+                metric:request_string ->
+                  end_time:iso_timestamp ->
+                    start_time:iso_timestamp ->
+                      identifier:identifier_string ->
                         service_type:service_type ->
                           unit -> describe_dimension_keys_request
 val make_delete_performance_analysis_report_response : unit -> unit
 val make_delete_performance_analysis_report_request :
-  analysis_report_id:string ->
-    identifier:string ->
+  analysis_report_id:analysis_report_id ->
+    identifier:identifier_string ->
       service_type:service_type ->
         unit -> delete_performance_analysis_report_request
 val make_create_performance_analysis_report_response :
-  ?analysis_report_id:string ->
+  ?analysis_report_id:analysis_report_id ->
     unit -> create_performance_analysis_report_response
 val make_create_performance_analysis_report_request :
-  ?tags:tag list ->
-    end_time:CoreTypes.Timestamp.t ->
-      start_time:CoreTypes.Timestamp.t ->
-        identifier:string ->
+  ?tags:tag_list ->
+    end_time:iso_timestamp ->
+      start_time:iso_timestamp ->
+        identifier:identifier_string ->
           service_type:service_type ->
             unit -> create_performance_analysis_report_request

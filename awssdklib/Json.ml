@@ -8,7 +8,9 @@ module SerializeHelpers = struct
   let unit_to_yojson () : t = `Assoc []
   let string_to_yojson (x : string) : t = `String x
   let int_to_yojson (x : int) : t = `Int x
-  let long_to_yojson (x : int) : t = `Int x
+  let byte_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
+  let short_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
+  let long_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let float_to_yojson (x : float) : t = `Float x
   let double_to_yojson (x : float) : t = `Float x
   let list_to_yojson (converter : 'a -> t) (x : 'a list) : t = `List (List.map converter x)
@@ -29,14 +31,17 @@ module SerializeHelpers = struct
     `Assoc
       (List.map
          (fun (name, value) ->
-           ( (key_converter name |> function
-              | `String x -> x
-              | _ -> failwith "expecting string compatible map name"),
+           ( ( key_converter name |> function
+               | `String x -> x
+               | _ -> failwith "expecting string compatible map name" ),
              value_converter value ))
          x)
 
   let timestamp_to_yojson (x : Timestamp.t) : t = `Float (Timestamp.to_float_s x)
   let option_to_yojson (converter : 'a -> t) (x : 'a option) = Option.map converter x
+
+  let nullable_to_yojson (converter : 'a -> t) (x : 'a Nullable.t) : t =
+    match x with Null -> `Null | Value v -> converter v
 end
 
 module DeserializeHelpers = struct
@@ -85,6 +90,12 @@ module DeserializeHelpers = struct
 
   let string_of_yojson (tree : t) path =
     match tree with `String x -> x | _ -> raise (deserialize_wrong_type_error path "string")
+
+  let byte_of_yojson (tree : t) path =
+    match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "byte")
+
+  let short_of_yojson (tree : t) path =
+    match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "short")
 
   let int_of_yojson (tree : t) path =
     match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "int")
@@ -153,4 +164,7 @@ module DeserializeHelpers = struct
   let option_of_yojson (converter : (string * t) list -> string list -> 'a)
       (tree : (string * t) list) path =
     try Some (converter tree path) with JsonDeserializeError (NoValueError v) -> None
+
+  let nullable_of_yojson (converter : t -> string list -> 'a) (tree : t) path : 'a Nullable.t =
+    try Value (converter tree path) with JsonDeserializeError (NoValueError v) -> Null
 end

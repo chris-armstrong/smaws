@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       activate_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -61,7 +61,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.\n\n  Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:\n  \n   {ul\n         {-  You call \n             {[\n              {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html}CreateArchive} \n             ]}\n              on an event bus set to use a customer managed key for encryption.\n             \n              }\n         {-  You call \n             {[\n              {{:https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer}CreateDiscoverer} \n             ]}\n              on an event bus set to use a customer managed key for encryption.\n             \n              }\n         {-  You call \n             {[\n              {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html}UpdatedEventBus} \n             ]}\n              to set a customer managed key on an event bus with an archives or schema discovery enabled.\n             \n              }\n         }\n   To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html}Data encryption in EventBridge} in the {i Amazon EventBridge User Guide}.\n   \n    "]
+     "Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.\n\n  If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. \n  \n   For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html}Encrypting archives} in the {i Amazon EventBridge User Guide}.\n   \n    "]
 module CreateConnection :
 sig
   val request :
@@ -69,13 +69,15 @@ sig
       create_connection_request ->
         (create_connection_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
           | `InternalException of internal_exception 
           | `LimitExceededException of limit_exceeded_exception 
           | `ResourceAlreadyExistsException of
-              resource_already_exists_exception ])
-          result
+              resource_already_exists_exception 
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc
-     "Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.\n"]
+     "Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.\n\n For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection.html}Connections for endpoint targets} in the {i Amazon EventBridge User Guide}.\n "]
 module CreateEndpoint :
 sig
   val request :
@@ -131,7 +133,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deactivate_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -161,7 +163,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_api_destination_request ->
-        (unit,
+        (delete_api_destination_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -174,7 +176,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_archive_request ->
-        (unit,
+        (delete_archive_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -200,7 +202,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_endpoint_request ->
-        (unit,
+        (delete_endpoint_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -214,7 +216,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_event_bus_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -226,7 +228,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_partner_event_source_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -240,7 +242,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -364,7 +366,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -379,7 +381,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_rule_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -544,7 +546,7 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalException of internal_exception ]) result
 end[@@ocaml.doc
-     "Sends custom events to Amazon EventBridge so that they can be matched to rules.\n\n The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html}Calculating PutEvents event entry size} in the {i  {i Amazon EventBridge User Guide} } \n \n  PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.\n  \n    PutEvents will only process nested JSON up to 1100 levels deep.\n    \n     "]
+     "Sends custom events to Amazon EventBridge so that they can be matched to rules.\n\n You can batch multiple event entries into one request for efficiency. However, the total entry size must be less than 256KB. You can calculate the entry size before you send the events. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevents.html#eb-putevent-size}Calculating PutEvents event entry size} in the {i  {i Amazon EventBridge User Guide} }.\n \n  PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.\n  \n    PutEvents will only process nested JSON up to 1000 levels deep.\n    \n     "]
 module PutPartnerEvents :
 sig
   val request :
@@ -562,7 +564,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -573,7 +575,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Running [PutPermission] permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified {i event bus}. Amazon EventBridge (CloudWatch Events) rules in your account are triggered by these events arriving to an event bus in your account. \n\n For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.\n \n  To enable multiple Amazon Web Services accounts to put events to your event bus, run [PutPermission] once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run [PutPermission] once specifying [Principal] as \"*\" and specifying the Amazon Web Services organization ID in [Condition], to grant permissions to all accounts in that organization.\n  \n   If you grant permissions using an organization, then accounts in that organization must specify a [RoleArn] with proper permissions when they use [PutTarget] to add your account's event bus as a target. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.\n   \n    The permission policy on the event bus cannot exceed 10 KB in size.\n    "]
+     "Running [PutPermission] permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified {i event bus}. Amazon EventBridge rules in your account are triggered by these events arriving to an event bus in your account. \n\n For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.\n \n  To enable multiple Amazon Web Services accounts to put events to your event bus, run [PutPermission] once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run [PutPermission] once specifying [Principal] as \"*\" and specifying the Amazon Web Services organization ID in [Condition], to grant permissions to all accounts in that organization.\n  \n   If you grant permissions using an organization, then accounts in that organization must specify a [RoleArn] with proper permissions when they use [PutTarget] to add your account's event bus as a target. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html}Sending and Receiving Events Between Amazon Web Services Accounts} in the {i Amazon EventBridge User Guide}.\n   \n    The permission policy on the event bus cannot exceed 10 KB in size.\n    "]
 module PutRule :
 sig
   val request :
@@ -590,7 +592,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html}DisableRule}.\n\n A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.\n \n  If you are updating an existing rule, the rule is replaced with what you specify in this [PutRule] command. If you omit arguments in [PutRule], the old values for those arguments are not kept. Instead, they are replaced with null values.\n  \n   When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.\n   \n    A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.\n    \n     When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the [PutRule] operation and assign tags, you must have both the [events:PutRule] and [events:TagResource] permissions.\n     \n      If you are updating an existing rule, any tags you specify in the [PutRule] operation are ignored. To update the tags of an existing rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html}UntagResource}.\n      \n       Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.\n       \n        In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.\n        \n         To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. \n         \n          An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html}Managing Your Costs with Budgets}.\n          "]
+     "Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html}DisableRule}.\n\n A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html}CreateEventBus}.\n \n  If you are updating an existing rule, the rule is replaced with what you specify in this [PutRule] command. If you omit arguments in [PutRule], the old values for those arguments are not kept. Instead, they are replaced with null values.\n  \n   When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.\n   \n    A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.\n    \n     When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the [PutRule] operation and assign tags, you must have both the [events:PutRule] and [events:TagResource] permissions.\n     \n      If you are updating an existing rule, any tags you specify in the [PutRule] operation are ignored. To update the tags of an existing rule, use {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html}TagResource} and {{:https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html}UntagResource}.\n      \n       Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.\n       \n        In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.\n        \n         To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. \n         \n          An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see {{:https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html}Managing Your Costs with Budgets}.\n          \n           To create a rule that filters for management events from Amazon Web Services services, see {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html#eb-service-event-cloudtrail-management}Receiving read-only management events from Amazon Web Services services} in the {i EventBridge User Guide}.\n           "]
 module PutTargets :
 sig
   val request :
@@ -612,7 +614,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_permission_request ->
-        (unit,
+        (Smaws_Lib.Smithy_api.Types.unit_,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -658,7 +660,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -685,7 +687,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConcurrentModificationException of
               concurrent_modification_exception 
@@ -694,7 +696,7 @@ sig
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
 end[@@ocaml.doc
-     "Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge (CloudWatch Events), rules and event buses can be tagged.\n"]
+     "Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge, rules and event buses can be tagged.\n"]
 module UpdateApiDestination :
 sig
   val request :
@@ -731,12 +733,13 @@ sig
       update_connection_request ->
         (update_connection_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
           | `ConcurrentModificationException of
               concurrent_modification_exception 
           | `InternalException of internal_exception 
           | `LimitExceededException of limit_exceeded_exception 
-          | `ResourceNotFoundException of resource_not_found_exception ])
-          result
+          | `ResourceNotFoundException of resource_not_found_exception 
+          | `ThrottlingException of throttling_exception ]) result
 end[@@ocaml.doc "Updates settings for a connection.\n"]
 module UpdateEndpoint :
 sig

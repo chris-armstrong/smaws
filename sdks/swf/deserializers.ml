@@ -10,15 +10,16 @@ let workflow_type_of_yojson tree path =
    } : workflow_type)
 let base_unit_of_yojson = unit_of_yojson
 let registration_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "DEPRECATED" -> DEPRECATED
-   | `String "REGISTERED" -> REGISTERED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RegistrationStatus"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RegistrationStatus") : 
-  registration_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "DEPRECATED" -> DEPRECATED
+    | `String "REGISTERED" -> REGISTERED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RegistrationStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "RegistrationStatus") : 
+     registration_status) : registration_status)
 let description_of_yojson = string_of_yojson
 let timestamp__of_yojson = timestamp_epoch_seconds_of_yojson
 let workflow_type_info_of_yojson tree path =
@@ -65,13 +66,15 @@ let task_list_of_yojson tree path =
   ({ name = (value_for_key name_of_yojson "name" _list path) } : task_list)
 let task_priority_of_yojson = string_of_yojson
 let child_policy_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ABANDON" -> ABANDON
-   | `String "REQUEST_CANCEL" -> REQUEST_CANCEL
-   | `String "TERMINATE" -> TERMINATE
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "ChildPolicy" value)
-   | _ -> raise (deserialize_wrong_type_error path "ChildPolicy") : child_policy)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ABANDON" -> ABANDON
+    | `String "REQUEST_CANCEL" -> REQUEST_CANCEL
+    | `String "TERMINATE" -> TERMINATE
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ChildPolicy" value)
+    | _ -> raise (deserialize_wrong_type_error path "ChildPolicy") : 
+     child_policy) : child_policy)
 let arn_of_yojson = string_of_yojson
 let workflow_type_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -112,16 +115,17 @@ let workflow_run_id_optional_of_yojson = string_of_yojson
 let workflow_run_id_of_yojson = string_of_yojson
 let workflow_id_of_yojson = string_of_yojson
 let workflow_execution_timeout_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "START_TO_CLOSE" -> START_TO_CLOSE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "WorkflowExecutionTimeoutType" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "WorkflowExecutionTimeoutType") : 
-  workflow_execution_timeout_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "START_TO_CLOSE" -> START_TO_CLOSE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "WorkflowExecutionTimeoutType" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "WorkflowExecutionTimeoutType") : 
+     workflow_execution_timeout_type) : workflow_execution_timeout_type)
 let workflow_execution_timed_out_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -134,18 +138,20 @@ let workflow_execution_timed_out_event_attributes_of_yojson tree path =
 let terminate_reason_of_yojson = string_of_yojson
 let data_of_yojson = string_of_yojson
 let workflow_execution_terminated_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATOR_INITIATED" -> OPERATOR_INITIATED
-   | `String "EVENT_LIMIT_EXCEEDED" -> EVENT_LIMIT_EXCEEDED
-   | `String "CHILD_POLICY_APPLIED" -> CHILD_POLICY_APPLIED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "WorkflowExecutionTerminatedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "WorkflowExecutionTerminatedCause") : workflow_execution_terminated_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATOR_INITIATED" -> OPERATOR_INITIATED
+    | `String "EVENT_LIMIT_EXCEEDED" -> EVENT_LIMIT_EXCEEDED
+    | `String "CHILD_POLICY_APPLIED" -> CHILD_POLICY_APPLIED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "WorkflowExecutionTerminatedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "WorkflowExecutionTerminatedCause") : workflow_execution_terminated_cause) : 
+  workflow_execution_terminated_cause)
 let workflow_execution_terminated_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -247,25 +253,28 @@ let workflow_execution_open_counts_of_yojson tree path =
        (value_for_key count_of_yojson "openActivityTasks" _list path)
    } : workflow_execution_open_counts)
 let execution_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CLOSED" -> CLOSED
-   | `String "OPEN" -> OPEN
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ExecutionStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ExecutionStatus") : 
-  execution_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CLOSED" -> CLOSED
+    | `String "OPEN" -> OPEN
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ExecutionStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ExecutionStatus") : 
+     execution_status) : execution_status)
 let close_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "TIMED_OUT" -> TIMED_OUT
-   | `String "CONTINUED_AS_NEW" -> CONTINUED_AS_NEW
-   | `String "TERMINATED" -> TERMINATED
-   | `String "CANCELED" -> CANCELED
-   | `String "FAILED" -> FAILED
-   | `String "COMPLETED" -> COMPLETED
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "CloseStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "CloseStatus") : close_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "TIMED_OUT" -> TIMED_OUT
+    | `String "CONTINUED_AS_NEW" -> CONTINUED_AS_NEW
+    | `String "TERMINATED" -> TERMINATED
+    | `String "CANCELED" -> CANCELED
+    | `String "FAILED" -> FAILED
+    | `String "COMPLETED" -> COMPLETED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "CloseStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "CloseStatus") : 
+     close_status) : close_status)
 let canceled_of_yojson = bool_of_yojson
 let workflow_execution_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -428,16 +437,18 @@ let workflow_execution_canceled_event_attributes_of_yojson tree path =
        (option_of_yojson (value_for_key data_of_yojson "details") _list path)
    } : workflow_execution_canceled_event_attributes)
 let workflow_execution_cancel_requested_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CHILD_POLICY_APPLIED" -> CHILD_POLICY_APPLIED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "WorkflowExecutionCancelRequestedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "WorkflowExecutionCancelRequestedCause") : workflow_execution_cancel_requested_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CHILD_POLICY_APPLIED" -> CHILD_POLICY_APPLIED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "WorkflowExecutionCancelRequestedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "WorkflowExecutionCancelRequestedCause") : workflow_execution_cancel_requested_cause) : 
+  workflow_execution_cancel_requested_cause)
 let workflow_execution_cancel_requested_event_attributes_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
@@ -674,17 +685,18 @@ let run_of_yojson tree path =
           _list path)
    } : run)
 let start_timer_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "TIMER_CREATION_RATE_EXCEEDED" -> TIMER_CREATION_RATE_EXCEEDED
-   | `String "OPEN_TIMERS_LIMIT_EXCEEDED" -> OPEN_TIMERS_LIMIT_EXCEEDED
-   | `String "TIMER_ID_ALREADY_IN_USE" -> TIMER_ID_ALREADY_IN_USE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "StartTimerFailedCause"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "StartTimerFailedCause") : 
-  start_timer_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "TIMER_CREATION_RATE_EXCEEDED" -> TIMER_CREATION_RATE_EXCEEDED
+    | `String "OPEN_TIMERS_LIMIT_EXCEEDED" -> OPEN_TIMERS_LIMIT_EXCEEDED
+    | `String "TIMER_ID_ALREADY_IN_USE" -> TIMER_ID_ALREADY_IN_USE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "StartTimerFailedCause"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "StartTimerFailedCause") : 
+     start_timer_failed_cause) : start_timer_failed_cause)
 let start_timer_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -706,16 +718,17 @@ let start_timer_decision_attributes_of_yojson tree path =
      timer_id = (value_for_key timer_id_of_yojson "timerId" _list path)
    } : start_timer_decision_attributes)
 let start_lambda_function_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ASSUME_ROLE_FAILED" -> ASSUME_ROLE_FAILED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "StartLambdaFunctionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "StartLambdaFunctionFailedCause") : 
-  start_lambda_function_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ASSUME_ROLE_FAILED" -> ASSUME_ROLE_FAILED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "StartLambdaFunctionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path "StartLambdaFunctionFailedCause") : 
+     start_lambda_function_failed_cause) : start_lambda_function_failed_cause)
 let cause_message_of_yojson = string_of_yojson
 let start_lambda_function_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -768,29 +781,32 @@ let start_child_workflow_execution_initiated_event_attributes_of_yojson tree
        (value_for_key workflow_id_of_yojson "workflowId" _list path)
    } : start_child_workflow_execution_initiated_event_attributes)
 let start_child_workflow_execution_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "DEFAULT_CHILD_POLICY_UNDEFINED" ->
-       DEFAULT_CHILD_POLICY_UNDEFINED
-   | `String "DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
-   | `String "DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "WORKFLOW_ALREADY_RUNNING" -> WORKFLOW_ALREADY_RUNNING
-   | `String "CHILD_CREATION_RATE_EXCEEDED" -> CHILD_CREATION_RATE_EXCEEDED
-   | `String "OPEN_WORKFLOWS_LIMIT_EXCEEDED" -> OPEN_WORKFLOWS_LIMIT_EXCEEDED
-   | `String "OPEN_CHILDREN_LIMIT_EXCEEDED" -> OPEN_CHILDREN_LIMIT_EXCEEDED
-   | `String "WORKFLOW_TYPE_DEPRECATED" -> WORKFLOW_TYPE_DEPRECATED
-   | `String "WORKFLOW_TYPE_DOES_NOT_EXIST" -> WORKFLOW_TYPE_DOES_NOT_EXIST
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "StartChildWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "StartChildWorkflowExecutionFailedCause") : start_child_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "DEFAULT_CHILD_POLICY_UNDEFINED" ->
+        DEFAULT_CHILD_POLICY_UNDEFINED
+    | `String "DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
+    | `String "DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "WORKFLOW_ALREADY_RUNNING" -> WORKFLOW_ALREADY_RUNNING
+    | `String "CHILD_CREATION_RATE_EXCEEDED" -> CHILD_CREATION_RATE_EXCEEDED
+    | `String "OPEN_WORKFLOWS_LIMIT_EXCEEDED" ->
+        OPEN_WORKFLOWS_LIMIT_EXCEEDED
+    | `String "OPEN_CHILDREN_LIMIT_EXCEEDED" -> OPEN_CHILDREN_LIMIT_EXCEEDED
+    | `String "WORKFLOW_TYPE_DEPRECATED" -> WORKFLOW_TYPE_DEPRECATED
+    | `String "WORKFLOW_TYPE_DOES_NOT_EXIST" -> WORKFLOW_TYPE_DOES_NOT_EXIST
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "StartChildWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "StartChildWorkflowExecutionFailedCause") : start_child_workflow_execution_failed_cause) : 
+  start_child_workflow_execution_failed_cause)
 let start_child_workflow_execution_failed_event_attributes_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -862,27 +878,29 @@ let signal_workflow_execution_input_of_yojson tree path =
      domain = (value_for_key domain_name_of_yojson "domain" _list path)
    } : signal_workflow_execution_input)
 let decision_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "ScheduleLambdaFunction" -> ScheduleLambdaFunction
-   | `String "StartChildWorkflowExecution" -> StartChildWorkflowExecution
-   | `String "RequestCancelExternalWorkflowExecution" ->
-       RequestCancelExternalWorkflowExecution
-   | `String "SignalExternalWorkflowExecution" ->
-       SignalExternalWorkflowExecution
-   | `String "CancelTimer" -> CancelTimer
-   | `String "StartTimer" -> StartTimer
-   | `String "RecordMarker" -> RecordMarker
-   | `String "ContinueAsNewWorkflowExecution" ->
-       ContinueAsNewWorkflowExecution
-   | `String "CancelWorkflowExecution" -> CancelWorkflowExecution
-   | `String "FailWorkflowExecution" -> FailWorkflowExecution
-   | `String "CompleteWorkflowExecution" -> CompleteWorkflowExecution
-   | `String "RequestCancelActivityTask" -> RequestCancelActivityTask
-   | `String "ScheduleActivityTask" -> ScheduleActivityTask
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "DecisionType" value)
-   | _ -> raise (deserialize_wrong_type_error path "DecisionType") : 
-  decision_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "ScheduleLambdaFunction" -> ScheduleLambdaFunction
+    | `String "StartChildWorkflowExecution" -> StartChildWorkflowExecution
+    | `String "RequestCancelExternalWorkflowExecution" ->
+        RequestCancelExternalWorkflowExecution
+    | `String "SignalExternalWorkflowExecution" ->
+        SignalExternalWorkflowExecution
+    | `String "CancelTimer" -> CancelTimer
+    | `String "StartTimer" -> StartTimer
+    | `String "RecordMarker" -> RecordMarker
+    | `String "ContinueAsNewWorkflowExecution" ->
+        ContinueAsNewWorkflowExecution
+    | `String "CancelWorkflowExecution" -> CancelWorkflowExecution
+    | `String "FailWorkflowExecution" -> FailWorkflowExecution
+    | `String "CompleteWorkflowExecution" -> CompleteWorkflowExecution
+    | `String "RequestCancelActivityTask" -> RequestCancelActivityTask
+    | `String "ScheduleActivityTask" -> ScheduleActivityTask
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "DecisionType" value)
+    | _ -> raise (deserialize_wrong_type_error path "DecisionType") : 
+     decision_type) : decision_type)
 let activity_id_of_yojson = string_of_yojson
 let schedule_activity_task_decision_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1258,93 +1276,99 @@ let record_activity_task_heartbeat_input_of_yojson tree path =
      task_token = (value_for_key task_token_of_yojson "taskToken" _list path)
    } : record_activity_task_heartbeat_input)
 let event_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "StartLambdaFunctionFailed" -> StartLambdaFunctionFailed
-   | `String "ScheduleLambdaFunctionFailed" -> ScheduleLambdaFunctionFailed
-   | `String "LambdaFunctionTimedOut" -> LambdaFunctionTimedOut
-   | `String "LambdaFunctionFailed" -> LambdaFunctionFailed
-   | `String "LambdaFunctionCompleted" -> LambdaFunctionCompleted
-   | `String "LambdaFunctionStarted" -> LambdaFunctionStarted
-   | `String "LambdaFunctionScheduled" -> LambdaFunctionScheduled
-   | `String "ExternalWorkflowExecutionCancelRequested" ->
-       ExternalWorkflowExecutionCancelRequested
-   | `String "RequestCancelExternalWorkflowExecutionFailed" ->
-       RequestCancelExternalWorkflowExecutionFailed
-   | `String "RequestCancelExternalWorkflowExecutionInitiated" ->
-       RequestCancelExternalWorkflowExecutionInitiated
-   | `String "ExternalWorkflowExecutionSignaled" ->
-       ExternalWorkflowExecutionSignaled
-   | `String "SignalExternalWorkflowExecutionFailed" ->
-       SignalExternalWorkflowExecutionFailed
-   | `String "SignalExternalWorkflowExecutionInitiated" ->
-       SignalExternalWorkflowExecutionInitiated
-   | `String "ChildWorkflowExecutionTerminated" ->
-       ChildWorkflowExecutionTerminated
-   | `String "ChildWorkflowExecutionCanceled" ->
-       ChildWorkflowExecutionCanceled
-   | `String "ChildWorkflowExecutionTimedOut" ->
-       ChildWorkflowExecutionTimedOut
-   | `String "ChildWorkflowExecutionFailed" -> ChildWorkflowExecutionFailed
-   | `String "ChildWorkflowExecutionCompleted" ->
-       ChildWorkflowExecutionCompleted
-   | `String "ChildWorkflowExecutionStarted" -> ChildWorkflowExecutionStarted
-   | `String "StartChildWorkflowExecutionFailed" ->
-       StartChildWorkflowExecutionFailed
-   | `String "StartChildWorkflowExecutionInitiated" ->
-       StartChildWorkflowExecutionInitiated
-   | `String "CancelTimerFailed" -> CancelTimerFailed
-   | `String "TimerCanceled" -> TimerCanceled
-   | `String "TimerFired" -> TimerFired
-   | `String "StartTimerFailed" -> StartTimerFailed
-   | `String "TimerStarted" -> TimerStarted
-   | `String "RecordMarkerFailed" -> RecordMarkerFailed
-   | `String "MarkerRecorded" -> MarkerRecorded
-   | `String "WorkflowExecutionSignaled" -> WorkflowExecutionSignaled
-   | `String "RequestCancelActivityTaskFailed" ->
-       RequestCancelActivityTaskFailed
-   | `String "ActivityTaskCancelRequested" -> ActivityTaskCancelRequested
-   | `String "ActivityTaskCanceled" -> ActivityTaskCanceled
-   | `String "ActivityTaskTimedOut" -> ActivityTaskTimedOut
-   | `String "ActivityTaskFailed" -> ActivityTaskFailed
-   | `String "ActivityTaskCompleted" -> ActivityTaskCompleted
-   | `String "ActivityTaskStarted" -> ActivityTaskStarted
-   | `String "ScheduleActivityTaskFailed" -> ScheduleActivityTaskFailed
-   | `String "ActivityTaskScheduled" -> ActivityTaskScheduled
-   | `String "DecisionTaskTimedOut" -> DecisionTaskTimedOut
-   | `String "DecisionTaskCompleted" -> DecisionTaskCompleted
-   | `String "DecisionTaskStarted" -> DecisionTaskStarted
-   | `String "DecisionTaskScheduled" -> DecisionTaskScheduled
-   | `String "WorkflowExecutionTerminated" -> WorkflowExecutionTerminated
-   | `String "ContinueAsNewWorkflowExecutionFailed" ->
-       ContinueAsNewWorkflowExecutionFailed
-   | `String "WorkflowExecutionContinuedAsNew" ->
-       WorkflowExecutionContinuedAsNew
-   | `String "CancelWorkflowExecutionFailed" -> CancelWorkflowExecutionFailed
-   | `String "WorkflowExecutionCanceled" -> WorkflowExecutionCanceled
-   | `String "WorkflowExecutionTimedOut" -> WorkflowExecutionTimedOut
-   | `String "FailWorkflowExecutionFailed" -> FailWorkflowExecutionFailed
-   | `String "WorkflowExecutionFailed" -> WorkflowExecutionFailed
-   | `String "CompleteWorkflowExecutionFailed" ->
-       CompleteWorkflowExecutionFailed
-   | `String "WorkflowExecutionCompleted" -> WorkflowExecutionCompleted
-   | `String "WorkflowExecutionCancelRequested" ->
-       WorkflowExecutionCancelRequested
-   | `String "WorkflowExecutionStarted" -> WorkflowExecutionStarted
-   | `String value ->
-       raise (deserialize_unknown_enum_value_error path "EventType" value)
-   | _ -> raise (deserialize_wrong_type_error path "EventType") : event_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "StartLambdaFunctionFailed" -> StartLambdaFunctionFailed
+    | `String "ScheduleLambdaFunctionFailed" -> ScheduleLambdaFunctionFailed
+    | `String "LambdaFunctionTimedOut" -> LambdaFunctionTimedOut
+    | `String "LambdaFunctionFailed" -> LambdaFunctionFailed
+    | `String "LambdaFunctionCompleted" -> LambdaFunctionCompleted
+    | `String "LambdaFunctionStarted" -> LambdaFunctionStarted
+    | `String "LambdaFunctionScheduled" -> LambdaFunctionScheduled
+    | `String "ExternalWorkflowExecutionCancelRequested" ->
+        ExternalWorkflowExecutionCancelRequested
+    | `String "RequestCancelExternalWorkflowExecutionFailed" ->
+        RequestCancelExternalWorkflowExecutionFailed
+    | `String "RequestCancelExternalWorkflowExecutionInitiated" ->
+        RequestCancelExternalWorkflowExecutionInitiated
+    | `String "ExternalWorkflowExecutionSignaled" ->
+        ExternalWorkflowExecutionSignaled
+    | `String "SignalExternalWorkflowExecutionFailed" ->
+        SignalExternalWorkflowExecutionFailed
+    | `String "SignalExternalWorkflowExecutionInitiated" ->
+        SignalExternalWorkflowExecutionInitiated
+    | `String "ChildWorkflowExecutionTerminated" ->
+        ChildWorkflowExecutionTerminated
+    | `String "ChildWorkflowExecutionCanceled" ->
+        ChildWorkflowExecutionCanceled
+    | `String "ChildWorkflowExecutionTimedOut" ->
+        ChildWorkflowExecutionTimedOut
+    | `String "ChildWorkflowExecutionFailed" -> ChildWorkflowExecutionFailed
+    | `String "ChildWorkflowExecutionCompleted" ->
+        ChildWorkflowExecutionCompleted
+    | `String "ChildWorkflowExecutionStarted" ->
+        ChildWorkflowExecutionStarted
+    | `String "StartChildWorkflowExecutionFailed" ->
+        StartChildWorkflowExecutionFailed
+    | `String "StartChildWorkflowExecutionInitiated" ->
+        StartChildWorkflowExecutionInitiated
+    | `String "CancelTimerFailed" -> CancelTimerFailed
+    | `String "TimerCanceled" -> TimerCanceled
+    | `String "TimerFired" -> TimerFired
+    | `String "StartTimerFailed" -> StartTimerFailed
+    | `String "TimerStarted" -> TimerStarted
+    | `String "RecordMarkerFailed" -> RecordMarkerFailed
+    | `String "MarkerRecorded" -> MarkerRecorded
+    | `String "WorkflowExecutionSignaled" -> WorkflowExecutionSignaled
+    | `String "RequestCancelActivityTaskFailed" ->
+        RequestCancelActivityTaskFailed
+    | `String "ActivityTaskCancelRequested" -> ActivityTaskCancelRequested
+    | `String "ActivityTaskCanceled" -> ActivityTaskCanceled
+    | `String "ActivityTaskTimedOut" -> ActivityTaskTimedOut
+    | `String "ActivityTaskFailed" -> ActivityTaskFailed
+    | `String "ActivityTaskCompleted" -> ActivityTaskCompleted
+    | `String "ActivityTaskStarted" -> ActivityTaskStarted
+    | `String "ScheduleActivityTaskFailed" -> ScheduleActivityTaskFailed
+    | `String "ActivityTaskScheduled" -> ActivityTaskScheduled
+    | `String "DecisionTaskTimedOut" -> DecisionTaskTimedOut
+    | `String "DecisionTaskCompleted" -> DecisionTaskCompleted
+    | `String "DecisionTaskStarted" -> DecisionTaskStarted
+    | `String "DecisionTaskScheduled" -> DecisionTaskScheduled
+    | `String "WorkflowExecutionTerminated" -> WorkflowExecutionTerminated
+    | `String "ContinueAsNewWorkflowExecutionFailed" ->
+        ContinueAsNewWorkflowExecutionFailed
+    | `String "WorkflowExecutionContinuedAsNew" ->
+        WorkflowExecutionContinuedAsNew
+    | `String "CancelWorkflowExecutionFailed" ->
+        CancelWorkflowExecutionFailed
+    | `String "WorkflowExecutionCanceled" -> WorkflowExecutionCanceled
+    | `String "WorkflowExecutionTimedOut" -> WorkflowExecutionTimedOut
+    | `String "FailWorkflowExecutionFailed" -> FailWorkflowExecutionFailed
+    | `String "WorkflowExecutionFailed" -> WorkflowExecutionFailed
+    | `String "CompleteWorkflowExecutionFailed" ->
+        CompleteWorkflowExecutionFailed
+    | `String "WorkflowExecutionCompleted" -> WorkflowExecutionCompleted
+    | `String "WorkflowExecutionCancelRequested" ->
+        WorkflowExecutionCancelRequested
+    | `String "WorkflowExecutionStarted" -> WorkflowExecutionStarted
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EventType" value)
+    | _ -> raise (deserialize_wrong_type_error path "EventType") : event_type) : 
+  event_type)
 let complete_workflow_execution_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CompleteWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "CompleteWorkflowExecutionFailedCause") : complete_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CompleteWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "CompleteWorkflowExecutionFailedCause") : complete_workflow_execution_failed_cause) : 
+  complete_workflow_execution_failed_cause)
 let complete_workflow_execution_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1356,17 +1380,19 @@ let complete_workflow_execution_failed_event_attributes_of_yojson tree path =
           "cause" _list path)
    } : complete_workflow_execution_failed_event_attributes)
 let fail_workflow_execution_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "FailWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "FailWorkflowExecutionFailedCause") : fail_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "FailWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "FailWorkflowExecutionFailedCause") : fail_workflow_execution_failed_cause) : 
+  fail_workflow_execution_failed_cause)
 let fail_workflow_execution_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1378,17 +1404,19 @@ let fail_workflow_execution_failed_event_attributes_of_yojson tree path =
           _list path)
    } : fail_workflow_execution_failed_event_attributes)
 let cancel_workflow_execution_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "CancelWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "CancelWorkflowExecutionFailedCause") : cancel_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "CancelWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "CancelWorkflowExecutionFailedCause") : cancel_workflow_execution_failed_cause) : 
+  cancel_workflow_execution_failed_cause)
 let cancel_workflow_execution_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1401,28 +1429,30 @@ let cancel_workflow_execution_failed_event_attributes_of_yojson tree path =
    } : cancel_workflow_execution_failed_event_attributes)
 let continue_as_new_workflow_execution_failed_cause_of_yojson (tree : t) path
   =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "CONTINUE_AS_NEW_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
-       CONTINUE_AS_NEW_WORKFLOW_EXECUTION_RATE_EXCEEDED
-   | `String "DEFAULT_CHILD_POLICY_UNDEFINED" ->
-       DEFAULT_CHILD_POLICY_UNDEFINED
-   | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
-   | `String "DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "WORKFLOW_TYPE_DOES_NOT_EXIST" -> WORKFLOW_TYPE_DOES_NOT_EXIST
-   | `String "WORKFLOW_TYPE_DEPRECATED" -> WORKFLOW_TYPE_DEPRECATED
-   | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ContinueAsNewWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ContinueAsNewWorkflowExecutionFailedCause") : continue_as_new_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "CONTINUE_AS_NEW_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
+        CONTINUE_AS_NEW_WORKFLOW_EXECUTION_RATE_EXCEEDED
+    | `String "DEFAULT_CHILD_POLICY_UNDEFINED" ->
+        DEFAULT_CHILD_POLICY_UNDEFINED
+    | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
+    | `String "DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_TASK_START_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_EXECUTION_START_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "WORKFLOW_TYPE_DOES_NOT_EXIST" -> WORKFLOW_TYPE_DOES_NOT_EXIST
+    | `String "WORKFLOW_TYPE_DEPRECATED" -> WORKFLOW_TYPE_DEPRECATED
+    | `String "UNHANDLED_DECISION" -> UNHANDLED_DECISION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ContinueAsNewWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ContinueAsNewWorkflowExecutionFailedCause") : continue_as_new_workflow_execution_failed_cause) : 
+  continue_as_new_workflow_execution_failed_cause)
 let continue_as_new_workflow_execution_failed_event_attributes_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -1480,15 +1510,17 @@ let decision_task_completed_event_attributes_of_yojson tree path =
           _list path)
    } : decision_task_completed_event_attributes)
 let decision_task_timeout_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "SCHEDULE_TO_START" -> SCHEDULE_TO_START
-   | `String "START_TO_CLOSE" -> START_TO_CLOSE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "DecisionTaskTimeoutType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "DecisionTaskTimeoutType") : 
-  decision_task_timeout_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "SCHEDULE_TO_START" -> SCHEDULE_TO_START
+    | `String "START_TO_CLOSE" -> START_TO_CLOSE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "DecisionTaskTimeoutType" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "DecisionTaskTimeoutType") : 
+     decision_task_timeout_type) : decision_task_timeout_type)
 let decision_task_timed_out_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1568,17 +1600,19 @@ let activity_task_failed_event_attributes_of_yojson tree path =
           _list path)
    } : activity_task_failed_event_attributes)
 let activity_task_timeout_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "HEARTBEAT" -> HEARTBEAT
-   | `String "SCHEDULE_TO_CLOSE" -> SCHEDULE_TO_CLOSE
-   | `String "SCHEDULE_TO_START" -> SCHEDULE_TO_START
-   | `String "START_TO_CLOSE" -> START_TO_CLOSE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ActivityTaskTimeoutType"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "ActivityTaskTimeoutType") : 
-  activity_task_timeout_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "HEARTBEAT" -> HEARTBEAT
+    | `String "SCHEDULE_TO_CLOSE" -> SCHEDULE_TO_CLOSE
+    | `String "SCHEDULE_TO_START" -> SCHEDULE_TO_START
+    | `String "START_TO_CLOSE" -> START_TO_CLOSE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ActivityTaskTimeoutType" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "ActivityTaskTimeoutType") : 
+     activity_task_timeout_type) : activity_task_timeout_type)
 let activity_task_timed_out_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1628,14 +1662,16 @@ let marker_recorded_event_attributes_of_yojson tree path =
        (value_for_key marker_name_of_yojson "markerName" _list path)
    } : marker_recorded_event_attributes)
 let record_marker_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecordMarkerFailedCause"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordMarkerFailedCause") : 
-  record_marker_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RecordMarkerFailedCause" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "RecordMarkerFailedCause") : 
+     record_marker_failed_cause) : record_marker_failed_cause)
 let record_marker_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1768,20 +1804,22 @@ let external_workflow_execution_signaled_event_attributes_of_yojson tree path
    } : external_workflow_execution_signaled_event_attributes)
 let signal_external_workflow_execution_failed_cause_of_yojson (tree : t) path
   =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
-       SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED
-   | `String "UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION" ->
-       UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "SignalExternalWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "SignalExternalWorkflowExecutionFailedCause") : signal_external_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
+        SIGNAL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED
+    | `String "UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION" ->
+        UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "SignalExternalWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "SignalExternalWorkflowExecutionFailedCause") : signal_external_workflow_execution_failed_cause) : 
+  signal_external_workflow_execution_failed_cause)
 let signal_external_workflow_execution_failed_event_attributes_of_yojson tree
   path =
   let _list = assoc_of_yojson tree path in
@@ -1832,20 +1870,22 @@ let request_cancel_external_workflow_execution_initiated_event_attributes_of_yoj
    } : request_cancel_external_workflow_execution_initiated_event_attributes)
 let request_cancel_external_workflow_execution_failed_cause_of_yojson
   (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
-       REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED
-   | `String "UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION" ->
-       UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RequestCancelExternalWorkflowExecutionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "RequestCancelExternalWorkflowExecutionFailedCause") : request_cancel_external_workflow_execution_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED" ->
+        REQUEST_CANCEL_EXTERNAL_WORKFLOW_EXECUTION_RATE_EXCEEDED
+    | `String "UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION" ->
+        UNKNOWN_EXTERNAL_WORKFLOW_EXECUTION
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RequestCancelExternalWorkflowExecutionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "RequestCancelExternalWorkflowExecutionFailedCause") : request_cancel_external_workflow_execution_failed_cause) : 
+  request_cancel_external_workflow_execution_failed_cause)
 let request_cancel_external_workflow_execution_failed_event_attributes_of_yojson
   tree path =
   let _list = assoc_of_yojson tree path in
@@ -1869,31 +1909,33 @@ let request_cancel_external_workflow_execution_failed_event_attributes_of_yojson
        (value_for_key workflow_id_of_yojson "workflowId" _list path)
    } : request_cancel_external_workflow_execution_failed_event_attributes)
 let schedule_activity_task_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED" ->
-       DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED
-   | `String "DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED" ->
-       DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED
-   | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
-   | `String "DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED" ->
-       DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED
-   | `String "ACTIVITY_CREATION_RATE_EXCEEDED" ->
-       ACTIVITY_CREATION_RATE_EXCEEDED
-   | `String "OPEN_ACTIVITIES_LIMIT_EXCEEDED" ->
-       OPEN_ACTIVITIES_LIMIT_EXCEEDED
-   | `String "ACTIVITY_ID_ALREADY_IN_USE" -> ACTIVITY_ID_ALREADY_IN_USE
-   | `String "ACTIVITY_TYPE_DOES_NOT_EXIST" -> ACTIVITY_TYPE_DOES_NOT_EXIST
-   | `String "ACTIVITY_TYPE_DEPRECATED" -> ACTIVITY_TYPE_DEPRECATED
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ScheduleActivityTaskFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path "ScheduleActivityTaskFailedCause") : 
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED" ->
+        DEFAULT_HEARTBEAT_TIMEOUT_UNDEFINED
+    | `String "DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_START_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED" ->
+        DEFAULT_SCHEDULE_TO_START_TIMEOUT_UNDEFINED
+    | `String "DEFAULT_TASK_LIST_UNDEFINED" -> DEFAULT_TASK_LIST_UNDEFINED
+    | `String "DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED" ->
+        DEFAULT_SCHEDULE_TO_CLOSE_TIMEOUT_UNDEFINED
+    | `String "ACTIVITY_CREATION_RATE_EXCEEDED" ->
+        ACTIVITY_CREATION_RATE_EXCEEDED
+    | `String "OPEN_ACTIVITIES_LIMIT_EXCEEDED" ->
+        OPEN_ACTIVITIES_LIMIT_EXCEEDED
+    | `String "ACTIVITY_ID_ALREADY_IN_USE" -> ACTIVITY_ID_ALREADY_IN_USE
+    | `String "ACTIVITY_TYPE_DOES_NOT_EXIST" -> ACTIVITY_TYPE_DOES_NOT_EXIST
+    | `String "ACTIVITY_TYPE_DEPRECATED" -> ACTIVITY_TYPE_DEPRECATED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ScheduleActivityTaskFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ScheduleActivityTaskFailedCause") : schedule_activity_task_failed_cause) : 
   schedule_activity_task_failed_cause)
 let schedule_activity_task_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1910,17 +1952,19 @@ let schedule_activity_task_failed_event_attributes_of_yojson tree path =
        (value_for_key activity_type_of_yojson "activityType" _list path)
    } : schedule_activity_task_failed_event_attributes)
 let request_cancel_activity_task_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "ACTIVITY_ID_UNKNOWN" -> ACTIVITY_ID_UNKNOWN
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "RequestCancelActivityTaskFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "RequestCancelActivityTaskFailedCause") : request_cancel_activity_task_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "ACTIVITY_ID_UNKNOWN" -> ACTIVITY_ID_UNKNOWN
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "RequestCancelActivityTaskFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "RequestCancelActivityTaskFailedCause") : request_cancel_activity_task_failed_cause) : 
+  request_cancel_activity_task_failed_cause)
 let request_cancel_activity_task_failed_event_attributes_of_yojson tree path
   =
   let _list = assoc_of_yojson tree path in
@@ -1935,15 +1979,16 @@ let request_cancel_activity_task_failed_event_attributes_of_yojson tree path
        (value_for_key activity_id_of_yojson "activityId" _list path)
    } : request_cancel_activity_task_failed_event_attributes)
 let cancel_timer_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
-   | `String "TIMER_ID_UNKNOWN" -> TIMER_ID_UNKNOWN
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "CancelTimerFailedCause"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "CancelTimerFailedCause") : 
-  cancel_timer_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "OPERATION_NOT_PERMITTED" -> OPERATION_NOT_PERMITTED
+    | `String "TIMER_ID_UNKNOWN" -> TIMER_ID_UNKNOWN
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "CancelTimerFailedCause"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "CancelTimerFailedCause") : 
+     cancel_timer_failed_cause) : cancel_timer_failed_cause)
 let cancel_timer_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2002,15 +2047,16 @@ let lambda_function_failed_event_attributes_of_yojson tree path =
        (value_for_key event_id_of_yojson "scheduledEventId" _list path)
    } : lambda_function_failed_event_attributes)
 let lambda_function_timeout_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "START_TO_CLOSE" -> START_TO_CLOSE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "LambdaFunctionTimeoutType" value)
-   | _ ->
-       raise (deserialize_wrong_type_error path "LambdaFunctionTimeoutType") : 
-  lambda_function_timeout_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "START_TO_CLOSE" -> START_TO_CLOSE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "LambdaFunctionTimeoutType" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "LambdaFunctionTimeoutType") : 
+     lambda_function_timeout_type) : lambda_function_timeout_type)
 let lambda_function_timed_out_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2024,22 +2070,24 @@ let lambda_function_timed_out_event_attributes_of_yojson tree path =
        (value_for_key event_id_of_yojson "scheduledEventId" _list path)
    } : lambda_function_timed_out_event_attributes)
 let schedule_lambda_function_failed_cause_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LAMBDA_SERVICE_NOT_AVAILABLE_IN_REGION" ->
-       LAMBDA_SERVICE_NOT_AVAILABLE_IN_REGION
-   | `String "LAMBDA_FUNCTION_CREATION_RATE_EXCEEDED" ->
-       LAMBDA_FUNCTION_CREATION_RATE_EXCEEDED
-   | `String "OPEN_LAMBDA_FUNCTIONS_LIMIT_EXCEEDED" ->
-       OPEN_LAMBDA_FUNCTIONS_LIMIT_EXCEEDED
-   | `String "ID_ALREADY_IN_USE" -> ID_ALREADY_IN_USE
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path
-            "ScheduleLambdaFunctionFailedCause" value)
-   | _ ->
-       raise
-         (deserialize_wrong_type_error path
-            "ScheduleLambdaFunctionFailedCause") : schedule_lambda_function_failed_cause)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LAMBDA_SERVICE_NOT_AVAILABLE_IN_REGION" ->
+        LAMBDA_SERVICE_NOT_AVAILABLE_IN_REGION
+    | `String "LAMBDA_FUNCTION_CREATION_RATE_EXCEEDED" ->
+        LAMBDA_FUNCTION_CREATION_RATE_EXCEEDED
+    | `String "OPEN_LAMBDA_FUNCTIONS_LIMIT_EXCEEDED" ->
+        OPEN_LAMBDA_FUNCTIONS_LIMIT_EXCEEDED
+    | `String "ID_ALREADY_IN_USE" -> ID_ALREADY_IN_USE
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "ScheduleLambdaFunctionFailedCause" value)
+    | _ ->
+        raise
+          (deserialize_wrong_type_error path
+             "ScheduleLambdaFunctionFailedCause") : schedule_lambda_function_failed_cause) : 
+  schedule_lambda_function_failed_cause)
 let schedule_lambda_function_failed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2793,3 +2841,8 @@ let base_integer_of_yojson = int_of_yojson
 let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let base_long_of_yojson = long_of_yojson
 let base_document_of_yojson = json_of_yojson
+let base_float_of_yojson = float_of_yojson
+let base_double_of_yojson = double_of_yojson
+let base_short_of_yojson = short_of_yojson
+let base_blob_of_yojson = blob_of_yojson
+let base_byte_of_yojson = byte_of_yojson

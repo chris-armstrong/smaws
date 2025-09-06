@@ -19,7 +19,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_ip_routes_request ->
-        (unit,
+        (add_ip_routes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -36,7 +36,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_region_request ->
-        (unit,
+        (add_region_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -58,7 +58,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       add_tags_to_resource_request ->
-        (unit,
+        (add_tags_to_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -73,7 +73,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_schema_extension_request ->
-        (unit,
+        (cancel_schema_extension_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -131,7 +131,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_conditional_forwarder_request ->
-        (unit,
+        (create_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -162,7 +162,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_log_subscription_request ->
-        (unit,
+        (create_log_subscription_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityAlreadyExistsException of entity_already_exists_exception 
@@ -227,7 +227,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_conditional_forwarder_request ->
-        (unit,
+        (delete_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -255,7 +255,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_log_subscription_request ->
-        (unit,
+        (delete_log_subscription_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -295,7 +295,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_certificate_request ->
-        (unit,
+        (deregister_certificate_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `CertificateDoesNotExistException of
               certificate_does_not_exist_exception 
@@ -315,7 +315,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_event_topic_request ->
-        (unit,
+        (deregister_event_topic_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -388,6 +388,22 @@ sig
           | `ServiceException of service_exception ]) result
 end[@@ocaml.doc
      "Obtains information about the directories that belong to this account.\n\n You can retrieve information about specific directories by passing the directory identifiers in the [DirectoryIds] parameter. Otherwise, all directories that belong to the current account are returned.\n \n  This operation supports pagination with the use of the [NextToken] request and response parameters. If more results are available, the [DescribeDirectoriesResult.NextToken] member contains a token that you pass in the next call to [DescribeDirectories] to retrieve the next set of items.\n  \n   You can also specify a maximum number of return results with the [Limit] parameter.\n   "]
+module DescribeDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_directory_data_access_request ->
+        (describe_directory_data_access_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Obtains status of directory data access enablement through the Directory Service Data API for the specified directory.\n"]
 module DescribeDomainControllers :
 sig
   val request :
@@ -535,7 +551,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_client_authentication_request ->
-        (unit,
+        (disable_client_authentication_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -548,12 +564,31 @@ sig
           result
 end[@@ocaml.doc
      "Disables alternative client authentication methods for the specified directory. \n"]
+module DisableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      disable_directory_data_access_request ->
+        (disable_directory_data_access_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Deactivates access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module DisableLDAPS :
 sig
   val request :
     Smaws_Lib.Context.t ->
       disable_ldaps_request ->
-        (unit,
+        (disable_ldaps_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryDoesNotExistException of
@@ -571,7 +606,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_radius_request ->
-        (unit,
+        (disable_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -583,7 +618,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disable_sso_request ->
-        (unit,
+        (disable_sso_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AuthenticationFailedException of authentication_failed_exception 
           | `ClientException of client_exception 
@@ -597,7 +632,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_client_authentication_request ->
-        (unit,
+        (enable_client_authentication_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -612,12 +647,31 @@ sig
           result
 end[@@ocaml.doc
      "Enables alternative client authentication methods for the specified directory.\n"]
+module EnableDirectoryDataAccess :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      enable_directory_data_access_request ->
+        (enable_directory_data_access_result,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `AccessDeniedException of access_denied_exception 
+          | `ClientException of client_exception 
+          | `DirectoryDoesNotExistException of
+              directory_does_not_exist_exception 
+          | `DirectoryInDesiredStateException of
+              directory_in_desired_state_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
+          | `ServiceException of service_exception 
+          | `UnsupportedOperationException of unsupported_operation_exception ])
+          result
+end[@@ocaml.doc
+     "Enables access to directory data via the Directory Service Data API for the specified directory. For more information, see {{:https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html}Directory Service Data API Reference}.\n"]
 module EnableLDAPS :
 sig
   val request :
     Smaws_Lib.Context.t ->
       enable_ldaps_request ->
-        (unit,
+        (enable_ldaps_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryDoesNotExistException of
@@ -637,7 +691,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_radius_request ->
-        (unit,
+        (enable_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityAlreadyExistsException of entity_already_exists_exception 
@@ -651,7 +705,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       enable_sso_request ->
-        (unit,
+        (enable_sso_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AuthenticationFailedException of authentication_failed_exception 
           | `ClientException of client_exception 
@@ -665,7 +719,7 @@ module GetDirectoryLimits :
 sig
   val request :
     Smaws_Lib.Context.t ->
-      unit ->
+      get_directory_limits_request ->
         (get_directory_limits_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
@@ -781,7 +835,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_event_topic_request ->
-        (unit,
+        (register_event_topic_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -809,7 +863,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_ip_routes_request ->
-        (unit,
+        (remove_ip_routes_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -822,7 +876,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_region_request ->
-        (unit,
+        (remove_region_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -839,7 +893,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       remove_tags_from_resource_request ->
-        (unit,
+        (remove_tags_from_resource_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -851,7 +905,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       reset_user_password_request ->
-        (unit,
+        (reset_user_password_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -862,13 +916,13 @@ sig
           | `UserDoesNotExistException of user_does_not_exist_exception ])
           result
 end[@@ocaml.doc
-     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
+     "Resets the password for any user in your Managed Microsoft AD or Simple AD directory. Disabled users will become enabled and can be authenticated following the API call.\n\n You can reset the password for any user in your directory with the following exceptions:\n \n  {ul\n        {-  For Simple AD, you cannot reset the password for any user that is a member of either the {b Domain Admins} or {b Enterprise Admins} group except for the administrator user.\n            \n             }\n        {-  For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the {b Amazon Web Services Reserved} OU. For more information about the OU structure for an Managed Microsoft AD directory, see {{:https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html}What Gets Created} in the {i Directory Service Administration Guide}.\n            \n             }\n        }\n  "]
 module RestoreFromSnapshot :
 sig
   val request :
     Smaws_Lib.Context.t ->
       restore_from_snapshot_request ->
-        (unit,
+        (restore_from_snapshot_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 
@@ -932,7 +986,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_conditional_forwarder_request ->
-        (unit,
+        (update_conditional_forwarder_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -948,7 +1002,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_directory_setup_request ->
-        (unit,
+        (update_directory_setup_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `AccessDeniedException of access_denied_exception 
           | `ClientException of client_exception 
@@ -969,7 +1023,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_number_of_domain_controllers_request ->
-        (unit,
+        (update_number_of_domain_controllers_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `DirectoryUnavailableException of directory_unavailable_exception 
@@ -987,7 +1041,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_radius_request ->
-        (unit,
+        (update_radius_result,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ClientException of client_exception 
           | `EntityDoesNotExistException of entity_does_not_exist_exception 

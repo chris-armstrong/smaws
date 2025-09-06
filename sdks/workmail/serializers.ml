@@ -33,7 +33,6 @@ let directory_service_authentication_failed_exception_to_yojson
 let update_user_response_to_yojson = unit_to_yojson
 let organization_id_to_yojson = string_to_yojson
 let entity_identifier_to_yojson = string_to_yojson
-let base_unit_to_yojson = unit_to_yojson
 let user_role_to_yojson (x : user_role) =
   match x with
   | REMOTE_USER -> `String "REMOTE_USER"
@@ -42,9 +41,13 @@ let user_role_to_yojson (x : user_role) =
   | USER -> `String "USER"
 let user_attribute_to_yojson = string_to_yojson
 let boolean_object_to_yojson = bool_to_yojson
+let identity_provider_user_id_for_update_to_yojson = string_to_yojson
 let update_user_request_to_yojson (x : update_user_request) =
   assoc_to_yojson
-    [("Office", (option_to_yojson user_attribute_to_yojson x.office));
+    [("IdentityProviderUserId",
+       (option_to_yojson identity_provider_user_id_for_update_to_yojson
+          x.identity_provider_user_id));
+    ("Office", (option_to_yojson user_attribute_to_yojson x.office));
     ("Country", (option_to_yojson user_attribute_to_yojson x.country));
     ("Department", (option_to_yojson user_attribute_to_yojson x.department));
     ("ZipCode", (option_to_yojson user_attribute_to_yojson x.zip_code));
@@ -424,6 +427,48 @@ let put_inbound_dmarc_settings_request_to_yojson
   assoc_to_yojson
     [("Enforced", (Some (boolean_object_to_yojson x.enforced)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let put_identity_provider_configuration_response_to_yojson = unit_to_yojson
+let identity_provider_authentication_mode_to_yojson
+  (x : identity_provider_authentication_mode) =
+  match x with
+  | IDENTITY_PROVIDER_AND_DIRECTORY ->
+      `String "IDENTITY_PROVIDER_AND_DIRECTORY"
+  | IDENTITY_PROVIDER_ONLY -> `String "IDENTITY_PROVIDER_ONLY"
+let instance_arn_to_yojson = string_to_yojson
+let application_arn_to_yojson = string_to_yojson
+let identity_center_configuration_to_yojson
+  (x : identity_center_configuration) =
+  assoc_to_yojson
+    [("ApplicationArn", (Some (application_arn_to_yojson x.application_arn)));
+    ("InstanceArn", (Some (instance_arn_to_yojson x.instance_arn)))]
+let personal_access_token_configuration_status_to_yojson
+  (x : personal_access_token_configuration_status) =
+  match x with | INACTIVE -> `String "INACTIVE" | ACTIVE -> `String "ACTIVE"
+let personal_access_token_lifetime_in_days_to_yojson = int_to_yojson
+let personal_access_token_configuration_to_yojson
+  (x : personal_access_token_configuration) =
+  assoc_to_yojson
+    [("LifetimeInDays",
+       (option_to_yojson personal_access_token_lifetime_in_days_to_yojson
+          x.lifetime_in_days));
+    ("Status",
+      (Some (personal_access_token_configuration_status_to_yojson x.status)))]
+let put_identity_provider_configuration_request_to_yojson
+  (x : put_identity_provider_configuration_request) =
+  assoc_to_yojson
+    [("PersonalAccessTokenConfiguration",
+       (Some
+          (personal_access_token_configuration_to_yojson
+             x.personal_access_token_configuration)));
+    ("IdentityCenterConfiguration",
+      (Some
+         (identity_center_configuration_to_yojson
+            x.identity_center_configuration)));
+    ("AuthenticationMode",
+      (Some
+         (identity_provider_authentication_mode_to_yojson
+            x.authentication_mode)));
+    ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let put_email_monitoring_configuration_response_to_yojson = unit_to_yojson
 let log_group_arn_to_yojson = string_to_yojson
 let put_email_monitoring_configuration_request_to_yojson
@@ -474,10 +519,17 @@ let entity_state_to_yojson (x : entity_state) =
   | DISABLED -> `String "DISABLED"
   | ENABLED -> `String "ENABLED"
 let timestamp__to_yojson = timestamp_to_yojson
+let identity_provider_user_id_to_yojson = string_to_yojson
+let identity_provider_identity_store_id_to_yojson = string_to_yojson
 let user_to_yojson (x : user) =
   assoc_to_yojson
-    [("DisabledDate",
-       (option_to_yojson timestamp__to_yojson x.disabled_date));
+    [("IdentityProviderIdentityStoreId",
+       (option_to_yojson identity_provider_identity_store_id_to_yojson
+          x.identity_provider_identity_store_id));
+    ("IdentityProviderUserId",
+      (option_to_yojson identity_provider_user_id_to_yojson
+         x.identity_provider_user_id));
+    ("DisabledDate", (option_to_yojson timestamp__to_yojson x.disabled_date));
     ("EnabledDate", (option_to_yojson timestamp__to_yojson x.enabled_date));
     ("UserRole", (option_to_yojson user_role_to_yojson x.user_role));
     ("State", (option_to_yojson entity_state_to_yojson x.state));
@@ -492,9 +544,13 @@ let list_users_response_to_yojson (x : list_users_response) =
     [("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
     ("Users", (option_to_yojson users_to_yojson x.users))]
 let max_results_to_yojson = int_to_yojson
+let identity_provider_user_id_prefix_to_yojson = string_to_yojson
 let list_users_filters_to_yojson (x : list_users_filters) =
   assoc_to_yojson
-    [("State", (option_to_yojson entity_state_to_yojson x.state));
+    [("IdentityProviderUserIdPrefix",
+       (option_to_yojson identity_provider_user_id_prefix_to_yojson
+          x.identity_provider_user_id_prefix));
+    ("State", (option_to_yojson entity_state_to_yojson x.state));
     ("PrimaryEmailPrefix",
       (option_to_yojson string__to_yojson x.primary_email_prefix));
     ("DisplayNamePrefix",
@@ -564,6 +620,41 @@ let list_resource_delegates_request_to_yojson
     [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
     ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
     ("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
+    ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let personal_access_token_id_to_yojson = string_to_yojson
+let personal_access_token_name_to_yojson = string_to_yojson
+let personal_access_token_scope_to_yojson = string_to_yojson
+let personal_access_token_scope_list_to_yojson tree =
+  list_to_yojson personal_access_token_scope_to_yojson tree
+let personal_access_token_summary_to_yojson
+  (x : personal_access_token_summary) =
+  assoc_to_yojson
+    [("Scopes",
+       (option_to_yojson personal_access_token_scope_list_to_yojson x.scopes));
+    ("ExpiresTime", (option_to_yojson timestamp__to_yojson x.expires_time));
+    ("DateLastUsed",
+      (option_to_yojson timestamp__to_yojson x.date_last_used));
+    ("DateCreated", (option_to_yojson timestamp__to_yojson x.date_created));
+    ("Name", (option_to_yojson personal_access_token_name_to_yojson x.name));
+    ("UserId", (option_to_yojson work_mail_identifier_to_yojson x.user_id));
+    ("PersonalAccessTokenId",
+      (option_to_yojson personal_access_token_id_to_yojson
+         x.personal_access_token_id))]
+let personal_access_token_summary_list_to_yojson tree =
+  list_to_yojson personal_access_token_summary_to_yojson tree
+let list_personal_access_tokens_response_to_yojson
+  (x : list_personal_access_tokens_response) =
+  assoc_to_yojson
+    [("PersonalAccessTokenSummaries",
+       (option_to_yojson personal_access_token_summary_list_to_yojson
+          x.personal_access_token_summaries));
+    ("NextToken", (option_to_yojson next_token_to_yojson x.next_token))]
+let list_personal_access_tokens_request_to_yojson
+  (x : list_personal_access_tokens_request) =
+  assoc_to_yojson
+    [("MaxResults", (option_to_yojson max_results_to_yojson x.max_results));
+    ("NextToken", (option_to_yojson next_token_to_yojson x.next_token));
+    ("UserId", (option_to_yojson entity_identifier_to_yojson x.user_id));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let organization_name_to_yojson = string_to_yojson
 let organization_summary_to_yojson (x : organization_summary) =
@@ -907,6 +998,26 @@ let list_access_control_rules_request_to_yojson
   (x : list_access_control_rules_request) =
   assoc_to_yojson
     [("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let get_personal_access_token_metadata_response_to_yojson
+  (x : get_personal_access_token_metadata_response) =
+  assoc_to_yojson
+    [("Scopes",
+       (option_to_yojson personal_access_token_scope_list_to_yojson x.scopes));
+    ("ExpiresTime", (option_to_yojson timestamp__to_yojson x.expires_time));
+    ("DateLastUsed",
+      (option_to_yojson timestamp__to_yojson x.date_last_used));
+    ("DateCreated", (option_to_yojson timestamp__to_yojson x.date_created));
+    ("Name", (option_to_yojson personal_access_token_name_to_yojson x.name));
+    ("UserId", (option_to_yojson work_mail_identifier_to_yojson x.user_id));
+    ("PersonalAccessTokenId",
+      (option_to_yojson personal_access_token_id_to_yojson
+         x.personal_access_token_id))]
+let get_personal_access_token_metadata_request_to_yojson
+  (x : get_personal_access_token_metadata_request) =
+  assoc_to_yojson
+    [("PersonalAccessTokenId",
+       (Some (personal_access_token_id_to_yojson x.personal_access_token_id)));
+    ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let get_mobile_device_access_override_response_to_yojson
   (x : get_mobile_device_access_override_response) =
   assoc_to_yojson
@@ -1088,7 +1199,13 @@ let disassociate_delegate_from_resource_request_to_yojson
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let describe_user_response_to_yojson (x : describe_user_response) =
   assoc_to_yojson
-    [("Office", (option_to_yojson user_attribute_to_yojson x.office));
+    [("IdentityProviderIdentityStoreId",
+       (option_to_yojson identity_provider_identity_store_id_to_yojson
+          x.identity_provider_identity_store_id));
+    ("IdentityProviderUserId",
+      (option_to_yojson identity_provider_user_id_to_yojson
+         x.identity_provider_user_id));
+    ("Office", (option_to_yojson user_attribute_to_yojson x.office));
     ("Country", (option_to_yojson user_attribute_to_yojson x.country));
     ("Department", (option_to_yojson user_attribute_to_yojson x.department));
     ("ZipCode", (option_to_yojson user_attribute_to_yojson x.zip_code));
@@ -1195,6 +1312,22 @@ let describe_inbound_dmarc_settings_request_to_yojson
   (x : describe_inbound_dmarc_settings_request) =
   assoc_to_yojson
     [("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let describe_identity_provider_configuration_response_to_yojson
+  (x : describe_identity_provider_configuration_response) =
+  assoc_to_yojson
+    [("PersonalAccessTokenConfiguration",
+       (option_to_yojson personal_access_token_configuration_to_yojson
+          x.personal_access_token_configuration));
+    ("IdentityCenterConfiguration",
+      (option_to_yojson identity_center_configuration_to_yojson
+         x.identity_center_configuration));
+    ("AuthenticationMode",
+      (option_to_yojson identity_provider_authentication_mode_to_yojson
+         x.authentication_mode))]
+let describe_identity_provider_configuration_request_to_yojson
+  (x : describe_identity_provider_configuration_request) =
+  assoc_to_yojson
+    [("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let describe_group_response_to_yojson (x : describe_group_response) =
   assoc_to_yojson
     [("HiddenFromGlobalAddressList",
@@ -1266,6 +1399,13 @@ let delete_resource_request_to_yojson (x : delete_resource_request) =
   assoc_to_yojson
     [("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let delete_personal_access_token_response_to_yojson = unit_to_yojson
+let delete_personal_access_token_request_to_yojson
+  (x : delete_personal_access_token_request) =
+  assoc_to_yojson
+    [("PersonalAccessTokenId",
+       (Some (personal_access_token_id_to_yojson x.personal_access_token_id)));
+    ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
 let delete_organization_response_to_yojson (x : delete_organization_response)
   =
   assoc_to_yojson
@@ -1274,7 +1414,10 @@ let delete_organization_response_to_yojson (x : delete_organization_response)
       (option_to_yojson organization_id_to_yojson x.organization_id))]
 let delete_organization_request_to_yojson (x : delete_organization_request) =
   assoc_to_yojson
-    [("ForceDelete", (option_to_yojson boolean__to_yojson x.force_delete));
+    [("DeleteIdentityCenterApplication",
+       (option_to_yojson boolean__to_yojson
+          x.delete_identity_center_application));
+    ("ForceDelete", (option_to_yojson boolean__to_yojson x.force_delete));
     ("DeleteDirectory", (Some (boolean__to_yojson x.delete_directory)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)));
     ("ClientToken",
@@ -1309,6 +1452,17 @@ let delete_impersonation_role_request_to_yojson
     [("ImpersonationRoleId",
        (Some (impersonation_role_id_to_yojson x.impersonation_role_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let delete_identity_provider_configuration_response_to_yojson =
+  unit_to_yojson
+let delete_identity_provider_configuration_request_to_yojson
+  (x : delete_identity_provider_configuration_request) =
+  assoc_to_yojson
+    [("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
+let delete_identity_center_application_response_to_yojson = unit_to_yojson
+let delete_identity_center_application_request_to_yojson
+  (x : delete_identity_center_application_request) =
+  assoc_to_yojson
+    [("ApplicationArn", (Some (application_arn_to_yojson x.application_arn)))]
 let delete_group_response_to_yojson = unit_to_yojson
 let delete_group_request_to_yojson (x : delete_group_request) =
   assoc_to_yojson
@@ -1345,8 +1499,11 @@ let create_user_response_to_yojson (x : create_user_response) =
     [("UserId", (option_to_yojson work_mail_identifier_to_yojson x.user_id))]
 let create_user_request_to_yojson (x : create_user_request) =
   assoc_to_yojson
-    [("HiddenFromGlobalAddressList",
-       (option_to_yojson boolean__to_yojson x.hidden_from_global_address_list));
+    [("IdentityProviderUserId",
+       (option_to_yojson identity_provider_user_id_to_yojson
+          x.identity_provider_user_id));
+    ("HiddenFromGlobalAddressList",
+      (option_to_yojson boolean__to_yojson x.hidden_from_global_address_list));
     ("LastName", (option_to_yojson user_attribute_to_yojson x.last_name));
     ("FirstName", (option_to_yojson user_attribute_to_yojson x.first_name));
     ("Role", (option_to_yojson user_role_to_yojson x.role));
@@ -1446,6 +1603,19 @@ let create_impersonation_role_request_to_yojson
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)));
     ("ClientToken",
       (option_to_yojson idempotency_client_token_to_yojson x.client_token))]
+let create_identity_center_application_response_to_yojson
+  (x : create_identity_center_application_response) =
+  assoc_to_yojson
+    [("ApplicationArn",
+       (option_to_yojson application_arn_to_yojson x.application_arn))]
+let identity_center_application_name_to_yojson = string_to_yojson
+let create_identity_center_application_request_to_yojson
+  (x : create_identity_center_application_request) =
+  assoc_to_yojson
+    [("ClientToken",
+       (option_to_yojson idempotency_client_token_to_yojson x.client_token));
+    ("InstanceArn", (Some (instance_arn_to_yojson x.instance_arn)));
+    ("Name", (Some (identity_center_application_name_to_yojson x.name)))]
 let create_group_response_to_yojson (x : create_group_response) =
   assoc_to_yojson
     [("GroupId",
@@ -1510,9 +1680,3 @@ let associate_delegate_to_resource_request_to_yojson
     [("EntityId", (Some (entity_identifier_to_yojson x.entity_id)));
     ("ResourceId", (Some (entity_identifier_to_yojson x.resource_id)));
     ("OrganizationId", (Some (organization_id_to_yojson x.organization_id)))]
-let base_string_to_yojson = string_to_yojson
-let base_boolean_to_yojson = bool_to_yojson
-let base_integer_to_yojson = int_to_yojson
-let base_timestamp_to_yojson = timestamp_to_yojson
-let base_long_to_yojson = long_to_yojson
-let base_document_to_yojson = json_to_yojson

@@ -48,16 +48,16 @@ let kinesis_firehose_input_update_of_yojson tree path =
           (value_for_key resource_ar_n_of_yojson "ResourceARNUpdate") _list
           path)
    } : kinesis_firehose_input_update)
-let base_unit_of_yojson = unit_of_yojson
 let record_format_type_of_yojson (tree : t) path =
-  (match tree with
-   | `String "CSV" -> CSV
-   | `String "JSON" -> JSON
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "RecordFormatType" value)
-   | _ -> raise (deserialize_wrong_type_error path "RecordFormatType") : 
-  record_format_type)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "CSV" -> CSV
+    | `String "JSON" -> JSON
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "RecordFormatType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RecordFormatType") : 
+     record_format_type) : record_format_type)
 let record_row_path_of_yojson = string_of_yojson
 let json_mapping_parameters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -455,16 +455,17 @@ let stop_application_request_of_yojson tree path =
 let start_application_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in (() : unit)
 let input_starting_position_of_yojson (tree : t) path =
-  (match tree with
-   | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
-   | `String "TRIM_HORIZON" -> TRIM_HORIZON
-   | `String "NOW" -> NOW
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "InputStartingPosition"
-            value)
-   | _ -> raise (deserialize_wrong_type_error path "InputStartingPosition") : 
-  input_starting_position)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
+    | `String "TRIM_HORIZON" -> TRIM_HORIZON
+    | `String "NOW" -> NOW
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "InputStartingPosition"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "InputStartingPosition") : 
+     input_starting_position) : input_starting_position)
 let input_starting_position_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -684,18 +685,20 @@ let list_tags_for_resource_request_of_yojson tree path =
           path)
    } : list_tags_for_resource_request)
 let application_status_of_yojson (tree : t) path =
-  (match tree with
-   | `String "UPDATING" -> UPDATING
-   | `String "RUNNING" -> RUNNING
-   | `String "READY" -> READY
-   | `String "STOPPING" -> STOPPING
-   | `String "STARTING" -> STARTING
-   | `String "DELETING" -> DELETING
-   | `String value ->
-       raise
-         (deserialize_unknown_enum_value_error path "ApplicationStatus" value)
-   | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
-  application_status)
+  (let _list = assoc_of_yojson tree path in
+   (match tree with
+    | `String "UPDATING" -> UPDATING
+    | `String "RUNNING" -> RUNNING
+    | `String "READY" -> READY
+    | `String "STOPPING" -> STOPPING
+    | `String "STARTING" -> STARTING
+    | `String "DELETING" -> DELETING
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "ApplicationStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "ApplicationStatus") : 
+     application_status) : application_status)
 let application_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1162,9 +1165,3 @@ let add_application_cloud_watch_logging_option_request_of_yojson tree path =
      application_name =
        (value_for_key application_name_of_yojson "ApplicationName" _list path)
    } : add_application_cloud_watch_logging_option_request)
-let base_string_of_yojson = string_of_yojson
-let base_boolean_of_yojson = bool_of_yojson
-let base_integer_of_yojson = int_of_yojson
-let base_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
-let base_long_of_yojson = long_of_yojson
-let base_document_of_yojson = json_of_yojson

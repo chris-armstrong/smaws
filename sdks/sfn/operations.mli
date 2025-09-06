@@ -6,9 +6,14 @@ sig
       create_activity_input ->
         (create_activity_output,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `ActivityAlreadyExists of activity_already_exists 
           | `ActivityLimitExceeded of activity_limit_exceeded 
-          | `InvalidName of invalid_name  | `TooManyTags of too_many_tags ])
-          result
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
+          | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
+          | `TooManyTags of too_many_tags ]) result
 end[@@ocaml.doc
      "Creates an activity. An activity is a task that you write in any programming language and host on any machine that has access to Step Functions. Activities must poll Step Functions using the [GetActivityTask] API action and respond using [SendTask*] API actions. This function lets Step Functions know the existence of your activity and returns an identifier for use in a state machine and when polling from the activity.\n\n  This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n  \n      [CreateActivity] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateActivity]'s idempotency check is based on the activity [name]. If a following request has different [tags] values, Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [tags] will not be updated, even if they are different.\n     \n      "]
 module CreateStateMachine :
@@ -21,9 +26,13 @@ sig
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
           | `InvalidDefinition of invalid_definition 
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
           | `InvalidLoggingConfiguration of invalid_logging_configuration 
           | `InvalidName of invalid_name 
           | `InvalidTracingConfiguration of invalid_tracing_configuration 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineAlreadyExists of state_machine_already_exists 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineLimitExceeded of state_machine_limit_exceeded 
@@ -31,7 +40,7 @@ sig
           | `TooManyTags of too_many_tags 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Creates a state machine. A state machine consists of a collection of states that can do work ([Task] states), determine to which states to transition next ([Choice] states), stop an execution with an error ([Fail] states), and so on. State machines are specified using a JSON-based, structured language. For more information, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} in the Step Functions User Guide.\n\n If you set the [publish] parameter of this API action to [true], it publishes version [1] as the first revision of the state machine.\n \n   This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n   \n       [CreateStateMachine] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateStateMachine]'s idempotency check is based on the state machine [name], [definition], [type], [LoggingConfiguration], and [TracingConfiguration]. The check is also based on the [publish] and [versionDescription] parameters. If a following request has a different [roleArn] or [tags], Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [roleArn] and [tags] will not be updated, even if they are different.\n      \n       "]
+     "Creates a state machine. A state machine consists of a collection of states that can do work ([Task] states), determine to which states to transition next ([Choice] states), stop an execution with an error ([Fail] states), and so on. State machines are specified using a JSON-based, structured language. For more information, see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} in the Step Functions User Guide.\n\n If you set the [publish] parameter of this API action to [true], it publishes version [1] as the first revision of the state machine.\n \n   For additional control over security, you can encrypt your data using a {b customer-managed key} for Step Functions state machines. You can configure a symmetric KMS key and data key reuse period when creating or updating a {b State Machine}. The execution history and state machine definition will be encrypted with the key applied to the State Machine. \n  \n    This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n    \n        [CreateStateMachine] is an idempotent API. Subsequent requests won\226\128\153t create a duplicate resource if it was already created. [CreateStateMachine]'s idempotency check is based on the state machine [name], [definition], [type], [LoggingConfiguration], [TracingConfiguration], and [EncryptionConfiguration] The check is also based on the [publish] and [versionDescription] parameters. If a following request has a different [roleArn] or [tags], Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, [roleArn] and [tags] will not be updated, even if they are different.\n       \n        "]
 module CreateStateMachineAlias :
 sig
   val request :
@@ -53,7 +62,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_activity_input ->
-        (unit,
+        (delete_activity_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn ])
           result
 end[@@ocaml.doc "Deletes an activity.\n"]
@@ -62,7 +71,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_input ->
-        (unit,
+        (delete_state_machine_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
@@ -72,7 +81,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_alias_input ->
-        (unit,
+        (delete_state_machine_alias_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
@@ -85,7 +94,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_state_machine_version_input ->
-        (unit,
+        (delete_state_machine_version_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
@@ -111,7 +120,10 @@ sig
         (describe_execution_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Provides information about a state machine execution, such as the state machine associated with the execution, the execution input and output, and relevant execution metadata. If you've {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html}redriven} an execution, you can use this API action to return information about the redrives of that execution. In addition, you can use this API action to return the Map Run Amazon Resource Name (ARN) if the execution was dispatched by a Map Run.\n\n If you specify a version or alias ARN when you call the [StartExecution] API action, [DescribeExecution] returns that ARN.\n \n   This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n   \n     Executions of an [EXPRESS] state machine aren't supported by [DescribeExecution] unless a Map Run dispatched them.\n     "]
 module DescribeMapRun :
@@ -131,6 +143,9 @@ sig
       describe_state_machine_input ->
         (describe_state_machine_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDoesNotExist of state_machine_does_not_exist ])
           result
 end[@@ocaml.doc
@@ -154,7 +169,10 @@ sig
         (describe_state_machine_for_execution_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Provides information about a state machine's definition, its execution role ARN, and configuration. If a Map Run dispatched the execution, this action returns the Map Run Amazon Resource Name (ARN) in the response. The state machine returned is the state machine associated with the Map Run.\n\n  This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.\n  \n    This API action is not supported by [EXPRESS] state machines.\n    "]
 module GetActivityTask :
@@ -166,7 +184,10 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ActivityDoesNotExist of activity_does_not_exist 
           | `ActivityWorkerLimitExceeded of activity_worker_limit_exceeded 
-          | `InvalidArn of invalid_arn ]) result
+          | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Used by workers to retrieve a task (with the specified activity ARN) which has been scheduled for execution by a running state machine. This initiates a long poll, where the service holds the HTTP connection open and responds as soon as a task becomes available (i.e. an execution of a task of this type is needed.) The maximum time the service holds on to the request before responding is 60 seconds. If no task is available within 60 seconds, the poll returns a [taskToken] with a null string.\n\n  This API action isn't logged in CloudTrail.\n  \n     Workers should set their client side socket timeout to at least 65 seconds (5 seconds higher than the maximum time the service may hold the poll request).\n     \n      Polling with [GetActivityTask] can cause latency in some implementations. See {{:https://docs.aws.amazon.com/step-functions/latest/dg/bp-activity-pollers.html}Avoid Latency When Polling for Activity Tasks} in the Step Functions Developer Guide.\n      \n       "]
 module GetExecutionHistory :
@@ -177,8 +198,10 @@ sig
         (get_execution_history_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
-          | `InvalidArn of invalid_arn  | `InvalidToken of invalid_token ])
-          result
+          | `InvalidArn of invalid_arn  | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception ]) result
 end[@@ocaml.doc
      "Returns the history of the specified execution as a list of events. By default, the results are returned in ascending order of the [timeStamp] of the events. Use the [reverseOrder] parameter to get the latest events first.\n\n If [nextToken] is returned, there are more results available. The value of [nextToken] is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an {i HTTP 400 InvalidToken} error.\n \n  This API action is not supported by [EXPRESS] state machines.\n  "]
 module ListActivities :
@@ -297,19 +320,22 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_failure_input ->
-        (unit,
+        (send_task_failure_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `TaskDoesNotExist of task_does_not_exist 
           | `TaskTimedOut of task_timed_out ]) result
 end[@@ocaml.doc
-     "Used by activity workers, Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token}callback} pattern, and optionally Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-sync}job run} pattern to report that the task identified by the [taskToken] failed.\n"]
+     "Used by activity workers, Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token}callback} pattern, and optionally Task states using the {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-sync}job run} pattern to report that the task identified by the [taskToken] failed.\n\n For an execution with encryption enabled, Step Functions will encrypt the error and cause fields using the KMS key for the execution role.\n \n  A caller can mark a task as fail without using any KMS permissions in the execution role if the caller provides a null value for both [error] and [cause] fields because no data needs to be encrypted.\n  "]
 module SendTaskHeartbeat :
 sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_heartbeat_input ->
-        (unit,
+        (send_task_heartbeat_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidToken of invalid_token 
           | `TaskDoesNotExist of task_does_not_exist 
@@ -321,10 +347,13 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       send_task_success_input ->
-        (unit,
+        (send_task_success_output,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidOutput of invalid_output 
           | `InvalidToken of invalid_token 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `TaskDoesNotExist of task_does_not_exist 
           | `TaskTimedOut of task_timed_out ]) result
 end[@@ocaml.doc
@@ -341,6 +370,9 @@ sig
           | `InvalidArn of invalid_arn 
           | `InvalidExecutionInput of invalid_execution_input 
           | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `ValidationException of validation_exception ]) result
@@ -355,6 +387,9 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `InvalidExecutionInput of invalid_execution_input 
           | `InvalidName of invalid_name 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `StateMachineDeleting of state_machine_deleting 
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `StateMachineTypeNotSupported of state_machine_type_not_supported ])
@@ -370,15 +405,18 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ExecutionDoesNotExist of execution_does_not_exist 
           | `InvalidArn of invalid_arn 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsInvalidStateException of kms_invalid_state_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Stops an execution.\n\n This API action is not supported by [EXPRESS] state machines.\n "]
+     "Stops an execution.\n\n This API action is not supported by [EXPRESS] state machines.\n \n  For an execution with encryption enabled, Step Functions will encrypt the error and cause fields using the KMS key for the execution role.\n  \n   A caller can stop an execution without using any KMS permissions in the execution role if the caller provides a null value for both [error] and [cause] fields because no data needs to be encrypted.\n   "]
 module TagResource :
 sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_input ->
-        (unit,
+        (tag_resource_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found 
           | `TooManyTags of too_many_tags ]) result
@@ -401,7 +439,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_input ->
-        (unit,
+        (untag_resource_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found ]) result
 end[@@ocaml.doc "Remove a tag from a Step Functions resource\n"]
@@ -410,7 +448,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_map_run_input ->
-        (unit,
+        (update_map_run_output,
           [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn 
           | `ResourceNotFound of resource_not_found 
           | `ValidationException of validation_exception ]) result
@@ -426,8 +464,12 @@ sig
           | `ConflictException of conflict_exception 
           | `InvalidArn of invalid_arn 
           | `InvalidDefinition of invalid_definition 
+          | `InvalidEncryptionConfiguration of
+              invalid_encryption_configuration 
           | `InvalidLoggingConfiguration of invalid_logging_configuration 
           | `InvalidTracingConfiguration of invalid_tracing_configuration 
+          | `KmsAccessDeniedException of kms_access_denied_exception 
+          | `KmsThrottlingException of kms_throttling_exception 
           | `MissingRequiredParameter of missing_required_parameter 
           | `ServiceQuotaExceededException of
               service_quota_exceeded_exception 
@@ -435,7 +477,7 @@ sig
           | `StateMachineDoesNotExist of state_machine_does_not_exist 
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Updates an existing state machine by modifying its [definition], [roleArn], or [loggingConfiguration]. Running executions will continue to use the previous [definition] and [roleArn]. You must include at least one of [definition] or [roleArn] or you will receive a [MissingRequiredParameter] error.\n\n A qualified state machine ARN refers to a {i Distributed Map state} defined within a state machine. For example, the qualified state machine ARN [arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel] refers to a {i Distributed Map state} with a label [mapStateLabel] in the state machine named [stateMachineName].\n \n  A qualified state machine ARN can either refer to a {i Distributed Map state} defined within a state machine, a version ARN, or an alias ARN.\n  \n   The following are some examples of qualified and unqualified state machine ARNs:\n   \n    {ul\n          {-  The following qualified state machine ARN refers to a {i Distributed Map state} with a label [mapStateLabel] in a state machine named [myStateMachine].\n              \n                [arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel] \n               \n                 If you provide a qualified state machine ARN that refers to a {i Distributed Map state}, the request fails with [ValidationException].\n                 \n                   }\n          {-  The following qualified state machine ARN refers to an alias named [PROD].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                 If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.\n                 \n                   }\n          {-  The following unqualified state machine ARN refers to a state machine named [myStateMachine].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                }\n          }\n   After you update your state machine, you can set the [publish] parameter to [true] in the same action to publish a new {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}. This way, you can opt-in to strict versioning of your state machine.\n   \n     Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.\n     \n        All [StartExecution] calls within a few seconds use the updated [definition] and [roleArn]. Executions started immediately after you call [UpdateStateMachine] may use the previous state machine [definition] and [roleArn]. \n        \n         "]
+     "Updates an existing state machine by modifying its [definition], [roleArn], [loggingConfiguration], or [EncryptionConfiguration]. Running executions will continue to use the previous [definition] and [roleArn]. You must include at least one of [definition] or [roleArn] or you will receive a [MissingRequiredParameter] error.\n\n A qualified state machine ARN refers to a {i Distributed Map state} defined within a state machine. For example, the qualified state machine ARN [arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel] refers to a {i Distributed Map state} with a label [mapStateLabel] in the state machine named [stateMachineName].\n \n  A qualified state machine ARN can either refer to a {i Distributed Map state} defined within a state machine, a version ARN, or an alias ARN.\n  \n   The following are some examples of qualified and unqualified state machine ARNs:\n   \n    {ul\n          {-  The following qualified state machine ARN refers to a {i Distributed Map state} with a label [mapStateLabel] in a state machine named [myStateMachine].\n              \n                [arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel] \n               \n                 If you provide a qualified state machine ARN that refers to a {i Distributed Map state}, the request fails with [ValidationException].\n                 \n                   }\n          {-  The following qualified state machine ARN refers to an alias named [PROD].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                 If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.\n                 \n                   }\n          {-  The following unqualified state machine ARN refers to a state machine named [myStateMachine].\n              \n                \n               {[\n               arn::states:::stateMachine:\n               ]}\n                \n               \n                }\n          }\n   After you update your state machine, you can set the [publish] parameter to [true] in the same action to publish a new {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html}version}. This way, you can opt-in to strict versioning of your state machine.\n   \n     Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.\n     \n        All [StartExecution] calls within a few seconds use the updated [definition] and [roleArn]. Executions started immediately after you call [UpdateStateMachine] may use the previous state machine [definition] and [roleArn]. \n        \n         "]
 module UpdateStateMachineAlias :
 sig
   val request :
@@ -459,4 +501,4 @@ sig
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ValidationException of validation_exception ]) result
 end[@@ocaml.doc
-     "Validates the syntax of a state machine definition.\n\n You can validate that a state machine definition is correct without creating a state machine resource. Step Functions will implicitly perform the same syntax check when you invoke [CreateStateMachine] and [UpdateStateMachine]. State machine definitions are specified using a JSON-based, structured language. For more information on Amazon States Language see {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} (ASL). \n \n  Suggested uses for [ValidateStateMachineDefinition]:\n  \n   {ul\n         {-  Integrate automated checks into your code review or Continuous Integration (CI) process to validate state machine definitions before starting deployments.\n             \n              }\n         {-  Run the validation from a Git pre-commit hook to check your state machine definitions before committing them to your source repository.\n             \n              }\n         }\n    Errors found in the state machine definition will be returned in the response as a list of {b diagnostic elements}, rather than raise an exception.\n    \n     "]
+     "Validates the syntax of a state machine definition specified in {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon States Language} (ASL), a JSON-based, structured language.\n\n You can validate that a state machine definition is correct without creating a state machine resource.\n \n  Suggested uses for [ValidateStateMachineDefinition]:\n  \n   {ul\n         {-  Integrate automated checks into your code review or Continuous Integration (CI) process to check state machine definitions before starting deployments.\n             \n              }\n         {-  Run validation from a Git pre-commit hook to verify the definition before committing to your source repository.\n             \n              }\n         }\n   Validation will look for problems in your state machine definition and return a {b result} and a list of {b diagnostic elements}.\n   \n    The {b result} value will be [OK] when your workflow definition can be successfully created or updated. Note the result can be [OK] even when diagnostic warnings are present in the response. The {b result} value will be [FAIL] when the workflow definition contains errors that would prevent you from creating or updating your state machine. \n    \n     The list of {{:https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinitionDiagnostic.html}ValidateStateMachineDefinitionDiagnostic} data elements can contain zero or more {b WARNING} and/or {b ERROR} elements.\n     \n       The {b ValidateStateMachineDefinition API} might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the {b result} field value (OK, FAIL). Do {b not} rely on the exact order, count, or wording of diagnostic messages.\n       \n        "]

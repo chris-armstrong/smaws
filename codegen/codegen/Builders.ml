@@ -19,7 +19,8 @@ let structure_shapes_without_exceptions shapeWithTarget =
              Some (name, structureShapeDetails)
          | _ -> None)
 
-let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails) =
+let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   let record_expr =
     if List.length members = 0 then B.pexp_ident (lident_noloc "()")
@@ -39,7 +40,7 @@ let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureSh
       (B.pexp_constraint record_expr
          (match members with
          | [] -> B.ptyp_constr (lident_noloc "unit") []
-         | _ -> Types.type_ident alias_context ~name))
+         | _ -> Types.type_ident alias_context ~name ~namespace_resolver ()))
   in
   let required, optional =
     List.partition (fun (mem : member) -> Trait.(hasTrait mem.traits isRequiredTrait)) members
@@ -48,6 +49,7 @@ let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureSh
     let field_name = SafeNames.safeMemberName member.name in
     let field_type =
       Types.resolve_for_target alias_context ~name:member.target ~traits:member.traits
+        ~namespace_resolver ()
     in
     let arg_label =
       if Trait.hasTrait member.traits Trait.isRequiredTrait then Ppxlib.Labelled field_name
@@ -65,7 +67,8 @@ let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureSh
 
   labelled_arguments
 
-let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails) =
+let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   let type_name =
     match members with [] -> lident_noloc "unit" | _ -> lident_noloc (SafeNames.safeTypeName name)
@@ -79,7 +82,7 @@ let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structu
   in
   let map_to_labelled_argument (member : Ast.Shape.member) prev_fun =
     let field_name = SafeNames.safeMemberName member.name in
-    let field_type = Types.resolve alias_context ~name:member.target in
+    let field_type = Types.resolve alias_context ~name:member.target ~namespace_resolver () in
     let arg_label =
       if Trait.hasTrait member.traits Trait.isRequiredTrait then Ppxlib.Labelled field_name
       else Ppxlib.Optional field_name
@@ -94,9 +97,10 @@ let generate_builder_sig ~alias_context name ({ members; _ } : Ast.Shape.structu
 
   labelled_arguments
 
-let stri_builders ~structure_shapes ~(alias_context : Types.t) =
+let stri_builders ~structure_shapes ~(alias_context : Types.t)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let make_structure_item name descriptor =
-    let builder = generate_builder ~alias_context name descriptor in
+    let builder = generate_builder ~alias_context name descriptor ~namespace_resolver () in
     let func_name = "make_" ^ SafeNames.safeTypeName name in
     [%stri let [%p B.ppat_var (Location.mknoloc func_name)] = [%e builder]]
   in
@@ -115,7 +119,8 @@ let stri_builders ~structure_shapes ~(alias_context : Types.t) =
   in
   structure_items
 
-let sigi_builders ~structure_shapes ~(alias_context : Types.t) =
+let sigi_builders ~structure_shapes ~(alias_context : Types.t)
+    ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let structure_items =
     structure_shapes
     |> List.map (fun shapeWithTarget ->
@@ -123,7 +128,9 @@ let sigi_builders ~structure_shapes ~(alias_context : Types.t) =
            match shapes with
            | [] -> []
            | (name, descriptor) :: [] ->
-               let builder = generate_builder_sig ~alias_context name descriptor in
+               let builder =
+                 generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+               in
                let func_name = "make_" ^ SafeNames.safeTypeName name in
 
                [
@@ -132,7 +139,9 @@ let sigi_builders ~structure_shapes ~(alias_context : Types.t) =
                ]
            | (name, descriptor) :: remainder ->
                let func_name = "make_" ^ SafeNames.safeTypeName name in
-               let builder = generate_builder_sig ~alias_context name descriptor in
+               let builder =
+                 generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+               in
                let value_binding =
                  B.psig_value
                    (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder ~prim:[])
@@ -141,7 +150,9 @@ let sigi_builders ~structure_shapes ~(alias_context : Types.t) =
                  remainder
                  |> List.map (fun (name, descriptor) ->
                         let func_name = "make_" ^ SafeNames.safeTypeName name in
-                        let builder = generate_builder_sig ~alias_context name descriptor in
+                        let builder =
+                          generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+                        in
                         let value_binding =
                           B.psig_value
                             (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder

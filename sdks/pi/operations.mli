@@ -16,7 +16,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_performance_analysis_report_request ->
-        (unit,
+        (delete_performance_analysis_report_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -45,7 +45,7 @@ sig
           | `InvalidArgumentException of invalid_argument_exception 
           | `NotAuthorizedException of not_authorized_exception ]) result
 end[@@ocaml.doc
-     "Get the attributes of the specified dimension group for a DB instance or data source. For example, if you specify a SQL ID, [GetDimensionKeyDetails] retrieves the full text of the dimension [db.sql.statement] associated with this ID. This operation is useful because [GetResourceMetrics] and [DescribeDimensionKeys] don't support retrieval of large SQL statement text.\n"]
+     "Get the attributes of the specified dimension group for a DB instance or data source. For example, if you specify a SQL ID, [GetDimensionKeyDetails] retrieves the full text of the dimension [db.sql.statement] associated with this ID. This operation is useful because [GetResourceMetrics] and [DescribeDimensionKeys] don't support retrieval of large SQL statement text, lock snapshots, and execution plans.\n"]
 module GetPerformanceAnalysisReport :
 sig
   val request :
@@ -135,7 +135,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 
@@ -147,7 +147,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InternalServiceError of internal_service_error 
           | `InvalidArgumentException of invalid_argument_exception 

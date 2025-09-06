@@ -1,0 +1,44 @@
+open Parselib
+open Ast
+open Exceptions
+
+let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
+    ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
+  if
+    Trait.hasTrait service.traits (function
+      | Trait.AwsProtocolAwsJson1_1Trait -> true
+      | Trait.AwsProtocolAwsJson1_0Trait -> true
+      | _ -> false)
+  then (
+    let opens =
+      [ Codegen.Ppx_util.stri_open [ "Types" ]; Codegen.Ppx_util.stri_open [ "Service_metadata" ] ]
+    in
+    try
+      let structure =
+        Codegen.AwsProtocolJson.Operations.generate ~name ~operation_shapes ~alias_context
+          ~namespace_resolver ()
+      in
+      Ppxlib.Pprintast.structure oc (opens @ structure)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))
+
+let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
+    ~alias_context ?(no_open = false)
+    ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
+  if
+    Trait.hasTrait service.traits (function
+      | Trait.AwsProtocolAwsJson1_1Trait -> true
+      | Trait.AwsProtocolAwsJson1_0Trait -> true
+      | _ -> false)
+  then (
+    let opens = if no_open then [] else [ Codegen.Ppx_util.sigi_open [ "Types" ] ] in
+    try
+      let sign =
+        Codegen.AwsProtocolJson.Operations.generate_mli ~name ~operation_shapes ~alias_context
+          ~namespace_resolver ()
+      in
+      Ppxlib.Pprintast.signature oc (opens @ sign)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))

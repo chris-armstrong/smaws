@@ -4,7 +4,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_delegate_to_resource_request ->
-        (unit,
+        (associate_delegate_to_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -21,7 +21,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       associate_member_to_group_request ->
-        (unit,
+        (associate_member_to_group_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -55,7 +55,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       cancel_mailbox_export_job_request ->
-        (unit,
+        (cancel_mailbox_export_job_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -70,7 +70,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_alias_request ->
-        (unit,
+        (create_alias_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EmailAddressInUseException of email_address_in_use_exception 
           | `EntityNotFoundException of entity_not_found_exception 
@@ -90,7 +90,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       create_availability_configuration_request ->
-        (unit,
+        (create_availability_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -121,6 +121,17 @@ sig
           result
 end[@@ocaml.doc
      "Creates a group that can be used in WorkMail by calling the [RegisterToWorkMail] operation.\n"]
+module CreateIdentityCenterApplication :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      create_identity_center_application_request ->
+        (create_identity_center_application_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception ])
+          result
+end[@@ocaml.doc
+     " Creates the WorkMail application in IAM Identity Center that can be used later in the WorkMail - IdC integration. For more information, see PutIdentityProviderConfiguration. This action does not affect the authentication settings for any WorkMail organizations. \n"]
 module CreateImpersonationRole :
 sig
   val request :
@@ -213,7 +224,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_access_control_rule_request ->
-        (unit,
+        (delete_access_control_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -226,7 +237,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_alias_request ->
-        (unit,
+        (delete_alias_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -242,7 +253,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_availability_configuration_request ->
-        (unit,
+        (delete_availability_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -255,7 +266,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_email_monitoring_configuration_request ->
-        (unit,
+        (delete_email_monitoring_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -269,7 +280,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_group_request ->
-        (unit,
+        (delete_group_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -282,12 +293,38 @@ sig
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
 end[@@ocaml.doc "Deletes a group from WorkMail.\n"]
+module DeleteIdentityCenterApplication :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_identity_center_application_request ->
+        (delete_identity_center_application_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Deletes the IAM Identity Center application from WorkMail. This action does not affect the authentication settings for any WorkMail organizations. \n"]
+module DeleteIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_identity_provider_configuration_request ->
+        (delete_identity_provider_configuration_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Disables the integration between IdC and WorkMail. Authentication will continue with the directory as it was before the IdC integration. You might have to reset your directory passwords and reconfigure your desktop and mobile email clients. \n"]
 module DeleteImpersonationRole :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_impersonation_role_request ->
-        (unit,
+        (delete_impersonation_role_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -301,7 +338,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mailbox_permissions_request ->
-        (unit,
+        (delete_mailbox_permissions_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -316,7 +353,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mobile_device_access_override_request ->
-        (unit,
+        (delete_mobile_device_access_override_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -331,7 +368,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_mobile_device_access_rule_request ->
-        (unit,
+        (delete_mobile_device_access_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -354,12 +391,26 @@ sig
           result
 end[@@ocaml.doc
      "Deletes an WorkMail organization and all underlying AWS resources managed by WorkMail as part of the organization. You can choose whether to delete the associated directory. For more information, see {{:https://docs.aws.amazon.com/workmail/latest/adminguide/remove_organization.html}Removing an organization} in the {i WorkMail Administrator Guide}.\n"]
+module DeletePersonalAccessToken :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      delete_personal_access_token_request ->
+        (delete_personal_access_token_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc
+     " Deletes the Personal Access Token from the provided WorkMail Organization. \n"]
 module DeleteResource :
 sig
   val request :
     Smaws_Lib.Context.t ->
       delete_resource_request ->
-        (unit,
+        (delete_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityStateException of entity_state_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -374,7 +425,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_retention_policy_request ->
-        (unit,
+        (delete_retention_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -388,7 +439,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       delete_user_request ->
-        (unit,
+        (delete_user_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -407,7 +458,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_from_work_mail_request ->
-        (unit,
+        (deregister_from_work_mail_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -423,7 +474,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       deregister_mail_domain_request ->
-        (unit,
+        (deregister_mail_domain_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidCustomSesConfigurationException of
               invalid_custom_ses_configuration_exception 
@@ -478,6 +529,21 @@ sig
           | `OrganizationStateException of organization_state_exception ])
           result
 end[@@ocaml.doc "Returns the data available for the group.\n"]
+module DescribeIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      describe_identity_provider_configuration_request ->
+        (describe_identity_provider_configuration_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Returns detailed information on the current IdC setup for the WorkMail organization. \n"]
 module DescribeInboundDmarcSettings :
 sig
   val request :
@@ -540,6 +606,9 @@ sig
       describe_user_request ->
         (describe_user_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `DirectoryServiceAuthenticationFailedException of
+              directory_service_authentication_failed_exception 
+          | `DirectoryUnavailableException of directory_unavailable_exception 
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -552,7 +621,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_delegate_from_resource_request ->
-        (unit,
+        (disassociate_delegate_from_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -568,7 +637,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       disassociate_member_from_group_request ->
-        (unit,
+        (disassociate_member_from_group_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -705,6 +774,21 @@ sig
           result
 end[@@ocaml.doc
      "Gets the mobile device access override for the given WorkMail organization, user, and device.\n"]
+module GetPersonalAccessTokenMetadata :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      get_personal_access_token_metadata_request ->
+        (get_personal_access_token_metadata_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Requests details of a specific Personal Access Token within the WorkMail organization. \n"]
 module ListAccessControlRules :
 sig
   val request :
@@ -741,6 +825,7 @@ sig
       list_availability_configurations_request ->
         (list_availability_configurations_response,
           [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
               organization_not_found_exception 
           | `OrganizationStateException of organization_state_exception ])
@@ -887,6 +972,21 @@ sig
           | `InvalidParameterException of invalid_parameter_exception ])
           result
 end[@@ocaml.doc "Returns summaries of the customer's organizations.\n"]
+module ListPersonalAccessTokens :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      list_personal_access_tokens_request ->
+        (list_personal_access_tokens_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `EntityNotFoundException of entity_not_found_exception 
+          | `EntityStateException of entity_state_exception 
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception ])
+          result
+end[@@ocaml.doc " Returns a summary of your Personal Access Tokens. \n"]
 module ListResourceDelegates :
 sig
   val request :
@@ -947,7 +1047,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_access_control_rule_request ->
-        (unit,
+        (put_access_control_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -964,7 +1064,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_email_monitoring_configuration_request ->
-        (unit,
+        (put_email_monitoring_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -974,12 +1074,27 @@ sig
           result
 end[@@ocaml.doc
      "Creates or updates the email monitoring configuration for a specified organization.\n"]
+module PutIdentityProviderConfiguration :
+sig
+  val request :
+    Smaws_Lib.Context.t ->
+      put_identity_provider_configuration_request ->
+        (put_identity_provider_configuration_response,
+          [> Smaws_Lib.Protocols.AwsJson.error
+          | `InvalidParameterException of invalid_parameter_exception 
+          | `OrganizationNotFoundException of
+              organization_not_found_exception 
+          | `OrganizationStateException of organization_state_exception 
+          | `ResourceNotFoundException of resource_not_found_exception ])
+          result
+end[@@ocaml.doc
+     " Enables integration between IAM Identity Center (IdC) and WorkMail to proxy authentication requests for mailbox users. You can connect your IdC directory or your external directory to WorkMail through IdC and manage access to WorkMail mailboxes in a single place. For enhanced protection, you could enable Multifactor Authentication (MFA) and Personal Access Tokens. \n"]
 module PutInboundDmarcSettings :
 sig
   val request :
     Smaws_Lib.Context.t ->
       put_inbound_dmarc_settings_request ->
-        (unit,
+        (put_inbound_dmarc_settings_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `OrganizationNotFoundException of
               organization_not_found_exception 
@@ -992,7 +1107,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_mailbox_permissions_request ->
-        (unit,
+        (put_mailbox_permissions_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1008,7 +1123,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_mobile_device_access_override_request ->
-        (unit,
+        (put_mobile_device_access_override_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1024,7 +1139,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       put_retention_policy_request ->
-        (unit,
+        (put_retention_policy_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -1038,7 +1153,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_mail_domain_request ->
-        (unit,
+        (register_mail_domain_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `LimitExceededException of limit_exceeded_exception 
@@ -1054,7 +1169,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       register_to_work_mail_request ->
-        (unit,
+        (register_to_work_mail_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1078,7 +1193,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       reset_password_request ->
-        (unit,
+        (reset_password_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1115,7 +1230,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       tag_resource_request ->
-        (unit,
+        (tag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationStateException of organization_state_exception 
@@ -1143,7 +1258,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       untag_resource_request ->
-        (unit,
+        (untag_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `ResourceNotFoundException of resource_not_found_exception ])
           result
@@ -1154,7 +1269,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_availability_configuration_request ->
-        (unit,
+        (update_availability_configuration_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `OrganizationNotFoundException of
@@ -1169,7 +1284,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_default_mail_domain_request ->
-        (unit,
+        (update_default_mail_domain_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `InvalidParameterException of invalid_parameter_exception 
           | `MailDomainNotFoundException of mail_domain_not_found_exception 
@@ -1185,7 +1300,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_group_request ->
-        (unit,
+        (update_group_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1195,13 +1310,13 @@ sig
           | `OrganizationStateException of organization_state_exception 
           | `UnsupportedOperationException of unsupported_operation_exception ])
           result
-end[@@ocaml.doc "Updates attibutes in a group.\n"]
+end[@@ocaml.doc "Updates attributes in a group.\n"]
 module UpdateImpersonationRole :
 sig
   val request :
     Smaws_Lib.Context.t ->
       update_impersonation_role_request ->
-        (unit,
+        (update_impersonation_role_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1219,7 +1334,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_mailbox_quota_request ->
-        (unit,
+        (update_mailbox_quota_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `EntityStateException of entity_state_exception 
@@ -1235,7 +1350,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_mobile_device_access_rule_request ->
-        (unit,
+        (update_mobile_device_access_rule_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `EntityNotFoundException of entity_not_found_exception 
           | `InvalidParameterException of invalid_parameter_exception 
@@ -1250,7 +1365,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_primary_email_address_request ->
-        (unit,
+        (update_primary_email_address_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
@@ -1273,7 +1388,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_resource_request ->
-        (unit,
+        (update_resource_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryUnavailableException of directory_unavailable_exception 
           | `EmailAddressInUseException of email_address_in_use_exception 
@@ -1296,7 +1411,7 @@ sig
   val request :
     Smaws_Lib.Context.t ->
       update_user_request ->
-        (unit,
+        (update_user_response,
           [> Smaws_Lib.Protocols.AwsJson.error
           | `DirectoryServiceAuthenticationFailedException of
               directory_service_authentication_failed_exception 
