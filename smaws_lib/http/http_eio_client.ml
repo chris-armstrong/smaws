@@ -1,7 +1,7 @@
 open Import
 
 module Log =
-  (val Logs.src_log (Logs.Src.create "awssdklib.http.http_eio" ~doc:"AwsSdkLib HTTP EIO")
+  (val Logs.src_log (Logs.Src.create "Smaws_Lib.http.http_eio" ~doc:"Smaws_Lib HTTP EIO")
       : Logs.LOG)
 
 module type S = sig

@@ -1,5 +1,5 @@
 open Base
-open Ast
+open Smithy_ast
 open Json.Decode
 open Json.ResultHelpers
 

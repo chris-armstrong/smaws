@@ -41,7 +41,7 @@ rec {
       include = [
         "dune"
         "dune-project"
-        "awssdklib"
+        "smaws_lib"
         "test"
       ];
     };

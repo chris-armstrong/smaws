@@ -2,7 +2,7 @@ open Import
 
 module Log =
   (val Logs.src_log
-         (Logs.Src.create "awssdklib.http.http_connection" ~doc:"AwsSdkLib Http Connection wrapper")
+         (Logs.Src.create "Smaws_Lib.http.http_connection" ~doc:"Smaws_Lib Http Connection wrapper")
       : Logs.LOG)
 
 module type S = sig

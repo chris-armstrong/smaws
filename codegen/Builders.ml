@@ -1,3 +1,5 @@
+module Ast = Smithy_ast
+module Parse = Smaws_parse
 open Ast
 
 module B = Ppxlib.Ast_builder.Make (struct
