@@ -1,4 +1,4 @@
-type protocol = AwsJson_1_0 | AwsJson_1_1
+type protocol = AwsJson_1_0 | AwsJson_1_1 | RestXml | Ec2Query | RestJson | AwsQuery
 
 type descriptor = {
   namespace : string;

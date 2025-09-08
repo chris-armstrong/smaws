@@ -255,7 +255,11 @@ module Serialiser = struct
            else
              Some
                (B.pstr_value
-                  (if List.length all_shapes > 1 then Recursive else Nonrecursive)
+                  (if
+                     List.length all_shapes > 1
+                     || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
+                   then Recursive
+                   else Nonrecursive)
                   all_shapes))
 end
 
@@ -558,7 +562,11 @@ module Deserialiser = struct
            else
              Some
                (B.pstr_value
-                  (if List.length all_shapes > 1 then Recursive else Nonrecursive)
+                  (if
+                     List.length all_shapes > 1
+                     || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
+                   then Recursive
+                   else Nonrecursive)
                   all_shapes))
 end
 
