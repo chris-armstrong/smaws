@@ -76,6 +76,16 @@ let smithyImplicitShapes =
     };
   ]
 
+(** is a shape recursive with itself as a target (shapes with mutually dependent targets are
+    {b mutually} recursive, but this function will not detect them)*)
+let is_recursive_shape_with_target s =
+  match s.descriptor with
+  | StructureShape { members; _ } ->
+      List.exists members ~f:(fun member -> String.equal member.target s.name)
+  | UnionShape { members; _ } ->
+      List.exists members ~f:(fun member -> String.equal member.target s.name)
+  | _ -> false
+
 (** resolve the target shape names referenced by the specified shape descriptor *)
 let getTargets descriptor =
   match descriptor with

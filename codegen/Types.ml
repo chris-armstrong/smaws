@@ -229,40 +229,6 @@ let determine_exception_type descriptor =
   | Ast.Shape.StructureShape s when Ast.Trait.(hasTrait s.traits isErrorTrait) -> true
   | _ -> false
 
-let const_str s = B.pexp_constant (Pconst_string (s, loc, None))
-
-let stri_service_metadata (service : Ast.Shape.serviceShapeDetails) =
-  let traits = Option.value service.traits ~default:[] in
-  let serviceDetails =
-    List.find_map_exn traits ~f:(function Ast.Trait.ServiceTrait x -> Some x | _ -> None)
-  in
-  let protocol_expr =
-    List.find_map_exn traits ~f:(function
-      | Ast.Trait.AwsProtocolAwsJson1_0Trait -> Some [%expr Smaws_Lib.Service.AwsJson_1_0]
-      | Ast.Trait.AwsProtocolAwsJson1_1Trait -> Some [%expr Smaws_Lib.Service.AwsJson_1_1]
-      | _ -> None)
-  in
-  let namespace_expr = const_str (Option.value serviceDetails.arnNamespace ~default:"<blank>") in
-  let endpointPrefix_expr =
-    const_str (Option.value serviceDetails.endpointPrefix ~default:"<blank>")
-  in
-  let version_expr = const_str service.version in
-
-  let service_expr =
-    [%expr
-      Smaws_Lib.Service.
-        {
-          namespace = [%e namespace_expr];
-          endpointPrefix = [%e endpointPrefix_expr];
-          version = [%e version_expr];
-          protocol = [%e protocol_expr];
-        }]
-  in
-  let service_metadata_letop = [%stri let service = [%e service_expr]] in
-  service_metadata_letop
-
-let sigi_service_metadata service = [%sigi: val service : Smaws_Lib.Service.descriptor]
-
 let generate_type_target ctx name descriptor
     ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
@@ -314,7 +280,7 @@ let stri_structure_shapes ?(with_derivings = false)
                Ppxlib_ast.Parsetree.
                  { pstr_loc = Location.none; pstr_desc = Pstr_type (Recursive, attributed_items) }
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
-       | Ast.Dependencies.{ name; descriptor; _ } ->
+       | Ast.Dependencies.{ name; descriptor; _ } as x ->
            let type_declaration = generate_type_target ctx name descriptor ~namespace_resolver () in
 
            type_declaration
@@ -330,7 +296,10 @@ let stri_structure_shapes ?(with_derivings = false)
                     else type_declaration
                   in
 
-                  B.pstr_type Nonrecursive [ filtered_declaration ]))
+                  B.pstr_type
+                    (if x |> Ast.Dependencies.is_recursive_shape_with_target then Recursive
+                     else Nonrecursive)
+                    [ filtered_declaration ]))
 
 let sigi_structure_shapes ?(with_derivings = false)
     ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) ctx structure_shapes fmt =
@@ -349,8 +318,12 @@ let sigi_structure_shapes ?(with_derivings = false)
 
            if List.length filtered_items > 0 then Some (B.psig_type Recursive filtered_items)
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
-       | Ast.Dependencies.{ name; descriptor; _ } ->
+       | Ast.Dependencies.{ name; descriptor; _ } as x ->
            let type_declaration = generate_type_target ctx name descriptor ~namespace_resolver () in
 
            type_declaration
-           |> Option.map ~f:(fun type_declaration -> B.psig_type Nonrecursive [ type_declaration ]))
+           |> Option.map ~f:(fun type_declaration ->
+                  B.psig_type
+                    (if x |> Ast.Dependencies.is_recursive_shape_with_target then Recursive
+                     else Nonrecursive)
+                    [ type_declaration ]))
