@@ -106,5 +106,5 @@
 (include_subdirs qualified)
 
 (library
- (name Model_tests_protocols)
+ (name model_tests_protocols)
  (libraries Smaws_Lib))

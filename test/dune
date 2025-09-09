@@ -1,0 +1,3 @@
+(executable
+ (name something)
+ (libraries model_tests_protocols Smaws_Lib eio_main))

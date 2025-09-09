@@ -64,6 +64,11 @@ module Make (Http_module : Http.Client_intf) = struct
     | `HttpError of Http.http_failure
     | `JsonParseError of Json.DeserializeHelpers.jsonParseError ]
 
+  let error_to_string = function
+    | `HttpError e -> Fmt.str "%a" Http.pp_http_failure e
+    | `JsonParseError e -> Fmt.str "%a" Json.DeserializeHelpers.pp_jsonParseError e
+    | `AWSServiceError e -> Fmt.str "%a" AwsErrors.pp_aws_service_error e
+
   let request ~(shape_name : string) ~(service : Service.descriptor) ~(config : Config.t)
       ~(input : json_type) ~(output_deserializer : json_type -> string list -> 'res) ~http
       ~(error_deserializer : json_type -> string list -> 'error) =
