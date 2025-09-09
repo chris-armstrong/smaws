@@ -82,3 +82,18 @@ module Client : sig
     ; .. > ->
     t
 end
+
+module type Http_factory = sig
+  type client_t
+  
+  val make :
+    sw:Eio.Switch.t ->
+    < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t
+    ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t
+    ; .. > ->
+    client_t
+
+  val client_module : unit -> (module Client_intf with type t = client_t)
+end
+
+module Default_http_factory : Http_factory with type client_t = Client.t

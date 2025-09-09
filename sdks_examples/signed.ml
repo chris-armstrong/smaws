@@ -17,7 +17,7 @@ let _ =
           in
           let body = {|{}|} in
           Fmt.pr "before context@.";
-          let context = Context.make ~sw ~config env in
+          let context = Context.make_with_default_http ~sw ~config env in
           let service =
             Service.
               { namespace = "sqs"; endpointPrefix = "sqs"; version = ""; protocol = AwsJson_1_0 }

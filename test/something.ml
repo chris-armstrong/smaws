@@ -8,7 +8,7 @@ let config : Smaws_Lib.Config.t =
 let run env =
   let open Smaws_Lib in
   Eio.Switch.run ~name:"smaws-test" @@ fun sw ->
-  let ctx = Context.make ~config ~sw env in
+  let ctx = Context.make_with_default_http ~config ~sw env in
   let input : Model_tests_protocols.Json.Types.content_type_parameters_input = { value = Some 5 } in
   let response = Model_tests_protocols.Json.ContentTypeParameters.request ctx input in
   match response with
