@@ -1,1 +1,1 @@
-include Protocols_gen.AwsJson.Make (Http.Client)
+include Protocols_gen.AwsJson.Make (Http.Http_Client_Eio)

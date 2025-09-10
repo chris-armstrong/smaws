@@ -14,7 +14,7 @@ let _ =
                 resolveAuth = (fun () -> Auth.Profile.resolve env ());
               }
           in
-          let context = Context.make_with_default_http ~sw ~config env in
+          let context = Context.make_with_eio_http ~sw ~config env in
           let ( let* ) res map = Result.bind res map in
 
           match

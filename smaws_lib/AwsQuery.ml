@@ -1,1 +1,1 @@
-include Protocols_gen.AwsQuery.Make (Http.Client)
+include Protocols_gen.AwsQuery.Make (Http.Http_Client_Eio)

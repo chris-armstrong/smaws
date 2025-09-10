@@ -17,7 +17,7 @@ let _ =
           in
           let body = {|{}|} in
           Fmt.pr "before context@.";
-          let context = Context.make_with_default_http ~sw ~config env in
+          let context = Context.make_with_eio_http ~sw ~config env in
           let service =
             Service.
               { namespace = "sqs"; endpointPrefix = "sqs"; version = ""; protocol = AwsJson_1_0 }
@@ -35,7 +35,7 @@ let _ =
           let body = `String body in
 
           let ( let* ) res map = Result.map map res in
-          let module Http = Http.Client in
+          let module Http = Http.Http_Client_Eio in
           match
             let* response, body = Http.request ~method_:`POST ~uri ~headers ~body context.http in
             let body = Http.Body.to_string body in
