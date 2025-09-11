@@ -1,110 +1,101 @@
-(rule
- (targets
-  (dir json))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.json json)))
-
-(rule
- (targets
-  (dir shared))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.shared shared)))
-
-(rule
- (targets
-  (dir restxml_xmlns))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.restxml.xmlns restxml_xmlns)))
-
-(rule
- (targets
-  (dir restjson_nested))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.restjson.nested restjson_nested)))
-
-(rule
- (targets
-  (dir restjson_validation))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run
-   %{gen}
-   %{input}
-   .
-   aws.protocoltests.restjson.validation
-   restjson_validation)))
-
-(rule
- (targets
-  (dir restjson))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.restjson restjson)))
-
-(rule
- (targets
-  (dir query))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.query query)))
-
-(rule
- (targets
-  (dir json10))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.json10 json10)))
-
-(rule
- (targets
-  (dir ec2))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.ec2 ec2)))
-
-(rule
- (targets
-  (dir config))
- (mode promote)
- (deps
-  (:gen ../gen.exe)
-  (:input ../../smithy-aws-protocol-tests_model.json))
- (action
-  (run %{gen} %{input} . aws.protocoltests.config config)))
-
-(include_subdirs qualified)
+;
+; (rule
+;  (targets
+;   (dir shared))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.shared shared)))
+;
+; (rule
+;  (targets
+;   (dir restxml_xmlns))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.restxml.xmlns restxml_xmlns)))
+;
+; (rule
+;  (targets
+;   (dir restjson_nested))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.restjson.nested restjson_nested)))
+;
+; (rule
+;  (targets
+;   (dir restjson_validation))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run
+;    %{gen}
+;    %{input}
+;    .
+;    aws.protocoltests.restjson.validation
+;    restjson_validation)))
+;
+; (rule
+;  (targets
+;   (dir restjson))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.restjson restjson)))
+;
+; (rule
+;  (targets
+;   (dir query))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.query query)))
+;
+; (rule
+;  (targets
+;   (dir json10))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.json10 json10)))
+;
+; (rule
+;  (targets
+;   (dir ec2))
+;  (mode promote)
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.ec2 ec2)))
+;
+; (rule
+;  (alias config)
+;  (targets
+;   (dir config))
+;  (deps
+;   (:gen ../gen.exe)
+;   (:input ../../smithy-aws-protocol-tests_model.json))
+;  (action
+;   (run %{gen} %{input} . aws.protocoltests.config config)))
+;
+; (include_subdirs no)
 
 (library
  (name model_tests_protocols)
- (libraries Smaws_Lib))
+ (libraries Smaws_Lib json))

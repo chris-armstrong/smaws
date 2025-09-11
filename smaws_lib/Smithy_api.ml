@@ -1,20 +1,20 @@
 module Types = struct
-  type unit_ = unit
-  type short = int
-  type long = int
-  type integer = int
-  type byte = int
-  type float_ = float
-  type double = float
-  type string_ = string
-  type boolean_ = bool
-  type char_ = int
-  type bigint = int64
-  type timestamp = CoreTypes.Timestamp.t
-  type document = CoreTypes.Document.t
-  type resource = CoreTypes.Resource.t
-  type blob = Bytes.t
-  type 'a nullable = 'a CoreTypes.Nullable.t
+  type unit_ = unit [@@deriving show, eq]
+  type short = int [@@deriving show, eq]
+  type long = int [@@deriving show, eq]
+  type integer = int [@@deriving show, eq]
+  type byte = int [@@deriving show, eq]
+  type float_ = float [@@deriving show, eq]
+  type double = float [@@deriving show, eq]
+  type string_ = string [@@deriving show, eq]
+  type boolean_ = bool [@@deriving show, eq]
+  type char_ = int [@@deriving show, eq]
+  type bigint = int64 [@@deriving show, eq]
+  type timestamp = CoreTypes.Timestamp.t [@@deriving show, eq]
+  type document = CoreTypes.Document.t [@@deriving show, eq]
+  type resource = CoreTypes.Resource.t [@@deriving show, eq]
+  type blob = Bytes.t [@@deriving show, eq]
+  type 'a nullable = 'a CoreTypes.Nullable.t [@@deriving show, eq]
 end
 
 module Json_serializers = struct

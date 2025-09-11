@@ -10,4 +10,4 @@ type descriptor = {
 let makeUri ~(config : Config.t) ~(service : descriptor) =
   Uri.make ~scheme:"https"
     ~host:(Printf.sprintf "%s.%s.amazonaws.com" service.endpointPrefix (config.resolveRegion ()))
-    ()
+    ~path:"/" ()

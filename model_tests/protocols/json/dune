@@ -1,0 +1,36 @@
+(rule
+ (mode promote)
+ (targets
+  builders.ml
+  builders.mli
+  json.ml
+  json.mli
+  json_deserializers.ml
+  json_serializers.ml
+  operations.ml
+  operations.mli
+  service.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli)
+ (deps
+  (:gen ../../gen.exe)
+  (:input ../../../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input} . aws.protocoltests.json)))
+
+(library
+ (name json)
+ (modules
+  builders
+  json
+  operations
+  service
+  service_metadata
+  types
+  json_deserializers
+  json_serializers)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries Smaws_Lib shared))

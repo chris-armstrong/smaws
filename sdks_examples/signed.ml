@@ -37,7 +37,9 @@ let _ =
           let ( let* ) res map = Result.map map res in
           let module Http = Http.Http_Client_Eio in
           match
-            let* response, body = Http.request ~method_:`POST ~uri ~headers ~body context.http in
+            let* response, body =
+              Http.request ~method_:`POST ~uri ~headers ~body (Context.http context)
+            in
             let body = Http.Body.to_string body in
             Fmt.pr "Headers %a@."
               (Fmt.list ~sep:Fmt.comma Fmt.string)

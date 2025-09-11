@@ -640,7 +640,7 @@ module Operations = struct
                     (Location.mknoloc (Serialiser.external_func_name ~namespace_resolver input)))
                  [ (Nolabel, exp_ident "request") ])
       in
-      let service_shape = Util.symbolName name ^ Util.symbolName operation_name in
+      let service_shape = Util.symbolName name ^ "." ^ Util.symbolName operation_name in
       let response_shape_deserializer =
         operation_shape.output
         |> Option.map ~f:(fun output -> Deserialiser.external_func_name ~namespace_resolver output)
@@ -652,19 +652,9 @@ module Operations = struct
       let request_func_name =
         B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
       in
-      let config_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "config" ]))
-      in
-      let http_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "http" ]))
-      in
       [%expr
-        let open Smaws_Lib.Context in
-        (* let open Json_deserializers in *)
-        (* let open Json_serializers in *)
         let input = [%e input] in
-        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service
-          ~config:[%e config_func_name] ~http:[%e http_func_name] ~input
+        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service ~context ~input
           ~output_deserializer:[%e B.pexp_ident (Location.mknoloc response_shape_deserializer)]
           ~error_deserializer]
     in
@@ -738,7 +728,7 @@ module Operations = struct
            (B.pmty_signature
               [%sig:
                 val request :
-                  Smaws_Lib.Context.t ->
+                  'http_type Smaws_Lib.Context.t ->
                   [%t input_type] ->
                   ([%t output_type], [%t exception_type]) result]))
     |> Docs.attach_doc_to_signature_item ~loc ~doc_string

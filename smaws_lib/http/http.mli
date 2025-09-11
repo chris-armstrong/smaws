@@ -50,6 +50,12 @@ module type Client_intf = sig
     (Response.t * Body.t, http_failure) result
 end
 
+module type Client = sig
+  include Client_intf
+
+  val make : unit -> t
+end
+
 module Http_Client_Eio : sig
   type t
 
@@ -75,7 +81,7 @@ module Http_Client_Eio : sig
     t ->
     (Response.t * Body.t, http_failure) result
 
-  val make :
+  val make_eio_client :
     sw:Eio.Switch.t ->
     < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t
     ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t

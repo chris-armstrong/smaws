@@ -1,7 +1,7 @@
 (** Nullable types are like option types, but the serialized representation is null instead of
     `undefined` *)
 module Nullable = struct
-  type 'a t = Null | Value of 'a
+  type 'a t = Null | Value of 'a [@@deriving show, eq]
 
   let bind v = Value v
   let map ~f v = match v with Null -> Null | Value v -> Value (f v)
@@ -18,7 +18,7 @@ module Document = Yojson.Basic
 module Timestamp = Ptime
 
 module Resource = struct
-  type t = unit
+  type t = unit [@@deriving show, eq]
 end
 
 module Blob = struct

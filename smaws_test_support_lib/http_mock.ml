@@ -4,6 +4,8 @@ module type HttpMock_intf = sig
   open Http
   include Http.Client_intf
 
+  type input_body = Http.input_body
+
   type request = {
     uri : Uri.t;
     headers : (string * string) list;

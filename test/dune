@@ -1,3 +1,10 @@
 (executable
  (name something)
- (libraries model_tests_protocols Smaws_Lib eio_main))
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries
+  model_tests_protocols
+  Smaws_Lib
+  eio_main
+  alcotest
+  Smaws_Test_Support_Lib))

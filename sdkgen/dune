@@ -9,7 +9,10 @@
   gen_operations
   gen_serialisers
   gen_service_metadata
+  gen_protocol_tests
   gen_types
   sdkgen
   SmithyHelpers)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq ppx_compare ppxlib.metaquot))
  (libraries smithy_ast smaws_parse codegen base))
