@@ -86,10 +86,10 @@ let getShapeTraits descriptor =
     | DoubleShape { traits }
     | BigIntegerShape { traits }
     | BigDecimalShape { traits }
-    | SetShape { traits; _ } ->
+    | SetShape { traits; _ }
+    | EnumShape { traits; _ }
+    | ByteShape { traits; _ } ->
         traits
-    | EnumShape { traits; _ } -> traits
-    | ByteShape { traits; _ } -> traits
     | UnitShape -> None
     | ResourceShape -> None
     | DocumentShape -> None

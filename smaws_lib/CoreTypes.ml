@@ -23,4 +23,11 @@ end
 
 module Blob = struct
   type t = bytes
+
+  let of_string s = Bytes.of_string s
+  let to_string b = Bytes.to_string b
+  let concat b1 b2 = Bytes.concat b1 b2
+  let length b = Bytes.length b
+  let empty = Bytes.empty
+  let sub = Bytes.sub
 end

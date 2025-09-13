@@ -226,8 +226,21 @@ val make_associate_created_artifact_request :
 (** {1:operations Operations} *)
 
 module AssociateCreatedArtifact : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_created_artifact_request ->
     ( associate_created_artifact_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -263,8 +276,22 @@ end
   \  "]
 
 module AssociateDiscoveredResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `PolicyErrorException of policy_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_discovered_resource_request ->
     ( associate_discovered_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -284,8 +311,20 @@ end
   "Associates a discovered resource ID from Application Discovery Service with a migration task.\n"]
 
 module AssociateSourceResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_source_resource_request ->
     ( associate_source_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -304,8 +343,20 @@ end
    source server, an application, or a migration wave.\n"]
 
 module CreateProgressUpdateStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_progress_update_stream_request ->
     ( create_progress_update_stream_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -326,8 +377,21 @@ end
    it does not need to be unique for each AWS account because it is scoped to the AWS account.\n"]
 
 module DeleteProgressUpdateStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_progress_update_stream_request ->
     ( delete_progress_update_stream_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -372,8 +436,20 @@ end
   \  "]
 
 module DescribeApplicationState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `PolicyErrorException of policy_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_application_state_request ->
     ( describe_application_state_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -390,8 +466,19 @@ end
 [@@ocaml.doc "Gets the migration status of an application.\n"]
 
 module DescribeMigrationTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_migration_task_request ->
     ( describe_migration_task_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -407,8 +494,21 @@ end
 [@@ocaml.doc "Retrieves a list of all attributes associated with a specific migration task.\n"]
 
 module DisassociateCreatedArtifact : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_created_artifact_request ->
     ( disassociate_created_artifact_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -444,8 +544,21 @@ end
   \  "]
 
 module DisassociateDiscoveredResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_discovered_resource_request ->
     ( disassociate_discovered_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -464,8 +577,20 @@ end
   "Disassociate an Application Discovery Service discovered resource from a migration task.\n"]
 
 module DisassociateSourceResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_source_resource_request ->
     ( disassociate_source_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -482,8 +607,21 @@ end
 [@@ocaml.doc "Removes the association between a source resource and a migration task.\n"]
 
 module ImportMigrationTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     import_migration_task_request ->
     ( import_migration_task_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -506,8 +644,18 @@ end
   \ "]
 
 module ListApplicationStates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_application_states_request ->
     ( list_application_states_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -524,8 +672,19 @@ end
    [ApplicationIds] parameter, only the migration statuses for those applications will be returned.\n"]
 
 module ListCreatedArtifacts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_created_artifacts_request ->
     ( list_created_artifacts_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -556,8 +715,19 @@ end
   \  "]
 
 module ListDiscoveredResources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_discovered_resources_request ->
     ( list_discovered_resources_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -573,8 +743,18 @@ end
 [@@ocaml.doc "Lists discovered resources associated with the given [MigrationTask].\n"]
 
 module ListMigrationTaskUpdates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_migration_task_updates_request ->
     ( list_migration_task_updates_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -591,8 +771,20 @@ end
    [MigrationTaskName] and [ProgressUpdateStream].\n"]
 
 module ListMigrationTasks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `PolicyErrorException of policy_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_migration_tasks_request ->
     ( list_migration_tasks_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -624,8 +816,18 @@ end
   \  "]
 
 module ListProgressUpdateStreams : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_progress_update_streams_request ->
     ( list_progress_update_streams_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -640,8 +842,18 @@ end
 [@@ocaml.doc "Lists progress update streams associated with the user account making this call.\n"]
 
 module ListSourceResources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_source_resources_request ->
     ( list_source_resources_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -658,8 +870,22 @@ end
    [ProgressUpdateStream].\n"]
 
 module NotifyApplicationState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `PolicyErrorException of policy_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     notify_application_state_request ->
     ( notify_application_state_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -682,8 +908,21 @@ end
   \         COMPLETED].\n"]
 
 module NotifyMigrationTaskState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     notify_migration_task_state_request ->
     ( notify_migration_task_state_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -718,8 +957,21 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module PutResourceAttributes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `DryRunOperation of dry_run_operation
+    | `HomeRegionNotSetException of home_region_not_set_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `UnauthorizedOperation of unauthorized_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_resource_attributes_request ->
     ( put_resource_attributes_result,
       [> Smaws_Lib.Protocols.AwsJson.error

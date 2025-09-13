@@ -632,8 +632,15 @@ val make_associate_custom_domain_request :
 (** {1:operations Operations} *)
 
 module AssociateCustomDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_custom_domain_request ->
     ( associate_custom_domain_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -654,8 +661,15 @@ end
   \ "]
 
 module CreateAutoScalingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_auto_scaling_configuration_request ->
     ( create_auto_scaling_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -682,8 +696,15 @@ end
   \   "]
 
 module CreateConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_connection_request ->
     ( create_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -702,8 +723,15 @@ end
   \ "]
 
 module CreateObservabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_observability_configuration_request ->
     ( create_observability_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -730,8 +758,15 @@ end
   \  "]
 
 module CreateService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_service_request ->
     ( create_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -750,8 +785,15 @@ end
   \ "]
 
 module CreateVpcConnector : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_vpc_connector_request ->
     ( create_vpc_connector_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -765,8 +807,16 @@ end
    associate your App Runner service to a custom Amazon Virtual Private Cloud (Amazon VPC).\n"]
 
 module CreateVpcIngressConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_vpc_ingress_connection_request ->
     ( create_vpc_ingress_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -781,8 +831,15 @@ end
    you want to associate your App Runner service with an Amazon VPC endpoint.\n"]
 
 module DeleteAutoScalingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_auto_scaling_configuration_request ->
     ( delete_auto_scaling_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -798,8 +855,15 @@ end
    that's used by one or more App Runner services.\n"]
 
 module DeleteConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_connection_request ->
     ( delete_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -813,8 +877,15 @@ end
    services that use this connection. If there are any, the [DeleteConnection] action fails.\n"]
 
 module DeleteObservabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_observability_configuration_request ->
     ( delete_observability_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -829,8 +900,16 @@ end
    Runner services.\n"]
 
 module DeleteService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_service_request ->
     ( delete_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -851,8 +930,15 @@ end
   \    "]
 
 module DeleteVpcConnector : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_vpc_connector_request ->
     ( delete_vpc_connector_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -866,8 +952,16 @@ end
    more App Runner services.\n"]
 
 module DeleteVpcIngressConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_vpc_ingress_connection_request ->
     ( delete_vpc_ingress_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -897,8 +991,15 @@ end
   \  "]
 
 module DescribeAutoScalingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_auto_scaling_configuration_request ->
     ( describe_auto_scaling_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -911,8 +1012,15 @@ end
   "Return a full description of an App Runner automatic scaling configuration resource.\n"]
 
 module DescribeCustomDomains : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_custom_domains_request ->
     ( describe_custom_domains_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -925,8 +1033,15 @@ end
   "Return a description of custom domain names that are associated with an App Runner service.\n"]
 
 module DescribeObservabilityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_observability_configuration_request ->
     ( describe_observability_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -938,8 +1053,15 @@ end
 [@@ocaml.doc "Return a full description of an App Runner observability configuration resource.\n"]
 
 module DescribeService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_service_request ->
     ( describe_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -951,8 +1073,15 @@ end
 [@@ocaml.doc "Return a full description of an App Runner service.\n"]
 
 module DescribeVpcConnector : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_vpc_connector_request ->
     ( describe_vpc_connector_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -964,8 +1093,15 @@ end
 [@@ocaml.doc "Return a description of an App Runner VPC connector resource.\n"]
 
 module DescribeVpcIngressConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_vpc_ingress_connection_request ->
     ( describe_vpc_ingress_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -977,8 +1113,16 @@ end
 [@@ocaml.doc "Return a full description of an App Runner VPC Ingress Connection resource.\n"]
 
 module DisassociateCustomDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_custom_domain_request ->
     ( disassociate_custom_domain_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -997,8 +1141,14 @@ end
   \ "]
 
 module ListAutoScalingConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_auto_scaling_configurations_request ->
     ( list_auto_scaling_configurations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1016,8 +1166,14 @@ end
   \ "]
 
 module ListConnections : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_connections_request ->
     ( list_connections_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1030,8 +1186,14 @@ end
    account.\n"]
 
 module ListObservabilityConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_observability_configurations_request ->
     ( list_observability_configurations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1049,8 +1211,15 @@ end
   \ "]
 
 module ListOperations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_operations_request ->
     ( list_operations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1066,8 +1235,14 @@ end
   \ "]
 
 module ListServices : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_services_request ->
     ( list_services_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1078,8 +1253,15 @@ end
 [@@ocaml.doc "Returns a list of running App Runner services in your Amazon Web Services account.\n"]
 
 module ListServicesForAutoScalingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_services_for_auto_scaling_configuration_request ->
     ( list_services_for_auto_scaling_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1092,8 +1274,16 @@ end
   "Returns a list of the associated App Runner services using an auto scaling configuration.\n"]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1108,8 +1298,14 @@ end
    tag key-value pairs.\n"]
 
 module ListVpcConnectors : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_vpc_connectors_request ->
     ( list_vpc_connectors_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1120,8 +1316,14 @@ end
 [@@ocaml.doc "Returns a list of App Runner VPC connectors in your Amazon Web Services account.\n"]
 
 module ListVpcIngressConnections : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_vpc_ingress_connections_request ->
     ( list_vpc_ingress_connections_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1133,8 +1335,16 @@ end
   "Return a list of App Runner VPC Ingress Connections in your Amazon Web Services account.\n"]
 
 module PauseService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     pause_service_request ->
     ( pause_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1152,8 +1362,16 @@ end
   \ "]
 
 module ResumeService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     resume_service_request ->
     ( resume_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1170,8 +1388,15 @@ end
   \ "]
 
 module StartDeployment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_deployment_request ->
     ( start_deployment_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1192,8 +1417,16 @@ end
   \  "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1207,8 +1440,16 @@ end
   "Add tags to, or update the tag values of, an App Runner resource. A tag is a key-value pair.\n"]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1221,8 +1462,15 @@ end
 [@@ocaml.doc "Remove tags from an App Runner resource.\n"]
 
 module UpdateDefaultAutoScalingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_default_auto_scaling_configuration_request ->
     ( update_default_auto_scaling_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1236,8 +1484,16 @@ end
    configuration will be set to non-default automatically.\n"]
 
 module UpdateService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_service_request ->
     ( update_service_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1261,8 +1517,16 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateVpcIngressConnection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceErrorException of internal_service_error_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `InvalidStateException of invalid_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_vpc_ingress_connection_request ->
     ( update_vpc_ingress_connection_response,
       [> Smaws_Lib.Protocols.AwsJson.error

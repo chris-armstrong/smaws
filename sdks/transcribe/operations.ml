@@ -2,6 +2,13 @@ open Types
 open Service_metadata
 
 module CreateCallAnalyticsCategory = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -19,15 +26,21 @@ module CreateCallAnalyticsCategory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_call_analytics_category_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_call_analytics_category_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeCreateCallAnalyticsCategory" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.CreateCallAnalyticsCategory"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_call_analytics_category_response_of_yojson
       ~error_deserializer
 end
 
 module CreateLanguageModel = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -45,15 +58,21 @@ module CreateLanguageModel = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_language_model_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_language_model_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeCreateLanguageModel" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.CreateLanguageModel" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.create_language_model_response_of_yojson
       ~error_deserializer
 end
 
 module CreateMedicalVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -71,15 +90,21 @@ module CreateMedicalVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_medical_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_medical_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeCreateMedicalVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.CreateMedicalVocabulary" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.create_medical_vocabulary_response_of_yojson
       ~error_deserializer
 end
 
 module CreateVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -97,15 +122,20 @@ module CreateVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeCreateVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_vocabulary_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.CreateVocabulary" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.create_vocabulary_response_of_yojson
       ~error_deserializer
 end
 
 module CreateVocabularyFilter = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -123,15 +153,21 @@ module CreateVocabularyFilter = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_vocabulary_filter_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_vocabulary_filter_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeCreateVocabularyFilter" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.CreateVocabularyFilter" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.create_vocabulary_filter_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteCallAnalyticsCategory = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -149,15 +185,20 @@ module DeleteCallAnalyticsCategory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_call_analytics_category_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_call_analytics_category_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteCallAnalyticsCategory" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteCallAnalyticsCategory"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_call_analytics_category_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteCallAnalyticsJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -173,15 +214,20 @@ module DeleteCallAnalyticsJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_call_analytics_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_call_analytics_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteCallAnalyticsJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteCallAnalyticsJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.delete_call_analytics_job_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteLanguageModel = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -197,15 +243,19 @@ module DeleteLanguageModel = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_language_model_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_language_model_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteLanguageModel" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteLanguageModel" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteMedicalScribeJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -221,15 +271,19 @@ module DeleteMedicalScribeJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_medical_scribe_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_medical_scribe_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteMedicalScribeJob" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteMedicalScribeJob" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteMedicalTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -245,15 +299,21 @@ module DeleteMedicalTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_medical_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_medical_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteMedicalTranscriptionJob"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteMedicalTranscriptionJob"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteMedicalVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -271,15 +331,19 @@ module DeleteMedicalVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_medical_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_medical_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteMedicalVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteMedicalVocabulary" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -295,15 +359,20 @@ module DeleteTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteTranscriptionJob" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteTranscriptionJob" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -321,15 +390,20 @@ module DeleteVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteVocabulary" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteVocabularyFilter = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -347,15 +421,20 @@ module DeleteVocabularyFilter = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_vocabulary_filter_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_vocabulary_filter_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDeleteVocabularyFilter" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DeleteVocabularyFilter" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DescribeLanguageModel = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -373,15 +452,21 @@ module DescribeLanguageModel = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_language_model_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_language_model_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeDescribeLanguageModel" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.DescribeLanguageModel" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.describe_language_model_response_of_yojson
       ~error_deserializer
 end
 
 module GetCallAnalyticsCategory = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -399,15 +484,21 @@ module GetCallAnalyticsCategory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_call_analytics_category_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_call_analytics_category_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetCallAnalyticsCategory" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetCallAnalyticsCategory" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_call_analytics_category_response_of_yojson
       ~error_deserializer
 end
 
 module GetCallAnalyticsJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -425,15 +516,21 @@ module GetCallAnalyticsJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_call_analytics_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_call_analytics_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetCallAnalyticsJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetCallAnalyticsJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_call_analytics_job_response_of_yojson
       ~error_deserializer
 end
 
 module GetMedicalScribeJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -451,15 +548,21 @@ module GetMedicalScribeJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_medical_scribe_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_medical_scribe_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetMedicalScribeJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetMedicalScribeJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_medical_scribe_job_response_of_yojson
       ~error_deserializer
 end
 
 module GetMedicalTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -477,15 +580,21 @@ module GetMedicalTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_medical_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_medical_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetMedicalTranscriptionJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetMedicalTranscriptionJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_medical_transcription_job_response_of_yojson
       ~error_deserializer
 end
 
 module GetMedicalVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -503,15 +612,21 @@ module GetMedicalVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_medical_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_medical_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetMedicalVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetMedicalVocabulary" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_medical_vocabulary_response_of_yojson
       ~error_deserializer
 end
 
 module GetTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -529,15 +644,21 @@ module GetTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetTranscriptionJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetTranscriptionJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_transcription_job_response_of_yojson
       ~error_deserializer
 end
 
 module GetVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -555,14 +676,20 @@ module GetVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_vocabulary_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetVocabulary" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_vocabulary_response_of_yojson
+      ~error_deserializer
 end
 
 module GetVocabularyFilter = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -580,15 +707,20 @@ module GetVocabularyFilter = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_vocabulary_filter_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_vocabulary_filter_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeGetVocabularyFilter" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.GetVocabularyFilter" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.get_vocabulary_filter_response_of_yojson
       ~error_deserializer
 end
 
 module ListCallAnalyticsCategories = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -604,15 +736,20 @@ module ListCallAnalyticsCategories = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_call_analytics_categories_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_call_analytics_categories_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListCallAnalyticsCategories" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListCallAnalyticsCategories"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_call_analytics_categories_response_of_yojson
       ~error_deserializer
 end
 
 module ListCallAnalyticsJobs = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -628,15 +765,20 @@ module ListCallAnalyticsJobs = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_call_analytics_jobs_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_call_analytics_jobs_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListCallAnalyticsJobs" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListCallAnalyticsJobs" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_call_analytics_jobs_response_of_yojson
       ~error_deserializer
 end
 
 module ListLanguageModels = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -652,15 +794,20 @@ module ListLanguageModels = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_language_models_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_language_models_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListLanguageModels" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListLanguageModels" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_language_models_response_of_yojson
       ~error_deserializer
 end
 
 module ListMedicalScribeJobs = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -676,15 +823,20 @@ module ListMedicalScribeJobs = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_medical_scribe_jobs_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_medical_scribe_jobs_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListMedicalScribeJobs" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListMedicalScribeJobs" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_medical_scribe_jobs_response_of_yojson
       ~error_deserializer
 end
 
 module ListMedicalTranscriptionJobs = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -700,15 +852,20 @@ module ListMedicalTranscriptionJobs = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_medical_transcription_jobs_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_medical_transcription_jobs_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListMedicalTranscriptionJobs"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListMedicalTranscriptionJobs"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_medical_transcription_jobs_response_of_yojson
       ~error_deserializer
 end
 
 module ListMedicalVocabularies = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -724,15 +881,21 @@ module ListMedicalVocabularies = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_medical_vocabularies_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_medical_vocabularies_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListMedicalVocabularies" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListMedicalVocabularies" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_medical_vocabularies_response_of_yojson
       ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -750,15 +913,20 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListTagsForResource" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListTagsForResource" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
 module ListTranscriptionJobs = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -774,15 +942,20 @@ module ListTranscriptionJobs = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_transcription_jobs_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_transcription_jobs_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListTranscriptionJobs" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListTranscriptionJobs" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_transcription_jobs_response_of_yojson
       ~error_deserializer
 end
 
 module ListVocabularies = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -798,15 +971,19 @@ module ListVocabularies = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_vocabularies_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_vocabularies_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListVocabularies" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_vocabularies_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListVocabularies" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_vocabularies_response_of_yojson
       ~error_deserializer
 end
 
 module ListVocabularyFilters = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -822,15 +999,21 @@ module ListVocabularyFilters = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_vocabulary_filters_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_vocabulary_filters_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeListVocabularyFilters" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.ListVocabularyFilters" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_vocabulary_filters_response_of_yojson
       ~error_deserializer
 end
 
 module StartCallAnalyticsJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -848,15 +1031,21 @@ module StartCallAnalyticsJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_call_analytics_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_call_analytics_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeStartCallAnalyticsJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.StartCallAnalyticsJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.start_call_analytics_job_response_of_yojson
       ~error_deserializer
 end
 
 module StartMedicalScribeJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -874,15 +1063,21 @@ module StartMedicalScribeJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_medical_scribe_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_medical_scribe_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeStartMedicalScribeJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.StartMedicalScribeJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.start_medical_scribe_job_response_of_yojson
       ~error_deserializer
 end
 
 module StartMedicalTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -900,15 +1095,21 @@ module StartMedicalTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_medical_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_medical_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeStartMedicalTranscriptionJob"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.StartMedicalTranscriptionJob"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_medical_transcription_job_response_of_yojson
       ~error_deserializer
 end
 
 module StartTranscriptionJob = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -926,15 +1127,22 @@ module StartTranscriptionJob = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_transcription_job_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_transcription_job_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeStartTranscriptionJob" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.StartTranscriptionJob" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.start_transcription_job_response_of_yojson
       ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -954,14 +1162,21 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeTagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.TagResource" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -981,14 +1196,21 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeUntagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.UntagResource" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateCallAnalyticsCategory = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -1008,15 +1230,22 @@ module UpdateCallAnalyticsCategory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_call_analytics_category_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_call_analytics_category_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeUpdateCallAnalyticsCategory" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.UpdateCallAnalyticsCategory"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_call_analytics_category_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateMedicalVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -1036,15 +1265,22 @@ module UpdateMedicalVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_medical_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_medical_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeUpdateMedicalVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.UpdateMedicalVocabulary" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.update_medical_vocabulary_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateVocabulary = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.transcribe#ConflictException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -1064,15 +1300,20 @@ module UpdateVocabulary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_vocabulary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_vocabulary_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeUpdateVocabulary" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.update_vocabulary_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.UpdateVocabulary" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.update_vocabulary_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateVocabularyFilter = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.transcribe#BadRequestException"
+    | `InternalFailureException _ -> "com.amazonaws.transcribe#InternalFailureException"
+    | `LimitExceededException _ -> "com.amazonaws.transcribe#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.transcribe#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "BadRequestException" ->
@@ -1090,10 +1331,9 @@ module UpdateVocabularyFilter = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_vocabulary_filter_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_vocabulary_filter_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TranscribeUpdateVocabularyFilter" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Transcribe.UpdateVocabularyFilter" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.update_vocabulary_filter_response_of_yojson
       ~error_deserializer
 end

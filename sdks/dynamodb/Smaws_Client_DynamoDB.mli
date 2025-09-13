@@ -1511,8 +1511,14 @@ val make_batch_execute_statement_input :
 (** {1:operations Operations} *)
 
 module BatchExecuteStatement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `RequestLimitExceeded of request_limit_exceeded ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_execute_statement_input ->
     ( batch_execute_statement_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1538,8 +1544,17 @@ end
   \      "]
 
 module BatchGetItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_item_input ->
     ( batch_get_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1606,8 +1621,19 @@ end
   \                 "]
 
 module BatchWriteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_write_item_input ->
     ( batch_write_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1712,8 +1738,19 @@ end
   \  "]
 
 module CreateBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableInUseException of table_in_use_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_backup_input ->
     ( create_backup_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1764,8 +1801,17 @@ end
   \  "]
 
 module CreateGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableAlreadyExistsException of global_table_already_exists_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_global_table_input ->
     ( create_global_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1844,8 +1890,16 @@ end
   \      "]
 
 module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_table_input ->
     ( create_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1873,8 +1927,17 @@ end
   \   "]
 
 module DeleteBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_backup_input ->
     ( delete_backup_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1891,8 +1954,21 @@ end
   \ "]
 
 module DeleteItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_item_input ->
     ( delete_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1921,8 +1997,18 @@ end
   \   "]
 
 module DeleteResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PolicyNotFoundException of policy_not_found_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_resource_policy_input ->
     ( delete_resource_policy_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1952,8 +2038,17 @@ end
   \       "]
 
 module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_table_input ->
     ( delete_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1985,8 +2080,15 @@ end
   \      "]
 
 module DescribeBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_backup_input ->
     ( describe_backup_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2001,8 +2103,15 @@ end
   \ "]
 
 module DescribeContinuousBackups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_continuous_backups_input ->
     ( describe_continuous_backups_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2026,8 +2135,14 @@ end
   \   "]
 
 module DescribeContributorInsights : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_contributor_insights_input ->
     ( describe_contributor_insights_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2039,8 +2154,10 @@ end
   "Returns information about contributor insights for a given table or global secondary index.\n"]
 
 module DescribeEndpoints : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_endpoints_request ->
     (describe_endpoints_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
 end
@@ -2051,8 +2168,15 @@ end
    traffic privacy}.\n"]
 
 module DescribeExport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ExportNotFoundException of export_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_export_input ->
     ( describe_export_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2064,8 +2188,15 @@ end
 [@@ocaml.doc "Describes an existing table export.\n"]
 
 module DescribeGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_global_table_input ->
     ( describe_global_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2092,8 +2223,15 @@ end
   \    "]
 
 module DescribeGlobalTableSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_global_table_settings_input ->
     ( describe_global_table_settings_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2120,8 +2258,12 @@ end
   \    "]
 
 module DescribeImport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_import_input ->
     ( describe_import_output,
       [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
@@ -2131,8 +2273,15 @@ end
 [@@ocaml.doc " Represents the properties of the import. \n"]
 
 module DescribeKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_kinesis_streaming_destination_input ->
     ( describe_kinesis_streaming_destination_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2144,8 +2293,14 @@ end
 [@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
 
 module DescribeLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_limits_input ->
     ( describe_limits_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2221,8 +2376,15 @@ end
   \         "]
 
 module DescribeTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_table_input ->
     ( describe_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2242,8 +2404,14 @@ end
   \   "]
 
 module DescribeTableReplicaAutoScaling : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_table_replica_auto_scaling_input ->
     ( describe_table_replica_auto_scaling_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2254,8 +2422,15 @@ end
 [@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
 
 module DescribeTimeToLive : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_time_to_live_input ->
     ( describe_time_to_live_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2267,8 +2442,17 @@ end
 [@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
 
 module DisableKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     kinesis_streaming_destination_input ->
     ( kinesis_streaming_destination_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2284,8 +2468,17 @@ end
    deleting either of the resources.\n"]
 
 module EnableKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     kinesis_streaming_destination_input ->
     ( kinesis_streaming_destination_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2302,8 +2495,20 @@ end
    DescribeKinesisStreamingDestination to check if streaming to the Kinesis data stream is ACTIVE.\n"]
 
 module ExecuteStatement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `DuplicateItemException of duplicate_item_exception
+    | `InternalServerError of internal_server_error
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     execute_statement_input ->
     ( execute_statement_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2333,8 +2538,19 @@ end
   \  "]
 
 module ExecuteTransaction : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+    | `InternalServerError of internal_server_error
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionCanceledException of transaction_canceled_exception
+    | `TransactionInProgressException of transaction_in_progress_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     execute_transaction_input ->
     ( execute_transaction_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2359,8 +2575,18 @@ end
   \   "]
 
 module ExportTableToPointInTime : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ExportConflictException of export_conflict_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidExportTimeException of invalid_export_time_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PointInTimeRecoveryUnavailableException of point_in_time_recovery_unavailable_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     export_table_to_point_in_time_input ->
     ( export_table_to_point_in_time_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2377,8 +2603,17 @@ end
    can export data from any time within the point in time recovery window.\n"]
 
 module GetItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_item_input ->
     ( get_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2400,8 +2635,16 @@ end
   \ "]
 
 module GetResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `PolicyNotFoundException of policy_not_found_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_resource_policy_input ->
     ( get_resource_policy_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2447,8 +2690,15 @@ end
   \    "]
 
 module ImportTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ImportConflictException of import_conflict_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     import_table_input ->
     ( import_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2460,8 +2710,14 @@ end
 [@@ocaml.doc " Imports table data from an S3 bucket. \n"]
 
 module ListBackups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_backups_input ->
     ( list_backups_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2486,8 +2742,14 @@ end
   \   "]
 
 module ListContributorInsights : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_contributor_insights_input ->
     ( list_contributor_insights_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2499,8 +2761,14 @@ end
   "Returns a list of ContributorInsightsSummary for a table and all its global secondary indexes.\n"]
 
 module ListExports : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_exports_input ->
     ( list_exports_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2511,8 +2779,14 @@ end
 [@@ocaml.doc "Lists completed exports within the past 90 days.\n"]
 
 module ListGlobalTables : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_global_tables_input ->
     ( list_global_tables_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2538,8 +2812,12 @@ end
   \    "]
 
 module ListImports : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_imports_input ->
     ( list_imports_output,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
@@ -2549,8 +2827,14 @@ end
 [@@ocaml.doc " Lists completed imports within the past 90 days. \n"]
 
 module ListTables : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tables_input ->
     ( list_tables_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2563,8 +2847,15 @@ end
    from [ListTables] is paginated, with each page returning a maximum of 100 table names.\n"]
 
 module ListTagsOfResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_of_resource_input ->
     ( list_tags_of_resource_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2582,8 +2873,21 @@ end
   \ "]
 
 module PutItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_item_input ->
     ( put_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2624,8 +2928,18 @@ end
   \       "]
 
 module PutResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PolicyNotFoundException of policy_not_found_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_resource_policy_input ->
     ( put_resource_policy_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2657,8 +2971,17 @@ end
   \    "]
 
 module Query : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     query_input ->
     ( query_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2717,8 +3040,19 @@ end
   \            "]
 
 module RestoreTableFromBackup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BackupInUseException of backup_in_use_exception
+    | `BackupNotFoundException of backup_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `TableAlreadyExistsException of table_already_exists_exception
+    | `TableInUseException of table_in_use_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     restore_table_from_backup_input ->
     ( restore_table_from_backup_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2761,8 +3095,20 @@ end
   \  "]
 
 module RestoreTableToPointInTime : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `InvalidRestoreTimeException of invalid_restore_time_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `PointInTimeRecoveryUnavailableException of point_in_time_recovery_unavailable_exception
+    | `TableAlreadyExistsException of table_already_exists_exception
+    | `TableInUseException of table_in_use_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     restore_table_to_point_in_time_input ->
     ( restore_table_to_point_in_time_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2832,8 +3178,17 @@ end
   \  "]
 
 module Scan : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     scan_input ->
     ( scan_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2888,8 +3243,17 @@ end
   \          "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2924,8 +3288,18 @@ end
   \   "]
 
 module TransactGetItems : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionCanceledException of transaction_canceled_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     transact_get_items_input ->
     ( transact_get_items_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2963,8 +3337,20 @@ end
   \  "]
 
 module TransactWriteItems : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `IdempotentParameterMismatchException of idempotent_parameter_mismatch_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionCanceledException of transaction_canceled_exception
+    | `TransactionInProgressException of transaction_in_progress_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     transact_write_items_input ->
     ( transact_write_items_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3044,8 +3430,17 @@ end
   \  "]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3079,8 +3474,16 @@ end
   \   "]
 
 module UpdateContinuousBackups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_continuous_backups_input ->
     ( update_continuous_backups_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3104,8 +3507,14 @@ end
   \  "]
 
 module UpdateContributorInsights : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_contributor_insights_input ->
     ( update_contributor_insights_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3122,8 +3531,18 @@ end
    key, you should not enable CloudWatch Contributor Insights for DynamoDB for this table.\n"]
 
 module UpdateGlobalTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ReplicaAlreadyExistsException of replica_already_exists_exception
+    | `ReplicaNotFoundException of replica_not_found_exception
+    | `TableNotFoundException of table_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_global_table_input ->
     ( update_global_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3182,8 +3601,19 @@ end
   \  "]
 
 module UpdateGlobalTableSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `GlobalTableNotFoundException of global_table_not_found_exception
+    | `IndexNotFoundException of index_not_found_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ReplicaNotFoundException of replica_not_found_exception
+    | `ResourceInUseException of resource_in_use_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_global_table_settings_input ->
     ( update_global_table_settings_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3214,8 +3644,21 @@ end
   \    "]
 
 module UpdateItem : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConditionalCheckFailedException of conditional_check_failed_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `ItemCollectionSizeLimitExceededException of item_collection_size_limit_exceeded_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ReplicatedWriteConflictException of replicated_write_conflict_exception
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TransactionConflictException of transaction_conflict_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_item_input ->
     ( update_item_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3240,8 +3683,17 @@ end
   \ "]
 
 module UpdateKinesisStreamingDestination : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_kinesis_streaming_destination_input ->
     ( update_kinesis_streaming_destination_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3255,8 +3707,17 @@ end
 [@@ocaml.doc "The command to update the Kinesis stream destination.\n"]
 
 module UpdateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_table_input ->
     ( update_table_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3290,8 +3751,16 @@ end
   \   "]
 
 module UpdateTableReplicaAutoScaling : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_table_replica_auto_scaling_input ->
     ( update_table_replica_auto_scaling_output,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3305,8 +3774,17 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateTimeToLive : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidEndpointException of invalid_endpoint_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_time_to_live_input ->
     ( update_time_to_live_output,
       [> Smaws_Lib.Protocols.AwsJson.error

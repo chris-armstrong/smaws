@@ -2,6 +2,11 @@ open Types
 open Service_metadata
 
 module DescribeStream = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.dynamodbstreams#InternalServerError"
+    | `ResourceNotFoundException _ -> "com.amazonaws.dynamodbstreams#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServerError" ->
@@ -15,14 +20,21 @@ module DescribeStream = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_stream_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810DescribeStream"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.DescribeStream"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_stream_output_of_yojson ~error_deserializer
 end
 
 module GetRecords = struct
+  let error_to_string = function
+    | `ExpiredIteratorException _ -> "com.amazonaws.dynamodbstreams#ExpiredIteratorException"
+    | `InternalServerError _ -> "com.amazonaws.dynamodbstreams#InternalServerError"
+    | `LimitExceededException _ -> "com.amazonaws.dynamodbstreams#LimitExceededException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.dynamodbstreams#ResourceNotFoundException"
+    | `TrimmedDataAccessException _ -> "com.amazonaws.dynamodbstreams#TrimmedDataAccessException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExpiredIteratorException" ->
@@ -44,14 +56,19 @@ module GetRecords = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_records_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_records_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810GetRecords" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_records_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.GetRecords" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_records_output_of_yojson
+      ~error_deserializer
 end
 
 module GetShardIterator = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.dynamodbstreams#InternalServerError"
+    | `ResourceNotFoundException _ -> "com.amazonaws.dynamodbstreams#ResourceNotFoundException"
+    | `TrimmedDataAccessException _ -> "com.amazonaws.dynamodbstreams#TrimmedDataAccessException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServerError" ->
@@ -68,15 +85,19 @@ module GetShardIterator = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_shard_iterator_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_shard_iterator_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810GetShardIterator"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.GetShardIterator"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_shard_iterator_output_of_yojson
       ~error_deserializer
 end
 
 module ListStreams = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.dynamodbstreams#InternalServerError"
+    | `ResourceNotFoundException _ -> "com.amazonaws.dynamodbstreams#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServerError" ->
@@ -90,9 +111,8 @@ module ListStreams = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_streams_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_streams_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810ListStreams" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_streams_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.ListStreams" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_streams_output_of_yojson
+      ~error_deserializer
 end

@@ -1,8 +1,19 @@
 open Types
 
 module AllocateStaticIp : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     allocate_static_ip_request ->
     ( allocate_static_ip_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -18,8 +29,18 @@ end
 [@@ocaml.doc "Allocates a static IP address.\n"]
 
 module AttachCertificateToDistribution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     attach_certificate_to_distribution_request ->
     ( attach_certificate_to_distribution_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -48,8 +69,19 @@ end
   \     "]
 
 module AttachDisk : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     attach_disk_request ->
     ( attach_disk_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -72,8 +104,19 @@ end
   \ "]
 
 module AttachInstancesToLoadBalancer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     attach_instances_to_load_balancer_request ->
     ( attach_instances_to_load_balancer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -99,8 +142,19 @@ end
   \  "]
 
 module AttachLoadBalancerTlsCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     attach_load_balancer_tls_certificate_request ->
     ( attach_load_balancer_tls_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -129,8 +183,19 @@ end
   \  "]
 
 module AttachStaticIp : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     attach_static_ip_request ->
     ( attach_static_ip_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -146,8 +211,19 @@ end
 [@@ocaml.doc "Attaches a static IP address to a specific Amazon Lightsail instance.\n"]
 
 module CloseInstancePublicPorts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     close_instance_public_ports_request ->
     ( close_instance_public_ports_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -169,8 +245,19 @@ end
   \ "]
 
 module CopySnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     copy_snapshot_request ->
     ( copy_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -198,8 +285,16 @@ end
   \  "]
 
 module CreateBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_bucket_request ->
     ( create_bucket_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -219,8 +314,17 @@ end
   \ "]
 
 module CreateBucketAccessKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_bucket_access_key_request ->
     ( create_bucket_access_key_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -250,8 +354,17 @@ end
   \    "]
 
 module CreateCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_certificate_request ->
     ( create_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -277,8 +390,19 @@ end
   \    "]
 
 module CreateCloudFormationStack : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_cloud_formation_stack_request ->
     ( create_cloud_formation_stack_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -302,8 +426,18 @@ end
   \   "]
 
 module CreateContactMethod : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_contact_method_request ->
     ( create_contact_method_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -327,8 +461,17 @@ end
   \ "]
 
 module CreateContainerService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_container_service_request ->
     ( create_container_service_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -348,8 +491,17 @@ end
   \ "]
 
 module CreateContainerServiceDeployment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_container_service_deployment_request ->
     ( create_container_service_deployment_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -376,8 +528,17 @@ end
   \  "]
 
 module CreateContainerServiceRegistryLogin : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_container_service_registry_login_request ->
     ( create_container_service_registry_login_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -412,8 +573,19 @@ end
   \       "]
 
 module CreateDisk : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_disk_request ->
     ( create_disk_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -436,8 +608,19 @@ end
   \ "]
 
 module CreateDiskFromSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_disk_from_snapshot_request ->
     ( create_disk_from_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -461,8 +644,19 @@ end
   \ "]
 
 module CreateDiskSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_disk_snapshot_request ->
     ( create_disk_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -502,8 +696,18 @@ end
   \   "]
 
 module CreateDistribution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_distribution_request ->
     ( create_distribution_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -525,8 +729,19 @@ end
   \ "]
 
 module CreateDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_domain_request ->
     ( create_domain_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -548,8 +763,19 @@ end
   \ "]
 
 module CreateDomainEntry : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_domain_entry_request ->
     ( create_domain_entry_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -573,8 +799,17 @@ end
   \ "]
 
 module CreateGUISessionAccessDetails : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_gui_session_access_details_request ->
     ( create_gui_session_access_details_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -594,8 +829,19 @@ end
   \ "]
 
 module CreateInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_instances_request ->
     ( create_instances_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -617,8 +863,19 @@ end
   \ "]
 
 module CreateInstancesFromSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_instances_from_snapshot_request ->
     ( create_instances_from_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -641,8 +898,19 @@ end
   \ "]
 
 module CreateInstanceSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_instance_snapshot_request ->
     ( create_instance_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -665,8 +933,19 @@ end
   \ "]
 
 module CreateKeyPair : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_key_pair_request ->
     ( create_key_pair_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -693,8 +972,19 @@ end
   \    "]
 
 module CreateLoadBalancer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_load_balancer_request ->
     ( create_load_balancer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -723,8 +1013,19 @@ end
   \  "]
 
 module CreateLoadBalancerTlsCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_load_balancer_tls_certificate_request ->
     ( create_load_balancer_tls_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -749,8 +1050,19 @@ end
   \  "]
 
 module CreateRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_relational_database_request ->
     ( create_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -772,8 +1084,19 @@ end
   \ "]
 
 module CreateRelationalDatabaseFromSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_relational_database_from_snapshot_request ->
     ( create_relational_database_from_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -799,8 +1122,19 @@ end
   \  "]
 
 module CreateRelationalDatabaseSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_relational_database_snapshot_request ->
     ( create_relational_database_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -823,8 +1157,18 @@ end
   \ "]
 
 module DeleteAlarm : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_alarm_request ->
     ( delete_alarm_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -846,8 +1190,18 @@ end
   \ "]
 
 module DeleteAutoSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_auto_snapshot_request ->
     ( delete_auto_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -865,8 +1219,17 @@ end
    Lightsail Developer Guide}.\n"]
 
 module DeleteBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_bucket_request ->
     ( delete_bucket_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -885,8 +1248,17 @@ end
   \   "]
 
 module DeleteBucketAccessKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_bucket_access_key_request ->
     ( delete_bucket_access_key_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -907,8 +1279,17 @@ end
   \  "]
 
 module DeleteCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_certificate_request ->
     ( delete_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -927,8 +1308,18 @@ end
   \ "]
 
 module DeleteContactMethod : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_contact_method_request ->
     ( delete_contact_method_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -952,8 +1343,17 @@ end
   \ "]
 
 module DeleteContainerImage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_container_image_request ->
     ( delete_container_image_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -968,8 +1368,17 @@ end
   "Deletes a container image that is registered to your Amazon Lightsail container service.\n"]
 
 module DeleteContainerService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_container_service_request ->
     ( delete_container_service_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -983,8 +1392,19 @@ end
 [@@ocaml.doc "Deletes your Amazon Lightsail container service.\n"]
 
 module DeleteDisk : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_disk_request ->
     ( delete_disk_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1009,8 +1429,19 @@ end
   \    "]
 
 module DeleteDiskSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_disk_snapshot_request ->
     ( delete_disk_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1038,8 +1469,18 @@ end
   \  "]
 
 module DeleteDistribution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_distribution_request ->
     ( delete_distribution_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1054,8 +1495,19 @@ end
 [@@ocaml.doc "Deletes your Amazon Lightsail content delivery network (CDN) distribution.\n"]
 
 module DeleteDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_domain_request ->
     ( delete_domain_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1077,8 +1529,19 @@ end
   \ "]
 
 module DeleteDomainEntry : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_domain_entry_request ->
     ( delete_domain_entry_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1100,8 +1563,19 @@ end
   \ "]
 
 module DeleteInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_instance_request ->
     ( delete_instance_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1123,8 +1597,19 @@ end
   \ "]
 
 module DeleteInstanceSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_instance_snapshot_request ->
     ( delete_instance_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1146,8 +1631,19 @@ end
   \ "]
 
 module DeleteKeyPair : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_key_pair_request ->
     ( delete_key_pair_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1178,8 +1674,19 @@ end
   \  "]
 
 module DeleteKnownHostKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_known_host_keys_request ->
     ( delete_known_host_keys_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1205,8 +1712,19 @@ end
   \   "]
 
 module DeleteLoadBalancer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_load_balancer_request ->
     ( delete_load_balancer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1230,8 +1748,19 @@ end
   \ "]
 
 module DeleteLoadBalancerTlsCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_load_balancer_tls_certificate_request ->
     ( delete_load_balancer_tls_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1254,8 +1783,19 @@ end
   \ "]
 
 module DeleteRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_relational_database_request ->
     ( delete_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1277,8 +1817,19 @@ end
   \ "]
 
 module DeleteRelationalDatabaseSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_relational_database_snapshot_request ->
     ( delete_relational_database_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1301,8 +1852,18 @@ end
   \ "]
 
 module DetachCertificateFromDistribution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     detach_certificate_from_distribution_request ->
     ( detach_certificate_from_distribution_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1322,8 +1883,19 @@ end
   \ "]
 
 module DetachDisk : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     detach_disk_request ->
     ( detach_disk_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1347,8 +1919,19 @@ end
   \ "]
 
 module DetachInstancesFromLoadBalancer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     detach_instances_from_load_balancer_request ->
     ( detach_instances_from_load_balancer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1374,8 +1957,19 @@ end
   \  "]
 
 module DetachStaticIp : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     detach_static_ip_request ->
     ( detach_static_ip_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1391,8 +1985,18 @@ end
 [@@ocaml.doc "Detaches a static IP from the Amazon Lightsail instance to which it is attached.\n"]
 
 module DisableAddOn : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_add_on_request ->
     ( disable_add_on_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1410,8 +2014,19 @@ end
    Lightsail Developer Guide}.\n"]
 
 module DownloadDefaultKeyPair : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     download_default_key_pair_request ->
     ( download_default_key_pair_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1431,8 +2046,18 @@ end
   \ "]
 
 module EnableAddOn : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_add_on_request ->
     ( enable_add_on_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1450,8 +2075,19 @@ end
    Lightsail Developer Guide}.\n"]
 
 module ExportSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     export_snapshot_request ->
     ( export_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1487,8 +2123,19 @@ end
   \      "]
 
 module GetActiveNames : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_active_names_request ->
     ( get_active_names_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1504,8 +2151,18 @@ end
 [@@ocaml.doc "Returns the names of all active (not deleted) resources.\n"]
 
 module GetAlarms : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_alarms_request ->
     ( get_alarms_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1529,8 +2186,18 @@ end
   \ "]
 
 module GetAutoSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_auto_snapshots_request ->
     ( get_auto_snapshots_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1549,8 +2216,19 @@ end
    Lightsail Developer Guide}.\n"]
 
 module GetBlueprints : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_blueprints_request ->
     ( get_blueprints_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1576,8 +2254,17 @@ end
   \   "]
 
 module GetBucketAccessKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_bucket_access_keys_request ->
     ( get_bucket_access_keys_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1598,8 +2285,16 @@ end
   \   "]
 
 module GetBucketBundles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_bucket_bundles_request ->
     ( get_bucket_bundles_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1620,8 +2315,17 @@ end
   \  "]
 
 module GetBucketMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_bucket_metric_data_request ->
     ( get_bucket_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1640,8 +2344,17 @@ end
   \ "]
 
 module GetBuckets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_buckets_request ->
     ( get_buckets_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1662,8 +2375,19 @@ end
   \ "]
 
 module GetBundles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_bundles_request ->
     ( get_bundles_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1686,8 +2410,17 @@ end
   \    "]
 
 module GetCertificates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_certificates_request ->
     ( get_certificates_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1707,8 +2440,19 @@ end
   \   "]
 
 module GetCloudFormationStackRecords : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_cloud_formation_stack_records_request ->
     ( get_cloud_formation_stack_records_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1729,8 +2473,18 @@ end
   \ "]
 
 module GetContactMethods : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_contact_methods_request ->
     ( get_contact_methods_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1755,8 +2509,15 @@ end
   \ "]
 
 module GetContainerAPIMetadata : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_api_metadata_request ->
     ( get_container_api_metadata_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1770,8 +2531,17 @@ end
    Lightsail Control (lightsailctl) plugin.\n"]
 
 module GetContainerImages : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_images_request ->
     ( get_container_images_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1791,8 +2561,17 @@ end
   \   "]
 
 module GetContainerLog : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_log_request ->
     ( get_container_log_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1816,8 +2595,17 @@ end
   \    "]
 
 module GetContainerServiceDeployments : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_service_deployments_request ->
     ( get_container_service_deployments_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1844,8 +2632,17 @@ end
   \     "]
 
 module GetContainerServiceMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_service_metric_data_request ->
     ( get_container_service_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1863,8 +2660,17 @@ end
   \ "]
 
 module GetContainerServicePowers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_service_powers_request ->
     ( get_container_service_powers_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1882,8 +2688,17 @@ end
   \ "]
 
 module GetContainerServices : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_container_services_request ->
     ( container_services_list_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1897,8 +2712,17 @@ end
 [@@ocaml.doc "Returns information about one or more of your Amazon Lightsail container services.\n"]
 
 module GetCostEstimate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_cost_estimate_request ->
     ( get_cost_estimate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1914,8 +2738,19 @@ end
    not generate for a resource that has been deleted.\n"]
 
 module GetDisk : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_disk_request ->
     ( get_disk_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1931,8 +2766,19 @@ end
 [@@ocaml.doc "Returns information about a specific block storage disk.\n"]
 
 module GetDisks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_disks_request ->
     ( get_disks_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1948,8 +2794,19 @@ end
 [@@ocaml.doc "Returns information about all block storage disks in your AWS account and region.\n"]
 
 module GetDiskSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_disk_snapshot_request ->
     ( get_disk_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1965,8 +2822,19 @@ end
 [@@ocaml.doc "Returns information about a specific block storage disk snapshot.\n"]
 
 module GetDiskSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_disk_snapshots_request ->
     ( get_disk_snapshots_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1983,8 +2851,18 @@ end
   "Returns information about all block storage disk snapshots in your AWS account and region.\n"]
 
 module GetDistributionBundles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_distribution_bundles_request ->
     ( get_distribution_bundles_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2004,8 +2882,18 @@ end
   \ "]
 
 module GetDistributionLatestCacheReset : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_distribution_latest_cache_reset_request ->
     ( get_distribution_latest_cache_reset_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2022,8 +2910,18 @@ end
    delivery network (CDN) distribution.\n"]
 
 module GetDistributionMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_distribution_metric_data_request ->
     ( get_distribution_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2044,8 +2942,18 @@ end
   \ "]
 
 module GetDistributions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_distributions_request ->
     ( get_distributions_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2062,8 +2970,19 @@ end
    distributions.\n"]
 
 module GetDomain : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_domain_request ->
     ( get_domain_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2079,8 +2998,19 @@ end
 [@@ocaml.doc "Returns information about a specific domain recordset.\n"]
 
 module GetDomains : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_domains_request ->
     ( get_domains_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2096,8 +3026,19 @@ end
 [@@ocaml.doc "Returns a list of all domains in the user's account.\n"]
 
 module GetExportSnapshotRecords : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_export_snapshot_records_request ->
     ( get_export_snapshot_records_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2120,8 +3061,19 @@ end
   \ "]
 
 module GetInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_request ->
     ( get_instance_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2139,8 +3091,19 @@ end
    server.\n"]
 
 module GetInstanceAccessDetails : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_access_details_request ->
     ( get_instance_access_details_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2163,8 +3126,19 @@ end
   \ "]
 
 module GetInstanceMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_metric_data_request ->
     ( get_instance_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2186,8 +3160,19 @@ end
   \ "]
 
 module GetInstancePortStates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_port_states_request ->
     ( get_instance_port_states_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2205,8 +3190,19 @@ end
    allowed to connect to the instance through the ports, and the protocol.\n"]
 
 module GetInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instances_request ->
     ( get_instances_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2223,8 +3219,19 @@ end
   "Returns information about all Amazon Lightsail virtual private servers, or {i instances}.\n"]
 
 module GetInstanceSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_snapshot_request ->
     ( get_instance_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2240,8 +3247,19 @@ end
 [@@ocaml.doc "Returns information about a specific instance snapshot.\n"]
 
 module GetInstanceSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_snapshots_request ->
     ( get_instance_snapshots_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2257,8 +3275,19 @@ end
 [@@ocaml.doc "Returns all instance snapshots for the user's account.\n"]
 
 module GetInstanceState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_instance_state_request ->
     ( get_instance_state_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2274,8 +3303,19 @@ end
 [@@ocaml.doc "Returns the state of a specific instance. Works on one instance at a time.\n"]
 
 module GetKeyPair : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_key_pair_request ->
     ( get_key_pair_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2291,8 +3331,19 @@ end
 [@@ocaml.doc "Returns information about a specific key pair.\n"]
 
 module GetKeyPairs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_key_pairs_request ->
     ( get_key_pairs_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2308,8 +3359,19 @@ end
 [@@ocaml.doc "Returns information about all key pairs in the user's account.\n"]
 
 module GetLoadBalancer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_load_balancer_request ->
     ( get_load_balancer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2325,8 +3387,19 @@ end
 [@@ocaml.doc "Returns information about the specified Lightsail load balancer.\n"]
 
 module GetLoadBalancerMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_load_balancer_metric_data_request ->
     ( get_load_balancer_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2347,8 +3420,19 @@ end
   \ "]
 
 module GetLoadBalancers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_load_balancers_request ->
     ( get_load_balancers_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2364,8 +3448,19 @@ end
 [@@ocaml.doc "Returns information about all load balancers in an account.\n"]
 
 module GetLoadBalancerTlsCertificates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_load_balancer_tls_certificates_request ->
     ( get_load_balancer_tls_certificates_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2388,8 +3483,17 @@ end
   \  "]
 
 module GetLoadBalancerTlsPolicies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_load_balancer_tls_policies_request ->
     ( get_load_balancer_tls_policies_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2409,8 +3513,19 @@ end
   \ "]
 
 module GetOperation : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_operation_request ->
     ( get_operation_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2428,8 +3543,19 @@ end
    create an instance, allocate a static IP, attach a static IP, and so on.\n"]
 
 module GetOperations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_operations_request ->
     ( get_operations_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2450,8 +3576,19 @@ end
   \ "]
 
 module GetOperationsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_operations_for_resource_request ->
     ( get_operations_for_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2467,8 +3604,19 @@ end
 [@@ocaml.doc "Gets operations for a specific resource (an instance or a static IP).\n"]
 
 module GetRegions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_regions_request ->
     ( get_regions_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2486,8 +3634,19 @@ end
   \        availability zones] parameter to also return the Availability Zones in a region.\n"]
 
 module GetRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_request ->
     ( get_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2503,8 +3662,19 @@ end
 [@@ocaml.doc "Returns information about a specific database in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseBlueprints : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_blueprints_request ->
     ( get_relational_database_blueprints_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2524,8 +3694,19 @@ end
   \ "]
 
 module GetRelationalDatabaseBundles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_bundles_request ->
     ( get_relational_database_bundles_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2545,8 +3726,19 @@ end
   \ "]
 
 module GetRelationalDatabaseEvents : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_events_request ->
     ( get_relational_database_events_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2562,8 +3754,19 @@ end
 [@@ocaml.doc "Returns a list of events for a specific database in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseLogEvents : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_log_events_request ->
     ( get_relational_database_log_events_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2579,8 +3782,19 @@ end
 [@@ocaml.doc "Returns a list of log events for a database in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseLogStreams : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_log_streams_request ->
     ( get_relational_database_log_streams_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2597,8 +3811,19 @@ end
   "Returns a list of available log streams for a specific database in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseMasterUserPassword : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_master_user_password_request ->
     ( get_relational_database_master_user_password_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2619,8 +3844,19 @@ end
   \ "]
 
 module GetRelationalDatabaseMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_metric_data_request ->
     ( get_relational_database_metric_data_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2641,8 +3877,19 @@ end
   \ "]
 
 module GetRelationalDatabaseParameters : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_parameters_request ->
     ( get_relational_database_parameters_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2664,8 +3911,19 @@ end
   \ "]
 
 module GetRelationalDatabases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_databases_request ->
     ( get_relational_databases_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2681,8 +3939,19 @@ end
 [@@ocaml.doc "Returns information about all of your databases in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_snapshot_request ->
     ( get_relational_database_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2698,8 +3967,19 @@ end
 [@@ocaml.doc "Returns information about a specific database snapshot in Amazon Lightsail.\n"]
 
 module GetRelationalDatabaseSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_relational_database_snapshots_request ->
     ( get_relational_database_snapshots_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2715,8 +3995,17 @@ end
 [@@ocaml.doc "Returns information about all of your database snapshots in Amazon Lightsail.\n"]
 
 module GetSetupHistory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_setup_history_request ->
     ( get_setup_history_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2732,8 +4021,19 @@ end
    were ran on the target instance.\n"]
 
 module GetStaticIp : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_static_ip_request ->
     ( get_static_ip_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2749,8 +4049,19 @@ end
 [@@ocaml.doc "Returns information about an Amazon Lightsail static IP.\n"]
 
 module GetStaticIps : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_static_ips_request ->
     ( get_static_ips_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2766,8 +4077,19 @@ end
 [@@ocaml.doc "Returns information about all static IPs in the user's account.\n"]
 
 module ImportKeyPair : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     import_key_pair_request ->
     ( import_key_pair_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2783,8 +4105,19 @@ end
 [@@ocaml.doc "Imports a public SSH key from a specific key pair.\n"]
 
 module IsVpcPeered : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     is_vpc_peered_request ->
     ( is_vpc_peered_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2800,8 +4133,19 @@ end
 [@@ocaml.doc "Returns a Boolean value indicating whether your Lightsail VPC is peered.\n"]
 
 module OpenInstancePublicPorts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     open_instance_public_ports_request ->
     ( open_instance_public_ports_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2824,8 +4168,19 @@ end
   \ "]
 
 module PeerVpc : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     peer_vpc_request ->
     ( peer_vpc_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2841,8 +4196,18 @@ end
 [@@ocaml.doc "Peers the Lightsail VPC with the user's default VPC.\n"]
 
 module PutAlarm : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_alarm_request ->
     ( put_alarm_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2872,8 +4237,19 @@ end
   \   "]
 
 module PutInstancePublicPorts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_instance_public_ports_request ->
     ( put_instance_public_ports_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2899,8 +4275,19 @@ end
   \ "]
 
 module RebootInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     reboot_instance_request ->
     ( reboot_instance_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2922,8 +4309,19 @@ end
   \ "]
 
 module RebootRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     reboot_relational_database_request ->
     ( reboot_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2945,8 +4343,17 @@ end
   \ "]
 
 module RegisterContainerImage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     register_container_image_request ->
     ( register_container_image_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2968,8 +4375,19 @@ end
   \   "]
 
 module ReleaseStaticIp : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     release_static_ip_request ->
     ( release_static_ip_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2985,8 +4403,18 @@ end
 [@@ocaml.doc "Deletes a specific static IP from your account.\n"]
 
 module ResetDistributionCache : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     reset_distribution_cache_request ->
     ( reset_distribution_cache_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3006,8 +4434,18 @@ end
   \ "]
 
 module SendContactMethodVerification : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     send_contact_method_verification_request ->
     ( send_contact_method_verification_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3040,8 +4478,19 @@ end
   \     "]
 
 module SetIpAddressType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     set_ip_address_type_request ->
     ( set_ip_address_type_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3062,8 +4511,17 @@ end
   \ "]
 
 module SetResourceAccessForBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     set_resource_access_for_bucket_request ->
     ( set_resource_access_for_bucket_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3081,8 +4539,17 @@ end
   \ "]
 
 module SetupInstanceHttps : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     setup_instance_https_request ->
     ( setup_instance_https_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3101,8 +4568,17 @@ end
   \ "]
 
 module StartGUISession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_gui_session_request ->
     ( start_gui_session_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3119,8 +4595,19 @@ end
    Use this action to resume the session after it expires. \n"]
 
 module StartInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_instance_request ->
     ( start_instance_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3149,8 +4636,19 @@ end
   \    "]
 
 module StartRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_relational_database_request ->
     ( start_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3173,8 +4671,17 @@ end
   \ "]
 
 module StopGUISession : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     stop_gui_session_request ->
     ( stop_gui_session_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3191,8 +4698,19 @@ end
    data will be lost.\n"]
 
 module StopInstance : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     stop_instance_request ->
     ( stop_instance_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3220,8 +4738,19 @@ end
   \    "]
 
 module StopRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     stop_relational_database_request ->
     ( stop_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3248,8 +4777,19 @@ end
   \    "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3275,8 +4815,18 @@ end
   \ "]
 
 module TestAlarm : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     test_alarm_request ->
     ( test_alarm_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3300,8 +4850,19 @@ end
   \ "]
 
 module UnpeerVpc : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     unpeer_vpc_request ->
     ( unpeer_vpc_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3317,8 +4878,19 @@ end
 [@@ocaml.doc "Unpeers the Lightsail VPC from the user's default VPC.\n"]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3341,8 +4913,17 @@ end
   \ "]
 
 module UpdateBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_bucket_request ->
     ( update_bucket_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3360,8 +4941,17 @@ end
   \ "]
 
 module UpdateBucketBundle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_bucket_bundle_request ->
     ( update_bucket_bundle_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3390,8 +4980,17 @@ end
   \  "]
 
 module UpdateContainerService : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_container_service_request ->
     ( update_container_service_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3407,8 +5006,18 @@ end
    and public domain names.\n"]
 
 module UpdateDistribution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_distribution_request ->
     ( update_distribution_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3426,8 +5035,18 @@ end
   \ "]
 
 module UpdateDistributionBundle : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_distribution_bundle_request ->
     ( update_distribution_bundle_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3454,8 +5073,19 @@ end
   \   "]
 
 module UpdateDomainEntry : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_domain_entry_request ->
     ( update_domain_entry_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3477,8 +5107,19 @@ end
   \ "]
 
 module UpdateInstanceMetadataOptions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_instance_metadata_options_request ->
     ( update_instance_metadata_options_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3501,8 +5142,19 @@ end
    IMDSv2 with an Amazon Lightsail instance} in the {i Amazon Lightsail Developer Guide}.\n"]
 
 module UpdateLoadBalancerAttribute : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_load_balancer_attribute_request ->
     ( update_load_balancer_attribute_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3526,8 +5178,19 @@ end
   \ "]
 
 module UpdateRelationalDatabase : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_relational_database_request ->
     ( update_relational_database_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3553,8 +5216,19 @@ end
   \  "]
 
 module UpdateRelationalDatabaseParameters : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AccountSetupInProgressException of account_setup_in_progress_exception
+    | `InvalidInputException of invalid_input_exception
+    | `NotFoundException of not_found_exception
+    | `OperationFailureException of operation_failure_exception
+    | `ServiceException of service_exception
+    | `UnauthenticatedException of unauthenticated_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_relational_database_parameters_request ->
     ( update_relational_database_parameters_result,
       [> Smaws_Lib.Protocols.AwsJson.error

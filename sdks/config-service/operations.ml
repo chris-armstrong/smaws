@@ -2,6 +2,13 @@ open Types
 open Service_metadata
 
 module AssociateResourceTypes = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.configservice#ConflictException"
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -17,15 +24,20 @@ module AssociateResourceTypes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : associate_resource_types_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.associate_resource_types_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceAssociateResourceTypes"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.AssociateResourceTypes"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_resource_types_response_of_yojson
       ~error_deserializer
 end
 
 module BatchGetAggregateResourceConfig = struct
+  let error_to_string = function
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationAggregatorException" ->
@@ -39,16 +51,20 @@ module BatchGetAggregateResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : batch_get_aggregate_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.batch_get_aggregate_resource_config_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceBatchGetAggregateResourceConfig" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.BatchGetAggregateResourceConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_aggregate_resource_config_response_of_yojson
       ~error_deserializer
 end
 
 module BatchGetResourceConfig = struct
+  let error_to_string = function
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoAvailableConfigurationRecorderException" ->
@@ -62,15 +78,19 @@ module BatchGetResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : batch_get_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.batch_get_resource_config_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceBatchGetResourceConfig"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.BatchGetResourceConfig"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_resource_config_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteAggregationAuthorization = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -82,16 +102,19 @@ module DeleteAggregationAuthorization = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_aggregation_authorization_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_aggregation_authorization_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteAggregationAuthorization" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteAggregationAuthorization" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteConfigRule = struct
+  let error_to_string = function
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigRuleException" ->
@@ -105,15 +128,18 @@ module DeleteConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_config_rule_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteConfigRule" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteConfigurationAggregator = struct
+  let error_to_string = function
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationAggregatorException" ->
@@ -125,16 +151,20 @@ module DeleteConfigurationAggregator = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_configuration_aggregator_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_configuration_aggregator_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteConfigurationAggregator" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteConfigurationAggregator" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteConfigurationRecorder = struct
+  let error_to_string = function
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `UnmodifiableEntityException _ -> "com.amazonaws.configservice#UnmodifiableEntityException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationRecorderException" ->
@@ -149,15 +179,20 @@ module DeleteConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_configuration_recorder_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteConfigurationRecorder"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteConfigurationRecorder" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteConformancePack = struct
+  let error_to_string = function
+    | `NoSuchConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConformancePackException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConformancePackException" ->
@@ -171,15 +206,21 @@ module DeleteConformancePack = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_conformance_pack_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_conformance_pack_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteConformancePack"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteConformancePack"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteDeliveryChannel = struct
+  let error_to_string = function
+    | `LastDeliveryChannelDeleteFailedException _ ->
+        "com.amazonaws.configservice#LastDeliveryChannelDeleteFailedException"
+    | `NoSuchDeliveryChannelException _ ->
+        "com.amazonaws.configservice#NoSuchDeliveryChannelException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "LastDeliveryChannelDeleteFailedException" ->
@@ -194,15 +235,19 @@ module DeleteDeliveryChannel = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_delivery_channel_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_delivery_channel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteDeliveryChannel"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteDeliveryChannel"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteEvaluationResults = struct
+  let error_to_string = function
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigRuleException" ->
@@ -216,15 +261,22 @@ module DeleteEvaluationResults = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_evaluation_results_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_evaluation_results_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteEvaluationResults"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteEvaluationResults"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_evaluation_results_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteOrganizationConfigRule = struct
+  let error_to_string = function
+    | `NoSuchOrganizationConfigRuleException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConfigRuleException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchOrganizationConfigRuleException" ->
@@ -241,16 +293,22 @@ module DeleteOrganizationConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_organization_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_organization_config_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteOrganizationConfigRule" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteOrganizationConfigRule" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteOrganizationConformancePack = struct
+  let error_to_string = function
+    | `NoSuchOrganizationConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConformancePackException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchOrganizationConformancePackException" ->
@@ -267,16 +325,19 @@ module DeleteOrganizationConformancePack = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_organization_conformance_pack_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_organization_conformance_pack_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteOrganizationConformancePack" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteOrganizationConformancePack" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeletePendingAggregationRequest = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -288,16 +349,25 @@ module DeletePendingAggregationRequest = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_pending_aggregation_request_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_pending_aggregation_request_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeletePendingAggregationRequest" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeletePendingAggregationRequest" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteRemediationConfiguration = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchRemediationConfigurationException _ ->
+        "com.amazonaws.configservice#NoSuchRemediationConfigurationException"
+    | `RemediationInProgressException _ ->
+        "com.amazonaws.configservice#RemediationInProgressException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -318,16 +388,19 @@ module DeleteRemediationConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_remediation_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_remediation_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteRemediationConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteRemediationConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_remediation_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteRemediationExceptions = struct
+  let error_to_string = function
+    | `NoSuchRemediationExceptionException _ ->
+        "com.amazonaws.configservice#NoSuchRemediationExceptionException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchRemediationExceptionException" ->
@@ -339,15 +412,20 @@ module DeleteRemediationExceptions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_remediation_exceptions_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_remediation_exceptions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteRemediationExceptions"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteRemediationExceptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_remediation_exceptions_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteResourceConfig = struct
+  let error_to_string = function
+    | `NoRunningConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoRunningConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoRunningConfigurationRecorderException" ->
@@ -361,15 +439,21 @@ module DeleteResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_resource_config_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteResourceConfig"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteResourceConfig"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteRetentionConfiguration = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchRetentionConfigurationException _ ->
+        "com.amazonaws.configservice#NoSuchRetentionConfigurationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -384,16 +468,21 @@ module DeleteRetentionConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_retention_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_retention_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteRetentionConfiguration" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteRetentionConfiguration" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteServiceLinkedConfigurationRecorder = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.configservice#ConflictException"
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -409,19 +498,23 @@ module DeleteServiceLinkedConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_service_linked_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.delete_service_linked_configuration_recorder_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDeleteServiceLinkedConfigurationRecorder" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DeleteServiceLinkedConfigurationRecorder" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.delete_service_linked_configuration_recorder_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteStoredQuery = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceNotFoundException" ->
@@ -435,15 +528,22 @@ module DeleteStoredQuery = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_stored_query_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_stored_query_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeleteStoredQuery" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_stored_query_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteStoredQuery" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_stored_query_response_of_yojson
       ~error_deserializer
 end
 
 module DeliverConfigSnapshot = struct
+  let error_to_string = function
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `NoRunningConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoRunningConfigurationRecorderException"
+    | `NoSuchDeliveryChannelException _ ->
+        "com.amazonaws.configservice#NoSuchDeliveryChannelException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoAvailableConfigurationRecorderException" ->
@@ -461,15 +561,22 @@ module DeliverConfigSnapshot = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : deliver_config_snapshot_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.deliver_config_snapshot_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDeliverConfigSnapshot"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeliverConfigSnapshot"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.deliver_config_snapshot_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeAggregateComplianceByConfigRules = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -488,19 +595,26 @@ module DescribeAggregateComplianceByConfigRules = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_aggregate_compliance_by_config_rules_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_aggregate_compliance_by_config_rules_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeAggregateComplianceByConfigRules" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeAggregateComplianceByConfigRules" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.describe_aggregate_compliance_by_config_rules_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeAggregateComplianceByConformancePacks = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -519,19 +633,25 @@ module DescribeAggregateComplianceByConformancePacks = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_aggregate_compliance_by_conformance_packs_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_aggregate_compliance_by_conformance_packs_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeAggregateComplianceByConformancePacks" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeAggregateComplianceByConformancePacks" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_aggregate_compliance_by_conformance_packs_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeAggregationAuthorizations = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -548,16 +668,21 @@ module DescribeAggregationAuthorizations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_aggregation_authorizations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_aggregation_authorizations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeAggregationAuthorizations" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeAggregationAuthorizations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_aggregation_authorizations_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeComplianceByConfigRule = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -575,16 +700,20 @@ module DescribeComplianceByConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_compliance_by_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_compliance_by_config_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeComplianceByConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeComplianceByConfigRule" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_compliance_by_config_rule_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeComplianceByResource = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -599,16 +728,21 @@ module DescribeComplianceByResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_compliance_by_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_compliance_by_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeComplianceByResource" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeComplianceByResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_compliance_by_resource_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigRuleEvaluationStatus = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -626,17 +760,22 @@ module DescribeConfigRuleEvaluationStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_config_rule_evaluation_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_config_rule_evaluation_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConfigRuleEvaluationStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConfigRuleEvaluationStatus" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_config_rule_evaluation_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigRules = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -654,15 +793,23 @@ module DescribeConfigRules = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_config_rules_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_config_rules_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDescribeConfigRules"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DescribeConfigRules"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_config_rules_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigurationAggregators = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -682,16 +829,23 @@ module DescribeConfigurationAggregators = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_configuration_aggregators_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_configuration_aggregators_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConfigurationAggregators" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConfigurationAggregators" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_configuration_aggregators_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigurationAggregatorSourcesStatus = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -711,19 +865,24 @@ module DescribeConfigurationAggregatorSourcesStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_configuration_aggregator_sources_status_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_configuration_aggregator_sources_status_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConfigurationAggregatorSourcesStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConfigurationAggregatorSourcesStatus" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_configuration_aggregator_sources_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigurationRecorders = struct
+  let error_to_string = function
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationRecorderException" ->
@@ -737,16 +896,20 @@ module DescribeConfigurationRecorders = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_configuration_recorders_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_configuration_recorders_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConfigurationRecorders" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConfigurationRecorders" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_configuration_recorders_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConfigurationRecorderStatus = struct
+  let error_to_string = function
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationRecorderException" ->
@@ -760,17 +923,26 @@ module DescribeConfigurationRecorderStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_configuration_recorder_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_configuration_recorder_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConfigurationRecorderStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConfigurationRecorderStatus" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_configuration_recorder_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConformancePackCompliance = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleInConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConfigRuleInConformancePackException"
+    | `NoSuchConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConformancePackException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -794,17 +966,24 @@ module DescribeConformancePackCompliance = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_conformance_pack_compliance_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_conformance_pack_compliance_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConformancePackCompliance" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConformancePackCompliance" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_conformance_pack_compliance_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConformancePacks = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConformancePackException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -824,15 +1003,21 @@ module DescribeConformancePacks = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_conformance_packs_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_conformance_packs_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDescribeConformancePacks"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DescribeConformancePacks"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_conformance_packs_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeConformancePackStatus = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -849,16 +1034,19 @@ module DescribeConformancePackStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_conformance_pack_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_conformance_pack_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeConformancePackStatus" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeConformancePackStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_conformance_pack_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeDeliveryChannels = struct
+  let error_to_string = function
+    | `NoSuchDeliveryChannelException _ ->
+        "com.amazonaws.configservice#NoSuchDeliveryChannelException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchDeliveryChannelException" ->
@@ -870,15 +1058,19 @@ module DescribeDeliveryChannels = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_delivery_channels_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_delivery_channels_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDescribeDeliveryChannels"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DescribeDeliveryChannels"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_delivery_channels_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeDeliveryChannelStatus = struct
+  let error_to_string = function
+    | `NoSuchDeliveryChannelException _ ->
+        "com.amazonaws.configservice#NoSuchDeliveryChannelException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchDeliveryChannelException" ->
@@ -890,16 +1082,23 @@ module DescribeDeliveryChannelStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_delivery_channel_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_delivery_channel_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeDeliveryChannelStatus" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeDeliveryChannelStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_delivery_channel_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeOrganizationConfigRules = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConfigRuleException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConfigRuleException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -919,16 +1118,23 @@ module DescribeOrganizationConfigRules = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_organization_config_rules_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_organization_config_rules_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeOrganizationConfigRules" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRules" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_organization_config_rules_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeOrganizationConfigRuleStatuses = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConfigRuleException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConfigRuleException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -948,19 +1154,27 @@ module DescribeOrganizationConfigRuleStatuses = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_organization_config_rule_statuses_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_organization_config_rule_statuses_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeOrganizationConfigRuleStatuses" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRuleStatuses" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.describe_organization_config_rule_statuses_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeOrganizationConformancePacks = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConformancePackException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -980,19 +1194,27 @@ module DescribeOrganizationConformancePacks = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_organization_conformance_packs_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_organization_conformance_packs_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeOrganizationConformancePacks" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConformancePacks" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.describe_organization_conformance_packs_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeOrganizationConformancePackStatuses = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConformancePackException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1012,19 +1234,25 @@ module DescribeOrganizationConformancePackStatuses = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_organization_conformance_pack_statuses_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.describe_organization_conformance_pack_statuses_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeOrganizationConformancePackStatuses" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConformancePackStatuses" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_organization_conformance_pack_statuses_response_of_yojson
       ~error_deserializer
 end
 
 module DescribePendingAggregationRequests = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1041,33 +1269,37 @@ module DescribePendingAggregationRequests = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_pending_aggregation_requests_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_pending_aggregation_requests_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribePendingAggregationRequests" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribePendingAggregationRequests" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_pending_aggregation_requests_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeRemediationConfigurations = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
   let error_deserializer tree path =
     let handler a = a in
     Smaws_Lib.Protocols.AwsJson.(
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_remediation_configurations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_remediation_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeRemediationConfigurations" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeRemediationConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_remediation_configurations_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeRemediationExceptions = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1082,16 +1314,22 @@ module DescribeRemediationExceptions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_remediation_exceptions_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_remediation_exceptions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeRemediationExceptions" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeRemediationExceptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_remediation_exceptions_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeRemediationExecutionStatus = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchRemediationConfigurationException _ ->
+        "com.amazonaws.configservice#NoSuchRemediationConfigurationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1109,17 +1347,23 @@ module DescribeRemediationExecutionStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_remediation_execution_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_remediation_execution_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeRemediationExecutionStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeRemediationExecutionStatus" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_remediation_execution_status_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeRetentionConfigurations = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchRetentionConfigurationException _ ->
+        "com.amazonaws.configservice#NoSuchRetentionConfigurationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1137,16 +1381,21 @@ module DescribeRetentionConfigurations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_retention_configurations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_retention_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceDescribeRetentionConfigurations" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.DescribeRetentionConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_retention_configurations_response_of_yojson
       ~error_deserializer
 end
 
 module DisassociateResourceTypes = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.configservice#ConflictException"
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -1162,15 +1411,22 @@ module DisassociateResourceTypes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : disassociate_resource_types_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.disassociate_resource_types_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceDisassociateResourceTypes"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DisassociateResourceTypes"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.disassociate_resource_types_response_of_yojson
       ~error_deserializer
 end
 
 module GetAggregateComplianceDetailsByConfigRule = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1189,19 +1445,26 @@ module GetAggregateComplianceDetailsByConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_aggregate_compliance_details_by_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_aggregate_compliance_details_by_config_rule_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetAggregateComplianceDetailsByConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetAggregateComplianceDetailsByConfigRule" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.get_aggregate_compliance_details_by_config_rule_response_of_yojson
       ~error_deserializer
 end
 
 module GetAggregateConfigRuleComplianceSummary = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1220,19 +1483,26 @@ module GetAggregateConfigRuleComplianceSummary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_aggregate_config_rule_compliance_summary_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_aggregate_config_rule_compliance_summary_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetAggregateConfigRuleComplianceSummary" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetAggregateConfigRuleComplianceSummary" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.get_aggregate_config_rule_compliance_summary_response_of_yojson
       ~error_deserializer
 end
 
 module GetAggregateConformancePackComplianceSummary = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1251,19 +1521,26 @@ module GetAggregateConformancePackComplianceSummary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_aggregate_conformance_pack_compliance_summary_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_aggregate_conformance_pack_compliance_summary_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetAggregateConformancePackComplianceSummary" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetAggregateConformancePackComplianceSummary" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.get_aggregate_conformance_pack_compliance_summary_response_of_yojson
       ~error_deserializer
 end
 
 module GetAggregateDiscoveredResourceCounts = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1282,19 +1559,28 @@ module GetAggregateDiscoveredResourceCounts = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_aggregate_discovered_resource_counts_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_aggregate_discovered_resource_counts_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetAggregateDiscoveredResourceCounts" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetAggregateDiscoveredResourceCounts" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.get_aggregate_discovered_resource_counts_response_of_yojson
       ~error_deserializer
 end
 
 module GetAggregateResourceConfig = struct
+  let error_to_string = function
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `OversizedConfigurationItemException _ ->
+        "com.amazonaws.configservice#OversizedConfigurationItemException"
+    | `ResourceNotDiscoveredException _ ->
+        "com.amazonaws.configservice#ResourceNotDiscoveredException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationAggregatorException" ->
@@ -1314,15 +1600,21 @@ module GetAggregateResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_aggregate_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_aggregate_resource_config_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceGetAggregateResourceConfig"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetAggregateResourceConfig"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_aggregate_resource_config_response_of_yojson
       ~error_deserializer
 end
 
 module GetComplianceDetailsByConfigRule = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1340,17 +1632,20 @@ module GetComplianceDetailsByConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_compliance_details_by_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_compliance_details_by_config_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetComplianceDetailsByConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetComplianceDetailsByConfigRule" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_compliance_details_by_config_rule_response_of_yojson
       ~error_deserializer
 end
 
 module GetComplianceDetailsByResource = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -1362,33 +1657,36 @@ module GetComplianceDetailsByResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_compliance_details_by_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_compliance_details_by_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetComplianceDetailsByResource" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetComplianceDetailsByResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_compliance_details_by_resource_response_of_yojson
       ~error_deserializer
 end
 
 module GetComplianceSummaryByConfigRule = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
+
   let error_deserializer tree path =
     let handler a = a in
     Smaws_Lib.Protocols.AwsJson.(
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let open Smaws_Lib.Context in
     let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetComplianceSummaryByConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetComplianceSummaryByConfigRule" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_compliance_summary_by_config_rule_response_of_yojson
       ~error_deserializer
 end
 
 module GetComplianceSummaryByResourceType = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -1400,19 +1698,28 @@ module GetComplianceSummaryByResourceType = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_compliance_summary_by_resource_type_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_compliance_summary_by_resource_type_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetComplianceSummaryByResourceType" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetComplianceSummaryByResourceType" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_compliance_summary_by_resource_type_response_of_yojson
       ~error_deserializer
 end
 
 module GetConformancePackComplianceDetails = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleInConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConfigRuleInConformancePackException"
+    | `NoSuchConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConformancePackException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1436,19 +1743,24 @@ module GetConformancePackComplianceDetails = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_conformance_pack_compliance_details_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_conformance_pack_compliance_details_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetConformancePackComplianceDetails" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetConformancePackComplianceDetails" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_conformance_pack_compliance_details_response_of_yojson
       ~error_deserializer
 end
 
 module GetConformancePackComplianceSummary = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchConformancePackException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1465,19 +1777,21 @@ module GetConformancePackComplianceSummary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_conformance_pack_compliance_summary_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_conformance_pack_compliance_summary_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetConformancePackComplianceSummary" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetConformancePackComplianceSummary" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_conformance_pack_compliance_summary_response_of_yojson
       ~error_deserializer
 end
 
 module GetCustomRulePolicy = struct
+  let error_to_string = function
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigRuleException" ->
@@ -1489,15 +1803,20 @@ module GetCustomRulePolicy = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_custom_rule_policy_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_custom_rule_policy_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceGetCustomRulePolicy"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetCustomRulePolicy"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_custom_rule_policy_response_of_yojson
       ~error_deserializer
 end
 
 module GetDiscoveredResourceCounts = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1513,15 +1832,23 @@ module GetDiscoveredResourceCounts = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_discovered_resource_counts_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_discovered_resource_counts_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceGetDiscoveredResourceCounts"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetDiscoveredResourceCounts" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_discovered_resource_counts_response_of_yojson
       ~error_deserializer
 end
 
 module GetOrganizationConfigRuleDetailedStatus = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConfigRuleException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConfigRuleException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1541,19 +1868,27 @@ module GetOrganizationConfigRuleDetailedStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_organization_config_rule_detailed_status_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_organization_config_rule_detailed_status_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetOrganizationConfigRuleDetailedStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetOrganizationConfigRuleDetailedStatus" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.get_organization_config_rule_detailed_status_response_of_yojson
       ~error_deserializer
 end
 
 module GetOrganizationConformancePackDetailedStatus = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchOrganizationConformancePackException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConformancePackException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1573,19 +1908,25 @@ module GetOrganizationConformancePackDetailedStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_organization_conformance_pack_detailed_status_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.get_organization_conformance_pack_detailed_status_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetOrganizationConformancePackDetailedStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetOrganizationConformancePackDetailedStatus" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.get_organization_conformance_pack_detailed_status_response_of_yojson
       ~error_deserializer
 end
 
 module GetOrganizationCustomRulePolicy = struct
+  let error_to_string = function
+    | `NoSuchOrganizationConfigRuleException _ ->
+        "com.amazonaws.configservice#NoSuchOrganizationConfigRuleException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchOrganizationConfigRuleException" ->
@@ -1600,16 +1941,25 @@ module GetOrganizationCustomRulePolicy = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_organization_custom_rule_policy_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_organization_custom_rule_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetOrganizationCustomRulePolicy" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetOrganizationCustomRulePolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_organization_custom_rule_policy_response_of_yojson
       ~error_deserializer
 end
 
 module GetResourceConfigHistory = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidTimeRangeException _ -> "com.amazonaws.configservice#InvalidTimeRangeException"
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `ResourceNotDiscoveredException _ ->
+        "com.amazonaws.configservice#ResourceNotDiscoveredException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1634,15 +1984,18 @@ module GetResourceConfigHistory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_resource_config_history_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_resource_config_history_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceGetResourceConfigHistory"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetResourceConfigHistory"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resource_config_history_response_of_yojson
       ~error_deserializer
 end
 
 module GetResourceEvaluationSummary = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceNotFoundException" ->
@@ -1654,16 +2007,19 @@ module GetResourceEvaluationSummary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_resource_evaluation_summary_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_resource_evaluation_summary_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceGetResourceEvaluationSummary" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.GetResourceEvaluationSummary" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resource_evaluation_summary_response_of_yojson
       ~error_deserializer
 end
 
 module GetStoredQuery = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceNotFoundException" ->
@@ -1677,15 +2033,21 @@ module GetStoredQuery = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_stored_query_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_stored_query_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceGetStoredQuery" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_stored_query_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetStoredQuery" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_stored_query_response_of_yojson
       ~error_deserializer
 end
 
 module ListAggregateDiscoveredResources = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1704,16 +2066,18 @@ module ListAggregateDiscoveredResources = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_aggregate_discovered_resources_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_aggregate_discovered_resources_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceListAggregateDiscoveredResources" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.ListAggregateDiscoveredResources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_aggregate_discovered_resources_response_of_yojson
       ~error_deserializer
 end
 
 module ListConfigurationRecorders = struct
+  let error_to_string = function
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ValidationException" ->
@@ -1724,15 +2088,21 @@ module ListConfigurationRecorders = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_configuration_recorders_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_configuration_recorders_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceListConfigurationRecorders"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListConfigurationRecorders"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_configuration_recorders_response_of_yojson
       ~error_deserializer
 end
 
 module ListConformancePackComplianceScores = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1749,19 +2119,25 @@ module ListConformancePackComplianceScores = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_conformance_pack_compliance_scores_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.list_conformance_pack_compliance_scores_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceListConformancePackComplianceScores" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.ListConformancePackComplianceScores" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.list_conformance_pack_compliance_scores_response_of_yojson
       ~error_deserializer
 end
 
 module ListDiscoveredResources = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1780,15 +2156,21 @@ module ListDiscoveredResources = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_discovered_resources_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_discovered_resources_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceListDiscoveredResources"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListDiscoveredResources"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_discovered_resources_response_of_yojson
       ~error_deserializer
 end
 
 module ListResourceEvaluations = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `InvalidTimeRangeException _ -> "com.amazonaws.configservice#InvalidTimeRangeException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1806,15 +2188,19 @@ module ListResourceEvaluations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_resource_evaluations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_resource_evaluations_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceListResourceEvaluations"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListResourceEvaluations"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_resource_evaluations_response_of_yojson
       ~error_deserializer
 end
 
 module ListStoredQueries = struct
+  let error_to_string = function
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidNextTokenException" ->
@@ -1828,15 +2214,20 @@ module ListStoredQueries = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_stored_queries_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_stored_queries_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceListStoredQueries" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_stored_queries_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListStoredQueries" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_stored_queries_response_of_yojson
       ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidLimitException" ->
@@ -1855,15 +2246,19 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceListTagsForResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListTagsForResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
 module PutAggregationAuthorization = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -1875,15 +2270,26 @@ module PutAggregationAuthorization = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_aggregation_authorization_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_aggregation_authorization_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutAggregationAuthorization"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.PutAggregationAuthorization" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_aggregation_authorization_response_of_yojson
       ~error_deserializer
 end
 
 module PutConfigRule = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `MaxNumberOfConfigRulesExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfConfigRulesExceededException"
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -1906,15 +2312,26 @@ module PutConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_config_rule_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutConfigRule" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConfigRule" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module PutConfigurationAggregator = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `InvalidRoleException _ -> "com.amazonaws.configservice#InvalidRoleException"
+    | `LimitExceededException _ -> "com.amazonaws.configservice#LimitExceededException"
+    | `NoAvailableOrganizationException _ ->
+        "com.amazonaws.configservice#NoAvailableOrganizationException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | `OrganizationAllFeaturesNotEnabledException _ ->
+        "com.amazonaws.configservice#OrganizationAllFeaturesNotEnabledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -1939,15 +2356,26 @@ module PutConfigurationAggregator = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_configuration_aggregator_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_configuration_aggregator_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutConfigurationAggregator"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConfigurationAggregator"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_configuration_aggregator_response_of_yojson
       ~error_deserializer
 end
 
 module PutConfigurationRecorder = struct
+  let error_to_string = function
+    | `InvalidConfigurationRecorderNameException _ ->
+        "com.amazonaws.configservice#InvalidConfigurationRecorderNameException"
+    | `InvalidRecordingGroupException _ ->
+        "com.amazonaws.configservice#InvalidRecordingGroupException"
+    | `InvalidRoleException _ -> "com.amazonaws.configservice#InvalidRoleException"
+    | `MaxNumberOfConfigurationRecordersExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfConfigurationRecordersExceededException"
+    | `UnmodifiableEntityException _ -> "com.amazonaws.configservice#UnmodifiableEntityException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidConfigurationRecorderNameException" ->
@@ -1973,15 +2401,26 @@ module PutConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_configuration_recorder_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutConfigurationRecorder"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConfigurationRecorder"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module PutConformancePack = struct
+  let error_to_string = function
+    | `ConformancePackTemplateValidationException _ ->
+        "com.amazonaws.configservice#ConformancePackTemplateValidationException"
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `MaxNumberOfConformancePacksExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfConformancePacksExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConformancePackTemplateValidationException" ->
@@ -2005,15 +2444,29 @@ module PutConformancePack = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_conformance_pack_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_conformance_pack_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutConformancePack" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConformancePack"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_conformance_pack_response_of_yojson
       ~error_deserializer
 end
 
 module PutDeliveryChannel = struct
+  let error_to_string = function
+    | `InsufficientDeliveryPolicyException _ ->
+        "com.amazonaws.configservice#InsufficientDeliveryPolicyException"
+    | `InvalidDeliveryChannelNameException _ ->
+        "com.amazonaws.configservice#InvalidDeliveryChannelNameException"
+    | `InvalidS3KeyPrefixException _ -> "com.amazonaws.configservice#InvalidS3KeyPrefixException"
+    | `InvalidS3KmsKeyArnException _ -> "com.amazonaws.configservice#InvalidS3KmsKeyArnException"
+    | `InvalidSNSTopicARNException _ -> "com.amazonaws.configservice#InvalidSNSTopicARNException"
+    | `MaxNumberOfDeliveryChannelsExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfDeliveryChannelsExceededException"
+    | `NoAvailableConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoAvailableConfigurationRecorderException"
+    | `NoSuchBucketException _ -> "com.amazonaws.configservice#NoSuchBucketException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientDeliveryPolicyException" ->
@@ -2046,15 +2499,21 @@ module PutDeliveryChannel = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_delivery_channel_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_delivery_channel_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutDeliveryChannel" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutDeliveryChannel"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module PutEvaluations = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `InvalidResultTokenException _ -> "com.amazonaws.configservice#InvalidResultTokenException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -2072,14 +2531,19 @@ module PutEvaluations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_evaluations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_evaluations_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutEvaluations" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.put_evaluations_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutEvaluations" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.put_evaluations_response_of_yojson
+      ~error_deserializer
 end
 
 module PutExternalEvaluation = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -2094,15 +2558,31 @@ module PutExternalEvaluation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_external_evaluation_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_external_evaluation_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutExternalEvaluation"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutExternalEvaluation"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_external_evaluation_response_of_yojson
       ~error_deserializer
 end
 
 module PutOrganizationConfigRule = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `MaxNumberOfOrganizationConfigRulesExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfOrganizationConfigRulesExceededException"
+    | `NoAvailableOrganizationException _ ->
+        "com.amazonaws.configservice#NoAvailableOrganizationException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | `OrganizationAllFeaturesNotEnabledException _ ->
+        "com.amazonaws.configservice#OrganizationAllFeaturesNotEnabledException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2134,15 +2614,31 @@ module PutOrganizationConfigRule = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_organization_config_rule_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_organization_config_rule_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutOrganizationConfigRule"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutOrganizationConfigRule"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_organization_config_rule_response_of_yojson
       ~error_deserializer
 end
 
 module PutOrganizationConformancePack = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `MaxNumberOfOrganizationConformancePacksExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfOrganizationConformancePacksExceededException"
+    | `NoAvailableOrganizationException _ ->
+        "com.amazonaws.configservice#NoAvailableOrganizationException"
+    | `OrganizationAccessDeniedException _ ->
+        "com.amazonaws.configservice#OrganizationAccessDeniedException"
+    | `OrganizationAllFeaturesNotEnabledException _ ->
+        "com.amazonaws.configservice#OrganizationAllFeaturesNotEnabledException"
+    | `OrganizationConformancePackTemplateValidationException _ ->
+        "com.amazonaws.configservice#OrganizationConformancePackTemplateValidationException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2175,16 +2671,21 @@ module PutOrganizationConformancePack = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_organization_conformance_pack_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_organization_conformance_pack_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServicePutOrganizationConformancePack" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.PutOrganizationConformancePack" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_organization_conformance_pack_response_of_yojson
       ~error_deserializer
 end
 
 module PutRemediationConfigurations = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2199,16 +2700,21 @@ module PutRemediationConfigurations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_remediation_configurations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_remediation_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServicePutRemediationConfigurations" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.PutRemediationConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_remediation_configurations_response_of_yojson
       ~error_deserializer
 end
 
 module PutRemediationExceptions = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2223,15 +2729,24 @@ module PutRemediationExceptions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_remediation_exceptions_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_remediation_exceptions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutRemediationExceptions"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutRemediationExceptions"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_remediation_exceptions_response_of_yojson
       ~error_deserializer
 end
 
 module PutResourceConfig = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `MaxActiveResourcesExceededException _ ->
+        "com.amazonaws.configservice#MaxActiveResourcesExceededException"
+    | `NoRunningConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoRunningConfigurationRecorderException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2251,15 +2766,20 @@ module PutResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_resource_config_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutResourceConfig" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutResourceConfig" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module PutRetentionConfiguration = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `MaxNumberOfRetentionConfigurationsExceededException _ ->
+        "com.amazonaws.configservice#MaxNumberOfRetentionConfigurationsExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -2275,15 +2795,22 @@ module PutRetentionConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_retention_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_retention_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutRetentionConfiguration"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutRetentionConfiguration"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_retention_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module PutServiceLinkedConfigurationRecorder = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.configservice#ConflictException"
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `LimitExceededException _ -> "com.amazonaws.configservice#LimitExceededException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -2301,19 +2828,25 @@ module PutServiceLinkedConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_service_linked_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.put_service_linked_configuration_recorder_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServicePutServiceLinkedConfigurationRecorder" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.PutServiceLinkedConfigurationRecorder" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.put_service_linked_configuration_recorder_response_of_yojson
       ~error_deserializer
 end
 
 module PutStoredQuery = struct
+  let error_to_string = function
+    | `ResourceConcurrentModificationException _ ->
+        "com.amazonaws.configservice#ResourceConcurrentModificationException"
+    | `TooManyTagsException _ -> "com.amazonaws.configservice#TooManyTagsException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceConcurrentModificationException" ->
@@ -2329,15 +2862,21 @@ module PutStoredQuery = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_stored_query_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_stored_query_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServicePutStoredQuery" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.put_stored_query_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutStoredQuery" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.put_stored_query_response_of_yojson
       ~error_deserializer
 end
 
 module SelectAggregateResourceConfig = struct
+  let error_to_string = function
+    | `InvalidExpressionException _ -> "com.amazonaws.configservice#InvalidExpressionException"
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | `NoSuchConfigurationAggregatorException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationAggregatorException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidExpressionException" ->
@@ -2357,16 +2896,20 @@ module SelectAggregateResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : select_aggregate_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.select_aggregate_resource_config_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"StarlingDoveServiceSelectAggregateResourceConfig" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"StarlingDoveService.SelectAggregateResourceConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.select_aggregate_resource_config_response_of_yojson
       ~error_deserializer
 end
 
 module SelectResourceConfig = struct
+  let error_to_string = function
+    | `InvalidExpressionException _ -> "com.amazonaws.configservice#InvalidExpressionException"
+    | `InvalidLimitException _ -> "com.amazonaws.configservice#InvalidLimitException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.configservice#InvalidNextTokenException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidExpressionException" ->
@@ -2383,15 +2926,22 @@ module SelectResourceConfig = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : select_resource_config_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.select_resource_config_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceSelectResourceConfig"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.SelectResourceConfig"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.select_resource_config_response_of_yojson
       ~error_deserializer
 end
 
 module StartConfigRulesEvaluation = struct
+  let error_to_string = function
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `LimitExceededException _ -> "com.amazonaws.configservice#LimitExceededException"
+    | `NoSuchConfigRuleException _ -> "com.amazonaws.configservice#NoSuchConfigRuleException"
+    | `ResourceInUseException _ -> "com.amazonaws.configservice#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidParameterValueException" ->
@@ -2410,15 +2960,22 @@ module StartConfigRulesEvaluation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_config_rules_evaluation_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_config_rules_evaluation_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceStartConfigRulesEvaluation"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartConfigRulesEvaluation"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_config_rules_evaluation_response_of_yojson
       ~error_deserializer
 end
 
 module StartConfigurationRecorder = struct
+  let error_to_string = function
+    | `NoAvailableDeliveryChannelException _ ->
+        "com.amazonaws.configservice#NoAvailableDeliveryChannelException"
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `UnmodifiableEntityException _ -> "com.amazonaws.configservice#UnmodifiableEntityException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoAvailableDeliveryChannelException" ->
@@ -2436,15 +2993,23 @@ module StartConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_configuration_recorder_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceStartConfigurationRecorder"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartConfigurationRecorder"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module StartRemediationExecution = struct
+  let error_to_string = function
+    | `InsufficientPermissionsException _ ->
+        "com.amazonaws.configservice#InsufficientPermissionsException"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | `NoSuchRemediationConfigurationException _ ->
+        "com.amazonaws.configservice#NoSuchRemediationConfigurationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InsufficientPermissionsException" ->
@@ -2462,15 +3027,20 @@ module StartRemediationExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_remediation_execution_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_remediation_execution_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceStartRemediationExecution"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartRemediationExecution"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_remediation_execution_response_of_yojson
       ~error_deserializer
 end
 
 module StartResourceEvaluation = struct
+  let error_to_string = function
+    | `IdempotentParameterMismatch _ -> "com.amazonaws.configservice#IdempotentParameterMismatch"
+    | `InvalidParameterValueException _ ->
+        "com.amazonaws.configservice#InvalidParameterValueException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "IdempotentParameterMismatch" ->
@@ -2485,15 +3055,20 @@ module StartResourceEvaluation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_resource_evaluation_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_resource_evaluation_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceStartResourceEvaluation"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartResourceEvaluation"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_resource_evaluation_response_of_yojson
       ~error_deserializer
 end
 
 module StopConfigurationRecorder = struct
+  let error_to_string = function
+    | `NoSuchConfigurationRecorderException _ ->
+        "com.amazonaws.configservice#NoSuchConfigurationRecorderException"
+    | `UnmodifiableEntityException _ -> "com.amazonaws.configservice#UnmodifiableEntityException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "NoSuchConfigurationRecorderException" ->
@@ -2508,15 +3083,20 @@ module StopConfigurationRecorder = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : stop_configuration_recorder_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.stop_configuration_recorder_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceStopConfigurationRecorder"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StopConfigurationRecorder"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | `TooManyTagsException _ -> "com.amazonaws.configservice#TooManyTagsException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceNotFoundException" ->
@@ -2532,15 +3112,18 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceTagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.TagResource" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.configservice#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.configservice#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ResourceNotFoundException" ->
@@ -2554,10 +3137,8 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveServiceUntagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.UntagResource" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

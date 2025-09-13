@@ -473,7 +473,7 @@ let parseShape name shape =
         (* TODO: these are technically different but they have the same shape and as long as the model is well-formed, this should give the right result *)
         | "intEnum" | "enum" -> parseEnumShape shapeDict
         | "document" -> parseDocumentShape shapeDict
-        | _ -> Error (CustomError ({js|unknown shape type |js} ^ typeValue))
+        | _ -> Error (CustomError ("unknown shape type: " ^ typeValue))
       in
 
       Result.map descriptor_ ~f:(fun descriptor ->

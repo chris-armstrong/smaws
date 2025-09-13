@@ -9,6 +9,25 @@ end)
 
 let loc = Location.none
 
+module Builtin_types = struct
+  open Ppx_util
+
+  let nullable constrained =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Nullable"; "t" ] |> Location.mknoloc)
+      [ constrained ]
+
+  let timestamp =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Timestamp"; "t" ] |> Location.mknoloc)
+      []
+
+  let document =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Document"; "t" ] |> Location.mknoloc)
+      []
+end
+
 let type_name ~is_exception_type name =
   Fmt.str "%s%s" (SafeNames.safeTypeName name) (if is_exception_type then "" else "")
 
@@ -58,7 +77,7 @@ let make_basic_type_manifest ctx descriptor
   | ShortShape { traits; _ } -> [%type: int]
   | BlobShape { traits; _ } -> [%type: bytes]
   | BooleanShape { traits; _ } -> [%type: bool]
-  | DocumentShape -> [%type: Smaws_Lib.CoreTypes.Document.t]
+  | DocumentShape -> Builtin_types.document
   | FloatShape { traits; _ } | DoubleShape { traits; _ } -> [%type: float]
   | LongShape { traits; _ } | IntegerShape { traits; _ } -> [%type: int]
   | StringShape { traits; _ } -> [%type: string]
@@ -70,15 +89,7 @@ let make_basic_type_manifest ctx descriptor
          ourselves *)
       let basic_type = resolve ctx ~name:target ~namespace_resolver () in
       let is_sparse = Ast.Trait.(hasTrait traits isSparseTrait) in
-      let resolved_type =
-        if is_sparse then
-          B.ptyp_constr
-            (Location.mknoloc
-               (Longident.unflatten [ "Smaws_Lib"; "Smithy_api"; "Types"; "nullable" ]
-               |> Option.value_exn))
-            [ basic_type ]
-        else basic_type
-      in
+      let resolved_type = if is_sparse then Builtin_types.nullable basic_type else basic_type in
       B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ resolved_type ]
   | TimestampShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.Timestamp.t]
   | UnitShape -> [%type: unit]
@@ -178,6 +189,10 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
   | MapShape { traits; mapKey; mapValue } ->
       let key_type = resolve ctx ~name:mapKey.target ~namespace_resolver () in
       let value_type = resolve ctx ~name:mapValue.target ~namespace_resolver () in
+      let is_sparse = Ast.Trait.hasTrait traits Ast.Trait.isSparseTrait in
+      let value_type =
+        match is_sparse with true -> Builtin_types.nullable value_type | false -> value_type
+      in
       let tuple = B.ptyp_tuple [ key_type; value_type ] in
       let list_type = B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ tuple ] in
 

@@ -45,6 +45,7 @@ let main () =
       let _ = Sdkgen.write_deserialisers ~output_dir model in
       let _ = Sdkgen.write_builders ~output_dir model in
       let _ = Sdkgen.write_module ~filename:module_dir_name ~output_dir model in
+      let _ = Sdkgen.write_protocol_tests ~output_dir model in
       let _ =
         match service_details with
         | Some (name, shape, trait) ->

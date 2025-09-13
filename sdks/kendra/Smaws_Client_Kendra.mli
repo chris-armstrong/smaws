@@ -1900,8 +1900,18 @@ val make_associate_entities_to_experience_request :
 (** {1:operations Operations} *)
 
 module AssociateEntitiesToExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceAlreadyExistException of resource_already_exist_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_entities_to_experience_request ->
     ( associate_entities_to_experience_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1921,8 +1931,18 @@ end
    a search experience with no code}.\n"]
 
 module AssociatePersonasToEntities : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceAlreadyExistException of resource_already_exist_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_personas_to_entities_request ->
     ( associate_personas_to_entities_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1942,8 +1962,18 @@ end
    a search experience with no code}.\n"]
 
 module BatchDeleteDocument : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_delete_document_request ->
     ( batch_delete_document_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1968,8 +1998,17 @@ end
   \  "]
 
 module BatchDeleteFeaturedResultsSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_delete_featured_results_set_request ->
     ( batch_delete_featured_results_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1986,8 +2025,18 @@ end
    documents are featured in the search results.\n"]
 
 module BatchGetDocumentStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_document_status_request ->
     ( batch_get_document_status_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2014,8 +2063,19 @@ end
   \  "]
 
 module BatchPutDocument : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_put_document_request ->
     ( batch_put_document_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2046,8 +2106,18 @@ end
   \   "]
 
 module ClearQuerySuggestions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     clear_query_suggestions_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2071,8 +2141,19 @@ end
   \  "]
 
 module CreateAccessControlConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_access_control_configuration_request ->
     ( create_access_control_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2115,8 +2196,20 @@ end
   \     "]
 
 module CreateDataSource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceAlreadyExistException of resource_already_exist_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_data_source_request ->
     ( create_data_source_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2145,8 +2238,19 @@ end
   \   "]
 
 module CreateExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_experience_request ->
     ( create_experience_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2166,8 +2270,19 @@ end
    a search experience with no code}.\n"]
 
 module CreateFaq : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_faq_request ->
     ( create_faq_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2191,8 +2306,19 @@ end
   \  "]
 
 module CreateFeaturedResultsSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `FeaturedResultsConflictException of featured_results_conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_featured_results_set_request ->
     ( create_featured_results_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2215,8 +2341,19 @@ end
   \ "]
 
 module CreateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceAlreadyExistException of resource_already_exist_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_index_request ->
     ( create_index_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2244,8 +2381,19 @@ end
   \  "]
 
 module CreateQuerySuggestionsBlockList : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_query_suggestions_block_list_request ->
     ( create_query_suggestions_block_list_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2278,8 +2426,19 @@ end
   \     "]
 
 module CreateThesaurus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_thesaurus_request ->
     ( create_thesaurus_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2300,8 +2459,18 @@ end
   \ "]
 
 module DeleteAccessControlConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_access_control_configuration_request ->
     ( delete_access_control_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2320,8 +2489,18 @@ end
    documents.\n"]
 
 module DeleteDataSource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_data_source_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2345,8 +2524,18 @@ end
   \ "]
 
 module DeleteExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_experience_request ->
     ( delete_experience_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2365,8 +2554,18 @@ end
    a search experience with no code}.\n"]
 
 module DeleteFaq : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_faq_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2381,8 +2580,18 @@ end
 [@@ocaml.doc "Removes a FAQ from an index.\n"]
 
 module DeleteIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_index_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2400,8 +2609,18 @@ end
    [DescribeIndex] API is set to [DELETING].\n"]
 
 module DeletePrincipalMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_principal_mapping_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2431,8 +2650,18 @@ end
   \   "]
 
 module DeleteQuerySuggestionsBlockList : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_query_suggestions_block_list_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2454,8 +2683,18 @@ end
   \  "]
 
 module DeleteThesaurus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_thesaurus_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2470,8 +2709,17 @@ end
 [@@ocaml.doc "Deletes an Amazon Kendra thesaurus. \n"]
 
 module DescribeAccessControlConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_access_control_configuration_request ->
     ( describe_access_control_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2489,8 +2737,17 @@ end
    access to documents.\n"]
 
 module DescribeDataSource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_data_source_request ->
     ( describe_data_source_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2504,8 +2761,17 @@ end
 [@@ocaml.doc "Gets information about an Amazon Kendra data source connector.\n"]
 
 module DescribeExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_experience_request ->
     ( describe_experience_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2523,8 +2789,17 @@ end
    a search experience with no code}.\n"]
 
 module DescribeFaq : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_faq_request ->
     ( describe_faq_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2538,8 +2813,17 @@ end
 [@@ocaml.doc "Gets information about a FAQ.\n"]
 
 module DescribeFeaturedResultsSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_featured_results_set_request ->
     ( describe_featured_results_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2556,8 +2840,17 @@ end
    documents are featured in the search results.\n"]
 
 module DescribeIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_index_request ->
     ( describe_index_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2571,8 +2864,17 @@ end
 [@@ocaml.doc "Gets information about an Amazon Kendra index.\n"]
 
 module DescribePrincipalMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_principal_mapping_request ->
     ( describe_principal_mapping_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2594,8 +2896,17 @@ end
   \ "]
 
 module DescribeQuerySuggestionsBlockList : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_query_suggestions_block_list_request ->
     ( describe_query_suggestions_block_list_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2615,8 +2926,17 @@ end
   \  "]
 
 module DescribeQuerySuggestionsConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_query_suggestions_config_request ->
     ( describe_query_suggestions_config_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2636,8 +2956,17 @@ end
   \  "]
 
 module DescribeThesaurus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_thesaurus_request ->
     ( describe_thesaurus_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2651,8 +2980,17 @@ end
 [@@ocaml.doc "Gets information about an Amazon Kendra thesaurus.\n"]
 
 module DisassociateEntitiesFromExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_entities_from_experience_request ->
     ( disassociate_entities_from_experience_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2671,8 +3009,17 @@ end
    a search experience with no code}.\n"]
 
 module DisassociatePersonasFromEntities : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_personas_from_entities_request ->
     ( disassociate_personas_from_entities_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2691,8 +3038,19 @@ end
    a search experience with no code}.\n"]
 
 module GetQuerySuggestions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_query_suggestions_request ->
     ( get_query_suggestions_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2712,8 +3070,16 @@ end
   \ "]
 
 module GetSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_snapshots_request ->
     ( get_snapshots_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2728,8 +3094,17 @@ end
    your search application and how effective the application is.\n"]
 
 module ListAccessControlConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_access_control_configurations_request ->
     ( list_access_control_configurations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2746,8 +3121,18 @@ end
    results are filtered based on the user or their group access to documents.\n"]
 
 module ListDataSourceSyncJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_data_source_sync_jobs_request ->
     ( list_data_source_sync_jobs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2762,8 +3147,17 @@ end
 [@@ocaml.doc "Gets statistics about synchronizing a data source connector.\n"]
 
 module ListDataSources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_data_sources_request ->
     ( list_data_sources_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2777,8 +3171,17 @@ end
 [@@ocaml.doc "Lists the data source connectors that you have created.\n"]
 
 module ListEntityPersonas : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_entity_personas_request ->
     ( list_entity_personas_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2793,8 +3196,17 @@ end
   "Lists specific permissions of users and groups with access to your Amazon Kendra experience.\n"]
 
 module ListExperienceEntities : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_experience_entities_request ->
     ( list_experience_entities_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2813,8 +3225,17 @@ end
    a search experience with no code}.\n"]
 
 module ListExperiences : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_experiences_request ->
     ( list_experiences_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2832,8 +3253,17 @@ end
    a search experience with no code}.\n"]
 
 module ListFaqs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_faqs_request ->
     ( list_faqs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2847,8 +3277,17 @@ end
 [@@ocaml.doc "Gets a list of FAQs associated with an index.\n"]
 
 module ListFeaturedResultsSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_featured_results_sets_request ->
     ( list_featured_results_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2865,8 +3304,18 @@ end
    specific documents are featured in the search results.\n"]
 
 module ListGroupsOlderThanOrderingId : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_groups_older_than_ordering_id_request ->
     ( list_groups_older_than_ordering_id_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2886,8 +3335,16 @@ end
   \ "]
 
 module ListIndices : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_indices_request ->
     ( list_indices_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2900,8 +3357,17 @@ end
 [@@ocaml.doc "Lists the Amazon Kendra indexes that you created.\n"]
 
 module ListQuerySuggestionsBlockLists : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_query_suggestions_block_lists_request ->
     ( list_query_suggestions_block_lists_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2922,8 +3388,17 @@ end
   \  "]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceUnavailableException of resource_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2939,8 +3414,17 @@ end
    resources can have tags associated with them.\n"]
 
 module ListThesauri : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_thesauri_request ->
     ( list_thesauri_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2954,8 +3438,19 @@ end
 [@@ocaml.doc "Lists the thesauri for an index.\n"]
 
 module PutPrincipalMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_principal_mapping_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2987,8 +3482,19 @@ end
   \   "]
 
 module Query : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     query_request ->
     ( query_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3042,8 +3548,19 @@ end
   \      "]
 
 module Retrieve : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     retrieve_request ->
     ( retrieve_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3105,8 +3622,19 @@ end
   \       "]
 
 module StartDataSourceSyncJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_data_source_sync_job_request ->
     ( start_data_source_sync_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3128,8 +3656,17 @@ end
   \ "]
 
 module StopDataSourceSyncJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     stop_data_source_sync_job_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3145,8 +3682,18 @@ end
    synchronization job.\n"]
 
 module SubmitFeedback : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ResourceUnavailableException of resource_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     submit_feedback_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3165,8 +3712,17 @@ end
   \ "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceUnavailableException of resource_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3182,8 +3738,17 @@ end
    already exists, the existing value is replaced with the new value.\n"]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceUnavailableException of resource_unavailable_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3197,8 +3762,19 @@ end
 [@@ocaml.doc "Removes a tag from an index, FAQ, data source, or other resource.\n"]
 
 module UpdateAccessControlConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_access_control_configuration_request ->
     ( update_access_control_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3239,8 +3815,18 @@ end
   \     "]
 
 module UpdateDataSource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_data_source_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3255,8 +3841,18 @@ end
 [@@ocaml.doc "Updates an Amazon Kendra data source connector.\n"]
 
 module UpdateExperience : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_experience_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3275,8 +3871,18 @@ end
    a search experience with no code}.\n"]
 
 module UpdateFeaturedResultsSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `FeaturedResultsConflictException of featured_results_conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_featured_results_set_request ->
     ( update_featured_results_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3295,8 +3901,19 @@ end
    in the search results.\n"]
 
 module UpdateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_index_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3312,8 +3929,18 @@ end
 [@@ocaml.doc "Updates an Amazon Kendra index.\n"]
 
 module UpdateQuerySuggestionsBlockList : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_query_suggestions_block_list_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3342,8 +3969,18 @@ end
   \    "]
 
 module UpdateQuerySuggestionsConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_query_suggestions_config_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3375,8 +4012,18 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateThesaurus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_thesaurus_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error

@@ -162,6 +162,10 @@ module Serialiser = struct
     | DocumentShape -> exp_func "json_to_yojson"
     | ServiceShape x -> None
     | MapShape x ->
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let item_transformer =
+          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target))
+        in
         Some
           (exp_fun_untyped "tree"
              (B.pexp_apply (exp_ident "map_to_yojson")
@@ -170,8 +174,9 @@ module Serialiser = struct
                     B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target))
                   );
                   ( Nolabel,
-                    B.pexp_ident
-                      (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target)) );
+                    if is_sparse then
+                      B.pexp_apply (exp_ident "nullable_to_yojson") [ (Nolabel, item_transformer) ]
+                    else item_transformer );
                   (Nolabel, exp_ident "tree");
                 ]))
     | EnumShape s -> Some (enum_func_body shapeWithTarget.name s)
@@ -459,6 +464,10 @@ module Deserialiser = struct
     | DocumentShape -> exp_func "json_of_yojson"
     | ServiceShape x -> None
     | MapShape x ->
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let item_type =
+          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target))
+        in
         Some
           (exp_fun_untyped "tree"
              (exp_fun_untyped "path"
@@ -468,8 +477,13 @@ module Deserialiser = struct
                        B.pexp_ident
                          (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target)) );
                      ( Nolabel,
-                       B.pexp_ident
-                         (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target)) );
+                       if is_sparse then
+                         B.pexp_apply
+                           (B.pexp_ident
+                              ([ "nullable_of_yojson" ] |> Longident.unflatten |> Option.value_exn
+                             |> Location.mknoloc))
+                           [ (Nolabel, item_type) ]
+                       else item_type );
                      (Nolabel, exp_ident "tree");
                      (Nolabel, exp_ident "path");
                    ])))
@@ -571,6 +585,44 @@ module Deserialiser = struct
 end
 
 module Operations = struct
+  (** * Create a generic error_to_string function for an operation's error type. * * FIXME: This
+      just prints the error name with its Smithy namespace. It should * also print its value. *)
+  let generate_error_to_string ~(operation_shape : Ast.Shape.operationShapeDetails)
+      ~namespace_resolver () =
+    let errors = operation_shape.errors |> Option.value ~default:[] in
+    let handler_body =
+      match errors with
+      | [] ->
+          B.pexp_ident
+            (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "error_to_string" ]))
+      | errors ->
+          let error_cases =
+            errors
+            |> List.map ~f:(fun error ->
+                   let name = Util.symbolName error in
+                   B.case
+                     ~lhs:(B.ppat_variant name (Some B.ppat_any))
+                     ~guard:None ~rhs:(const_str error))
+          in
+          let default_case =
+            B.case
+              ~lhs:
+                (B.ppat_alias
+                   (B.ppat_type
+                      (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "error" ])))
+                   (Location.mknoloc "e"))
+              ~guard:None
+              ~rhs:
+                (B.pexp_apply
+                   (make_lident ~names:[ Modules.protocolAwsJson; "error_to_string" ]
+                   |> Location.mknoloc |> B.pexp_ident)
+                   [ (Nolabel, exp_ident "e") ])
+          in
+          B.pexp_function_cases (error_cases @ [ default_case ])
+    in
+    B.pstr_value Nonrecursive
+      [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_to_string")) ~expr:handler_body ]
+
   let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
@@ -677,12 +729,12 @@ module Operations = struct
         ~namespace_resolver ()
     in
     let error_handler = generate_error_handler ~operation_shape ~namespace_resolver () in
-    let module_items = [ error_handler; request_handler ] in
+    let error_to_string = generate_error_to_string ~operation_shape ~namespace_resolver () in
+    let module_items = [ error_to_string; error_handler; request_handler ] in
     let module_expr = B.pmod_structure module_items in
     B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
 
-  let generate_error_type alias_ctx errors
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+  let generate_error_constructor_list alias_ctx errors ~namespace_resolver () =
     let smaws_lib_constructor =
       [
         B.rinherit
@@ -692,12 +744,22 @@ module Operations = struct
              []);
       ]
     in
-    errors |> Option.value ~default:[]
-    |> List.map ~f:(fun error ->
-           let name = SafeNames.safeConstructorName error in
-           B.rtag (lstr_noloc name) false
-             [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ])
-    |> fun constructors -> B.ptyp_variant (smaws_lib_constructor @ constructors) Open None
+    smaws_lib_constructor
+    @ (errors |> Option.value ~default:[]
+      |> List.map ~f:(fun error ->
+             let name = SafeNames.safeConstructorName error in
+             B.rtag (lstr_noloc name) false
+               [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ]))
+
+  let generate_error_type alias_ctx errors
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+    generate_error_constructor_list alias_ctx errors ~namespace_resolver () |> fun constructors ->
+    B.ptyp_variant constructors Open None
+
+  let generate_error_to_string_type alias_ctx errors
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+    generate_error_constructor_list alias_ctx errors ~namespace_resolver () |> fun constructors ->
+    B.ptyp_variant constructors Closed None
 
   let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
       ~alias_context ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
@@ -727,6 +789,12 @@ module Operations = struct
          ~type_:
            (B.pmty_signature
               [%sig:
+                val error_to_string :
+                  [%t
+                    generate_error_to_string_type alias_context operation_shape.errors
+                      ~namespace_resolver ()] ->
+                  string
+
                 val request :
                   'http_type Smaws_Lib.Context.t ->
                   [%t input_type] ->

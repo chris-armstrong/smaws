@@ -132,3 +132,5 @@ let safeVariantName name =
          (if String.length x > 0 then Some (camelCase x) else None) [@ns.ternary])
   |> String.concat ~sep:"_")
   [@ns.braces]
+
+let safeModuleName = camelCase

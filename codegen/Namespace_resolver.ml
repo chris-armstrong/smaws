@@ -19,4 +19,9 @@ module Namespace_resolver = struct
   let resolve_optional_reference ~symbol_transformer t = function
     | None -> None
     | Some target_name -> Some (resolve_reference ~symbol_transformer t target_name)
+
+  let current_namespace x = x.current_namespace
+
+  let current_module x =
+    x.current_namespace |> Map.find x.namespace_module_mapping |> Option.value_exn
 end

@@ -843,8 +843,16 @@ val make_create_call_analytics_category_request :
 (** {1:operations Operations} *)
 
 module CreateCallAnalyticsCategory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_call_analytics_category_request ->
     ( create_call_analytics_category_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -879,8 +887,16 @@ end
   \     "]
 
 module CreateLanguageModel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_language_model_request ->
     ( create_language_model_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -912,8 +928,16 @@ end
   \  "]
 
 module CreateMedicalVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_medical_vocabulary_request ->
     ( create_medical_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -941,8 +965,16 @@ end
   \   "]
 
 module CreateVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_vocabulary_request ->
     ( create_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -968,8 +1000,16 @@ end
   \   "]
 
 module CreateVocabularyFilter : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_vocabulary_filter_request ->
     ( create_vocabulary_filter_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -995,8 +1035,16 @@ end
   \   "]
 
 module DeleteCallAnalyticsCategory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_call_analytics_category_request ->
     ( delete_call_analytics_category_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1011,8 +1059,15 @@ end
    want to delete using [CategoryName]. Category names are case sensitive.\n"]
 
 module DeleteCallAnalyticsJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_call_analytics_job_request ->
     ( delete_call_analytics_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1026,8 +1081,15 @@ end
    delete using [CallAnalyticsJobName]. Job names are case sensitive.\n"]
 
 module DeleteLanguageModel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_language_model_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1041,8 +1103,15 @@ end
    you want to delete using [ModelName]. custom language model names are case sensitive.\n"]
 
 module DeleteMedicalScribeJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_medical_scribe_job_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1056,8 +1125,15 @@ end
    delete using [MedicalScribeJobName]. Job names are case sensitive.\n"]
 
 module DeleteMedicalTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_medical_transcription_job_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1071,8 +1147,16 @@ end
    want to delete using [MedicalTranscriptionJobName]. Job names are case sensitive.\n"]
 
 module DeleteMedicalVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_medical_vocabulary_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1088,8 +1172,15 @@ end
    sensitive.\n"]
 
 module DeleteTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_transcription_job_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1103,8 +1194,16 @@ end
    delete using [TranscriptionJobName]. Job names are case sensitive.\n"]
 
 module DeleteVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_vocabulary_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1119,8 +1218,16 @@ end
    you want to delete using [VocabularyName]. Custom vocabulary names are case sensitive.\n"]
 
 module DeleteVocabularyFilter : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_vocabulary_filter_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1136,8 +1243,16 @@ end
    names are case sensitive.\n"]
 
 module DescribeLanguageModel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_language_model_request ->
     ( describe_language_model_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1158,8 +1273,16 @@ end
   \  "]
 
 module GetCallAnalyticsCategory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_call_analytics_category_request ->
     ( get_call_analytics_category_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1175,8 +1298,16 @@ end
   \ "]
 
 module GetCallAnalyticsJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_call_analytics_job_request ->
     ( get_call_analytics_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1203,8 +1334,16 @@ end
   \    "]
 
 module GetMedicalScribeJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_medical_scribe_job_request ->
     ( get_medical_scribe_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1225,8 +1364,16 @@ end
   \  "]
 
 module GetMedicalTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_medical_transcription_job_request ->
     ( get_medical_transcription_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1247,8 +1394,16 @@ end
   \  "]
 
 module GetMedicalVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_medical_vocabulary_request ->
     ( get_medical_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1268,8 +1423,16 @@ end
   \  "]
 
 module GetTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_transcription_job_request ->
     ( get_transcription_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1293,8 +1456,16 @@ end
   \   "]
 
 module GetVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_vocabulary_request ->
     ( get_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1314,8 +1485,16 @@ end
   \  "]
 
 module GetVocabularyFilter : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_vocabulary_filter_request ->
     ( get_vocabulary_filter_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1331,8 +1510,15 @@ end
   \ "]
 
 module ListCallAnalyticsCategories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_call_analytics_categories_request ->
     ( list_call_analytics_categories_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1347,8 +1533,15 @@ end
   \ "]
 
 module ListCallAnalyticsJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_call_analytics_jobs_request ->
     ( list_call_analytics_jobs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1364,8 +1557,15 @@ end
   \ "]
 
 module ListLanguageModels : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_language_models_request ->
     ( list_language_models_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1381,8 +1581,15 @@ end
   \ "]
 
 module ListMedicalScribeJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_medical_scribe_jobs_request ->
     ( list_medical_scribe_jobs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1398,8 +1605,15 @@ end
   \ "]
 
 module ListMedicalTranscriptionJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_medical_transcription_jobs_request ->
     ( list_medical_transcription_jobs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1415,8 +1629,15 @@ end
   \ "]
 
 module ListMedicalVocabularies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_medical_vocabularies_request ->
     ( list_medical_vocabularies_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1432,8 +1653,16 @@ end
   \ "]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1450,8 +1679,15 @@ end
   \ "]
 
 module ListTranscriptionJobs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_transcription_jobs_request ->
     ( list_transcription_jobs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1467,8 +1703,15 @@ end
   \ "]
 
 module ListVocabularies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_vocabularies_request ->
     ( list_vocabularies_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1484,8 +1727,15 @@ end
   \ "]
 
 module ListVocabularyFilters : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_vocabulary_filters_request ->
     ( list_vocabulary_filters_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1501,8 +1751,16 @@ end
   \ "]
 
 module StartCallAnalyticsJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_call_analytics_job_request ->
     ( start_call_analytics_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1564,8 +1822,16 @@ end
   \     "]
 
 module StartMedicalScribeJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_medical_scribe_job_request ->
     ( start_medical_scribe_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1620,8 +1886,16 @@ end
   \  "]
 
 module StartMedicalTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_medical_transcription_job_request ->
     ( start_medical_transcription_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1678,8 +1952,16 @@ end
   \  "]
 
 module StartTranscriptionJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_transcription_job_request ->
     ( start_transcription_job_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1725,8 +2007,17 @@ end
   \  "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1744,8 +2035,17 @@ end
   \ "]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1763,8 +2063,17 @@ end
   \ "]
 
 module UpdateCallAnalyticsCategory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_call_analytics_category_request ->
     ( update_call_analytics_category_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1783,8 +2092,17 @@ end
   \ "]
 
 module UpdateMedicalVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_medical_vocabulary_request ->
     ( update_medical_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1801,8 +2119,17 @@ end
    vocabulary.\n"]
 
 module UpdateVocabulary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_vocabulary_request ->
     ( update_vocabulary_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1820,8 +2147,16 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateVocabularyFilter : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `InternalFailureException of internal_failure_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_vocabulary_filter_request ->
     ( update_vocabulary_filter_response,
       [> Smaws_Lib.Protocols.AwsJson.error

@@ -1,8 +1,20 @@
 open Types
 
 module AssociateDRTLogBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedForDependencyException of access_denied_for_dependency_exception
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitsExceededException of limits_exceeded_exception
+    | `NoAssociatedRoleException of no_associated_role_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_drt_log_bucket_request ->
     ( associate_drt_log_bucket_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -27,8 +39,18 @@ end
   \ "]
 
 module AssociateDRTRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedForDependencyException of access_denied_for_dependency_exception
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_drt_role_request ->
     ( associate_drt_role_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -76,8 +98,18 @@ end
   \     "]
 
 module AssociateHealthCheck : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `LimitsExceededException of limits_exceeded_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_health_check_request ->
     ( associate_health_check_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -100,8 +132,17 @@ end
   \ "]
 
 module AssociateProactiveEngagementDetails : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_proactive_engagement_details_request ->
     ( associate_proactive_engagement_details_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -129,8 +170,20 @@ end
   \     "]
 
 module CreateProtection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `LimitsExceededException of limits_exceeded_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceAlreadyExistsException of resource_already_exists_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_protection_request ->
     ( create_protection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -161,8 +214,18 @@ end
   \ "]
 
 module CreateProtectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitsExceededException of limits_exceeded_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceAlreadyExistsException of resource_already_exists_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_protection_group_request ->
     ( create_protection_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -179,8 +242,14 @@ end
    grouping improves the accuracy of detection and reduces false positives. \n"]
 
 module CreateSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `ResourceAlreadyExistsException of resource_already_exists_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_subscription_request ->
     ( create_subscription_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -200,8 +269,15 @@ end
   \    "]
 
 module DeleteProtection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_protection_request ->
     ( delete_protection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -213,8 +289,15 @@ end
 [@@ocaml.doc "Deletes an Shield Advanced [Protection].\n"]
 
 module DeleteProtectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_protection_group_request ->
     ( delete_protection_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -226,8 +309,15 @@ end
 [@@ocaml.doc "Removes the specified protection group.\n"]
 
 module DeleteSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `LockedSubscriptionException of locked_subscription_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_subscription_request ->
     ( delete_subscription_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -241,8 +331,14 @@ end
    commitment. You cannot delete a subscription prior to the completion of that commitment. \n"]
 
 module DescribeAttack : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalErrorException of internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_attack_request ->
     ( describe_attack_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -253,8 +349,12 @@ end
 [@@ocaml.doc "Describes the details of a DDoS attack. \n"]
 
 module DescribeAttackStatistics : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_attack_statistics_request ->
     ( describe_attack_statistics_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ]
@@ -275,8 +375,14 @@ end
   \  "]
 
 module DescribeDRTAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_drt_access_request ->
     ( describe_drt_access_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -289,8 +395,14 @@ end
    (SRT) to access your Amazon Web Services account while assisting with attack mitigation.\n"]
 
 module DescribeEmergencyContactSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_emergency_contact_settings_request ->
     ( describe_emergency_contact_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -304,8 +416,15 @@ end
    initiate proactive customer support.\n"]
 
 module DescribeProtection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_protection_request ->
     ( describe_protection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -317,8 +436,14 @@ end
 [@@ocaml.doc "Lists the details of a [Protection] object.\n"]
 
 module DescribeProtectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_protection_group_request ->
     ( describe_protection_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -329,8 +454,14 @@ end
 [@@ocaml.doc "Returns the specification for the specified protection group.\n"]
 
 module DescribeSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_subscription_request ->
     ( describe_subscription_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -341,8 +472,17 @@ end
 [@@ocaml.doc "Provides details about the Shield Advanced subscription for an account.\n"]
 
 module DisableApplicationLayerAutomaticResponse : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_application_layer_automatic_response_request ->
     ( disable_application_layer_automatic_response_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -359,8 +499,17 @@ end
    for attacks that it detects for the resource. \n"]
 
 module DisableProactiveEngagement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_proactive_engagement_request ->
     ( disable_proactive_engagement_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -376,8 +525,18 @@ end
    to the SRT and to initiate proactive customer support.\n"]
 
 module DisassociateDRTLogBucket : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedForDependencyException of access_denied_for_dependency_exception
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `NoAssociatedRoleException of no_associated_role_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_drt_log_bucket_request ->
     ( disassociate_drt_log_bucket_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -394,8 +553,16 @@ end
    the logs that you shared previously.\n"]
 
 module DisassociateDRTRole : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_drt_role_request ->
     ( disassociate_drt_role_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -409,8 +576,17 @@ end
   "Removes the Shield Response Team's (SRT) access to your Amazon Web Services account.\n"]
 
 module DisassociateHealthCheck : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_health_check_request ->
     ( disassociate_health_check_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -432,8 +608,18 @@ end
   \ "]
 
 module EnableApplicationLayerAutomaticResponse : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitsExceededException of limits_exceeded_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_application_layer_automatic_response_request ->
     ( enable_application_layer_automatic_response_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -474,8 +660,17 @@ end
   \        "]
 
 module EnableProactiveEngagement : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_proactive_engagement_request ->
     ( enable_proactive_engagement_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -491,8 +686,12 @@ end
    escalations to the SRT and to initiate proactive customer support.\n"]
 
 module GetSubscriptionState : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_subscription_state_request ->
     ( get_subscription_state_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ]
@@ -502,8 +701,15 @@ end
 [@@ocaml.doc "Returns the [SubscriptionState], either [Active] or [Inactive].\n"]
 
 module ListAttacks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_attacks_request ->
     ( list_attacks_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -516,8 +722,15 @@ end
   "Returns all ongoing DDoS attacks or all DDoS attacks during a specified time period.\n"]
 
 module ListProtectionGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidPaginationTokenException of invalid_pagination_token_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_protection_groups_request ->
     ( list_protection_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -532,8 +745,15 @@ end
    the criteria. \n"]
 
 module ListProtections : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidPaginationTokenException of invalid_pagination_token_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_protections_request ->
     ( list_protections_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -547,8 +767,15 @@ end
    provide filtering criteria and retrieve just the subset of protections that match the criteria. \n"]
 
 module ListResourcesInProtectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidPaginationTokenException of invalid_pagination_token_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_resources_in_protection_group_request ->
     ( list_resources_in_protection_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -560,8 +787,15 @@ end
 [@@ocaml.doc "Retrieves the resources that are included in the protection group. \n"]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -575,8 +809,16 @@ end
    Shield.\n"]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -589,8 +831,16 @@ end
 [@@ocaml.doc "Adds or updates tags for a resource in Shield.\n"]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidResourceException of invalid_resource_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -603,8 +853,17 @@ end
 [@@ocaml.doc "Removes tags from a resource in Shield.\n"]
 
 module UpdateApplicationLayerAutomaticResponse : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidOperationException of invalid_operation_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_application_layer_automatic_response_request ->
     ( update_application_layer_automatic_response_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -620,8 +879,16 @@ end
    for the specified resource.\n"]
 
 module UpdateEmergencyContactSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_emergency_contact_settings_request ->
     ( update_emergency_contact_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -637,8 +904,16 @@ end
    the SRT and to initiate proactive customer support.\n"]
 
 module UpdateProtectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_protection_group_request ->
     ( update_protection_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -654,8 +929,17 @@ end
    detection and reduces false positives. \n"]
 
 module UpdateSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LockedSubscriptionException of locked_subscription_exception
+    | `OptimisticLockException of optimistic_lock_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_subscription_request ->
     ( update_subscription_response,
       [> Smaws_Lib.Protocols.AwsJson.error

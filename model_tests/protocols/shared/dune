@@ -7,6 +7,7 @@
   types.mli
   shared.ml
   shared.mli
+  protocol_tests.ml
   json_serializers.ml
   json_deserializers.ml)
  (deps

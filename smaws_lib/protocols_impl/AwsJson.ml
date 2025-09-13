@@ -67,6 +67,8 @@ let error_to_string = function
   | `JsonParseError e -> Fmt.str "%a" Json.DeserializeHelpers.pp_jsonParseError e
   | `AWSServiceError e -> Fmt.str "%a" AwsErrors.pp_aws_service_error e
 
+let pp_error fmt e = Fmt.pf fmt "%s" (error_to_string e)
+
 let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(input : json_type)
     ~(output_deserializer : json_type -> string list -> 'res)
