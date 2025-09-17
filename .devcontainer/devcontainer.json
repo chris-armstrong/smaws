@@ -1,0 +1,11 @@
+{
+    "name": "smaws ocaml",
+    "image": "ghcr.io/chris-armstrong/ocaml-devcontainer:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "version": "latest"
+        }
+    },
+    "remoteUser": "ocaml",
+    "updateRemoteUserUID": true
+}
