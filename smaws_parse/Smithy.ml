@@ -212,8 +212,12 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#httpQuery" -> Ok Trait.HttpQueryTrait
     | "smithy.api#httpHeader" -> Ok Trait.HttpHeaderTrait
     | "smithy.api#retryable" -> Ok Trait.RetryableTrait
-    | "smithy.api#timestampFormat" ->
-        value |> parseString >>| fun timestampFormat -> Trait.TimestampFormatTrait timestampFormat
+    | "smithy.api#timestampFormat" -> (
+        value |> parseString >>| function
+        | "date-time" -> Trait.TimestampFormatTrait TimestampFormatDateTime
+        | "epoch-seconds" -> Trait.TimestampFormatTrait TimestampFormatEpochSeconds
+        | "http-date" -> Trait.TimestampFormatTrait TimestampFormatHttpDate
+        | x -> failwith (Fmt.str "unknown timestamp format value %s" x))
     | "smithy.api#range" ->
         let obj = value |> parseObject in
         let min = optional (obj |> field "min") |> mapOptional parseNumber in

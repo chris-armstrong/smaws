@@ -10,10 +10,10 @@ let _ =
             (credentials.session_token |> Option.is_some);
 
           let config : Config.t =
-            {
-              resolveRegion = (fun () -> "ap-southeast-2");
-              resolveAuth = (fun () -> Auth.Profile.resolve env ());
-            }
+            Config.make
+              ~resolveRegion:(fun () -> "ap-southeast-2")
+              ~resolveAuth:(fun () -> Auth.Profile.resolve env ())
+              ()
           in
           let body = {|{}|} in
           Fmt.pr "before context@.";

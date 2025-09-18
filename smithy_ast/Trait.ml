@@ -37,6 +37,12 @@ type staticContextParams = (string * staticContextParamValue) list [@@deriving s
 type operationContextParam = { path : string } [@@deriving show, equal]
 type operationContextParams = (string * operationContextParam) list [@@deriving show, equal]
 
+type timestampFormat =
+  | TimestampFormatDateTime
+  | TimestampFormatEpochSeconds
+  | TimestampFormatHttpDate
+[@@deriving show, equal]
+
 type httpRequestTest = {
   id : string;
   protocol : string;
@@ -138,7 +144,7 @@ type t =
   | StreamingTrait
   | SuppressTrait
   | TagsTrait of string list
-  | TimestampFormatTrait of string
+  | TimestampFormatTrait of timestampFormat
   | TestSmokeTests
   | WaitableTrait
   | XmlAttributeTrait

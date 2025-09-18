@@ -29,7 +29,7 @@ module Json_serializers = struct
   let boolean__to_yojson = Json.SerializeHelpers.bool_to_yojson
   let char__to_yojson = Json.SerializeHelpers.int_to_yojson
   let bigint_to_yojson = Json.SerializeHelpers.big_int_to_yojson
-  let timestamp_to_yojson = Json.SerializeHelpers.timestamp_to_yojson
+  let timestamp_to_yojson = Json.SerializeHelpers.timestamp_epoch_seconds_to_yojson
   let document_to_yojson = Json.SerializeHelpers.json_to_yojson
   let blob_to_yojson = Json.SerializeHelpers.blob_to_yojson
 end

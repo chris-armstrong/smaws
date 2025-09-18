@@ -153,7 +153,17 @@ module Serialiser = struct
     | BooleanShape x -> exp_func "bool_to_yojson"
     | BigIntegerShape x -> exp_func "big_int_to_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_to_yojson"
-    | TimestampShape x -> exp_func "timestamp_to_yojson"
+    | TimestampShape x -> begin
+        let format =
+          Option.value ~default:[] x.traits
+          |> List.find_map ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None)
+          |> Option.value ~default:Trait.TimestampFormatEpochSeconds
+        in
+        match format with
+        | Trait.TimestampFormatEpochSeconds -> exp_func "timestamp_epoch_seconds_to_yojson"
+        | Trait.TimestampFormatDateTime -> exp_func "timestamp_iso_8601_to_yojson"
+        | Trait.TimestampFormatHttpDate -> exp_func "timestamp_http_date_to_yojson"
+      end
     | BlobShape x -> exp_func "blob_to_yojson"
     | LongShape x -> exp_func "long_to_yojson"
     | FloatShape x -> exp_func "float_to_yojson"
@@ -451,7 +461,17 @@ module Deserialiser = struct
     | BooleanShape x -> exp_func "bool_of_yojson"
     | BigIntegerShape x -> exp_func "big_int_of_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_of_yojson"
-    | TimestampShape x -> exp_func "timestamp_epoch_seconds_of_yojson"
+    | TimestampShape x -> begin
+        let format =
+          Option.value ~default:[] x.traits
+          |> List.find_map ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None)
+          |> Option.value ~default:Trait.TimestampFormatEpochSeconds
+        in
+        match format with
+        | Trait.TimestampFormatEpochSeconds -> exp_func "timestamp_epoch_seconds_of_yojson"
+        | Trait.TimestampFormatDateTime -> exp_func "timestamp_iso_8601_of_yojson"
+        | Trait.TimestampFormatHttpDate -> exp_func "timestamp_http_date_of_yojson"
+      end
     | BlobShape x -> exp_func "blob_of_yojson"
     | LongShape x -> exp_func "long_of_yojson"
     | FloatShape x -> exp_func "float_of_yojson"
