@@ -2,8 +2,7 @@ open Smaws_Lib.Json.DeserializeHelpers
 open Types
 
 let rs_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SINGLE_REGION" -> SINGLE_REGION
     | `String "MULTI_REGION" -> MULTI_REGION
     | `String value -> raise (deserialize_unknown_enum_value_error path "rs" value)
@@ -15,8 +14,7 @@ let region_of_yojson = string_of_yojson
 let kms_key_ar_n_of_yojson = string_of_yojson
 
 let view_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NEW_IMAGE" -> NEW_IMAGE
     | `String "OLD_IMAGE" -> OLD_IMAGE
     | `String "KEYS_ONLY" -> KEYS_ONLY
@@ -58,8 +56,7 @@ let column_definition_list_of_yojson tree path =
   list_of_yojson column_definition_of_yojson tree path
 
 let throughput_mode_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PAY_PER_REQUEST" -> PAY_PER_REQUEST
     | `String "PROVISIONED" -> PROVISIONED
     | `String value -> raise (deserialize_unknown_enum_value_error path "ThroughputMode" value)
@@ -81,8 +78,7 @@ let capacity_specification_of_yojson tree path =
     : capacity_specification)
 
 let encryption_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CUSTOMER_MANAGED_KMS_KEY" -> CUSTOMER_MANAGED_KMS_KEY
     | `String "AWS_OWNED_KMS_KEY" -> AWS_OWNED_KMS_KEY
     | `String value -> raise (deserialize_unknown_enum_value_error path "EncryptionType" value)
@@ -100,8 +96,7 @@ let encryption_specification_of_yojson tree path =
     : encryption_specification)
 
 let point_in_time_recovery_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENABLED" -> ENABLED
     | `String "DISABLED" -> DISABLED
     | `String value ->
@@ -116,8 +111,7 @@ let point_in_time_recovery_of_yojson tree path =
     : point_in_time_recovery)
 
 let time_to_live_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENABLED" -> ENABLED
     | `String value -> raise (deserialize_unknown_enum_value_error path "TimeToLiveStatus" value)
     | _ -> raise (deserialize_wrong_type_error path "TimeToLiveStatus")
@@ -131,8 +125,7 @@ let time_to_live_of_yojson tree path =
 let default_time_to_live_of_yojson = int_of_yojson
 
 let client_side_timestamps_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENABLED" -> ENABLED
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "ClientSideTimestampsStatus" value)
@@ -218,8 +211,7 @@ let replica_specification_list_of_yojson tree path =
   list_of_yojson replica_specification_of_yojson tree path
 
 let cdc_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENABLED" -> ENABLED
     | `String "ENABLING" -> ENABLING
     | `String "DISABLED" -> DISABLED
@@ -243,8 +235,7 @@ let tag_of_yojson tree path =
 let tag_list_of_yojson tree path = list_of_yojson tag_of_yojson tree path
 
 let cdc_propagate_tags_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TABLE" -> TABLE
     | `String "NONE" -> NONE
     | `String value -> raise (deserialize_unknown_enum_value_error path "CdcPropagateTags" value)
@@ -396,8 +387,7 @@ let untag_resource_request_of_yojson tree path =
     : untag_resource_request)
 
 let type_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ACTIVE" -> ACTIVE
     | `String "CREATING" -> CREATING
     | `String "DELETING" -> DELETING
@@ -437,8 +427,7 @@ let table_summary_of_yojson tree path =
 let table_summary_list_of_yojson tree path = list_of_yojson table_summary_of_yojson tree path
 
 let table_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ACTIVE" -> ACTIVE
     | `String "CREATING" -> CREATING
     | `String "UPDATING" -> UPDATING
@@ -461,8 +450,7 @@ let static_column_of_yojson tree path =
 let static_column_list_of_yojson tree path = list_of_yojson static_column_of_yojson tree path
 
 let sort_order_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ASC" -> ASC
     | `String "DESC" -> DESC
     | `String value -> raise (deserialize_unknown_enum_value_error path "SortOrder" value)
@@ -537,8 +525,7 @@ let restore_table_request_of_yojson tree path =
     : restore_table_request)
 
 let keyspace_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ACTIVE" -> ACTIVE
     | `String "CREATING" -> CREATING
     | `String "UPDATING" -> UPDATING

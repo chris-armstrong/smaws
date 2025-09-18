@@ -4,8 +4,7 @@ open Types
 let error_message_of_yojson = string_of_yojson
 
 let validation_exception_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "OTHER" -> OTHER
     | `String "FIELD_VALIDATION_FAILED" -> FIELD_VALIDATION_FAILED
     | `String value ->
@@ -32,8 +31,7 @@ let update_subscription_response_of_yojson tree path =
   (() : unit)
 
 let auto_renew_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value -> raise (deserialize_unknown_enum_value_error path "AutoRenew" value)
@@ -89,8 +87,7 @@ let update_protection_group_response_of_yojson tree path =
 let protection_group_id_of_yojson = string_of_yojson
 
 let protection_group_aggregation_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MAX" -> MAX
     | `String "MEAN" -> MEAN
     | `String "SUM" -> SUM
@@ -101,8 +98,7 @@ let protection_group_aggregation_of_yojson (tree : t) path =
     : protection_group_aggregation)
 
 let protection_group_pattern_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BY_RESOURCE_TYPE" -> BY_RESOURCE_TYPE
     | `String "ARBITRARY" -> ARBITRARY
     | `String "ALL" -> ALL
@@ -113,8 +109,7 @@ let protection_group_pattern_of_yojson (tree : t) path =
     : protection_group_pattern)
 
 let protected_resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GLOBAL_ACCELERATOR" -> GLOBAL_ACCELERATOR
     | `String "APPLICATION_LOAD_BALANCER" -> APPLICATION_LOAD_BALANCER
     | `String "CLASSIC_LOAD_BALANCER" -> CLASSIC_LOAD_BALANCER
@@ -229,8 +224,7 @@ let invalid_resource_exception_of_yojson tree path =
     : invalid_resource_exception)
 
 let unit__of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REQUESTS" -> REQUESTS
     | `String "PACKETS" -> PACKETS
     | `String "BYTES" -> BYTES
@@ -320,8 +314,7 @@ let summarized_attack_vector_list_of_yojson tree path =
   list_of_yojson summarized_attack_vector_of_yojson tree path
 
 let subscription_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INACTIVE" -> INACTIVE
     | `String "ACTIVE" -> ACTIVE
     | `String value -> raise (deserialize_unknown_enum_value_error path "SubscriptionState" value)
@@ -382,8 +375,7 @@ let subscription_limits_of_yojson tree path =
 let duration_in_seconds_of_yojson = long_of_yojson
 
 let proactive_engagement_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING" -> PENDING
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
@@ -416,8 +408,7 @@ let subscription_of_yojson tree path =
     : subscription)
 
 let sub_resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "URL" -> URL
     | `String "IP" -> IP
     | `String value -> raise (deserialize_unknown_enum_value_error path "SubResourceType" value)
@@ -461,8 +452,7 @@ let health_check_id_of_yojson = string_of_yojson
 let health_check_ids_of_yojson tree path = list_of_yojson health_check_id_of_yojson tree path
 
 let application_layer_automatic_response_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value ->
@@ -918,8 +908,7 @@ let describe_attack_statistics_request_of_yojson tree path =
 let attack_id_of_yojson = string_of_yojson
 
 let attack_layer_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "APPLICATION" -> APPLICATION
     | `String "NETWORK" -> NETWORK
     | `String value -> raise (deserialize_unknown_enum_value_error path "AttackLayer" value)
@@ -928,8 +917,7 @@ let attack_layer_of_yojson (tree : t) path =
     : attack_layer)
 
 let attack_property_identifier_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "WORDPRESS_PINGBACK_SOURCE" -> WORDPRESS_PINGBACK_SOURCE
     | `String "WORDPRESS_PINGBACK_REFLECTOR" -> WORDPRESS_PINGBACK_REFLECTOR
     | `String "SOURCE_USER_AGENT" -> SOURCE_USER_AGENT

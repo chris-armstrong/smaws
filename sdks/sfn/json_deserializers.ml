@@ -14,8 +14,7 @@ let variable_references_of_yojson tree path =
   map_of_yojson state_name_of_yojson variable_name_list_of_yojson tree path
 
 let validation_exception_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INVALID_ROUTING_CONFIGURATION" -> INVALID_ROUTING_CONFIGURATION
     | `String "CANNOT_UPDATE_COMPLETED_MAP_RUN" -> CANNOT_UPDATE_COMPLETED_MAP_RUN
     | `String "MISSING_REQUIRED_PARAMETER" -> MISSING_REQUIRED_PARAMETER
@@ -40,8 +39,7 @@ let validation_exception_of_yojson tree path =
 let validate_state_machine_definition_truncated_of_yojson = bool_of_yojson
 
 let validate_state_machine_definition_severity_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "WARNING" -> WARNING
     | `String "ERROR" -> ERROR
     | `String value ->
@@ -52,8 +50,7 @@ let validate_state_machine_definition_severity_of_yojson (tree : t) path =
     : validate_state_machine_definition_severity)
 
 let validate_state_machine_definition_result_code_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FAIL" -> FAIL
     | `String "OK" -> OK
     | `String value ->
@@ -105,8 +102,7 @@ let validate_state_machine_definition_max_result_of_yojson = int_of_yojson
 let definition_of_yojson = string_of_yojson
 
 let state_machine_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXPRESS" -> EXPRESS
     | `String "STANDARD" -> STANDARD
     | `String value -> raise (deserialize_unknown_enum_value_error path "StateMachineType" value)
@@ -145,8 +141,7 @@ let update_state_machine_output_of_yojson tree path =
     : update_state_machine_output)
 
 let log_level_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "OFF" -> OFF
     | `String "FATAL" -> FATAL
     | `String "ERROR" -> ERROR
@@ -200,8 +195,7 @@ let kms_key_id_of_yojson = string_of_yojson
 let kms_data_key_reuse_period_seconds_of_yojson = int_of_yojson
 
 let encryption_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CUSTOMER_MANAGED_KMS_KEY" -> CUSTOMER_MANAGED_KMS_KEY
     | `String "AWS_OWNED_KEY" -> AWS_OWNED_KEY
     | `String value -> raise (deserialize_unknown_enum_value_error path "EncryptionType" value)
@@ -460,8 +454,7 @@ let inspection_data_of_yojson tree path =
     : inspection_data)
 
 let test_execution_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CAUGHT_ERROR" -> CAUGHT_ERROR
     | `String "RETRIABLE" -> RETRIABLE
     | `String "FAILED" -> FAILED
@@ -485,8 +478,7 @@ let test_state_output_of_yojson tree path =
     : test_state_output)
 
 let inspection_level_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TRACE" -> TRACE
     | `String "DEBUG" -> DEBUG
     | `String "INFO" -> INFO
@@ -656,8 +648,7 @@ let tag_resource_input_of_yojson tree path =
     : tag_resource_input)
 
 let sync_execution_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TIMED_OUT" -> TIMED_OUT
     | `String "FAILED" -> FAILED
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -680,8 +671,7 @@ let stop_execution_input_of_yojson tree path =
     : stop_execution_input)
 
 let kms_key_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CREATING" -> CREATING
     | `String "UNAVAILABLE" -> UNAVAILABLE
     | `String "PENDING_IMPORT" -> PENDING_IMPORT
@@ -724,8 +714,7 @@ let state_machine_type_not_supported_of_yojson tree path =
     : state_machine_type_not_supported)
 
 let state_machine_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETING" -> DELETING
     | `String "ACTIVE" -> ACTIVE
     | `String value -> raise (deserialize_unknown_enum_value_error path "StateMachineStatus" value)
@@ -855,8 +844,7 @@ let start_sync_execution_output_of_yojson tree path =
     : start_sync_execution_output)
 
 let included_data_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "METADATA_ONLY" -> METADATA_ONLY
     | `String "ALL_DATA" -> ALL_DATA
     | `String value -> raise (deserialize_unknown_enum_value_error path "IncludedData" value)
@@ -1006,8 +994,7 @@ let map_state_started_event_details_of_yojson tree path =
     : map_state_started_event_details)
 
 let map_run_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ABORTED" -> ABORTED
     | `String "FAILED" -> FAILED
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -1180,8 +1167,7 @@ let list_map_runs_input_of_yojson tree path =
 let list_executions_page_token_of_yojson = string_of_yojson
 
 let execution_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING_REDRIVE" -> PENDING_REDRIVE
     | `String "ABORTED" -> ABORTED
     | `String "TIMED_OUT" -> TIMED_OUT
@@ -1226,8 +1212,7 @@ let list_executions_output_of_yojson tree path =
     : list_executions_output)
 
 let execution_redrive_filter_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NOT_REDRIVEN" -> NOT_REDRIVEN
     | `String "REDRIVEN" -> REDRIVEN
     | `String value ->
@@ -1343,8 +1328,7 @@ let include_execution_data_get_execution_history_of_yojson = bool_of_yojson
 let identity_of_yojson = string_of_yojson
 
 let history_event_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EvaluationFailed" -> EvaluationFailed
     | `String "MapRunRedriven" -> MapRunRedriven
     | `String "ExecutionRedriven" -> ExecutionRedriven
@@ -1761,8 +1745,7 @@ let activity_does_not_exist_of_yojson tree path =
     : activity_does_not_exist)
 
 let execution_redrive_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REDRIVABLE_BY_MAP_RUN" -> REDRIVABLE_BY_MAP_RUN
     | `String "NOT_REDRIVABLE" -> NOT_REDRIVABLE
     | `String "REDRIVABLE" -> REDRIVABLE

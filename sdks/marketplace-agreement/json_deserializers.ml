@@ -20,8 +20,7 @@ let validity_term_of_yojson tree path =
     : validity_term)
 
 let validation_exception_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "OTHER" -> OTHER
     | `String "UNSUPPORTED_FILTERS" -> UNSUPPORTED_FILTERS
     | `String "INVALID_MAX_RESULTS" -> INVALID_MAX_RESULTS
@@ -117,8 +116,7 @@ let support_term_of_yojson tree path =
     : support_term)
 
 let sort_order_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DESCENDING" -> DESCENDING
     | `String "ASCENDING" -> ASCENDING
     | `String value -> raise (deserialize_unknown_enum_value_error path "SortOrder" value)
@@ -180,8 +178,7 @@ let proposal_summary_of_yojson tree path =
     : proposal_summary)
 
 let agreement_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TERMINATED" -> TERMINATED
     | `String "SUPERSEDED" -> SUPERSEDED
     | `String "ROLLED_BACK" -> ROLLED_BACK
@@ -285,8 +282,7 @@ let schedule_item_of_yojson tree path =
 let schedule_list_of_yojson tree path = list_of_yojson schedule_item_of_yojson tree path
 
 let resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Agreement" -> AGREEMENT
     | `String value -> raise (deserialize_unknown_enum_value_error path "ResourceType" value)
     | _ -> raise (deserialize_wrong_type_error path "ResourceType")

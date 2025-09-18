@@ -120,7 +120,7 @@ let request (type http_t) (module Http : Http.Client_intf with type t = http_t) 
   match Request.make (module Http) ~service ~config ~action ~fields ~http with
   | Ok (response, body) -> begin
       let status = Http.Response.status response in
-      let body = Http.Body.to_string body in
+      let body = match Http.Body.to_string body with Some body -> body | None -> "" in
       match status with
       | 200 ->
           let metadata, result =

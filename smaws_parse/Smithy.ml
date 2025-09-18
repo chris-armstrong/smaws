@@ -143,6 +143,15 @@ let parseTestHttpRequestTests value =
 
         let+ documentation = optional (value |> field "documentation") |> mapOptional parseString in
         let+ tags = optional (value |> field "tags") |> mapOptional (parseArray parseString) in
+        let+ appliesTo =
+          optional (value |> field "appliesTo")
+          |> mapOptional parseString
+          |> Result.map ~f:(function
+               | Some "server" -> Some `Server
+               | Some "client" -> Some `Client
+               | None -> None
+               | _ -> failwith "unexpected value for appliesTo in HttpRequestTrait")
+        in
         Ok
           {
             id;
@@ -163,8 +172,7 @@ let parseTestHttpRequestTests value =
             vendorParamsShape;
             documentation;
             tags;
-            appliesTo = None;
-            (* TODO: parse appliesTo correctly *)
+            appliesTo;
           })
       value
   in

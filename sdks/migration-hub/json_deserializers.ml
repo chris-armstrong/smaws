@@ -2,8 +2,7 @@ open Smaws_Lib.Json.DeserializeHelpers
 open Types
 
 let update_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MIGRATION_TASK_STATE_UPDATED" -> MigrationTaskStateUpdated
     | `String value -> raise (deserialize_unknown_enum_value_error path "UpdateType" value)
     | _ -> raise (deserialize_wrong_type_error path "UpdateType")
@@ -31,8 +30,7 @@ let throttling_exception_of_yojson tree path =
     : throttling_exception)
 
 let status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "COMPLETED" -> COMPLETED
     | `String "FAILED" -> FAILED
     | `String "IN_PROGRESS" -> IN_PROGRESS
@@ -88,8 +86,7 @@ let resource_name_of_yojson = string_of_yojson
 let resource_attribute_value_of_yojson = string_of_yojson
 
 let resource_attribute_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MOTHERBOARD_SERIAL_NUMBER" -> MOTHERBOARD_SERIAL_NUMBER
     | `String "BIOS_ID" -> BIOS_ID
     | `String "VM_PATH" -> VM_PATH
@@ -209,8 +206,7 @@ let notify_application_state_result_of_yojson tree path =
 let application_id_of_yojson = string_of_yojson
 
 let application_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "COMPLETED" -> COMPLETED
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "NOT_STARTED" -> NOT_STARTED

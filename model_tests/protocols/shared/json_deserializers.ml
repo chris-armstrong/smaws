@@ -89,8 +89,7 @@ let integer_list_of_yojson tree path =
   list_of_yojson Smaws_Lib.Smithy_api.Json_deserializers.integer_of_yojson tree path
 
 let integer_enum_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `Int 3 -> C
     | `Int 2 -> B
     | `Int 1 -> A
@@ -111,8 +110,7 @@ let http_date_set_of_yojson tree path = list_of_yojson http_date_of_yojson tree 
 let greeting_list_of_yojson tree path = list_of_yojson greeting_struct_of_yojson tree path
 
 let foo_enum_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "0" -> ZERO
     | `String "1" -> ONE
     | `String "Bar" -> BAR

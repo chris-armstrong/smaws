@@ -2,6 +2,8 @@ open CoreTypes
 
 type t = Yojson.Basic.t
 
+let of_string x = Yojson.Basic.from_string x
+
 module SerializeHelpers = struct
   type t = Yojson.Basic.t
 

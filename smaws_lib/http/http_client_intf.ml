@@ -13,7 +13,7 @@ module type S = sig
   module Body : sig
     type t
 
-    val to_string : t -> string
+    val to_string : t -> string option
     val drain : t -> unit
   end
 

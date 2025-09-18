@@ -380,11 +380,7 @@ module Deserialiser = struct
     let type_name_s = SafeNames.safeTypeName name in
 
     let type_name = B.ptyp_constr (lident_noloc type_name_s) [] in
-    let typed_match_exp =
-      [%expr
-        let _list = assoc_of_yojson tree path in
-        ([%e match_exp] : [%t type_name])]
-    in
+    let typed_match_exp = [%expr ([%e match_exp] : [%t type_name])] in
     exp_fun "tree" "t"
       (exp_fun_untyped "path"
          (B.pexp_constraint typed_match_exp (B.ptyp_constr (lident_noloc type_name_s) [])))

@@ -81,8 +81,8 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
   let body = json_to_string input in
   let service_version =
     match service.protocol with
-    | Service.AwsJson_1_0 -> "application/x-amz-json-1.0; charset=utf-8"
-    | Service.AwsJson_1_1 -> "application/x-amz-json-1.1; charset=utf-8"
+    | Service.AwsJson_1_0 -> "application/x-amz-json-1.0"
+    | Service.AwsJson_1_1 -> "application/x-amz-json-1.1"
     | _ -> failwith "Unsupported service protocol"
   in
   let headers = [ ("Content-Type", service_version); ("X-Amz-Target", shape_name) ] in
@@ -94,9 +94,14 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
   match Http.request ~method_:`POST ~headers ~body:(`String body) ~uri http with
   | Ok (response, body) -> begin
       let body = body |> Http.Body.to_string in
-      Fmt.pr "Response body: %s" body;
+
       let body_res =
-        body |> json_of_string ~fname:(Fmt.str "%s.%s" service.endpointPrefix shape_name)
+        match body with
+        | Some body ->
+            Fmt.pr "Response body: %s" body;
+
+            body |> json_of_string ~fname:(Fmt.str "%s.%s" service.endpointPrefix shape_name)
+        | None -> `Assoc []
       in
 
       match response |> Http.Response.status with

@@ -10,8 +10,7 @@ let validation_exception_of_yojson tree path =
 let resource_name_of_yojson = string_of_yojson
 
 let template_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENVIRONMENT" -> ENVIRONMENT
     | `String "SERVICE" -> SERVICE
     | `String value -> raise (deserialize_unknown_enum_value_error path "TemplateType" value)
@@ -20,8 +19,7 @@ let template_type_of_yojson (tree : t) path =
     : template_type)
 
 let repository_provider_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GITHUB" -> GITHUB
     | `String "GITHUB_ENTERPRISE" -> GITHUB_ENTERPRISE
     | `String "BITBUCKET" -> BITBUCKET
@@ -98,8 +96,7 @@ let access_denied_exception_of_yojson tree path =
 let template_version_part_of_yojson = string_of_yojson
 
 let template_version_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REGISTRATION_IN_PROGRESS" -> REGISTRATION_IN_PROGRESS
     | `String "REGISTRATION_FAILED" -> REGISTRATION_FAILED
     | `String "DRAFT" -> DRAFT
@@ -128,8 +125,7 @@ let compatible_environment_template_list_of_yojson tree path =
 let template_schema_of_yojson = string_of_yojson
 
 let service_template_supported_component_source_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DIRECTLY_DEFINED" -> DIRECTLY_DEFINED
     | `String value ->
         raise
@@ -221,8 +217,7 @@ let full_template_version_number_of_yojson = string_of_yojson
 let arn_of_yojson = string_of_yojson
 
 let provisioning_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CUSTOMER_MANAGED" -> CUSTOMER_MANAGED
     | `String value -> raise (deserialize_unknown_enum_value_error path "Provisioning" value)
     | _ -> raise (deserialize_wrong_type_error path "Provisioning")
@@ -301,8 +296,7 @@ let update_service_sync_config_input_of_yojson tree path =
     : update_service_sync_config_input)
 
 let blocker_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AUTOMATED" -> AUTOMATED
     | `String value -> raise (deserialize_unknown_enum_value_error path "BlockerType" value)
     | _ -> raise (deserialize_wrong_type_error path "BlockerType")
@@ -310,8 +304,7 @@ let blocker_type_of_yojson (tree : t) path =
     : blocker_type)
 
 let blocker_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ACTIVE" -> ACTIVE
     | `String "RESOLVED" -> RESOLVED
     | `String value -> raise (deserialize_unknown_enum_value_error path "BlockerStatus" value)
@@ -377,8 +370,7 @@ let update_service_sync_blocker_input_of_yojson tree path =
     : update_service_sync_blocker_input)
 
 let deployment_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "FAILED" -> FAILED
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -436,8 +428,7 @@ let update_service_pipeline_output_of_yojson tree path =
     : update_service_pipeline_output)
 
 let deployment_update_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NONE" -> NONE
     | `String "CURRENT_VERSION" -> CURRENT_VERSION
     | `String "MINOR_VERSION" -> MINOR_VERSION
@@ -468,8 +459,7 @@ let update_service_pipeline_input_of_yojson tree path =
 let service_arn_of_yojson = string_of_yojson
 
 let service_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CREATE_IN_PROGRESS" -> CREATE_IN_PROGRESS
     | `String "CREATE_FAILED_CLEANUP_IN_PROGRESS" -> CREATE_FAILED_CLEANUP_IN_PROGRESS
     | `String "CREATE_FAILED_CLEANUP_COMPLETE" -> CREATE_FAILED_CLEANUP_COMPLETE
@@ -816,8 +806,7 @@ let update_environment_input_of_yojson tree path =
 let environment_account_connection_arn_of_yojson = string_of_yojson
 
 let environment_account_connection_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING" -> PENDING
     | `String "CONNECTED" -> CONNECTED
     | `String "REJECTED" -> REJECTED
@@ -930,8 +919,7 @@ let update_component_output_of_yojson tree path =
     : update_component_output)
 
 let component_deployment_update_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NONE" -> NONE
     | `String "CURRENT_VERSION" -> CURRENT_VERSION
     | `String value ->
@@ -1077,8 +1065,7 @@ let tag_resource_input_of_yojson tree path =
     : tag_resource_input)
 
 let sync_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TEMPLATE_SYNC" -> TEMPLATE_SYNC
     | `String "SERVICE_SYNC" -> SERVICE_SYNC
     | `String value -> raise (deserialize_unknown_enum_value_error path "SyncType" value)
@@ -1087,8 +1074,7 @@ let sync_type_of_yojson (tree : t) path =
     : sync_type)
 
 let sort_order_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ASCENDING" -> ASCENDING
     | `String "DESCENDING" -> DESCENDING
     | `String value -> raise (deserialize_unknown_enum_value_error path "SortOrder" value)
@@ -1284,8 +1270,7 @@ let revision_of_yojson tree path =
     : revision)
 
 let resource_sync_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INITIATED" -> INITIATED
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -1330,8 +1315,7 @@ let resource_sync_attempt_of_yojson tree path =
     : resource_sync_attempt)
 
 let resource_deployment_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "FAILED" -> FAILED
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -1366,8 +1350,7 @@ let resource_counts_summary_of_yojson tree path =
     : resource_counts_summary)
 
 let repository_sync_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INITIATED" -> INITIATED
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "SUCCEEDED" -> SUCCEEDED
@@ -1468,8 +1451,7 @@ let provisioned_resource_name_of_yojson = string_of_yojson
 let provisioned_resource_identifier_of_yojson = string_of_yojson
 
 let provisioned_resource_engine_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CLOUDFORMATION" -> CLOUDFORMATION
     | `String "TERRAFORM" -> TERRAFORM
     | `String value ->
@@ -1648,8 +1630,7 @@ let list_service_pipeline_outputs_input_of_yojson tree path =
     : list_service_pipeline_outputs_input)
 
 let list_service_instances_sort_by_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "name" -> NAME
     | `String "deploymentStatus" -> DEPLOYMENT_STATUS
     | `String "templateName" -> TEMPLATE_NAME
@@ -1673,8 +1654,7 @@ let list_service_instances_output_of_yojson tree path =
     : list_service_instances_output)
 
 let list_service_instances_filter_by_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "name" -> NAME
     | `String "deploymentStatus" -> DEPLOYMENT_STATUS
     | `String "templateName" -> TEMPLATE_NAME
@@ -2045,8 +2025,7 @@ let list_environment_account_connections_output_of_yojson tree path =
     : list_environment_account_connections_output)
 
 let environment_account_connection_requester_account_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MANAGEMENT_ACCOUNT" -> MANAGEMENT_ACCOUNT
     | `String "ENVIRONMENT_ACCOUNT" -> ENVIRONMENT_ACCOUNT
     | `String value ->
@@ -2082,8 +2061,7 @@ let list_environment_account_connections_input_of_yojson tree path =
 let deployment_arn_of_yojson = string_of_yojson
 
 let deployment_target_resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENVIRONMENT" -> ENVIRONMENT
     | `String "SERVICE_PIPELINE" -> SERVICE_PIPELINE
     | `String "SERVICE_INSTANCE" -> SERVICE_INSTANCE

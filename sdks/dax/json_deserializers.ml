@@ -203,8 +203,7 @@ let parameter_group_status_of_yojson tree path =
     : parameter_group_status)
 
 let sse_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "DISABLING" -> DISABLING
     | `String "ENABLED" -> ENABLED
@@ -220,8 +219,7 @@ let sse_description_of_yojson tree path =
     : sse_description)
 
 let cluster_endpoint_encryption_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TLS" -> TLS
     | `String "NONE" -> NONE
     | `String value ->
@@ -379,8 +377,7 @@ let subnet_group_already_exists_fault_of_yojson tree path =
     : subnet_group_already_exists_fault)
 
 let source_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SUBNET_GROUP" -> SUBNET_GROUP
     | `String "PARAMETER_GROUP" -> PARAMETER_GROUP
     | `String "CLUSTER" -> CLUSTER
@@ -418,8 +415,7 @@ let node_not_found_fault_of_yojson tree path =
     : node_not_found_fault)
 
 let parameter_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NODE_TYPE_SPECIFIC" -> NODE_TYPE_SPECIFIC
     | `String "DEFAULT" -> DEFAULT
     | `String value -> raise (deserialize_unknown_enum_value_error path "ParameterType" value)
@@ -439,8 +435,7 @@ let node_type_specific_value_list_of_yojson tree path =
   list_of_yojson node_type_specific_value_of_yojson tree path
 
 let is_modifiable_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CONDITIONAL" -> CONDITIONAL
     | `String "FALSE" -> FALSE
     | `String "TRUE" -> TRUE
@@ -450,8 +445,7 @@ let is_modifiable_of_yojson (tree : t) path =
     : is_modifiable)
 
 let change_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REQUIRES_REBOOT" -> REQUIRES_REBOOT
     | `String "IMMEDIATE" -> IMMEDIATE
     | `String value -> raise (deserialize_unknown_enum_value_error path "ChangeType" value)

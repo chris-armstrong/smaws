@@ -11,8 +11,7 @@ let validation_exception_of_yojson tree path =
 let stream_ar_n_of_yojson = string_of_yojson
 
 let stream_mode_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ON_DEMAND" -> ON_DEMAND
     | `String "PROVISIONED" -> PROVISIONED
     | `String value -> raise (deserialize_unknown_enum_value_error path "StreamMode" value)
@@ -74,8 +73,7 @@ let update_shard_count_output_of_yojson tree path =
     : update_shard_count_output)
 
 let scaling_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNIFORM_SCALING" -> UNIFORM_SCALING
     | `String value -> raise (deserialize_unknown_enum_value_error path "ScalingType" value)
     | _ -> raise (deserialize_wrong_type_error path "ScalingType")
@@ -136,8 +134,7 @@ let data_of_yojson = blob_of_yojson
 let partition_key_of_yojson = string_of_yojson
 
 let encryption_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "KMS" -> KMS
     | `String "NONE" -> NONE
     | `String value -> raise (deserialize_unknown_enum_value_error path "EncryptionType" value)
@@ -270,8 +267,7 @@ let subscribe_to_shard_output_of_yojson tree path =
 let consumer_ar_n_of_yojson = string_of_yojson
 
 let shard_iterator_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
     | `String "LATEST" -> LATEST
     | `String "TRIM_HORIZON" -> TRIM_HORIZON
@@ -302,8 +298,7 @@ let subscribe_to_shard_input_of_yojson tree path =
     : subscribe_to_shard_input)
 
 let stream_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UPDATING" -> UPDATING
     | `String "ACTIVE" -> ACTIVE
     | `String "DELETING" -> DELETING
@@ -331,8 +326,7 @@ let stream_name_list_of_yojson tree path = list_of_yojson stream_name_of_yojson 
 let retention_period_hours_of_yojson = int_of_yojson
 
 let metrics_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ALL" -> ALL
     | `String "IteratorAgeMilliseconds" -> ITERATOR_AGE_MILLISECONDS
     | `String "ReadProvisionedThroughputExceeded" -> READ_PROVISIONED_THROUGHPUT_EXCEEDED
@@ -468,8 +462,7 @@ let split_shard_input_of_yojson tree path =
 let shard_iterator_of_yojson = string_of_yojson
 
 let shard_filter_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FROM_TIMESTAMP" -> FROM_TIMESTAMP
     | `String "AT_TIMESTAMP" -> AT_TIMESTAMP
     | `String "AT_LATEST" -> AT_LATEST
@@ -502,8 +495,7 @@ let remove_tags_from_stream_input_of_yojson tree path =
 let consumer_name_of_yojson = string_of_yojson
 
 let consumer_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ACTIVE" -> ACTIVE
     | `String "DELETING" -> DELETING
     | `String "CREATING" -> CREATING

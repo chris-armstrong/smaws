@@ -6,8 +6,7 @@ let untag_resource_response_of_yojson tree path =
   (() : unit)
 
 let service_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DOCDB" -> DOCDB
     | `String "RDS" -> RDS
     | `String value -> raise (deserialize_unknown_enum_value_error path "ServiceType" value)
@@ -46,8 +45,7 @@ let internal_service_error_of_yojson tree path =
     : internal_service_error)
 
 let text_format_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MARKDOWN" -> MARKDOWN
     | `String "PLAIN_TEXT" -> PLAIN_TEXT
     | `String value -> raise (deserialize_unknown_enum_value_error path "TextFormat" value)
@@ -83,8 +81,7 @@ let tag_resource_request_of_yojson tree path =
 let string__of_yojson = string_of_yojson
 
 let severity_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HIGH" -> HIGH
     | `String "MEDIUM" -> MEDIUM
     | `String "LOW" -> LOW
@@ -150,8 +147,7 @@ let recommendation_of_yojson tree path =
 let recommendation_list_of_yojson tree path = list_of_yojson recommendation_of_yojson tree path
 
 let period_alignment_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "START_TIME" -> START_TIME
     | `String "END_TIME" -> END_TIME
     | `String value -> raise (deserialize_unknown_enum_value_error path "PeriodAlignment" value)
@@ -175,8 +171,7 @@ let list_tags_for_resource_request_of_yojson tree path =
 let iso_timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let analysis_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FAILED" -> FAILED
     | `String "SUCCEEDED" -> SUCCEEDED
     | `String "RUNNING" -> RUNNING
@@ -296,8 +291,7 @@ let list_available_resource_dimensions_response_of_yojson tree path =
 let dimensions_metric_list_of_yojson tree path = list_of_yojson sanitized_string_of_yojson tree path
 
 let fine_grained_action_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GetResourceMetrics" -> GET_RESOURCE_METRICS
     | `String "GetDimensionKeyDetails" -> GET_DIMENSION_KEY_DETAILS
     | `String "DescribeDimensionKeys" -> DESCRIBE_DIMENSION_KEYS
@@ -409,8 +403,7 @@ let get_resource_metrics_request_of_yojson tree path =
     : get_resource_metrics_request)
 
 let feature_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNKNOWN" -> UNKNOWN
     | `String "DISABLED_PENDING_REBOOT" -> DISABLED_PENDING_REBOOT
     | `String "ENABLED_PENDING_REBOOT" -> ENABLED_PENDING_REBOOT
@@ -450,8 +443,7 @@ let get_resource_metadata_request_of_yojson tree path =
 let analysis_report_id_of_yojson = string_of_yojson
 
 let context_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CONTEXTUAL" -> CONTEXTUAL
     | `String "CAUSAL" -> CAUSAL
     | `String value -> raise (deserialize_unknown_enum_value_error path "ContextType" value)
@@ -534,8 +526,7 @@ let get_performance_analysis_report_response_of_yojson tree path =
     : get_performance_analysis_report_response)
 
 let accept_language_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EN_US" -> EN_US
     | `String value -> raise (deserialize_unknown_enum_value_error path "AcceptLanguage" value)
     | _ -> raise (deserialize_wrong_type_error path "AcceptLanguage")
@@ -555,8 +546,7 @@ let get_performance_analysis_report_request_of_yojson tree path =
     : get_performance_analysis_report_request)
 
 let detail_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNAVAILABLE" -> UNAVAILABLE
     | `String "PROCESSING" -> PROCESSING
     | `String "AVAILABLE" -> AVAILABLE

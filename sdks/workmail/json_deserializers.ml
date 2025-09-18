@@ -51,8 +51,7 @@ let organization_id_of_yojson = string_of_yojson
 let entity_identifier_of_yojson = string_of_yojson
 
 let user_role_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REMOTE_USER" -> REMOTE_USER
     | `String "SYSTEM_USER" -> SYSTEM_USER
     | `String "RESOURCE" -> RESOURCE
@@ -146,8 +145,7 @@ let booking_options_of_yojson tree path =
 let new_resource_description_of_yojson = string_of_yojson
 
 let resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EQUIPMENT" -> EQUIPMENT
     | `String "ROOM" -> ROOM
     | `String value -> raise (deserialize_unknown_enum_value_error path "ResourceType" value)
@@ -197,8 +195,7 @@ let mobile_device_access_rule_name_of_yojson = string_of_yojson
 let mobile_device_access_rule_description_of_yojson = string_of_yojson
 
 let mobile_device_access_rule_effect_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DENY" -> DENY
     | `String "ALLOW" -> ALLOW
     | `String value ->
@@ -293,8 +290,7 @@ let impersonation_role_id_of_yojson = string_of_yojson
 let impersonation_role_name_of_yojson = string_of_yojson
 
 let impersonation_role_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "READ_ONLY" -> READ_ONLY
     | `String "FULL_ACCESS" -> FULL_ACCESS
     | `String value ->
@@ -309,8 +305,7 @@ let impersonation_rule_name_of_yojson = string_of_yojson
 let impersonation_rule_description_of_yojson = string_of_yojson
 
 let access_effect_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DENY" -> DENY
     | `String "ALLOW" -> ALLOW
     | `String value -> raise (deserialize_unknown_enum_value_error path "AccessEffect" value)
@@ -585,8 +580,7 @@ let short_string_of_yojson = string_of_yojson
 let policy_description_of_yojson = string_of_yojson
 
 let folder_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "JUNK_EMAIL" -> JUNK_EMAIL
     | `String "DRAFTS" -> DRAFTS
     | `String "SENT_ITEMS" -> SENT_ITEMS
@@ -598,8 +592,7 @@ let folder_name_of_yojson (tree : t) path =
     : folder_name)
 
 let retention_action_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PERMANENTLY_DELETE" -> PERMANENTLY_DELETE
     | `String "DELETE" -> DELETE
     | `String "NONE" -> NONE
@@ -660,8 +653,7 @@ let put_mailbox_permissions_response_of_yojson tree path =
   (() : unit)
 
 let permission_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SEND_ON_BEHALF" -> SEND_ON_BEHALF
     | `String "SEND_AS" -> SEND_AS
     | `String "FULL_ACCESS" -> FULL_ACCESS
@@ -699,8 +691,7 @@ let put_identity_provider_configuration_response_of_yojson tree path =
   (() : unit)
 
 let identity_provider_authentication_mode_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IDENTITY_PROVIDER_AND_DIRECTORY" -> IDENTITY_PROVIDER_AND_DIRECTORY
     | `String "IDENTITY_PROVIDER_ONLY" -> IDENTITY_PROVIDER_ONLY
     | `String value ->
@@ -721,8 +712,7 @@ let identity_center_configuration_of_yojson tree path =
     : identity_center_configuration)
 
 let personal_access_token_configuration_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INACTIVE" -> INACTIVE
     | `String "ACTIVE" -> ACTIVE
     | `String value ->
@@ -782,8 +772,7 @@ let put_access_control_rule_response_of_yojson tree path =
 let access_control_rule_name_of_yojson = string_of_yojson
 
 let access_control_rule_effect_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DENY" -> DENY
     | `String "ALLOW" -> ALLOW
     | `String value ->
@@ -830,8 +819,7 @@ let put_access_control_rule_request_of_yojson tree path =
 let user_name_of_yojson = string_of_yojson
 
 let entity_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETED" -> DELETED
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
@@ -967,8 +955,7 @@ let list_resources_request_of_yojson tree path =
     : list_resources_request)
 
 let member_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "USER" -> USER
     | `String "GROUP" -> GROUP
     | `String value -> raise (deserialize_unknown_enum_value_error path "MemberType" value)
@@ -1256,8 +1243,7 @@ let list_mailbox_permissions_request_of_yojson tree path =
 let percentage_of_yojson = int_of_yojson
 
 let mailbox_export_job_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CANCELLED" -> CANCELLED
     | `String "FAILED" -> FAILED
     | `String "COMPLETED" -> COMPLETED
@@ -1456,8 +1442,7 @@ let list_group_members_request_of_yojson tree path =
     : list_group_members_request)
 
 let availability_provider_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "LAMBDA" -> LAMBDA
     | `String "EWS" -> EWS
     | `String value ->
@@ -1695,8 +1680,7 @@ let dns_record_of_yojson tree path =
 let dns_records_of_yojson tree path = list_of_yojson dns_record_of_yojson tree path
 
 let dns_record_verification_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FAILED" -> FAILED
     | `String "VERIFIED" -> VERIFIED
     | `String "PENDING" -> PENDING
@@ -2084,8 +2068,7 @@ let describe_group_request_of_yojson tree path =
     : describe_group_request)
 
 let entity_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RESOURCE" -> RESOURCE
     | `String "USER" -> USER
     | `String "GROUP" -> GROUP

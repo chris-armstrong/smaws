@@ -37,7 +37,7 @@ module type Client_intf = sig
   module Body : sig
     type t
 
-    val to_string : t -> string
+    val to_string : t -> string option
     val drain : t -> unit
   end
 
@@ -69,7 +69,7 @@ module Http_Client_Eio : sig
   module Body : sig
     type t
 
-    val to_string : t -> string
+    val to_string : t -> string option
     val drain : t -> unit
   end
 

@@ -2,8 +2,7 @@ open Smaws_Lib.Json.DeserializeHelpers
 open Types
 
 let validation_exception_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "other" -> OTHER
     | `String "fieldValidationFailed" -> FIELD_VALIDATION_FAILED
     | `String "cannotParse" -> CANNOT_PARSE
@@ -47,8 +46,7 @@ let update_routing_control_states_response_of_yojson tree path =
 let arn_of_yojson = string_of_yojson
 
 let routing_control_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Off" -> Off
     | `String "On" -> On
     | `String value -> raise (deserialize_unknown_enum_value_error path "RoutingControlState" value)

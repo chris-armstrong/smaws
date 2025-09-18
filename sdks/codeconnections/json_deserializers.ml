@@ -25,8 +25,7 @@ let deployment_file_path_of_yojson = string_of_yojson
 let owner_id_of_yojson = string_of_yojson
 
 let provider_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GitLabSelfManaged" -> GITLAB_SELF_MANAGED
     | `String "GitLab" -> GITLAB
     | `String "GitHubEnterpriseServer" -> GITHUB_ENTERPRISE_SERVER
@@ -43,8 +42,7 @@ let resource_name_of_yojson = string_of_yojson
 let iam_role_arn_of_yojson = string_of_yojson
 
 let sync_configuration_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CFN_STACK_SYNC" -> CFN_STACK_SYNC
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "SyncConfigurationType" value)
@@ -53,8 +51,7 @@ let sync_configuration_type_of_yojson (tree : t) path =
     : sync_configuration_type)
 
 let publish_deployment_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value ->
@@ -64,8 +61,7 @@ let publish_deployment_status_of_yojson (tree : t) path =
     : publish_deployment_status)
 
 let trigger_resource_update_on_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FILE_CHANGE" -> FILE_CHANGE
     | `String "ANY_CHANGE" -> ANY_CHANGE
     | `String value ->
@@ -75,8 +71,7 @@ let trigger_resource_update_on_of_yojson (tree : t) path =
     : trigger_resource_update_on)
 
 let pull_request_comment_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value -> raise (deserialize_unknown_enum_value_error path "PullRequestComment" value)
@@ -185,8 +180,7 @@ let access_denied_exception_of_yojson tree path =
 let id_of_yojson = string_of_yojson
 
 let blocker_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AUTOMATED" -> AUTOMATED
     | `String value -> raise (deserialize_unknown_enum_value_error path "BlockerType" value)
     | _ -> raise (deserialize_wrong_type_error path "BlockerType")
@@ -194,8 +188,7 @@ let blocker_type_of_yojson (tree : t) path =
     : blocker_type)
 
 let blocker_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RESOLVED" -> RESOLVED
     | `String "ACTIVE" -> ACTIVE
     | `String value -> raise (deserialize_unknown_enum_value_error path "BlockerStatus" value)
@@ -434,8 +427,7 @@ let revision_of_yojson tree path =
     : revision)
 
 let resource_sync_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SUCCEEDED" -> SUCCEEDED
     | `String "IN_PROGRESS" -> IN_PROGRESS
     | `String "INITIATED" -> INITIATED
@@ -479,8 +471,7 @@ let resource_already_exists_exception_of_yojson tree path =
     : resource_already_exists_exception)
 
 let repository_sync_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "QUEUED" -> QUEUED
     | `String "SUCCEEDED" -> SUCCEEDED
     | `String "IN_PROGRESS" -> IN_PROGRESS
@@ -641,8 +632,7 @@ let connection_name_of_yojson = string_of_yojson
 let account_id_of_yojson = string_of_yojson
 
 let connection_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ERROR" -> ERROR
     | `String "AVAILABLE" -> AVAILABLE
     | `String "PENDING" -> PENDING

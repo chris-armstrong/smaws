@@ -14,8 +14,7 @@ let resource_id_of_yojson = string_of_yojson
 let resource_description_of_yojson = string_of_yojson
 
 let record_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CNAME" -> CNAME
     | `String "AAAA" -> AAAA
     | `String "A" -> A
@@ -43,8 +42,7 @@ let dns_config_change_of_yojson tree path =
     : dns_config_change)
 
 let health_check_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TCP" -> TCP
     | `String "HTTPS" -> HTTPS
     | `String "HTTP" -> HTTP
@@ -230,8 +228,7 @@ let update_private_dns_namespace_request_of_yojson tree path =
     : update_private_dns_namespace_request)
 
 let custom_health_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNHEALTHY" -> UNHEALTHY
     | `String "HEALTHY" -> HEALTHY
     | `String value -> raise (deserialize_unknown_enum_value_error path "CustomHealthStatus" value)
@@ -336,8 +333,7 @@ let tag_resource_request_of_yojson tree path =
     : tag_resource_request)
 
 let service_type_option_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HTTP" -> HTTP
     | `String value -> raise (deserialize_unknown_enum_value_error path "ServiceTypeOption" value)
     | _ -> raise (deserialize_wrong_type_error path "ServiceTypeOption")
@@ -345,8 +341,7 @@ let service_type_option_of_yojson (tree : t) path =
     : service_type_option)
 
 let service_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DNS" -> DNS
     | `String "DNS_HTTP" -> DNS_HTTP
     | `String "HTTP" -> HTTP
@@ -360,8 +355,7 @@ let service_name_of_yojson = string_of_yojson
 let resource_count_of_yojson = int_of_yojson
 
 let routing_policy_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "WEIGHTED" -> WEIGHTED
     | `String "MULTIVALUE" -> MULTIVALUE
     | `String value -> raise (deserialize_unknown_enum_value_error path "RoutingPolicy" value)
@@ -412,8 +406,7 @@ let service_summary_of_yojson tree path =
 let service_summaries_list_of_yojson tree path = list_of_yojson service_summary_of_yojson tree path
 
 let service_filter_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NAMESPACE_ID" -> NAMESPACE_ID
     | `String value -> raise (deserialize_unknown_enum_value_error path "ServiceFilterName" value)
     | _ -> raise (deserialize_wrong_type_error path "ServiceFilterName")
@@ -424,8 +417,7 @@ let filter_value_of_yojson = string_of_yojson
 let filter_values_of_yojson tree path = list_of_yojson filter_value_of_yojson tree path
 
 let filter_condition_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BEGINS_WITH" -> BEGINS_WITH
     | `String "BETWEEN" -> BETWEEN
     | `String "IN" -> IN
@@ -558,8 +550,7 @@ let list_services_request_of_yojson tree path =
     : list_services_request)
 
 let operation_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FAIL" -> FAIL
     | `String "SUCCESS" -> SUCCESS
     | `String "PENDING" -> PENDING
@@ -590,8 +581,7 @@ let list_operations_response_of_yojson tree path =
     : list_operations_response)
 
 let operation_filter_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UPDATE_DATE" -> UPDATE_DATE
     | `String "TYPE" -> TYPE
     | `String "STATUS" -> STATUS
@@ -625,8 +615,7 @@ let list_operations_request_of_yojson tree path =
 let namespace_name_of_yojson = string_of_yojson
 
 let namespace_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HTTP" -> HTTP
     | `String "DNS_PRIVATE" -> DNS_PRIVATE
     | `String "DNS_PUBLIC" -> DNS_PUBLIC
@@ -689,8 +678,7 @@ let list_namespaces_response_of_yojson tree path =
     : list_namespaces_response)
 
 let namespace_filter_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HTTP_NAME" -> HTTP_NAME
     | `String "NAME" -> NAME
     | `String "TYPE" -> TYPE
@@ -775,8 +763,7 @@ let operation_not_found_of_yojson tree path =
     : operation_not_found)
 
 let operation_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DEREGISTER_INSTANCE" -> DEREGISTER_INSTANCE
     | `String "REGISTER_INSTANCE" -> REGISTER_INSTANCE
     | `String "UPDATE_SERVICE" -> UPDATE_SERVICE
@@ -792,8 +779,7 @@ let message_of_yojson = string_of_yojson
 let code_of_yojson = string_of_yojson
 
 let operation_target_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INSTANCE" -> INSTANCE
     | `String "SERVICE" -> SERVICE
     | `String "NAMESPACE" -> NAMESPACE
@@ -858,8 +844,7 @@ let get_namespace_request_of_yojson tree path =
   ({ id = value_for_key resource_id_of_yojson "Id" _list path } : get_namespace_request)
 
 let health_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNKNOWN" -> UNKNOWN
     | `String "UNHEALTHY" -> UNHEALTHY
     | `String "HEALTHY" -> HEALTHY
@@ -969,8 +954,7 @@ let discover_instances_response_of_yojson tree path =
 let discover_max_results_of_yojson = int_of_yojson
 
 let health_status_filter_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HEALTHY_OR_ELSE_ALL" -> HEALTHY_OR_ELSE_ALL
     | `String "ALL" -> ALL
     | `String "UNHEALTHY" -> UNHEALTHY

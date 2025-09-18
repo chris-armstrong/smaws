@@ -227,7 +227,12 @@ let make_input_pattern ~namespace_resolver ~pattern_name input_shape =
   |> Option.value ~default:(B.ppat_var (Location.mknoloc pattern_name))
 
 let make_response_body_expr body_string =
-  B.pexp_constant B.(Pconst_string (body_string |> Option.value ~default:"", loc, None))
+  body_string
+  |> Option.map ~f:(fun body_string ->
+         B.pexp_construct
+           (Location.mknoloc Longident.(Lident "Some"))
+           (Some (B.pexp_constant B.(Pconst_string (body_string, loc, None)))))
+  |> Option.value ~default:B.(pexp_construct Location.(mknoloc Longident.(Lident "None")) None)
 
 let make_headers_expr headers =
   headers
@@ -257,21 +262,45 @@ let make_error_to_string_expr ~namespace_resolver ~shape_resolver ~operation_nam
 
 let make_request_body_expected_expr input_body =
   B.pexp_construct (lident_noloc "Some")
-    (Some (B.pexp_variant "String" (Some (const_str input_body))))
+    (Some
+       (B.pexp_apply
+          (B.pexp_ident
+             (Location.mknoloc (make_lident ~names:[ "Smaws_Lib"; "Json"; "of_string" ])))
+          [ (Nolabel, const_str input_body) ]))
 
 let make_request_body_test input_body =
   match input_body with
   | Some input_body ->
       let request_body_expected_expr = make_request_body_expected_expr input_body in
       [%expr
-        check Alcotest_http.input_body_testable "expected request body value"
-          [%e request_body_expected_expr] request.body]
+        check Alcotest_http.input_body_json_testable "expected request body value"
+          [%e request_body_expected_expr]
+          (request.body
+          |> Option.map (function
+               | `Form _ -> failwith "not expecting form"
+               | `String x -> x
+               | `None -> "{}")
+          |> Option.map Yojson.Basic.from_string)]
   | None -> [%expr ()]
 
 let make_request_method_expected_expr method_ = B.pexp_variant method_ None
 
 let make_request_uri_expected_expr uri =
   B.pexp_apply (exp_ident "Uri.of_string") [ (Nolabel, const_str uri) ]
+
+let make_test_case_function_name (request_test : Trait.httpRequestTest) =
+  request_test.id |> Codegen.SafeNames.snakeCase
+
+let make_config_expr (http_request_test : Trait.httpRequestTest) =
+  match http_request_test.host with
+  | Some host ->
+      [%expr
+        {
+          Config.dummy with
+          endpoint =
+            Some { uri = Some ([%e "//" ^ host |> const_str] |> Uri.of_string); headers = None };
+        }]
+  | None -> [%expr Config.dummy]
 
 let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape ~operation_name
     http_protocols =
@@ -282,7 +311,7 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
            B.pexp_constant (Ppxlib.Ast.Pconst_string (request_test.id, loc, None))
          in
          let test_name_pat =
-           B.ppat_var (Location.mknoloc (request_test.id |> Codegen.SafeNames.snakeCase))
+           B.ppat_var (Location.mknoloc (make_test_case_function_name request_test))
          in
          let input_pat = make_input_pattern ~pattern_name:"input" ~namespace_resolver input_shape in
          let input_expr = make_input_expr ~shape_resolver input_shape request_test.params in
@@ -300,6 +329,7 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
          let error_to_string_expr =
            make_error_to_string_expr ~namespace_resolver ~shape_resolver ~operation_name
          in
+         let config_expr = make_config_expr request_test in
          [%stri
            let [%p test_name_pat] =
             fun () ->
@@ -307,9 +337,11 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
              let module Mock = (val Http_mock.create_http_mock ()) in
              let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
 
-             let ctx = Smaws_Lib.Context.make ~config:Config.dummy ~http_type () in
+             let config = [%e config_expr] in
+
+             let ctx = Smaws_Lib.Context.make ~config ~http_type () in
              let [%p input_pat] = [%e input_expr] in
-             Mock.mock_response ~body:[%e response_body_expr] ~status:200
+             Mock.mock_response ?body:[%e response_body_expr] ~status:200
                ~headers:[ ("Content-Type", "application/json") ]
                ();
              let response = [%e operation_call_expr] ctx input in
@@ -347,23 +379,45 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
              traits |> Option.value ~default:[]
              |> List.find_map ~f:(function Trait.TestHttpRequestTests x -> Some x | _ -> None)
              |> Option.value ~default:[]
+             |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
+                    match t.appliesTo with Some `Client | None -> true | Some `Server -> false)
            in
-           let input_shape =
-             input
-             (* |> Option.bind ~f:(fun input -> *)
-             (*        structure_shapes *)
-             (*        |> List.find ~f:(fun Dependencies.{ name = shape_name; _ } -> *)
-             (*               String.equal shape_name input)) *)
+           let input_shape = input in
+           let output_shape = output in
+           let test_case_functions =
+             make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+               ~operation_name:name http_protocols
            in
-           let output_shape =
-             output
-             (* |> Option.map ~f:(fun output -> *)
-             (*        structure_shapes *)
-             (*        |> List.find ~f:(fun Dependencies.{ name = shape_name; _ } -> *)
-             (*               String.equal shape_name output)) *)
+           let test_suite_name =
+             B.ppat_var
+               (Location.mknoloc ((name |> Codegen.SafeNames.safeFunctionName) ^ "_test_suite"))
            in
-           make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
-             ~operation_name:name http_protocols)
+           let test_suite_str = const_str name in
+           let test_cases =
+             B.elist
+               (http_protocols
+               |> List.map ~f:(fun (protocol : Trait.httpRequestTest) ->
+                      B.pexp_tuple
+                        [
+                          const_str protocol.id;
+                          B.pexp_variant "Quick" None;
+                          Codegen.Ppx_util.exp_ident (make_test_case_function_name protocol);
+                        ]))
+           in
+           test_case_functions
+           @ [%str
+               let [%p test_suite_name] : unit Alcotest.test = ([%e test_suite_str], [%e test_cases])])
+  in
+  let namespace_str =
+    const_str (Codegen.Namespace_resolver.Namespace_resolver.current_namespace namespace_resolver)
+  in
+  let test_suites_expr =
+    operation_shapes
+    |> List.map ~f:(fun (name, _, _) ->
+           B.pexp_ident
+             (Location.mknoloc
+                Longident.(Lident ((name |> Codegen.SafeNames.safeFunctionName) ^ "_test_suite"))))
+    |> B.elist
   in
   let opens =
     Codegen.Ppx_util.
@@ -377,7 +431,12 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
   in
 
   let flattened_structure_items = all_test_structures |> List.concat in
-  Ppxlib.Pprintast.structure fmt (opens @ flattened_structure_items)
+  Ppxlib.Pprintast.structure fmt
+    (opens @ flattened_structure_items
+    @ [
+        [%stri
+          let () = Eio_main.run @@ fun env -> Alcotest.run [%e namespace_str] [%e test_suites_expr]];
+      ])
 
 let generate_mli ~structure_shapes ~alias_context ?(with_derivings = false) ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =

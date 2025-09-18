@@ -39,4 +39,4 @@
 (test
  (name protocol_tests)
  (modules protocol_tests)
- (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest json))
+ (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest json eio_main))

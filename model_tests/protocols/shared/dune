@@ -21,4 +21,4 @@
  (modules builders types shared json_serializers json_deserializers)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq))
- (libraries Smaws_Lib))
+ (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest eio_main))

@@ -45,8 +45,9 @@ let _ =
               (Fmt.list ~sep:Fmt.comma Fmt.string)
               (response |> Http.Response.headers |> List.map (fun (k, v) -> k ^ ":" ^ v));
 
-            Fmt.pr "Response %d: [%d]%s@." (Http.Response.status response) (body |> String.length)
-              body
+            Fmt.pr "Response %d: [%d]%a@." (Http.Response.status response)
+              (body |> Option.value ~default:"" |> String.length)
+              (Fmt.option Fmt.string) body
           with
           | Ok body -> ()
           | Error error -> Fmt.pr "Error! %a\n" Smaws_Lib.Http.pp_http_failure error))

@@ -14,7 +14,7 @@ module type HttpMock_intf = sig
   }
 
   val make : unit -> t
-  val mock_response : ?headers:headers -> ?status:int -> body:string -> unit -> unit
+  val mock_response : ?headers:headers -> ?status:int -> ?body:string -> unit -> unit
   val last_request : unit -> request
 end
 
@@ -33,7 +33,7 @@ let create_http_mock () =
     end
 
     module Body = struct
-      type t = string
+      type t = string option
 
       let to_string x = x
       let drain _ = ()
@@ -50,7 +50,7 @@ let create_http_mock () =
     let requests = Stack.create ()
     let responses = Queue.create ()
 
-    let mock_response ?(headers = []) ?(status = 200) ~body () =
+    let mock_response ?(headers = []) ?(status = 200) ?body () =
       let response : Response.t = { headers_ = headers; status_ = status } in
       let body = body in
       Queue.push (Ok (response, body)) responses
