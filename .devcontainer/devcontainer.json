@@ -4,6 +4,13 @@
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
             "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/node": {
+            "version": "lts"
+            
+        },
+        "ghcr.io/larsnieuwenhuizen/features/neovim": {
+
         }
     },
     "remoteUser": "ocaml",
