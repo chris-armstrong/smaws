@@ -758,7 +758,6 @@ module Operations = struct
         let matchers = B.pexp_function_cases (cases @ failure_cases) in
 
         [%expr
-          (* let open Json_deserializers in *)
           let handler = fun handler tree path -> [%e matchers] in
           [%e call_handler]]
       end
@@ -787,9 +786,6 @@ module Operations = struct
         |> Option.map ~f:(fun output -> Deserialiser.external_func_name ~namespace_resolver output)
         |> Option.value ~default:(Longident.Lident "base_unit_of_yojson")
       in
-      (* Fmt.pr "response_shape_deserializer: %a %a\n%!" (Fmt.list Fmt.string) *)
-      (* (Longident.flatten response_shape_deserializer) *)
-      (* (Fmt.option Fmt.string) operation_shape.output; *)
       let request_func_name =
         B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
       in
