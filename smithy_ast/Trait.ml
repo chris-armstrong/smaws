@@ -132,6 +132,7 @@ type t =
   | ReferencesTrait of reference list
   | RequiredTrait
   | RequiresLengthTrait
+  | RequestCompressionTrait of string list
   | RetryableTrait
   | RulesEndpointRuleSetTrait
   | RulesEndpointTests

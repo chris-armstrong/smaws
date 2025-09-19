@@ -282,6 +282,9 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#suppress" -> Ok Trait.SuppressTrait
     | "aws.auth#unsignedPayload" -> Ok Trait.AwsAuthUnsignedPayloadTrait
     | "smithy.api#requiresLength" -> Ok Trait.RequiresLengthTrait
+    | "smithy.api#requestCompression" ->
+        value |> parseObject |> field "encodings" |> parseArray parseString
+        >>| fun encodings -> Trait.RequestCompressionTrait encodings
     | "smithy.api#sparse" -> Ok Trait.SparseTrait
     | "smithy.api#httpChecksumRequired" -> Ok Trait.HttpChecksumRequiredTrait
     | "aws.api#clientDiscoveredEndpoint" -> Ok Trait.AwsApiClientDiscoveredEndpointTrait
