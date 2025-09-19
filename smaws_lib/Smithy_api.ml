@@ -30,6 +30,9 @@ module Json_serializers = struct
   let char__to_yojson = Json.SerializeHelpers.int_to_yojson
   let bigint_to_yojson = Json.SerializeHelpers.big_int_to_yojson
   let timestamp_to_yojson = Json.SerializeHelpers.timestamp_epoch_seconds_to_yojson
+  let timestamp_epoch_seconds_to_yojson = Json.SerializeHelpers.timestamp_epoch_seconds_to_yojson
+  let timestamp_iso_8601_to_yojson = Json.SerializeHelpers.timestamp_iso_8601_to_yojson
+  let timestamp_http_date_to_yojson = Json.SerializeHelpers.timestamp_http_date_to_yojson
   let document_to_yojson = Json.SerializeHelpers.json_to_yojson
   let blob_to_yojson = Json.SerializeHelpers.blob_to_yojson
 end
@@ -47,6 +50,9 @@ module Json_deserializers = struct
   let char__of_yojson = Json.DeserializeHelpers.int_of_yojson
   let bigint_of_yojson = Json.DeserializeHelpers.big_int_of_yojson
   let timestamp_of_yojson = Json.DeserializeHelpers.timestamp_epoch_seconds_of_yojson
+  let timestamp_epoch_seconds_of_yojson = Json.DeserializeHelpers.timestamp_epoch_seconds_of_yojson
+  let timestamp_iso_8601_of_yojson = Json.DeserializeHelpers.timestamp_iso_8601_of_yojson
+  let timestamp_http_date_of_yojson = Json.DeserializeHelpers.timestamp_http_date_of_yojson
   let document_of_yojson = Json.DeserializeHelpers.json_of_yojson
   let blob_of_yojson = Json.DeserializeHelpers.blob_of_yojson
 end

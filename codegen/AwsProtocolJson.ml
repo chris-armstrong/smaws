@@ -12,6 +12,23 @@ let loc = Location.none
 
 exception UnexpectedType of string
 
+(* Helper function to resolve timestamp format from traits *)
+let resolve_timestamp_format ?(member_traits : Trait.t list option = None)
+    ?(shape_traits : Trait.t list option = None) () =
+  let find_timestamp_format traits =
+    Option.(traits >>= fun traits ->
+      List.find_map traits ~f:(function
+        | Trait.TimestampFormatTrait x -> Some x
+        | _ -> None))
+  in
+  (* Check member traits first, then shape traits, then default *)
+  match find_timestamp_format member_traits with
+  | Some format -> format
+  | None ->
+    (match find_timestamp_format shape_traits with
+     | Some format -> format
+     | None -> Trait.TimestampFormatEpochSeconds)
+
 (* let has_func_body = *)
 (*   Shape.( *)
 (*     function *)
@@ -27,9 +44,22 @@ module Serialiser = struct
   let serialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_to_yojson"
 
   let func_name ?(is_exception_type = false)
+      ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
+    (* Special handling for TimestampShape with member-level traits *)
     let symbol_transformer ~local x =
-      if local then [ serialiser_func_str x ] else [ "Json_serializers"; serialiser_func_str x ]
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix = match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_to_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_to_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_to_yojson"
+        in
+        if local then [ func_suffix ] else [ "Json_serializers"; func_suffix ]
+      else
+        if local then [ serialiser_func_str x ] else [ "Json_serializers"; serialiser_func_str x ]
     in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
@@ -38,8 +68,22 @@ module Serialiser = struct
     Longident.unflatten resolved_name |> Option.value_exn
 
   let external_func_name ?(is_exception_type = false)
+      ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
-    let symbol_transformer ~local x = [ "Json_serializers"; serialiser_func_str x ] in
+    let symbol_transformer ~local x =
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix = match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_to_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_to_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_to_yojson"
+        in
+        [ "Json_serializers"; func_suffix ]
+      else
+        [ "Json_serializers"; serialiser_func_str x ]
+    in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
         name
@@ -93,7 +137,7 @@ module Serialiser = struct
                                     (B.pexp_apply
                                        (B.pexp_ident
                                           (Location.mknoloc
-                                             (func_name ~namespace_resolver m.target)))
+                                             (func_name ~member_traits:m.traits ~shape_traits:s.traits ~namespace_resolver m.target)))
                                        [ (Nolabel, exp_ident "arg") ]));
                              ];
                          ] );
@@ -116,20 +160,21 @@ module Serialiser = struct
               (B.pexp_ident (lident_noloc "x"))
               (lident_noloc (SafeNames.safeMemberName mem.name))
           in
+          let basic_value_exp = (B.pexp_ident (Location.mknoloc (func_name ~member_traits:mem.traits ~namespace_resolver mem.target))) in
           let value =
             match is_required with
             | true ->
                 B.pexp_construct (lident_noloc "Some")
                   (Some
                      (B.pexp_apply
-                        (B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver mem.target)))
+                        basic_value_exp
                         [ (Nolabel, field_lookup) ]))
             | false ->
                 B.pexp_apply
                   (B.pexp_ident (lident_noloc "option_to_yojson"))
                   [
                     ( Nolabel,
-                      B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver mem.target)) );
+                      basic_value_exp );
                     (Nolabel, field_lookup);
                   ]
           in
@@ -174,14 +219,15 @@ module Serialiser = struct
     | MapShape x ->
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let item_transformer =
-          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target))
+          B.pexp_ident (Location.mknoloc (func_name ~member_traits:(x.mapValue.traits) ~shape_traits:x.traits ~namespace_resolver x.mapValue.target))
         in
         Some
           (exp_fun_untyped "tree"
              (B.pexp_apply (exp_ident "map_to_yojson")
                 [
                   ( Nolabel,
-                    B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target))
+                  (* no need to pass in traits - map keys are always strings *)
+                    B.pexp_ident (Location.mknoloc (func_name  ~namespace_resolver x.mapKey.target))
                   );
                   ( Nolabel,
                     if is_sparse then
@@ -196,13 +242,13 @@ module Serialiser = struct
           (exp_fun_untyped "tree"
              (B.pexp_apply (exp_ident "set_to_yojson")
                 [
-                  (Nolabel, B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)));
+                  (Nolabel, B.pexp_ident (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target)));
                   (Nolabel, exp_ident "tree");
                 ]))
     | ListShape x ->
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let item_transformer =
-          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target))
+          B.pexp_ident (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target))
         in
         let transformer =
           B.pexp_apply (exp_ident "list_to_yojson")
@@ -282,10 +328,23 @@ module Deserialiser = struct
   let deserialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_of_yojson"
 
   let func_name ?(is_exception_type = false)
+      ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
+    (* Special handling for TimestampShape with member-level traits *)
     let symbol_transformer ~local x =
-      if local then [ deserialiser_func_str x ]
-      else [ "Json_deserializers"; deserialiser_func_str x ]
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix = match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_of_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_of_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_of_yojson"
+        in
+        if local then [ func_suffix ] else [ "Json_deserializers"; func_suffix ]
+      else
+        if local then [ deserialiser_func_str x ]
+        else [ "Json_deserializers"; deserialiser_func_str x ]
     in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
@@ -295,8 +354,22 @@ module Deserialiser = struct
     resolved_name
 
   let external_func_name ?(is_exception_type = false)
+      ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
-    let symbol_transformer ~local x = [ "Json_deserializers"; deserialiser_func_str x ] in
+    let symbol_transformer ~local x =
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix = match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_of_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_of_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_of_yojson"
+        in
+        [ "Json_deserializers"; func_suffix ]
+      else
+        [ "Json_deserializers"; deserialiser_func_str x ]
+    in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
         name
@@ -312,7 +385,7 @@ module Deserialiser = struct
              let pattern = pat_const_str m.name in
              let application =
                B.pexp_apply
-                 (B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver m.target)))
+                 (B.pexp_ident (Location.mknoloc (func_name ~member_traits:m.traits ~shape_traits:s.traits ~namespace_resolver m.target)))
                  [ (Nolabel, exp_ident "value_"); (Nolabel, exp_ident "path") ]
              in
              let expression =
@@ -404,7 +477,7 @@ module Deserialiser = struct
           (List.map descriptor.members ~f:(fun mem ->
                let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
                let converter_name =
-                 func_name ~is_exception_type:false ~namespace_resolver mem.target
+                 func_name ~is_exception_type:false ~member_traits:mem.traits ~shape_traits:descriptor.traits ~namespace_resolver mem.target
                in
                let key_name = SafeNames.safeMemberName mem.name in
                let key = lident_noloc key_name in
@@ -482,7 +555,7 @@ module Deserialiser = struct
     | MapShape x ->
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let item_type =
-          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target))
+          B.pexp_ident (Location.mknoloc (func_name ~member_traits:(x.mapValue.traits) ~namespace_resolver ~shape_traits:x.traits x.mapValue.target))
         in
         Some
           (exp_fun_untyped "tree"
@@ -491,7 +564,7 @@ module Deserialiser = struct
                    [
                      ( Nolabel,
                        B.pexp_ident
-                         (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target)) );
+                         (Location.mknoloc (func_name ~member_traits:(x.mapKey.traits) ~namespace_resolver x.mapKey.target)) );
                      ( Nolabel,
                        if is_sparse then
                          B.pexp_apply
@@ -512,12 +585,12 @@ module Deserialiser = struct
                 (B.pexp_apply (exp_ident "list_of_yojson")
                    [
                      ( Nolabel,
-                       B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) );
+                       B.pexp_ident (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target)) );
                      (Nolabel, exp_ident "tree");
                      (Nolabel, exp_ident "path");
                    ])))
     | ListShape x ->
-        let item_type = B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) in
+        let item_type = B.pexp_ident (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target)) in
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let wrapped_type =
           if is_sparse then

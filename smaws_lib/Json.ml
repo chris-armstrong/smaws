@@ -39,7 +39,16 @@ module SerializeHelpers = struct
              value_converter value ))
          x)
 
-  let timestamp_iso_8601_to_yojson (x : Timestamp.t) : t = `String (Timestamp.to_rfc3339 x)
+  let timestamp_iso_8601_to_yojson (x : Timestamp.t) : t =
+    let rfc3339_str = Timestamp.to_rfc3339 x in
+    (* Convert -00:00 to Z for UTC timezone *)
+    let len = String.length rfc3339_str in
+    let z_format =
+      if len >= 6 && String.sub rfc3339_str (len - 6) 6 = "-00:00" then
+        String.sub rfc3339_str 0 (len - 6) ^ "Z"
+      else rfc3339_str
+    in
+    `String z_format
 
   let timestamp_epoch_seconds_to_yojson (x : Timestamp.t) : t =
     let f = Timestamp.to_float_s x in
@@ -59,18 +68,18 @@ module SerializeHelpers = struct
     in
     let month =
       month |> function
-      | 0 -> "Jan"
-      | 1 -> "Feb"
-      | 2 -> "Mar"
-      | 3 -> "Apr"
-      | 4 -> "May"
-      | 5 -> "Jun"
-      | 6 -> "Jul"
-      | 7 -> "Aug"
-      | 8 -> "Sep"
-      | 9 -> "Oct"
-      | 10 -> "Nov"
-      | 11 -> "Dec"
+      | 1 -> "Jan"
+      | 2 -> "Feb"
+      | 3 -> "Mar"
+      | 4 -> "Apr"
+      | 5 -> "May"
+      | 6 -> "Jun"
+      | 7 -> "Jul"
+      | 8 -> "Aug"
+      | 9 -> "Sep"
+      | 10 -> "Oct"
+      | 11 -> "Nov"
+      | 12 -> "Dec"
       | _ -> failwith "unexpected month"
     in
     `String
@@ -211,7 +220,7 @@ module DeserializeHelpers = struct
   let timestamp_http_date_of_yojson (tree : t) path =
     (match tree with
     | `String str ->
-        Scanf.sscanf str "%s, %d %s %d %d:%d:%d GMT"
+        Scanf.sscanf str "%s@, %d %s %d %d:%d:%d GMT"
           (fun weekday day month year hour minute second ->
             let weekday =
               match weekday with
@@ -226,20 +235,21 @@ module DeserializeHelpers = struct
             in
             let month =
               match month with
-              | "Jan" -> 0
-              | "Feb" -> 1
-              | "Mar" -> 2
-              | "Apr" -> 3
-              | "May" -> 4
-              | "Jun" -> 5
-              | "Jul" -> 6
-              | "Aug" -> 7
-              | "Sep" -> 8
-              | "Oct" -> 9
-              | "Nov" -> 10
-              | "Dec" -> 11
+              | "Jan" -> 1
+              | "Feb" -> 2
+              | "Mar" -> 3
+              | "Apr" -> 4
+              | "May" -> 5
+              | "Jun" -> 6
+              | "Jul" -> 7
+              | "Aug" -> 8
+              | "Sep" -> 9
+              | "Oct" -> 10
+              | "Nov" -> 11
+              | "Dec" -> 12
               | _ -> failwith "unexpected month"
             in
+            Fmt.pf Fmt.stdout "read %d %d %d %d-%d-%d\n" year month day hour minute second;
             CoreTypes.Timestamp.of_date_time ((year, month, day), ((hour, minute, second), 0)))
     | _ -> raise (deserialize_wrong_type_error path "timestamp(http-date)"))
     |> Option.get_or_exn ~exn:(JsonDeserializeError (CustomError "invalid timestamp"))
