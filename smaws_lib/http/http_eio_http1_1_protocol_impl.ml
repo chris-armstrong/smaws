@@ -32,27 +32,31 @@ let make_http_1_1_client ~sw ~scheme ssl_socket =
       let response_promise, response_resolver = Eio.Promise.create () in
       let response_handler = make_http_1_1_response_handler response_resolver in
       let error_handler = make_http_1_1_error_handler response_resolver in
-      let body_string =
+      let body_string, content_encoding =
         match body with
-        | `None -> None
-        | `String body -> Some body
-        | `Form assoc_list -> Some (Uri.encoded_of_query assoc_list)
+        | `None -> (None, None)
+        | `String body -> (Some body, None)
+        | `Compressed (body, Http_types.Gzip) -> (Some body, Some "gzip")
+        | `Form assoc_list -> (Some (Uri.encoded_of_query assoc_list), None)
       in
       let path = match path with "" -> "/" | _ -> path in
       let body_length = body_string |> Option.value ~default:"" |> String.length |> Int.to_string in
       Logs.debug (fun m -> m "URI: %s %s" (Httpun.Method.to_string method_) path);
       Logs.debug (fun m ->
           m "Writing body [%s]: %s@." body_length (Option.value ~default:"" body_string));
-      let headers =
-        List.concat
-          [
-            [
-              ("connection", "keep-alive");
-              ("user-agent", "ocaml/1.0.0-experimental");
-              ("Content-Length", body_length);
-            ];
-            headers;
-          ]
+      let base_headers =
+        [
+          ("connection", "keep-alive");
+          ("user-agent", "ocaml/1.0.0-experimental");
+          ("Content-Length", body_length);
+        ]
+      in
+      let compression_headers =
+        match content_encoding with
+        | Some encoding -> [("Content-Encoding", encoding)]
+        | None -> []
+      in
+      let headers = List.concat [base_headers; compression_headers; headers]
       in
       let request =
         Httpun.Request.create ~headers:(Httpun.Headers.of_list headers)

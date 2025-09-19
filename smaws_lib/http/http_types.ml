@@ -6,7 +6,13 @@ let string_of_method = Httpun_types.Method.to_string
 
 type headers = (string * string) list [@@deriving show, eq]
 
-type input_body = [ `None | `String of string | `Form of (string * string list) list ]
+type body_encoding = Gzip [@@deriving show, eq]
+
+type input_body =
+  [ `None
+  | `String of string
+  | `Compressed of string * body_encoding
+  | `Form of (string * string list) list ]
 [@@deriving show, eq]
 
 type http_failure =

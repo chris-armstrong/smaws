@@ -279,6 +279,7 @@ let make_request_body_test input_body =
           |> Option.map (function
                | `Form _ -> failwith "not expecting form"
                | `String x -> x
+               | `Compressed (x, _) -> x
                | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)]
   | None -> [%expr ()]

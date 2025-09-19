@@ -12,10 +12,19 @@ val pp_http_failure : Format.formatter -> http_failure -> unit
 val equal_http_failure : http_failure -> http_failure -> bool
 
 type headers = (string * string) list
-type input_body = [ `None | `String of string | `Form of (string * string list) list ]
+
+type body_encoding = Gzip
+
+type input_body =
+  [ `None
+  | `String of string
+  | `Compressed of string * body_encoding
+  | `Form of (string * string list) list ]
 
 val pp_input_body : Format.formatter -> input_body -> unit
 val equal_input_body : input_body -> input_body -> bool
+val pp_body_encoding : Format.formatter -> body_encoding -> unit
+val equal_body_encoding : body_encoding -> body_encoding -> bool
 
 type method_ =
   [ `GET | `POST | `CONNECT | `DELETE | `HEAD | `OPTIONS | `Other of string | `PUT | `TRACE ]

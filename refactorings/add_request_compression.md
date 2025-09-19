@@ -170,11 +170,17 @@ Based on Smithy specification:
 
 - [x] Trait definition added to `smithy_ast/Trait.ml`
 - [x] Trait parser added to `smaws_parse/Smithy.ml`
-- [ ] HTTP layer enhancement
-- [ ] Compression utilities
-- [ ] HTTP client updates
-- [ ] Protocol layer enhancement
-- [ ] Code generation updates
-- [ ] Test support updates
+- [x] **Phase 1: HTTP layer enhancement**
+  - [x] Added `body_encoding` ADT to `http_types.ml`
+  - [x] Extended `input_body` type with `Compressed` variant
+  - [x] Updated `http.mli` interface
+  - [x] Updated `http_eio_http1_1_protocol_impl.ml` to handle compression
+  - [x] Fixed test infrastructure (`protocol_tests.ml`, `gen_protocol_tests.ml`)
+  - [x] Build validation successful
+- [ ] **Phase 2: Compression utilities**
+- [ ] **Phase 3: HTTP client updates**
+- [ ] **Phase 4: Protocol layer enhancement**
+- [ ] **Phase 5: Code generation updates**
+- [ ] **Phase 6: Test support updates**
 
 This approach ensures each phase is independently testable and the overall change is both safe and comprehensive.
