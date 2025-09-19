@@ -6,7 +6,7 @@ let string_of_method = Httpun_types.Method.to_string
 
 type headers = (string * string) list [@@deriving show, eq]
 
-type body_encoding = Gzip [@@deriving show, eq]
+type body_encoding = Compression.body_encoding = Gzip [@@deriving show, eq]
 
 type input_body =
   [ `None

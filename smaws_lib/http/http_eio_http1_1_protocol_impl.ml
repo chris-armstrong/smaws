@@ -36,7 +36,7 @@ let make_http_1_1_client ~sw ~scheme ssl_socket =
         match body with
         | `None -> (None, None)
         | `String body -> (Some body, None)
-        | `Compressed (body, Http_types.Gzip) -> (Some body, Some "gzip")
+        | `Compressed (body, Compression.Gzip) -> (Some body, Some "gzip")
         | `Form assoc_list -> (Some (Uri.encoded_of_query assoc_list), None)
       in
       let path = match path with "" -> "/" | _ -> path in

@@ -13,7 +13,7 @@ val equal_http_failure : http_failure -> http_failure -> bool
 
 type headers = (string * string) list
 
-type body_encoding = Gzip
+type body_encoding = Compression.body_encoding = Gzip
 
 type input_body =
   [ `None

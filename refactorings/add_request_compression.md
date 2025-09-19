@@ -177,7 +177,14 @@ Based on Smithy specification:
   - [x] Updated `http_eio_http1_1_protocol_impl.ml` to handle compression
   - [x] Fixed test infrastructure (`protocol_tests.ml`, `gen_protocol_tests.ml`)
   - [x] Build validation successful
-- [ ] **Phase 2: Compression utilities**
+- [x] **Phase 2: Compression utilities**
+  - [x] Added camlzip library dependency to dune-project and dune files (switched from decompress for simplicity)
+  - [x] Created `smaws_lib/compression.ml` module with proper gzip compression
+  - [x] Implemented real `compress_gzip` function using camlzip library with temporary file approach
+  - [x] Implemented `body_encoding_to_string` and `body_encoding_to_header_value` utility functions
+  - [x] Added Compression module to Smaws_Lib exports
+  - [x] Created comprehensive unit tests in `test/test_compression.ml` including roundtrip verification
+  - [x] Build validation successful with all tests passing
 - [ ] **Phase 3: HTTP client updates**
 - [ ] **Phase 4: Protocol layer enhancement**
 - [ ] **Phase 5: Code generation updates**
