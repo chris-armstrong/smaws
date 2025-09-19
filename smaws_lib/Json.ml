@@ -282,5 +282,7 @@ module DeserializeHelpers = struct
     try Some (converter tree path) with JsonDeserializeError (NoValueError v) -> None
 
   let nullable_of_yojson (converter : t -> string list -> 'a) (tree : t) path : 'a Nullable.t =
-    try Value (converter tree path) with JsonDeserializeError (NoValueError v) -> Null
+    match tree with
+    | `Null -> Null
+    | _ -> Value (converter tree path)
 end
