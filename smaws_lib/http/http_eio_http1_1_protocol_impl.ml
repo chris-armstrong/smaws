@@ -53,11 +53,10 @@ let make_http_1_1_client ~sw ~scheme ssl_socket =
       in
       let compression_headers =
         match content_encoding with
-        | Some encoding -> [("Content-Encoding", encoding)]
+        | Some encoding -> [ ("Content-Encoding", encoding) ]
         | None -> []
       in
-      let headers = List.concat [base_headers; compression_headers; headers]
-      in
+      let headers = List.concat [ base_headers; compression_headers; headers ] in
       let request =
         Httpun.Request.create ~headers:(Httpun.Headers.of_list headers)
           ~version:(Httpun.Version.of_string "HTTP/1.1")

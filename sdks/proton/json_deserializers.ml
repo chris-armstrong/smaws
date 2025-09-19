@@ -151,11 +151,11 @@ let service_template_version_of_yojson tree path =
        value_for_key compatible_environment_template_list_of_yojson "compatibleEnvironmentTemplates"
          _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_template_version_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      status_message =
@@ -237,11 +237,11 @@ let service_template_of_yojson tree path =
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      display_name = option_of_yojson (value_for_key display_name_of_yojson "displayName") _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_template_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -329,7 +329,8 @@ let sync_blocker_of_yojson tree path =
   ({
      resolved_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "resolvedAt")
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+            "resolvedAt")
          _list path;
      resolved_reason =
        option_of_yojson
@@ -338,8 +339,8 @@ let sync_blocker_of_yojson tree path =
      contexts =
        option_of_yojson (value_for_key sync_blocker_contexts_of_yojson "contexts") _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      created_reason =
        value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "createdReason" _list
          path;
@@ -410,14 +411,14 @@ let service_pipeline_of_yojson tree path =
        value_for_key template_version_part_of_yojson "templateMajorVersion" _list path;
      template_name = value_for_key resource_name_of_yojson "templateName" _list path;
      last_deployment_succeeded_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentSucceededAt" _list path;
      last_deployment_attempted_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentAttemptedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key arn_of_yojson "arn" _list path;
    }
     : service_pipeline)
@@ -496,11 +497,11 @@ let service_of_yojson tree path =
        option_of_yojson (value_for_key status_message_of_yojson "statusMessage") _list path;
      status = value_for_key service_status_of_yojson "status" _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      template_name = value_for_key resource_name_of_yojson "templateName" _list path;
      arn = value_for_key service_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
@@ -544,14 +545,14 @@ let service_instance_of_yojson tree path =
      environment_name = value_for_key resource_name_of_yojson "environmentName" _list path;
      service_name = value_for_key resource_name_of_yojson "serviceName" _list path;
      last_deployment_succeeded_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentSucceededAt" _list path;
      last_deployment_attempted_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentAttemptedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_instance_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -604,11 +605,11 @@ let environment_template_version_of_yojson tree path =
   ({
      schema = option_of_yojson (value_for_key template_schema_of_yojson "schema") _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key environment_template_version_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      status_message =
@@ -658,11 +659,11 @@ let environment_template_of_yojson tree path =
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      display_name = option_of_yojson (value_for_key display_name_of_yojson "displayName") _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key environment_template_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -744,14 +745,14 @@ let environment_of_yojson tree path =
      template_name = value_for_key resource_name_of_yojson "templateName" _list path;
      arn = value_for_key environment_arn_of_yojson "arn" _list path;
      last_deployment_succeeded_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentSucceededAt" _list path;
      last_deployment_attempted_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentAttemptedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -825,11 +826,11 @@ let environment_account_connection_of_yojson tree path =
        option_of_yojson (value_for_key role_arn_of_yojson "componentRoleArn") _list path;
      status = value_for_key environment_account_connection_status_of_yojson "status" _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      requested_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "requestedAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "requestedAt" _list path;
      environment_name = value_for_key resource_name_of_yojson "environmentName" _list path;
      role_arn = value_for_key arn_of_yojson "roleArn" _list path;
      environment_account_id =
@@ -888,20 +889,20 @@ let component_of_yojson tree path =
      deployment_status = value_for_key deployment_status_of_yojson "deploymentStatus" _list path;
      last_deployment_succeeded_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
             "lastDeploymentSucceededAt")
          _list path;
      last_deployment_attempted_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
             "lastDeploymentAttemptedAt")
          _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      service_instance_name =
        option_of_yojson (value_for_key resource_name_of_yojson "serviceInstanceName") _list path;
      service_name =
@@ -1086,11 +1087,11 @@ let service_template_version_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_template_version_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      status_message =
@@ -1121,11 +1122,11 @@ let service_template_summary_of_yojson tree path =
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      display_name = option_of_yojson (value_for_key display_name_of_yojson "displayName") _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_template_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -1159,11 +1160,11 @@ let service_summary_of_yojson tree path =
        option_of_yojson (value_for_key status_message_of_yojson "statusMessage") _list path;
      status = value_for_key service_status_of_yojson "status" _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      template_name = value_for_key resource_name_of_yojson "templateName" _list path;
      arn = value_for_key service_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
@@ -1209,14 +1210,14 @@ let service_instance_summary_of_yojson tree path =
      environment_name = value_for_key resource_name_of_yojson "environmentName" _list path;
      service_name = value_for_key resource_name_of_yojson "serviceName" _list path;
      last_deployment_succeeded_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentSucceededAt" _list path;
      last_deployment_attempted_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentAttemptedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key service_instance_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -1286,7 +1287,8 @@ let resource_sync_event_of_yojson tree path =
      event =
        value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "event" _list path;
      time =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "time" _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "time" _list path;
      external_id =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "externalId")
@@ -1305,8 +1307,8 @@ let resource_sync_attempt_of_yojson tree path =
      events = value_for_key resource_sync_events_of_yojson "events" _list path;
      status = value_for_key resource_sync_status_of_yojson "status" _list path;
      started_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "startedAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "startedAt" _list path;
      target =
        value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "target" _list path;
      target_revision = value_for_key revision_of_yojson "targetRevision" _list path;
@@ -1368,7 +1370,8 @@ let repository_sync_event_of_yojson tree path =
      event =
        value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "event" _list path;
      time =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "time" _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "time" _list path;
      external_id =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "externalId")
@@ -1404,8 +1407,8 @@ let repository_sync_attempt_of_yojson tree path =
      events = value_for_key repository_sync_events_of_yojson "events" _list path;
      status = value_for_key repository_sync_status_of_yojson "status" _list path;
      started_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "startedAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "startedAt" _list path;
    }
     : repository_sync_attempt)
 
@@ -1815,14 +1818,14 @@ let environment_summary_of_yojson tree path =
      template_name = value_for_key resource_name_of_yojson "templateName" _list path;
      arn = value_for_key environment_arn_of_yojson "arn" _list path;
      last_deployment_succeeded_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentSucceededAt" _list path;
      last_deployment_attempted_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "lastDeploymentAttemptedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -1875,11 +1878,11 @@ let environment_template_summary_of_yojson tree path =
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      display_name = option_of_yojson (value_for_key display_name_of_yojson "displayName") _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key environment_template_arn_of_yojson "arn" _list path;
      name = value_for_key resource_name_of_yojson "name" _list path;
    }
@@ -1909,11 +1912,11 @@ let environment_template_version_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      arn = value_for_key environment_template_version_arn_of_yojson "arn" _list path;
      description = option_of_yojson (value_for_key description_of_yojson "description") _list path;
      status_message =
@@ -1996,11 +1999,11 @@ let environment_account_connection_summary_of_yojson tree path =
        option_of_yojson (value_for_key arn_of_yojson "componentRoleArn") _list path;
      status = value_for_key environment_account_connection_status_of_yojson "status" _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      requested_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "requestedAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "requestedAt" _list path;
      environment_name = value_for_key resource_name_of_yojson "environmentName" _list path;
      role_arn = value_for_key arn_of_yojson "roleArn" _list path;
      environment_account_id =
@@ -2093,18 +2096,19 @@ let deployment_summary_of_yojson tree path =
      environment_name = value_for_key resource_name_of_yojson "environmentName" _list path;
      completed_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "completedAt")
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+            "completedAt")
          _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      target_resource_type =
        value_for_key deployment_target_resource_type_of_yojson "targetResourceType" _list path;
      target_resource_created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "targetResourceCreatedAt" _list path;
      target_arn = value_for_key arn_of_yojson "targetArn" _list path;
      arn = value_for_key deployment_arn_of_yojson "arn" _list path;
@@ -2158,20 +2162,20 @@ let component_summary_of_yojson tree path =
      deployment_status = value_for_key deployment_status_of_yojson "deploymentStatus" _list path;
      last_deployment_succeeded_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
             "lastDeploymentSucceededAt")
          _list path;
      last_deployment_attempted_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
             "lastDeploymentAttemptedAt")
          _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      service_instance_name =
        option_of_yojson (value_for_key resource_name_of_yojson "serviceInstanceName") _list path;
      service_name =
@@ -2564,14 +2568,15 @@ let deployment_of_yojson tree path =
          _list path;
      completed_at =
        option_of_yojson
-         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "completedAt")
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+            "completedAt")
          _list path;
      last_modified_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "lastModifiedAt"
-         _list path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "lastModifiedAt" _list path;
      created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson "createdAt" _list
-         path;
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
+         "createdAt" _list path;
      deployment_status_message =
        option_of_yojson
          (value_for_key status_message_of_yojson "deploymentStatusMessage")
@@ -2587,7 +2592,7 @@ let deployment_of_yojson tree path =
      target_resource_type =
        value_for_key deployment_target_resource_type_of_yojson "targetResourceType" _list path;
      target_resource_created_at =
-       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_of_yojson
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.timestamp_epoch_seconds_of_yojson
          "targetResourceCreatedAt" _list path;
      target_arn = value_for_key arn_of_yojson "targetArn" _list path;
      arn = value_for_key deployment_arn_of_yojson "arn" _list path;

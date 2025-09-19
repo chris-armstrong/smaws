@@ -14,8 +14,5 @@ let compress_gzip (input : string) : string =
   Sys.remove temp_file;
   result
 
-let body_encoding_to_string = function
-  | Gzip -> "gzip"
-
-let body_encoding_to_header_value = function
-  | Gzip -> "gzip"
+let body_encoding_to_string = function Gzip -> "gzip"
+let body_encoding_to_header_value = function Gzip -> "gzip"

@@ -84,7 +84,7 @@ let validate_state_machine_definition_input_to_yojson (x : validate_state_machin
       ("definition", Some (definition_to_yojson x.definition));
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let revision_id_to_yojson = string_to_yojson
 let arn_to_yojson = string_to_yojson
 

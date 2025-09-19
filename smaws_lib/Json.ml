@@ -13,18 +13,21 @@ module SerializeHelpers = struct
   let byte_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let short_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let long_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
-  let float_to_yojson (x : float) : t = 
+
+  let float_to_yojson (x : float) : t =
     match x with
     | x when Float.is_nan x -> `String "NaN"
-    | x when (Float.is_infinite x) && (x < 0.) -> `String "-Infinity"
-    | x when (Float.is_infinite x) && (x > 0.) -> `String "Infinity"
+    | x when Float.is_infinite x && x < 0. -> `String "-Infinity"
+    | x when Float.is_infinite x && x > 0. -> `String "Infinity"
     | _ -> `Float x
-  let double_to_yojson (x : float) : t = 
+
+  let double_to_yojson (x : float) : t =
     match x with
     | x when Float.is_nan x -> `String "NaN"
-    | x when (Float.is_infinite x) && (x < 0.) -> `String "-Infinity"
-    | x when (Float.is_infinite x) && (x > 0.) -> `String "Infinity"
+    | x when Float.is_infinite x && x < 0. -> `String "-Infinity"
+    | x when Float.is_infinite x && x > 0. -> `String "Infinity"
     | _ -> `Float x
+
   let list_to_yojson (converter : 'a -> t) (x : 'a list) : t = `List (List.map converter x)
   let big_int_to_yojson (x : int64) : t = `Int (Int64.to_int x)
   let bool_to_yojson (x : bool) : t = `Bool x
@@ -161,14 +164,16 @@ module DeserializeHelpers = struct
     match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "long")
 
   let float_of_yojson (tree : t) path =
-    match tree with `Float x -> x 
+    match tree with
+    | `Float x -> x
     | `String "NaN" -> Float.nan
     | `String "Infinity" -> Float.infinity
     | `String "-Infinity" -> Float.neg_infinity
     | _ -> raise (deserialize_wrong_type_error path "float")
 
   let double_of_yojson (tree : t) path =
-    match tree with `Float x -> x 
+    match tree with
+    | `Float x -> x
     | `String "NaN" -> Float.nan
     | `String "Infinity" -> Float.infinity
     | `String "-Infinity" -> Float.neg_infinity
@@ -282,7 +287,5 @@ module DeserializeHelpers = struct
     try Some (converter tree path) with JsonDeserializeError (NoValueError v) -> None
 
   let nullable_of_yojson (converter : t -> string list -> 'a) (tree : t) path : 'a Nullable.t =
-    match tree with
-    | `Null -> Null
-    | _ -> Value (converter tree path)
+    match tree with `Null -> Null | _ -> Value (converter tree path)
 end

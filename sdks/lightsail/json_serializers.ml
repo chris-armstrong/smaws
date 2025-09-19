@@ -1,7 +1,7 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let string__to_yojson = string_to_yojson
 let non_empty_string_to_yojson = string_to_yojson
 let resource_name_to_yojson = string_to_yojson
@@ -19,7 +19,7 @@ let setup_request_to_yojson (x : setup_request) =
       ("instanceName", option_to_yojson resource_name_to_yojson x.instance_name);
     ]
 
-let iso_date_to_yojson = timestamp_to_yojson
+let iso_date_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let region_name_to_yojson (x : region_name) =
   match x with

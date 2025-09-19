@@ -12,7 +12,7 @@ let registration_status_to_yojson (x : registration_status) =
   match x with DEPRECATED -> `String "DEPRECATED" | REGISTERED -> `String "REGISTERED"
 
 let description_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let workflow_type_info_to_yojson (x : workflow_type_info) =
   assoc_to_yojson

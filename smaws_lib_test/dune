@@ -1,4 +1,4 @@
-(executable
+(test
  (name something)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq))
@@ -9,9 +9,10 @@
   alcotest
   Smaws_Test_Support_Lib))
 
-(executable
+(test
  (name test_compression)
- (libraries
-  Smaws_Lib
-  alcotest
-  unix))
+ (libraries Smaws_Lib alcotest eio unix))
+
+(test
+ (name test_http_compression_eio)
+ (libraries Smaws_Lib eio eio_main eio.mock alcotest uri))

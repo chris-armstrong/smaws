@@ -113,7 +113,7 @@ let list_tags_for_resource_request_to_yojson (x : list_tags_for_resource_request
       ("ServiceType", Some (service_type_to_yojson x.service_type));
     ]
 
-let iso_timestamp_to_yojson = timestamp_to_yojson
+let iso_timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let analysis_status_to_yojson (x : analysis_status) =
   match x with

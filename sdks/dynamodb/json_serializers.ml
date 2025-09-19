@@ -354,7 +354,7 @@ let key_schema_element_to_yojson (x : key_schema_element) =
     ]
 
 let key_schema_to_yojson tree = list_to_yojson key_schema_element_to_yojson tree
-let date_to_yojson = timestamp_to_yojson
+let date_to_yojson = timestamp_epoch_seconds_to_yojson
 let non_negative_long_object_to_yojson = long_to_yojson
 
 let provisioned_throughput_description_to_yojson (x : provisioned_throughput_description) =
@@ -1509,8 +1509,8 @@ let time_to_live_description_to_yojson (x : time_to_live_description) =
       ("TimeToLiveStatus", option_to_yojson time_to_live_status_to_yojson x.time_to_live_status);
     ]
 
-let time_range_upper_bound_to_yojson = timestamp_to_yojson
-let time_range_lower_bound_to_yojson = timestamp_to_yojson
+let time_range_upper_bound_to_yojson = timestamp_epoch_seconds_to_yojson
+let time_range_lower_bound_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_value_string_to_yojson = string_to_yojson
 
 let tag_to_yojson (x : tag) =
@@ -1564,7 +1564,7 @@ let table_creation_parameters_to_yojson (x : table_creation_parameters) =
       ("TableName", Some (table_name_to_yojson x.table_name));
     ]
 
-let table_creation_date_time_to_yojson = timestamp_to_yojson
+let table_creation_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let table_already_exists_exception_to_yojson (x : table_already_exists_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
@@ -1986,8 +1986,8 @@ let input_format_to_yojson (x : input_format) =
   | ION -> `String "ION"
   | DYNAMODB_JSON -> `String "DYNAMODB_JSON"
 
-let import_start_time_to_yojson = timestamp_to_yojson
-let import_end_time_to_yojson = timestamp_to_yojson
+let import_start_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let import_end_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let import_summary_to_yojson (x : import_summary) =
   assoc_to_yojson
@@ -2122,7 +2122,7 @@ let list_contributor_insights_input_to_yojson (x : list_contributor_insights_inp
     ]
 
 let backup_name_to_yojson = string_to_yojson
-let backup_creation_date_time_to_yojson = timestamp_to_yojson
+let backup_creation_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let backup_status_to_yojson (x : backup_status) =
   match x with
@@ -2185,7 +2185,7 @@ let list_backups_input_to_yojson (x : list_backups_input) =
       ("TableName", option_to_yojson table_arn_to_yojson x.table_name);
     ]
 
-let last_update_date_time_to_yojson = timestamp_to_yojson
+let last_update_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let enable_kinesis_streaming_configuration_to_yojson (x : enable_kinesis_streaming_configuration) =
   assoc_to_yojson
@@ -2265,8 +2265,8 @@ let input_format_options_to_yojson (x : input_format_options) =
 let input_compression_type_to_yojson (x : input_compression_type) =
   match x with NONE -> `String "NONE" | ZSTD -> `String "ZSTD" | GZIP -> `String "GZIP"
 
-let export_from_time_to_yojson = timestamp_to_yojson
-let export_to_time_to_yojson = timestamp_to_yojson
+let export_from_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let export_to_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let export_view_type_to_yojson (x : export_view_type) =
   match x with
@@ -2386,9 +2386,9 @@ let failure_exception_to_yojson (x : failure_exception) =
       ("ExceptionName", option_to_yojson exception_name_to_yojson x.exception_name);
     ]
 
-let export_time_to_yojson = timestamp_to_yojson
-let export_start_time_to_yojson = timestamp_to_yojson
-let export_end_time_to_yojson = timestamp_to_yojson
+let export_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let export_start_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let export_end_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let export_manifest_to_yojson = string_to_yojson
 
 let export_format_to_yojson (x : export_format) =

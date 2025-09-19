@@ -341,7 +341,7 @@ let sign_request_to_yojson (x : sign_request) =
       ("KeyId", Some (key_id_type_to_yojson x.key_id));
     ]
 
-let date_type_to_yojson = timestamp_to_yojson
+let date_type_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let key_state_to_yojson (x : key_state) =
   match x with

@@ -946,7 +946,7 @@ let invalid_input_exception_to_yojson (x : invalid_input_exception) =
 let internal_error_exception_to_yojson (x : internal_error_exception) =
   assoc_to_yojson [ ("Message", option_to_yojson error_message_to_yojson x.message) ]
 
-let time_stamp_to_yojson = timestamp_to_yojson
+let time_stamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let firewall_deployment_model_to_yojson (x : firewall_deployment_model) =
   match x with DISTRIBUTED -> `String "DISTRIBUTED" | CENTRALIZED -> `String "CENTRALIZED"

@@ -306,7 +306,7 @@ let list_identity_pools_input_to_yojson (x : list_identity_pools_input) =
       ("MaxResults", Some (query_limit_to_yojson x.max_results));
     ]
 
-let date_type_to_yojson = timestamp_to_yojson
+let date_type_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let identity_description_to_yojson (x : identity_description) =
   assoc_to_yojson

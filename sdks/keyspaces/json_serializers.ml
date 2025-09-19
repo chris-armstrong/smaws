@@ -256,7 +256,7 @@ let type_status_to_yojson (x : type_status) =
 
 let type_name_to_yojson = string_to_yojson
 let type_name_list_to_yojson tree = list_to_yojson type_name_to_yojson tree
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_resource_response_to_yojson = unit_to_yojson
 
 let tag_resource_request_to_yojson (x : tag_resource_request) =

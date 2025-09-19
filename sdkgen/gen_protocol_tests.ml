@@ -366,6 +366,14 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
                  ()
              | Error error -> failwith ([%e error_to_string_expr] error)])
 
+(* Tests which are disabled for reasons *)
+let bannedTests =
+  [
+    (* this test violates the spec for AwsJson protocol by specifying smithy.api#httpHeader trait *)
+    "SDKAppliedContentEncoding_awsJson1_1";
+    "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsJson1_1";
+  ]
+
 let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_context
     ?(with_derivings = false) ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
@@ -380,6 +388,8 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
              traits |> Option.value ~default:[]
              |> List.find_map ~f:(function Trait.TestHttpRequestTests x -> Some x | _ -> None)
              |> Option.value ~default:[]
+             |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
+                    not (List.exists bannedTests ~f:(String.equal t.id)))
              |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
                     match t.appliesTo with Some `Client | None -> true | Some `Server -> false)
            in

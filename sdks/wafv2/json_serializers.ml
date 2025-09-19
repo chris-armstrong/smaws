@@ -1483,7 +1483,7 @@ let update_regex_pattern_set_request_to_yojson (x : update_regex_pattern_set_req
       ("Name", Some (entity_name_to_yojson x.name));
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let update_managed_rule_set_version_expiry_date_response_to_yojson
     (x : update_managed_rule_set_version_expiry_date_response) =

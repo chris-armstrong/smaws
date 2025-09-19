@@ -4,7 +4,7 @@ open Types
 let zero_value_integer_to_yojson = int_to_yojson
 let unversioned_term_type_to_yojson = string_to_yojson
 let bounded_string_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let validity_term_to_yojson (x : validity_term) =
   assoc_to_yojson

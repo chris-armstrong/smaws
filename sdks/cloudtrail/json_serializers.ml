@@ -217,7 +217,7 @@ let advanced_event_selector_to_yojson (x : advanced_event_selector) =
 let advanced_event_selectors_to_yojson tree = list_to_yojson advanced_event_selector_to_yojson tree
 let retention_period_to_yojson = int_to_yojson
 let termination_protection_enabled_to_yojson = bool_to_yojson
-let date_to_yojson = timestamp_to_yojson
+let date_to_yojson = timestamp_epoch_seconds_to_yojson
 let event_data_store_kms_key_id_to_yojson = string_to_yojson
 
 let billing_mode_to_yojson (x : billing_mode) =

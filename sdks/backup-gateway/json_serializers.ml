@@ -32,7 +32,7 @@ let vmware_tags_to_yojson tree = list_to_yojson vmware_tag_to_yojson tree
 let name_to_yojson = string_to_yojson
 let path_to_yojson = string_to_yojson
 let resource_arn_to_yojson = string_to_yojson
-let time_to_yojson = timestamp_to_yojson
+let time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let virtual_machine_to_yojson (x : virtual_machine) =
   assoc_to_yojson

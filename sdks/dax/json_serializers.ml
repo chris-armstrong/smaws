@@ -105,7 +105,7 @@ let endpoint_to_yojson (x : endpoint) =
     ]
 
 let node_identifier_list_to_yojson tree = list_to_yojson string__to_yojson tree
-let t_stamp_to_yojson = timestamp_to_yojson
+let t_stamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let node_to_yojson (x : node) =
   assoc_to_yojson

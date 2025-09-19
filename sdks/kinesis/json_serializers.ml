@@ -71,7 +71,7 @@ let untag_resource_input_to_yojson (x : untag_resource_input) =
       ("TagKeys", Some (tag_key_list_to_yojson x.tag_keys));
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_value_to_yojson = string_to_yojson
 let tag_map_to_yojson tree = map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 

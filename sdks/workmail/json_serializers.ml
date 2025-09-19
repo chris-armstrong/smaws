@@ -572,7 +572,7 @@ let entity_state_to_yojson (x : entity_state) =
   | DISABLED -> `String "DISABLED"
   | ENABLED -> `String "ENABLED"
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let identity_provider_user_id_to_yojson = string_to_yojson
 let identity_provider_identity_store_id_to_yojson = string_to_yojson
 

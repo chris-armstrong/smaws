@@ -4,7 +4,7 @@ open Types
 let update_type_to_yojson (x : update_type) =
   match x with MigrationTaskStateUpdated -> `String "MIGRATION_TASK_STATE_UPDATED"
 
-let update_date_time_to_yojson = timestamp_to_yojson
+let update_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let error_message_to_yojson = string_to_yojson
 
 let unauthorized_operation_to_yojson (x : unauthorized_operation) =
